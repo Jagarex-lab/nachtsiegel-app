@@ -22,10 +22,15 @@ var lane_buttons: Array[Button] = []
 var camera: Camera3D
 
 func _ready() -> void:
-	_build_world()
+	# Show the verified 2D HUD first, before initializing any 3D resources.
 	_build_ui()
 	_refresh()
-	_announce("Wähle eine Karte und danach einen freien Pfad.")
+	_announce("Arena-UI gestartet · 3D-Welt wird geladen …")
+	call_deferred("_start_3d_world")
+
+func _start_3d_world() -> void:
+	_build_world()
+	_announce("Arena bereit · Wähle eine Karte und danach einen freien Pfad.")
 
 func _build_world() -> void:
 	var world := WorldEnvironment.new()
