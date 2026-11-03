@@ -75,12 +75,12 @@ func _build_ui() -> void:
 	var layer := CanvasLayer.new()
 	add_child(layer)
 	var root := Control.new()
-	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	layer.add_child(root)
+	root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var top := PanelContainer.new()
-	top.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	top.offset_bottom = 84
 	root.add_child(top)
+	top.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	top.offset_bottom = 84
 	var header := VBoxContainer.new()
 	top.add_child(header)
 	var title := Label.new()
@@ -93,9 +93,9 @@ func _build_ui() -> void:
 	status_label.add_theme_font_size_override("font_size", 18)
 	header.add_child(status_label)
 	var bottom := PanelContainer.new()
-	bottom.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	bottom.offset_top = -192
 	root.add_child(bottom)
+	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	bottom.offset_top = -192
 	var column := VBoxContainer.new()
 	bottom.add_child(column)
 	message_label = Label.new()
