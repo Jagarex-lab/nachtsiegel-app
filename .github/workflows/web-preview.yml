@@ -32,6 +32,7 @@ jobs:
           mkdir -p build/web
           godot --headless --path . --export-release "Web" build/web/index.html
           test -s build/web/index.html
+          python3 tools/inject_web_diagnostics.py
       - name: Upload browser build
         uses: actions/upload-artifact@v4
         with:
