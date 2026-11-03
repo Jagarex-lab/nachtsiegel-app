@@ -27,6 +27,14 @@ jobs:
           include-templates: true
       - name: Import Godot project and validate scripts
         run: godot --headless --path . --editor --quit
+      - name: Smoke-test arena startup and reject script errors
+        run: |
+          set -o pipefail
+          timeout 25s godot --headless --path . --quit-after 8 2>&1 | tee /tmp/nachtsiegel-start.log
+          if grep -Eiq "SCRIPT ERROR|Parse Error|Parser Error|Invalid get index|Invalid call|ERROR:" /tmp/nachtsiegel-start.log; then
+            echo "Arena startup reported errors"
+            exit 1
+          fi
       - name: Export web build
         run: |
           mkdir -p build/web
