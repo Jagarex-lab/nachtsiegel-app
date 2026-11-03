@@ -17,10 +17,14 @@ concurrency:
 jobs:
   export:
     runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:4.3
     steps:
       - uses: actions/checkout@v4
+      - name: Install Godot 4.3 and matching export templates
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.3.0
+          use-dotnet: false
+          include-templates: true
       - name: Import Godot project and validate scripts
         run: godot --headless --path . --editor --quit
       - name: Export web build
