@@ -1,27 +1,29 @@
-# NACHTSIEGEL App — Roadmap
+# NACHTSIEGEL — Entwicklungsstand
 
-## Milestone 0 — Godot foundation (this commit)
-- Godot 4 project and GL Compatibility renderer for broad mobile support
-- 3D five-lane obsidian arena, 2D HUD, card selection, summon and basic turn interactions
-- No external or unlicensed assets
-- Mobile landscape-first
+## Implementiert im Branch develop
+- Godot-4-Webexport mit GitHub Actions und GitHub Pages
+- 2.5D-Obsidian-Arena mit fünf Pfaden und schräger 3D-Kamera
+- Querformat-orientierte HUD-Anordnung und Hinweis für Hochformat
+- Vergrößerte Handkarten mit Kosten, Angriff, Leben und Fraktionsfarben
+- Animierte prozedurale 3D-Platzhalterkreaturen mit Angriff-/Lebenswerten
+- Kartenauswahl, Zielpfad, maximal zwei Beschwörungen pro Zug
+- 25-Karten-Testdeck, Kartenziehen, Energie, lokale Gegnerzüge
+- Kreatur-gegen-Kreatur-Kampf, direkter Heldenschaden auf freien Pfaden
+- Pfadkontroll-Testregel: drei freie Pfade in zwei eigenen Angriffsphasen
+- Funkenstoß kann ausschließlich gegnerische Kreaturen treffen
+- Safari-Diagnose für Startprobleme
 
-## Milestone 1 — Game rules
-- Port the deterministic v2.5 engine into GDScript
-- Implement 25-card decks, 4 orders, creature abilities, 2 summons/turn, resonance, block, ward, path control and replay
-- Unit tests against canonical combat fixtures
+## Noch NICHT fertig
+- Originalillustrationen und individuelle 3D-Kreaturenmodelle
+- Vollständiger Import der 100 Kreaturen und 16 Fähigkeiten aus dem Browser-Spiel
+- Vollständige v2.5-Kampfregeln, Block/Schild/Resonanz und deterministische Logs
+- Deckbuilder, Menüs, Audio, Animationen auf Produktionsniveau
+- Multiplayer, Konten, Monetarisierung, native iOS/Android-Pakete
+- Tests auf verschiedenen iPhones und Android-Geräten
 
-## Milestone 2 — Art and animation
-- Original commercial-safe card illustrations and creature models
-- Attack, damage, summon and spell effects
-- Accessible, responsive landscape UI for iPhone and Android
-
-## Milestone 3 — Delivery
-- GitHub Actions Godot web export and GitHub Pages preview
-- Android signed build and test distribution
-- iOS build via macOS runner, provisioning and TestFlight
-
-## Milestone 4 — Multiplayer
-- Server-authoritative match validation, matchmaking, accounts and monetization
-
-This is an interaction prototype, NOT a complete port of the existing game.
+## Nächste Meilensteine
+1. CI-Build der neuen Arena verifizieren, iPhone-Querformat testen.
+2. Original-Kartenillustrationen und Kreaturen-Assets mit kommerziell zulässiger Lizenz einpflegen.
+3. Vorhandenes Kampfregelwerk systematisch portieren und mit Fixtures testen.
+4. Responsive mobile UX, Audio, Effekte, Zuganimationen und Performance optimieren.
+5. Native Builds und App-Store-Vorbereitung.
