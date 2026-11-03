@@ -52,42 +52,9 @@ func _ready() -> void:
 	call_deferred("_start_world")
 
 func _start_world() -> void:
-	world_root = Node3D.new()
-	world_root.name = "ObsidianWorld"
-	add_child(world_root)
-	var environment_node := WorldEnvironment.new()
-	var environment := Environment.new()
-	environment.background_mode = Environment.BG_COLOR
-	environment.background_color = Color("#0d0b17")
-	environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
-	environment.ambient_light_color = Color("#75617f")
-	environment.ambient_light_energy = 1.05
-	environment_node.environment = environment
-	world_root.add_child(environment_node)
-	camera = Camera3D.new()
-	camera.position = Vector3(0, 9.4, 12.8)
-	camera.rotation_degrees = Vector3(-44, 0, 0)
-	camera.fov = 52
-	camera.current = true
-	world_root.add_child(camera)
-	var sunlight := DirectionalLight3D.new()
-	sunlight.rotation_degrees = Vector3(-60,-25,0)
-	sunlight.light_color = Color("#f4d7ad")
-	sunlight.light_energy = 1.65
-	world_root.add_child(sunlight)
-	_mesh_box(Vector3(0,-0.45,0),Vector3(12.7,0.8,10.6),Color("#16121e"),world_root)
-	_mesh_box(Vector3(0,0.03,-5.0),Vector3(13.1,0.32,0.55),Color("#85613e"),world_root)
-	_mesh_box(Vector3(0,0.03,5.0),Vector3(13.1,0.32,0.55),Color("#85613e"),world_root)
-	for i in LANES:
-		var x := float(i-2)*2.35
-		_mesh_box(Vector3(x,0.02,0),Vector3(2.15,0.12,9.5),Color("#2a2432"),world_root)
-		_mesh_box(Vector3(x,0.11,0),Vector3(0.065,0.03,8.8),Color("#b98b58"),world_root)
-		_mesh_box(Vector3(x,0.14,-2.35),Vector3(1.88,0.10,2.0),Color("#553041"),world_root)
-		_mesh_box(Vector3(x,0.14,2.35),Vector3(1.88,0.10,2.0),Color("#285058"),world_root)
-		_mesh_box(Vector3(x,0.15,0),Vector3(1.85,0.03,0.055),Color("#b78b50"),world_root)
-		unit_nodes.append({"ally":null,"foe":null})
-	_refresh_units()
-	_announce("Arena bereit · Karte wählen, dann einen Pfad antippen.")
+	# The 3D test arena is deliberately retired. The game now uses a
+	# deterministic, iPhone-friendly 2D card-table presentation.
+	_announce("Wähle eine Karte und anschließend einen der fünf Pfade.")
 
 func _mesh_box(pos:Vector3, dims:Vector3, color:Color, parent:Node3D) -> void:
 	var mesh := BoxMesh.new()
@@ -200,17 +167,8 @@ func _create_creature(data:Dictionary, lane:int, enemy:bool) -> Node3D:
 	return holder
 
 func _refresh_units() -> void:
-	if world_root == null:
-		return
-	for i in LANES:
-		for side in ["ally","foe"]:
-			var data = allies[i] if side == "ally" else foes[i]
-			var old = unit_nodes[i][side]
-			if old != null:
-				old.queue_free()
-			unit_nodes[i][side] = null
-			if data != null:
-				unit_nodes[i][side] = _create_creature(data,i,side == "foe")
+	# Lane cards are updated in _refresh; no primitive 3D creatures.
+	pass
 
 func _panel(color:Color) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
@@ -238,48 +196,102 @@ func _build_ui() -> void:
 	root_ui = Control.new()
 	ui_layer.add_child(root_ui)
 	root_ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var backdrop := ColorRect.new()
+	backdrop.color = Color("#100e19")
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root_ui.add_child(backdrop)
+	var frame := PanelContainer.new()
+	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	frame.offset_left = 16
+	frame.offset_right = -16
+	frame.offset_top = 12
+	frame.offset_bottom = -12
+	frame.add_theme_stylebox_override("panel", _panel(Color("#241b2b")))
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	root_ui.add_child(frame)
 	var header := PanelContainer.new()
 	root_ui.add_child(header)
 	header.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	header.offset_bottom = 76
-	header.add_theme_stylebox_override("panel",_panel(Color("#17121fe9")))
+	header.offset_left = 28
+	header.offset_right = -28
+	header.offset_top = 20
+	header.offset_bottom = 94
+	header.add_theme_stylebox_override("panel", _panel(Color("#17111fe9")))
 	var header_column := VBoxContainer.new()
-	header_column.add_theme_constant_override("separation",1)
 	header.add_child(header_column)
-	title_label = _label("N A C H T S I E G E L    ·    OBSIDIAN-ARENA",25)
+	title_label = _label("N A C H T S I E G E L   ·   DIE OBSIDIAN-ARENA",25)
 	header_column.add_child(title_label)
-	status_label = _label("",21)
+	status_label = _label("",20)
 	header_column.add_child(status_label)
-	var bottom := PanelContainer.new()
-	root_ui.add_child(bottom)
-	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	bottom.offset_top = -240
-	bottom.add_theme_stylebox_override("panel",_panel(Color("#17121ff2")))
-	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation",3)
-	bottom.add_child(column)
-	message_label = _label("",19)
-	column.add_child(message_label)
+	var board := PanelContainer.new()
+	root_ui.add_child(board)
+	board.anchor_left = 0.5
+	board.anchor_right = 0.5
+	board.offset_left = -508
+	board.offset_right = 508
+	board.offset_top = 104
+	board.offset_bottom = 454
+	board.add_theme_stylebox_override("panel",_panel(Color("#342431")))
+	var board_col := VBoxContainer.new()
+	board_col.add_theme_constant_override("separation",9)
+	board.add_child(board_col)
+	var opponent := _label("✦   G E G N E R I S C H E   S E I T E   ✦",17)
+	opponent.add_theme_color_override("font_color",Color("#e9a7a2"))
+	board_col.add_child(opponent)
+	var enemy_row := HBoxContainer.new()
+	enemy_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	enemy_row.add_theme_constant_override("separation",9)
+	board_col.add_child(enemy_row)
+	for i in LANES:
+		var enemy_slot := PanelContainer.new()
+		enemy_slot.custom_minimum_size = Vector2(185,111)
+		enemy_slot.add_theme_stylebox_override("panel",_panel(Color("#4a2836")))
+		enemy_row.add_child(enemy_slot)
+		var enemy_label := _label("LEER",16)
+		enemy_label.name = "Enemy"
+		enemy_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		enemy_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		enemy_slot.add_child(enemy_label)
+	var divider_label := _label("◆     DIE FÜNF PFADE DES NACHTSIEGELS     ◆",17)
+	divider_label.add_theme_color_override("font_color",Color("#e8c48c"))
+	board_col.add_child(divider_label)
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation",12)
-	column.add_child(row)
+	row.add_theme_constant_override("separation",9)
+	board_col.add_child(row)
 	for i in LANES:
 		var lane := Button.new()
-		lane.custom_minimum_size = Vector2(172,37)
-		lane.add_theme_font_size_override("font_size",16)
-		lane.add_theme_stylebox_override("normal",_panel(Color("#252030")))
+		lane.custom_minimum_size = Vector2(185,115)
+		lane.add_theme_font_size_override("font_size",17)
+		lane.add_theme_stylebox_override("normal",_panel(Color("#23444b")))
+		lane.add_theme_stylebox_override("hover",_panel(Color("#376a6c")))
+		lane.add_theme_stylebox_override("pressed",_panel(Color("#4e8b85")))
 		lane.pressed.connect(_choose_lane.bind(i))
 		row.add_child(lane)
 		lane_buttons.append(lane)
+	var bottom := PanelContainer.new()
+	root_ui.add_child(bottom)
+	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
+	bottom.offset_left = 28
+	bottom.offset_right = -28
+	bottom.offset_top = -244
+	bottom.offset_bottom = -20
+	bottom.add_theme_stylebox_override("panel",_panel(Color("#17111ff5")))
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation",5)
+	bottom.add_child(column)
+	message_label = _label("",17)
+	column.add_child(message_label)
 	hand_row = HBoxContainer.new()
 	hand_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	hand_row.add_theme_constant_override("separation",10)
+	hand_row.add_theme_constant_override("separation",9)
 	column.add_child(hand_row)
 	end_button = Button.new()
-	end_button.text = "ZUG BEENDEN  →"
-	end_button.custom_minimum_size = Vector2(260,32)
+	end_button.text = "✦   ZUG BEENDEN   ✦"
+	end_button.custom_minimum_size = Vector2(260,35)
 	end_button.add_theme_font_size_override("font_size",17)
+	end_button.add_theme_stylebox_override("normal",_panel(Color("#5a344f")))
 	end_button.pressed.connect(_end_turn)
 	column.add_child(end_button)
 	landscape_panel = ColorRect.new()
@@ -308,33 +320,34 @@ func _draw_card() -> void:
 func _card_button(index:int) -> Button:
 	var data:Dictionary = CARD_POOL[int(hand[index])]
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(164,114)
+	button.custom_minimum_size = Vector2(170,135)
 	button.text = ""
 	button.disabled = finished or energy < int(data["cost"])
 	var accent := Color(str(data["tint"]))
-	button.add_theme_stylebox_override("normal",_panel(accent.darkened(0.78)))
-	button.add_theme_stylebox_override("hover",_panel(accent.darkened(0.53)))
-	button.add_theme_stylebox_override("pressed",_panel(accent.darkened(0.36)))
+	button.add_theme_stylebox_override("normal",_panel(accent.darkened(0.75)))
+	button.add_theme_stylebox_override("hover",_panel(accent.darkened(0.55)))
+	button.add_theme_stylebox_override("pressed",_panel(accent.darkened(0.35)))
 	if index == selected:
-		button.add_theme_stylebox_override("normal",_panel(accent.darkened(0.43)))
+		button.add_theme_stylebox_override("normal",_panel(accent.darkened(0.35)))
 	var content := VBoxContainer.new()
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(content)
 	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	content.add_theme_constant_override("separation",1)
-	var heading := _label("%s  ·  %d ENERGIE" % [str(data["sigil"]),int(data["cost"])],13)
+	var heading := _label("%d ✦   %s" % [int(data["cost"]),str(data["sigil"])],15)
 	heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(heading)
 	var art := CardVignette.new()
 	art.accent = accent
 	art.archetype = str(data["sigil"])
+	art.custom_minimum_size = Vector2(0,66)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(art)
-	var name_label := _label(str(data["name"]),15)
+	var name_label := _label(str(data["name"]),16)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(name_label)
-	var stats := "ZAUBER  %d SCHADEN" % int(data["attack"]) if str(data["kind"]) == "spell" else "ANG %d   ·   LP %d" % [int(data["attack"]),int(data["hp"])]
-	var stats_label := _label(stats,12)
+	var stats := "ZAUBER · %d SCHADEN" % int(data["attack"]) if str(data["kind"]) == "spell" else "⚔ %d     ♥ %d" % [int(data["attack"]),int(data["hp"])]
+	var stats_label := _label(stats,15)
 	stats_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	content.add_child(stats_label)
 	button.pressed.connect(_select_card.bind(index))
@@ -343,11 +356,12 @@ func _card_button(index:int) -> Button:
 func _refresh() -> void:
 	if status_label == null:
 		return
-	status_label.text = "DU  %d ♥     ·     ENERGIE  %d     ·     RUNDE  %d     ·     BESCHWÖRUNGEN  %d/2     ·     GEGNER  %d ♥" % [player_hp,energy,round_number,summons,foe_hp]
+	status_label.text = "DU  %d ♥    ·    ENERGIE  %d    ·    RUNDE  %d    ·    BESCHWÖRUNGEN  %d/2    ·    GEGNER  %d ♥" % [player_hp,energy,round_number,summons,foe_hp]
 	for i in LANES:
-		var ally_str := "—" if allies[i] == null else "%d/%d" % [int(allies[i]["attack"]),int(allies[i]["hp"])]
-		var foe_str := "—" if foes[i] == null else "%d/%d" % [int(foes[i]["attack"]),int(foes[i]["hp"])]
-		lane_buttons[i].text = "PFAD %d   %s | %s" % [i+1,ally_str,foe_str]
+		var ally_str := "✦  FREIER PFAD  ✦" if allies[i] == null else "%s\n⚔ %d     ♥ %d" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
+		lane_buttons[i].text = "PFAD %d\n%s" % [i+1,ally_str]
+		var enemy_label:Label = lane_buttons[i].get_parent().get_parent().get_child(1).get_child(i).get_node("Enemy")
+		enemy_label.text = "✧  UNBESETZT  ✧" if foes[i] == null else "%s\n⚔ %d     ♥ %d" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
 	for child in hand_row.get_children():
 		hand_row.remove_child(child)
 		child.queue_free()
