@@ -1,6 +1,7 @@
 extends Node3D
 ## NACHTSIEGEL mobile arena, milestone 1.
 ## Original 2.5D visual prototype with local combat; NOT a verified port of the legacy rules.
+const CardVignette = preload("res://scripts/card_vignette.gd")
 const LANES := 5
 const MAX_HP := 35
 const CARD_POOL := [
@@ -35,6 +36,7 @@ var hand_row: HBoxContainer
 var lane_buttons: Array[Button] = []
 var end_button: Button
 var landscape_panel: ColorRect
+var card_buttons: Array[Button] = []
 var camera: Camera3D
 var world_root: Node3D
 
@@ -63,7 +65,7 @@ func _start_world() -> void:
 	environment_node.environment = environment
 	world_root.add_child(environment_node)
 	camera = Camera3D.new()
-	camera.position = Vector3(0, 10.6, 12.8)
+	camera.position = Vector3(0, 9.4, 12.8)
 	camera.rotation_degrees = Vector3(-44, 0, 0)
 	camera.fov = 52
 	camera.current = true
@@ -115,28 +117,75 @@ func _create_creature(data:Dictionary, lane:int, enemy:bool) -> Node3D:
 	base_mat.albedo_color = Color("#8b4b62") if enemy else Color("#4c8890")
 	base.material_override = base_mat
 	holder.add_child(base)
-	var body := SphereMesh.new()
-	body.radius = 0.51
-	body.height = 1.05
+	var tint := Color(str(data["tint"]))
+	var name := str(data["name"])
+	var body_mesh: PrimitiveMesh
+	if name == "Nebelqualle" or name == "Gezeitenhüter":
+		var dome := SphereMesh.new()
+		dome.radius = 0.64
+		dome.height = 0.75
+		body_mesh = dome
+	elif name == "Dornenwolf" or name == "Schattenwolf":
+		var beast := CapsuleMesh.new()
+		beast.radius = 0.38
+		beast.height = 1.38
+		body_mesh = beast
+	else:
+		var knight := CylinderMesh.new()
+		knight.top_radius = 0.28
+		knight.bottom_radius = 0.53
+		knight.height = 1.25
+		body_mesh = knight
 	var body_instance := MeshInstance3D.new()
-	body_instance.mesh = body
-	body_instance.position.y = 0.84
+	body_instance.mesh = body_mesh
+	body_instance.position.y = 0.93
 	var mat := StandardMaterial3D.new()
-	mat.albedo_color = Color(str(data["tint"]))
-	mat.metallic = 0.25
-	mat.roughness = 0.32
+	mat.albedo_color = tint
+	mat.metallic = 0.42
+	mat.roughness = 0.33
 	body_instance.material_override = mat
 	holder.add_child(body_instance)
-	var crest := SphereMesh.new()
-	crest.radius = 0.21
-	crest.height = 0.42
+	if name == "Dornenwolf" or name == "Schattenwolf":
+		for side in [-1,1]:
+			var ear := CylinderMesh.new()
+			ear.top_radius = 0.01
+			ear.bottom_radius = 0.22
+			ear.height = 0.67
+			var ear_node := MeshInstance3D.new()
+			ear_node.mesh = ear
+			ear_node.position = Vector3(float(side)*0.26,1.72,0)
+			ear_node.material_override = mat
+			holder.add_child(ear_node)
+	elif name == "Nebelqualle" or name == "Gezeitenhüter":
+		for j in 5:
+			var tendril := CylinderMesh.new()
+			tendril.top_radius = 0.045
+			tendril.bottom_radius = 0.07
+			tendril.height = 0.66
+			var strand := MeshInstance3D.new()
+			strand.mesh = tendril
+			strand.position = Vector3((float(j)-2.0)*0.20,0.36,0)
+			strand.material_override = mat
+			holder.add_child(strand)
+	else:
+		var helm := SphereMesh.new()
+		helm.radius = 0.31
+		helm.height = 0.53
+		var helm_node := MeshInstance3D.new()
+		helm_node.mesh = helm
+		helm_node.position.y = 1.78
+		helm_node.material_override = mat
+		holder.add_child(helm_node)
 	var eye := MeshInstance3D.new()
-	eye.mesh = crest
-	eye.position = Vector3(0,1.03,0.44)
+	var eye_mesh := SphereMesh.new()
+	eye_mesh.radius = 0.12
+	eye_mesh.height = 0.24
+	eye.mesh = eye_mesh
+	eye.position = Vector3(0,1.13,0.43)
 	var eye_mat := StandardMaterial3D.new()
-	eye_mat.albedo_color = Color("#fff0bb")
+	eye_mat.albedo_color = Color("#ffe6aa")
 	eye_mat.emission_enabled = true
-	eye_mat.emission = Color("#f0bc75")
+	eye_mat.emission = tint
 	eye.material_override = eye_mat
 	holder.add_child(eye)
 	var text3d := Label3D.new()
@@ -144,7 +193,7 @@ func _create_creature(data:Dictionary, lane:int, enemy:bool) -> Node3D:
 	text3d.font_size = 45
 	text3d.pixel_size = 0.008
 	text3d.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	text3d.position = Vector3(0,1.8,0)
+	text3d.position = Vector3(0,2.23,0)
 	holder.add_child(text3d)
 	holder.scale = Vector3(0.05,0.05,0.05)
 	holder.create_tween().tween_property(holder,"scale",Vector3.ONE,0.27).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
@@ -192,10 +241,10 @@ func _build_ui() -> void:
 	var header := PanelContainer.new()
 	root_ui.add_child(header)
 	header.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	header.offset_bottom = 105
+	header.offset_bottom = 76
 	header.add_theme_stylebox_override("panel",_panel(Color("#17121fe9")))
 	var header_column := VBoxContainer.new()
-	header_column.add_theme_constant_override("separation",5)
+	header_column.add_theme_constant_override("separation",1)
 	header.add_child(header_column)
 	title_label = _label("N A C H T S I E G E L    ·    OBSIDIAN-ARENA",25)
 	header_column.add_child(title_label)
@@ -204,10 +253,10 @@ func _build_ui() -> void:
 	var bottom := PanelContainer.new()
 	root_ui.add_child(bottom)
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	bottom.offset_top = -220
+	bottom.offset_top = -240
 	bottom.add_theme_stylebox_override("panel",_panel(Color("#17121ff2")))
 	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation",7)
+	column.add_theme_constant_override("separation",3)
 	bottom.add_child(column)
 	message_label = _label("",19)
 	column.add_child(message_label)
@@ -217,7 +266,7 @@ func _build_ui() -> void:
 	column.add_child(row)
 	for i in LANES:
 		var lane := Button.new()
-		lane.custom_minimum_size = Vector2(172,42)
+		lane.custom_minimum_size = Vector2(172,37)
 		lane.add_theme_font_size_override("font_size",16)
 		lane.add_theme_stylebox_override("normal",_panel(Color("#252030")))
 		lane.pressed.connect(_choose_lane.bind(i))
@@ -225,11 +274,11 @@ func _build_ui() -> void:
 		lane_buttons.append(lane)
 	hand_row = HBoxContainer.new()
 	hand_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	hand_row.add_theme_constant_override("separation",9)
+	hand_row.add_theme_constant_override("separation",10)
 	column.add_child(hand_row)
 	end_button = Button.new()
 	end_button.text = "ZUG BEENDEN  →"
-	end_button.custom_minimum_size = Vector2(260,35)
+	end_button.custom_minimum_size = Vector2(260,32)
 	end_button.add_theme_font_size_override("font_size",17)
 	end_button.pressed.connect(_end_turn)
 	column.add_child(end_button)
@@ -259,15 +308,35 @@ func _draw_card() -> void:
 func _card_button(index:int) -> Button:
 	var data:Dictionary = CARD_POOL[int(hand[index])]
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(178,90)
-	button.add_theme_font_size_override("font_size",17)
-	button.text = "%s  ✦%d\n%s\n%s" % [str(data["sigil"]),int(data["cost"]),str(data["name"]),("ZAUBER · %d SCHADEN" % int(data["attack"])) if str(data["kind"]) == "spell" else "%d ANGRIFF  ·  %d LEBEN" % [int(data["attack"]),int(data["hp"])]]
+	button.custom_minimum_size = Vector2(164,114)
+	button.text = ""
 	button.disabled = finished or energy < int(data["cost"])
-	button.add_theme_stylebox_override("normal",_panel(Color(str(data["tint"])).darkened(0.64)))
-	button.add_theme_stylebox_override("hover",_panel(Color(str(data["tint"])).darkened(0.38)))
-	button.add_theme_stylebox_override("pressed",_panel(Color(str(data["tint"])).darkened(0.22)))
+	var accent := Color(str(data["tint"]))
+	button.add_theme_stylebox_override("normal",_panel(accent.darkened(0.78)))
+	button.add_theme_stylebox_override("hover",_panel(accent.darkened(0.53)))
+	button.add_theme_stylebox_override("pressed",_panel(accent.darkened(0.36)))
 	if index == selected:
-		button.add_theme_stylebox_override("normal",_panel(Color(str(data["tint"])).darkened(0.30)))
+		button.add_theme_stylebox_override("normal",_panel(accent.darkened(0.43)))
+	var content := VBoxContainer.new()
+	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	button.add_child(content)
+	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	content.add_theme_constant_override("separation",1)
+	var heading := _label("%s  ·  %d ENERGIE" % [str(data["sigil"]),int(data["cost"])],13)
+	heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(heading)
+	var art := CardVignette.new()
+	art.accent = accent
+	art.archetype = str(data["sigil"])
+	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_child(art)
+	var name_label := _label(str(data["name"]),15)
+	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(name_label)
+	var stats := "ZAUBER  %d SCHADEN" % int(data["attack"]) if str(data["kind"]) == "spell" else "ANG %d   ·   LP %d" % [int(data["attack"]),int(data["hp"])]
+	var stats_label := _label(stats,12)
+	stats_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	content.add_child(stats_label)
 	button.pressed.connect(_select_card.bind(index))
 	return button
 
