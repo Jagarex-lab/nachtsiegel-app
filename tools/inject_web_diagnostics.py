@@ -18,13 +18,7 @@ script = r"""
     const canvas = document.querySelector('canvas');
     if (!canvas) show('Kein Godot-Canvas gefunden.');
     else if (canvas.width === 0 || canvas.height === 0) show('Godot-Canvas ohne Größe.');
-    else if (box.style.display !== 'block') {
-      const hint = document.createElement('button');
-      hint.textContent='Schwarzer Bildschirm? Diagnose öffnen';
-      hint.style.cssText='position:fixed;z-index:2147483646;right:10px;bottom:10px;border:1px solid #a98d65;background:#181521;color:white;border-radius:8px;padding:7px 10px;font:12px -apple-system,Arial';
-      hint.onclick=() => { hint.remove(); show('Canvas: '+canvas.width+'×'+canvas.height+'\nWebGL2: '+(!!document.createElement('canvas').getContext('webgl2'))+'\nBrowser: '+navigator.userAgent); };
-      document.body.appendChild(hint);
-    }
+
   }, 10000);
 })();
 </script>
