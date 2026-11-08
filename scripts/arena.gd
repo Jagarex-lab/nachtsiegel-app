@@ -204,18 +204,48 @@ func _slot_style(friendly:bool, active:bool = false) -> StyleBoxFlat:
 
 func _card_style(accent:Color, active:bool = false) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#2b2430")
+	style.bg_color = Color("#211a23")
 	style.border_color = Color("#ead3a0") if active else accent.lightened(0.18)
-	style.set_border_width_all(3 if active else 2)
-	style.set_corner_radius_all(7)
+	style.set_border_width_all(4 if active else 3)
+	style.border_width_top = 7
+	style.border_width_bottom = 5
+	style.set_corner_radius_all(12)
 	style.shadow_color = Color(0,0,0,0.6)
-	style.shadow_size = 7
+	style.shadow_size = 10
 	style.shadow_offset = Vector2(0,3)
 	style.content_margin_left = 6
 	style.content_margin_right = 6
 	style.content_margin_top = 3
 	style.content_margin_bottom = 3
 	return style
+
+func _arena_frame_style() -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = Color("#17121d")
+	style.border_color = Color("#98714a")
+	style.set_border_width_all(2)
+	style.border_width_top = 4
+	style.set_corner_radius_all(10)
+	style.shadow_color = Color(0,0,0,0.8)
+	style.shadow_size = 12
+	style.content_margin_left = 12
+	style.content_margin_right = 12
+	style.content_margin_top = 8
+	style.content_margin_bottom = 8
+	return style
+
+func _board_texture() -> GradientTexture2D:
+	var gradient := Gradient.new()
+	gradient.set_color(0,Color("#31212b"))
+	gradient.set_color(1,Color("#10131c"))
+	var texture := GradientTexture2D.new()
+	texture.gradient = gradient
+	texture.fill = GradientTexture2D.FILL_RADIAL
+	texture.fill_from = Vector2(0.5,0.5)
+	texture.fill_to = Vector2(0.5,0.95)
+	texture.width = 1024
+	texture.height = 512
+	return texture
 
 func _label(value:String,size:int) -> Label:
 	var item := Label.new()
@@ -238,53 +268,64 @@ func _build_ui() -> void:
 	root_ui.add_child(backdrop)
 	var frame := PanelContainer.new()
 	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	frame.offset_left = 16
-	frame.offset_right = -16
-	frame.offset_top = 12
-	frame.offset_bottom = -12
-	frame.add_theme_stylebox_override("panel", _panel(Color("#241b2b")))
+	frame.offset_left = 8
+	frame.offset_right = -8
+	frame.offset_top = 6
+	frame.offset_bottom = -6
+	frame.add_theme_stylebox_override("panel", _arena_frame_style())
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root_ui.add_child(frame)
 	var header := PanelContainer.new()
 	root_ui.add_child(header)
 	header.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	header.offset_left = 28
-	header.offset_right = -28
-	header.offset_top = 20
-	header.offset_bottom = 94
-	header.add_theme_stylebox_override("panel", _panel(Color("#17131f")))
+	header.offset_left = 20
+	header.offset_right = -20
+	header.offset_top = 14
+	header.offset_bottom = 79
+	header.add_theme_stylebox_override("panel", _arena_frame_style())
 	var header_column := VBoxContainer.new()
 	header.add_child(header_column)
-	title_label = _label("N A C H T S I E G E L    /    OBSIDIAN-ARENA",25)
+	title_label = _label("N A C H T S I E G E L",23)
 	header_column.add_child(title_label)
-	status_label = _label("",20)
+	status_label = _label("",18)
 	header_column.add_child(status_label)
 	var board := PanelContainer.new()
 	root_ui.add_child(board)
-	board.anchor_left = 0.5
-	board.anchor_right = 0.5
-	board.offset_left = -508
-	board.offset_right = 508
-	board.offset_top = 104
-	board.offset_bottom = 454
-	board.add_theme_stylebox_override("panel",_panel(Color("#211d2a")))
-	var board_art := Control.new()
+	board.anchor_left = 0.055
+	board.anchor_right = 0.945
+	board.anchor_top = 0.13
+	board.anchor_bottom = 0.70
+	board.offset_left = 0
+	board.offset_right = 0
+	board.offset_top = 0
+	board.offset_bottom = 0
+	board.add_theme_stylebox_override("panel",_arena_frame_style())
+	var board_art := TextureRect.new()
 	board_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	board_art.texture = _board_texture()
+	board_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	board_art.stretch_mode = TextureRect.STRETCH_SCALE
 	board.add_child(board_art)
+	board_art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var board_col := VBoxContainer.new()
-	board_col.add_theme_constant_override("separation",9)
+	board_col.add_theme_constant_override("separation",10)
+	board_col.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	board_col.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	board.add_child(board_col)
 	var opponent := _label("G E G N E R",17)
 	opponent.add_theme_color_override("font_color",Color("#e9a7a2"))
+	opponent.add_theme_font_size_override("font_size",16)
 	board_col.add_child(opponent)
 	var enemy_row := HBoxContainer.new()
 	enemy_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	enemy_row.add_theme_constant_override("separation",9)
+	enemy_row.add_theme_constant_override("separation",12)
+	enemy_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	board_col.add_child(enemy_row)
 	for i in LANES:
 		var enemy_slot := PanelContainer.new()
-		enemy_slot.custom_minimum_size = Vector2(185,111)
+		enemy_slot.custom_minimum_size = Vector2(0,145)
+		enemy_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		enemy_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		enemy_slot.add_theme_stylebox_override("panel",_slot_style(false))
 		enemy_slot.modulate.a = 0.91
 		enemy_row.add_child(enemy_slot)
@@ -295,14 +336,18 @@ func _build_ui() -> void:
 		enemy_slot.add_child(enemy_label)
 	var divider_label := _label("I     ·     II     ·     III     ·     IV     ·     V",17)
 	divider_label.add_theme_color_override("font_color",Color("#e8c48c"))
+	divider_label.add_theme_font_size_override("font_size",15)
 	board_col.add_child(divider_label)
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation",9)
+	row.add_theme_constant_override("separation",12)
+	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	board_col.add_child(row)
 	for i in LANES:
 		var lane := Button.new()
-		lane.custom_minimum_size = Vector2(185,115)
+		lane.custom_minimum_size = Vector2(0,145)
+		lane.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		lane.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		lane.add_theme_font_size_override("font_size",17)
 		lane.add_theme_stylebox_override("normal",_slot_style(true))
 		lane.add_theme_stylebox_override("hover",_slot_style(true,true))
@@ -313,11 +358,11 @@ func _build_ui() -> void:
 	var bottom := PanelContainer.new()
 	root_ui.add_child(bottom)
 	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	bottom.offset_left = 28
-	bottom.offset_right = -28
-	bottom.offset_top = -244
-	bottom.offset_bottom = -20
-	bottom.add_theme_stylebox_override("panel",_panel(Color("#17131f")))
+	bottom.offset_left = 20
+	bottom.offset_right = -20
+	bottom.offset_top = -207
+	bottom.offset_bottom = -12
+	bottom.add_theme_stylebox_override("panel",_arena_frame_style())
 	var column := VBoxContainer.new()
 	column.add_theme_constant_override("separation",5)
 	bottom.add_child(column)
@@ -325,11 +370,12 @@ func _build_ui() -> void:
 	column.add_child(message_label)
 	hand_row = HBoxContainer.new()
 	hand_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	hand_row.add_theme_constant_override("separation",9)
+	hand_row.add_theme_constant_override("separation",12)
+	hand_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	column.add_child(hand_row)
 	end_button = Button.new()
 	end_button.text = "ZUG BEENDEN"
-	end_button.custom_minimum_size = Vector2(260,35)
+	end_button.custom_minimum_size = Vector2(260,36)
 	end_button.add_theme_font_size_override("font_size",17)
 	end_button.add_theme_stylebox_override("normal",_panel(Color("#65415a")))
 	end_button.pressed.connect(_end_turn)
@@ -360,16 +406,18 @@ func _draw_card() -> void:
 func _card_button(index:int) -> Button:
 	var data:Dictionary = CARD_POOL[int(hand[index])]
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(174,138)
+	button.custom_minimum_size = Vector2(175,150)
 	button.text = ""
 	button.disabled = finished or energy < int(data["cost"])
 	var accent := Color(str(data["tint"]))
 	button.add_theme_stylebox_override("normal",_card_style(accent, index == selected))
+	button.add_theme_stylebox_override("disabled",_card_style(accent.darkened(0.45),false))
 	button.add_theme_stylebox_override("hover",_card_style(accent,true))
 	button.add_theme_stylebox_override("pressed",_card_style(accent,true))
 	if index == selected:
 		button.add_theme_stylebox_override("normal",_card_style(accent,true))
 	var bezel := Panel.new()
+	bezel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bezel.add_theme_stylebox_override("panel", _card_style(accent, index == selected))
 	button.add_child(bezel)
 	bezel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -384,7 +432,7 @@ func _card_button(index:int) -> Button:
 	var art := CardVignette.new()
 	art.accent = accent
 	art.archetype = str(data["sigil"])
-	art.custom_minimum_size = Vector2(0,70)
+	art.custom_minimum_size = Vector2(0,80)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(art)
 	var name_label := _label(str(data["name"]),17)
