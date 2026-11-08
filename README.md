@@ -2,7 +2,7 @@
 
 Eigenständiges Dark-Fantasy-Kartenduell in Godot 4.6.3, für Querformat auf iPhone und Android gestaltet. Fünf Pfade, illustrierte Reliquienkarten, Obsidianarena und lokaler KI-Gegner.
 
-![Neue Arena](docs/screenshots/arena-battle.png)
+![Mondheiligtum](docs/screenshots/sanctum/arena-battle.png)
 
 **Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/
 
@@ -28,6 +28,6 @@ godot --headless --path . --export-debug 'Android QA' work/build/nachtsiegel-deb
 
 `tools/test.sh` legt Godot-Benutzerdaten ausschließlich unter `work/` ab. Exportvorlagen müssen daher unter diesem XDG-Datenverzeichnis verfügbar sein, wenn dieselben Umgebungsvariablen für den Export verwendet werden. Binärdateien, SDK, Debug-Schlüssel und temporäre Dateien werden nicht eingecheckt.
 
-[Prüfbericht und Screenshots](docs/QA-2026-11-08.md) · [Asset-Herkunft](assets/ASSET_MANIFEST.md)
+[Aktuelle Grafikstufe und Tests](docs/QA-SANCTUM-2026-11-08.md) · [Erste Überarbeitung](docs/QA-2026-11-08.md) · [Asset-Herkunft](assets/ASSET_MANIFEST.md)
 
 Godot: MIT. Projektcode und Spielinhalte: bestehender Rechtevorbehalt laut `LICENSE-NOTICE.md`. Illustrationen sind ausdrücklich als KI-Konzept-Platzhalter gekennzeichnet.

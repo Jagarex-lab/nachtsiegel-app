@@ -59,11 +59,14 @@ func run() -> void:
 		arena.summons = 0
 		arena.selected = -1
 		arena._refresh()
-		await settle()
+		await create_timer(0.4).timeout
 		check(not arena.landscape_panel.visible,"Landscape gate %s" % dimensions)
 		var viewport = Rect2(Vector2.ZERO,Vector2(dimensions))
 		for card in arena.card_buttons:
-			check(viewport.encloses(card.get_global_rect()),"Hand card unclipped %s" % dimensions)
+			var transform = card.get_global_transform()
+			for corner in [Vector2.ZERO,Vector2(card.size.x,0),card.size,Vector2(0,card.size.y)]:
+				check(viewport.has_point(transform*corner),"Fanned hand corner unclipped %s" % dimensions)
+			check(card.size.x*arena.root_ui.scale.x >= 44 and card.size.y*arena.root_ui.scale.y >= 44,"Hand touch target >=44px %s" % dimensions)
 		for lane in arena.lane_buttons:
 			check(viewport.encloses(lane.get_global_rect()),"Path unclipped %s" % dimensions)
 			check(lane.get_global_rect().size.x >= 44 and lane.get_global_rect().size.y >= 44,"Path >=44px %s" % dimensions)
@@ -100,10 +103,29 @@ func run() -> void:
 		check(is_instance_valid(arena.modal),"Card inspection opens")
 		await touch(arena.modal.get_child(arena.modal.get_child_count()-1))
 		check(arena.modal == null,"ScreenTouch closes inspection")
+		# Insufficient energy dims a card but must not prevent reading it.
+		arena.energy = 0
+		arena.selected = -1
+		arena.hand = [4]
+		arena._refresh()
+		await create_timer(0.4).timeout
+		await touch(arena.card_buttons[0])
+		check(arena.selected == 0,"Unaffordable card can be selected for inspection %s" % dimensions)
+		arena._show_card()
+		await settle()
+		check(is_instance_valid(arena.modal),"Unaffordable inspection opens %s" % dimensions)
+		await touch(arena.modal.get_child(arena.modal.get_child_count()-1))
+		var unchanged = arena.allies.duplicate(true)
+		arena._choose_lane(4)
+		check(arena.allies == unchanged and arena.energy == 0 and arena.hand == [4],"Unaffordable card cannot be played %s" % dimensions)
+		arena.energy = 10
+		arena.selected = -1
 		arena.hand = [0,1,2,3,4,5]
 		arena.foes = [arena.CARD_POOL[3].duplicate(true),null,arena.CARD_POOL[4].duplicate(true),null,arena.CARD_POOL[2].duplicate(true)]
 		arena._refresh()
 		await settle()
+		await create_timer(0.4).timeout
+		arena._announce("Wähle eine Karte und anschließend einen der fünf Pfade.")
 		await capture("res://work/landscape-%dx%d.png" % [dimensions.x,dimensions.y])
 	root.size = Vector2i(390,844)
 	await settle()

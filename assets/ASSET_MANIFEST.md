@@ -8,3 +8,12 @@
 - Ältere prozedurale Illustrationsskripte bleiben als historische Projektressourcen erhalten, werden aber von der neuen Arena nicht geladen.
 
 Die bestehende Projektlizenz und `LICENSE-NOTICE.md` bleiben maßgeblich für Spielcode und Spielinhalte. Der technische Prototyp ist keine Store-Veröffentlichung.
+
+## Erweiterung „Mondheiligtum“ (08.11.2026)
+
+- `art/arena_painted.png`: eigens mit OpenAI Image Generation erzeugte 16:9-Kathedralen-Arena mit freier Spielfläche, fünf Siegeln, Steinschnitzerei, Kerzen und Mondlicht. Kein Referenzbild eines bestehenden Spiels.
+- `art/reliquary_frame.png`: eigens generierter transparenter Kartenrahmen mit Metallrelief, Beschwörungssockel, Namensschild und Wertesockeln. Illustrationen und alle Werte werden separat in Godot eingesetzt; kein eingebrannter Spieltext.
+- `art/hero_medallion.png`: eigens generierte transparente Metallfassung mit Porträtfenster, Namensschild und Lebenspunkt-Edelstein. Bestehende eigene Konzeptporträts und dynamische Lebenspunkte werden in Godot zusammengesetzt.
+- Diese drei Bilder sind KI-generierte Original-Konzeptassets für dieses Projekt und ersetzen noch keine abschließende manuelle Art-Produktion. Keine Behauptung exklusiver Rechte an KI-Ausgaben.
+- `fonts/Cinzel.ttf`: Cinzel, Copyright 2020 The Cinzel Project Authors, SIL Open Font License 1.1. Unveränderte Quelle: https://github.com/google/fonts/tree/main/ofl/cinzel. Lizenz: `fonts/Cinzel-OFL.txt`.
+- Shader-Licht, Gravuren, Zielfeldringe, Energie-Orb, HUD-Kristalle, gezeichnete UI-Schaltflächen und zeitlich begrenzte Zauber-/Beschwörungseffekte sind prozedurale Projektgrafik. Regeln, Bildfenster, Texte und Werte bleiben vom generierten Rahmen getrennt.

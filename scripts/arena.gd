@@ -29,7 +29,7 @@ var ui_layer: CanvasLayer
 var root_ui: Control
 var status_label: Label
 var message_label: Label
-var hand_row: HBoxContainer
+var hand_row: Control
 var lane_buttons: Array[Button] = []
 var hero_player: Label
 var hero_enemy: Label
@@ -82,7 +82,11 @@ func _gold_panel(base:Color, rim:Color = Color("#a98452")) -> StyleBoxFlat:
 
 const CardFace = preload("res://scripts/card_face.gd")
 const Atmosphere = preload("res://scripts/atmosphere.gd")
-const DISPLAY_FONT = preload("res://assets/fonts/Display.ttf")
+const RitualButton = preload("res://scripts/ritual_button.gd")
+const SigilSlot = preload("res://scripts/sigil_slot.gd")
+const RitualHud = preload("res://scripts/ritual_hud.gd")
+const RitualFx = preload("res://scripts/ritual_fx.gd")
+const DISPLAY_FONT = preload("res://assets/fonts/Cinzel.ttf")
 const BODY_FONT = preload("res://assets/fonts/Body.ttf")
 var lane_faces: Array = []
 var foe_faces: Array = []
@@ -92,6 +96,9 @@ var modal: Control
 var busy := false
 var restart_button: Button
 var energy_gems: Label
+var hud_art: Control
+var hero_medallions: Array = []
+var foe_wells: Array = []
 
 func _put(node: Control, rect: Rect2, parent: Node = null) -> void:
 	(parent if parent != null else root_ui).add_child(node)
@@ -107,16 +114,9 @@ func _caption(value: String, rect: Rect2, font_size: int = 18, color: Color = Co
 	return label
 
 func _action(value: String, rect: Rect2, callback: Callable) -> Button:
-	var button = Button.new()
-	button.text = value
-	button.add_theme_font_override("font", BODY_FONT)
-	button.add_theme_font_size_override("font_size",17)
-	button.add_theme_color_override("font_color",Color("#f2dfaf"))
-	button.add_theme_stylebox_override("normal",_gold_panel(Color("#22383e"),Color("#a28b5e")))
-	button.add_theme_stylebox_override("hover",_gold_panel(Color("#34565b"),Color("#efd598")))
-	button.add_theme_stylebox_override("pressed",_gold_panel(Color("#101e2a"),Color("#8de2d7")))
-	button.add_theme_stylebox_override("focus",_gold_panel(Color(0,0,0,0),Color("#b5eee5")))
-	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var button = RitualButton.new()
+	button.caption = value
+	button.emphasis = value.begins_with("ZUG") or value.begins_with("NEUES")
 	button.pressed.connect(callback)
 	_put(button,rect)
 	return button
@@ -146,64 +146,69 @@ func _build_ui() -> void:
 	theme.default_font = BODY_FONT
 	root_ui.theme = theme
 	var backdrop = TextureRect.new()
-	backdrop.texture = preload("res://assets/art/arena.svg")
+	backdrop.texture = preload("res://assets/art/arena_painted.png")
+	backdrop.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	var light = ShaderMaterial.new()
+	light.shader = preload("res://assets/shaders/arena_light.gdshader")
+	backdrop.material = light
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_put(backdrop,Rect2(0,0,1600,900))
-	_caption("N A C H T S I E G E L",Rect2(450,18,700,48),32,Color("#e7d4a9"),true)
-	_caption("D A S   R I T U A L   D E R   F Ü N F   P F A D E",Rect2(480,64,640,26),12)
-	_caption("LOKALES DUELL",Rect2(40,27,230,30),14)
+	_caption("N A C H T S I E G E L",Rect2(425,12,750,54),36,Color("#e7d4a9"),true)
+	_caption("D A S   R I T U A L   D E R   F Ü N F   P F A D E",Rect2(480,64,640,26),11)
+	_caption("D U E L L   I M   M O N D H E I L I G T U M",Rect2(25,25,315,35),10)
+	hud_art = RitualHud.new()
+	_put(hud_art,Rect2(0,0,1600,900))
 	_action("?  SPIELHILFE",Rect2(1370,0,210,103),_show_help)
 	# Paired sculpted reliquaries sit within the five carved channels.
 	for i in LANES:
-		var x = 311.0+i*192.0
-		var foe = _face({},Rect2(x,150,150,181),0,true)
+		var x = 355.0+i*180.0
+		var enemy_well = SigilSlot.new()
+		enemy_well.enemy = true
+		enemy_well.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_put(enemy_well,Rect2(x,145,160,194))
+		foe_wells.append(enemy_well)
+		var foe = _face({},Rect2(x,145,160,194),0,true)
 		foe.visible = false
 		foe.pressed.connect(_choose_lane.bind(i))
 		foe_faces.append(foe)
-		var target = Button.new()
-		target.text = "✧\nBESCHWÖREN"
-		target.add_theme_font_size_override("font_size",13)
-		target.add_theme_color_override("font_color",Color("#7e9999"))
-		target.add_theme_stylebox_override("normal",StyleBoxEmpty.new())
-		target.add_theme_stylebox_override("hover",_gold_panel(Color(0.2,0.6,0.56,0.16),Color("#b3dcd0")))
-		target.add_theme_stylebox_override("focus",_gold_panel(Color(0.2,0.6,0.56,0.1),Color("#b3dcd0")))
+		var target = SigilSlot.new()
 		target.pressed.connect(_choose_lane.bind(i))
-		_put(target,Rect2(x-2,399,154,188))
+		_put(target,Rect2(x-2,397,164,200))
 		lane_buttons.append(target)
-		var ally = _face({},Rect2(x,403,150,181),0,true)
+		var ally = _face({},Rect2(x,399,160,194),0,true)
 		ally.visible = false
 		ally.pressed.connect(_choose_lane.bind(i))
 		lane_faces.append(ally)
-		_caption(["I","II","III","IV","V"][i],Rect2(x+47,343,56,30),17,Color("#e1c893"),true)
-		_caption("GEGNER",Rect2(x,121,150,20),10,Color("#9c8d8c"))
+		_caption(["I","II","III","IV","V"][i],Rect2(x+52,343,56,30),17,Color("#e1c893"),true)
 	# Tall hero medallions with distinct identities.
-	var enemy = _face({"name":"Der Aschenkönig","attack":0,"hp":35,"tint":"#b46753"},Rect2(82,145,164,197),8,true)
+	var enemy = _face({"name":"Der Aschenkönig","attack":0,"hp":35,"tint":"#b46753"},Rect2(77,151,174,220),8,true)
 	enemy.heroic = true
 	enemy.disabled = false
 	enemy.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var player = _face({"name":"Die Siegelhüterin","attack":0,"hp":35,"tint":"#72beb9"},Rect2(82,417,164,197),7,true)
+	var player = _face({"name":"Die Siegelhüterin","attack":0,"hp":35,"tint":"#72beb9"},Rect2(77,426,174,220),7,true)
+	hero_medallions = [player,enemy]
 	player.heroic = true
 	player.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	hero_enemy = _caption("35 / 35",Rect2(82,350,164,32),23,Color("#e0a798"),true)
-	hero_player = _caption("35 / 35",Rect2(82,623,164,32),23,Color("#a6e0d5"),true)
+	hero_enemy = _caption("35 / 35",Rect2(107,318,114,45),28,Color("#eae5d1"),true)
+	hero_player = _caption("35 / 35",Rect2(107,593,114,45),28,Color("#eae5d1"),true)
+	hero_enemy.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	hero_player.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_caption("GEGNERISCHER HELD",Rect2(61,112,206,24),11)
-	_caption("DEINE HELDIN",Rect2(61,385,206,24),11)
+	_caption("DEINE HELDIN",Rect2(61,389,206,24),11)
 	round_label = _caption("RUNDE 01",Rect2(1370,100,210,33),18,Color("#e0cda6"),true)
-	_caption("DEINE ENERGIE",Rect2(1370,146,210,26),11)
-	energy_label = _caption("3 / 10",Rect2(1370,171,210,48),29,Color("#9cdcd9"),true)
-	energy_gems = _caption("◆ ◆ ◆",Rect2(1370,217,210,26),15,Color("#74c5c8"))
-	info_label = _caption("Ein Siegel.\nFünf Wege zum Sieg.\n\nWähle eine Handkarte,\ndann ihren Zielpfad.",Rect2(1371,274,209,172),15)
+	_caption("DEINE ENERGIE",Rect2(1370,139,210,26),11)
+	energy_label = _caption("3 / 10",Rect2(1428,167,94,49),34,Color("#9cdcd9"),true)
+	energy_gems = _caption("◆ ◆ ◆",Rect2(1370,272,210,22),15,Color("#74c5c8"))
+	info_label = _caption("Ein Siegel.\nFünf Wege zum Sieg.\n\nWähle eine Handkarte,\ndann ihren Zielpfad.",Rect2(1371,303,209,117),15)
 	info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	detail_button = _action("KARTE ANSEHEN",Rect2(1370,418,210,103),_show_card)
 	detail_button.visible = false
 	end_button = _action("ZUG BEENDEN  ›",Rect2(1370,530,210,103),_end_turn)
-	_caption("DEINE HAND",Rect2(64,731,210,26),14,Color("#e3c998"),true)
-	_caption("Illustrationen: Konzept-Platzhalter",Rect2(39,770,260,42),10,Color("#7c918f"))
-	hand_row = HBoxContainer.new()
-	hand_row.add_theme_constant_override("separation",13)
-	hand_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	_put(hand_row,Rect2(318,684,932,191))
-	message_label = _caption("",Rect2(318,644,932,31),15,Color("#bcd5ce"))
+	_caption("DEINE HAND",Rect2(55,718,235,26),14,Color("#e3c998"),true)
+	_caption("Illustrationen: Konzept-Platzhalter",Rect2(28,751,280,42),10,Color("#7c918f"))
+	hand_row = Control.new()
+	_put(hand_row,Rect2(318,655,932,235))
+	message_label = _caption("",Rect2(318,612,932,31),14,Color("#bcd5ce"))
 	status_label = _caption("",Rect2(1350,641,240,42),12)
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	restart_button = _action("NEUES DUELL",Rect2(1370,701,210,103),func(): get_tree().reload_current_scene())
@@ -212,6 +217,7 @@ func _build_ui() -> void:
 	_put(ambience,Rect2(0,0,1600,900))
 	landscape_panel = ColorRect.new()
 	landscape_panel.color = Color("#09141e")
+	landscape_panel.z_index = 200
 	_put(landscape_panel,Rect2(0,0,1600,900))
 	var orientation = _label("NACHTSIEGEL\n\nBitte das Gerät\nins Querformat drehen",22)
 	orientation.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -239,6 +245,7 @@ func _close_modal() -> void:
 func _modal_shell() -> Control:
 	_close_modal()
 	modal = Control.new()
+	modal.z_index = 100
 	_put(modal,Rect2(0,0,1600,900))
 	var shade = Button.new()
 	shade.add_theme_stylebox_override("normal",_gold_panel(Color(0.01,0.03,0.05,0.94),Color("#82704f")))
@@ -283,21 +290,25 @@ func _draw_card() -> void:
 func _card_button(index:int) -> Button:
 	var data: Dictionary = CARD_POOL[int(hand[index])]
 	var button = CardFace.new()
-	button.custom_minimum_size = Vector2(144,188)
+	button.size = Vector2(156,212)
+	button.pivot_offset = Vector2(78,200)
 	button.data = data
 	button.art = _art(int(hand[index]))
 	button.active = index == selected
-	button.disabled = finished or busy or energy < int(data["cost"])
+	button.disabled = finished or busy
+	button.unaffordable = energy < int(data["cost"])
 	button.pressed.connect(_select_card.bind(index))
 	card_buttons.append(button)
 	return button
 
 func _refresh() -> void:
 	if status_label == null: return
-	hero_player.text = "%d / 35 LP" % player_hp
-	hero_enemy.text = "%d / 35 LP" % foe_hp
-	energy_label.text = "%d / 10" % energy
-	energy_gems.text = "◆ ".repeat(mini(energy,5)) + ("+" if energy > 5 else "")
+	hero_player.text = str(player_hp)
+	hero_enemy.text = str(foe_hp)
+	energy_label.text = str(energy)
+	energy_gems.text = "%d / 10 ENERGIE" % energy
+	hud_art.energy = energy
+	hud_art.queue_redraw()
 	round_label.text = "RUNDE %02d" % round_number
 	status_label.text = "Kontrollserie %d / 2\n%d Karten im Stapel" % [streak,deck.size()]
 	var selection: Dictionary = CARD_POOL[int(hand[selected])] if selected >= 0 and selected < hand.size() else {}
@@ -315,30 +326,50 @@ func _refresh() -> void:
 		lane_faces[i].disabled = finished or busy
 		foe_faces[i].disabled = finished or busy
 		var legal = not selection.is_empty() and selection.kind == "unit" and allies[i] == null and summons < 2 and energy >= int(selection.cost)
-		lane_buttons[i].text = "✧\nHIER BESCHWÖREN" if legal else "✧\nFREIER PFAD"
-		lane_buttons[i].add_theme_color_override("font_color",Color("#c5f7df") if legal else Color("#7e9999"))
+		lane_buttons[i].legal = legal
+		lane_buttons[i].occupied = allies[i] != null
+		lane_buttons[i].queue_redraw()
+		foe_wells[i].occupied = foes[i] != null
+		foe_wells[i].queue_redraw()
 	for child in hand_row.get_children():
 		hand_row.remove_child(child)
 		child.queue_free()
 	card_buttons.clear()
 	for i in hand.size(): hand_row.add_child(_card_button(i))
+	_fan_hand()
 	if hand.size() > previous_hand_count:
 		call_deferred("_animate_draw")
 	previous_hand_count = hand.size()
 	end_button.disabled = finished or busy
+	end_button.caption = "PFADKAMPF …" if busy else "ZUG BEENDEN"
+	end_button.queue_redraw()
 	restart_button.visible = finished
 	detail_button.visible = selected >= 0
 	if selected >= 0 and selected < hand.size():
 		var data: Dictionary = CARD_POOL[int(hand[selected])]
-		info_label.text = "%s\n\n%d Energie · %d ANG · %d LP\n\n%s" % [data.name,data.cost,data.attack,data.hp,"Gegnerische Kreatur treffen" if data.kind == "spell" else "Freien eigenen Pfad wählen"]
+		info_label.text = "%s\n%d Energie · %d ANG · %d LP\n\n%s" % [data.name,data.cost,data.attack,data.hp,"Zu wenig Energie" if energy < int(data.cost) else ("Gegnerische Kreatur treffen" if data.kind == "spell" else "Freien Pfad wählen")]
 	elif not finished:
-		info_label.text = "DEIN ZUG\n\nKarte wählen.\nPfad bestimmen.\nSiegel brechen."
+		info_label.text = "DEIN ZUG\n\nWähle deinen Pfad."
+
+func _fan_hand() -> void:
+	var count = card_buttons.size()
+	var span = maxf(0,count-1)*149.0+156.0
+	for i in count:
+		var card: Control = card_buttons[i]
+		var offset = float(i)-(count-1)*.5
+		card.position = Vector2((932-span)/2+i*149,absf(offset)*4)
+		card.rotation_degrees = offset*2.2
+		card.z_index = 20 if i == selected else i
 
 func _animate_draw() -> void:
 	if card_buttons.is_empty(): return
 	var card: Control = card_buttons.back()
+	var target = card.position
+	card.position += Vector2(30,40)
 	card.modulate.a = 0.0
-	card.create_tween().tween_property(card,"modulate:a",1.0,0.3)
+	var tween = card.create_tween().set_parallel(true)
+	tween.tween_property(card,"modulate:a",1.0,0.3)
+	tween.tween_property(card,"position",target,0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 func _card_index(data: Dictionary) -> int:
 	for i in CARD_POOL.size():
@@ -347,17 +378,28 @@ func _card_index(data: Dictionary) -> int:
 
 func _pulse_lane(lane: int, spell: bool) -> void:
 	var face: Control = foe_faces[lane] if spell else lane_faces[lane]
-	var burst = ColorRect.new()
-	burst.color = Color(0.6,0.92,0.83,0.38) if not spell else Color(1,0.5,0.18,0.65)
-	burst.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_put(burst,Rect2(face.position,face.size))
-	var tween = create_tween()
-	tween.tween_property(burst,"modulate:a",0.0,0.42)
-	tween.tween_callback(burst.queue_free)
+	var effect = RitualFx.new()
+	effect.destination = face.position+face.size/2
+	effect.origin = Vector2(800,780)
+	if selected >= 0 and selected < card_buttons.size():
+		var card: Control = card_buttons[selected]
+		effect.origin = root_ui.get_global_transform().affine_inverse()*(card.get_global_transform()*(card.size/2))
+		effect.tint = Color(str(CARD_POOL[int(hand[selected])].tint))
+	effect.spell = spell
+	_put(effect,Rect2(0,0,1600,900))
+	effect.z_index = 40
 	if face.visible:
 		face.pivot_offset = face.size/2
 		face.scale = Vector2.ONE*0.86
 		face.create_tween().tween_property(face,"scale",Vector2.ONE,0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+func _turn_banner() -> void:
+	var banner = _caption("DEIN ZUG   ·   RUNDE %d" % round_number,Rect2(565,337,470,48),23,Color("#e4d0a5"),true)
+	banner.z_index = 45
+	var tween = banner.create_tween()
+	tween.tween_interval(.8)
+	tween.tween_property(banner,"modulate:a",0.0,.4)
+	tween.tween_callback(banner.queue_free)
 
 func _announce(value:String) -> void:
 	if message_label != null:
@@ -368,7 +410,7 @@ func _select_card(index:int) -> void:
 		return
 	selected = -1 if selected == index else index
 	var data:Dictionary = CARD_POOL[int(hand[index])]
-	_announce("%s gewählt · Zielpfad antippen" % str(data["name"]))
+	_announce("%s · Zielpfad wählen" % str(data["name"]) if selected >= 0 else "Auswahl aufgehoben")
 	_refresh.call_deferred()
 	if selected >= 0:
 		call_deferred("_lift_selection")
@@ -376,7 +418,7 @@ func _select_card(index:int) -> void:
 func _lift_selection() -> void:
 	if selected < 0 or selected >= card_buttons.size(): return
 	var card: Control = card_buttons[selected]
-	card.create_tween().tween_property(card,"position:y",-12.0,0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	card.create_tween().tween_property(card,"position:y",card.position.y-22.0,0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _choose_lane(lane:int) -> void:
 	if finished or busy or lane < 0 or lane >= LANES or selected < 0 or selected >= hand.size():
@@ -447,6 +489,7 @@ func _end_turn() -> void:
 	var previous_foe = foe_hp
 	busy = false
 	_resolve_turn()
+	if not finished: _turn_banner()
 	for pair in [[previous_allies,allies,lane_faces],[previous_foes,foes,foe_faces]]:
 		for i in LANES:
 			if pair[0][i] == null: continue
@@ -462,7 +505,7 @@ func _end_turn() -> void:
 				pair[2][i].create_tween().tween_property(pair[2][i],"modulate",Color.WHITE,0.4)
 	for pair in [[hero_player,previous_player-player_hp],[hero_enemy,previous_foe-foe_hp]]:
 		if pair[1] > 0:
-			var damage = _caption("−%d" % pair[1],Rect2(pair[0].position-Vector2(0,40),Vector2(164,45)),32,Color("#ffc09b"),true)
+			var damage = _caption("−%d" % pair[1],Rect2(pair[0].position-Vector2(25,40),Vector2(164,45)),32,Color("#ffc09b"),true)
 			var fade = damage.create_tween().set_parallel(true)
 			fade.tween_property(damage,"position:y",damage.position.y-30,0.7)
 			fade.tween_property(damage,"modulate:a",0.0,0.7)
