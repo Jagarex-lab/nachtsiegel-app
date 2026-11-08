@@ -2,8 +2,6 @@ extends Node3D
 ## NACHTSIEGEL mobile arena, milestone 1.
 ## Original 2.5D visual prototype with local combat; NOT a verified port of the legacy rules.
 const CardVignette = preload("res://scripts/card_vignette.gd")
-const RitualBoard = preload("res://scripts/ritual_board.gd")
-const CardBezel = preload("res://scripts/card_bezel.gd")
 const LANES := 5
 const MAX_HP := 35
 const CARD_POOL := [
