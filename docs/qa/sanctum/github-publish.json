@@ -1,0 +1,144 @@
+{
+  "conclusion": "success",
+  "headSha": "6fa69bc76cb96dab38bf29ce3087f7a9705f76a2",
+  "jobs": [
+    {
+      "completedAt": "2026-11-08T21:10:57Z",
+      "conclusion": "success",
+      "databaseId": 128862519526,
+      "name": "test-and-export",
+      "startedAt": "2026-11-08T21:08:50Z",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install Godot and matching templates",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Rules, real GUI input, landscape layout and render tests",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Export tested browser build",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install browser test runtime",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Browser startup and touch smoke test",
+          "number": 7,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Preserve QA evidence and browser build",
+          "number": 8,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Upload checked Pages build",
+          "number": 9,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 18,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 19,
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42523705692/job/128862519526"
+    },
+    {
+      "completedAt": "2026-11-08T21:11:51Z",
+      "conclusion": "success",
+      "databaseId": 128863087523,
+      "name": "deploy",
+      "startedAt": "2026-11-08T21:11:01Z",
+      "status": "completed",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Publish the checked game",
+          "number": 2,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v4",
+          "number": 3,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Install live browser test runtime",
+          "number": 4,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Verify public game and touch input",
+          "number": 5,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Preserve public game verification",
+          "number": 6,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v4",
+          "number": 12,
+          "status": "completed"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 13,
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42523705692/job/128863087523"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42523705692"
+}
