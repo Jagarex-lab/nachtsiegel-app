@@ -4,11 +4,13 @@ Eigenständiges Dark-Fantasy-Kartenduell in Godot 4.6.3, für Querformat auf iPh
 
 ![Neue Arena](docs/screenshots/arena-battle.png)
 
+**Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/
+
 ## Spielen
 
 `project.godot` in Godot 4.6.3 öffnen und F6/F5 starten. Handkarte antippen, anschließend Zielpfad wählen. Zauber können auch direkt auf die gegnerische Kreaturenkarte gespielt werden. **Karte ansehen** öffnet die Großansicht; **Spielhilfe** erklärt Kampf und Siegbedingungen. Nach Sieg/Niederlage startet **Neues Duell** eine frische Partie.
 
-Der Entwicklungsstand baut auf `develop` auf. Die vorhandenen lokalen Spielregeln bleiben erhalten; dieser Stand ist kein nachgewiesener vollständiger Port des älteren [Webspiels](https://jagarex-lab.github.io/duel-deck/).
+Getestete Änderungen auf `develop` werden automatisch auf der Spielseite veröffentlicht und dort erneut im Browser geprüft. Der Entwicklungsstand baut auf `develop` auf. Die vorhandenen lokalen Spielregeln bleiben erhalten; dieser Stand ist kein nachgewiesener vollständiger Port des älteren [Webspiels](https://jagarex-lab.github.io/duel-deck/).
 
 ## Prüfen und exportieren
 

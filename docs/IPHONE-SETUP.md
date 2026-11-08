@@ -1,10 +1,10 @@
 # iPhone- und Android-Prüfung
 
-Dieser Entwicklungsbranch veröffentlicht keine Pages-Version und keinen Store-Build. Der Workflow **NACHTSIEGEL Arena QA** erstellt nach bestandenen Tests ein herunterladbares Browser-Artefakt.
+Die getestete Webversion wird nach ausdrücklicher Freigabe des Nutzers automatisch auf https://jagarex-lab.github.io/nachtsiegel-app/ veröffentlicht. Der Workflow **NACHTSIEGEL Test and Publish** veröffentlicht ausschließlich nach erfolgreichen Tests auf `develop` und prüft anschließend die öffentliche Seite. Das ist keine native Store-Veröffentlichung.
 
 ## Web auf dem Telefon
 
-Den Inhalt von `work/build/web/` über HTTPS oder einen erreichbaren Entwicklungsserver ausliefern; die HTML-Datei nicht über `file://` öffnen. Auf Safari bzw. Chrome im Querformat testen. Der Webexport verwendet keine Threads und benötigt deshalb keinen SharedArrayBuffer. Der lokale QA-Bericht deckt Chromium mit simuliertem Touch ab, keinen echten Mobile-Safari-Test.
+Die Spielseite in Safari bzw. Chrome öffnen. Für lokale Entwicklung den Inhalt von `work/build/web/` über HTTPS oder einen erreichbaren Entwicklungsserver ausliefern; die HTML-Datei nicht über `file://` öffnen. Auf Safari bzw. Chrome im Querformat testen. Der Webexport verwendet keine Threads und benötigt deshalb keinen SharedArrayBuffer. Der lokale QA-Bericht deckt Chromium mit simuliertem Touch ab, keinen echten Mobile-Safari-Test.
 
 ## Native Android-Version
 
