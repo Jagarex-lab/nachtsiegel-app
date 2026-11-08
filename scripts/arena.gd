@@ -270,7 +270,7 @@ func _build_ui() -> void:
 	board.offset_top = 104
 	board.offset_bottom = 454
 	board.add_theme_stylebox_override("panel",_panel(Color("#211d2a")))
-	var board_art := RitualBoard.new()
+	var board_art := Control.new()
 	board_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	board.add_child(board_art)
 	var board_col := VBoxContainer.new()
@@ -371,9 +371,8 @@ func _card_button(index:int) -> Button:
 	button.add_theme_stylebox_override("pressed",_card_style(accent,true))
 	if index == selected:
 		button.add_theme_stylebox_override("normal",_card_style(accent,true))
-	var bezel := CardBezel.new()
-	bezel.accent = accent
-	bezel.selected = index == selected
+	var bezel := Panel.new()
+	bezel.add_theme_stylebox_override("panel", _card_style(accent, index == selected))
 	button.add_child(bezel)
 	bezel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var content := VBoxContainer.new()
