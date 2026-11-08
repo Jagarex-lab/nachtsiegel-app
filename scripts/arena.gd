@@ -310,26 +310,26 @@ func _build_ui() -> void:
 	table.add_theme_stylebox_override("panel",_gold_panel(Color("#231c24"),Color("#755338")))
 	root_ui.add_child(table)
 	table_ref = table
-	_position(table,0.018,0.025,0.982,0.975)
+	_position(table,0.005,0.006,0.995,0.994)
 	var board := Panel.new()
 	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	board.add_theme_stylebox_override("panel",_gold_panel(Color("#29202b"),Color("#b58a50")))
 	root_ui.add_child(board)
 	board_ref = board
-	_position(board,0.165,0.075,0.875,0.745)
+	_position(board,0.145,0.035,0.87,0.79)
 	var background := RitualTable.new()
 	board.add_child(background)
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	# Five lanes are now continuous columns rather than isolated oversized tiles.
 	var lanes := HBoxContainer.new()
-	lanes.add_theme_constant_override("separation",8)
+	lanes.add_theme_constant_override("separation",5)
 	root_ui.add_child(lanes)
 	lane_row_ref = lanes
-	_position(lanes,0.184,0.105,0.856,0.716)
+	_position(lanes,0.157,0.063,0.858,0.76)
 	for i in LANES:
 		var column := VBoxContainer.new()
 		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		column.add_theme_constant_override("separation",5)
+		column.add_theme_constant_override("separation",1)
 		lanes.add_child(column)
 		var foe_slot := PanelContainer.new()
 		foe_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -345,7 +345,7 @@ func _build_ui() -> void:
 		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		var foe_portrait := CreaturePortrait.new()
 		foe_slot.add_child(foe_portrait)
-		_position(foe_portrait,0.16,0.04,0.84,0.73)
+		_position(foe_portrait,0.05,0.02,0.95,0.78)
 		enemy_portraits.append(foe_portrait)
 		enemy_labels.append(foe_label)
 		var number := _label("%d" % (i+1),14)
@@ -362,14 +362,14 @@ func _build_ui() -> void:
 		column.add_child(ally_slot)
 		var ally_portrait := CreaturePortrait.new()
 		ally_slot.add_child(ally_portrait)
-		_position(ally_portrait,0.16,0.04,0.84,0.73)
+		_position(ally_portrait,0.05,0.02,0.95,0.78)
 		ally_portraits.append(ally_portrait)
 		lane_buttons.append(ally_slot)
 	# Hero portraits: visual placeholders, but with distinct HUD.
 	var enemy_frame := PanelContainer.new()
 	enemy_frame.add_theme_stylebox_override("panel",_gold_panel(Color("#3c222c"),Color("#c1906d")))
 	root_ui.add_child(enemy_frame)
-	_position(enemy_frame,0.025,0.09,0.153,0.365)
+	_position(enemy_frame,0.012,0.075,0.135,0.385)
 	var enemy_box := VBoxContainer.new()
 	enemy_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	enemy_frame.add_child(enemy_box)
@@ -385,7 +385,7 @@ func _build_ui() -> void:
 	var player_frame := PanelContainer.new()
 	player_frame.add_theme_stylebox_override("panel",_gold_panel(Color("#22363c"),Color("#7da8a3")))
 	root_ui.add_child(player_frame)
-	_position(player_frame,0.025,0.385,0.153,0.665)
+	_position(player_frame,0.012,0.405,0.135,0.735)
 	var player_box := VBoxContainer.new()
 	player_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	player_frame.add_child(player_box)
@@ -401,7 +401,7 @@ func _build_ui() -> void:
 	var right_hud := PanelContainer.new()
 	right_hud.add_theme_stylebox_override("panel",_gold_panel(Color("#211924")))
 	root_ui.add_child(right_hud)
-	_position(right_hud,0.885,0.09,0.974,0.49)
+	_position(right_hud,0.88,0.075,0.988,0.485)
 	var hud_col := VBoxContainer.new()
 	hud_col.alignment = BoxContainer.ALIGNMENT_CENTER
 	right_hud.add_child(hud_col)
@@ -420,7 +420,7 @@ func _build_ui() -> void:
 	hand_panel.add_theme_stylebox_override("panel",_gold_panel(Color("#18131d"),Color("#a17b4d")))
 	root_ui.add_child(hand_panel)
 	hand_panel_ref = hand_panel
-	_position(hand_panel,0.165,0.750,0.875,0.983)
+	_position(hand_panel,0.145,0.785,0.87,0.994)
 	var hand_col := VBoxContainer.new()
 	hand_col.add_theme_constant_override("separation",3)
 	hand_panel.add_child(hand_col)
@@ -438,10 +438,10 @@ func _build_ui() -> void:
 	end_button.add_theme_stylebox_override("hover",_gold_panel(Color("#94613c"),Color("#ffe0a0")))
 	end_button.pressed.connect(_end_turn)
 	root_ui.add_child(end_button)
-	_position(end_button,0.885,0.53,0.974,0.70)
+	_position(end_button,0.88,0.52,0.988,0.73)
 	title_label = _label("N A C H T S I E G E L",17)
 	root_ui.add_child(title_label)
-	_position(title_label,0.32,0.028,0.72,0.074)
+	_position(title_label,0.32,0.005,0.72,0.05)
 	landscape_panel = ColorRect.new()
 	landscape_panel.color = Color("#100c18")
 	landscape_panel.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -463,13 +463,13 @@ func _update_orientation() -> void:
 	if size_now.x > size_now.y:
 		var wide := size_now.x / maxf(1.0,size_now.y)
 		if wide > 1.7:
-			_position(board_ref,0.155,0.035,0.855,0.77)
-			_position(lane_row_ref,0.172,0.07,0.838,0.744)
-			_position(hand_panel_ref,0.17,0.775,0.84,0.985)
+			_position(board_ref,0.145,0.04,0.87,0.79)
+			_position(lane_row_ref,0.157,0.067,0.858,0.76)
+			_position(hand_panel_ref,0.145,0.79,0.87,0.995)
 		else:
-			_position(board_ref,0.155,0.065,0.855,0.73)
-			_position(lane_row_ref,0.172,0.095,0.838,0.71)
-			_position(hand_panel_ref,0.17,0.745,0.84,0.985)
+			_position(board_ref,0.145,0.04,0.87,0.79)
+			_position(lane_row_ref,0.157,0.067,0.858,0.76)
+			_position(hand_panel_ref,0.145,0.79,0.87,0.995)
 
 func _draw_card() -> void:
 	if deck.is_empty() or hand.size() >= 6:
@@ -480,7 +480,7 @@ func _card_button(index:int) -> Button:
 	var data:Dictionary = CARD_POOL[int(hand[index])]
 	var accent := Color(str(data["tint"]))
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(116,115)
+	button.custom_minimum_size = Vector2(142,155)
 	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	button.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	button.disabled = finished or energy < int(data["cost"])
@@ -493,20 +493,20 @@ func _card_button(index:int) -> Button:
 	contents.add_theme_constant_override("separation",0)
 	button.add_child(contents)
 	contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var cost := _label("%d   %s" % [int(data["cost"]),str(data["sigil"])],11)
+	var cost := _label("%d   %s" % [int(data["cost"]),str(data["sigil"])],14)
 	cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	contents.add_child(cost)
 	var art := CreaturePortrait.new()
 	art.accent = accent
 	art.archetype = str(data["sigil"])
-	art.custom_minimum_size = Vector2(0,48)
+	art.custom_minimum_size = Vector2(0,85)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	contents.add_child(art)
-	var name_label := _label(str(data["name"]),12)
+	var name_label := _label(str(data["name"]),15)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	contents.add_child(name_label)
 	var stats := "ZAUBER %d" % int(data["attack"]) if str(data["kind"]) == "spell" else "%d ANG  /  %d LP" % [int(data["attack"]),int(data["hp"])]
-	var stats_label := _label(stats,11)
+	var stats_label := _label(stats,13)
 	stats_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	contents.add_child(stats_label)
 	button.pressed.connect(_select_card.bind(index))
