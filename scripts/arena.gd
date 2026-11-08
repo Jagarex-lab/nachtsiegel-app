@@ -334,6 +334,7 @@ func _build_ui() -> void:
 		foe_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		foe_slot.add_child(foe_label)
 		foe_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		foe_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		var foe_portrait := CreaturePortrait.new()
 		foe_slot.add_child(foe_portrait)
@@ -347,6 +348,7 @@ func _build_ui() -> void:
 		ally_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		ally_slot.size_flags_stretch_ratio = 1.0
 		ally_slot.add_theme_font_size_override("font_size",15)
+		ally_slot.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		ally_slot.add_theme_stylebox_override("normal",_gold_panel(Color("#234044",0.62),Color("#71938d",0.8)))
 		ally_slot.add_theme_stylebox_override("hover",_gold_panel(Color("#375e61",0.9),Color("#e6c58e")))
 		ally_slot.add_theme_stylebox_override("pressed",_gold_panel(Color("#446e68",0.9),Color("#e6c58e")))
