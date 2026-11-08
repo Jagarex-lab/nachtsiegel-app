@@ -1,8 +1,14 @@
 .godot/
 .import/
 export.cfg
-export_presets.cfg
 *.apk
 *.aab
 *.ipa
 .DS_Store
+
+work/
+
+*.keystore
+*.jks
+
+node_modules/

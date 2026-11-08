@@ -1,0 +1,30 @@
+[
+  {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 1280,
+      "height": 720
+    },
+    "errors": [],
+    "touch": "End turn tapped; see turn2 screenshot for visual verification"
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "canvas": {
+      "x": 0,
+      "y": 0,
+      "width": 844,
+      "height": 390
+    },
+    "errors": [],
+    "touch": "End turn tapped; see turn2 screenshot for visual verification"
+  }
+]

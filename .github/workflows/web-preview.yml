@@ -1,66 +1,56 @@
-name: Godot Web Preview
+name: NACHTSIEGEL Arena QA
 
 on:
   push:
+    branches: [develop, 'feature/arena-quality']
+  pull_request:
     branches: [develop]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: nachtsiegel-pages
+  group: nachtsiegel-qa-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  export:
+  test-and-export:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - name: Install Godot 4.3 and matching export templates
+      - name: Install Godot and matching templates
         uses: chickensoft-games/setup-godot@v2
         with:
-          version: 4.3.0
+          version: 4.6.3
           use-dotnet: false
           include-templates: true
-      - name: Import Godot project and validate scripts
-        run: godot --headless --path . --editor --quit
-      - name: Smoke-test arena startup and reject script errors
+      - name: Rules, real GUI input, landscape layout and render tests
+        run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
+      - name: Export tested browser build
         run: |
-          set -o pipefail
-          timeout 25s godot --headless --path . --quit-after 8 2>&1 | tee /tmp/nachtsiegel-start.log
-          if grep -Eiq "SCRIPT ERROR|Parse Error|Parser Error|Invalid get index|Invalid call" /tmp/nachtsiegel-start.log; then
-            echo "Arena startup reported errors"
-            exit 1
-          fi
-          # The headless dummy renderer can log a null-mesh ERROR for 3D objects.
-          # It is not a GDScript parse failure; browser WebGL rendering is separate.
-      - name: Export web build
+          mkdir -p work/build/web
+          godot --headless --path . --export-debug 'Web QA' work/build/web/index.html
+          test -s work/build/web/index.wasm
+      - name: Install browser test runtime
         run: |
-          mkdir -p build/web
-          godot --headless --path . --export-release "Web" build/web/index.html
-          test -s build/web/index.html
-          python3 tools/inject_web_diagnostics.py
-      - name: Upload browser build
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Browser startup and touch smoke test
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/web > work/http.log 2>&1 &
+          node tools/browser_qa.cjs
+      - name: Preserve QA evidence and browser build
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: nachtsiegel-web-preview
-          path: build/web/
-          if-no-files-found: error
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: build/web/
-
-  deploy:
-    needs: export
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          name: nachtsiegel-arena-qa
+          path: |
+            work/*final.log
+            work/browser*.log
+            work/browser-results.json
+            work/*.png
+            work/build/web/
+          if-no-files-found: warn
+# QA artifacts only. No Pages, store release or production deployment.

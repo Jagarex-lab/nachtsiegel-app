@@ -1,9 +1,6 @@
 extends Node3D
-## NACHTSIEGEL mobile arena, milestone 1.
+## NACHTSIEGEL: original landscape reliquary arena.
 ## Original 2.5D visual prototype with local combat; NOT a verified port of the legacy rules.
-const CardVignette = preload("res://scripts/card_vignette.gd")
-const RitualTable = preload("res://scripts/ritual_table.gd")
-const CreaturePortrait = preload("res://scripts/creature_portrait.gd")
 const LANES := 5
 const MAX_HP := 35
 const CARD_POOL := [
@@ -28,237 +25,37 @@ var summons := 0
 var selected := -1
 var finished := false
 var streak := 0
-var unit_nodes: Array = []
 var ui_layer: CanvasLayer
 var root_ui: Control
-var title_label: Label
 var status_label: Label
 var message_label: Label
 var hand_row: HBoxContainer
 var lane_buttons: Array[Button] = []
-var enemy_labels: Array[Label] = []
-var enemy_portraits: Array = []
-var ally_portraits: Array = []
 var hero_player: Label
 var hero_enemy: Label
 var energy_label: Label
 var round_label: Label
 var end_button: Button
 var landscape_panel: ColorRect
-var hand_panel_ref: PanelContainer
-var board_ref: Panel
-var lane_row_ref: HBoxContainer
-var table_ref: Panel
 var card_buttons: Array[Button] = []
-var camera: Camera3D
-var world_root: Node3D
 
 func _ready() -> void:
 	rng.seed = 8802026
 	for i in 25:
 		deck.append(i % CARD_POOL.size())
-	deck.shuffle()
+	for i in range(deck.size()-1,0,-1):
+		var j = rng.randi_range(0,i)
+		var swap = deck[i]
+		deck[i] = deck[j]
+		deck[j] = swap
 	for i in 4:
 		_draw_card()
 	_build_ui()
 	_refresh()
-	call_deferred("_start_world")
+	call_deferred("_introduce")
 
-func _start_world() -> void:
-	# The 3D test arena is deliberately retired. The game now uses a
-	# deterministic, iPhone-friendly 2D card-table presentation.
+func _introduce() -> void:
 	_announce("Wähle eine Karte und anschließend einen der fünf Pfade.")
-
-func _mesh_box(pos:Vector3, dims:Vector3, color:Color, parent:Node3D) -> void:
-	var mesh := BoxMesh.new()
-	mesh.size = dims
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = color
-	mat.metallic = 0.2
-	mat.roughness = 0.55
-	mesh.material = mat
-	var item := MeshInstance3D.new()
-	item.mesh = mesh
-	item.position = pos
-	parent.add_child(item)
-
-func _create_creature(data:Dictionary, lane:int, enemy:bool) -> Node3D:
-	var holder := Node3D.new()
-	holder.position = Vector3(float(lane-2)*2.35,0.28,-2.35 if enemy else 2.35)
-	world_root.add_child(holder)
-	var pedestal := CylinderMesh.new()
-	pedestal.top_radius = 0.62
-	pedestal.bottom_radius = 0.72
-	pedestal.height = 0.23
-	var base := MeshInstance3D.new()
-	base.mesh = pedestal
-	base.position.y = 0.15
-	var base_mat := StandardMaterial3D.new()
-	base_mat.albedo_color = Color("#8b4b62") if enemy else Color("#4c8890")
-	base.material_override = base_mat
-	holder.add_child(base)
-	var tint := Color(str(data["tint"]))
-	var name := str(data["name"])
-	var body_mesh: PrimitiveMesh
-	if name == "Nebelqualle" or name == "Gezeitenhüter":
-		var dome := SphereMesh.new()
-		dome.radius = 0.64
-		dome.height = 0.75
-		body_mesh = dome
-	elif name == "Dornenwolf" or name == "Schattenwolf":
-		var beast := CapsuleMesh.new()
-		beast.radius = 0.38
-		beast.height = 1.38
-		body_mesh = beast
-	else:
-		var knight := CylinderMesh.new()
-		knight.top_radius = 0.28
-		knight.bottom_radius = 0.53
-		knight.height = 1.25
-		body_mesh = knight
-	var body_instance := MeshInstance3D.new()
-	body_instance.mesh = body_mesh
-	body_instance.position.y = 0.93
-	var mat := StandardMaterial3D.new()
-	mat.albedo_color = tint
-	mat.metallic = 0.42
-	mat.roughness = 0.33
-	body_instance.material_override = mat
-	holder.add_child(body_instance)
-	if name == "Dornenwolf" or name == "Schattenwolf":
-		for side in [-1,1]:
-			var ear := CylinderMesh.new()
-			ear.top_radius = 0.01
-			ear.bottom_radius = 0.22
-			ear.height = 0.67
-			var ear_node := MeshInstance3D.new()
-			ear_node.mesh = ear
-			ear_node.position = Vector3(float(side)*0.26,1.72,0)
-			ear_node.material_override = mat
-			holder.add_child(ear_node)
-	elif name == "Nebelqualle" or name == "Gezeitenhüter":
-		for j in 5:
-			var tendril := CylinderMesh.new()
-			tendril.top_radius = 0.045
-			tendril.bottom_radius = 0.07
-			tendril.height = 0.66
-			var strand := MeshInstance3D.new()
-			strand.mesh = tendril
-			strand.position = Vector3((float(j)-2.0)*0.20,0.36,0)
-			strand.material_override = mat
-			holder.add_child(strand)
-	else:
-		var helm := SphereMesh.new()
-		helm.radius = 0.31
-		helm.height = 0.53
-		var helm_node := MeshInstance3D.new()
-		helm_node.mesh = helm
-		helm_node.position.y = 1.78
-		helm_node.material_override = mat
-		holder.add_child(helm_node)
-	var eye := MeshInstance3D.new()
-	var eye_mesh := SphereMesh.new()
-	eye_mesh.radius = 0.12
-	eye_mesh.height = 0.24
-	eye.mesh = eye_mesh
-	eye.position = Vector3(0,1.13,0.43)
-	var eye_mat := StandardMaterial3D.new()
-	eye_mat.albedo_color = Color("#ffe6aa")
-	eye_mat.emission_enabled = true
-	eye_mat.emission = tint
-	eye.material_override = eye_mat
-	holder.add_child(eye)
-	var text3d := Label3D.new()
-	text3d.text = "%d / %d" % [int(data["attack"]),int(data["hp"])]
-	text3d.font_size = 45
-	text3d.pixel_size = 0.008
-	text3d.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	text3d.position = Vector3(0,2.23,0)
-	holder.add_child(text3d)
-	holder.scale = Vector3(0.05,0.05,0.05)
-	holder.create_tween().tween_property(holder,"scale",Vector3.ONE,0.27).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	return holder
-
-func _refresh_units() -> void:
-	# Lane cards are updated in _refresh; no primitive 3D creatures.
-	pass
-
-func _panel(color:Color) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = color
-	style.border_color = Color("#a7895e")
-	style.shadow_color = Color(0.02,0.01,0.03,0.55)
-	style.shadow_size = 4
-	style.shadow_offset = Vector2(0,2)
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(5)
-	style.content_margin_left = 10
-	style.content_margin_right = 10
-	style.content_margin_top = 6
-	style.content_margin_bottom = 6
-	return style
-
-func _slot_style(friendly:bool, active:bool = false) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#263e42") if friendly else Color("#412b38")
-	if active:
-		style.bg_color = Color("#36585b")
-	style.border_color = Color("#a99169") if active else Color("#76604f")
-	style.set_border_width_all(2)
-	style.border_width_top = 4
-	style.set_corner_radius_all(4)
-	style.shadow_color = Color(0.01,0.01,0.02,0.45)
-	style.shadow_size = 4
-	style.content_margin_left = 5
-	style.content_margin_right = 5
-	style.content_margin_top = 6
-	style.content_margin_bottom = 6
-	return style
-
-func _card_style(accent:Color, active:bool = false) -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#211a23")
-	style.border_color = Color("#ead3a0") if active else accent.lightened(0.18)
-	style.set_border_width_all(4 if active else 3)
-	style.border_width_top = 7
-	style.border_width_bottom = 5
-	style.set_corner_radius_all(12)
-	style.shadow_color = Color(0,0,0,0.6)
-	style.shadow_size = 10
-	style.shadow_offset = Vector2(0,3)
-	style.content_margin_left = 6
-	style.content_margin_right = 6
-	style.content_margin_top = 3
-	style.content_margin_bottom = 3
-	return style
-
-func _arena_frame_style() -> StyleBoxFlat:
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("#17121d")
-	style.border_color = Color("#98714a")
-	style.set_border_width_all(2)
-	style.border_width_top = 4
-	style.set_corner_radius_all(10)
-	style.shadow_color = Color(0,0,0,0.8)
-	style.shadow_size = 12
-	style.content_margin_left = 12
-	style.content_margin_right = 12
-	style.content_margin_top = 8
-	style.content_margin_bottom = 8
-	return style
-
-func _board_texture() -> GradientTexture2D:
-	var gradient := Gradient.new()
-	gradient.set_color(0,Color("#31212b"))
-	gradient.set_color(1,Color("#10131c"))
-	var texture := GradientTexture2D.new()
-	texture.gradient = gradient
-	texture.fill = GradientTexture2D.FILL_RADIAL
-	texture.fill_from = Vector2(0.5,0.5)
-	texture.fill_to = Vector2(0.5,0.95)
-	texture.width = 1024
-	texture.height = 512
-	return texture
 
 func _label(value:String,size:int) -> Label:
 	var item := Label.new()
@@ -283,193 +80,200 @@ func _gold_panel(base:Color, rim:Color = Color("#a98452")) -> StyleBoxFlat:
 	st.content_margin_bottom = 5
 	return st
 
-func _position(control:Control, left:float, top:float, right:float, bottom:float) -> void:
-	control.anchor_left = left
-	control.anchor_top = top
-	control.anchor_right = right
-	control.anchor_bottom = bottom
-	control.offset_left = 0
-	control.offset_top = 0
-	control.offset_right = 0
-	control.offset_bottom = 0
+const CardFace = preload("res://scripts/card_face.gd")
+const Atmosphere = preload("res://scripts/atmosphere.gd")
+const DISPLAY_FONT = preload("res://assets/fonts/Display.ttf")
+const BODY_FONT = preload("res://assets/fonts/Body.ttf")
+var lane_faces: Array = []
+var foe_faces: Array = []
+var info_label: Label
+var detail_button: Button
+var modal: Control
+var busy := false
+var restart_button: Button
+var energy_gems: Label
+
+func _put(node: Control, rect: Rect2, parent: Node = null) -> void:
+	(parent if parent != null else root_ui).add_child(node)
+	node.position = rect.position
+	node.size = rect.size
+
+func _caption(value: String, rect: Rect2, font_size: int = 18, color: Color = Color("#c4b491"), serif: bool = false) -> Label:
+	var label = _label(value, font_size)
+	label.add_theme_font_override("font", DISPLAY_FONT if serif else BODY_FONT)
+	label.add_theme_color_override("font_color", color)
+	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_put(label,rect)
+	return label
+
+func _action(value: String, rect: Rect2, callback: Callable) -> Button:
+	var button = Button.new()
+	button.text = value
+	button.add_theme_font_override("font", BODY_FONT)
+	button.add_theme_font_size_override("font_size",17)
+	button.add_theme_color_override("font_color",Color("#f2dfaf"))
+	button.add_theme_stylebox_override("normal",_gold_panel(Color("#22383e"),Color("#a28b5e")))
+	button.add_theme_stylebox_override("hover",_gold_panel(Color("#34565b"),Color("#efd598")))
+	button.add_theme_stylebox_override("pressed",_gold_panel(Color("#101e2a"),Color("#8de2d7")))
+	button.add_theme_stylebox_override("focus",_gold_panel(Color(0,0,0,0),Color("#b5eee5")))
+	button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	button.pressed.connect(callback)
+	_put(button,rect)
+	return button
+
+func _art(index: int) -> AtlasTexture:
+	var texture = AtlasTexture.new()
+	texture.atlas = preload("res://assets/art/atlas.png")
+	var cell = texture.atlas.get_size()/3.0
+	texture.region = Rect2(Vector2(index%3,index/3)*cell,cell)
+	return texture
+
+func _face(data: Dictionary, rect: Rect2, index: int, small: bool = false) -> Button:
+	var face = CardFace.new()
+	face.data = data
+	face.art = _art(index)
+	face.compact = small
+	_put(face,rect)
+	return face
 
 func _build_ui() -> void:
 	ui_layer = CanvasLayer.new()
 	add_child(ui_layer)
 	root_ui = Control.new()
 	ui_layer.add_child(root_ui)
-	root_ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var backdrop := ColorRect.new()
-	backdrop.color = Color("#0c0c13")
+	root_ui.size = Vector2(1600,900)
+	var theme = Theme.new()
+	theme.default_font = BODY_FONT
+	root_ui.theme = theme
+	var backdrop = TextureRect.new()
+	backdrop.texture = preload("res://assets/art/arena.svg")
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root_ui.add_child(backdrop)
-	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	# Full-width tabletop, with side panels for the heroes.
-	var table := Panel.new()
-	table.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	table.add_theme_stylebox_override("panel",_gold_panel(Color("#231c24"),Color("#755338")))
-	root_ui.add_child(table)
-	table_ref = table
-	_position(table,0.005,0.006,0.995,0.994)
-	var board := Panel.new()
-	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	board.add_theme_stylebox_override("panel",_gold_panel(Color("#29202b"),Color("#b58a50")))
-	root_ui.add_child(board)
-	board_ref = board
-	_position(board,0.145,0.035,0.87,0.79)
-	var background := RitualTable.new()
-	board.add_child(background)
-	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	# Five lanes are now continuous columns rather than isolated oversized tiles.
-	var lanes := HBoxContainer.new()
-	lanes.add_theme_constant_override("separation",5)
-	root_ui.add_child(lanes)
-	lane_row_ref = lanes
-	_position(lanes,0.157,0.063,0.858,0.76)
+	_put(backdrop,Rect2(0,0,1600,900))
+	_caption("N A C H T S I E G E L",Rect2(450,18,700,48),32,Color("#e7d4a9"),true)
+	_caption("D A S   R I T U A L   D E R   F Ü N F   P F A D E",Rect2(480,64,640,26),12)
+	_caption("LOKALES DUELL",Rect2(40,27,230,30),14)
+	_action("?  SPIELHILFE",Rect2(1370,0,210,103),_show_help)
+	# Paired sculpted reliquaries sit within the five carved channels.
 	for i in LANES:
-		var column := VBoxContainer.new()
-		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		column.add_theme_constant_override("separation",1)
-		lanes.add_child(column)
-		var foe_slot := PanelContainer.new()
-		foe_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		foe_slot.size_flags_stretch_ratio = 1.0
-		foe_slot.add_theme_stylebox_override("panel",_gold_panel(Color("#3d2735",0.68),Color("#795342",0.65)))
-		column.add_child(foe_slot)
-		var foe_label := _label("FREI",15)
-		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		foe_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		foe_slot.add_child(foe_label)
-		foe_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		foe_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-		var foe_portrait := CreaturePortrait.new()
-		foe_slot.add_child(foe_portrait)
-		_position(foe_portrait,0.05,0.02,0.95,0.78)
-		enemy_portraits.append(foe_portrait)
-		enemy_labels.append(foe_label)
-		var number := _label("%d" % (i+1),14)
-		number.add_theme_color_override("font_color",Color("#d9b477"))
-		column.add_child(number)
-		var ally_slot := Button.new()
-		ally_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		ally_slot.size_flags_stretch_ratio = 1.0
-		ally_slot.add_theme_font_size_override("font_size",15)
-		ally_slot.add_theme_stylebox_override("normal",_gold_panel(Color("#234044",0.62),Color("#71938d",0.8)))
-		ally_slot.add_theme_stylebox_override("hover",_gold_panel(Color("#375e61",0.9),Color("#e6c58e")))
-		ally_slot.add_theme_stylebox_override("pressed",_gold_panel(Color("#446e68",0.9),Color("#e6c58e")))
-		ally_slot.pressed.connect(_choose_lane.bind(i))
-		column.add_child(ally_slot)
-		var ally_portrait := CreaturePortrait.new()
-		ally_slot.add_child(ally_portrait)
-		_position(ally_portrait,0.05,0.02,0.95,0.78)
-		ally_portraits.append(ally_portrait)
-		lane_buttons.append(ally_slot)
-	# Hero portraits: visual placeholders, but with distinct HUD.
-	var enemy_frame := PanelContainer.new()
-	enemy_frame.add_theme_stylebox_override("panel",_gold_panel(Color("#3c222c"),Color("#c1906d")))
-	root_ui.add_child(enemy_frame)
-	_position(enemy_frame,0.012,0.075,0.135,0.385)
-	var enemy_box := VBoxContainer.new()
-	enemy_box.alignment = BoxContainer.ALIGNMENT_CENTER
-	enemy_frame.add_child(enemy_box)
-	enemy_box.add_child(_label("GEGNER",15))
-	var enemy_icon := CreaturePortrait.new()
-	enemy_icon.heroic = true
-	enemy_icon.accent = Color("#d3a48f")
-	enemy_icon.custom_minimum_size = Vector2(80,80)
-	enemy_icon.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	enemy_box.add_child(enemy_icon)
-	hero_enemy = _label("35 LP",22)
-	enemy_box.add_child(hero_enemy)
-	var player_frame := PanelContainer.new()
-	player_frame.add_theme_stylebox_override("panel",_gold_panel(Color("#22363c"),Color("#7da8a3")))
-	root_ui.add_child(player_frame)
-	_position(player_frame,0.012,0.405,0.135,0.735)
-	var player_box := VBoxContainer.new()
-	player_box.alignment = BoxContainer.ALIGNMENT_CENTER
-	player_frame.add_child(player_box)
-	player_box.add_child(_label("DEIN HELD",15))
-	var player_icon := CreaturePortrait.new()
-	player_icon.heroic = true
-	player_icon.accent = Color("#9ecac5")
-	player_icon.custom_minimum_size = Vector2(80,80)
-	player_icon.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	player_box.add_child(player_icon)
-	hero_player = _label("35 LP",22)
-	player_box.add_child(hero_player)
-	var right_hud := PanelContainer.new()
-	right_hud.add_theme_stylebox_override("panel",_gold_panel(Color("#211924")))
-	root_ui.add_child(right_hud)
-	_position(right_hud,0.88,0.075,0.988,0.485)
-	var hud_col := VBoxContainer.new()
-	hud_col.alignment = BoxContainer.ALIGNMENT_CENTER
-	right_hud.add_child(hud_col)
-	hud_col.add_child(_label("RUNDE",15))
-	round_label = _label("1",30)
-	hud_col.add_child(round_label)
-	hud_col.add_child(_label("ENERGIE",15))
-	energy_label = _label("3",30)
-	energy_label.add_theme_color_override("font_color",Color("#83c4e2"))
-	hud_col.add_child(energy_label)
-	status_label = _label("",13)
-	status_label.visible = false
-	root_ui.add_child(status_label)
-	# Hand occupies a dedicated, generous region below the arena.
-	var hand_panel := PanelContainer.new()
-	hand_panel.add_theme_stylebox_override("panel",_gold_panel(Color("#18131d"),Color("#a17b4d")))
-	root_ui.add_child(hand_panel)
-	hand_panel_ref = hand_panel
-	_position(hand_panel,0.145,0.785,0.87,0.994)
-	var hand_col := VBoxContainer.new()
-	hand_col.add_theme_constant_override("separation",3)
-	hand_panel.add_child(hand_col)
-	message_label = _label("Karte wählen, dann einen Pfad antippen",14)
-	hand_col.add_child(message_label)
+		var x = 311.0+i*192.0
+		var foe = _face({},Rect2(x,150,150,181),0,true)
+		foe.visible = false
+		foe.pressed.connect(_choose_lane.bind(i))
+		foe_faces.append(foe)
+		var target = Button.new()
+		target.text = "✧\nBESCHWÖREN"
+		target.add_theme_font_size_override("font_size",13)
+		target.add_theme_color_override("font_color",Color("#7e9999"))
+		target.add_theme_stylebox_override("normal",StyleBoxEmpty.new())
+		target.add_theme_stylebox_override("hover",_gold_panel(Color(0.2,0.6,0.56,0.16),Color("#b3dcd0")))
+		target.add_theme_stylebox_override("focus",_gold_panel(Color(0.2,0.6,0.56,0.1),Color("#b3dcd0")))
+		target.pressed.connect(_choose_lane.bind(i))
+		_put(target,Rect2(x-2,399,154,188))
+		lane_buttons.append(target)
+		var ally = _face({},Rect2(x,403,150,181),0,true)
+		ally.visible = false
+		ally.pressed.connect(_choose_lane.bind(i))
+		lane_faces.append(ally)
+		_caption(["I","II","III","IV","V"][i],Rect2(x+47,343,56,30),17,Color("#e1c893"),true)
+		_caption("GEGNER",Rect2(x,121,150,20),10,Color("#9c8d8c"))
+	# Tall hero medallions with distinct identities.
+	var enemy = _face({"name":"Der Aschenkönig","attack":0,"hp":35,"tint":"#b46753"},Rect2(82,145,164,197),8,true)
+	enemy.heroic = true
+	enemy.disabled = false
+	enemy.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var player = _face({"name":"Die Siegelhüterin","attack":0,"hp":35,"tint":"#72beb9"},Rect2(82,417,164,197),7,true)
+	player.heroic = true
+	player.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hero_enemy = _caption("35 / 35",Rect2(82,350,164,32),23,Color("#e0a798"),true)
+	hero_player = _caption("35 / 35",Rect2(82,623,164,32),23,Color("#a6e0d5"),true)
+	_caption("GEGNERISCHER HELD",Rect2(61,112,206,24),11)
+	_caption("DEINE HELDIN",Rect2(61,385,206,24),11)
+	round_label = _caption("RUNDE 01",Rect2(1370,100,210,33),18,Color("#e0cda6"),true)
+	_caption("DEINE ENERGIE",Rect2(1370,146,210,26),11)
+	energy_label = _caption("3 / 10",Rect2(1370,171,210,48),29,Color("#9cdcd9"),true)
+	energy_gems = _caption("◆ ◆ ◆",Rect2(1370,217,210,26),15,Color("#74c5c8"))
+	info_label = _caption("Ein Siegel.\nFünf Wege zum Sieg.\n\nWähle eine Handkarte,\ndann ihren Zielpfad.",Rect2(1371,274,209,172),15)
+	info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	detail_button = _action("KARTE ANSEHEN",Rect2(1370,418,210,103),_show_card)
+	detail_button.visible = false
+	end_button = _action("ZUG BEENDEN  ›",Rect2(1370,530,210,103),_end_turn)
+	_caption("DEINE HAND",Rect2(64,731,210,26),14,Color("#e3c998"),true)
+	_caption("Illustrationen: Konzept-Platzhalter",Rect2(39,770,260,42),10,Color("#7c918f"))
 	hand_row = HBoxContainer.new()
+	hand_row.add_theme_constant_override("separation",13)
 	hand_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	hand_row.add_theme_constant_override("separation",10)
-	hand_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	hand_col.add_child(hand_row)
-	end_button = Button.new()
-	end_button.text = "ZUG BEENDEN"
-	end_button.add_theme_font_size_override("font_size",19)
-	end_button.add_theme_stylebox_override("normal",_gold_panel(Color("#725033"),Color("#dfb46c")))
-	end_button.add_theme_stylebox_override("hover",_gold_panel(Color("#94613c"),Color("#ffe0a0")))
-	end_button.pressed.connect(_end_turn)
-	root_ui.add_child(end_button)
-	_position(end_button,0.88,0.52,0.988,0.73)
-	title_label = _label("N A C H T S I E G E L",17)
-	root_ui.add_child(title_label)
-	_position(title_label,0.32,0.005,0.72,0.05)
+	_put(hand_row,Rect2(318,684,932,191))
+	message_label = _caption("",Rect2(318,644,932,31),15,Color("#bcd5ce"))
+	status_label = _caption("",Rect2(1350,641,240,42),12)
+	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	restart_button = _action("NEUES DUELL",Rect2(1370,701,210,103),func(): get_tree().reload_current_scene())
+	restart_button.visible = false
+	var ambience = Atmosphere.new()
+	_put(ambience,Rect2(0,0,1600,900))
 	landscape_panel = ColorRect.new()
-	landscape_panel.color = Color("#100c18")
-	landscape_panel.mouse_filter = Control.MOUSE_FILTER_STOP
-	root_ui.add_child(landscape_panel)
-	landscape_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var landscape_text := _label("NACHTSIEGEL\nBitte iPhone ins Querformat drehen",32)
-	landscape_text.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	landscape_text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	landscape_panel.add_child(landscape_text)
+	landscape_panel.color = Color("#09141e")
+	_put(landscape_panel,Rect2(0,0,1600,900))
+	var orientation = _label("NACHTSIEGEL\n\nBitte das Gerät\nins Querformat drehen",22)
+	orientation.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	orientation.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	landscape_panel.add_child(orientation)
+	orientation.size = Vector2(1600,900)
 	get_viewport().size_changed.connect(_update_orientation)
 	_update_orientation()
 
 func _update_orientation() -> void:
-	if landscape_panel == null:
-		return
-	var size_now := get_viewport().get_visible_rect().size
-	landscape_panel.visible = size_now.y > size_now.x
-	# The playmat occupies the screen; avoid an unreadable miniature on iPhone.
-	if size_now.x > size_now.y:
-		var wide := size_now.x / maxf(1.0,size_now.y)
-		if wide > 1.7:
-			_position(board_ref,0.145,0.04,0.87,0.79)
-			_position(lane_row_ref,0.157,0.067,0.858,0.76)
-			_position(hand_panel_ref,0.145,0.79,0.87,0.995)
-		else:
-			_position(board_ref,0.145,0.04,0.87,0.79)
-			_position(lane_row_ref,0.157,0.067,0.858,0.76)
-			_position(hand_panel_ref,0.145,0.79,0.87,0.995)
+	var available = get_viewport().get_visible_rect().size
+	var factor = minf(available.x/1600.0,available.y/900.0)
+	root_ui.scale = Vector2.ONE*factor
+	root_ui.position = (available-Vector2(1600,900)*factor)/2.0
+	landscape_panel.top_level = true
+	landscape_panel.position = Vector2.ZERO
+	landscape_panel.size = available
+	landscape_panel.get_child(0).size = available
+	landscape_panel.visible = available.y > available.x
+
+func _close_modal() -> void:
+	if is_instance_valid(modal): modal.queue_free()
+	modal = null
+
+func _modal_shell() -> Control:
+	_close_modal()
+	modal = Control.new()
+	_put(modal,Rect2(0,0,1600,900))
+	var shade = Button.new()
+	shade.add_theme_stylebox_override("normal",_gold_panel(Color(0.01,0.03,0.05,0.94),Color("#82704f")))
+	shade.pressed.connect(_close_modal)
+	_put(shade,Rect2(0,0,1600,900),modal)
+	return modal
+
+func _show_help() -> void:
+	var panel = _modal_shell()
+	var text = _label("DAS RITUAL DER FÜNF PFADE\n\nKarte antippen → eigenen Pfad antippen.\nZauber treffen eine gegnerische Kreatur auf dem Zielpfad.\nMaximal zwei Beschwörungen pro Runde.\n\nZug beenden: Deine Kreaturen greifen zuerst an.\nDanach beschwört der Gegner und greift an.\nFreie Pfade verursachen Schaden am gegnerischen Helden.\n\nSieg: 35 Lebenspunkte besiegen oder drei freie Pfade\nin zwei aufeinanderfolgenden Runden kontrollieren.\n\nKosten ◆    Angriff ANG    Lebenspunkte LP\n\nTippe außerhalb des Textes, um zurückzukehren.",24)
+	text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_put(text,Rect2(280,150,1040,600),panel)
+	_action_in_modal("ZURÜCK ZUM DUELL",Rect2(570,776,460,103))
+
+func _action_in_modal(value: String, rect: Rect2) -> void:
+	var button = _action(value,rect,_close_modal)
+	root_ui.remove_child(button)
+	modal.add_child(button)
+
+func _show_card() -> void:
+	if selected < 0 or selected >= hand.size(): return
+	var data: Dictionary = CARD_POOL[int(hand[selected])]
+	var panel = _modal_shell()
+	var card = CardFace.new()
+	card.data = data
+	card.art = _art(int(hand[selected]))
+	card.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_put(card,Rect2(410,160,360,510),panel)
+	var text = _label("%s\n\n%d Energie\n%d Angriff · %d Lebenspunkte\n\n%s\n\nOriginale KI-Konzeptillustration\nVorläufiger Artwork-Platzhalter" % [data.name,data.cost,data.attack,data.hp,"Trifft eine gegnerische Kreatur." if data.kind == "spell" else "Beschwöre auf einem freien eigenen Pfad."],30)
+	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_put(text,Rect2(805,145,480,550),panel)
+	_action_in_modal("ZURÜCK · ZIELPFAD WÄHLEN",Rect2(565,742,470,103))
+
+var previous_hand_count := 0
 
 func _draw_card() -> void:
 	if deck.is_empty() or hand.size() >= 6:
@@ -477,83 +281,105 @@ func _draw_card() -> void:
 	hand.append(deck.pop_back())
 
 func _card_button(index:int) -> Button:
-	var data:Dictionary = CARD_POOL[int(hand[index])]
-	var accent := Color(str(data["tint"]))
-	var button := Button.new()
-	button.custom_minimum_size = Vector2(142,155)
-	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
-	button.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	button.disabled = finished or energy < int(data["cost"])
-	button.add_theme_stylebox_override("normal",_card_style(accent,index == selected))
-	button.add_theme_stylebox_override("disabled",_card_style(accent.darkened(0.5)))
-	button.add_theme_stylebox_override("hover",_card_style(accent,true))
-	button.add_theme_stylebox_override("pressed",_card_style(accent,true))
-	var contents := VBoxContainer.new()
-	contents.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	contents.add_theme_constant_override("separation",0)
-	button.add_child(contents)
-	contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var cost := _label("%d   %s" % [int(data["cost"]),str(data["sigil"])],14)
-	cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	contents.add_child(cost)
-	var art := CreaturePortrait.new()
-	art.accent = accent
-	art.archetype = str(data["sigil"])
-	art.custom_minimum_size = Vector2(0,85)
-	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	contents.add_child(art)
-	var name_label := _label(str(data["name"]),15)
-	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	contents.add_child(name_label)
-	var stats := "ZAUBER %d" % int(data["attack"]) if str(data["kind"]) == "spell" else "%d ANG  /  %d LP" % [int(data["attack"]),int(data["hp"])]
-	var stats_label := _label(stats,13)
-	stats_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	contents.add_child(stats_label)
+	var data: Dictionary = CARD_POOL[int(hand[index])]
+	var button = CardFace.new()
+	button.custom_minimum_size = Vector2(144,188)
+	button.data = data
+	button.art = _art(int(hand[index]))
+	button.active = index == selected
+	button.disabled = finished or busy or energy < int(data["cost"])
 	button.pressed.connect(_select_card.bind(index))
+	card_buttons.append(button)
 	return button
 
 func _refresh() -> void:
-	if status_label == null:
-		return
-	status_label.text = "DU %d  ·  ENERGIE %d  ·  RUNDE %d  ·  GEGNER %d" % [player_hp,energy,round_number,foe_hp]
-	hero_player.text = "%d LP" % player_hp
-	hero_enemy.text = "%d LP" % foe_hp
+	if status_label == null: return
+	hero_player.text = "%d / 35 LP" % player_hp
+	hero_enemy.text = "%d / 35 LP" % foe_hp
 	energy_label.text = "%d / 10" % energy
-	round_label.text = "%d" % round_number
+	energy_gems.text = "◆ ".repeat(mini(energy,5)) + ("+" if energy > 5 else "")
+	round_label.text = "RUNDE %02d" % round_number
+	status_label.text = "Kontrollserie %d / 2\n%d Karten im Stapel" % [streak,deck.size()]
+	var selection: Dictionary = CARD_POOL[int(hand[selected])] if selected >= 0 and selected < hand.size() else {}
 	for i in LANES:
-		lane_buttons[i].text = "LEER" if allies[i] == null else "%s\n%d ANG  /  %d LP" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
-		enemy_labels[i].text = "LEER" if foes[i] == null else "%s\n%d ANG  /  %d LP" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
-		ally_portraits[i].visible = allies[i] != null
-		enemy_portraits[i].visible = foes[i] != null
-		if allies[i] != null:
-			ally_portraits[i].archetype = str(allies[i]["sigil"])
-			ally_portraits[i].accent = Color(str(allies[i]["tint"]))
-			ally_portraits[i].queue_redraw()
-		if foes[i] != null:
-			enemy_portraits[i].archetype = str(foes[i]["sigil"])
-			enemy_portraits[i].accent = Color(str(foes[i]["tint"]))
-			enemy_portraits[i].queue_redraw()
+		for pair in [[allies,lane_faces],[foes,foe_faces]]:
+			var unit = pair[0][i]
+			var face = pair[1][i]
+			face.visible = unit != null
+			if unit != null:
+				face.data = unit
+				face.art = _art(_card_index(unit))
+				face.active = not selection.is_empty() and selection.kind == "spell" and pair[1] == foe_faces
+				face.queue_redraw()
+		lane_buttons[i].disabled = finished or busy
+		lane_faces[i].disabled = finished or busy
+		foe_faces[i].disabled = finished or busy
+		var legal = not selection.is_empty() and selection.kind == "unit" and allies[i] == null and summons < 2 and energy >= int(selection.cost)
+		lane_buttons[i].text = "✧\nHIER BESCHWÖREN" if legal else "✧\nFREIER PFAD"
+		lane_buttons[i].add_theme_color_override("font_color",Color("#c5f7df") if legal else Color("#7e9999"))
 	for child in hand_row.get_children():
 		hand_row.remove_child(child)
 		child.queue_free()
-	for i in hand.size():
-		hand_row.add_child(_card_button(i))
-	end_button.disabled = finished
+	card_buttons.clear()
+	for i in hand.size(): hand_row.add_child(_card_button(i))
+	if hand.size() > previous_hand_count:
+		call_deferred("_animate_draw")
+	previous_hand_count = hand.size()
+	end_button.disabled = finished or busy
+	restart_button.visible = finished
+	detail_button.visible = selected >= 0
+	if selected >= 0 and selected < hand.size():
+		var data: Dictionary = CARD_POOL[int(hand[selected])]
+		info_label.text = "%s\n\n%d Energie · %d ANG · %d LP\n\n%s" % [data.name,data.cost,data.attack,data.hp,"Gegnerische Kreatur treffen" if data.kind == "spell" else "Freien eigenen Pfad wählen"]
+	elif not finished:
+		info_label.text = "DEIN ZUG\n\nKarte wählen.\nPfad bestimmen.\nSiegel brechen."
+
+func _animate_draw() -> void:
+	if card_buttons.is_empty(): return
+	var card: Control = card_buttons.back()
+	card.modulate.a = 0.0
+	card.create_tween().tween_property(card,"modulate:a",1.0,0.3)
+
+func _card_index(data: Dictionary) -> int:
+	for i in CARD_POOL.size():
+		if CARD_POOL[i].name == data.name: return i
+	return 0
+
+func _pulse_lane(lane: int, spell: bool) -> void:
+	var face: Control = foe_faces[lane] if spell else lane_faces[lane]
+	var burst = ColorRect.new()
+	burst.color = Color(0.6,0.92,0.83,0.38) if not spell else Color(1,0.5,0.18,0.65)
+	burst.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_put(burst,Rect2(face.position,face.size))
+	var tween = create_tween()
+	tween.tween_property(burst,"modulate:a",0.0,0.42)
+	tween.tween_callback(burst.queue_free)
+	if face.visible:
+		face.pivot_offset = face.size/2
+		face.scale = Vector2.ONE*0.86
+		face.create_tween().tween_property(face,"scale",Vector2.ONE,0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _announce(value:String) -> void:
 	if message_label != null:
 		message_label.text = value
 
 func _select_card(index:int) -> void:
-	if finished or index >= hand.size():
+	if finished or busy or index < 0 or index >= hand.size():
 		return
-	selected = index
+	selected = -1 if selected == index else index
 	var data:Dictionary = CARD_POOL[int(hand[index])]
 	_announce("%s gewählt · Zielpfad antippen" % str(data["name"]))
-	_refresh()
+	_refresh.call_deferred()
+	if selected >= 0:
+		call_deferred("_lift_selection")
+
+func _lift_selection() -> void:
+	if selected < 0 or selected >= card_buttons.size(): return
+	var card: Control = card_buttons[selected]
+	card.create_tween().tween_property(card,"position:y",-12.0,0.18).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _choose_lane(lane:int) -> void:
-	if finished or selected < 0 or selected >= hand.size():
+	if finished or busy or lane < 0 or lane >= LANES or selected < 0 or selected >= hand.size():
 		_announce("Wähle zuerst eine Karte.")
 		return
 	var data:Dictionary = CARD_POOL[int(hand[selected])].duplicate(true)
@@ -579,11 +405,11 @@ func _choose_lane(lane:int) -> void:
 		if int(foes[lane]["hp"]) <= 0:
 			foes[lane] = null
 		_announce("Funkenstoß trifft gegnerische Kreatur auf Pfad %d." % (lane+1))
+	_pulse_lane(lane,str(data["kind"]) == "spell")
 	energy -= int(data["cost"])
 	hand.remove_at(selected)
 	selected = -1
-	_refresh_units()
-	_refresh()
+	_refresh.call_deferred()
 
 func _combat_phase(attacker:Array, defender:Array, attacking_player:bool) -> void:
 	var damage: Array = [0,0,0,0,0]
@@ -604,6 +430,45 @@ func _combat_phase(attacker:Array, defender:Array, attacking_player:bool) -> voi
 				defender[i] = null
 
 func _end_turn() -> void:
+	if finished or busy: return
+	busy = true
+	_refresh()
+	_announce("Die Pfade erwachen …")
+	for face in lane_faces:
+		if face.visible:
+			var start: Vector2 = face.position
+			var tween = face.create_tween()
+			tween.tween_property(face,"position",start+Vector2(0,-25),0.18)
+			tween.tween_property(face,"position",start,0.19)
+	await get_tree().create_timer(0.4).timeout
+	var previous_allies = allies.duplicate(true)
+	var previous_foes = foes.duplicate(true)
+	var previous_player = player_hp
+	var previous_foe = foe_hp
+	busy = false
+	_resolve_turn()
+	for pair in [[previous_allies,allies,lane_faces],[previous_foes,foes,foe_faces]]:
+		for i in LANES:
+			if pair[0][i] == null: continue
+			if pair[1][i] == null:
+				var ghost = _face(pair[0][i],Rect2(pair[2][i].position,pair[2][i].size),_card_index(pair[0][i]),true)
+				ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				var fade = ghost.create_tween().set_parallel(true)
+				fade.tween_property(ghost,"modulate:a",0.0,0.4)
+				fade.tween_property(ghost,"position:y",ghost.position.y+28,0.4)
+				fade.chain().tween_callback(ghost.queue_free)
+			elif int(pair[1][i].hp) < int(pair[0][i].hp):
+				pair[2][i].modulate = Color("#f3a07d")
+				pair[2][i].create_tween().tween_property(pair[2][i],"modulate",Color.WHITE,0.4)
+	for pair in [[hero_player,previous_player-player_hp],[hero_enemy,previous_foe-foe_hp]]:
+		if pair[1] > 0:
+			var damage = _caption("−%d" % pair[1],Rect2(pair[0].position-Vector2(0,40),Vector2(164,45)),32,Color("#ffc09b"),true)
+			var fade = damage.create_tween().set_parallel(true)
+			fade.tween_property(damage,"position:y",damage.position.y-30,0.7)
+			fade.tween_property(damage,"modulate:a",0.0,0.7)
+			fade.chain().tween_callback(damage.queue_free)
+
+func _resolve_turn() -> void:
 	if finished:
 		return
 	_combat_phase(allies,foes,true)
@@ -635,12 +500,11 @@ func _end_turn() -> void:
 	summons = 0
 	selected = -1
 	_draw_card()
-	_refresh_units()
 	_refresh()
 	_announce("Runde %d · Dein Zug. Freie Pfade: %d · Kontrollserie: %d/2" % [round_number,free_paths,streak])
 
 func _finish(value:String) -> void:
 	finished = true
-	_refresh_units()
+	info_label.text = value
 	_refresh()
 	_announce(value)

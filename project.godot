@@ -1,10 +1,11 @@
 ; Engine configuration file.
-; NACHTSIEGEL mobile 2.5D prototype
+; NACHTSIEGEL landscape ritual arena
 
 config_version=5
 
 [application]
 config/name="NACHTSIEGEL"
+config/icon="res://assets/icon.svg"
 run/main_scene="res://scenes/arena.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/description="NACHTSIEGEL - 2.5D Dark Fantasy Card Battler"
@@ -14,11 +15,16 @@ window/size/viewport_width=1280
 window/size/viewport_height=720
 window/size/window_width_override=1280
 window/size/window_height_override=720
-window/stretch/mode="canvas_items"
-window/handheld/orientation=6
+window/stretch/mode="disabled"
+window/handheld/orientation=0
 
 [rendering]
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/default_filters/use_nearest_mipmap_filter=false
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.035, 0.035, 0.055, 1)
+
+[input_devices]
+pointing/emulate_touch_from_mouse=true
+pointing/emulate_mouse_from_touch=true
