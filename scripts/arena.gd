@@ -45,6 +45,10 @@ var energy_label: Label
 var round_label: Label
 var end_button: Button
 var landscape_panel: ColorRect
+var hand_panel_ref: PanelContainer
+var board_ref: Panel
+var lane_row_ref: HBoxContainer
+var table_ref: Panel
 var card_buttons: Array[Button] = []
 var camera: Camera3D
 var world_root: Node3D
@@ -305,11 +309,13 @@ func _build_ui() -> void:
 	table.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	table.add_theme_stylebox_override("panel",_gold_panel(Color("#231c24"),Color("#755338")))
 	root_ui.add_child(table)
+	table_ref = table
 	_position(table,0.018,0.025,0.982,0.975)
 	var board := Panel.new()
 	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	board.add_theme_stylebox_override("panel",_gold_panel(Color("#29202b"),Color("#b58a50")))
 	root_ui.add_child(board)
+	board_ref = board
 	_position(board,0.165,0.075,0.875,0.745)
 	var background := RitualTable.new()
 	board.add_child(background)
@@ -318,6 +324,7 @@ func _build_ui() -> void:
 	var lanes := HBoxContainer.new()
 	lanes.add_theme_constant_override("separation",8)
 	root_ui.add_child(lanes)
+	lane_row_ref = lanes
 	_position(lanes,0.184,0.105,0.856,0.716)
 	for i in LANES:
 		var column := VBoxContainer.new()
@@ -412,6 +419,7 @@ func _build_ui() -> void:
 	var hand_panel := PanelContainer.new()
 	hand_panel.add_theme_stylebox_override("panel",_gold_panel(Color("#18131d"),Color("#a17b4d")))
 	root_ui.add_child(hand_panel)
+	hand_panel_ref = hand_panel
 	_position(hand_panel,0.165,0.750,0.875,0.983)
 	var hand_col := VBoxContainer.new()
 	hand_col.add_theme_constant_override("separation",3)
@@ -451,6 +459,17 @@ func _update_orientation() -> void:
 		return
 	var size_now := get_viewport().get_visible_rect().size
 	landscape_panel.visible = size_now.y > size_now.x
+	# The playmat occupies the screen; avoid an unreadable miniature on iPhone.
+	if size_now.x > size_now.y:
+		var wide := size_now.x / maxf(1.0,size_now.y)
+		if wide > 1.7:
+			_position(board_ref,0.155,0.035,0.855,0.77)
+			_position(lane_row_ref,0.172,0.07,0.838,0.744)
+			_position(hand_panel_ref,0.17,0.775,0.84,0.985)
+		else:
+			_position(board_ref,0.155,0.065,0.855,0.73)
+			_position(lane_row_ref,0.172,0.095,0.838,0.71)
+			_position(hand_panel_ref,0.17,0.745,0.84,0.985)
 
 func _draw_card() -> void:
 	if deck.is_empty() or hand.size() >= 6:
@@ -461,7 +480,8 @@ func _card_button(index:int) -> Button:
 	var data:Dictionary = CARD_POOL[int(hand[index])]
 	var accent := Color(str(data["tint"]))
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(155,145)
+	button.custom_minimum_size = Vector2(116,115)
+	button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	button.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	button.disabled = finished or energy < int(data["cost"])
 	button.add_theme_stylebox_override("normal",_card_style(accent,index == selected))
@@ -473,20 +493,20 @@ func _card_button(index:int) -> Button:
 	contents.add_theme_constant_override("separation",0)
 	button.add_child(contents)
 	contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var cost := _label("%d   %s" % [int(data["cost"]),str(data["sigil"])],13)
+	var cost := _label("%d   %s" % [int(data["cost"]),str(data["sigil"])],11)
 	cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	contents.add_child(cost)
 	var art := CreaturePortrait.new()
 	art.accent = accent
 	art.archetype = str(data["sigil"])
-	art.custom_minimum_size = Vector2(0,85)
+	art.custom_minimum_size = Vector2(0,48)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	contents.add_child(art)
-	var name_label := _label(str(data["name"]),14)
+	var name_label := _label(str(data["name"]),12)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	contents.add_child(name_label)
 	var stats := "ZAUBER %d" % int(data["attack"]) if str(data["kind"]) == "spell" else "%d ANG  /  %d LP" % [int(data["attack"]),int(data["hp"])]
-	var stats_label := _label(stats,13)
+	var stats_label := _label(stats,11)
 	stats_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	contents.add_child(stats_label)
 	button.pressed.connect(_select_card.bind(index))
