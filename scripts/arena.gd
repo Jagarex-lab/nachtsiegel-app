@@ -2,6 +2,8 @@ extends Node3D
 ## NACHTSIEGEL mobile arena, milestone 1.
 ## Original 2.5D visual prototype with local combat; NOT a verified port of the legacy rules.
 const CardVignette = preload("res://scripts/card_vignette.gd")
+const RitualBoard = preload("res://scripts/ritual_board.gd")
+const CardBezel = preload("res://scripts/card_bezel.gd")
 const LANES := 5
 const MAX_HP := 35
 const CARD_POOL := [
@@ -268,14 +270,12 @@ func _build_ui() -> void:
 	board.offset_top = 104
 	board.offset_bottom = 454
 	board.add_theme_stylebox_override("panel",_panel(Color("#211d2a")))
-	var board_gold := ColorRect.new()
-	board_gold.color = Color("#a47a4b")
-	board_gold.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	board.add_child(board_gold)
-	board_gold.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	board_gold.offset_bottom = 3
+	var board_art := RitualBoard.new()
+	board_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	board.add_child(board_art)
 	var board_col := VBoxContainer.new()
 	board_col.add_theme_constant_override("separation",9)
+	board_col.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	board.add_child(board_col)
 	var opponent := _label("G E G N E R",17)
 	opponent.add_theme_color_override("font_color",Color("#e9a7a2"))
@@ -288,6 +288,7 @@ func _build_ui() -> void:
 		var enemy_slot := PanelContainer.new()
 		enemy_slot.custom_minimum_size = Vector2(185,111)
 		enemy_slot.add_theme_stylebox_override("panel",_slot_style(false))
+		enemy_slot.modulate.a = 0.91
 		enemy_row.add_child(enemy_slot)
 		var enemy_label := _label("LEER",16)
 		enemy_label.name = "Enemy"
@@ -370,6 +371,11 @@ func _card_button(index:int) -> Button:
 	button.add_theme_stylebox_override("pressed",_card_style(accent,true))
 	if index == selected:
 		button.add_theme_stylebox_override("normal",_card_style(accent,true))
+	var bezel := CardBezel.new()
+	bezel.accent = accent
+	bezel.selected = index == selected
+	button.add_child(bezel)
+	bezel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var content := VBoxContainer.new()
 	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(content)
@@ -397,12 +403,12 @@ func _card_button(index:int) -> Button:
 func _refresh() -> void:
 	if status_label == null:
 		return
-	status_label.text = "DU  %d ♥    ·    ENERGIE  %d    ·    RUNDE  %d    ·    BESCHWÖRUNGEN  %d/2    ·    GEGNER  %d ♥" % [player_hp,energy,round_number,summons,foe_hp]
+	status_label.text = "DU  %d LP    ·    ENERGIE  %d    ·    RUNDE  %d    ·    BESCHWÖRUNGEN  %d/2    ·    GEGNER  %d LP" % [player_hp,energy,round_number,summons,foe_hp]
 	for i in LANES:
-		var ally_str := "FREIER PLATZ" if allies[i] == null else "%s\n⚔ %d     ♥ %d" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
+		var ally_str := "LEER" if allies[i] == null else "%s\nANG %d   /   LP %d" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
 		lane_buttons[i].text = "PFAD %d\n%s" % [i+1,ally_str]
 		var enemy_label:Label = lane_buttons[i].get_parent().get_parent().get_child(1).get_child(i).get_node("Enemy")
-		enemy_label.text = "UNBESETZT" if foes[i] == null else "%s\n⚔ %d     ♥ %d" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
+		enemy_label.text = "LEER" if foes[i] == null else "%s\nANG %d   /   LP %d" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
 	for child in hand_row.get_children():
 		hand_row.remove_child(child)
 		child.queue_free()
