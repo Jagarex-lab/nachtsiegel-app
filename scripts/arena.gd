@@ -3,6 +3,7 @@ extends Node3D
 ## Original 2.5D visual prototype with local combat; NOT a verified port of the legacy rules.
 const CardVignette = preload("res://scripts/card_vignette.gd")
 const RitualTable = preload("res://scripts/ritual_table.gd")
+const CreaturePortrait = preload("res://scripts/creature_portrait.gd")
 const LANES := 5
 const MAX_HP := 35
 const CARD_POOL := [
@@ -36,6 +37,8 @@ var message_label: Label
 var hand_row: HBoxContainer
 var lane_buttons: Array[Button] = []
 var enemy_labels: Array[Label] = []
+var enemy_portraits: Array = []
+var ally_portraits: Array = []
 var hero_player: Label
 var hero_enemy: Label
 var energy_label: Label
@@ -330,6 +333,12 @@ func _build_ui() -> void:
 		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		foe_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		foe_slot.add_child(foe_label)
+		foe_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+		var foe_portrait := CreaturePortrait.new()
+		foe_slot.add_child(foe_portrait)
+		_position(foe_portrait,0.16,0.04,0.84,0.73)
+		enemy_portraits.append(foe_portrait)
 		enemy_labels.append(foe_label)
 		var number := _label("%d" % (i+1),14)
 		number.add_theme_color_override("font_color",Color("#d9b477"))
@@ -343,6 +352,10 @@ func _build_ui() -> void:
 		ally_slot.add_theme_stylebox_override("pressed",_gold_panel(Color("#446e68",0.9),Color("#e6c58e")))
 		ally_slot.pressed.connect(_choose_lane.bind(i))
 		column.add_child(ally_slot)
+		var ally_portrait := CreaturePortrait.new()
+		ally_slot.add_child(ally_portrait)
+		_position(ally_portrait,0.16,0.04,0.84,0.73)
+		ally_portraits.append(ally_portrait)
 		lane_buttons.append(ally_slot)
 	# Hero portraits: visual placeholders, but with distinct HUD.
 	var enemy_frame := PanelContainer.new()
@@ -353,8 +366,11 @@ func _build_ui() -> void:
 	enemy_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	enemy_frame.add_child(enemy_box)
 	enemy_box.add_child(_label("GEGNER",15))
-	var enemy_icon := _label("?",54)
-	enemy_icon.add_theme_color_override("font_color",Color("#d3a48f"))
+	var enemy_icon := CreaturePortrait.new()
+	enemy_icon.heroic = true
+	enemy_icon.accent = Color("#d3a48f")
+	enemy_icon.custom_minimum_size = Vector2(80,80)
+	enemy_icon.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	enemy_box.add_child(enemy_icon)
 	hero_enemy = _label("35 LP",22)
 	enemy_box.add_child(hero_enemy)
@@ -366,8 +382,11 @@ func _build_ui() -> void:
 	player_box.alignment = BoxContainer.ALIGNMENT_CENTER
 	player_frame.add_child(player_box)
 	player_box.add_child(_label("DEIN HELD",15))
-	var player_icon := _label("?",54)
-	player_icon.add_theme_color_override("font_color",Color("#9ecac5"))
+	var player_icon := CreaturePortrait.new()
+	player_icon.heroic = true
+	player_icon.accent = Color("#9ecac5")
+	player_icon.custom_minimum_size = Vector2(80,80)
+	player_icon.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	player_box.add_child(player_icon)
 	hero_player = _label("35 LP",22)
 	player_box.add_child(hero_player)
@@ -456,10 +475,10 @@ func _card_button(index:int) -> Button:
 	var cost := _label("%d   %s" % [int(data["cost"]),str(data["sigil"])],13)
 	cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	contents.add_child(cost)
-	var art := CardVignette.new()
+	var art := CreaturePortrait.new()
 	art.accent = accent
 	art.archetype = str(data["sigil"])
-	art.custom_minimum_size = Vector2(0,70)
+	art.custom_minimum_size = Vector2(0,85)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	contents.add_child(art)
 	var name_label := _label(str(data["name"]),14)
@@ -481,8 +500,18 @@ func _refresh() -> void:
 	energy_label.text = "%d / 10" % energy
 	round_label.text = "%d" % round_number
 	for i in LANES:
-		lane_buttons[i].text = "◇" if allies[i] == null else "✦\n%s\n⚔ %d    ♥ %d" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
-		enemy_labels[i].text = "◇" if foes[i] == null else "✦\n%s\n⚔ %d    ♥ %d" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
+		lane_buttons[i].text = "LEER" if allies[i] == null else "%s\n%d ANG  /  %d LP" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
+		enemy_labels[i].text = "LEER" if foes[i] == null else "%s\n%d ANG  /  %d LP" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
+		ally_portraits[i].visible = allies[i] != null
+		enemy_portraits[i].visible = foes[i] != null
+		if allies[i] != null:
+			ally_portraits[i].archetype = str(allies[i]["sigil"])
+			ally_portraits[i].accent = Color(str(allies[i]["tint"]))
+			ally_portraits[i].queue_redraw()
+		if foes[i] != null:
+			enemy_portraits[i].archetype = str(foes[i]["sigil"])
+			enemy_portraits[i].accent = Color(str(foes[i]["tint"]))
+			enemy_portraits[i].queue_redraw()
 	for child in hand_row.get_children():
 		hand_row.remove_child(child)
 		child.queue_free()
