@@ -2,6 +2,7 @@ extends Node3D
 ## NACHTSIEGEL mobile arena, milestone 1.
 ## Original 2.5D visual prototype with local combat; NOT a verified port of the legacy rules.
 const CardVignette = preload("res://scripts/card_vignette.gd")
+const RitualTable = preload("res://scripts/ritual_table.gd")
 const LANES := 5
 const MAX_HP := 35
 const CARD_POOL := [
@@ -307,11 +308,7 @@ func _build_ui() -> void:
 	board.add_theme_stylebox_override("panel",_gold_panel(Color("#29202b"),Color("#b58a50")))
 	root_ui.add_child(board)
 	_position(board,0.165,0.075,0.875,0.745)
-	var background := TextureRect.new()
-	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	background.texture = _board_texture()
-	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	background.stretch_mode = TextureRect.STRETCH_SCALE
+	var background := RitualTable.new()
 	board.add_child(background)
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	# Five lanes are now continuous columns rather than isolated oversized tiles.
@@ -327,7 +324,7 @@ func _build_ui() -> void:
 		var foe_slot := PanelContainer.new()
 		foe_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		foe_slot.size_flags_stretch_ratio = 1.0
-		foe_slot.add_theme_stylebox_override("panel",_gold_panel(Color("#37242f"),Color("#795342")))
+		foe_slot.add_theme_stylebox_override("panel",_gold_panel(Color("#3d2735",0.68),Color("#795342",0.65)))
 		column.add_child(foe_slot)
 		var foe_label := _label("FREI",15)
 		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -341,9 +338,9 @@ func _build_ui() -> void:
 		ally_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		ally_slot.size_flags_stretch_ratio = 1.0
 		ally_slot.add_theme_font_size_override("font_size",15)
-		ally_slot.add_theme_stylebox_override("normal",_gold_panel(Color("#234044"),Color("#71938d")))
-		ally_slot.add_theme_stylebox_override("hover",_gold_panel(Color("#375e61"),Color("#e6c58e")))
-		ally_slot.add_theme_stylebox_override("pressed",_gold_panel(Color("#446e68"),Color("#e6c58e")))
+		ally_slot.add_theme_stylebox_override("normal",_gold_panel(Color("#234044",0.62),Color("#71938d",0.8)))
+		ally_slot.add_theme_stylebox_override("hover",_gold_panel(Color("#375e61",0.9),Color("#e6c58e")))
+		ally_slot.add_theme_stylebox_override("pressed",_gold_panel(Color("#446e68",0.9),Color("#e6c58e")))
 		ally_slot.pressed.connect(_choose_lane.bind(i))
 		column.add_child(ally_slot)
 		lane_buttons.append(ally_slot)
@@ -395,7 +392,7 @@ func _build_ui() -> void:
 	var hand_panel := PanelContainer.new()
 	hand_panel.add_theme_stylebox_override("panel",_gold_panel(Color("#18131d"),Color("#a17b4d")))
 	root_ui.add_child(hand_panel)
-	_position(hand_panel,0.165,0.765,0.875,0.967)
+	_position(hand_panel,0.165,0.750,0.875,0.983)
 	var hand_col := VBoxContainer.new()
 	hand_col.add_theme_constant_override("separation",3)
 	hand_panel.add_child(hand_col)
@@ -444,7 +441,7 @@ func _card_button(index:int) -> Button:
 	var data:Dictionary = CARD_POOL[int(hand[index])]
 	var accent := Color(str(data["tint"]))
 	var button := Button.new()
-	button.custom_minimum_size = Vector2(136,115)
+	button.custom_minimum_size = Vector2(155,145)
 	button.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	button.disabled = finished or energy < int(data["cost"])
 	button.add_theme_stylebox_override("normal",_card_style(accent,index == selected))
@@ -462,7 +459,7 @@ func _card_button(index:int) -> Button:
 	var art := CardVignette.new()
 	art.accent = accent
 	art.archetype = str(data["sigil"])
-	art.custom_minimum_size = Vector2(0,40)
+	art.custom_minimum_size = Vector2(0,70)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	contents.add_child(art)
 	var name_label := _label(str(data["name"]),14)
@@ -484,8 +481,8 @@ func _refresh() -> void:
 	energy_label.text = "%d / 10" % energy
 	round_label.text = "%d" % round_number
 	for i in LANES:
-		lane_buttons[i].text = "FREI" if allies[i] == null else "%s\n%d ANG  /  %d LP" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
-		enemy_labels[i].text = "FREI" if foes[i] == null else "%s\n%d ANG  /  %d LP" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
+		lane_buttons[i].text = "◇" if allies[i] == null else "✦\n%s\n⚔ %d    ♥ %d" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
+		enemy_labels[i].text = "◇" if foes[i] == null else "✦\n%s\n⚔ %d    ♥ %d" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
 	for child in hand_row.get_children():
 		hand_row.remove_child(child)
 		child.queue_free()
