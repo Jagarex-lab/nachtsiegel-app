@@ -348,7 +348,6 @@ func _build_ui() -> void:
 		ally_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		ally_slot.size_flags_stretch_ratio = 1.0
 		ally_slot.add_theme_font_size_override("font_size",15)
-		ally_slot.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		ally_slot.add_theme_stylebox_override("normal",_gold_panel(Color("#234044",0.62),Color("#71938d",0.8)))
 		ally_slot.add_theme_stylebox_override("hover",_gold_panel(Color("#375e61",0.9),Color("#e6c58e")))
 		ally_slot.add_theme_stylebox_override("pressed",_gold_panel(Color("#446e68",0.9),Color("#e6c58e")))
