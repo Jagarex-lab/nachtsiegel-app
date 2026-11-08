@@ -34,6 +34,11 @@ var status_label: Label
 var message_label: Label
 var hand_row: HBoxContainer
 var lane_buttons: Array[Button] = []
+var enemy_labels: Array[Label] = []
+var hero_player: Label
+var hero_enemy: Label
+var energy_label: Label
+var round_label: Label
 var end_button: Button
 var landscape_panel: ColorRect
 var card_buttons: Array[Button] = []
@@ -255,6 +260,31 @@ func _label(value:String,size:int) -> Label:
 	item.add_theme_color_override("font_color",Color("#f4e8d8"))
 	return item
 
+func _gold_panel(base:Color, rim:Color = Color("#a98452")) -> StyleBoxFlat:
+	var st := StyleBoxFlat.new()
+	st.bg_color = base
+	st.border_color = rim
+	st.set_border_width_all(2)
+	st.border_width_top = 4
+	st.set_corner_radius_all(12)
+	st.shadow_color = Color(0,0,0,0.7)
+	st.shadow_size = 9
+	st.content_margin_left = 8
+	st.content_margin_right = 8
+	st.content_margin_top = 5
+	st.content_margin_bottom = 5
+	return st
+
+func _position(control:Control, left:float, top:float, right:float, bottom:float) -> void:
+	control.anchor_left = left
+	control.anchor_top = top
+	control.anchor_right = right
+	control.anchor_bottom = bottom
+	control.offset_left = 0
+	control.offset_top = 0
+	control.offset_right = 0
+	control.offset_bottom = 0
+
 func _build_ui() -> void:
 	ui_layer = CanvasLayer.new()
 	add_child(ui_layer)
@@ -262,124 +292,131 @@ func _build_ui() -> void:
 	ui_layer.add_child(root_ui)
 	root_ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	var backdrop := ColorRect.new()
-	backdrop.color = Color("#100e19")
-	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.color = Color("#0c0c13")
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	root_ui.add_child(backdrop)
-	var frame := PanelContainer.new()
-	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	frame.offset_left = 8
-	frame.offset_right = -8
-	frame.offset_top = 6
-	frame.offset_bottom = -6
-	frame.add_theme_stylebox_override("panel", _arena_frame_style())
-	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	root_ui.add_child(frame)
-	var header := PanelContainer.new()
-	root_ui.add_child(header)
-	header.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
-	header.offset_left = 20
-	header.offset_right = -20
-	header.offset_top = 14
-	header.offset_bottom = 79
-	header.add_theme_stylebox_override("panel", _arena_frame_style())
-	var header_column := VBoxContainer.new()
-	header.add_child(header_column)
-	title_label = _label("N A C H T S I E G E L",23)
-	header_column.add_child(title_label)
-	status_label = _label("",18)
-	header_column.add_child(status_label)
-	var board := PanelContainer.new()
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	# Full-width tabletop, with side panels for the heroes.
+	var table := Panel.new()
+	table.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	table.add_theme_stylebox_override("panel",_gold_panel(Color("#231c24"),Color("#755338")))
+	root_ui.add_child(table)
+	_position(table,0.018,0.025,0.982,0.975)
+	var board := Panel.new()
+	board.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	board.add_theme_stylebox_override("panel",_gold_panel(Color("#29202b"),Color("#b58a50")))
 	root_ui.add_child(board)
-	board.anchor_left = 0.055
-	board.anchor_right = 0.945
-	board.anchor_top = 0.13
-	board.anchor_bottom = 0.70
-	board.offset_left = 0
-	board.offset_right = 0
-	board.offset_top = 0
-	board.offset_bottom = 0
-	board.add_theme_stylebox_override("panel",_arena_frame_style())
-	var board_art := TextureRect.new()
-	board_art.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	board_art.texture = _board_texture()
-	board_art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	board_art.stretch_mode = TextureRect.STRETCH_SCALE
-	board.add_child(board_art)
-	board_art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var board_col := VBoxContainer.new()
-	board_col.add_theme_constant_override("separation",10)
-	board_col.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	board_col.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	board.add_child(board_col)
-	var opponent := _label("G E G N E R",17)
-	opponent.add_theme_color_override("font_color",Color("#e9a7a2"))
-	opponent.add_theme_font_size_override("font_size",16)
-	board_col.add_child(opponent)
-	var enemy_row := HBoxContainer.new()
-	enemy_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	enemy_row.add_theme_constant_override("separation",12)
-	enemy_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	board_col.add_child(enemy_row)
+	_position(board,0.165,0.075,0.875,0.745)
+	var background := TextureRect.new()
+	background.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	background.texture = _board_texture()
+	background.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	background.stretch_mode = TextureRect.STRETCH_SCALE
+	board.add_child(background)
+	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	# Five lanes are now continuous columns rather than isolated oversized tiles.
+	var lanes := HBoxContainer.new()
+	lanes.add_theme_constant_override("separation",8)
+	root_ui.add_child(lanes)
+	_position(lanes,0.184,0.105,0.856,0.716)
 	for i in LANES:
-		var enemy_slot := PanelContainer.new()
-		enemy_slot.custom_minimum_size = Vector2(0,145)
-		enemy_slot.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		enemy_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		enemy_slot.add_theme_stylebox_override("panel",_slot_style(false))
-		enemy_slot.modulate.a = 0.91
-		enemy_row.add_child(enemy_slot)
-		var enemy_label := _label("LEER",16)
-		enemy_label.name = "Enemy"
-		enemy_label.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		enemy_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		enemy_slot.add_child(enemy_label)
-	var divider_label := _label("I     ·     II     ·     III     ·     IV     ·     V",17)
-	divider_label.add_theme_color_override("font_color",Color("#e8c48c"))
-	divider_label.add_theme_font_size_override("font_size",15)
-	board_col.add_child(divider_label)
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation",12)
-	row.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	board_col.add_child(row)
-	for i in LANES:
-		var lane := Button.new()
-		lane.custom_minimum_size = Vector2(0,145)
-		lane.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		lane.size_flags_vertical = Control.SIZE_EXPAND_FILL
-		lane.add_theme_font_size_override("font_size",17)
-		lane.add_theme_stylebox_override("normal",_slot_style(true))
-		lane.add_theme_stylebox_override("hover",_slot_style(true,true))
-		lane.add_theme_stylebox_override("pressed",_slot_style(true,true))
-		lane.pressed.connect(_choose_lane.bind(i))
-		row.add_child(lane)
-		lane_buttons.append(lane)
-	var bottom := PanelContainer.new()
-	root_ui.add_child(bottom)
-	bottom.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	bottom.offset_left = 20
-	bottom.offset_right = -20
-	bottom.offset_top = -207
-	bottom.offset_bottom = -12
-	bottom.add_theme_stylebox_override("panel",_arena_frame_style())
-	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation",5)
-	bottom.add_child(column)
-	message_label = _label("",17)
-	column.add_child(message_label)
+		var column := VBoxContainer.new()
+		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		column.add_theme_constant_override("separation",5)
+		lanes.add_child(column)
+		var foe_slot := PanelContainer.new()
+		foe_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		foe_slot.size_flags_stretch_ratio = 1.0
+		foe_slot.add_theme_stylebox_override("panel",_gold_panel(Color("#37242f"),Color("#795342")))
+		column.add_child(foe_slot)
+		var foe_label := _label("FREI",15)
+		foe_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		foe_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		foe_slot.add_child(foe_label)
+		enemy_labels.append(foe_label)
+		var number := _label("%d" % (i+1),14)
+		number.add_theme_color_override("font_color",Color("#d9b477"))
+		column.add_child(number)
+		var ally_slot := Button.new()
+		ally_slot.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		ally_slot.size_flags_stretch_ratio = 1.0
+		ally_slot.add_theme_font_size_override("font_size",15)
+		ally_slot.add_theme_stylebox_override("normal",_gold_panel(Color("#234044"),Color("#71938d")))
+		ally_slot.add_theme_stylebox_override("hover",_gold_panel(Color("#375e61"),Color("#e6c58e")))
+		ally_slot.add_theme_stylebox_override("pressed",_gold_panel(Color("#446e68"),Color("#e6c58e")))
+		ally_slot.pressed.connect(_choose_lane.bind(i))
+		column.add_child(ally_slot)
+		lane_buttons.append(ally_slot)
+	# Hero portraits: visual placeholders, but with distinct HUD.
+	var enemy_frame := PanelContainer.new()
+	enemy_frame.add_theme_stylebox_override("panel",_gold_panel(Color("#3c222c"),Color("#c1906d")))
+	root_ui.add_child(enemy_frame)
+	_position(enemy_frame,0.025,0.09,0.153,0.365)
+	var enemy_box := VBoxContainer.new()
+	enemy_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	enemy_frame.add_child(enemy_box)
+	enemy_box.add_child(_label("GEGNER",15))
+	var enemy_icon := _label("?",54)
+	enemy_icon.add_theme_color_override("font_color",Color("#d3a48f"))
+	enemy_box.add_child(enemy_icon)
+	hero_enemy = _label("35 LP",22)
+	enemy_box.add_child(hero_enemy)
+	var player_frame := PanelContainer.new()
+	player_frame.add_theme_stylebox_override("panel",_gold_panel(Color("#22363c"),Color("#7da8a3")))
+	root_ui.add_child(player_frame)
+	_position(player_frame,0.025,0.385,0.153,0.665)
+	var player_box := VBoxContainer.new()
+	player_box.alignment = BoxContainer.ALIGNMENT_CENTER
+	player_frame.add_child(player_box)
+	player_box.add_child(_label("DEIN HELD",15))
+	var player_icon := _label("?",54)
+	player_icon.add_theme_color_override("font_color",Color("#9ecac5"))
+	player_box.add_child(player_icon)
+	hero_player = _label("35 LP",22)
+	player_box.add_child(hero_player)
+	var right_hud := PanelContainer.new()
+	right_hud.add_theme_stylebox_override("panel",_gold_panel(Color("#211924")))
+	root_ui.add_child(right_hud)
+	_position(right_hud,0.885,0.09,0.974,0.49)
+	var hud_col := VBoxContainer.new()
+	hud_col.alignment = BoxContainer.ALIGNMENT_CENTER
+	right_hud.add_child(hud_col)
+	hud_col.add_child(_label("RUNDE",15))
+	round_label = _label("1",30)
+	hud_col.add_child(round_label)
+	hud_col.add_child(_label("ENERGIE",15))
+	energy_label = _label("3",30)
+	energy_label.add_theme_color_override("font_color",Color("#83c4e2"))
+	hud_col.add_child(energy_label)
+	status_label = _label("",13)
+	status_label.visible = false
+	root_ui.add_child(status_label)
+	# Hand occupies a dedicated, generous region below the arena.
+	var hand_panel := PanelContainer.new()
+	hand_panel.add_theme_stylebox_override("panel",_gold_panel(Color("#18131d"),Color("#a17b4d")))
+	root_ui.add_child(hand_panel)
+	_position(hand_panel,0.165,0.765,0.875,0.967)
+	var hand_col := VBoxContainer.new()
+	hand_col.add_theme_constant_override("separation",3)
+	hand_panel.add_child(hand_col)
+	message_label = _label("Karte wählen, dann einen Pfad antippen",14)
+	hand_col.add_child(message_label)
 	hand_row = HBoxContainer.new()
 	hand_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	hand_row.add_theme_constant_override("separation",12)
+	hand_row.add_theme_constant_override("separation",10)
 	hand_row.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	column.add_child(hand_row)
+	hand_col.add_child(hand_row)
 	end_button = Button.new()
 	end_button.text = "ZUG BEENDEN"
-	end_button.custom_minimum_size = Vector2(260,36)
-	end_button.add_theme_font_size_override("font_size",17)
-	end_button.add_theme_stylebox_override("normal",_panel(Color("#65415a")))
+	end_button.add_theme_font_size_override("font_size",19)
+	end_button.add_theme_stylebox_override("normal",_gold_panel(Color("#725033"),Color("#dfb46c")))
+	end_button.add_theme_stylebox_override("hover",_gold_panel(Color("#94613c"),Color("#ffe0a0")))
 	end_button.pressed.connect(_end_turn)
-	column.add_child(end_button)
+	root_ui.add_child(end_button)
+	_position(end_button,0.885,0.53,0.974,0.70)
+	title_label = _label("N A C H T S I E G E L",17)
+	root_ui.add_child(title_label)
+	_position(title_label,0.32,0.028,0.72,0.074)
 	landscape_panel = ColorRect.new()
 	landscape_panel.color = Color("#100c18")
 	landscape_panel.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -405,55 +442,50 @@ func _draw_card() -> void:
 
 func _card_button(index:int) -> Button:
 	var data:Dictionary = CARD_POOL[int(hand[index])]
-	var button := Button.new()
-	button.custom_minimum_size = Vector2(175,150)
-	button.text = ""
-	button.disabled = finished or energy < int(data["cost"])
 	var accent := Color(str(data["tint"]))
-	button.add_theme_stylebox_override("normal",_card_style(accent, index == selected))
-	button.add_theme_stylebox_override("disabled",_card_style(accent.darkened(0.45),false))
+	var button := Button.new()
+	button.custom_minimum_size = Vector2(136,115)
+	button.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	button.disabled = finished or energy < int(data["cost"])
+	button.add_theme_stylebox_override("normal",_card_style(accent,index == selected))
+	button.add_theme_stylebox_override("disabled",_card_style(accent.darkened(0.5)))
 	button.add_theme_stylebox_override("hover",_card_style(accent,true))
 	button.add_theme_stylebox_override("pressed",_card_style(accent,true))
-	if index == selected:
-		button.add_theme_stylebox_override("normal",_card_style(accent,true))
-	var bezel := Panel.new()
-	bezel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	bezel.add_theme_stylebox_override("panel", _card_style(accent, index == selected))
-	button.add_child(bezel)
-	bezel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var content := VBoxContainer.new()
-	content.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	button.add_child(content)
-	content.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	content.add_theme_constant_override("separation",1)
-	var heading := _label("%d ENERGIE    /    %s" % [int(data["cost"]),str(data["sigil"])],15)
-	heading.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	content.add_child(heading)
+	var contents := VBoxContainer.new()
+	contents.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	contents.add_theme_constant_override("separation",0)
+	button.add_child(contents)
+	contents.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var cost := _label("%d   %s" % [int(data["cost"]),str(data["sigil"])],13)
+	cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	contents.add_child(cost)
 	var art := CardVignette.new()
 	art.accent = accent
 	art.archetype = str(data["sigil"])
-	art.custom_minimum_size = Vector2(0,80)
+	art.custom_minimum_size = Vector2(0,40)
 	art.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	content.add_child(art)
-	var name_label := _label(str(data["name"]),17)
+	contents.add_child(art)
+	var name_label := _label(str(data["name"]),14)
 	name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	content.add_child(name_label)
-	var stats := "ZAUBER  /  %d SCHADEN" % int(data["attack"]) if str(data["kind"]) == "spell" else "ANGRIFF %d   /   LEBEN %d" % [int(data["attack"]),int(data["hp"])]
-	var stats_label := _label(stats,15)
+	contents.add_child(name_label)
+	var stats := "ZAUBER %d" % int(data["attack"]) if str(data["kind"]) == "spell" else "%d ANG  /  %d LP" % [int(data["attack"]),int(data["hp"])]
+	var stats_label := _label(stats,13)
 	stats_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	content.add_child(stats_label)
+	contents.add_child(stats_label)
 	button.pressed.connect(_select_card.bind(index))
 	return button
 
 func _refresh() -> void:
 	if status_label == null:
 		return
-	status_label.text = "DU  %d LP    ·    ENERGIE  %d    ·    RUNDE  %d    ·    BESCHWÖRUNGEN  %d/2    ·    GEGNER  %d LP" % [player_hp,energy,round_number,summons,foe_hp]
+	status_label.text = "DU %d  ·  ENERGIE %d  ·  RUNDE %d  ·  GEGNER %d" % [player_hp,energy,round_number,foe_hp]
+	hero_player.text = "%d LP" % player_hp
+	hero_enemy.text = "%d LP" % foe_hp
+	energy_label.text = "%d / 10" % energy
+	round_label.text = "%d" % round_number
 	for i in LANES:
-		var ally_str := "LEER" if allies[i] == null else "%s\nANG %d   /   LP %d" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
-		lane_buttons[i].text = "PFAD %d\n%s" % [i+1,ally_str]
-		var enemy_label:Label = lane_buttons[i].get_parent().get_parent().get_child(1).get_child(i).get_node("Enemy")
-		enemy_label.text = "LEER" if foes[i] == null else "%s\nANG %d   /   LP %d" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
+		lane_buttons[i].text = "FREI" if allies[i] == null else "%s\n%d ANG  /  %d LP" % [str(allies[i]["name"]),int(allies[i]["attack"]),int(allies[i]["hp"])]
+		enemy_labels[i].text = "FREI" if foes[i] == null else "%s\n%d ANG  /  %d LP" % [str(foes[i]["name"]),int(foes[i]["attack"]),int(foes[i]["hp"])]
 	for child in hand_row.get_children():
 		hand_row.remove_child(child)
 		child.queue_free()
