@@ -61,6 +61,18 @@ jobs:
           assert re.search(r'NARRATIVE: \d+ assertions, 0 failures', log), log
           print(log)
           PYCHECK
+      - name: Verify campaign foundation in the exported package
+        run: |
+          game_name="nachtsiegel-${GITHUB_SHA:0:12}"
+          godot --headless --main-pack "work/build/web/$game_name.pck" --script "$PWD/tests/exported_experience.gd" --quit-after 120 > work/exported-experience-final.log 2>&1
+          python3 - <<'PYCHECK'
+          import re
+          from pathlib import Path
+          log = Path('work/exported-experience-final.log').read_text()
+          assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:', log, re.M), log
+          assert 'entry scene; 0 failures' in log, log
+          print(log)
+          PYCHECK
       - name: Install browser test runtime
         run: |
           npm install --no-save --package-lock=false playwright
