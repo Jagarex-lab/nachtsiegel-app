@@ -1,0 +1,55 @@
+{
+  "date_utc": "2026-11-09",
+  "tools": {
+    "node": "v24.22.1",
+    "godot": "4.6.3.stable.official.7d41c59c4",
+    "rendering": "X11/Xvfb :99, Mesa llvmpipe software renderer"
+  },
+  "results": [
+    {
+      "command": "node test.js",
+      "working_directory": "duel-deck @ 34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+      "exit_code": 0,
+      "elapsed_seconds": 1.46,
+      "log": "js-test.log"
+    },
+    {
+      "command": "node tests.js",
+      "working_directory": "duel-deck @ 34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+      "exit_code": 1,
+      "elapsed_seconds": 0.07,
+      "log": "js-tests.log"
+    },
+    {
+      "command": "node ui-smoke.test.js",
+      "working_directory": "duel-deck @ 34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+      "exit_code": 1,
+      "elapsed_seconds": 0.08,
+      "log": "js-ui-smoke-test.log"
+    },
+    {
+      "command": "node check.js",
+      "working_directory": "duel-deck @ 34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+      "exit_code": 1,
+      "elapsed_seconds": 0.07,
+      "log": "js-check.log"
+    },
+    {
+      "command": "node simulate.js 1000 0 /path/to/output.json",
+      "exit_code": 0,
+      "log": "js-simulate-1000.json",
+      "matches": 1000,
+      "completed": 998,
+      "timeouts": 2,
+      "errors": 0
+    },
+    {
+      "command": "DISPLAY=:99 bash tools/test.sh",
+      "exit_code": 0,
+      "log": "godot-full-suite.log",
+      "assertions": 9547,
+      "failures": 0,
+      "oracle_scope": "current Godot versus frozen previous Godot, not JavaScript"
+    }
+  ]
+}

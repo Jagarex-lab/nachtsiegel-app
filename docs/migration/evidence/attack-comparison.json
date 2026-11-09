@@ -1,0 +1,72 @@
+{
+  "assertions": 16,
+  "failures": 0,
+  "known_divergent_subcases": 4,
+  "matching_subcases": 4,
+  "outcomes": [
+    {
+      "godot_hp": 25,
+      "legacy_hp": 25.0,
+      "mode": "empty",
+      "same_hp": true,
+      "side": "hero",
+      "unsupported_state": "none"
+    },
+    {
+      "godot_hp": 25,
+      "legacy_hp": 32.0,
+      "mode": "protected",
+      "same_hp": false,
+      "side": "hero",
+      "unsupported_state": "protected"
+    },
+    {
+      "godot_hp": 35,
+      "legacy_hp": 35.0,
+      "mode": "occupied",
+      "same_hp": true,
+      "side": "hero",
+      "unsupported_state": "none"
+    },
+    {
+      "godot_hp": 25,
+      "legacy_hp": 35.0,
+      "mode": "newly_summoned",
+      "same_hp": false,
+      "side": "hero",
+      "unsupported_state": "newly_summoned"
+    },
+    {
+      "godot_hp": 25,
+      "legacy_hp": 25.0,
+      "mode": "empty",
+      "same_hp": true,
+      "side": "enemy",
+      "unsupported_state": "none"
+    },
+    {
+      "godot_hp": 25,
+      "legacy_hp": 32.0,
+      "mode": "protected",
+      "same_hp": false,
+      "side": "enemy",
+      "unsupported_state": "protected"
+    },
+    {
+      "godot_hp": 35,
+      "legacy_hp": 35.0,
+      "mode": "occupied",
+      "same_hp": true,
+      "side": "enemy",
+      "unsupported_state": "none"
+    },
+    {
+      "godot_hp": 25,
+      "legacy_hp": 35.0,
+      "mode": "newly_summoned",
+      "same_hp": false,
+      "side": "enemy",
+      "unsupported_state": "newly_summoned"
+    }
+  ]
+}
