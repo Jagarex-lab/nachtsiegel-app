@@ -1,0 +1,4 @@
+pinned-reference-and-catalog	Pinned JS reference, catalog and P01-P07 differential engine	2026-11-09T19:14:36.9467863Z LEGACY FOUNDATIONS: 2171 assertions, 0 failures; 100 cards, 5 decks, 24 validation vectors, 152 fixture steps inspected; no combat port
+pinned-reference-and-catalog	Pinned JS reference, catalog and P01-P07 differential engine	2026-11-09T19:14:40.4718207Z LEGACY ENGINE: 2237 assertions, 0 failures; 440 differential cases; 122 existing scenarios supported, 2 explicitly unsupported
+pinned-reference-and-catalog	Pinned JS reference, catalog and P01-P07 differential engine	2026-11-09T19:14:45.7958302Z LEGACY P05/P06: 2342 assertions, 0 failures; 366 differential cases, 521 transitions, 200 card-side pairs,16 effects
+pinned-reference-and-catalog	Pinned JS reference, catalog and P01-P07 differential engine	2026-11-09T19:14:58.4835915Z LEGACY P07: 7562 assertions, 0 failures; 474 differential cases, 1084 transitions, 200 mixed card-side chains

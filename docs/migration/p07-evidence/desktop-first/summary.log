@@ -1,0 +1,5 @@
+RULES: 684 assertions, 0 failures; 30 baseline differential duels
+CREATIVE DATA: 2253 assertions, 0 failures; 74 entities; 275 keys per locale; unchanged 7-card pool
+NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+EXPERIENCE: 707 assertions, 0 failures; menu, tutorial, campaign, collection and persisted restart
+Godot errors in work/input-layout-final.log

@@ -1,8 +1,8 @@
-name: Legacy P01-P06 (no deployment)
+name: Legacy P01-P07 (no deployment)
 
 on:
   pull_request:
-    branches: [develop, 'feature/legacy-foundations', 'feature/legacy-engine-p01-p04']
+    branches: [develop, 'feature/legacy-foundations', 'feature/legacy-engine-p01-p04', 'feature/legacy-engine-p05-p06']
   workflow_dispatch:
 
 permissions:
@@ -24,5 +24,5 @@ jobs:
           include-templates: false
       - name: Import scripts for headless tests
         run: godot --headless --editor --import --path . --quit
-      - name: Pinned JS reference, catalog and P01-P06 differential engine
+      - name: Pinned JS reference, catalog and P01-P07 differential engine
         run: tools/test_legacy.sh

@@ -1,7 +1,7 @@
 extends RefCounted
-## P01-P06 legacy kernel. No scene/UI/network/economy dependencies.
+## P01-P07 legacy kernel. No scene/UI/network/economy dependencies.
 ## start/begin_turn/advance_turn expose original boundaries BEFORE optional AI.
-## P07 order reactions/tactics and P10 AI remain explicitly unsupported.
+## P10 automatic AI and P11 replay ABI remain explicitly unsupported.
 const Catalog = preload("res://scripts/legacy/catalog.gd")
 const Validator = preload("res://scripts/legacy/deck_validator.gd")
 const Random = preload("res://scripts/legacy/rng.gd")
@@ -21,7 +21,7 @@ var _queue: Array = []
 var _resolving := false
 var _dead_units: Array = []
 func capabilities() -> Dictionary:
-	return {"packages":["P01","P02","P03-core","P04","P05","P06"],"summon_effects":EFFECTS.duplicate(),"automatic_enemy_controller":false,"unsupported":["P07 order reactions/active tactics/burst","P10 automatic AI","P11 replay audit"]}
+	return {"packages":["P01","P02","P03-core","P04","P05","P06","P07"],"summon_effects":EFFECTS.duplicate(),"automatic_enemy_controller":false,"unsupported":["P10 automatic AI","P11 replay audit"]}
 func _valid_side(side: String) -> bool:
 	return side in ["hero","enemy"] and state.has(side)
 func _other(side: String) -> String:
@@ -181,7 +181,6 @@ func play_support(side: String, index: Variant, lane: Variant) -> String:
 	if card.is_empty():return "unknown_card"
 	if int(p.summons)>=2 or int(p.energy)<int(card.cost) or p.lanes[lane]!=null:return "invalid_resources_or_lane"
 	if not card.effect in EFFECTS:return "unknown_effect"
-	if p.attune!=null and p.attune!=card.order:return "P07:order_reaction"
 	return ""
 func play(side: String, index: Variant, lane: Variant) -> bool:
 	if not play_support(side,index,lane).is_empty():return false
@@ -190,6 +189,8 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
 	p.hand.remove_at(index);p.energy=int(p.energy)-int(card.cost);p.summons=int(p.summons)+1
 	p.lanes[lane]={"id":card.id,"hp":card.hp,"atk":card.atk,"summoned":true,"stun":0}
 	_trace("summon",side,{"lane":lane,"card_id":card.id})
+	if p.attune!=null and p.attune!=card.order:
+		add_res(p,2);_reaction(side,str(p.attune),str(card.order))
 	p.attune=card.order
 	check_winner()
 	if state.winner==null:enqueue({"type":"summon","side":side,"card_id":card.id,"lane":lane})
@@ -313,7 +314,7 @@ func _advance_unchecked(side: String) -> bool:
 	return true
 func execute(command: String, args: Array) -> Dictionary:
 	# Player-facing facade rejects finished operations and partial raw-helper failures.
-	var arities := {"play":3,"finishDraw":1,"advanceTurnBoundary":1,"burn":2,"recover":1,"chooseStrikeTarget":2,"moveCreature":3,"skipShift":1}
+	var arities := {"play":3,"finishDraw":1,"advanceTurnBoundary":1,"burn":2,"recover":1,"chooseStrikeTarget":2,"moveCreature":3,"skipShift":1,"burst":2,"tacticalMove":3,"fortify":2}
 	if not arities.has(command):return {"ok":false,"reason":"unsupported_command:"+command}
 	if args.size()!=int(arities[command]) or not args[0] is String or not _valid_side(args[0]):return {"ok":false,"reason":"invalid_arguments"}
 	if state.winner!=null:return {"ok":false,"reason":"finished"}
@@ -330,6 +331,9 @@ func execute(command: String, args: Array) -> Dictionary:
 		"chooseStrikeTarget":ok=choose_strike_target(args[0],args[1])
 		"moveCreature":ok=move_creature(args[0],args[1],args[2])
 		"skipShift":ok=skip_shift(args[0])
+		"burst":ok=burst(args[0],args[1])
+		"tacticalMove":ok=tactical_move(args[0],args[1],args[2])
+		"fortify":ok=fortify(args[0],args[1])
 	return {"ok":ok,"reason":"" if ok else "invalid_action"}
 func add_res(player: Dictionary, amount: int) -> void:
 	player.resonance=mini(15,int(player.resonance)+amount)
@@ -439,3 +443,61 @@ func _resolve_formation(event: Dictionary) -> void:
 	for neighbor in [to-1,to+1]:
 		if neighbor>=0 and neighbor<LANES and p.lanes[neighbor]!=null:
 			add_res(p,1);_trace("formation",event.side);return
+
+func _reaction(side: String, from: String, to: String) -> void:
+	var p: Dictionary=state[side]
+	var enemy: Dictionary=state[_other(side)]
+	var key := from+">"+to
+	match key:
+		"ash>tide","ash>veil":damage(enemy,2)
+		"tide>thorn":p.ward=mini(25,int(p.ward)+3)
+		"thorn>veil":p.hp=mini(int(p.maxHp),int(p.hp)+2)
+		"veil>ash":enemy.weak=maxi(int(enemy.weak),1)
+		"tide>veil":p.energy=int(p.energy)+1
+		"ash>thorn":p.block=int(p.block)+3
+		"thorn>ash","veil>thorn":p.ward=mini(25,int(p.ward)+2)
+		"veil>tide":p.block=int(p.block)+2
+		"thorn>tide","tide>ash":add_res(p,1)
+		_:return
+	_trace("reaction",side,{"pair":key})
+func burst(side: String, order: Variant) -> bool:
+	if not _valid_side(side) or state.winner!=null or state.active!=side:return false
+	var p: Dictionary=state[side]
+	if p.phase!="main" or int(p.resonance)<15 or bool(p.burstUsed) or not order is String:return false
+	var units: Array=[]
+	for unit: Variant in p.lanes:
+		if unit!=null and catalog.card(unit.id).order==order:units.append(unit)
+	if units.is_empty():return false
+	# Original burst deliberately permits a pending strike/shift choice.
+	p.resonance=int(p.resonance)-8;p.burstUsed=true
+	var enemy: Dictionary=state[_other(side)]
+	match order:
+		"ash":damage(enemy,4+units.size()*3)
+		"tide":p.ward=mini(25,int(p.ward)+6+units.size()*2)
+		"thorn":
+			for unit: Variant in p.lanes:
+				if unit!=null:unit.hp=mini(int(catalog.card(unit.id).hp),int(unit.hp)+3)
+			p.hp=mini(int(p.maxHp),int(p.hp)+3+units.size())
+		"veil":
+			enemy.weak=2
+			for unit: Dictionary in units:unit.atk=int(unit.atk)+2
+	_trace("burst",side,{"order":order,"units":units.size()})
+	check_winner()
+	return true
+func tactical_move(side: String, from: Variant, to: Variant) -> bool:
+	if not _valid_side(side) or state.winner!=null or state.active!=side:return false
+	var p: Dictionary=state[side]
+	if p.phase!="main" or p.pendingTarget!=null or p.pendingShift!=null or bool(p.tacticUsed) or int(p.resonance)<3 or not _integer(from) or not _integer(to):return false
+	if from<0 or from>=LANES or to<0 or to>=LANES or abs(int(from)-int(to))!=1 or p.lanes[from]==null or p.lanes[to]!=null:return false
+	p.lanes[to]=p.lanes[from];p.lanes[from]=null;p.resonance=int(p.resonance)-3;p.tacticUsed=true
+	_trace("tactical_move",side,{"from":from,"to":to})
+	return true
+func fortify(side: String, lane: Variant) -> bool:
+	if not _valid_side(side) or state.winner!=null or state.active!=side:return false
+	var p: Dictionary=state[side]
+	if p.phase!="main" or p.pendingTarget!=null or p.pendingShift!=null or bool(p.fortifyUsed) or int(p.resonance)<2 or not _integer(lane) or lane<0 or lane>=LANES or p.lanes[lane]==null:return false
+	var unit: Dictionary=p.lanes[lane]
+	p.resonance=int(p.resonance)-2;p.fortifyUsed=true;p.ward=mini(25,int(p.ward)+2)
+	unit.hp=mini(int(catalog.card(unit.id).hp),int(unit.hp)+1)
+	_trace("fortify",side,{"lane":lane})
+	return true

@@ -1,0 +1,19 @@
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1766324Z RULES: 684 assertions, 0 failures; 30 baseline differential duels
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1767483Z CREATIVE DATA: 2253 assertions, 0 failures; 74 entities; 275 keys per locale; unchanged 7-card pool
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1768636Z NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1769785Z EXPERIENCE: 707 assertions, 0 failures; menu, tutorial, campaign, collection and persisted restart
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1770829Z INPUT/LAYOUT: 380 assertions, 0 failures; seven landscape sizes; mouse + ScreenTouch
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1771914Z PREMIUM: 1720 assertions, 0 failures; 4 landscape sizes; six cards, selection and actual ink visibility
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1772856Z UX AUDIT: 2350 assertions, 0 failures; 62 paired rendered states
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1773870Z COMBAT PRESENTATION: 725 assertions, 0 failures; complete duels, event order, rapid input, resize, bounded FX/audio and persisted mixer
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1774665Z COMBAT SEQUENCE: 631 assertions, 0 failures; 4 family renders and 6 causal frames
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T19:17:00.1775156Z CONTRAST: 89 rendered states, 3838 regions, 0 failures
+test-and-export	Verify localized data inside the exported package	2026-11-09T19:17:22.8582648Z NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:19:19.5994303Z BROWSER PASS: chromium desktop
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:20:57.0073952Z BROWSER PASS: chromium desktop-wide
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:21:35.7402513Z BROWSER PASS: chromium android-landscape
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:22:45.3931866Z BROWSER PASS: chromium android-bars
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:23:22.6505240Z BROWSER PASS: webkit iphone-landscape
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:23:40.9314336Z BROWSER PASS: webkit iphone-wide
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:23:58.8564859Z BROWSER PASS: webkit iphone-reduced
+test-and-export	Full browser tutorial, saved reload and collection tests	2026-11-09T19:23:58.9577779Z BROWSER: 7 device/engine profiles, 0 failures

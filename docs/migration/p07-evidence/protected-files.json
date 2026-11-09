@@ -1,0 +1,338 @@
+{
+  "baseline": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+  "unchanged_count": 83,
+  "files": [
+    {
+      "path": ".github/workflows/web-preview.yml",
+      "sha256": "594dd236c85601bfcd9b3ba237107fd33a07affb50bf89c0e8563f0a01d19124"
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "f77d90b3112242de2acf5dbc325a723b2103923999081ab7f3beff8c96d75b08"
+    },
+    {
+      "path": "assets/ASSET_MANIFEST.md",
+      "sha256": "3267f1d548e63816eea3c7919340db4dd72d690b96073b9a895af256a63e79dd"
+    },
+    {
+      "path": "assets/art/arena.svg",
+      "sha256": "93c7f29d2eea04ee60dcb44037d7565347fbceb6ce241bed50cf7aea7d402ec8"
+    },
+    {
+      "path": "assets/art/arena.svg.import",
+      "sha256": "411222b9169c837834806e7470049072b14c79009a6dea9a232443732da3a33e"
+    },
+    {
+      "path": "assets/art/arena_painted.png",
+      "sha256": "9fd3147acf886a6138de034d4473e1f6ef5f465ee1a88ce418da5d830d9012cb"
+    },
+    {
+      "path": "assets/art/arena_painted.png.import",
+      "sha256": "8d282eb067c63d5401aacb5411ba6eadd535faa53c6a2632a584c7c0ef1429fb"
+    },
+    {
+      "path": "assets/art/atlas.png",
+      "sha256": "3655610a243d792b90115ba752805a28d3e1f3491e1f70e3fba1c17660ad1db3"
+    },
+    {
+      "path": "assets/art/atlas.png.import",
+      "sha256": "82f05d5d76c6845eb6d8238f60cd039d5e836bff46137895a30c16c3fa497d99"
+    },
+    {
+      "path": "assets/art/hero_medallion.png",
+      "sha256": "8b64c9fe63fa3072c361da4e66e2cde9ef09bc9b337d61e88bb6c981dda8bf20"
+    },
+    {
+      "path": "assets/art/hero_medallion.png.import",
+      "sha256": "dbe9808a6080bafcb8406d24fd466889b99f52574dc546e3ecb360d3afd4f2c1"
+    },
+    {
+      "path": "assets/art/premium_slate.png",
+      "sha256": "1ae84af9029913c5e2b0e012d73424a49cd9ea6fa85bd1198a7c7b5e7ee51942"
+    },
+    {
+      "path": "assets/art/premium_slate.png.import",
+      "sha256": "4c45674e3bafdf98a281c34945e64d4b1f19038c386039982eb447a34c43b885"
+    },
+    {
+      "path": "assets/art/reliquary_frame.png",
+      "sha256": "3aeae204ecfdae9bfc5bd865fdb8fc243ee2f259fee51ccbcc38860cca7b291d"
+    },
+    {
+      "path": "assets/art/reliquary_frame.png.import",
+      "sha256": "ec720df506c1ea4404039b1a7e8ece6cb7492a3a93af8951997a86e0193874fe"
+    },
+    {
+      "path": "assets/audio/ASH.wav",
+      "sha256": "09eca113d017e1b2f68531a3533fc4b8597904bfdfc215550b9e8e6c6b35c52f"
+    },
+    {
+      "path": "assets/audio/ASH.wav.import",
+      "sha256": "0065a216fd0a96346ad1956467c07a264e980960ee61eb23e7dbd2b30eaeed8a"
+    },
+    {
+      "path": "assets/audio/README.md",
+      "sha256": "c56a0bebb9dd0615b487b710f235909c5e85b8a680001b2d716a97e6424792b0"
+    },
+    {
+      "path": "assets/audio/THORN.wav",
+      "sha256": "6550cebf41348ffa35f772ecc39a55c8d0ce41d89d33a31a20fc170bf9143b30"
+    },
+    {
+      "path": "assets/audio/THORN.wav.import",
+      "sha256": "d2de23e353b23250e019604d1ffb21a2f86b5864de18d3d94a302e7ce8f3f2bc"
+    },
+    {
+      "path": "assets/audio/TIDE.wav",
+      "sha256": "6b9c8afe96cd485cd37cccc5a1081b2a64ce111aaaaf71e55168a6022e5873fc"
+    },
+    {
+      "path": "assets/audio/TIDE.wav.import",
+      "sha256": "304d8a466d34d6be3ec0b520cb841e4f38dc26da2832af627a5cbdf40c46c7c9"
+    },
+    {
+      "path": "assets/audio/VEIL.wav",
+      "sha256": "04eba320dbc919f37f6c220e410cfb4bbc88647c52c40f9501ac2510e7c44107"
+    },
+    {
+      "path": "assets/audio/VEIL.wav.import",
+      "sha256": "0f97d407dbcadc675335544701032cdee7aaf345df54895cadb9254bf14bf9ad"
+    },
+    {
+      "path": "assets/audio/atmosphere.ogg",
+      "sha256": "263ebcadf3f3e2a77f1555f8d1f013c8538e9b0b2f1a8fdcd83bdac8b2af3c40"
+    },
+    {
+      "path": "assets/audio/atmosphere.ogg.import",
+      "sha256": "2244861f238bb309637e7b38ef8de70c61931db4c29677d6f44cd20923eacdb8"
+    },
+    {
+      "path": "assets/audio/attack.wav",
+      "sha256": "9f78ce5ae0a56da9353957efcede14e77a6a2af4d655d091da154c3590886977"
+    },
+    {
+      "path": "assets/audio/attack.wav.import",
+      "sha256": "fe395a6c6c4026edfbe6a0177dee3b5331f16670c4eb8fe1f40c1bcb2c7adb2d"
+    },
+    {
+      "path": "assets/audio/draw.wav",
+      "sha256": "28ec95d153433fbb7a9c3062b8e13e10353234cae6523061ac6f04b9753c6a12"
+    },
+    {
+      "path": "assets/audio/draw.wav.import",
+      "sha256": "3eefd9de40eb9611d2f853611673b10f74cf1afc25390e19271feda56272e417"
+    },
+    {
+      "path": "assets/audio/hit.wav",
+      "sha256": "32f4e150c2cab514aa1deaf8be43f9cc34fc85b6008df04d272f1fe07c3245fe"
+    },
+    {
+      "path": "assets/audio/hit.wav.import",
+      "sha256": "a608ee20162de74013c7e17d07731c208edfd4ff58a092d4903dbfa7d25f8009"
+    },
+    {
+      "path": "assets/audio/lose.wav",
+      "sha256": "a296f714700e8dc9f6438b8b17998a3b65b6e4fbef3f0aa3c61c2d87c938b952"
+    },
+    {
+      "path": "assets/audio/lose.wav.import",
+      "sha256": "e8db6ac0b14f950fb4eb47c9fbec32d1c069e92dccd4486bcf214fde3d5a17ee"
+    },
+    {
+      "path": "assets/audio/turn.wav",
+      "sha256": "f66d7c087567f872b3163fd1321401488ef42bda3f78d555534bc7779336b775"
+    },
+    {
+      "path": "assets/audio/turn.wav.import",
+      "sha256": "454cc691b3db034676dff4906813b84c5296ff5665e550754719f26a25bc7ea5"
+    },
+    {
+      "path": "assets/audio/ui.wav",
+      "sha256": "6b57303819cdddd5d51da37376ca25b982e47ce4ea4478bfa99f96c3a373ccf7"
+    },
+    {
+      "path": "assets/audio/ui.wav.import",
+      "sha256": "69c81ef181e81dc7443199b62613cb4cd91bf9ac7ca92e334fe2fa44b9a2f87e"
+    },
+    {
+      "path": "assets/audio/win.wav",
+      "sha256": "f5a8307c7b24fa5c583042ddcce261b22010a6cb86b02d95c7446bfd0dd22b18"
+    },
+    {
+      "path": "assets/audio/win.wav.import",
+      "sha256": "82bb9460ad67420a845f06d3291db1ff19285327c9aa581ea48549b6af722394"
+    },
+    {
+      "path": "assets/fonts/Body.ttf",
+      "sha256": "57f73e11f51999432bf7ab22ce55b6f945d5eca1bf824404cfa9ec2e3718c84e"
+    },
+    {
+      "path": "assets/fonts/Body.ttf.import",
+      "sha256": "0625a224257e72b5ce0ec56a00a173cb91a33c228fb30d265157512c0cf06256"
+    },
+    {
+      "path": "assets/fonts/Cinzel-OFL.txt",
+      "sha256": "f2b3029aba64c378bf0963b62945eee15e564fe4330b934c8f2eb058282b5e83"
+    },
+    {
+      "path": "assets/fonts/Cinzel.ttf",
+      "sha256": "f4d83d34d1f6c741193e4acf4b3dff9531e5a67b6aa65228d00a7db72a4e0f34"
+    },
+    {
+      "path": "assets/fonts/Cinzel.ttf.import",
+      "sha256": "b71273d4be2d1a61c3c60f159e15906a3426a4c2b1a4bdb6762129808ae1c0db"
+    },
+    {
+      "path": "assets/fonts/Display.ttf",
+      "sha256": "8cb29f7db250ebb2551a6ce2c1e0bfd5a0eb520e9e233370db0493e82e1f36f7"
+    },
+    {
+      "path": "assets/fonts/Display.ttf.import",
+      "sha256": "32f55968487afd81e28dedc63aa4b09f4f924be1833873f741fb2eb20417d672"
+    },
+    {
+      "path": "assets/fonts/LICENSE",
+      "sha256": "63d3ba759d12804c5b31a9d5940d855c1820d1f5999e6b0872eb1c7ff045fbc9"
+    },
+    {
+      "path": "assets/icon.svg",
+      "sha256": "e671939496ed17dc536471284c0f5394dd0a3380ecf04c2625db0092ec6d33c0"
+    },
+    {
+      "path": "assets/icon.svg.import",
+      "sha256": "0541c33398e8b518f66a3b077eaf30eaf0ea77bf1edaedf728a6c8be0ce054ee"
+    },
+    {
+      "path": "assets/shaders/arena_light.gdshader",
+      "sha256": "6c18c296d798adf4b08ae073e9c56fc26586e217d3119e56b9fabe4907d9b8c8"
+    },
+    {
+      "path": "assets/shaders/arena_light.gdshader.uid",
+      "sha256": "1e066ebf6ab4241cb1baa822a6e4ce3e341b0eea0777dd62d055c7761420bcb0"
+    },
+    {
+      "path": "data/brand/identity.json",
+      "sha256": "d206e81e76a2f0b4c35b2a8bfd64d133e9f8be1a449c0ed9c4f6c9c846fcdc4e"
+    },
+    {
+      "path": "data/campaign/chapters.json",
+      "sha256": "43412603de7f2d7de3deed0af430ad54c328daa83abc0c9da9a2d2095683f691"
+    },
+    {
+      "path": "data/card_definitions.gd",
+      "sha256": "6449cdf4d01e8e1042c4c38d3639d74910c543f9f378fa52f1d6f1a612c680c3"
+    },
+    {
+      "path": "data/card_definitions.gd.uid",
+      "sha256": "bd2066ac62a4a09fd4511e49056860cde217fa85684fd9e7fa90728dd0f89e01"
+    },
+    {
+      "path": "data/legacy/README.md",
+      "sha256": "cd100d8690f86acf02c7964ef833d491e392b5af4290f837d96368bc6df25d25"
+    },
+    {
+      "path": "data/legacy/cards.json",
+      "sha256": "0e70a27c6c70e8bc5e8d527b4fbbb76201ae0d004c7b1cb29202b219cf229ffe"
+    },
+    {
+      "path": "data/legacy/decks.json",
+      "sha256": "fdb59708856314644bd434de8f286826aa50cb08bd46e60203aa7107a9606be5"
+    },
+    {
+      "path": "data/legacy/display_de.json",
+      "sha256": "a6f4ab40f8e3641395772996059007f5439d3f1ba1478fee98e9cbd569684231"
+    },
+    {
+      "path": "data/narrative/content.json",
+      "sha256": "9e41aca3d221170703b4d1f230335a720612e306f82cbee0cbc3051a6f6729ea"
+    },
+    {
+      "path": "data/narrative/locales/de.json",
+      "sha256": "242c4018c890a08063934db4ebfcdcaaf2ab10f99e128e8488d78ae93c8f7b8b"
+    },
+    {
+      "path": "data/narrative/locales/en.json",
+      "sha256": "0ecb7fd700b98bce7e004ba60cb44a0cc5bde09b79f2331a5a79768c5b6d40e9"
+    },
+    {
+      "path": "export_presets.cfg",
+      "sha256": "996d9ecb6bdd6e37438d993cf8aecf55733ebb4332da92ff3e7ea8eac39a5f40"
+    },
+    {
+      "path": "project.godot",
+      "sha256": "0642ef54b318c749cf3a5332a45453ea252debcb0dd579783a647fd8bb287ce7"
+    },
+    {
+      "path": "scripts/arena.gd",
+      "sha256": "b703149f6bda913a6a1c9747b6d1a483f9e80682e58ba00af6c8950b53aabdd7"
+    },
+    {
+      "path": "scripts/battle_model.gd",
+      "sha256": "c5abda32e8baeb9271becd8d855568dda4d14e98a56aea9859668421c6835145"
+    },
+    {
+      "path": "scripts/game_audio.gd",
+      "sha256": "1721ae8e5bc2dd8cc0e6ea97d7426fb2b9d7d5c407991670ba0c5981f82468e6"
+    },
+    {
+      "path": "tests/fixtures/legacy/cards.json",
+      "sha256": "a31e88342c7b637ac6599e6b01505c64db71fd8cdfc2267ed3d6e21d1da975b9"
+    },
+    {
+      "path": "tests/fixtures/legacy/combat_p04_v1.json",
+      "sha256": "b10be219fbfc44b1433356b5a181f4a805ffed782b33452201826dc40ee45203"
+    },
+    {
+      "path": "tests/fixtures/legacy/decks.json",
+      "sha256": "a5940a8a90223e948971006cc27f6acd2834b0b20bd074bb094f0fa2848dead5"
+    },
+    {
+      "path": "tests/fixtures/legacy/engine_p01_p04.json",
+      "sha256": "ddc9b286408c3db927cbf2ea85f6c657482d0be64a505bbffbd13a9141232420"
+    },
+    {
+      "path": "tests/fixtures/legacy/p05_p06_edges_v1.json",
+      "sha256": "32afbf852bf3dc592fac037db659bdb085f15d755c14f7550d8be06b643fcf63"
+    },
+    {
+      "path": "tests/fixtures/legacy/p05_p06_lifecycle_v1.json",
+      "sha256": "63dc69d31d2f0df55d1f830388e1a0c347ce93c6a795fcba9e3a66f332fc94a0"
+    },
+    {
+      "path": "tests/fixtures/legacy/p05_p06_v1.json",
+      "sha256": "473fe4d5db5aee7fbaa1ad99aa52b96ed9ba3be0c328c9993ee36c6ddc7afb3d"
+    },
+    {
+      "path": "tests/fixtures/legacy/queue_winner_p04_v1.json",
+      "sha256": "b80ce36c65a687a723018eeb8742dfbefa9ffea52cf7f85627429d12f051db90"
+    },
+    {
+      "path": "tests/fixtures/legacy/rng_consumption_v1.json",
+      "sha256": "e11a9796698f8bc9586b288e2678fb9742b88a24f17b804aa536af9de414f2a6"
+    },
+    {
+      "path": "tests/fixtures/legacy/transitions.json",
+      "sha256": "66ab79f38af794bf32073f08be4fbefe99b64b42e7ad10d37ff54f395a06aff4"
+    },
+    {
+      "path": "tests/fixtures/legacy/turns_p03_v1.json",
+      "sha256": "14c305f9342c07c61cb594eba193f1acf4ddd72ad9aa32768598d9b1ce4ac531"
+    },
+    {
+      "path": "tests/input_layout.gd",
+      "sha256": "687d9c43c903d44833ed3cc05a01995f10d463c6a96a85f43bb71478229af82d"
+    },
+    {
+      "path": "tests/reference/duel_deck/README.md",
+      "sha256": "f71e13c3a9bb99eb41416b901b05092d70d4b92f58e721371af0461700758bbf"
+    },
+    {
+      "path": "tests/reference/duel_deck/engine.js",
+      "sha256": "abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1"
+    },
+    {
+      "path": "tests/reference/duel_deck/source.lock.json",
+      "sha256": "f1ffa858b55bd53297f57d4c37d650c99d332a65ddb81eb7c1a6e9003ffd4a66"
+    }
+  ]
+}
