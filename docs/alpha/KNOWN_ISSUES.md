@@ -26,3 +26,10 @@ Pushlauf42705454623 bestand alle Archivprofile und alle vier Alpha-Chromiumprofi
 ## Phase B – ausdrücklich nicht ausgeführt
 
 Kein develop-Merge und kein produktives Deployment. Admin-Einstellungen für geschützten Pages-Release sind nicht nachweislich vollständig eingerichtet. Alte Publisher-ID406254158 deaktiviert lassen. Releaseregeln nicht durch Featurebranch-Hosting umgehen. Siehe RELEASE_REPORT.
+
+
+## Browser-Kompatibilitätsnachtrag – 2026-11-09
+
+Der getrennte PR-Lauf42708751068 bestand die vollständigen WebKitprüfungen; der Pushlauf42708739069 scheiterte dagegen im dritten **Archiv**-WebKitprofil vor Spielstart mit `Out of bounds memory access (entryFunction)`. Prozessisolation allein ist damit kein verlässlich nachgewiesener Fix. Auch dieses Scheitern bleibt erhalten, kein automatischer Retry wird als uneingeschränkter Erfolg gezählt.
+
+Das exakte zuvor fehlgeschlagene CI-Alpha-Artefakt wurde lokal geöffnet: WebKit-iPhone-Flow und PCK-Smoke bestanden. JS/WASM des CI- und lokalen Exports sind bytegleich. Der verwendete Playwright1.56.1-/WebKit26-Stack wird für Folgeprüfungen auf den aktuellen stabilen, ausdrücklich fixierten Playwright1.65.0-/WebKit27.2-Stack aktualisiert. Erster lokaler iPhone-Flow des CI-Artefakts auf27.2 bestanden. Vollständige Folgeprüfungen ausstehend; keine behauptete Root-Cause-Behebung oder physische Geräteabnahme.

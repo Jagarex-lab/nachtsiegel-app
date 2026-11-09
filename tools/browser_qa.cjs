@@ -30,6 +30,7 @@ const assert = require('assert/strict');
    headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{})
   });
   try {
+    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
     const {name,insets,...options}=profile;
     const context=await browser.newContext(options);
     const page=await context.newPage();
