@@ -1,0 +1,38 @@
+✔ reference pin rejects wrong commit, changed bytes and changed blob (28.880111ms)
+✔ all six generated outputs are deterministic and current, byte for byte (1124.650212ms)
+✔ 100 rule records and separated original labels match every upstream field (15.094226ms)
+✔ five original decks preserve order, size, IDs and original validation outcomes (7.218102ms)
+✔ canonical comparison preserves JSON types, null/missing and array order (1.448409ms)
+✖ transition fixture covers all 11 commands, legal and rejected; all effects and reactions (58.843049ms)
+✔ reordered object fields pass, missing HP, changed target and shuffled deck fail on actual fixtures (46.191258ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1618.069408
+
+✖ failing tests:
+
+test at tests/legacy_foundations.test.cjs:51:1
+✖ transition fixture covers all 11 commands, legal and rejected; all effects and reactions (58.843049ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  1 !== 2
+
+      at TestContext.<anonymous> (/workspace/nachtsiegel-app/tests/legacy_foundations.test.cjs:56:43)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

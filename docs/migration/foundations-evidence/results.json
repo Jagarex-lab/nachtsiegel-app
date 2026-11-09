@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-09",
+  "branch": "feature/legacy-foundations",
+  "base_commit": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8",
+  "audit_reference_commit": "51ad544087dba200846b4420e493fcbe656c634f",
+  "upstream_commit": "34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+  "environment": {
+    "node": "v24.22.1",
+    "godot": "4.6.3.stable.official.7d41c59c4",
+    "rendering": "Linux/Xvfb :99, Mesa llvmpipe"
+  },
+  "results": {
+    "new_suite": {
+      "exit_code": 0,
+      "node_test_groups": 8,
+      "godot_assertions": 2171,
+      "failures": 0
+    },
+    "production_regression": {
+      "exit_code": 0,
+      "assertions": 9547,
+      "failures": 0,
+      "audio_cues": 11,
+      "contrast_states": 89,
+      "contrast_regions": 3836
+    },
+    "upstream_replay": {
+      "exit_code": 0,
+      "completed_duels": 250,
+      "replay_verifications": 250
+    },
+    "upstream_known_failures": [
+      {
+        "command": "node tests.js",
+        "exit_code": 1
+      },
+      {
+        "command": "node ui-smoke.test.js",
+        "exit_code": 1
+      },
+      {
+        "command": "node check.js",
+        "exit_code": 1
+      }
+    ],
+    "reference_and_generation": {
+      "exit_code": 0,
+      "verified_generated_files": 6,
+      "cards": 100,
+      "decks": 5,
+      "validation_vectors": 24,
+      "controlled_scenarios": 124,
+      "steps": 152,
+      "openings": 6
+    }
+  },
+  "corrected_development_failure": "Initial opening seeds both produced hero coin; second changed to 2147483648; coverage test now passes for both coin sides.",
+  "limitations": [
+    "No runtime combat port or production activation",
+    "No Godot transition-execution parity claim",
+    "No web/mobile export, browser QA or physical device tests in this task",
+    "JS property-key/falsy ownership coercion intentionally outside typed API domain"
+  ],
+  "implementation_sha256": {
+    "data/legacy/cards.json": "0e70a27c6c70e8bc5e8d527b4fbbb76201ae0d004c7b1cb29202b219cf229ffe",
+    "data/legacy/decks.json": "fdb59708856314644bd434de8f286826aa50cb08bd46e60203aa7107a9606be5",
+    "data/legacy/display_de.json": "a6f4ab40f8e3641395772996059007f5439d3f1ba1478fee98e9cbd569684231",
+    "scripts/legacy/catalog.gd": "bb7124f409149303f53001766ae89c4c3610694c6a6c950c54bb23113aa8d664",
+    "scripts/legacy/deck_validator.gd": "3fe82e7561e118b92034f3a067dacc408eec1f4380f5fd60775004e630b1086e",
+    "scripts/legacy/display_catalog.gd": "94b65500ceafd24b42c153d28cc95f91638065225ab7fba02908c887e7399a99",
+    "tests/fixtures/legacy/cards.json": "a31e88342c7b637ac6599e6b01505c64db71fd8cdfc2267ed3d6e21d1da975b9",
+    "tests/fixtures/legacy/decks.json": "a5940a8a90223e948971006cc27f6acd2834b0b20bd074bb094f0fa2848dead5",
+    "tests/fixtures/legacy/transitions.json": "66ab79f38af794bf32073f08be4fbefe99b64b42e7ad10d37ff54f395a06aff4",
+    "tests/legacy_fixture_compare.gd": "8c2313c94a09b138c2888cefc603e64f34303b1f05f2021eca3d10e4cb5708a3",
+    "tests/legacy_foundations.gd": "9fd57ca2c76619e62d6e7e8fd4b42b7ce6657c5f12effb68690ae2581291ee5e",
+    "tests/legacy_foundations.test.cjs": "48d81d7557134d5982ee6d1c850286d17b62f571048ea95136e88dd8e35cbe92",
+    "tools/legacy/compare.cjs": "8654a52272db6a530aada78e259cb968f77c6d767e08fb5a1154a65f7de4acc4",
+    "tools/legacy/generate.cjs": "0f952411bd990af65f2ad2a88dc6ada08d6396e2ac7ca62a6e39c6804b62463d",
+    "tools/legacy/reference.cjs": "e5df930f201819cf578f8f71ef684c387fd86cde551412c2bccd98dcb17c0ca6",
+    "tools/legacy/scenarios.cjs": "ea2525e3616b470fb03d2418a38b6d33b18f56f36f118f9fb5ed55dba3625117"
+  }
+}

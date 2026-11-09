@@ -1,0 +1,28 @@
+name: Legacy foundations (no deployment)
+
+on:
+  pull_request:
+    branches: [develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pinned-reference-and-catalog:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import scripts for headless tests
+        run: godot --headless --editor --import --path . --quit
+      - name: Pinned JS reference, reproducible fixtures and isolated Godot catalog
+        run: tools/test_legacy.sh

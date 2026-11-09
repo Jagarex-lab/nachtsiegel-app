@@ -1,0 +1,711 @@
+{
+  "counting_unit": "70 explicitly bounded functional requirements; no effort weighting",
+  "counts": {
+    "vollständig": 6,
+    "teilweise": 12,
+    "fehlend": 43,
+    "abweichend": 9
+  },
+  "mechanics": [
+    {
+      "id": "M01",
+      "name": "Fünf gegenüberliegende Pfade",
+      "status": "vollständig",
+      "legacy": "5 Slots pro Seite. [J21], [J81]",
+      "godot": "5 Slots pro Seite. [G3], [G72]",
+      "evidence": "S + T: rules, Angriffssonden",
+      "package": "P03",
+      "accept": "Beide Seiten besitzen genau fünf gültige Slots."
+    },
+    {
+      "id": "M02",
+      "name": "Angriff auf leeren Gegenpfad",
+      "status": "teilweise",
+      "legacy": "Gegnerheld wird getroffen; Block → Schild → HP. [J71], [J81]",
+      "godot": "Richtiges Heldenziel, aber unmittelbar HP-Abzug. [G79]",
+      "evidence": "T: beide Seiten, 4 passende / 4 abweichende Teilfälle",
+      "package": "P04",
+      "accept": "Leerer Gegenpfad trifft ausschließlich den Gegnerhelden und verbraucht Schutz in Reihenfolge."
+    },
+    {
+      "id": "M03",
+      "name": "Gewöhnlicher Kreaturentreffer",
+      "status": "vollständig",
+      "legacy": "Nur gegenüberliegende Kreatur verliert Angriffswert an HP; kein allgemeiner Gegenschlag. [J81]",
+      "godot": "Identischer enger Basisfall; tote Kreatur wird entfernt. [G77]",
+      "evidence": "T: rules + besetzter Pfad in beiden Richtungen; Fähigkeiten separat",
+      "package": "P04",
+      "accept": "Gegenüberliegendes Ziel nimmt Schaden; ohne Sonderfähigkeit kein Gegenschaden und kein gewöhnlicher Überlauf."
+    },
+    {
+      "id": "M04",
+      "name": "Spieler: Kosten / Kartenverbrauch",
+      "status": "vollständig",
+      "legacy": "Bezahlbarer gültiger Aufruf verbraucht Kosten und eine Handkarte. [J74]",
+      "godot": "Derselbe Basisvertrag. [G35]",
+      "evidence": "T: rules Summon spends cost and card, Insufficient energy",
+      "package": "P03",
+      "accept": "Gültig genau einmal abbuchen, Ablehnung verändert keine Ressourcen."
+    },
+    {
+      "id": "M05",
+      "name": "Spieler: gültiger freier Beschwörungsplatz",
+      "status": "vollständig",
+      "legacy": "Nur eigene freie Slots 0–4. [J74]",
+      "godot": "Ebenfalls eigene freie Slots 0–4. [G35]",
+      "evidence": "S + T: rules occupied/no selection; Indexgrenzen statisch",
+      "package": "P03",
+      "accept": "Besetzte und ungültige Slots ablehnen; keine Mutation."
+    },
+    {
+      "id": "M06",
+      "name": "Spieler: zwei Beschwörungen je eigenem Zug",
+      "status": "vollständig",
+      "legacy": "summons < 2. [J74]",
+      "godot": "summons < 2, Reset beim Rundenwechsel. [G41], [G132]",
+      "evidence": "T: rules zweite erlaubt / dritte abgelehnt",
+      "package": "P03",
+      "accept": "Dritte Kreatur ablehnen, nächster eigener Zug erlaubt wieder zwei."
+    },
+    {
+      "id": "M07",
+      "name": "Handobergrenze beim eigentlichen Ziehen",
+      "status": "vollständig",
+      "legacy": "draw stoppt bei sechs. [J57]",
+      "godot": "draw_card stoppt bei sechs. [G33]",
+      "evidence": "T: rules Six card hand limit; Überlaufverfahren separat M19",
+      "package": "P05",
+      "accept": "Bei sechs Handkarten kein zusätzliches Ziehen und kein Verlust einer Deckkarte."
+    },
+    {
+      "id": "M08",
+      "name": "Stabile Kartenidentität / Seltenheit / Effektstärke",
+      "status": "fehlend",
+      "legacy": "100 IDs, order, rarity, power, effect. [J8]",
+      "godot": "Kampfpool nur Index/name/kind/sigil und Grundwerte. [C]; narrative IDs sind keine JS-IDs.",
+      "evidence": "S: vollständiger Datenexport",
+      "package": "P02",
+      "accept": "100 bekannte IDs unverwechselbar auflösen; keine Zuordnung allein nach Namen."
+    },
+    {
+      "id": "M09",
+      "name": "Kartenwerte und Katalogumfang",
+      "status": "abweichend",
+      "legacy": "100 Kreaturen mit Effekten. [J8]",
+      "godot": "6 Kreaturen ohne Fähigkeiten + 1 Zauber; zwei Namenskollisionen mit anderen Werten. [C]",
+      "evidence": "S: Kartenmatrix und exportierte Werte",
+      "package": "P02",
+      "accept": "Für jede übernommene ID Typ/Kosten/ATK/HP/power/rarity/effect exakt vergleichen."
+    },
+    {
+      "id": "M10",
+      "name": "Deckprüfung / Kopien / Besitz",
+      "status": "fehlend",
+      "legacy": "20–25; gewöhnlich/selten/episch max. 3, legendär max. 1, Besitzlimit. [J99]",
+      "godot": "Festes indexbasiertes Deck, keine entsprechende Prüfung. [G28]",
+      "evidence": "S; alter tests.js bricht vor weiteren Checks ab",
+      "package": "P02",
+      "accept": "Grenzen 19/20/25/26, unbekannte IDs, 3/4 Kopien, legendär 1/2 und Besitz prüfen."
+    },
+    {
+      "id": "M11",
+      "name": "Vier Standarddecks / eigenes Deck",
+      "status": "fehlend",
+      "legacy": "Vier konkrete gemischte 25er-Listen + START 25. [J12]–[J18]",
+      "godot": "Ein festes 25er-Muster i % 7; keine Deckwahl. [G28]",
+      "evidence": "S: exportierte Decklisten",
+      "package": "P02",
+      "accept": "Alle vier Presets und START mit identischer Reihenfolge/Multimenge laden."
+    },
+    {
+      "id": "M12",
+      "name": "Seed-RNG, Shuffle, Ziehrichtung",
+      "status": "abweichend",
+      "legacy": "32-bit LCG, Fisher–Yates, Deckanfang shift; Münze verbraucht RNG zuerst. [J19], [J57], [J69]",
+      "godot": "Godot RNG, Fisher–Yates mit anderer Zufallsfolge; Deckende pop_back. [G26]–[G34]",
+      "evidence": "S; innerhalb JS 250 Replays erfolgreich, kein Cross-Engine-Seednachweis",
+      "package": "P01/P02",
+      "accept": "Goldene Zufallsfolgen, Münze, beide Deckreihenfolgen und erste Hände stimmen überein."
+    },
+    {
+      "id": "M13",
+      "name": "Münzwurf / Startspielerausgleich",
+      "status": "fehlend",
+      "legacy": "Seed-Münze; zweiter Spieler +4 Schild und einmalig +1 Energie. [J68], [J69]",
+      "godot": "Spieler beginnt stets; kein Ausgleich. [G22], [G101]",
+      "evidence": "S",
+      "package": "P03",
+      "accept": "Beide Startseiten und ihr erster Energie-/Schutzwert müssen goldene Zustände treffen."
+    },
+    {
+      "id": "M14",
+      "name": "Startleben / Gegner-Level",
+      "status": "abweichend",
+      "legacy": "Held 35, Gegner min(43,33+floor(level/3)). [J69]",
+      "godot": "Beide stets 35. [G25]",
+      "evidence": "S",
+      "package": "P03",
+      "accept": "Level 1/2/5 sowie Deckelwert mit beiden Anfangszuständen prüfen."
+    },
+    {
+      "id": "M15",
+      "name": "Erste Hand / erster Zug",
+      "status": "abweichend",
+      "legacy": "3 Karten im ersten eigenen Zug; ggf. automatische gegnerische Eröffnung. [J68], [J69]",
+      "godot": "4 Karten direkt bei start; kein gegnerischer Erstzug. [G32]",
+      "evidence": "S",
+      "package": "P03/P05",
+      "accept": "Eröffnung für beide Münzseiten stimmt vor und nach automatischem Gegnerzug überein."
+    },
+    {
+      "id": "M16",
+      "name": "Zugphasen / aktive Seite",
+      "status": "teilweise",
+      "legacy": "begin → draw → main → attack → end, aktive Seite; Round steigt pro Halbzug. [J68], [J82]",
+      "godot": "UI-Phasen vorhanden, Modell kombiniert Spielerangriff/Gegnerbeschwörung/Gegnerangriff; Round pro ganzem Zyklus. [G101], [A935]",
+      "evidence": "S + T: Godot-Regressionsduelle, kein JS-Phasenvergleich",
+      "package": "P03",
+      "accept": "Jeder Befehl nur in erlaubter Phase/Seite; Zustände je Phasengrenze gleich."
+    },
+    {
+      "id": "M17",
+      "name": "Energieformel und Rücksetzung",
+      "status": "abweichend",
+      "legacy": "Basis 2 + Hard-Gegnerbonus + Zweitspielerbonus + Resonanzschwellen 5/10/15. [J68]",
+      "godot": "Start 3, danach min(10,2+round_number). [G25], [G133]",
+      "evidence": "S",
+      "package": "P03/P07",
+      "accept": "Schwellen 4/5/9/10/14/15, erster/zweiter Spieler und Hard-Level separat prüfen."
+    },
+    {
+      "id": "M18",
+      "name": "Folgezug ziehen / Bestätigung",
+      "status": "teilweise",
+      "legacy": "1 Karte, explizite Spieler-Nachziehphase nach Erstzug. [J60], [J68]",
+      "godot": "1 Karte automatisch nach Gegnerangriff. [G136]",
+      "evidence": "S + T: Godot-Regressionsduelle, kein expliziter Phasentest gegen JS",
+      "package": "P05",
+      "accept": "Vor Bestätigung kein main-Befehl; nach genau einem Ziehen keine Wiederholung."
+    },
+    {
+      "id": "M19",
+      "name": "Pflichtverbrennen bei Überlauf",
+      "status": "fehlend",
+      "legacy": "Nur draw und nur erforderlicher Überlauf; Hand → Ablage vor Ziehen. [J58]",
+      "godot": "Volle Hand lässt Nachziehen lediglich ausfallen. [G33]",
+      "evidence": "S",
+      "package": "P05",
+      "accept": "Bei 6+1 muss genau eine Karte gewählt/abgelegt werden; freiwilliges Verbrennen ablehnen."
+    },
+    {
+      "id": "M20",
+      "name": "Block: Verbrauch und Ablauf",
+      "status": "fehlend",
+      "legacy": "Vor Schild verbraucht; bei eigenem begin auf 0. [J41], [J68], [J71]",
+      "godot": "Kein block-Zustand, keine Absorption. [G79]",
+      "evidence": "T: JS 2/5/10-Schaden; Godot-geschützte Vektoren weichen ab",
+      "package": "P04",
+      "accept": "Teil-/Vollabsorption, mehrere Angriffe und Ablauf erst beim nächsten eigenen begin prüfen."
+    },
+    {
+      "id": "M21",
+      "name": "Schild: Verbrauch / Deckel / Persistenz",
+      "status": "fehlend",
+      "legacy": "Nach Block; cap 25; hält bis Verbrauch, verschiedene Quellen. [J42], [J71]",
+      "godot": "Kein ward-Zustand. [G79]",
+      "evidence": "T: JS Restschutz + geschützte Vektoren",
+      "package": "P04",
+      "accept": "Cap 25 und Erhalt über Zugwechsel; Schaden konsumiert Rest nach Block."
+    },
+    {
+      "id": "M22",
+      "name": "Leerer Stapel / Erschöpfung",
+      "status": "fehlend",
+      "legacy": "Einmal pro Nachziehphase mit fehlenden Karten 1/2/3 direkter Schaden; Serie bei vollständigem Ziehen zurückgesetzt. [J60]–[J65]",
+      "godot": "Leeres Deck bewirkt nichts. [G33]",
+      "evidence": "S",
+      "package": "P05",
+      "accept": "Mehrere fehlende Karten nicht mehrfach bestrafen; Schutz ignorieren; Reset und tödlichen Fall prüfen."
+    },
+    {
+      "id": "M23",
+      "name": "Ablagestapel / Todeskarte",
+      "status": "fehlend",
+      "legacy": "Tod und burn legen ID ab; Todesevent nach Entfernung. [J37], [J58], [J81]",
+      "godot": "Tote Einheiten werden null; keine Ablage. [G47], [G87]",
+      "evidence": "S + T: Godot Ziel verschwindet, keine Ablageassertion",
+      "package": "P04/P05",
+      "accept": "Jede tote/verbrannte Karte exakt einmal in korrekter Reihenfolge ablegen."
+    },
+    {
+      "id": "M24",
+      "name": "Deterministischer Erinnerungskreislauf",
+      "status": "fehlend",
+      "legacy": "Leeres Deck aus Ablage neu mischen, seitenspezifischer Seed, direkter Preis 1/2/3. [J59]",
+      "godot": "Keine Deckerneuerung. [G33]",
+      "evidence": "S",
+      "package": "P05",
+      "accept": "Deck/Ablage/Reihenfolge/Preis nach mehreren Kreisläufen einschließlich Tod vergleichen."
+    },
+    {
+      "id": "M25",
+      "name": "Erinnerungsruf / Rückholung",
+      "status": "fehlend",
+      "legacy": "main, einmal, −5 Resonanz, Hand < 6, deterministisch zufällige Ablagekarte. [J70]",
+      "godot": "Keine Rückholung.",
+      "evidence": "S: vollständiges Modell [G35]–[G137]",
+      "package": "P05/P07",
+      "accept": "Bedingungen/Seed/Ablageentfernung und Verbot der zweiten Nutzung prüfen."
+    },
+    {
+      "id": "M26",
+      "name": "Beschwörungsverzögerung",
+      "status": "fehlend",
+      "legacy": "Neu beschworen wartet eine eigene Angriffsphase, außer haste; stun wird vorher geprüft. [J81]",
+      "godot": "Jede Einheit greift sofort an; keine Flags. [G72]",
+      "evidence": "T: neu beschworen in beiden Richtungen abweichend",
+      "package": "P04",
+      "accept": "Normale Einheit wartet genau einmal; Eile und gleichzeitige Betäubung getrennt prüfen."
+    },
+    {
+      "id": "M27",
+      "name": "FIFO-Effektqueue / Todesreihenfolge",
+      "status": "fehlend",
+      "legacy": "summon/death/formation FIFO, Reentranzschutz, max. 100 Schritte, Stop bei winner. [J35]–[J54]",
+      "godot": "Keine entsprechende Queue. [G35], [G72]",
+      "evidence": "S",
+      "package": "P04/P06",
+      "accept": "Verschachtelte Effekte/Tode in JS-Reihenfolge; Sicherheitslimit und Gewinnerabbruch prüfen."
+    },
+    {
+      "id": "M28",
+      "name": "Kartenfähigkeit strike",
+      "status": "fehlend",
+      "legacy": "Beliebiges belegtes Gegnerfeld wählen; ohne Kreaturen geschützter Helden-Fallback; KI niedrigste HP. [J40]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Beliebiges belegtes Gegnerfeld wählen; ohne Kreaturen geschützter Helden-Fallback; KI niedrigste HP."
+    },
+    {
+      "id": "M29",
+      "name": "Kartenfähigkeit guard",
+      "status": "fehlend",
+      "legacy": "Bei Beschwörung power+2 Block auf eigenem Helden, nächster eigener Beginn löscht Block. [J41]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Bei Beschwörung power+2 Block auf eigenem Helden, nächster eigener Beginn löscht Block."
+    },
+    {
+      "id": "M30",
+      "name": "Kartenfähigkeit ward",
+      "status": "fehlend",
+      "legacy": "Bei Beschwörung power+1 Schild, gedeckelt bei 25. [J42]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Bei Beschwörung power+1 Schild, gedeckelt bei 25."
+    },
+    {
+      "id": "M31",
+      "name": "Kartenfähigkeit mend",
+      "status": "fehlend",
+      "legacy": "Bei Beschwörung power+2 Heldenheilung, maxHp respektieren. [J43]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Bei Beschwörung power+2 Heldenheilung, maxHp respektieren."
+    },
+    {
+      "id": "M32",
+      "name": "Kartenfähigkeit weave",
+      "status": "fehlend",
+      "legacy": "Bei Beschwörung power+1 Resonanz, cap 15. [J44]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06/P07",
+      "accept": "Bei Beschwörung power+1 Resonanz, cap 15."
+    },
+    {
+      "id": "M33",
+      "name": "Kartenfähigkeit drain",
+      "status": "fehlend",
+      "legacy": "Geschützten Helden treffen und nur tatsächlichen HP-Verlust heilen; maxHp. [J45]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Geschützten Helden treffen und nur tatsächlichen HP-Verlust heilen; maxHp."
+    },
+    {
+      "id": "M34",
+      "name": "Kartenfähigkeit rally",
+      "status": "fehlend",
+      "legacy": "Linken Nachbarn vor rechtem wählen und Angriff dauerhaft um power erhöhen. [J46]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Linken Nachbarn vor rechtem wählen und Angriff dauerhaft um power erhöhen."
+    },
+    {
+      "id": "M35",
+      "name": "Kartenfähigkeit silence",
+      "status": "fehlend",
+      "legacy": "Nur gegenüberliegende Kreatur stun=max(stun,1); kein Entfernen von Fähigkeiten. [J47]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Nur gegenüberliegende Kreatur stun=max(stun,1); kein Entfernen von Fähigkeiten."
+    },
+    {
+      "id": "M36",
+      "name": "Kartenfähigkeit pierce",
+      "status": "fehlend",
+      "legacy": "Ankunft power+2 ignoriert Schutz; tödlicher Kreaturentreffer-Überlauf durchläuft Schutz. [J48]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Ankunft power+2 ignoriert Schutz; tödlicher Kreaturentreffer-Überlauf durchläuft Schutz."
+    },
+    {
+      "id": "M37",
+      "name": "Kartenfähigkeit shift",
+      "status": "fehlend",
+      "legacy": "Nachbar der Quelle auf beliebigen freien eigenen Pfad; Skip; Formation +1 bei Nachbar. [J49]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Nachbar der Quelle auf beliebigen freien eigenen Pfad; Skip; Formation +1 bei Nachbar."
+    },
+    {
+      "id": "M38",
+      "name": "Kartenfähigkeit harvest",
+      "status": "fehlend",
+      "legacy": "Beim eigenen Tod power+1 Resonanz nach Ablage/Entfernung; kein Ankunftseffekt. [J37]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06/P07",
+      "accept": "Beim eigenen Tod power+1 Resonanz nach Ablage/Entfernung; kein Ankunftseffekt."
+    },
+    {
+      "id": "M39",
+      "name": "Kartenfähigkeit retaliate",
+      "status": "fehlend",
+      "legacy": "Nur bei positivem Treffer und überlebendem Verteidiger power Gegenschaden; Tod des Angreifers. [J81]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Nur bei positivem Treffer und überlebendem Verteidiger power Gegenschaden; Tod des Angreifers."
+    },
+    {
+      "id": "M40",
+      "name": "Kartenfähigkeit draw",
+      "status": "fehlend",
+      "legacy": "Ankunft zieht maximal eine Karte; volle Hand/leeres Deck ohne Erschöpfung oder Kreislauf. [J50]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Ankunft zieht maximal eine Karte; volle Hand/leeres Deck ohne Erschöpfung oder Kreislauf."
+    },
+    {
+      "id": "M41",
+      "name": "Kartenfähigkeit haste",
+      "status": "fehlend",
+      "legacy": "Nur Beschwörungsverzögerung umgehen, nicht Betäubung. [J81]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "Nur Beschwörungsverzögerung umgehen, nicht Betäubung."
+    },
+    {
+      "id": "M42",
+      "name": "Kartenfähigkeit weaken",
+      "status": "fehlend",
+      "legacy": "max(weak,power); alle Angriffe nächster eigener Phase reduziert, danach Reset. [J51]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06",
+      "accept": "max(weak,power); alle Angriffe nächster eigener Phase reduziert, danach Reset."
+    },
+    {
+      "id": "M43",
+      "name": "Kartenfähigkeit pulse",
+      "status": "fehlend",
+      "legacy": "Ankunft +power Resonanz/+power Schild, beide benachbarten Verbündeten +1 Angriff. [J52]",
+      "godot": "Kein Effektfeld oder Dispatch. [C], [G35], [G72]",
+      "evidence": "S; 100 JS-Ankunftssonden sind nur Smoke, keine semantische Einzelabdeckung",
+      "package": "P06/P07",
+      "accept": "Ankunft +power Resonanz/+power Schild, beide benachbarten Verbündeten +1 Angriff."
+    },
+    {
+      "id": "M44",
+      "name": "Resonanzzustand / cap / Schwellen",
+      "status": "fehlend",
+      "legacy": "Eigene Resonanz cap 15; bei 15 Zugbeginn +2 Schild. [J68], [J72]",
+      "godot": "sigil nur Darstellung, keine Resonanz. [C], [G90]",
+      "evidence": "S",
+      "package": "P07",
+      "accept": "Caps und Schwellen plus gleichzeitige Energie-/Schildwirkung vergleichen."
+    },
+    {
+      "id": "M45",
+      "name": "Ordenswechsel / 12 gerichtete Reaktionen",
+      "status": "fehlend",
+      "legacy": "Anderer Folgeruf +2 Resonanz, gerichtete Reaktion, attune je Zug reset. [J73], [J74]",
+      "godot": "Keine Ordensketten.",
+      "evidence": "S: [C], [G35]",
+      "package": "P07",
+      "accept": "Alle 12 geordneten Paare und gleiches Paar/erster Ruf ohne Reaktion testen."
+    },
+    {
+      "id": "M46",
+      "name": "Vier Ordensentfesselungen",
+      "status": "fehlend",
+      "legacy": "Freigabe bei 15, Kosten 8, einmal/Zug, passende eigene Einheit erforderlich. [J97]",
+      "godot": "Keine Entfesselung.",
+      "evidence": "S: Modell und Arena-Kommandos",
+      "package": "P07",
+      "accept": "Alle vier Formeln, Schwellen, Kosten, Einheitenbedingung und Wiederholung prüfen."
+    },
+    {
+      "id": "M47",
+      "name": "Aktives Pfadmanöver",
+      "status": "fehlend",
+      "legacy": "Einmal/main, −3 Resonanz, nur benachbart frei, keine Formationsbelohnung. [J79]",
+      "godot": "Kein Manöverkommando.",
+      "evidence": "S: [A573], [A861], [G35]",
+      "package": "P07/P09",
+      "accept": "Legale Nachbarbewegung und illegale Fern-/Doppelnutzung; keine shift-Formation auslösen."
+    },
+    {
+      "id": "M48",
+      "name": "Aktive Pfadwacht",
+      "status": "fehlend",
+      "legacy": "Einmal/main, −2 Resonanz, +2 Schild und eigene Einheit +1 HP bis Basis. [J80]",
+      "godot": "Kein Pfadwachtkommando.",
+      "evidence": "S",
+      "package": "P07/P09",
+      "accept": "Auch voll geheilte Einheit kann Schild gewähren; Deckel und Flags vergleichen."
+    },
+    {
+      "id": "M49",
+      "name": "Sieg / Niederlage durch Helden-HP",
+      "status": "teilweise",
+      "legacy": "Nach relevanten Aktionen und jedem Pfad prüfen; reguläres play/endTurn stoppen. [J78], [J81]",
+      "godot": "Beide Ergebnisse vorhanden, Prüfung erst nach ganzer Angriffsphase. [G106], [G129]",
+      "evidence": "T: rules Sieg/Niederlage; Reihenfolge statisch abweichend",
+      "package": "P04/P08",
+      "accept": "Nach jedem entscheidenden Ereignis korrektes Ergebnis; keine weiteren regulären Angriffe/Spielzüge."
+    },
+    {
+      "id": "M50",
+      "name": "Zwei Kontrollphasen mit drei freien Pfaden",
+      "status": "teilweise",
+      "legacy": "Für beide Seiten getrennte eigene Serien; Unterbrechung reset. [J81]",
+      "godot": "Nur Spieler-streak und Spielerprüfung, kein gegnerischer Pfadsieg. [G110]",
+      "evidence": "T: rules Spielerpfadsieg; Gegenseite statisch nicht implementiert",
+      "package": "P08",
+      "accept": "Beide Seiten gewinnen im zweiten eigenen Kontrollschritt; Unterbrechung löscht nur eigene Serie."
+    },
+    {
+      "id": "M51",
+      "name": "Gleichzeitiger Heldentod / Unentschieden",
+      "status": "fehlend",
+      "legacy": "check erlaubt draw. [J78]",
+      "godot": "Nur Textresultat Sieg oder Niederlage. [G107], [G129]",
+      "evidence": "S; JS 250 Replays enthalten keinen Draw-Nachweis",
+      "package": "P08",
+      "accept": "Kontrollierter beidseitiger Null-HP-Zustand ergibt genau draw und sperrt alle Befehle."
+    },
+    {
+      "id": "M52",
+      "name": "Sequentielle Angriffe / sofortiger Abbruch",
+      "status": "abweichend",
+      "legacy": "Pfad 0–4, Treffer/Tod/Trigger/Sieg vollständig vor nächstem Pfad. [J81]",
+      "godot": "Sammelt Kreaturenschaden; Heldenabzüge zuerst, dann Kreaturentreffer, Sieg später. [G72]",
+      "evidence": "S; bestehender Regressionstest schützt Godot-Verhalten",
+      "package": "P04/P08",
+      "accept": "Mehrpfad-Szenario mit tödlichem frühen Treffer erzeugt keine späteren Schäden/Tode."
+    },
+    {
+      "id": "M53",
+      "name": "Gegner: Deck / Hand / Energie / Limit",
+      "status": "abweichend",
+      "legacy": "KI benutzt dieselben Ressourcen, max. 2 Beschwörungen. [J83]",
+      "godot": "Pro Zyklus eine kostenlose zufällige Einheit ohne Gegnerdeck/-hand/-energie. [G118]",
+      "evidence": "S + T: Godot-Regressionsduelle",
+      "package": "P10",
+      "accept": "Jede KI-Aktion durch denselben Validator; Ressourcenverbrauch und Hand/Deckstände stimmen."
+    },
+    {
+      "id": "M54",
+      "name": "Gegner: Auswahl / Schwierigkeitsstufen",
+      "status": "abweichend",
+      "legacy": "Level-basierte deterministische Scoring-KI mit Fähigkeiten, Zielwahl, Manöver, Wacht, Recover. [J83]–[J96]",
+      "godot": "Fünf andere Profile mit Zufalls-/Zweierstichproben; keine Legacy-Effektbewertung. [G53]–[G71]",
+      "evidence": "S; 1000 JS-Simulationen, keine Cross-Engine-KI-Vergleiche",
+      "package": "P10",
+      "accept": "Identische Kandidaten, Sortierung/Tie-Breaks und Aktionen für easy/normal/hard."
+    },
+    {
+      "id": "M55",
+      "name": "Deterministische Partie aus Seed",
+      "status": "teilweise",
+      "legacy": "Seed + Level + HeroDeck reichen zur Rekonstruktion. [J69], [J103]",
+      "godot": "Seed bestimmt lokale Partie, aber anderer RNG/Start/Katalog; Profile statt Level. [G22]",
+      "evidence": "T: 30 Godot-intern verglichene Duelle; 250 JS-interne Replays",
+      "package": "P01/P10/P11",
+      "accept": "Gleiche Eingabe + Befehle in beiden Engines ergeben gleiche kanonische Zustandsfolge."
+    },
+    {
+      "id": "M56",
+      "name": "Vollständige Zustands-Snapshots",
+      "status": "teilweise",
+      "legacy": "Beide Ressourcen/Deckreihenfolgen/Ablagen/Flags/IDs/aktive Seite/Ergebnis. [J25]",
+      "godot": "Nur eigener Deck/Handzustand, Felder, HP, Energie, Round und wenige Flags; result/Profil fehlen. [G90]",
+      "evidence": "S + T: rules vergleicht nur zwölf Godot-Felder",
+      "package": "P11",
+      "accept": "Kanonischer Snapshot deckt alle Legacy-Felder inklusive Pending-Auswahl ab."
+    },
+    {
+      "id": "M57",
+      "name": "Ereignisprotokoll mit Ursache / Ziel",
+      "status": "teilweise",
+      "legacy": "Chronologische Ereignisse mit state, seq, side, source, target, actionId, pendingDeath. [J28]",
+      "godot": "presentation mit before/after/attacks nur letztem Zug; kein vollständiges Legacy-Ereignisformat. [G92], [A941]",
+      "evidence": "S + T: bestehende Präsentationstests betreffen Godot-Frames",
+      "package": "P11",
+      "accept": "Komplette JS-Ereignisfolge einschließlich Todeszwischenzuständen reproduzierbar exportieren."
+    },
+    {
+      "id": "M58",
+      "name": "Befehlsprotokoll / Zustands-Hashes",
+      "status": "fehlend",
+      "legacy": "11 record-Kommandos, args, beforeHash/afterHash, Eventgrenzen. [J100]–[J102]",
+      "godot": "Keine Command-Historie oder FNV-Hashes.",
+      "evidence": "S: gesamtes [G]",
+      "package": "P11",
+      "accept": "Angenommene Kommandos und Eventgrenzen gleich; abgelehnte Kommandos nicht aufzeichnen."
+    },
+    {
+      "id": "M59",
+      "name": "Versionierter vollständiger Kampfexport",
+      "status": "fehlend",
+      "legacy": "NACHTSIEGEL-COMBAT-AUDIT v4, replayVersion 2, engine-Label 2.4. [J33]",
+      "godot": "Keine kompatible Exportfunktion; QA-Bridge ist kein Auditexport. [A642]",
+      "evidence": "S",
+      "package": "P11",
+      "accept": "Alle erforderlichen Felder/versionierten Semantiken aus aktueller JS-Quelle exportieren."
+    },
+    {
+      "id": "M60",
+      "name": "Replay-Import / Verifikation",
+      "status": "fehlend",
+      "legacy": "Neuberechnung aus Deck/Seed/Level; before/after/finalHash prüfen. [J103]–[J105]",
+      "godot": "Kein kompatibler Import/Verifier.",
+      "evidence": "T: nur JS-Verifier besteht 250 Replays",
+      "package": "P11",
+      "accept": "Goldene JS-Replays und manipulierte Hashes/ungültige Befehle mit gleichem Ergebnis prüfen."
+    },
+    {
+      "id": "M61",
+      "name": "Offene Effektziele / Skip / Eingabegates",
+      "status": "fehlend",
+      "legacy": "pendingTarget/Shift verhindern weiteres play/endTurn; Auswahl/Skip schließt ab. [J56], [J74]–[J82], [U45]",
+      "godot": "Zauberauswahl direkt auf Gegner möglich; kein Legacy-Pending-Workflow. [A573], [A861]",
+      "evidence": "S; Godot-Spelltests sind kein strike-Nachweis",
+      "package": "P09",
+      "accept": "Erzwungene Zielwahl/Skip mit korrekter Sperre aller betroffenen Aktionen darstellen."
+    },
+    {
+      "id": "M62",
+      "name": "Regelbasierte Angriffsvorschau",
+      "status": "fehlend",
+      "legacy": "Stun, Wartestatus, Ziel, Durchbruch und Schutz je Pfad. [U22]",
+      "godot": "Zielmarkierung/Animation, keine entsprechende Ressourcen-/Effektvorschau. [A910]",
+      "evidence": "S",
+      "package": "P09",
+      "accept": "Vorschau aus derselben Regelabfrage, kein UI-Nachbau der Kampflogik."
+    },
+    {
+      "id": "M63",
+      "name": "Sammlung: Suche / Filter / Details",
+      "status": "teilweise",
+      "legacy": "100 Karten, Name/Orden/Effekt/Seltenheit/Besitz, Grundwerte und Fähigkeit. [U24]–[U26]",
+      "godot": "7 spielbare +13 explizite Konzepte; Suche und Fraktion, keine Besitz-/Effekt-/Seltenheitsfilter. [F202]",
+      "evidence": "S + T: vorhandene Experience-Suite",
+      "package": "P12",
+      "accept": "Alle tatsächlichen Karten und Filter korrekt; Konzepte bleiben getrennt und nicht spielbar."
+    },
+    {
+      "id": "M64",
+      "name": "Deckwerkstatt / Presetwechsel",
+      "status": "fehlend",
+      "legacy": "Deck hinzufügen/entfernen, Limits/Verfügbarkeit, Presets. [U27], [U28], [U45]",
+      "godot": "Keine Deckwerkstatt; Sammlung ist Ansicht. [F202]",
+      "evidence": "S",
+      "package": "P12",
+      "accept": "Legales Deck speichern/starten; unzulässige Änderungen und Fehlstart verhindern."
+    },
+    {
+      "id": "M65",
+      "name": "Lokaler Fortschritt / Settings",
+      "status": "teilweise",
+      "legacy": "localStorage: wins/losses/level, owned/deck, Schwierigkeit/Fx; battle absichtlich null. [U3]–[U8]",
+      "godot": "Eigener versionierter Fortschritt mit Kapiteln/Helden/Audio; kein owned/deck/Legacy-Level. [S12]",
+      "evidence": "S + T: vorhandene Experience-Suite; kein Legacy-Save-Importtest",
+      "package": "P12",
+      "accept": "Bestehende neue Fortschrittsdaten erhalten und Legacy-Felder ausdrücklich abbilden, nicht ersetzen."
+    },
+    {
+      "id": "M66",
+      "name": "Spielstand-Import/-Export / Altschema",
+      "status": "fehlend",
+      "legacy": "JSON Import/Export, Schlüssel v09 und v06/v05-Migration. [U7], [U30], [U45], [U61]",
+      "godot": "Nur Godot-eigenes Fortschrittsschema / ux.cfg-Migration. [S27]",
+      "evidence": "S",
+      "package": "P12",
+      "accept": "Validen Altstand importieren, ungültigen atomar ablehnen; Besitz/Deck/Settings erhalten."
+    },
+    {
+      "id": "M67",
+      "name": "Lokale Währung / Booster / Belohnung",
+      "status": "fehlend",
+      "legacy": "Start 180, Booster 240/3 Karten, mindestens seltene erste; Siege/Level/Belohnung, Aufgabe ohne Lohn. [U6], [U29], [U45]",
+      "godot": "Keine entsprechende Währung oder Booster; Siege/Kapitel separat. [S12]",
+      "evidence": "S: implementierter Shop-Code, Navigation und Adminmodus unterscheiden",
+      "package": "P12",
+      "accept": "Kosten, Zufallsrarität, Besitz-/Sieges-/Aufgabebuchung ohne Echtgeld exakt oder bewusst aus Scope nehmen."
+    },
+    {
+      "id": "M68",
+      "name": "Ereigniswiedergabe / Überspringen",
+      "status": "teilweise",
+      "legacy": "Historisches Replaypanel, Geschwindigkeiten off/fast/normal/slow, Skip; Logexport. [U23], [U37]–[U44]",
+      "godot": "Präsentationsframes und reduced_motion/low_effects; kein Legacy-Replaypanel/Tempoauswahl/Skip. [A935]",
+      "evidence": "S + T: Präsentationstests beweisen nur neue Sequenzen",
+      "package": "P09/P11",
+      "accept": "Regelzustand von Darstellung trennen, Skip/Tempo darf Endzustand/Kommandofolge nie verändern."
+    },
+    {
+      "id": "M69",
+      "name": "Eigenständige Zauberkarten",
+      "status": "abweichend",
+      "legacy": "Keine: alle 100 kind=creature; strike ist Ankunftsfähigkeit. [J8]",
+      "godot": "Funkenstoß eigenständiger spell, Kosten 2 / Schaden 3 / nur Gegnerkreatur. [C], [G44]",
+      "evidence": "T: rules Zauber gültig/leer; kein Legacy-Gegenstück",
+      "package": "P02/P09",
+      "accept": "Als Godot-Zusatz getrennt kennzeichnen; nicht als Migration einer Legacy-Karte zählen."
+    },
+    {
+      "id": "M70",
+      "name": "Vier Orden als Regelidentität",
+      "status": "teilweise",
+      "legacy": "ash/tide/thorn/veil mit gerichteten Synergien; Presetnamen sind keine Ordensnamen. [J4], [J13]",
+      "godot": "ASH/TIDE/THORN/VEIL als visuelle sigils, neue narrative Fraktionen nur Metadaten. [C], [N]",
+      "evidence": "S",
+      "package": "P02/P07",
+      "accept": "Stabile Regel-order erhalten; narrative Anzeige darf Regel-ID nicht austauschen."
+    }
+  ]
+}

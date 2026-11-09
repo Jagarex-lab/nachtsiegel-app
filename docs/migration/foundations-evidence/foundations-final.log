@@ -1,0 +1,20 @@
+LEGACY GENERATOR: 6 files verified byte-for-byte; 124 controlled cases, 152 steps, 6 openings; pinned 34b3062c3f22c0950d9323ad9b97b17c41d1d14f
+✔ reference pin rejects wrong commit, changed bytes and changed blob (77.560211ms)
+✔ all six generated outputs are deterministic and current, byte for byte (3247.267461ms)
+✔ 100 rule records and separated original labels match every upstream field (57.037112ms)
+✔ five original decks preserve order, size, IDs and original validation outcomes (16.957067ms)
+✔ canonical comparison preserves JSON types, null/missing and array order (1.941979ms)
+✔ transition fixture covers all 11 commands, legal and rejected; all effects and reactions (562.904334ms)
+✔ reordered object fields pass, missing HP, changed target and shuffled deck fail on actual fixtures (258.610637ms)
+✔ new data namespace is not imported by production UI, battle model, scenes or autoloads (13.045778ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4959.64252
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LEGACY FOUNDATIONS: 2171 assertions, 0 failures; 100 cards, 5 decks, 24 validation vectors, 152 fixture steps inspected; no combat port
