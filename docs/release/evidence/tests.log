@@ -6,6 +6,6 @@ test_missing_or_weakened_settings_and_qa (test_safety.Safety.test_missing_or_wea
 test_workflow_privilege_boundaries (test_safety.Safety.test_workflow_privilege_boundaries) ... ok
 
 ----------------------------------------------------------------------
-Ran 6 tests in 0.056s
+Ran 6 tests in 0.017s
 
 OK

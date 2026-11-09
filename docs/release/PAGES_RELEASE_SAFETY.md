@@ -52,3 +52,9 @@ Nach einer separat genehmigten Veröffentlichung: Schalter false und weitere Rel
 ## Tests und Aussagegrenzen
 
 `python3 -m unittest discover -s tests/release -v` mit Python3/PyYAML6.0.3: **6 Testgruppen bestanden**, einschließlich 90 Event/Ref/Schalterkombinationen, 6 ungültiger Eingabekontexte, 20 schwächerer Einstellungen/QA-Negativfälle sowie statischer Privileg-/Triggerprüfung aller Workflows. [Log](evidence/tests.log). Es wurden keine Settings geschrieben, keine Workflow-Dispatches ausgelöst, keine Artefakte in Pages hochgeladen und keine Deploy-API aufgerufen. Kein echter End-to-End-Release behauptet; eine tatsächliche Reviewerfreigabe und Token-Lesbarkeit können ohne freigegebenen Release nicht als erfolgreich getestet gelten.
+
+### CI-Nachtrag
+
+Quellcommit `8722076`: Sicherheits-CI [42679644472](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42679644472) und [42679657468](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42679657468) SUCCESS; vollständige unveränderte Desktop-/Export-/Chromium-/WebKit-QA [42679657438](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42679657438) SUCCESS. Dieser Lauf besitzt bereits keinen Deployjob mehr. Das ist kein Nachweis aktivierter Repository-Schutzregeln. Nachtrag ergänzt ausschließlich `pages:read` im Read-only-Preflight, damit die Pages-Metadatenabfrage ein explizites Leserecht besitzt, und wiederholt die sechs lokalen Safety-Gruppen erfolgreich. Der Publishjob allein behält Pages-/OIDC-Schreibrecht.
+
+Die tatsächlichen gelesenen Environment-/Pages-/Branch-Policy-Snapshots wurden zusätzlich durch den Guard validiert: **abgelehnt, required reviewers missing** ([Log](evidence/current-settings-denial.log)). Der übrige Kandidaten-/QA-Kontext war dafür synthetisch gültig; kein echter Release-/Token-Integrationstest behauptet.
