@@ -106,7 +106,12 @@ func _render_now() -> void:
 	_clear()
 	if page=="lobby":lobby()
 	elif page=="builder":builder()
-	elif page=="battle":battle()
+	elif page=="battle":
+		if layout.size.y<296:
+			text("Mehr Platz für das Spielfeld benötigt",body,20)
+			text("Bitte Tastatur schließen, Browserleisten einklappen oder ins Querformat drehen. Die Partie bleibt erhalten.")
+			button("small_menu","Zum Menü",confirm_menu)
+		else:battle()
 	queue_redraw()
 func lobby() -> void:
 	var top=row();text("ORAFOLD  /  ALPHA 0.1",top,24);button("archive","Prototyp-Archiv",func():get_tree().root.set_meta("alpha_archive",true);get_tree().change_scene_to_file("res://scenes/front_end.tscn"),top)
@@ -412,7 +417,7 @@ func _layout() -> void:
 		if value is Dictionary:insets=value
 	var left=float(insets.get("left",0));var right=float(insets.get("right",0));var top=float(insets.get("top",0));var bottom=float(insets.get("bottom",0))
 	layout.position=Vector2(left,top)*density;layout.scale=Vector2.ONE*density
-	layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(260,size.y/density-top-bottom))
+	layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(160,size.y/density-top-bottom))
 	compact=layout.size.y<380
 	for side in ["left","right","top","bottom"]:outer_margin.add_theme_constant_override("margin_"+side,4 if compact else 8)
 	body.add_theme_constant_override("separation",2 if compact else 4)
