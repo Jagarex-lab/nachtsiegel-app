@@ -6,9 +6,9 @@ Spieladresse: https://jagarex-lab.github.io/nachtsiegel-app/
 
 1. Auf einem Entwicklungsbranch implementieren und prüfen.
 2. Workflow `NACHTSIEGEL Test and Publish`: Godot-Import, Regelprüfung, echte GUI-/Touch-Ereignisse, Querformat-Screenshots und Webexport ausführen.
-3. Den exportierten Build in zwei Browsergrößen testen. Der Build enthält `build-info.json` mit Commit und Run-ID; die Browserprüfung vergleicht den erwarteten Commit.
+3. Den exportierten Build in sechs Geräte-/Browserprofilen mit Chromium und WebKit testen. Der Build enthält `build-info.json` mit Commit und Run-ID; die Browserprüfung vergleicht den erwarteten Commit.
 4. Den geprüften Feature-Stand nach `develop` integrieren. Auf `develop` laufen dieselben Prüfungen nochmals, danach wird genau das geprüfte Build-Verzeichnis als Pages-Artefakt veröffentlicht.
-5. Die öffentliche Spielseite wird anschließend in zwei Browsergrößen samt Touch-Zugende und erwartetem Commit geprüft. Screenshots und Ergebnisse liegen im Workflow-Artefakt `nachtsiegel-live-qa`.
+5. Die öffentliche Spielseite wird anschließend in sechs Geräte-/Browserprofilen mit Chromium und WebKit samt Touch-Zugende und erwartetem Commit geprüft. Screenshots und Ergebnisse liegen im Workflow-Artefakt `nachtsiegel-live-qa`.
 
 Ein fehlgeschlagener Test verhindert die Bereitstellung. Die bestehende Pages-Umgebung erlaubt `develop`; ihre Schutzregeln bleiben erhalten. Pull Requests und der Featurebranch veröffentlichen nichts. `main` bleibt unverändert.
 

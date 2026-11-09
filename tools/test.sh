@@ -11,6 +11,9 @@ GODOT_BIN="${GODOT_BIN:-godot}"
 if [[ -n "${DISPLAY:-}" ]]; then
   "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1600x900 --script tests/input_layout.gd > work/input-layout-final.log 2>&1
   "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1600x900 --script tests/visual.gd > work/visual-final.log 2>&1
+  mkdir -p work/ux
+  "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1280x720 --script tests/ux_audit.gd > work/ux-final.log 2>&1
+  python3 tools/contrast_report.py > work/contrast-final.log 2>&1
 else
   echo 'Render tests require DISPLAY (for example Xvfb :99 -screen 0 1600x1000x24 -ac).'
   exit 2
@@ -18,14 +21,16 @@ fi
 python3 - <<'VERIFY'
 from pathlib import Path
 import re
-for name in ["import", "rules", "input-layout", "visual"]:
+for name in ["import", "rules", "input-layout", "visual", "ux", "contrast"]:
     path = Path("work", name + "-final.log")
     content = path.read_text()
     if re.search(r"SCRIPT ERROR|^ERROR:|^FAIL:", content, re.MULTILINE):
         raise SystemExit("Godot errors in " + str(path))
-    if name in ["rules", "input-layout"]:
+    if name in ["rules", "input-layout", "ux"]:
         result = re.search(r"^.*assertions, 0 failures.*$", content, re.MULTILINE)
         if not result:
             raise SystemExit("Missing successful test summary in " + str(path))
         print(result.group())
+    if name == "contrast":
+        print(content.strip())
 VERIFY

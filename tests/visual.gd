@@ -8,8 +8,16 @@ func capture(path: String) -> void:
 	await RenderingServer.frame_post_draw
 	get_root().get_texture().get_image().save_png(path)
 func run() -> void:
+	var source = load("res://scripts/arena.gd")
+	if source == null or not source.can_instantiate():
+		printerr("FAIL: Arena cannot instantiate")
+		quit(1)
+		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
+	arena._set_reduced_motion(false,false)
+	arena.onboarding_step = 0
+	arena._introduce()
 	await create_timer(0.6).timeout
 	await capture("res://work/arena-initial.png")
 	arena.hand = [0,1,2,3,4,5]

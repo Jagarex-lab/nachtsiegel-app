@@ -44,10 +44,16 @@ func capture(path: String) -> void:
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png(path)
 func run() -> void:
+	var source = load("res://scripts/arena.gd")
+	if source == null or not source.can_instantiate():
+		printerr("FAIL: Arena cannot instantiate")
+		quit(1)
+		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
+	arena._set_reduced_motion(false,false)
 	await create_timer(0.4).timeout
-	for dimensions in [Vector2i(1600,900),Vector2i(1280,720),Vector2i(844,390),Vector2i(915,412),Vector2i(1024,768)]:
+	for dimensions in [Vector2i(1600,900),Vector2i(1280,720),Vector2i(844,390),Vector2i(915,412),Vector2i(1024,768),Vector2i(844,320),Vector2i(915,350)]:
 		print("SIZE ",dimensions)
 		root.size = dimensions
 		await settle()
@@ -134,5 +140,5 @@ func run() -> void:
 	root.size = Vector2i(844,390)
 	await settle()
 	check(not arena.landscape_panel.visible,"Rotation restores play")
-	print("INPUT/LAYOUT: %d assertions, %d failures; five landscape sizes; mouse + ScreenTouch" % [assertions,failures])
+	print("INPUT/LAYOUT: %d assertions, %d failures; seven landscape sizes; mouse + ScreenTouch" % [assertions,failures])
 	quit(1 if failures else 0)

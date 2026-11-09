@@ -29,6 +29,11 @@ func unit(index: int) -> Dictionary:
 func snapshot(game) -> Array:
 	return [game.hand,game.deck,game.allies,game.foes,game.energy,game.summons,game.selected,game.finished,game.player_hp,game.foe_hp,game.streak,game.round_number]
 func run() -> void:
+	var source = load("res://scripts/arena.gd")
+	if source == null or not source.can_instantiate():
+		printerr("FAIL: Arena cannot instantiate")
+		quit(1)
+		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
 	await process_frame

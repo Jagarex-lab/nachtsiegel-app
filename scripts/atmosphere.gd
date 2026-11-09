@@ -1,4 +1,5 @@
 extends Control
+var reduced_motion := false
 var clock := 0.0
 var candle_glow: GradientTexture2D
 const CANDLES = [Vector2(125,329),Vector2(1529,501)]
@@ -13,6 +14,7 @@ func _ready() -> void:
 	candle_glow.fill_from = Vector2(.5,.5)
 	candle_glow.fill_to = Vector2(1,.5)
 func _process(delta: float) -> void:
+	if reduced_motion: return
 	clock += delta
 	queue_redraw()
 func _draw() -> void:

@@ -1,0 +1,8 @@
+BROWSER PASS: chromium desktop
+BROWSER PASS: chromium android-landscape
+BROWSER PASS: chromium android-bars
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+BROWSER PASS: webkit iphone-landscape
+BROWSER PASS: webkit iphone-wide
+BROWSER PASS: webkit iphone-reduced
+BROWSER: 6 device/engine profiles, 0 failures

@@ -1,8 +1,10 @@
 extends Control
 ## Bounded, deterministic faction-tinted summoning and spell effects.
+const T = preload("res://scripts/ui_tokens.gd")
+var reduced_motion := false
 var origin := Vector2.ZERO
 var destination := Vector2.ZERO
-var tint := Color("#8eddd0")
+var tint := T.SUCCESS
 var spell := false
 var elapsed := 0.0
 var lifetime := 0.75
@@ -14,6 +16,9 @@ func _process(delta: float) -> void:
 		return
 	queue_redraw()
 func _draw() -> void:
+	if reduced_motion:
+		draw_arc(destination,40,0,TAU,48,tint,3,true)
+		return
 	var t = clampf(elapsed/lifetime,0,1)
 	var alpha = sin(PI*t)
 	var center = destination
