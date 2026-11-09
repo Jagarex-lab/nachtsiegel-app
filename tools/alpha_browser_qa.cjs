@@ -10,10 +10,10 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
-   const state=()=>page.evaluate(()=>window.orafoldQA);
+   const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync('work/alpha/browser-progress.json',JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
    const tap=async r=>{await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
-   const action=async id=>{await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});await tap((await state()).actions[id].rect);};
+   const action=async id=>{await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});const previous=await state();await tap(previous.actions[id].rect);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});};
    const shot=tag=>page.screenshot({path:`work/alpha/${engine}-${name}-${tag}.png`});
    async function opening(){await action('start');await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);}
    async function playTurn(){
@@ -53,7 +53,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
    try{
     if(process.env.EXPECTED_COMMIT){const r=await page.request.get(new URL('build-info.json',url).href);assert(r.ok());assert.equal((await r.json()).commit,process.env.EXPECTED_COMMIT);}
     await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');assert((await page.title()).includes('ORAFOLD'));
-    await shot('lobby');await opening();let q=await state();assert.equal(q.battle.hero.maxHp,30);assert.equal(q.battle.enemy.maxHp,30);
+    console.log('LOBBY',engine,name);await shot('lobby');await opening();let q=await state();assert.equal(q.battle.hero.maxHp,30);assert.equal(q.battle.enemy.maxHp,30);
     for(const key of ['end','actions','inspect','convergence','menu','log']){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
     for(const r of Object.values(q.board))assert(r[2]>=43.9&&r[3]>=43.9&&r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,'board safe bounds');
     await shot('battle');await playTurn();await shot('after-turn');
@@ -63,14 +63,14 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
     if(name==='desktop'||name==='android'){
      if(name==='android'){await action('mode_legacy');await action('start');}
      else await opening();
-     let turns=0;while(!(await state()).battle.winner&&turns++<160)await playTurn();
+     let turns=0;while(!(await state()).battle.winner&&turns++<160){const q=await state();console.log('UI DUEL',engine,name,'turn',q.battle.round,'HP',q.battle.hero.hp,q.battle.enemy.hp,'commands',q.command_count);await playTurn();}
      q=await state();assert(q.battle.winner,'complete UI duel');await shot('result');await action('result_log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
      await action('restart');await action('confirm_restart');await wait(()=>!window.orafoldQA.battle.winner);await shot('restart');
     }
     assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,checks:'real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification'});
     console.log('ALPHA BROWSER PASS:',engine,name);
    }catch(error){await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,errors},null,2));throw error;}
-   finally{await context.close();}
+   finally{clearInterval(progress);await context.close();}
   }}finally{await browser.close();}
  }
  fs.writeFileSync('work/alpha/browser-results.json',JSON.stringify(results,null,2));console.log(`ALPHA BROWSER: ${results.length} profiles,0 failures`);

@@ -2,10 +2,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p work/alpha/web/media work/xdg/{data,config,cache}
-export XDG_DATA_HOME="$PWD/work/xdg/data" XDG_CONFIG_HOME="$PWD/work/xdg/config" XDG_CACHE_HOME="$PWD/work/xdg/cache"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}" XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}" XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 alpha_build_commit="$(git rev-parse HEAD)"
 alpha_build_name="orafold-${alpha_build_commit:0:12}"
-"${GODOT_BIN:-godot}" --headless --path . --export-debug 'Alpha Web QA' "work/alpha/web/$alpha_build_name.html" > work/alpha/export.log 2>&1
+if ! "${GODOT_BIN:-godot}" --headless --path . --export-debug 'Alpha Web QA' "work/alpha/web/$alpha_build_name.html" > work/alpha/export.log 2>&1; then
+  cat work/alpha/export.log
+  exit 1
+fi
 mv "work/alpha/web/$alpha_build_name.html" work/alpha/web/index.html
 cp docs/combat/gameplay.mp4 work/alpha/web/media/gameplay.mp4
 python3 - "$alpha_build_commit" <<'PY'

@@ -66,12 +66,12 @@ func run() -> void:
 	m=battle();m.state.hero.turns=7;m.begin_turn("hero");check(m.state.hero.energy==8,"energy curve cap8")
 	m.state.hero.turns=20;m.state.hero.phase="main";m.begin_turn("hero");check(m.state.hero.energy==8,"energy stays8")
 	for count in [10,25,50,100]:
-		m=battle();m.state.enemy.ward=1000;m.events.clear()
+		m=battle();m.state.enemy.block=1000;m.events.clear()
 		check(m.enqueue({"type":"echo","side":"hero","remaining":count}),"finite chain "+str(count))
 		var echoes=0
 		for e in m.events:
 			if e.kind=="echo":echoes+=1
-		check(echoes==count and m.state.enemy.ward==1000-count,"all triggers in order "+str(count))
+		check(echoes==count and m.state.enemy.block==1000-count,"all triggers in order "+str(count))
 	var broken=preload("res://tests/alpha_cycle_model.gd").new();broken.state=battle().state.duplicate(true)
 	check(not broken.enqueue({"type":"echo","side":"hero","remaining":2}),"broken free cycle rejected")
 	check(not broken.state.error.is_empty() and not broken.execute("endTurn",["hero"]).ok,"cycle explicit error and lock")
@@ -112,7 +112,7 @@ func run() -> void:
 	for enabled in [true,false]:
 		for hero in catalog.deck_ids():
 			for enemy in catalog.deck_ids():
-				for seed_value in [12345,8802026]:
+				for seed_value in paired_seeds(hero,enemy):
 					var began=Time.get_ticks_msec()
 					m=Model.new();m.convergence_enabled=enabled;m.start_alpha(catalog.deck(hero),catalog.deck(enemy),seed_value);m.mulligan([]);m.choose_origin(2)
 					if m.state.stage=="second":m.finish_opening()
@@ -176,3 +176,12 @@ func boundary_checks() -> void:
 	m=battle();m.state.hero.hand=["oa-stillwatch-e01"];m.state.enemy.hp=1;m.play("hero",0,0);bind(m)
 	m.state.active="hero";m.state.round=13;m.begin_turn("hero")
 	check(m.state.winner=="hero" and m.events[-1].kind=="result","delayed HP victory takes priority over convergence presentation")
+
+func paired_seeds(hero: String, enemy: String) -> Array:
+	var catalog=Catalog.new();var found: Dictionary={}
+	for seed_value in 128:
+		var m=Model.new();m.start_alpha(catalog.deck(hero),catalog.deck(enemy),seed_value);m.mulligan([])
+		if not found.has(m.state.coin):found[m.state.coin]=seed_value
+		if found.size()==2:return [found.hero,found.enemy]
+	check(false,"could not counterbalance starting players")
+	return [12345,8802026]

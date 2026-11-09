@@ -36,6 +36,8 @@ var board_views: Dictionary={}
 var status: Label
 var pulse := 0.0
 var render_pending := false
+var render_version := 0
+var modal_version := 0
 var save_key := "houses"
 const COLORS={"houses":Color("c4aae9"),"stillwatch":Color("8cd5e8"),"morph":Color("add895"),"ninth":Color("eac17b"),"neutral":Color("b9c4d5"),"ash":Color("eac17b"),"tide":Color("8cd5e8"),"thorn":Color("add895"),"veil":Color("c4aae9")}
 func _ready() -> void:
@@ -98,7 +100,7 @@ func render() -> void:
 	render_pending=true
 	call_deferred("_render_now")
 func _render_now() -> void:
-	render_pending=false
+	render_pending=false;render_version+=1
 	if not is_instance_valid(body):return
 	_layout()
 	_clear()
@@ -271,6 +273,7 @@ func show_actions() -> void:
 			button("burst_"+order,"Entfesseln "+str(AlphaCatalog.new().source.powers.get(order,order.to_upper()))+" · benötigt15, kostet8 Resonanz",func():close_modal();act("burst",["hero",order]),box,int(session.model.state.hero.resonance)<15)
 	)
 func show_modal(title: String, content: Callable) -> void:
+	modal_version+=1
 	close_modal()
 	if is_instance_valid(feedback):feedback.jobs.clear()
 	modal=PanelContainer.new();modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);modal.add_theme_stylebox_override("panel",T.panel(T.GOLD,Color(.025,.04,.065,.98)));layout.add_child(modal)
@@ -279,6 +282,7 @@ func show_modal(title: String, content: Callable) -> void:
 	var top=row(box);text(title,top,18);button("modal_close","ZURÜCK",close_modal,top)
 	var content_box=scroll(box);content.call(content_box)
 func close_modal() -> void:
+	modal_version+=1
 	if is_instance_valid(modal):modal.hide();modal.queue_free()
 	modal=null
 func inspect(c: Dictionary) -> void:
@@ -346,7 +350,7 @@ func builder() -> void:
 	button("clear_deck","LEEREN",func():deck=[];render(),bottom)
 	text(message,body,12)
 func publish_qa() -> void:
-	var state={"page":page,"mode":mode,"actions":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode}
+	var state={"page":page,"mode":mode,"actions":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version}
 	for key in actions:
 		var b=actions[key]
 		if is_instance_valid(b) and b.is_visible_in_tree():
