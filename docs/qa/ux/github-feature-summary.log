@@ -1,0 +1,11 @@
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T04:59:41.9530623Z RULES: 684 assertions, 0 failures; 30 baseline differential duels
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T04:59:41.9531530Z INPUT/LAYOUT: 380 assertions, 0 failures; seven landscape sizes; mouse + ScreenTouch
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T04:59:41.9531949Z UX AUDIT: 1900 assertions, 0 failures; 49 paired rendered states
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T04:59:41.9532283Z CONTRAST: 49 rendered states, 2042 regions, 0 failures
+test-and-export	Browser startup and touch smoke test	2026-11-09T05:01:09.8694848Z BROWSER PASS: chromium desktop
+test-and-export	Browser startup and touch smoke test	2026-11-09T05:01:19.3949715Z BROWSER PASS: chromium android-landscape
+test-and-export	Browser startup and touch smoke test	2026-11-09T05:01:33.4882172Z BROWSER PASS: chromium android-bars
+test-and-export	Browser startup and touch smoke test	2026-11-09T05:01:45.3006947Z BROWSER PASS: webkit iphone-landscape
+test-and-export	Browser startup and touch smoke test	2026-11-09T05:01:51.1136856Z BROWSER PASS: webkit iphone-wide
+test-and-export	Browser startup and touch smoke test	2026-11-09T05:01:56.0779118Z BROWSER PASS: webkit iphone-reduced
+test-and-export	Browser startup and touch smoke test	2026-11-09T05:01:56.1620365Z BROWSER: 6 device/engine profiles, 0 failures
