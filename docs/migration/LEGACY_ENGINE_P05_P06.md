@@ -4,7 +4,7 @@ Stand 2026-11-09. Branch `feature/legacy-engine-p05-p06`, direkt aus PR #4 bei `
 
 ## Ausgangsbasis und Schutzgrenzen
 
-PR #1 Audit, #2 Grundlagen und #4 Kernel sind offen, unverändert und gemäß ihren jeweiligen CI-Nachweisen grün. #4 basiert auf #2; der neue PR wird deshalb gegen **`feature/legacy-engine-p01-p04`** gestapelt. PR #3 ist unabhängig und wird weder übernommen noch verändert. Fixierte JS-Referenz: `Jagarex-lab/duel-deck` bei `34b3062c3f22c0950d9323ad9b97b17c41d1d14f`, SHA-256 `abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1`.
+PR #1 Audit, #2 Grundlagen und #4 Kernel sind offen, unverändert und gemäß ihren jeweiligen CI-Nachweisen grün. #4 basiert auf #2; [PR #5](https://github.com/Jagarex-lab/nachtsiegel-app/pull/5) ist deshalb gegen **`feature/legacy-engine-p01-p04`** gestapelt. PR #3 ist unabhängig und wird weder übernommen noch verändert. Fixierte JS-Referenz: `Jagarex-lab/duel-deck` bei `34b3062c3f22c0950d9323ad9b97b17c41d1d14f`, SHA-256 `abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1`.
 
 Weiterbenutzt: Katalog, 100 Original-IDs/Regelwerte, fünf Decklisten, RNG, Spielerzustand, Schadenspipeline, Angriffsbereitschaft, Kampf und Todesqueue aus P01–P04. Keine zweite Kampfengine. Änderungen ausschließlich am vorhandenen Legacy-Kernel, seiner Testinstrumentierung/-suite und Migrationsdokumentation. Bereits eingecheckte Goldens/Referenzbytes werden nicht überschrieben. Produktive Arena, sieben Prototypkarten, Lore/Fraktionen/Assets, Markenidentität, F2P und Pages-/Exportkonfiguration bleiben unverändert. Die im Auftrag genannte Bezeichnung ORAFOLD wird hier weder umbenannt noch neu aktiviert.
 
@@ -81,6 +81,7 @@ Die gegnerseitige Auswahl innerhalb strike/shift ist Bestandteil der ursprüngli
 | Godot Grundlagen | **2171 Assertions, 0 Fehler** |
 | Godot bestehender Kernelvergleich | **2221 Assertions, 0 Fehler; 415 Fälle**, davon die bisherigen 370 unverändert enthalten |
 | Godot neue P05/P06-Suite | **2348 Assertions, 0 Fehler; 366 Szenarien / 521 Übergänge**, alle 16 Effekte und 200 Karten-/Seitenpaare |
+| Vollständige Desktop-Regression | **9547 Assertions, 0 Fehler**, Exit 0 mit begrenzter Mesa-Threadzahl; Audio/Kontrast bestanden |
 | Gesamter Differentialvergleich | **781 bestandene Fälle**, 27 getrennt ausgewiesene alte unsupported-Szenarien |
 | Original-JS `node test.js` | 250 vollständige Läufe und 250 Replays, Exit 0 |
 | Original-JS `node tests.js` | Exit 1: bestehende START-Erwartung 20 versus Quellwert 25 |
@@ -90,6 +91,8 @@ Die gegnerseitige Auswahl innerhalb strike/shift ist Bestandteil der ursprüngli
 [Legacy-Testlog](p05-p06-evidence/legacy-suite.log), [Kernelresultat und unsupported-Liste](p05-p06-evidence/core-results.json), [P05/P06-Resultat](p05-p06-evidence/p05-p06-results.json), [unveränderte Upstream-Testresultate](p05-p06-evidence/upstream-results.json).
 
 Die [Kartenabdeckung](p05-p06-evidence/card-coverage.csv) führt alle 100 stabilen Original-IDs mit beiden Seiten auf; gemischte Ordensketten sind ausdrücklich P07-gesperrt. [Geschützte Dateien](p05-p06-evidence/protected-files.json) dokumentieren die unveränderten Quell-/Datenbytes. Das [Quellmanifest](p05-p06-evidence/source-manifest.json) fixiert die geprüften Kernel-, Test- und neuen Fixturebytes mit SHA-256.
+
+Die GitHub-Legacy-CI für den unveränderten Quellcommit `363cce9` ist ebenfalls **SUCCESS**: [Run 42667937946](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42667937946), [Resultat](p05-p06-evidence/ci-source-result.json), [Assertionszusammenfassung](p05-p06-evidence/ci-source-summary.log). Die separat laufende Web-QA wird damit nicht als bestanden ausgegeben.
 
 Die neue Suite vergleicht pro Schritt vollständige Vor-/Nachzustände und eine kanonische **Ereigniszustandsfolge** mit pendingDeath. Unmittelbar identische aufeinanderfolgende Beobachtungen werden zusammengefasst; keine Ressourcen, Deckreihenfolgen, Flags oder Zwischenzustände gelöscht. Nichtaufeinanderfolgende Wiederholungen bleiben erhalten. Vertauschte unterschiedliche Ereigniszustände und manipulierte Felder werden erkannt.
 
@@ -117,7 +120,7 @@ Der anschließend serialisierte Gesamtlauf scheiterte im unveränderten Kampfpr�
 
 Eine isolierte Wiederholung mit `DISPLAY=:99 LP_NUM_THREADS=2 godot --path . --audio-driver Dummy --resolution 1280x720 --script tests/combat_presentation.gd` bestand **725 Assertions, 0 Fehler** einschließlich aller vier intern gewechselten Auflösungen und vollständiger Sieg-/Niederlagenpartien ([Log](p05-p06-evidence/combat-lp2.log), [Messwerte](p05-p06-evidence/combat-lp2-performance.json)). Die begrenzte Mesa-Threadzahl ist eine reine Testumgebungseinstellung, keine Produktions-/Testcodeänderung.
 
-Der vollständige Desktop-Regressionslauf mit `DISPLAY=:99 LP_NUM_THREADS=2 tools/test.sh` läuft zum Zeitpunkt dieses Quellcommits noch. Bis zum dokumentierten Abschluss bleibt der Folge-PR Entwurf; der Ausgang wird mit eigenen Logs nachgetragen. Keine vollständig grüne Endabnahme dieses Laufs behauptet.
+**Abgeschlossene vollständige Wiederholung:** `DISPLAY=:99 LP_NUM_THREADS=2 bash tools/test.sh` beendet mit **Exit 0**, **9547 Assertions / 0 Fehler**, 11 Audio-Cues, 89 gerenderten Kontrastzuständen / 3837 Regionen ohne Fehler. Auch der zentrale Godot-Fehlercheck besteht; kein Ressourcenrest in diesem Lauf. [Ergebnis](p05-p06-evidence/production-lp2-result.json), [Zusammenfassung](p05-p06-evidence/production-lp2-summary.log), [Einzellogs](p05-p06-evidence/production-lp2/). Die früheren Fehlversuche bleiben offen nachvollziehbar; ein einzelner grüner Wiederholungslauf beweist keine allgemeine Beseitigung von Testflakiness. Es wurden dafür keine Regeln, Arena-, Audio- oder Testfriständerungen vorgenommen.
 
 ## Fortschrittsmatrix P01–P12
 

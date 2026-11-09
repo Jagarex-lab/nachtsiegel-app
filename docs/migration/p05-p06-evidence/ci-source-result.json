@@ -1,0 +1,9 @@
+{
+  "head": "363cce9c3bb2cd0b43efbad2d930649039c81657",
+  "workflow": "Legacy foundations (no deployment)",
+  "run_id": 42667937946,
+  "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42667937946",
+  "conclusion": "success",
+  "production_deployment": false,
+  "scope": "Legacy tests only; separate Web QA not included"
+}

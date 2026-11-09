@@ -1,0 +1,113 @@
+{
+  "duels": [
+    {
+      "low_effects": true,
+      "p50_frame_ms": 67.359,
+      "p95_frame_ms": 102.075,
+      "passing": false,
+      "peak_fx": 9,
+      "peak_nodes": 80,
+      "peak_static_bytes": 38034582,
+      "peak_tweens": 5,
+      "reduced_motion": false,
+      "rendered_frames": 52,
+      "result": "SIEG · Drei Pfade zweimal gehalten!",
+      "viewport": [
+        844,
+        390
+      ],
+      "wall_seconds": 5.495021
+    },
+    {
+      "low_effects": false,
+      "p50_frame_ms": 79.536,
+      "p95_frame_ms": 123.077,
+      "passing": false,
+      "peak_fx": 8,
+      "peak_nodes": 78,
+      "peak_static_bytes": 39373138,
+      "peak_tweens": 0,
+      "reduced_motion": true,
+      "rendered_frames": 25,
+      "result": "SIEG · Drei Pfade zweimal gehalten!",
+      "viewport": [
+        915,
+        412
+      ],
+      "wall_seconds": 3.808495
+    },
+    {
+      "low_effects": false,
+      "p50_frame_ms": 159.741,
+      "p95_frame_ms": 199.224,
+      "passing": false,
+      "peak_fx": 8,
+      "peak_nodes": 78,
+      "peak_static_bytes": 40041360,
+      "peak_tweens": 4,
+      "reduced_motion": false,
+      "rendered_frames": 34,
+      "result": "SIEG · Drei Pfade zweimal gehalten!",
+      "viewport": [
+        1280,
+        720
+      ],
+      "wall_seconds": 9.113775
+    },
+    {
+      "low_effects": false,
+      "p50_frame_ms": 168.121,
+      "p95_frame_ms": 255.029,
+      "passing": false,
+      "peak_fx": 8,
+      "peak_nodes": 78,
+      "peak_static_bytes": 40042352,
+      "peak_tweens": 4,
+      "reduced_motion": false,
+      "rendered_frames": 34,
+      "result": "SIEG · Drei Pfade zweimal gehalten!",
+      "viewport": [
+        1600,
+        900
+      ],
+      "wall_seconds": 10.54017
+    },
+    {
+      "low_effects": false,
+      "p50_frame_ms": 56.767,
+      "p95_frame_ms": 83.167,
+      "passing": false,
+      "peak_fx": 9,
+      "peak_nodes": 80,
+      "peak_static_bytes": 40106580,
+      "peak_tweens": 5,
+      "reduced_motion": false,
+      "rendered_frames": 62,
+      "result": "SIEG · Drei Pfade zweimal gehalten!",
+      "viewport": [
+        844,
+        390
+      ],
+      "wall_seconds": 5.332597
+    },
+    {
+      "low_effects": false,
+      "p50_frame_ms": 70.518,
+      "p95_frame_ms": 98.242,
+      "passing": true,
+      "peak_fx": 10,
+      "peak_nodes": 84,
+      "peak_static_bytes": 40295640,
+      "peak_tweens": 5,
+      "reduced_motion": false,
+      "rendered_frames": 108,
+      "result": "NIEDERLAGE · Dein Held ist gefallen.",
+      "viewport": [
+        844,
+        390
+      ],
+      "wall_seconds": 7.933011
+    }
+  ],
+  "environment": "Linux Xvfb / llvmpipe, Dummy audio; software renderer, NOT physical mobile hardware"
+}
