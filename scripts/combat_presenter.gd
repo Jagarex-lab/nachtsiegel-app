@@ -22,14 +22,14 @@ func cancel_all(snap: bool=false) -> void:
 	for id in targets.keys():
 		var record=targets[id];var node=record.node.get_ref()
 		if snap and is_instance_valid(node):
-			for property in record.values:node.set(property,record.values[property])
+			for property in record.values:node.set_indexed(NodePath(property),record.values[property])
 	for id in tweens.keys():_cancel_id(id)
 func animate(control: Control, property: String, target: Variant, duration: float, delay: float=0.0) -> void:
 	animate_properties(control,{property:target},duration,delay)
 func animate_properties(control: Control, values: Dictionary, duration: float, delay: float=0.0) -> void:
 	cancel(control)
 	if reduced_motion:
-		for property in values:control.set(property,values[property])
+		for property in values:control.set_indexed(NodePath(property),values[property])
 		return
 	var id=control.get_instance_id();var tween=control.create_tween().set_parallel(true)
 	tweens[id]=tween;targets[id]={"node":weakref(control),"values":values};peak_tweens=maxi(peak_tweens,tweens.size())

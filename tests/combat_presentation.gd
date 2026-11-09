@@ -69,9 +69,13 @@ func run() -> void:
 	arena=load("res://scenes/arena.tscn").instantiate();root.add_child(arena);await settle()
 	for i in 500:arena.presenter.effect(["ASH","TIDE","THORN","VEIL"][i%4],"impact",Vector2(600,300),Vector2(600,300))
 	check(arena.presenter.canvas.jobs.size()==16,"500 simultaneous requests cannot grow FX nodes")
+	arena._set_reduced_motion(false,false)
 	var face=arena.hero_medallions[0];var target=face.position
 	arena.presenter.animate(face,"position",target+Vector2(0,10),.8);arena._set_reduced_motion(true,false)
 	check(arena.presenter.tweens.is_empty(),"Reduced movement cancels in-flight transforms")
+	arena._set_reduced_motion(false,false);face.modulate.a=.2
+	arena.presenter.animate(face,"modulate:a",1.0,.8);arena._set_reduced_motion(true,false)
+	check(is_equal_approx(face.modulate.a,1.0),"Reduced movement completes indexed opacity properties")
 	arena.allies[0]=arena.CARD_POOL[0].duplicate(true);arena._end_turn();root.size=Vector2i(915,412);await idle()
 	check(arena.round_number==2,"Viewport resize during combat preserves resolution")
 	await create_timer(.8).timeout;check(arena.presenter.canvas.jobs.is_empty(),"Expired effects are retired")
