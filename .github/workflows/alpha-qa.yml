@@ -91,6 +91,7 @@ jobs:
         run: |
           python3 -m http.server 8789 --bind 127.0.0.1 --directory work/alpha/archive-web > work/alpha/archive-http.log 2>&1 &
           python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8789/build-info.json http://127.0.0.1:8788/build-info.json
           GAME_URL=http://127.0.0.1:8789/ QA_PREFIX=alpha/archive node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
           GAME_URL=http://127.0.0.1:8788/ node tools/alpha_browser_qa.cjs
       - name: Repeated fresh WebKit cold boots on both ruleset entry points

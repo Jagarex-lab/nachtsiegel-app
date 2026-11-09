@@ -91,6 +91,7 @@ jobs:
           EXPECTED_COMMIT: ${{ github.sha }}
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/web > work/http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8765/build-info.json
           node tools/browser_qa.cjs
       - name: Export and test Alpha default entry after archive browser regression
         env:
@@ -99,6 +100,7 @@ jobs:
         run: |
           tools/build_alpha.sh
           python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8788/build-info.json
           node tools/alpha_browser_qa.cjs
           mv work/build/web work/build/archive-web
           cp -a work/alpha/web work/build/web
