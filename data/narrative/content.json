@@ -921,7 +921,10 @@
         "status": "future_narrative_direction_not_feature",
         "texts": {
           "name": "arcs.arc_blank_march.name",
-          "question": "arcs.arc_blank_march.question"
+          "question": "arcs.arc_blank_march.question",
+          "setup": "arcs.arc_blank_march.setup",
+          "development": "arcs.arc_blank_march.development",
+          "payoff": "arcs.arc_blank_march.payoff"
         }
       },
       {
@@ -929,7 +932,10 @@
         "status": "future_narrative_direction_not_feature",
         "texts": {
           "name": "arcs.arc_closure.name",
-          "question": "arcs.arc_closure.question"
+          "question": "arcs.arc_closure.question",
+          "setup": "arcs.arc_closure.setup",
+          "development": "arcs.arc_closure.development",
+          "payoff": "arcs.arc_closure.payoff"
         }
       },
       {
@@ -937,7 +943,10 @@
         "status": "future_narrative_direction_not_feature",
         "texts": {
           "name": "arcs.arc_eight_personhood.name",
-          "question": "arcs.arc_eight_personhood.question"
+          "question": "arcs.arc_eight_personhood.question",
+          "setup": "arcs.arc_eight_personhood.setup",
+          "development": "arcs.arc_eight_personhood.development",
+          "payoff": "arcs.arc_eight_personhood.payoff"
         }
       }
     ]

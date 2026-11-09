@@ -31,7 +31,7 @@ Die Vorschau ist eine technische API für spätere Entwurfswerkzeuge, kein neuer
 `data/narrative/content.json` enthält Version, Entwurfsstatus und stabile IDs. Texte stehen ausschließlich unter `data/narrative/locales/de.json` und `en.json`; Metadaten wie bisherige Bindungsnamen dienen dem Abgleich und sind keine Lokalisierungsquelle.
 
 - **74 Entitäten**, gegliedert in Welt, Zeitlinie, Pfade, Fraktionen, Orte, Figuren, Karten, Intro, Kapitel, Kampagne, Boss, Geheimnisse und Folgehandlungen.
-- **266 Schlüssel pro Sprache**, identische Schlüsselmenge, keine leeren Übersetzungen.
+- **275 Schlüssel pro Sprache**, identische Schlüsselmenge, keine leeren Übersetzungen.
 - Die Daten nennen `status: creative_draft` und `runtime_enabled: false`.
 - Die ersten sieben Karten referenzieren unveränderte Pool-Indizes. Die übrigen 13 haben `concept_only` und keine Kosten, Angriffe, Lebenswerte oder Effekte.
 - Fraktions-, Orts-, Figuren- und Kapitelverweise verwenden IDs, keine übersetzten Namen.
@@ -104,7 +104,7 @@ Godot 4.6.3; Xvfb/Mesa; Python/Pillow. Vollständiger Lauf `DISPLAY=:99 tools/te
 |---|---|
 | Godot-Import | Keine Skriptfehler |
 | Bestehende Regeln | 684 Assertions, 0 Fehler; 30 Differential-Duelle |
-| Narrative Daten / Lokalisierung / Markenmetadaten | 2.190 Assertions, 0 Fehler |
+| Narrative Daten / Lokalisierung / Markenmetadaten | 2.253 Assertions, 0 Fehler |
 | Tatsächliche Godot-Katalogabfragen | 97 Assertions, 0 Fehler |
 | Bestehende Maus-/Touch- und Layouttests | 380 Assertions, 0 Fehler |
 | Bestehendes UX-Audit | 1.900 Assertions, 0 Fehler; 49 gepaarte Renderzustände |
@@ -112,7 +112,7 @@ Godot 4.6.3; Xvfb/Mesa; Python/Pillow. Vollständiger Lauf `DISPLAY=:99 tools/te
 | Webexport | Erfolgreich |
 | Katalogtest gegen exportiertes PCK | Weitere 97 Assertions, 0 Fehler; Daten tatsächlich enthalten |
 
-Die vollständige Suite umfasst **5.251 Assertions**, zusätzlich Kontrastmessungen und den wiederholten Pakettest. Neue Datenprüfungen fanden im Entwicklungszyklus eine doppelte Entitäts-ID; der erste Godot-Test fand einen falschen Lookup-Pfad. Beide wurden korrigiert und die komplette Suite danach erfolgreich ausgeführt.
+Die vollständige Suite umfasst **5.314 Assertions**, zusätzlich Kontrastmessungen und den wiederholten Pakettest. Neue Datenprüfungen fanden im Entwicklungszyklus eine doppelte Entitäts-ID; der erste Godot-Test fand einen falschen Lookup-Pfad. Beide wurden korrigiert und die komplette Suite danach erfolgreich ausgeführt.
 
 Die neuen Prüfungen sind in `tools/test.sh` und die Paketprüfung in GitHub Actions integriert. Browserprüfungen kontrollieren zusätzlich, dass Browser-Titel und Canvas-Beschriftung die unveränderte zentrale Produktidentität verwenden. Ergebnisse und Logauszüge liegen unter [qa/](qa/).
 

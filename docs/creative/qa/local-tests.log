@@ -1,5 +1,5 @@
 RULES: 684 assertions, 0 failures; 30 baseline differential duels
-CREATIVE DATA: 2190 assertions, 0 failures; 74 entities; 266 keys per locale; unchanged 7-card pool
+CREATIVE DATA: 2253 assertions, 0 failures; 74 entities; 275 keys per locale; unchanged 7-card pool
 NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
 INPUT/LAYOUT: 380 assertions, 0 failures; seven landscape sizes; mouse + ScreenTouch
 UX AUDIT: 1900 assertions, 0 failures; 49 paired rendered states

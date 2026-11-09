@@ -594,6 +594,24 @@ Wer trägt die Kosten eines Vertrags, dessen Unterzeichner die Grenzen nie verla
 
 **EN:** Who bears the costs of an agreement whose signatories never leave its borders?
 
+### Anlage
+
+Nach der Ersten offenen Rechnung finden Mara und Ivara in der Leermark einen Weg, der Wärme abführt, ohne in einer bekannten Gemeindebilanz zu erscheinen. Eine Wanderstation beherbergt die Nachfahren von Menschen, die vor dem Nullwinter aus dem Fünferbund austraten. Sie haben keinen Vertrag gebrochen: Sie haben den heutigen nie unterschrieben.
+
+**EN:** After the First Open Account, Mara and Ivara find a path in the Blank March that carries heat away without appearing in any known community account. A traveling station shelters descendants of people who left the Fivefold Accord before the Zero Winter. They have broken no agreement: they never signed the present one.
+
+### Entwicklung
+
+Orren kann die Versorgung nur durch Rücknahme lokaler Zusagen stabilisieren. Nemi organisiert Verhandlungen ohne Zwangserfassung. Der Schmelzkonvent entdeckt, dass manche zurückgewonnenen Anker aus der Leermark stammen und deren Restfähigkeit verbrauchen. Der Konflikt verläuft zwischen unterschiedlichen legitimen Zuständigkeiten; keine geheime Invasorenrasse soll ihn vereinfachen.
+
+**EN:** Orren can stabilize supply only by withdrawing local commitments. Nemi organizes negotiation without compulsory registration. The Crucible Compact discovers that some reclaimed anchors came from the Blank March and consume its remaining capacity. The conflict is between different legitimate jurisdictions; no secret invading race is introduced to simplify it.
+
+### Ziel und offene Folgen
+
+Ein erweiterter Bund braucht Grenzen für das Recht, fremde Reserven zu nutzen, und ein wirksames Austrittsverfahren. Mara muss akzeptieren, dass ein überprüfbarer örtlicher Vertrag nicht automatisch überall gilt. Das Ende kann einen begrenzten grenzübergreifenden Austausch tragen; eine mühelose Wiederherstellung der gesamten Leermark ist ausgeschlossen.
+
+**EN:** An enlarged accord needs limits on the right to use others’ reserves and a workable exit procedure. Mara must accept that an auditable local agreement does not automatically apply everywhere. The ending may support bounded exchange across borders; effortless restoration of the entire Blank March is ruled out.
+
 ## Das Recht zu enden
 
 Stabile ID: `arc_closure`. Status: `future_narrative_direction_not_feature`. 
@@ -604,6 +622,24 @@ Darf eine heilende Wirkung weiterlaufen, wenn ihre Begünstigten ihren Abschluss
 
 **EN:** May a healing working continue when its beneficiaries ask for it to end?
 
+### Anlage
+
+Sera erhält die erste glaubhaft bezeugte Bitte, eine seit Jahrzehnten aufrechterhaltene heilende Wirkung zu beenden. Das Pflegehaus bezieht aus derselben Wirkung seine bauliche Ruhe. Der persönliche Wunsch einer Bewohnerin berührt damit die Sicherheit anderer, ohne dadurch ungültig zu werden.
+
+**EN:** Sera receives the first credibly witnessed request to end a healing working maintained for decades. The care house draws its structural rest from the same working. A resident’s personal wish therefore affects other people’s safety without becoming invalid for that reason.
+
+### Entwicklung
+
+Schließende und Fortführende streiten innerhalb aller vier Fraktionen. Varo kann eine Ersatzstütze bauen, muss dafür jedoch andere Reparaturen verschieben. Rian verteidigt die Pflegegemeinschaft und wird mit der Grenze seines eigenen Stellvertretungsanspruchs konfrontiert. Die Bewohnerin erhält eine eigene Stimme; sie ist kein bloßes moralisches Rätsel für die Helden.
+
+**EN:** Closers and Continuants disagree within all four factions. Varo can build a replacement brace but must defer other repairs. Rian defends the care community and confronts the limits of his own claim to represent it. The resident has a voice of her own; she is not merely a moral puzzle for the heroes.
+
+### Ziel und offene Folgen
+
+Der Bogen zielt auf ein verlässliches, widerrufbares Pflegeverfahren und eine tatsächlich getragene Ersatzversorgung. Er liefert keine allgemeine Formel, die Zustimmung oder Fürsorge überflüssig macht. Sera lernt, Hilfe anzunehmen, ohne ihre Grenze zu verkaufen. Keine Spielregel über Wiederbelebung oder dauerhaften Heldentod wird daraus abgeleitet.
+
+**EN:** The arc seeks a dependable, revocable care procedure and replacement supply with real support behind it. It offers no universal formula that makes consent or care unnecessary. Sera learns to accept help without selling her boundary. No resurrection or permanent hero-death rule is derived from it.
+
 ## Achts eigene Hand
 
 Stabile ID: `arc_eight_personhood`. Status: `future_narrative_direction_not_feature`. 
@@ -613,4 +649,22 @@ Stabile ID: `arc_eight_personhood`. Status: `future_narrative_direction_not_feat
 Kann ein gemachter Zeuge Verantwortung übernehmen, ohne das Eigentum seiner Erbauer zu bleiben?
 
 **EN:** Can a made witness accept responsibility without remaining its makers’ property?
+
+### Anlage
+
+Die acht Messkörper werden nach einem Archivschaden unterschiedlichen Eigentümern zugeteilt. Jeder Teil kann echte Messungen bezeugen, aber keiner allein den gemeinsamen Gesprächsverlauf. Eda muss entscheiden, ob ihr bisheriger Schutzanspruch ebenfalls eine Form des Besitzes geworden ist.
+
+**EN:** After archive damage, the eight measuring bodies are assigned to different owners. Each part can witness genuine measurements, but none alone holds their shared conversation. Eda must decide whether her own protective claim has also become a form of ownership.
+
+### Entwicklung
+
+Acht verlangt ein selbst benanntes Mandat und das Recht, eine Verknüpfung abzulehnen. Der Pegelbund fürchtet den Verlust unersetzlicher Messungen, die Pfropfkammern sehen einen Präzedenzfall für gepflegte Verbände. Die Handlung prüft Verantwortung an konkreten falschen und richtigen Aussagen, nicht an einem überraschenden Beweis, dass Acht in Wahrheit ein alter Gott sei.
+
+**EN:** Eight asks for a self-named mandate and the right to refuse a connection. The Level Concord fears losing irreplaceable measurements; the Graft Chambers see a precedent for maintained unions. The story tests responsibility through specific true and false statements, not a surprise revelation that Eight is secretly an ancient god.
+
+### Ziel und offene Folgen
+
+Eine neue Rechtsform kann Verantwortung, Wartungspflicht und Widerspruch verbinden, ohne Acht zum Eigentümer anderer gemachter Wesen zu machen. Eda gibt Entscheidungsgewalt ab. Offen bleibt, welche Verbände überhaupt eine gemeinsame Stimme beanspruchen dürfen. Das ist ein narrativer Horizont, kein angekündigtes KI-, Beschwörungs- oder Fraktionsfeature.
+
+**EN:** A new legal form may connect responsibility, maintenance duties and objection without making Eight the owner of other made beings. Eda relinquishes authority. It remains open which unions may claim a shared voice at all. This is a narrative horizon, not an announced AI, summoning or faction feature.
 
