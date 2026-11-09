@@ -4,7 +4,7 @@ Stand:2026-11-09. Die neueste Nutzeranweisung autorisiert Implementierung, lokal
 
 ## Lokale Integration
 
-Draft-PR [#8](https://github.com/Jagarex-lab/nachtsiegel-app/pull/8), Branch `alpha/playable-0.1`, Basis develop. PR2→4→5→7 werden über PR7-Head `023a0e0` übernommen. Nur im Alpha-Branch lokal integriert: PR1 `c635e12`, PR6 `faea1cc`, PR3 `37d8fc5`. Auditdokumente aus PR1/2 sind identisch; der PR1-Merge erzeugte keine doppelten Baumdateien. Keine der bestehenden PRs wurde remote gemergt/retargetet. PR3 ist unabhängig,5 basiert auf4,7 auf5. Aktueller read-only GitHub-Snapshot im QA-Artefakt `pr-status-current.json`.
+Draft-PR [#8](https://github.com/Jagarex-lab/nachtsiegel-app/pull/8), Branch `alpha/playable-0.1`, Basis develop. PR2→4→5→7 werden über PR7-Head `023a0e0` übernommen. Nur im Alpha-Branch lokal integriert: PR1 `c635e12`, PR6 `faea1cc`, PR3 `37d8fc5`. Auditdokumente aus PR1/2 sind identisch; der PR1-Merge erzeugte keine doppelten Baumdateien. Keine der bestehenden PRs wurde remote gemergt/retargetet. PR3 ist unabhängig,5 basiert auf4,7 auf5. Aktueller read-only [GitHub-Snapshot](evidence/pr-status.json): alle sieben PRs offen, nicht gemergt und bei der Abfrage mergeable.
 
 Develop bleibt `b1f5ea59a4754bac19df31e279bff8a295cb6ea8`. Main und andere Repositories wurden nicht geändert. Es gab keinen Release-Dispatch, keine Pagesveröffentlichung und keine neue öffentliche Alpha-URL.
 

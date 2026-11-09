@@ -119,6 +119,7 @@ func run() -> void:
 					var turns=0
 					while m.state.winner==null and m.state.error.is_empty() and turns<180:
 						m.ai_turn("hero");turns+=1
+						check(invariants(m),"post-turn resources, instance IDs and card conservation")
 					check(m.state.winner!=null and m.state.error.is_empty(),"complete Alpha AI duel "+hero+enemy+str(enabled)+str(seed_value))
 					var attempts=0;var success=0;var failed=0;var chains=0;var direct=0
 					var used_cards: Array=[];var energy_spent=0;var hero_damage=0;var previous: Dictionary={}
@@ -185,3 +186,18 @@ func paired_seeds(hero: String, enemy: String) -> Array:
 		if found.size()==2:return [found.hero,found.enemy]
 	check(false,"could not counterbalance starting players")
 	return [12345,8802026]
+
+func invariants(m) -> bool:
+	var uids: Dictionary={}
+	for side in ["hero","enemy"]:
+		var p: Dictionary=m.state[side]
+		if p.energy<0 or p.energy>8 or p.resonance<0 or p.resonance>15 or p.ward<0 or p.ward>25 or p.block<0:return false
+		if p.hand.size()>6 or p.lanes.size()!=5 or p.hp>p.maxHp:return false
+		var count=p.hand.size()+p.deck.size()+p.discard.size()+(1 if p.relic!=null else 0)
+		for unit in p.lanes:
+			if unit==null:continue
+			count+=1
+			if not m.catalog.cards.has(unit.id) or unit.hp<=0 or int(unit.uid)<=0 or uids.has(unit.uid):return false
+			uids[unit.uid]=true
+		if count!=30:return false
+	return true

@@ -8,7 +8,7 @@
 
 ## Alpha-Eröffnung
 
-30 Karten, genau eine Macht plus neutrale Karten; höchstens3 identische Karten, Legendäre höchstens1. Beide Helden30 LP; beide ziehen fünf Karten. Einmaliger Mulligan ausgewählter verschiedener Handindizes: Ersatz aus verbleibendem Deck ziehen, danach zurückgelegte Karten einmischen. Leere Auswahl verbraucht kein zusätzliches RNG. KI tauscht teure Karten. Erst danach entscheidet der gemeinsame deterministische Seed den Startspieler.
+30 Karten mit einer gewählten Macht; alle nichtneutralen Karten müssen zu dieser Macht gehören. Neutrale Karten sind zusätzlich erlaubt; höchstens3 identische Karten, Legendäre höchstens1. Beide Helden30 LP; beide ziehen fünf Karten. Einmaliger Mulligan ausgewählter verschiedener Handindizes: Ersatz aus verbleibendem Deck ziehen, danach zurückgelegte Karten einmischen. Leere Auswahl verbraucht kein zusätzliches RNG. KI tauscht teure Karten. Erst danach entscheidet der gemeinsame deterministische Seed den Startspieler.
 
 Beide wählen verdeckt einen Ursprungspfad, anschließend gemeinsame Aufdeckung. Die erste dort eigene beschworene/zurückgeholte Kreatur erhält einmal einen Punkt Kreaturenschutz; die Nutzung wird pro Spieler vermerkt. Der zweite Spieler kann einmal seinen Ursprung ändern und einmal genau eine Handkarte tauschen; beides optional. Erster Spieler zieht in seinem ersten Zug nicht, zweiter zieht eine Karte.
 

@@ -1,0 +1,82 @@
+{
+  "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+  "profiles": [
+    {
+      "engine": "chromium",
+      "profile": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": "real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification"
+    },
+    {
+      "engine": "chromium",
+      "profile": "desktop-wide",
+      "viewport": {
+        "width": 1600,
+        "height": 900
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": "real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification"
+    },
+    {
+      "engine": "chromium",
+      "profile": "android",
+      "viewport": {
+        "width": 915,
+        "height": 412
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": "real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification"
+    },
+    {
+      "engine": "chromium",
+      "profile": "android-bars",
+      "viewport": {
+        "width": 844,
+        "height": 320
+      },
+      "dpr": 2,
+      "errors": [],
+      "checks": "real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification"
+    },
+    {
+      "engine": "webkit",
+      "profile": "iphone",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "dpr": 3,
+      "errors": [],
+      "checks": "real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification"
+    },
+    {
+      "engine": "webkit",
+      "profile": "iphone-wide",
+      "viewport": {
+        "width": 915,
+        "height": 412
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": "real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification"
+    },
+    {
+      "engine": "webkit",
+      "profile": "iphone-bars",
+      "viewport": {
+        "width": 844,
+        "height": 320
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": "real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification"
+    }
+  ]
+}

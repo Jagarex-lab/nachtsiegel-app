@@ -5,8 +5,9 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
  const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
  const results=[],profiles={chromium:[{name:'desktop',viewport:{width:1280,height:720},hasTouch:true},{name:'desktop-wide',viewport:{width:1600,height:900},hasTouch:true},{...devices['Pixel 7'],name:'android',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['Pixel 7'],name:'android-bars',viewport:{width:844,height:320},deviceScaleFactor:2,insets:{left:44,right:44,top:0,bottom:21}}],webkit:[{...devices['iPhone 13'],name:'iphone',viewport:{width:844,height:390},deviceScaleFactor:3},{...devices['iPhone 13 Pro Max'],name:'iphone-wide',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['iPhone 13'],name:'iphone-bars',viewport:{width:844,height:320},deviceScaleFactor:1,reducedMotion:'reduce',insets:{left:44,right:44,top:0,bottom:21}}]};
  for(const engine of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
+  for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
   const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
-  try{for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
+  try{
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
@@ -45,7 +46,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
      if(!choice){
       const ready=p.lanes.map((u,i)=>u&&!u.stun&&(!u.summoned||by[u.id].effect==='haste')&&u.atk>p.weak&&!b.enemy.lanes[i]?i:-1).filter(i=>i>=0);
       if(q.mode==='alpha'&&b.round>=11&&ready.length>=3){
-       await action('convergence');for(const i of ready.slice(0,3)){await tap((await state()).board['hero'+i]);await page.waitForTimeout(150);}await action('convergence');
+       await action('convergence');for(const i of ready.slice(0,3)){const previous=await state();await tap(previous.board['hero'+i]);await page.waitForFunction(v=>window.orafoldQA.render_version>v,previous.render_version);}const previous=await state();await action('convergence');await page.waitForFunction(n=>window.orafoldQA.command_count>n,previous.command_count);
       }else await action('end');return;
      }
      await page.waitForFunction(()=>window.orafoldQA.hand.map(c=>c.id).join()===window.orafoldQA.battle.hero.hand.join());q=await state();await tap(q.hand[choice.i].rect);
@@ -74,9 +75,10 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
     }
     assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,checks:'real touch, opening, 44CSS/safe-area board, legal card turn, saved deck reload; complete Alpha desktop/Legacy Android duels and replay verification'});
     console.log('ALPHA BROWSER PASS:',engine,name);
-   }catch(error){await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,errors},null,2));throw error;}
+   }catch(error){await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,errors,diagnostic:await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,page:window.orafoldQA?.page})).catch(()=>null)},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}
-  }}finally{await browser.close();}
+  }finally{await browser.close();}
+  }
  }
  fs.writeFileSync('work/alpha/browser-results.json',JSON.stringify(results,null,2));console.log(`ALPHA BROWSER: ${results.length} profiles,0 failures`);
 })().catch(error=>{console.error(error);process.exit(1)});

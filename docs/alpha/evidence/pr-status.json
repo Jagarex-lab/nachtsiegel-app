@@ -1,0 +1,103 @@
+{
+  "observed_utc": "2026-11-09",
+  "pull_requests": [
+    {
+      "number": 1,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "base": "develop",
+      "base_sha": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8",
+      "head": "audit/legacy-functional-parity",
+      "head_sha": "51ad544087dba200846b4420e493fcbe656c634f",
+      "commits": 1,
+      "changed_files": 30,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/1"
+    },
+    {
+      "number": 2,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "base": "develop",
+      "base_sha": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8",
+      "head": "feature/legacy-foundations",
+      "head_sha": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+      "commits": 2,
+      "changed_files": 84,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/2"
+    },
+    {
+      "number": 3,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "base": "develop",
+      "base_sha": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8",
+      "head": "architecture/f2p-economy-design",
+      "head_sha": "d3634b462444760665ba169dcd2be7df86baddfe",
+      "commits": 1,
+      "changed_files": 13,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/3"
+    },
+    {
+      "number": 4,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "base": "feature/legacy-foundations",
+      "base_sha": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+      "head": "feature/legacy-engine-p01-p04",
+      "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+      "commits": 1,
+      "changed_files": 48,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/4"
+    },
+    {
+      "number": 5,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": true,
+      "base": "feature/legacy-engine-p01-p04",
+      "base_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+      "head": "feature/legacy-engine-p05-p06",
+      "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+      "commits": 3,
+      "changed_files": 58,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/5"
+    },
+    {
+      "number": 6,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": false,
+      "base": "develop",
+      "base_sha": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8",
+      "head": "security/pages-release-gate",
+      "head_sha": "dadb8471eaea8decc182792f26e5083e2100a4b6",
+      "commits": 4,
+      "changed_files": 19,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/6"
+    },
+    {
+      "number": 7,
+      "state": "open",
+      "merged": false,
+      "mergeable": true,
+      "draft": true,
+      "base": "feature/legacy-engine-p05-p06",
+      "base_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+      "head": "feature/legacy-engine-p07",
+      "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+      "commits": 2,
+      "changed_files": 40,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/7"
+    }
+  ]
+}

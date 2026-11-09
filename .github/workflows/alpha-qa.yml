@@ -37,42 +37,70 @@ jobs:
       - name: Release separation regression
         run: python3 -m unittest discover -s tests/release -v
       - name: Isolated Alpha export
-        run: tools/build_alpha.sh
-      - name: Browser runtime
         run: |
-          npm install --prefix work/qa-browser --no-save --package-lock=false playwright@1.56.1
-          work/qa-browser/node_modules/.bin/playwright install --with-deps chromium webkit
-      - name: Existing archive browser regression
-        env:
-          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
-          EXPECTED_COMMIT: ${{ github.sha }}
-          GAME_URL: http://127.0.0.1:8789/
-        run: |
+          tools/build_alpha.sh
           tools/build_archive_qa.sh
-          python3 -m http.server 8789 --bind 127.0.0.1 --directory work/alpha/archive-web > work/alpha/archive-http.log 2>&1 &
-          node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
-      - name: Alpha actual touch complete duels and persistence in Chromium and WebKit
-        env:
-          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
-          EXPECTED_COMMIT: ${{ github.sha }}
-          GAME_URL: http://127.0.0.1:8788/
-        run: |
-          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
-          node tools/alpha_browser_qa.cjs
-      - name: Package commit-addressed tested build
+      - name: Package isolated candidate for browser verification
         run: python3 tools/package_alpha.py > work/alpha/package-result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: orafold-alpha-builds
+          path: |
+            work/alpha/web/
+            work/alpha/archive-web/
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: orafold-alpha-0.1-QA
+          name: orafold-alpha-native-QA
           path: |
             work/alpha/*.log
             work/alpha/*.json
             work/alpha/*.png
             work/alpha/*.zip
-            work/alpha/web/
-            work/alpha/archive-web/
             work/legacy/*.log
-            work/legacy/*results.json
             work/*final.log
-          if-no-files-found: warn
+  browser:
+    needs: alpha-playable
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: orafold-alpha-builds
+          path: work/alpha
+      - name: Browser runtime on a fresh runner per engine
+        run: |
+          npm install --prefix work/qa-browser --no-save --package-lock=false playwright@1.56.1
+          work/qa-browser/node_modules/.bin/playwright install --with-deps ${{ matrix.engine }}
+      - name: Archive then Alpha actual touch tests
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          QA_ENGINES: ${{ matrix.engine }}
+        run: |
+          python3 -m http.server 8789 --bind 127.0.0.1 --directory work/alpha/archive-web > work/alpha/archive-http.log 2>&1 &
+          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
+          GAME_URL=http://127.0.0.1:8789/ QA_PREFIX=alpha/archive node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
+          GAME_URL=http://127.0.0.1:8788/ node tools/alpha_browser_qa.cjs
+      - name: Package the browser-verified candidate
+        run: python3 tools/package_alpha.py > work/alpha/package-result.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orafold-alpha-QA-${{ matrix.engine }}
+          path: |
+            work/alpha/*.log
+            work/alpha/*.json
+            work/alpha/*.png
+            work/alpha/*.zip

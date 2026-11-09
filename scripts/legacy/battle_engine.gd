@@ -1,7 +1,7 @@
 extends RefCounted
-## P01-P07 legacy kernel. No scene/UI/network/economy dependencies.
+## Shared legacy kernel. No scene/UI/network/economy dependencies.
 ## start/begin_turn/advance_turn expose original boundaries BEFORE optional AI.
-## P10 automatic AI and P11 replay ABI remain explicitly unsupported.
+## start_match/end_turn add the P10 original AI; the P11 original JS audit ABI remains unsupported.
 const Catalog = preload("res://scripts/legacy/catalog.gd")
 const Validator = preload("res://scripts/legacy/deck_validator.gd")
 const Random = preload("res://scripts/legacy/rng.gd")
