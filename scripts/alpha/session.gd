@@ -72,6 +72,8 @@ static func replay(data: Variant) -> Dictionary:
 func save_deck(key: String, ids: Array, rule_mode: String) -> Dictionary:
 	var result: Dictionary=AlphaCatalog.new().validate(ids) if rule_mode=="alpha" else preload("res://scripts/legacy/deck_validator.gd").new().validate(ids)
 	if not result.ok:return result
+	var slot=key.get_slice(":",key.get_slice_count(":")-1)
+	if rule_mode=="alpha" and slot in AlphaCatalog.new().deck_ids() and result.faction not in [slot,"neutral"]:return {"ok":false,"message":"Deck passt nicht zur gewählten Macht."}
 	profile.decks[key]={"mode":rule_mode,"cards":ids.duplicate()}
 	if not save_profile():return {"ok":false,"message":"Speichern fehlgeschlagen."}
 	return {"ok":true,"message":"Deck gespeichert."}

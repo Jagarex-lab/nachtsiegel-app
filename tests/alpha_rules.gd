@@ -101,6 +101,7 @@ func run() -> void:
 	check(session.save_deck("qa:houses",catalog.deck("houses"),"alpha").ok,"deck save")
 	check(Session.new().profile.decks.has("qa:houses"),"deck survives restart")
 	check(not session.save_deck("qa:bad",[],"alpha").ok,"invalid save rejected")
+	check(not session.save_deck("alpha:houses",catalog.deck("morph"),"alpha").ok,"wrong selected power rejected")
 	session.start_match("alpha",catalog.deck("houses"),12345,2,catalog.deck("morph"))
 	session.command("mulligan",[[]]);session.command("origin",[2])
 	if session.model.state.stage=="second":session.command("openingDone",[])

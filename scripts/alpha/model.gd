@@ -329,11 +329,11 @@ func ai_turn(side: String) -> void:
 				if c.effect=="recall":score=6
 				if c.effect=="redirect":score=1
 				if c.effect=="stasis" or c.effect=="bolt" or c.effect=="displace":score=4
-				if op.convergence!=null and op.convergence.lanes.has(lane) and (c.kind=="creature" or c.effect in ["stasis","bolt","displace"]):score+=6 if int(state.level)<=1 else 20
 				if int(state.level)>=5 and c.kind=="creature" and op.lanes[lane]!=null:
 					score+=(3 if int(c.atk)>=int(op.lanes[lane].hp) else 0)+(2 if int(c.hp)>int(op.lanes[lane].atk) else 0)
 				if int(state.level)<=1:score=float(c.atk)+float(c.hp)*.2+(2 if c.kind=="creature" else .1)
 				if c.kind=="creature" and op.lanes[lane]==null:score+=float(c.atk)*.5
+				if op.convergence!=null and op.convergence.lanes.has(lane) and (c.kind=="creature" or c.effect in ["stasis","bolt","displace"]):score+=6 if int(state.level)<=1 else 20
 				if best.is_empty() or score>best.score:best={"index":index,"lane":lane,"score":score}
 		if best.is_empty() or best.score<0:break
 		if not play(side,best.index,best.lane):state.error="KI schlug eine illegale Aktion vor.";return
