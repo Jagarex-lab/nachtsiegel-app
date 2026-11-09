@@ -1,0 +1,98 @@
+[
+  {
+    "engine": "chromium",
+    "profile": "desktop",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "deviceScaleFactor": 1,
+    "metadata": {
+      "commit": "local-creative-draft",
+      "channel": "feature/brand-world-bible"
+    },
+    "target": "http://127.0.0.1:8770/?qa=1",
+    "errors": [],
+    "checks": "CSS touch targets, first summon, double-tap inspection, end turn, contextual hints, motion preference and viewport resize"
+  },
+  {
+    "engine": "chromium",
+    "profile": "android-landscape",
+    "viewport": {
+      "width": 915,
+      "height": 412
+    },
+    "deviceScaleFactor": 1,
+    "metadata": {
+      "commit": "local-creative-draft",
+      "channel": "feature/brand-world-bible"
+    },
+    "target": "http://127.0.0.1:8770/?qa=1",
+    "errors": [],
+    "checks": "CSS touch targets, first summon, double-tap inspection, end turn, contextual hints, motion preference and viewport resize"
+  },
+  {
+    "engine": "chromium",
+    "profile": "android-bars",
+    "viewport": {
+      "width": 844,
+      "height": 320
+    },
+    "deviceScaleFactor": 2,
+    "metadata": {
+      "commit": "local-creative-draft",
+      "channel": "feature/brand-world-bible"
+    },
+    "target": "http://127.0.0.1:8770/?qa=1",
+    "errors": [],
+    "checks": "CSS touch targets, first summon, double-tap inspection, end turn, contextual hints, motion preference and viewport resize"
+  },
+  {
+    "engine": "webkit",
+    "profile": "iphone-landscape",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "deviceScaleFactor": 3,
+    "metadata": {
+      "commit": "local-creative-draft",
+      "channel": "feature/brand-world-bible"
+    },
+    "target": "http://127.0.0.1:8770/?qa=1",
+    "errors": [],
+    "checks": "CSS touch targets, first summon, double-tap inspection, end turn, contextual hints, motion preference and viewport resize"
+  },
+  {
+    "engine": "webkit",
+    "profile": "iphone-wide",
+    "viewport": {
+      "width": 915,
+      "height": 412
+    },
+    "deviceScaleFactor": 1,
+    "metadata": {
+      "commit": "local-creative-draft",
+      "channel": "feature/brand-world-bible"
+    },
+    "target": "http://127.0.0.1:8770/?qa=1",
+    "errors": [],
+    "checks": "CSS touch targets, first summon, double-tap inspection, end turn, contextual hints, motion preference and viewport resize"
+  },
+  {
+    "engine": "webkit",
+    "profile": "iphone-reduced",
+    "viewport": {
+      "width": 844,
+      "height": 320
+    },
+    "deviceScaleFactor": 1,
+    "metadata": {
+      "commit": "local-creative-draft",
+      "channel": "feature/brand-world-bible"
+    },
+    "target": "http://127.0.0.1:8770/?qa=1",
+    "errors": [],
+    "checks": "CSS touch targets, first summon, double-tap inspection, end turn, contextual hints, motion preference and viewport resize"
+  }
+]

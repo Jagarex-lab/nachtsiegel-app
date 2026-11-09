@@ -49,6 +49,18 @@ jobs:
               'channel': os.environ['GITHUB_REF_NAME'],
           }, indent=2))
           PYINFO
+      - name: Verify localized data inside the exported package
+        run: |
+          game_name="nachtsiegel-${GITHUB_SHA:0:12}"
+          godot --headless --main-pack "work/build/web/$game_name.pck" --script "$PWD/tests/narrative.gd" --quit-after 120 > work/exported-narrative-final.log 2>&1
+          python3 - <<'PYCHECK'
+          import re
+          from pathlib import Path
+          log = Path('work/exported-narrative-final.log').read_text()
+          assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:', log, re.M), log
+          assert re.search(r'NARRATIVE: \d+ assertions, 0 failures', log), log
+          print(log)
+          PYCHECK
       - name: Install browser test runtime
         run: |
           npm install --no-save --package-lock=false playwright

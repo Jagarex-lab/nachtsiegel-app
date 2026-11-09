@@ -1,0 +1,65 @@
+[
+  {
+    "domain": "keruvant.com",
+    "endpoint": "https://rdap.verisign.com/com/v1/domain/keruvant.com",
+    "checked_at": "2026-11-09T05:27:56.807007+00:00",
+    "method": "Registry RDAP GET; TLS verified",
+    "http": 404,
+    "observation": "no_record_returned",
+    "detail": []
+  },
+  {
+    "domain": "mournweft.com",
+    "endpoint": "https://rdap.verisign.com/com/v1/domain/mournweft.com",
+    "checked_at": "2026-11-09T05:27:56.807961+00:00",
+    "method": "Registry RDAP GET; TLS verified",
+    "http": 404,
+    "observation": "no_record_returned",
+    "detail": []
+  },
+  {
+    "domain": "varnethra.com",
+    "endpoint": "https://rdap.verisign.com/com/v1/domain/varnethra.com",
+    "checked_at": "2026-11-09T05:27:56.808649+00:00",
+    "method": "Registry RDAP GET; TLS verified",
+    "http": 200,
+    "observation": "registry_record_returned",
+    "ldh_name": "VARNETHRA.COM",
+    "status": [
+      "client transfer prohibited"
+    ]
+  },
+  {
+    "domain": "keruvant.games",
+    "endpoint": "https://rdap.identitydigital.services/rdap/domain/keruvant.games",
+    "checked_at": "2026-11-09T05:27:56.809451+00:00",
+    "method": "Registry RDAP GET; TLS verified",
+    "http": 404,
+    "observation": "no_record_returned",
+    "detail": [
+      "Object not found"
+    ]
+  },
+  {
+    "domain": "mournweft.games",
+    "endpoint": "https://rdap.identitydigital.services/rdap/domain/mournweft.games",
+    "checked_at": "2026-11-09T05:27:56.809967+00:00",
+    "method": "Registry RDAP GET; TLS verified",
+    "http": 404,
+    "observation": "no_record_returned",
+    "detail": [
+      "Object not found"
+    ]
+  },
+  {
+    "domain": "varnethra.games",
+    "endpoint": "https://rdap.identitydigital.services/rdap/domain/varnethra.games",
+    "checked_at": "2026-11-09T05:27:56.810647+00:00",
+    "method": "Registry RDAP GET; TLS verified",
+    "http": 404,
+    "observation": "no_record_returned",
+    "detail": [
+      "Object not found"
+    ]
+  }
+]

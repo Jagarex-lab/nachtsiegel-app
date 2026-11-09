@@ -1,0 +1,948 @@
+{
+  "schema_version": 1,
+  "status": "creative_draft",
+  "runtime_enabled": false,
+  "work_title_key": "project.working_title",
+  "collections": {
+    "world": [
+      {
+        "id": "arvess",
+        "texts": {
+          "name": "world.arvess.name",
+          "premise": "world.arvess.premise",
+          "origin": "world.arvess.origin",
+          "key_event": "world.arvess.key_event",
+          "conflict": "world.arvess.conflict",
+          "magic": "world.arvess.magic",
+          "limits": "world.arvess.limits",
+          "paths": "world.arvess.paths",
+          "religion": "world.arvess.religion",
+          "politics": "world.arvess.politics",
+          "everyday": "world.arvess.everyday",
+          "player": "world.arvess.player",
+          "boundaries": "world.arvess.boundaries"
+        }
+      }
+    ],
+    "timeline": [
+      {
+        "id": "accord",
+        "year": -40,
+        "texts": {
+          "event": "timeline.accord.event"
+        }
+      },
+      {
+        "id": "winter",
+        "year": 0,
+        "texts": {
+          "event": "timeline.winter.event"
+        }
+      },
+      {
+        "id": "emergency",
+        "year": 3,
+        "texts": {
+          "event": "timeline.emergency.event"
+        }
+      },
+      {
+        "id": "census",
+        "year": 62,
+        "texts": {
+          "event": "timeline.census.event"
+        }
+      },
+      {
+        "id": "breach",
+        "year": 82,
+        "texts": {
+          "event": "timeline.breach.event"
+        }
+      },
+      {
+        "id": "present",
+        "year": 83,
+        "texts": {
+          "event": "timeline.present.event"
+        }
+      }
+    ],
+    "paths": [
+      {
+        "id": "path_heat",
+        "lane_index": 0,
+        "texts": {
+          "name": "paths.path_heat.name",
+          "purpose": "paths.path_heat.purpose",
+          "symbol": "paths.path_heat.symbol"
+        }
+      },
+      {
+        "id": "path_water",
+        "lane_index": 1,
+        "texts": {
+          "name": "paths.path_water.name",
+          "purpose": "paths.path_water.purpose",
+          "symbol": "paths.path_water.symbol"
+        }
+      },
+      {
+        "id": "path_food",
+        "lane_index": 2,
+        "texts": {
+          "name": "paths.path_food.name",
+          "purpose": "paths.path_food.purpose",
+          "symbol": "paths.path_food.symbol"
+        }
+      },
+      {
+        "id": "path_witness",
+        "lane_index": 3,
+        "texts": {
+          "name": "paths.path_witness.name",
+          "purpose": "paths.path_witness.purpose",
+          "symbol": "paths.path_witness.symbol"
+        }
+      },
+      {
+        "id": "path_rest",
+        "lane_index": 4,
+        "texts": {
+          "name": "paths.path_rest.name",
+          "purpose": "paths.path_rest.purpose",
+          "symbol": "paths.path_rest.symbol"
+        }
+      }
+    ],
+    "factions": [
+      {
+        "id": "crucible",
+        "legacy_name": "Aschensturm",
+        "legacy_sigils": [
+          "ASH"
+        ],
+        "role_reference": "pressure",
+        "concept_palette": [
+          "#9d583d",
+          "#5e696b",
+          "#e7dcc7"
+        ],
+        "texts": {
+          "name": "factions.crucible.name",
+          "philosophy": "factions.crucible.philosophy",
+          "goal": "factions.crucible.goal",
+          "culture": "factions.crucible.culture",
+          "inner_conflict": "factions.crucible.inner_conflict",
+          "creatures": "factions.crucible.creatures",
+          "architecture": "factions.crucible.architecture",
+          "visual": "factions.crucible.visual",
+          "role": "factions.crucible.role",
+          "introduction": "factions.crucible.introduction"
+        }
+      },
+      {
+        "id": "concord",
+        "legacy_name": "Gezeitenwall",
+        "legacy_sigils": [
+          "TIDE"
+        ],
+        "role_reference": "endurance",
+        "concept_palette": [
+          "#25575a",
+          "#becdc6",
+          "#7a8d91"
+        ],
+        "texts": {
+          "name": "factions.concord.name",
+          "philosophy": "factions.concord.philosophy",
+          "goal": "factions.concord.goal",
+          "culture": "factions.concord.culture",
+          "inner_conflict": "factions.concord.inner_conflict",
+          "creatures": "factions.concord.creatures",
+          "architecture": "factions.concord.architecture",
+          "visual": "factions.concord.visual",
+          "role": "factions.concord.role",
+          "introduction": "factions.concord.introduction"
+        }
+      },
+      {
+        "id": "graft",
+        "legacy_name": "Dornenwacht",
+        "legacy_sigils": [
+          "THORN"
+        ],
+        "role_reference": "fragile_pressure",
+        "concept_palette": [
+          "#647047",
+          "#3d3530",
+          "#e4d9bb"
+        ],
+        "texts": {
+          "name": "factions.graft.name",
+          "philosophy": "factions.graft.philosophy",
+          "goal": "factions.graft.goal",
+          "culture": "factions.graft.culture",
+          "inner_conflict": "factions.graft.inner_conflict",
+          "creatures": "factions.graft.creatures",
+          "architecture": "factions.graft.architecture",
+          "visual": "factions.graft.visual",
+          "role": "factions.graft.role",
+          "introduction": "factions.graft.introduction"
+        }
+      },
+      {
+        "id": "names",
+        "legacy_name": "Nachtgewebe",
+        "legacy_sigils": [
+          "VEIL"
+        ],
+        "role_reference": "balanced_presence",
+        "concept_palette": [
+          "#51405f",
+          "#b9b5b8",
+          "#797d8a"
+        ],
+        "texts": {
+          "name": "factions.names.name",
+          "philosophy": "factions.names.philosophy",
+          "goal": "factions.names.goal",
+          "culture": "factions.names.culture",
+          "inner_conflict": "factions.names.inner_conflict",
+          "creatures": "factions.names.creatures",
+          "architecture": "factions.names.architecture",
+          "visual": "factions.names.visual",
+          "role": "factions.names.role",
+          "introduction": "factions.names.introduction"
+        }
+      }
+    ],
+    "locations": [
+      {
+        "id": "fivefold_house",
+        "affiliation": "arvess",
+        "texts": {
+          "name": "locations.fivefold_house.name",
+          "description": "locations.fivefold_house.description"
+        }
+      },
+      {
+        "id": "gauge_gate",
+        "affiliation": "concord",
+        "texts": {
+          "name": "locations.gauge_gate.name",
+          "description": "locations.gauge_gate.description"
+        }
+      },
+      {
+        "id": "third_furnace",
+        "affiliation": "crucible",
+        "texts": {
+          "name": "locations.third_furnace.name",
+          "description": "locations.third_furnace.description"
+        }
+      },
+      {
+        "id": "graft_court",
+        "affiliation": "graft",
+        "texts": {
+          "name": "locations.graft_court.name",
+          "description": "locations.graft_court.description"
+        }
+      },
+      {
+        "id": "offset_archive",
+        "affiliation": "names",
+        "texts": {
+          "name": "locations.offset_archive.name",
+          "description": "locations.offset_archive.description"
+        }
+      },
+      {
+        "id": "rest_quay",
+        "affiliation": "independent",
+        "texts": {
+          "name": "locations.rest_quay.name",
+          "description": "locations.rest_quay.description"
+        }
+      },
+      {
+        "id": "blank_march",
+        "affiliation": "independent",
+        "texts": {
+          "name": "locations.blank_march.name",
+          "description": "locations.blank_march.description"
+        }
+      },
+      {
+        "id": "underroll",
+        "affiliation": "independent",
+        "texts": {
+          "name": "locations.underroll.name",
+          "description": "locations.underroll.description"
+        }
+      }
+    ],
+    "characters": [
+      {
+        "id": "mara",
+        "faction_id": "independent",
+        "age": 32,
+        "hero_candidate": true,
+        "legacy_portrait_proposal": "Siegelhüterin",
+        "texts": {
+          "name": "characters.mara.name",
+          "role": "characters.mara.role",
+          "biography": "characters.mara.biography",
+          "goal": "characters.mara.goal",
+          "flaw": "characters.mara.flaw",
+          "quote": "characters.mara.quote"
+        }
+      },
+      {
+        "id": "varo",
+        "faction_id": "crucible",
+        "age": 48,
+        "hero_candidate": true,
+        "legacy_portrait_proposal": "Aschenkönig",
+        "texts": {
+          "name": "characters.varo.name",
+          "role": "characters.varo.role",
+          "biography": "characters.varo.biography",
+          "goal": "characters.varo.goal",
+          "flaw": "characters.varo.flaw",
+          "quote": "characters.varo.quote"
+        }
+      },
+      {
+        "id": "ivara",
+        "faction_id": "concord",
+        "age": 35,
+        "hero_candidate": true,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.ivara.name",
+          "role": "characters.ivara.role",
+          "biography": "characters.ivara.biography",
+          "goal": "characters.ivara.goal",
+          "flaw": "characters.ivara.flaw",
+          "quote": "characters.ivara.quote"
+        }
+      },
+      {
+        "id": "rian",
+        "faction_id": "graft",
+        "age": 41,
+        "hero_candidate": true,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.rian.name",
+          "role": "characters.rian.role",
+          "biography": "characters.rian.biography",
+          "goal": "characters.rian.goal",
+          "flaw": "characters.rian.flaw",
+          "quote": "characters.rian.quote"
+        }
+      },
+      {
+        "id": "eda",
+        "faction_id": "names",
+        "age": 57,
+        "hero_candidate": true,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.eda.name",
+          "role": "characters.eda.role",
+          "biography": "characters.eda.biography",
+          "goal": "characters.eda.goal",
+          "flaw": "characters.eda.flaw",
+          "quote": "characters.eda.quote"
+        }
+      },
+      {
+        "id": "sera",
+        "faction_id": "independent",
+        "age": 29,
+        "hero_candidate": true,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.sera.name",
+          "role": "characters.sera.role",
+          "biography": "characters.sera.biography",
+          "goal": "characters.sera.goal",
+          "flaw": "characters.sera.flaw",
+          "quote": "characters.sera.quote"
+        }
+      },
+      {
+        "id": "tovin",
+        "faction_id": "concord",
+        "age": 62,
+        "hero_candidate": false,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.tovin.name",
+          "role": "characters.tovin.role",
+          "biography": "characters.tovin.biography",
+          "goal": "characters.tovin.goal",
+          "flaw": "characters.tovin.flaw",
+          "quote": "characters.tovin.quote"
+        }
+      },
+      {
+        "id": "orren",
+        "faction_id": "crucible",
+        "age": 54,
+        "hero_candidate": false,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.orren.name",
+          "role": "characters.orren.role",
+          "biography": "characters.orren.biography",
+          "goal": "characters.orren.goal",
+          "flaw": "characters.orren.flaw",
+          "quote": "characters.orren.quote"
+        }
+      },
+      {
+        "id": "nemi",
+        "faction_id": "independent",
+        "age": 23,
+        "hero_candidate": false,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.nemi.name",
+          "role": "characters.nemi.role",
+          "biography": "characters.nemi.biography",
+          "goal": "characters.nemi.goal",
+          "flaw": "characters.nemi.flaw",
+          "quote": "characters.nemi.quote"
+        }
+      },
+      {
+        "id": "eight",
+        "faction_id": "names",
+        "age": 83,
+        "hero_candidate": false,
+        "legacy_portrait_proposal": null,
+        "texts": {
+          "name": "characters.eight.name",
+          "role": "characters.eight.role",
+          "biography": "characters.eight.biography",
+          "goal": "characters.eight.goal",
+          "flaw": "characters.eight.flaw",
+          "quote": "characters.eight.quote"
+        }
+      }
+    ],
+    "cards": [
+      {
+        "id": "ash_watch",
+        "faction_id": "crucible",
+        "status": "existing_presentation_binding",
+        "flavor_only": true,
+        "legacy_pool_index": 0,
+        "legacy_name": "Aschenwache",
+        "texts": {
+          "name": "cards.ash_watch.name",
+          "flavor": "cards.ash_watch.flavor"
+        }
+      },
+      {
+        "id": "thorn_wolf",
+        "faction_id": "graft",
+        "status": "existing_presentation_binding",
+        "flavor_only": true,
+        "legacy_pool_index": 1,
+        "legacy_name": "Dornenwolf",
+        "texts": {
+          "name": "cards.thorn_wolf.name",
+          "flavor": "cards.thorn_wolf.flavor"
+        }
+      },
+      {
+        "id": "mist_jelly",
+        "faction_id": "concord",
+        "status": "existing_presentation_binding",
+        "flavor_only": true,
+        "legacy_pool_index": 2,
+        "legacy_name": "Nebelqualle",
+        "texts": {
+          "name": "cards.mist_jelly.name",
+          "flavor": "cards.mist_jelly.flavor"
+        }
+      },
+      {
+        "id": "shadow_wolf",
+        "faction_id": "names",
+        "status": "existing_presentation_binding",
+        "flavor_only": true,
+        "legacy_pool_index": 3,
+        "legacy_name": "Schattenwolf",
+        "texts": {
+          "name": "cards.shadow_wolf.name",
+          "flavor": "cards.shadow_wolf.flavor"
+        }
+      },
+      {
+        "id": "ember_knight",
+        "faction_id": "crucible",
+        "status": "existing_presentation_binding",
+        "flavor_only": true,
+        "legacy_pool_index": 4,
+        "legacy_name": "Glutritter",
+        "texts": {
+          "name": "cards.ember_knight.name",
+          "flavor": "cards.ember_knight.flavor"
+        }
+      },
+      {
+        "id": "tide_keeper",
+        "faction_id": "concord",
+        "status": "existing_presentation_binding",
+        "flavor_only": true,
+        "legacy_pool_index": 5,
+        "legacy_name": "Gezeitenhüter",
+        "texts": {
+          "name": "cards.tide_keeper.name",
+          "flavor": "cards.tide_keeper.flavor"
+        }
+      },
+      {
+        "id": "spark_burst",
+        "faction_id": "crucible",
+        "status": "existing_presentation_binding",
+        "flavor_only": true,
+        "legacy_pool_index": 6,
+        "legacy_name": "Funkenstoß",
+        "texts": {
+          "name": "cards.spark_burst.name",
+          "flavor": "cards.spark_burst.flavor"
+        }
+      },
+      {
+        "id": "furnace_apprentice",
+        "faction_id": "crucible",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.furnace_apprentice.name",
+          "flavor": "cards.furnace_apprentice.flavor"
+        }
+      },
+      {
+        "id": "seam_bearer",
+        "faction_id": "crucible",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.seam_bearer.name",
+          "flavor": "cards.seam_bearer.flavor"
+        }
+      },
+      {
+        "id": "closure_bell",
+        "faction_id": "crucible",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.closure_bell.name",
+          "flavor": "cards.closure_bell.flavor"
+        }
+      },
+      {
+        "id": "level_reader",
+        "faction_id": "concord",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.level_reader.name",
+          "flavor": "cards.level_reader.flavor"
+        }
+      },
+      {
+        "id": "bridge_dweller",
+        "faction_id": "concord",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.bridge_dweller.name",
+          "flavor": "cards.bridge_dweller.flavor"
+        }
+      },
+      {
+        "id": "filter_colony",
+        "faction_id": "concord",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.filter_colony.name",
+          "flavor": "cards.filter_colony.flavor"
+        }
+      },
+      {
+        "id": "graft_carer",
+        "faction_id": "graft",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.graft_carer.name",
+          "flavor": "cards.graft_carer.flavor"
+        }
+      },
+      {
+        "id": "open_trellis",
+        "faction_id": "graft",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.open_trellis.name",
+          "flavor": "cards.open_trellis.flavor"
+        }
+      },
+      {
+        "id": "borrowed_root",
+        "faction_id": "graft",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.borrowed_root.name",
+          "flavor": "cards.borrowed_root.flavor"
+        }
+      },
+      {
+        "id": "second_hand",
+        "faction_id": "names",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.second_hand.name",
+          "flavor": "cards.second_hand.flavor"
+        }
+      },
+      {
+        "id": "blank_margin",
+        "faction_id": "names",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.blank_margin.name",
+          "flavor": "cards.blank_margin.flavor"
+        }
+      },
+      {
+        "id": "unlinked_witness",
+        "faction_id": "names",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.unlinked_witness.name",
+          "flavor": "cards.unlinked_witness.flavor"
+        }
+      },
+      {
+        "id": "night_shift",
+        "faction_id": "independent",
+        "status": "concept_only",
+        "flavor_only": true,
+        "texts": {
+          "name": "cards.night_shift.name",
+          "flavor": "cards.night_shift.flavor"
+        }
+      }
+    ],
+    "intro": [
+      {
+        "id": "intro_01",
+        "start_seconds": 0,
+        "end_seconds": 7,
+        "speaker_id": "mara",
+        "texts": {
+          "visual": "intro.intro_01.visual",
+          "voice": "intro.intro_01.voice",
+          "audio": "intro.intro_01.audio"
+        }
+      },
+      {
+        "id": "intro_02",
+        "start_seconds": 7,
+        "end_seconds": 15,
+        "speaker_id": "mara",
+        "texts": {
+          "visual": "intro.intro_02.visual",
+          "voice": "intro.intro_02.voice",
+          "audio": "intro.intro_02.audio"
+        }
+      },
+      {
+        "id": "intro_03",
+        "start_seconds": 15,
+        "end_seconds": 23,
+        "speaker_id": "mara",
+        "texts": {
+          "visual": "intro.intro_03.visual",
+          "voice": "intro.intro_03.voice",
+          "audio": "intro.intro_03.audio"
+        }
+      },
+      {
+        "id": "intro_04",
+        "start_seconds": 23,
+        "end_seconds": 31,
+        "speaker_id": "mara",
+        "texts": {
+          "visual": "intro.intro_04.visual",
+          "voice": "intro.intro_04.voice",
+          "audio": "intro.intro_04.audio"
+        }
+      },
+      {
+        "id": "intro_05",
+        "start_seconds": 31,
+        "end_seconds": 40,
+        "speaker_id": "mara",
+        "texts": {
+          "visual": "intro.intro_05.visual",
+          "voice": "intro.intro_05.voice",
+          "audio": "intro.intro_05.audio"
+        }
+      }
+    ],
+    "chapters": [
+      {
+        "id": "chapter_01",
+        "location_id": "gauge_gate",
+        "character_ids": [
+          "mara",
+          "tovin",
+          "ivara"
+        ],
+        "antagonist_id": "tovin",
+        "status": "narrative_design_only",
+        "texts": {
+          "name": "chapters.chapter_01.name",
+          "hook": "chapters.chapter_01.hook",
+          "events": "chapters.chapter_01.events",
+          "climax": "chapters.chapter_01.climax",
+          "outcome": "chapters.chapter_01.outcome",
+          "dilemma": "chapters.chapter_01.dilemma",
+          "line": "chapters.chapter_01.line"
+        }
+      },
+      {
+        "id": "chapter_02",
+        "location_id": "third_furnace",
+        "character_ids": [
+          "mara",
+          "varo",
+          "orren"
+        ],
+        "antagonist_id": null,
+        "status": "narrative_design_only",
+        "texts": {
+          "name": "chapters.chapter_02.name",
+          "hook": "chapters.chapter_02.hook",
+          "events": "chapters.chapter_02.events",
+          "climax": "chapters.chapter_02.climax",
+          "outcome": "chapters.chapter_02.outcome",
+          "dilemma": "chapters.chapter_02.dilemma",
+          "line": "chapters.chapter_02.line"
+        }
+      },
+      {
+        "id": "chapter_03",
+        "location_id": "graft_court",
+        "character_ids": [
+          "mara",
+          "rian",
+          "nemi"
+        ],
+        "antagonist_id": null,
+        "status": "narrative_design_only",
+        "texts": {
+          "name": "chapters.chapter_03.name",
+          "hook": "chapters.chapter_03.hook",
+          "events": "chapters.chapter_03.events",
+          "climax": "chapters.chapter_03.climax",
+          "outcome": "chapters.chapter_03.outcome",
+          "dilemma": "chapters.chapter_03.dilemma",
+          "line": "chapters.chapter_03.line"
+        }
+      },
+      {
+        "id": "chapter_04",
+        "location_id": "offset_archive",
+        "character_ids": [
+          "mara",
+          "eda",
+          "sera",
+          "eight"
+        ],
+        "antagonist_id": null,
+        "status": "narrative_design_only",
+        "texts": {
+          "name": "chapters.chapter_04.name",
+          "hook": "chapters.chapter_04.hook",
+          "events": "chapters.chapter_04.events",
+          "climax": "chapters.chapter_04.climax",
+          "outcome": "chapters.chapter_04.outcome",
+          "dilemma": "chapters.chapter_04.dilemma",
+          "line": "chapters.chapter_04.line"
+        }
+      },
+      {
+        "id": "chapter_05",
+        "location_id": "fivefold_house",
+        "character_ids": [
+          "mara",
+          "orren",
+          "varo",
+          "ivara",
+          "rian",
+          "eda",
+          "sera",
+          "nemi",
+          "eight"
+        ],
+        "antagonist_id": "orren",
+        "status": "narrative_design_only",
+        "texts": {
+          "name": "chapters.chapter_05.name",
+          "hook": "chapters.chapter_05.hook",
+          "events": "chapters.chapter_05.events",
+          "climax": "chapters.chapter_05.climax",
+          "outcome": "chapters.chapter_05.outcome",
+          "dilemma": "chapters.chapter_05.dilemma",
+          "line": "chapters.chapter_05.line"
+        }
+      }
+    ],
+    "campaign": [
+      {
+        "id": "campaign_first_account",
+        "chapter_ids": [
+          "chapter_01",
+          "chapter_02",
+          "chapter_03",
+          "chapter_04",
+          "chapter_05"
+        ],
+        "status": "narrative_design_only",
+        "texts": {
+          "name": "campaign.campaign_first_account.name",
+          "logline": "campaign.campaign_first_account.logline"
+        }
+      }
+    ],
+    "boss": [
+      {
+        "id": "boss_gauge_gate",
+        "chapter_id": "chapter_01",
+        "character_id": "tovin",
+        "status": "design_only_not_implemented",
+        "ruleset": "existing_duel",
+        "opponent_pool_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "texts": {
+          "name": "boss.boss_gauge_gate.name",
+          "motive": "boss.boss_gauge_gate.motive",
+          "staging": "boss.boss_gauge_gate.staging",
+          "rules": "boss.boss_gauge_gate.rules",
+          "first_summon": "boss.boss_gauge_gate.first_summon",
+          "first_hit": "boss.boss_gauge_gate.first_hit",
+          "victory": "boss.boss_gauge_gate.victory",
+          "defeat": "boss.boss_gauge_gate.defeat",
+          "learning": "boss.boss_gauge_gate.learning"
+        }
+      }
+    ],
+    "secrets": [
+      {
+        "id": "double_entry",
+        "reveal_chapter_ids": [
+          "chapter_02"
+        ],
+        "audience": "writers_only_spoiler",
+        "texts": {
+          "truth": "secrets.double_entry.truth"
+        }
+      },
+      {
+        "id": "consented_erasure",
+        "reveal_chapter_ids": [
+          "chapter_03",
+          "chapter_04"
+        ],
+        "audience": "writers_only_spoiler",
+        "texts": {
+          "truth": "secrets.consented_erasure.truth"
+        }
+      },
+      {
+        "id": "unpaid_rest",
+        "reveal_chapter_ids": [
+          "chapter_04"
+        ],
+        "audience": "writers_only_spoiler",
+        "texts": {
+          "truth": "secrets.unpaid_rest.truth"
+        }
+      },
+      {
+        "id": "eight_limits",
+        "reveal_chapter_ids": [
+          "chapter_04"
+        ],
+        "audience": "writers_only_spoiler",
+        "texts": {
+          "truth": "secrets.eight_limits.truth"
+        }
+      },
+      {
+        "id": "external_load",
+        "reveal_chapter_ids": [
+          "chapter_05"
+        ],
+        "audience": "writers_only_spoiler",
+        "texts": {
+          "truth": "secrets.external_load.truth"
+        }
+      }
+    ],
+    "arcs": [
+      {
+        "id": "arc_blank_march",
+        "status": "future_narrative_direction_not_feature",
+        "texts": {
+          "name": "arcs.arc_blank_march.name",
+          "question": "arcs.arc_blank_march.question"
+        }
+      },
+      {
+        "id": "arc_closure",
+        "status": "future_narrative_direction_not_feature",
+        "texts": {
+          "name": "arcs.arc_closure.name",
+          "question": "arcs.arc_closure.question"
+        }
+      },
+      {
+        "id": "arc_eight_personhood",
+        "status": "future_narrative_direction_not_feature",
+        "texts": {
+          "name": "arcs.arc_eight_personhood.name",
+          "question": "arcs.arc_eight_personhood.question"
+        }
+      }
+    ]
+  },
+  "opening_key": "opening.monologue",
+  "campaign_id": "campaign_first_account",
+  "intro_duration_seconds": 40
+}

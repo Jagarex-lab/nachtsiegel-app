@@ -2,6 +2,7 @@ extends Node3D
 ## NACHTSIEGEL: original landscape reliquary arena.
 ## Original 2.5D visual prototype with local combat; NOT a verified port of the legacy rules.
 const T = preload("res://scripts/ui_tokens.gd")
+const Brand = preload("res://scripts/brand_identity.gd")
 const LANES := 5
 const MAX_HP := 35
 const CARD_POOL := [
@@ -41,6 +42,7 @@ var landscape_panel: ColorRect
 var card_buttons: Array[Button] = []
 
 func _ready() -> void:
+	Brand.apply_window_title()
 	rng.seed = 8802026
 	for i in 25:
 		deck.append(i % CARD_POOL.size())
@@ -181,7 +183,7 @@ func _build_ui() -> void:
 	backdrop.material = light
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_put(backdrop,Rect2(0,0,1600,900))
-	_caption("NACHTSIEGEL",Rect2(480,12,640,68),42,T.TEXT,true).set_meta("min_css",18.0)
+	_caption(Brand.display_name(),Rect2(480,12,640,68),42,T.TEXT,true).set_meta("min_css",18.0)
 	hud_art = RitualHud.new()
 	_put(hud_art,Rect2(0,0,1600,900))
 	help_button = _action("MENÜ",Rect2(1370,0,210,103),_show_menu)
@@ -249,7 +251,7 @@ func _build_ui() -> void:
 	landscape_panel.color = T.SURFACE
 	landscape_panel.z_index = 200
 	_put(landscape_panel,Rect2(0,0,1600,900))
-	var orientation = _label("NACHTSIEGEL\n\nBitte das Gerät\nins Querformat drehen",22)
+	var orientation = _label(Brand.display_name()+"\n\nBitte das Gerät\nins Querformat drehen",22)
 	orientation.set_meta("screen_label",true)
 	landscape_panel.add_child(orientation)
 	get_viewport().size_changed.connect(_update_orientation)

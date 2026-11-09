@@ -6,6 +6,10 @@ Eigenständiges Dark-Fantasy-Kartenduell in Godot 4.6.3, für Querformat auf iPh
 
 **Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/?v=e7c4f548a031
 
+## Marken- und Lore-Entwurf
+
+[Master Task A: vollständige Marken- und Lore-Bibel](docs/creative/README.md), mit 20 Namenskandidaten, Entscheidungsvorlage und strukturierten DE-/EN-Texten. NACHTSIEGEL bleibt der Produktname; Kampagne, neue Fraktionsnamen und Boss sind ausdrücklich Kreativentwürfe.
+
 ## Spielen
 
 `project.godot` in Godot 4.6.3 öffnen und F6/F5 starten. Handkarte antippen, anschließend Zielpfad wählen. Zauber können auch direkt auf die gegnerische Kreaturenkarte gespielt werden. **Details** öffnet die Großansicht; **Menü → Spielhilfe** erklärt Kampf und Siegbedingungen. Nach Sieg/Niederlage startet **Neues Duell** eine frische Partie.
