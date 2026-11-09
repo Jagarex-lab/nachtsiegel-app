@@ -32,7 +32,7 @@ func run() -> void:
 	var source = load("res://scripts/arena.gd")
 	if source == null or not source.can_instantiate():
 		printerr("FAIL: Arena cannot instantiate")
-		quit(1)
+		finish_test(1)
 		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
@@ -127,4 +127,7 @@ func run() -> void:
 	while arena.busy and Time.get_ticks_msec()<deadline:await process_frame
 	check(not arena.busy and arena.round_number == 2,"Animated end turn resolves exactly once")
 	print("RULES: %d assertions, %d failures; 30 baseline differential duels" % [assertions,failures])
-	quit(1 if failures else 0)
+	finish_test(1 if failures else 0)
+
+func finish_test(code: int=0) -> void:
+	root.get_node("GameAudio").request_quit(code)
