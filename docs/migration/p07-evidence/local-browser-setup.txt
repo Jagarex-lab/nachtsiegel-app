@@ -1,0 +1,19 @@
+Playwright 1.56.1 installed under ignored work/qa-browser with repository-local npm cache.
+Chromium1194 and WebKit2215 downloaded from Playwright distribution.
+Scoped system package helper unavailable; apt-cache read denied an apt configuration file. No system configuration changed.
+Dependencies fetched over HTTPS from official deb.debian.org trixie package index, SHA256 checked against that index, dpkg-deb extracted under work/qa-browser/native/root.
+Libraries copied into ignored WebKit test bundle sys/lib because its MiniBrowser wrapper overwrites LD_LIBRARY_PATH.
+All initially missing libraries additionally verified with actual ctypes.CDLL.
+PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1 is required for the unprivileged local runtime: Playwright's dlopen precheck looks only at global ldconfig cache, not local bundle paths. Real Chromium/WebKit processes and every browser assertion still execute; no application checks skipped.
+No physical iPhone/Android tests claimed. Browser profiles are emulation.
+libgtk-4-1 4.18.6+ds-2 51ab1114a57702e703cce745c24caf5bd31ec1d2a900c72fd15fe47c6c030e68
+libgraphene-1.0-0 1.10.8-5 ddcf98f17f6c0a7c76974d7238be1468e59c186034c1b806638d32d9f446ea6e
+libwoff1 1.0.2-2+b2 628a2a993556027adaa4e93a675fee341e3d47d306db7f3811ff56ea84a42022
+libharfbuzz-icu0 10.2.0-1+deb13u1 0b45d951629e98673c0da73b2bcd0886a467d833bb3b7499892a168f247165d2
+libhyphen0 2.8.8-7+b2 fa9dca7b8cf1381fd52800c44a385c5725a78a88bd705f7c39b1046a5293435e
+libmanette-0.2-0 0.2.12-1 98841a467692c46fd1870275113235691ebbfe71a3524f6b2a0fa7e9c33c6e56
+libgles2 1.7.0-1+b2 e12c18aa77939d122ee1dea520ba0440b97dc19200b7396e03dff03a3ece74c1
+libcairo-script-interpreter2 1.18.4-1+b1 52b45eb6e49c53c0a35ef45555a9457b094482eafef27d27cd777b916a2f06de
+libhidapi-hidraw0 0.14.0-1+b2 89c546cb55be403ce63fe668baff2515979100a30fa07e2b97de186b9c07f01e
+libglvnd0 1.7.0-1+b2 887f74008166549ce9e100c906aa937e95d6e5ce1c8d86efe8c95fd953359b9c
+liblzo2-2 2.10-3+b1 f3032201fe2928a87e13f05ce256ff3ac2a7860c7e594dc51ae6d7348a4466ce
