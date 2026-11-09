@@ -51,7 +51,7 @@ def main():
     check(boss['character_id']in characters and boss['chapter_id']=='chapter_01','First boss narrative references')
     check(boss['opponent_pool_indices']==list(range(6)),'No faction deck override or AI rule change')
     baseline=read('tests/fixtures/legacy_card_pool.json')
-    s=(ROOT/'scripts/arena.gd').read_text();active=json.loads(re.search(r'const CARD_POOL := (\[.*?\n\])',s,re.S).group(1))
+    s=(ROOT/'data/card_definitions.gd').read_text();active=json.loads(re.search(r'const POOL := (\[.*?\n\])',s,re.S).group(1))
     check(active==baseline,'Frozen card names, stats, effects and identities unchanged')
     bindings=[i for i in c['cards']if i['status']=='existing_presentation_binding']
     check([i['legacy_pool_index']for i in bindings]==list(range(7)),'Exactly seven existing bindings')

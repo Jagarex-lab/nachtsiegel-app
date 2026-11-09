@@ -84,6 +84,8 @@ jobs:
             work/build/web/
             work/ux/*.png
             work/ux/*.json
+            work/experience/*.png
+            work/experience/*.log
           if-no-files-found: warn
       - name: Upload checked Pages build
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'

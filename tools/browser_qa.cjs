@@ -27,7 +27,7 @@ const assert = require('assert/strict');
    headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{})
   });
   try {
-   for(const profile of profiles[engine]){
+   for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
     const {name,insets,...options}=profile;
     const context=await browser.newContext(options);
     const page=await context.newPage();
@@ -50,7 +50,14 @@ const assert = require('assert/strict');
     const tap=async rect=>page.touchscreen.tap(rect[0]+rect[2]/2,rect[1]+rect[3]/2);
     try{
      await page.goto(target.href,{waitUntil:'networkidle'});
-     await wait(()=>!document.querySelector('#status')&&window.nachtsiegelQA?.round===1);
+     await wait(()=>!document.querySelector('#status')&&window.nachtsiegelHub?.page==='start');
+     const hub=()=>page.evaluate(()=>window.nachtsiegelHub);
+     const hubTap=async(id,next)=>{const h=await hub();assert(h.actions[id]&&!h.actions[id].disabled,id+' available');await tap(h.actions[id].rect);if(next)await wait(p=>window.nachtsiegelHub.page===p,next);};
+     await page.screenshot({path:base+'-home-start.png'});
+     await hubTap('begin','intro');await hubTap('intro_skip','heroes');
+     await hubTap('hero_ash_king');await wait(()=>window.nachtsiegelHub.selected_hero==='ash_king');
+     await hubTap('start_tutorial','battle');
+     await wait(()=>window.nachtsiegelQA?.round===1);
      await page.waitForTimeout(500);
      const identity=require('../data/brand/identity.json');
      const releaseName=identity.approved_product_name||identity.legacy_product_name;
@@ -95,23 +102,63 @@ const assert = require('assert/strict');
      q=await state();const toggle=q.modal_actions.find(b=>b.caption.startsWith('BEWEGUNG'));assert(toggle);
      const motionBefore=q.reduced_motion;await tap(toggle.rect);
      await wait(before=>window.nachtsiegelQA.reduced_motion!==before,motionBefore);
-     q=await state();await tap(q.modal_actions.find(b=>b.caption==='ZURÜCK').rect);
+     q=await state();await tap(q.modal_actions.find(b=>b.caption==='ZURÜCK'||b.caption==='WEITERSPIELEN').rect);
      await wait(()=>window.nachtsiegelQA.modal==='');
-     if(engine==='chromium'&&name==='desktop'){
-      await tap(q.actions.menu);await wait(()=>window.nachtsiegelQA.modal==='menu');
-      q=await state();await tap(q.modal_actions.find(b=>b.caption==='VOLLBILD').rect);
-      await wait(()=>!!document.fullscreenElement);
-      await page.screenshot({path:base+'-fullscreen.png'});
-      await page.evaluate(()=>document.exitFullscreen());
-      await page.waitForTimeout(250);
-     }
      // A real viewport-height change approximates expanding browser bars.
      const shorter={width:options.viewport.width,height:Math.max(300,options.viewport.height-30)};
      await page.setViewportSize(shorter);await page.waitForTimeout(400);q=await state();
      const end=q.actions.end;assert(end[3]>=43.99&&end[1]+end[3]<=shorter.height+.5,'Browser-bar resize keeps action reachable');
      await page.screenshot({path:base+'-bars.png'});
+     // Complete a real tutorial with actual touch commands; no health/result injection.
+     await page.setViewportSize(options.viewport);await page.waitForTimeout(250);
+     for(let turn=0;turn<45;turn++){
+      q=await state();console.log(`QA ${engine}/${name}: tutorial round ${q.round}, hp ${q.player_hp}/${q.foe_hp}`);if(q.finished)break;
+      for(let move=0;move<8;move++){
+       q=await state();let best=null;
+       for(const c of q.cards){if(c.cost>q.energy)continue;
+        for(let lane=0;lane<5;lane++){let score=-999;
+         if(c.kind==='unit'&&q.summons<2&&!q.allies[lane])score=c.attack*2+c.hp*2+(!q.enemies[lane]?12:(c.attack>=q.enemies[lane].hp?8:0));
+         if(c.kind==='spell'&&q.enemies[lane])score=q.enemies[lane].hp<=3?80:15;
+         if(score>=0&&(!best||score>best.score))best={c,lane,score};
+        }
+       }
+       if(!best)break;
+       await tap(best.c.rect);await wait(i=>window.nachtsiegelQA.selected===i,best.c.index);
+       q=await state();await tap((best.c.kind==='spell'?q.foes:q.targets)[best.lane].rect);
+       await wait(()=>window.nachtsiegelQA.selected===-1);
+      }
+      q=await state();const before=q.round;await tap(q.actions.end);
+      await wait(r=>window.nachtsiegelQA.finished||(window.nachtsiegelQA.round>r&&!window.nachtsiegelQA.busy),before);
+     }
+     q=await state();assert(q.finished,'Tutorial reaches a genuine result');
+     let h=await hub();assert(h.tutorial_completed&&h.wins===1&&h.unlocked_chapter===1,'Real victory saved and chapter one unlocked');
+     await wait(()=>window.nachtsiegelQA.modal==='result');q=await state();await page.screenshot({path:base+'-tutorial-result.png'});
+     await tap(q.modal_actions.find(a=>a.caption==='HAUPTMENÜ').rect);await wait(()=>window.nachtsiegelHub.page==='home');
+     await page.waitForTimeout(1200);await page.reload({waitUntil:'networkidle'});await wait(()=>window.nachtsiegelHub?.page==='start');
+     h=await hub();assert(h.tutorial_completed&&h.selected_hero==='ash_king'&&h.wins===1,'Reload retains tutorial, wins and selected hero');
+     await hubTap('begin','home');await page.screenshot({path:base+'-home-progress.png'});
+     if(engine==='chromium'&&name==='desktop'){
+      await hubTap('settings','settings');await hubTap('fullscreen');await wait(()=>!!document.fullscreenElement);
+      await page.screenshot({path:base+'-fullscreen.png'});await page.evaluate(()=>document.exitFullscreen());await page.waitForTimeout(250);await hubTap('back','home');
+     }
+     await hubTap('campaign','campaign');h=await hub();assert(!h.actions.chapter_1.disabled&&h.actions.chapter_2.disabled,'Chapter progression gated');
+     await hubTap('chapter_1','chapter');await page.screenshot({path:base+'-chapter.png'});
+     await hubTap('back','campaign');await hubTap('back','home');await hubTap('collection','collection');
+     h=await hub();assert.equal(h.visible_cards.length,7,'Exactly seven implemented cards');
+     await hubTap('filter');await wait(()=>window.nachtsiegelHub.visible_cards.length===3);
+     await hubTap('concepts');await wait(()=>window.nachtsiegelHub.visible_cards.length>3);
+     h=await hub();await tap(h.search_rect);await page.keyboard.type('Ofenlehrling');
+     await wait(()=>window.nachtsiegelHub.visible_cards.length===1&&window.nachtsiegelHub.visible_cards[0]==='furnace_apprentice');
+     await page.screenshot({path:base+'-collection-search.png'});
+     if(name==='android-bars'){
+      await page.setViewportSize({width:options.viewport.width,height:200});await wait(()=>window.nachtsiegelHub.keyboard_layout);
+      h=await hub();assert(h.search_rect[1]+h.search_rect[3]<=200,'Typing layout keeps input above keyboard');
+      await page.screenshot({path:base+'-keyboard.png'});await page.setViewportSize(options.viewport);await page.waitForTimeout(300);
+     }
+     await hubTap('card_furnace_apprentice','inspect');await page.screenshot({path:base+'-concept.png'});
+     await hubTap('collection_back','collection');await hubTap('back','home');
      assert.equal(errors.length,0,JSON.stringify(errors));
-     results.push({engine,profile:name,viewport:options.viewport,deviceScaleFactor:options.deviceScaleFactor||1,metadata,target:target.href,errors,checks:'CSS touch targets, first summon, double-tap inspection, end turn, contextual hints, motion preference and viewport resize'});
+     results.push({engine,profile:name,viewport:options.viewport,deviceScaleFactor:options.deviceScaleFactor||1,metadata,target:target.href,errors,checks:'touch, full tutorial victory, hero selection, saved reload, locked chapters, collection search/filter, concept inspection, safe areas and motion preference'});
      console.log(`BROWSER PASS: ${engine} ${name}`);
     }catch(e){await page.screenshot({path:base+'-failure.png'}).catch(()=>{});throw e}
     finally{await context.close()}

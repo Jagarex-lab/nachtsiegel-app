@@ -5,28 +5,47 @@ const T = preload("res://scripts/ui_tokens.gd")
 const Brand = preload("res://scripts/brand_identity.gd")
 const LANES := 5
 const MAX_HP := 35
-const CARD_POOL := [
-	{"name":"Aschenwache","cost":2,"attack":2,"hp":4,"kind":"unit","tint":"#d76e43","sigil":"ASH"},
-	{"name":"Dornenwolf","cost":2,"attack":3,"hp":2,"kind":"unit","tint":"#83b27c","sigil":"THORN"},
-	{"name":"Nebelqualle","cost":2,"attack":1,"hp":5,"kind":"unit","tint":"#72b9c5","sigil":"TIDE"},
-	{"name":"Schattenwolf","cost":3,"attack":3,"hp":4,"kind":"unit","tint":"#a48acb","sigil":"VEIL"},
-	{"name":"Glutritter","cost":4,"attack":4,"hp":5,"kind":"unit","tint":"#f1a55d","sigil":"ASH"},
-	{"name":"Gezeitenhüter","cost":3,"attack":2,"hp":6,"kind":"unit","tint":"#6b9ddd","sigil":"TIDE"},
-	{"name":"Funkenstoß","cost":2,"attack":3,"hp":0,"kind":"spell","tint":"#ed9165","sigil":"SPELL"}
-]
-var rng := RandomNumberGenerator.new()
-var deck: Array = []
-var hand: Array = []
-var allies: Array = [null,null,null,null,null]
-var foes: Array = [null,null,null,null,null]
-var player_hp := MAX_HP
-var foe_hp := MAX_HP
-var energy := 3
-var round_number := 1
-var summons := 0
-var selected := -1
-var finished := false
-var streak := 0
+const CARD_POOL = preload("res://data/card_definitions.gd").POOL
+var battle = preload("res://scripts/battle_model.gd").new()
+var rng: RandomNumberGenerator:
+	get: return battle.rng
+	set(value): battle.rng = value
+var deck: Array:
+	get: return battle.deck
+	set(value): battle.deck = value
+var hand: Array:
+	get: return battle.hand
+	set(value): battle.hand = value
+var allies: Array:
+	get: return battle.allies
+	set(value): battle.allies = value
+var foes: Array:
+	get: return battle.foes
+	set(value): battle.foes = value
+var player_hp: int:
+	get: return battle.player_hp
+	set(value): battle.player_hp = value
+var foe_hp: int:
+	get: return battle.foe_hp
+	set(value): battle.foe_hp = value
+var energy: int:
+	get: return battle.energy
+	set(value): battle.energy = value
+var round_number: int:
+	get: return battle.round_number
+	set(value): battle.round_number = value
+var summons: int:
+	get: return battle.summons
+	set(value): battle.summons = value
+var selected: int:
+	get: return battle.selected
+	set(value): battle.selected = value
+var finished: bool:
+	get: return battle.finished
+	set(value): battle.finished = value
+var streak: int:
+	get: return battle.streak
+	set(value): battle.streak = value
 var ui_layer: CanvasLayer
 var root_ui: Control
 var status_label: Label
@@ -43,16 +62,7 @@ var card_buttons: Array[Button] = []
 
 func _ready() -> void:
 	Brand.apply_window_title()
-	rng.seed = 8802026
-	for i in 25:
-		deck.append(i % CARD_POOL.size())
-	for i in range(deck.size()-1,0,-1):
-		var j = rng.randi_range(0,i)
-		var swap = deck[i]
-		deck[i] = deck[j]
-		deck[j] = swap
-	for i in 4:
-		_draw_card()
+	battle.start(battle_seed,battle_profile)
 	_load_preferences()
 	_build_ui()
 	_refresh()
@@ -125,6 +135,19 @@ var safe_override := Rect2()
 var phase := "play"
 var canvas_width := 1600.0
 var path_labels: Array[Label] = []
+signal completed(victory: bool, reason: String)
+signal main_menu_requested
+signal retry_requested
+signal continue_requested
+signal preferences_updated(reduced: bool)
+var managed_session := false
+var battle_profile := "standard"
+var battle_seed := 8802026
+var player_portrait_index := 7
+var opponent_portrait_index := 8
+var player_title := "Siegelhüterin"
+var opponent_title := "Aschenkönig"
+var result_summary := ""
 var layout_concept := "mobile"
 var composition: Dictionary = {}
 var stage: Control
@@ -225,11 +248,11 @@ func _build_ui() -> void:
 		ally.pressed.connect(_board_tap.bind(i,false))
 		lane_faces.append(ally)
 		path_labels.append(_caption(["I","II","III","IV","V"][i],Rect2(x+40,99,80,42),28,T.TEXT,true))
-	var enemy = _face({"name":"Aschenkönig","attack":0,"hp":35,"tint":"#b46753"},Rect2(77,151,174,220),8,true)
+	var enemy = _face({"name":opponent_title,"attack":0,"hp":35,"tint":"#b46753"},Rect2(77,151,174,220),opponent_portrait_index,true)
 	enemy.heroic = true
 	enemy.enemy = true
 	enemy.pressed.connect(_show_hero.bind(true))
-	var player = _face({"name":"Siegelhüterin","attack":0,"hp":35,"tint":"#72beb9"},Rect2(77,426,174,220),7,true)
+	var player = _face({"name":player_title,"attack":0,"hp":35,"tint":"#72beb9"},Rect2(77,426,174,220),player_portrait_index,true)
 	player.heroic = true
 	player.pressed.connect(_show_hero.bind(false))
 	hero_medallions = [player,enemy]
@@ -419,7 +442,9 @@ func _save_preferences() -> void:
 func _set_reduced_motion(enabled: bool, persist: bool = true) -> void:
 	reduced_motion = enabled
 	_apply_motion()
-	if persist: _save_preferences()
+	if persist:
+		_save_preferences()
+		preferences_updated.emit(reduced_motion)
 func _apply_motion() -> void:
 	if not is_instance_valid(ambience): return
 	ambience.reduced_motion = reduced_motion
@@ -431,6 +456,15 @@ func _toggle_motion() -> void:
 func _show_menu() -> void:
 	var panel = _modal_shell()
 	modal_kind = "menu"
+	if managed_session:
+		var heading = _label("DUELLMENÜ",40)
+		_put(heading,Rect2(400,64,800,70),panel)
+		_action_in_modal("WEITERSPIELEN",Rect2(460,170,680,110))
+		_action_in_modal("SPIELHILFE",Rect2(460,305,680,110),_show_help)
+		_action_in_modal("BEWEGUNG: REDUZIERT" if reduced_motion else "BEWEGUNG: NORMAL",Rect2(460,440,680,110),_toggle_motion)
+		_action_in_modal("HAUPTMENÜ",Rect2(460,742,680,110),_show_leave_confirmation)
+		_layout_modal()
+		return
 	var title = _label("MENÜ · %d Karten" % deck.size(),40)
 	title.set_meta("min_css",18.0)
 	_put(title,Rect2(400,64,800,70),panel)
@@ -486,7 +520,7 @@ func _show_data_card(data: Dictionary, index: int, origin: String) -> void:
 func _show_hero(enemy: bool) -> void:
 	var panel = _modal_shell()
 	modal_kind = "hero"
-	var text = _label("%s\n\n%d von 35 Leben\n\nUnblockierte Kreaturenangriffe treffen den Helden.\nAuf 0 Leben endet das Duell.\n\nKonzeptporträt" % ["Aschenkönig · Gegner" if enemy else "Siegelhüterin · Dein Held",foe_hp if enemy else player_hp],32)
+	var text = _label("%s\n\n%d von 35 Leben\n\nUnblockierte Kreaturenangriffe treffen den Helden.\nAuf 0 Leben endet das Duell.\n\nKonzeptporträt" % [(opponent_title+" · Gegner") if enemy else (player_title+" · Dein Held"),foe_hp if enemy else player_hp],32)
 	text.set_meta("min_css",14.0)
 	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_put(text,Rect2(300,150,1000,520),panel)
@@ -538,7 +572,9 @@ func _board_tap(lane: int, enemy: bool) -> void:
 		_announce("Zauber: Kreatur oben wählen", "warning")
 		return
 	_choose_lane(lane)
-func _restart() -> void: get_tree().call_deferred("reload_current_scene")
+func _restart() -> void:
+	if managed_session: retry_requested.emit()
+	else: get_tree().call_deferred("reload_current_scene")
 func _show_result(value: String) -> void:
 	if not finished: return
 	var panel = _modal_shell()
@@ -547,12 +583,26 @@ func _show_result(value: String) -> void:
 	title.set_meta("min_css",24.0)
 	title.add_theme_color_override("font_color",T.SUCCESS if value.begins_with("SIEG") else T.DANGER)
 	_put(title,Rect2(400,200,800,100),panel)
-	var text = _label(value.get_slice("·",1).strip_edges(),32)
+	var text = _label(value.get_slice("·",1).strip_edges()+(("\n"+result_summary) if managed_session else ""),32)
 	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_put(text,Rect2(350,330,900,170),panel)
-	_action_in_modal("WEITER ANSEHEN",Rect2(350,650,420,110))
-	_action_in_modal("NEUES DUELL",Rect2(830,650,420,110),_restart)
+	if managed_session:
+		_action_in_modal("HAUPTMENÜ",Rect2(350,650,420,110),func(): main_menu_requested.emit())
+		_action_in_modal("WEITER" if value.begins_with("SIEG") else "NOCHMAL",Rect2(830,650,420,110),func(): continue_requested.emit() if value.begins_with("SIEG") else retry_requested.emit())
+	else:
+		_action_in_modal("WEITER ANSEHEN",Rect2(350,650,420,110))
+		_action_in_modal("NEUES DUELL",Rect2(830,650,420,110),_restart)
 	_layout_modal()
+func _show_leave_confirmation() -> void:
+	var panel = _modal_shell()
+	modal_kind = "leave"
+	var text = _label("Zum Hauptmenü?\nEin laufendes Duell wird nicht gespeichert.\nDein bisheriger Fortschritt bleibt erhalten.",30)
+	text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_put(text,Rect2(300,220,1000,300),panel)
+	_action_in_modal("WEITERSPIELEN",Rect2(330,680,450,110))
+	_action_in_modal("VERLASSEN",Rect2(820,680,450,110),func(): main_menu_requested.emit())
+	_layout_modal()
+
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		if modal != null: _close_modal()
@@ -572,11 +622,11 @@ func _process(delta: float) -> void:
 			_publish_qa()
 func _publish_qa() -> void:
 	if not OS.has_feature("web") or card_buttons.size() != hand.size(): return
-	var result = {"round":round_number,"energy":energy,"selected":selected,"busy":busy,"phase":phase,"modal":modal_kind,"reduced_motion":reduced_motion,"onboarding":onboarding_step,"player_hp":player_hp,"foe_hp":foe_hp,"scale":ui_scale,"density":display_ratio,"cards":[],"targets":[],"foes":[],"actions":{},"text_css":{"energy":energy_label.get_theme_font_size("font_size")*ui_scale,"phase":phase_label.get_theme_font_size("font_size")*ui_scale,"focus":info_label.get_theme_font_size("font_size")*ui_scale,"values":T.font_size(30,ui_scale,12)*ui_scale}}
+	var result = {"round":round_number,"energy":energy,"finished":finished,"summons":summons,"allies":allies,"enemies":foes,"selected":selected,"busy":busy,"phase":phase,"modal":modal_kind,"reduced_motion":reduced_motion,"onboarding":onboarding_step,"player_hp":player_hp,"foe_hp":foe_hp,"scale":ui_scale,"density":display_ratio,"cards":[],"targets":[],"foes":[],"actions":{},"text_css":{"energy":energy_label.get_theme_font_size("font_size")*ui_scale,"phase":phase_label.get_theme_font_size("font_size")*ui_scale,"focus":info_label.get_theme_font_size("font_size")*ui_scale,"values":T.font_size(30,ui_scale,12)*ui_scale}}
 	for i in card_buttons.size():
 		var rect = card_buttons[i].get_global_rect()
 		var data: Dictionary = CARD_POOL[int(hand[i])]
-		result.cards.append({"index":i,"name":data.name,"kind":data.kind,"cost":data.cost,"rect":[rect.position.x/display_ratio,rect.position.y/display_ratio,rect.size.x/display_ratio,rect.size.y/display_ratio]})
+		result.cards.append({"index":i,"name":data.name,"kind":data.kind,"cost":data.cost,"attack":data.attack,"hp":data.hp,"rect":[rect.position.x/display_ratio,rect.position.y/display_ratio,rect.size.x/display_ratio,rect.size.y/display_ratio]})
 	for list in [[lane_buttons,"targets"],[foe_faces,"foes"]]:
 		for i in LANES:
 			var rect = list[0][i].get_global_rect()
@@ -590,10 +640,7 @@ func _publish_qa() -> void:
 		result.modal_actions.append({"caption":button.caption,"rect":[rect.position.x/display_ratio,rect.position.y/display_ratio,rect.size.x/display_ratio,rect.size.y/display_ratio]})
 	JavaScriptBridge.eval("window.nachtsiegelQA="+JSON.stringify(result),true)
 
-func _draw_card() -> void:
-	if deck.is_empty() or hand.size() >= 6:
-		return
-	hand.append(deck.pop_back())
+func _draw_card() -> void: battle.draw_card()
 
 func _card_button(index:int) -> Button:
 	var data: Dictionary = CARD_POOL[int(hand[index])]
@@ -708,7 +755,7 @@ func _card_index(data: Dictionary) -> int:
 		if CARD_POOL[i].name == data.name: return i
 	return 0
 
-func _pulse_lane(lane: int, spell: bool) -> void:
+func _pulse_lane(lane: int, spell: bool, source_point: Vector2 = Vector2(-1,-1)) -> void:
 	var face: Control = foe_faces[lane] if spell else lane_faces[lane]
 	var effect = RitualFx.new()
 	effect.destination = face.position+face.size/2
@@ -717,6 +764,7 @@ func _pulse_lane(lane: int, spell: bool) -> void:
 		var card: Control = card_buttons[selected]
 		effect.origin = root_ui.get_global_transform().affine_inverse()*(card.get_global_transform()*(card.size/2))
 		effect.tint = Color(str(CARD_POOL[int(hand[selected])].tint))
+	if source_point.x >= 0: effect.origin = source_point
 	effect.spell = spell
 	effect.reduced_motion = reduced_motion
 	if reduced_motion: effect.lifetime = .18
@@ -773,59 +821,25 @@ func _lift_selection() -> void:
 	tween.tween_property(card,"position:y",target,T.MOTION_SELECT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tween.tween_property(card,"scale",Vector2.ONE*T.SELECT_SCALE,T.MOTION_SELECT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
-func _choose_lane(lane:int) -> void:
-	if finished or busy or lane < 0 or lane >= LANES or selected < 0 or selected >= hand.size():
-		_announce("Wähle zuerst eine Handkarte", "warning")
+func _choose_lane(lane: int) -> void:
+	if busy: return
+	var origin = Vector2(canvas_width/2,780)
+	if selected >= 0 and selected < card_buttons.size():
+		var card: Control = card_buttons[selected]
+		origin = root_ui.get_global_transform().affine_inverse()*(card.get_global_transform()*(card.size/2))
+	var outcome = battle.play(lane)
+	if not outcome.ok:
+		_announce(outcome.reason,"warning")
 		return
-	var data:Dictionary = CARD_POOL[int(hand[selected])].duplicate(true)
-	if int(data["cost"]) > energy:
-		_announce("Nicht genügend Energie", "warning")
-		return
-	if str(data["kind"]) == "unit":
-		if summons >= 2:
-			_announce("Limit: 2 Beschwörungen/Runde", "warning")
-			return
-		if allies[lane] != null:
-			_announce("Dieses eigene Feld ist besetzt", "warning")
-			return
-		allies[lane] = data
-		summons += 1
-		_announce("%s · Pfad %d" % [str(data["name"]),lane+1], "success")
-	else:
-		# Spells require an enemy creature. Never deal summon/spell target damage to the hero.
-		if foes[lane] == null:
-			_announce("Wähle eine gegnerische Kreatur", "warning")
-			return
-		foes[lane]["hp"] = int(foes[lane]["hp"]) - int(data["attack"])
-		if int(foes[lane]["hp"]) <= 0:
-			foes[lane] = null
-		_announce("Funkenstoß · −3 Leben auf Pfad %d" % (lane+1), "damage")
-	_pulse_lane(lane,str(data["kind"]) == "spell")
-	energy -= int(data["cost"])
-	hand.remove_at(selected)
-	selected = -1
+	_pulse_lane(lane,outcome.spell,origin)
+	_announce(outcome.message,"damage" if outcome.spell else "success")
 	if onboarding_step < 2:
 		onboarding_step = 2
-		_announce("3 · Beende deinen Zug", "success")
+		_announce("3 · Beende deinen Zug","success")
 	_refresh.call_deferred()
 
-func _combat_phase(attacker:Array, defender:Array, attacking_player:bool) -> void:
-	var damage: Array = [0,0,0,0,0]
-	for i in LANES:
-		if attacker[i] == null:
-			continue
-		if defender[i] != null:
-			damage[i] = int(attacker[i]["attack"])
-		else:
-			if attacking_player:
-				foe_hp = max(0,foe_hp-int(attacker[i]["attack"]))
-			else:
-				player_hp = max(0,player_hp-int(attacker[i]["attack"]))
-	for i in LANES:
-		if damage[i] > 0 and defender[i] != null:
-			defender[i]["hp"] = int(defender[i]["hp"]) - int(damage[i])
-			if int(defender[i]["hp"]) <= 0:
-				defender[i] = null
+func _combat_phase(attacker: Array, defender: Array, attacking_player: bool) -> void:
+	battle.combat_phase(attacker,defender,attacking_player)
 
 func _lunge(faces: Array, direction: float) -> void:
 	if reduced_motion: return
@@ -884,43 +898,18 @@ func _end_turn() -> void:
 			feedback.tween_callback(damage.queue_free)
 
 func _resolve_turn() -> void:
-	if finished:
-		return
-	_combat_phase(allies,foes,true)
-	if foe_hp <= 0:
-		_finish("SIEG · Der gegnerische Held fällt!")
-		return
-	var free_paths := 0
-	for i in LANES:
-		if allies[i] != null and foes[i] == null:
-			free_paths += 1
-	streak = streak + 1 if free_paths >= 3 else 0
-	if streak >= 2:
-		_finish("SIEG · Drei Pfade zweimal gehalten!")
-		return
-	# Enemy summons into a free enemy field.
-	var options: Array = []
-	for i in LANES:
-		if foes[i] == null:
-			options.append(i)
-	if not options.is_empty():
-		var lane:int = int(options[rng.randi_range(0,options.size()-1)])
-		foes[lane] = CARD_POOL[rng.randi_range(0,5)].duplicate(true)
-	_combat_phase(foes,allies,false)
-	if player_hp <= 0:
-		_finish("NIEDERLAGE · Dein Held ist gefallen.")
-		return
-	round_number += 1
-	energy = min(10,2+round_number)
-	summons = 0
-	selected = -1
-	_draw_card()
-	_refresh()
-	_announce("Runde %d · Dein Zug" % round_number, "success")
+	if finished: return
+	battle.resolve_turn()
+	if not battle.result.is_empty(): _finish(battle.result)
+	else:
+		_refresh()
+		_announce("Runde %d · Dein Zug" % round_number,"success")
 
 func _finish(value:String) -> void:
 	finished = true
 	phase = "finished"
+	battle.result = value
+	completed.emit(value.begins_with("SIEG"),value)
 	info_label.text = value
 	_refresh()
 	_announce(value)

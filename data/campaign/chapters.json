@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "status": "implemented_local_prototype",
+  "chapters": [
+    {
+      "number": 1,
+      "id": "chapter_01",
+      "title_key": "chapters.chapter_01.name",
+      "story_key": "chapters.chapter_01.hook",
+      "outcome_key": "chapters.chapter_01.outcome",
+      "opponent": "Tovin Marr",
+      "opponent_type": "Schleusenverwalter",
+      "difficulty": "Leicht",
+      "ai_profile": "easy",
+      "next": 2,
+      "ruleset": "existing_duel",
+      "portrait_status": "existing_placeholder",
+      "seed": 8802043
+    },
+    {
+      "number": 2,
+      "id": "chapter_02",
+      "title_key": "chapters.chapter_02.name",
+      "story_key": "chapters.chapter_02.hook",
+      "outcome_key": "chapters.chapter_02.outcome",
+      "opponent": "Ofenaufsicht",
+      "opponent_type": "Werkstattwache",
+      "difficulty": "Standard",
+      "ai_profile": "standard",
+      "next": 3,
+      "ruleset": "existing_duel",
+      "portrait_status": "existing_placeholder",
+      "seed": 8802060
+    },
+    {
+      "number": 3,
+      "id": "chapter_03",
+      "title_key": "chapters.chapter_03.name",
+      "story_key": "chapters.chapter_03.hook",
+      "outcome_key": "chapters.chapter_03.outcome",
+      "opponent": "Kammerdelegation",
+      "opponent_type": "Pfropfhof-Wache",
+      "difficulty": "Defensiv",
+      "ai_profile": "defensive",
+      "next": 4,
+      "ruleset": "existing_duel",
+      "portrait_status": "existing_placeholder",
+      "seed": 8802077
+    },
+    {
+      "number": 4,
+      "id": "chapter_04",
+      "title_key": "chapters.chapter_04.name",
+      "story_key": "chapters.chapter_04.hook",
+      "outcome_key": "chapters.chapter_04.outcome",
+      "opponent": "Archivaufsicht",
+      "opponent_type": "Zeugniswache",
+      "difficulty": "Taktisch",
+      "ai_profile": "tactical",
+      "next": 5,
+      "ruleset": "existing_duel",
+      "portrait_status": "existing_placeholder",
+      "seed": 8802094
+    },
+    {
+      "number": 5,
+      "id": "chapter_05",
+      "title_key": "chapters.chapter_05.name",
+      "story_key": "chapters.chapter_05.hook",
+      "outcome_key": "chapters.chapter_05.outcome",
+      "opponent": "Orren Daal",
+      "opponent_type": "Wintermandat",
+      "difficulty": "Anspruchsvoll",
+      "ai_profile": "challenging",
+      "next": null,
+      "ruleset": "existing_duel",
+      "portrait_status": "existing_placeholder",
+      "seed": 8802111
+    }
+  ]
+}

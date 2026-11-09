@@ -1,6 +1,6 @@
 # Task B – Premium-Komposition und visuelles System
 
-Basis `develop` bei `2bce5c3`, Umsetzung auf `feature/premium-arena`. Der Produktname bleibt NACHTSIEGEL. Dieser Bericht beschreibt tatsächlich in Godot implementierte Komponenten; die Screenshots sind echte Renderings, keine gemalten UI-Mockups.
+Basis `develop` bei `2bce5c3`, Umsetzung auf `feature/premium-experience`. Der Produktname bleibt NACHTSIEGEL. Dieser Bericht beschreibt tatsächlich in Godot implementierte Komponenten; die Screenshots sind echte Renderings, keine gemalten UI-Mockups.
 
 ## Audit
 

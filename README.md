@@ -2,17 +2,19 @@
 
 Eigenständiges Dark-Fantasy-Kartenduell in Godot 4.6.3, für Querformat auf iPhone und Android gestaltet. Fünf Pfade, illustrierte Reliquienkarten, Obsidianarena und lokaler KI-Gegner.
 
-![Mondheiligtum](docs/screenshots/ux/full-board-six-hand-844x390.png)
+![Neue Arena](docs/design/premium/screenshots/full-board-six-hand-844x390.png)
 
 **Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/?v=22e80a20b559
 
+[Premium-Designbericht mit drei gerenderten Konzepten](docs/design/premium/README.md) · [Spielerfahrung, Kampagne und Tests](docs/experience/README.md)
+
 ## Marken- und Lore-Entwurf
 
-[Master Task A: vollständige Marken- und Lore-Bibel](docs/creative/README.md), mit 20 Namenskandidaten, Entscheidungsvorlage und strukturierten DE-/EN-Texten. NACHTSIEGEL bleibt der Produktname; Kampagne, neue Fraktionsnamen und Boss sind ausdrücklich Kreativentwürfe.
+[Master Task A: vollständige Marken- und Lore-Bibel](docs/creative/README.md), mit 20 Namenskandidaten, Entscheidungsvorlage und strukturierten DE-/EN-Texten. NACHTSIEGEL bleibt der Produktname. Ein kuratierter Teil der Lore ist jetzt als lokale Fünf-Kapitel-Kampagne spielbar; weitere Entwürfe bleiben gekennzeichnet.
 
 ## Spielen
 
-`project.godot` in Godot 4.6.3 öffnen und F6/F5 starten. Handkarte antippen, anschließend Zielpfad wählen. Zauber können auch direkt auf die gegnerische Kreaturenkarte gespielt werden. **Details** öffnet die Großansicht; **Menü → Spielhilfe** erklärt Kampf und Siegbedingungen. Nach Sieg/Niederlage startet **Neues Duell** eine frische Partie.
+`project.godot` in Godot 4.6.3 öffnen und F5 starten. Startbildschirm → überspringbare Einführung → Held wählen → Tutorial. Danach stehen normales Duell, freigeschaltete Kampagnenkapitel, Sammlung und Einstellungen im Hauptmenü bereit. Fortschritt bleibt lokal gespeichert. Handkarte antippen, anschließend Zielpfad wählen. Zauber können auch direkt auf die gegnerische Kreaturenkarte gespielt werden. **Details** öffnet die Großansicht; **Menü → Spielhilfe** erklärt Kampf und Siegbedingungen. Nach Sieg/Niederlage führen die Ergebnisaktionen ins Hauptmenü, zur Wiederholung oder zur nächsten freigeschalteten Begegnung.
 
 Getestete Änderungen auf `develop` werden automatisch auf der Spielseite veröffentlicht und dort erneut im Browser geprüft. Der Entwicklungsstand baut auf `develop` auf. Die vorhandenen lokalen Spielregeln bleiben erhalten; dieser Stand ist kein nachgewiesener vollständiger Port des älteren [Webspiels](https://jagarex-lab.github.io/duel-deck/).
 

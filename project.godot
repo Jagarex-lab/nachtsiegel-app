@@ -6,7 +6,7 @@ config_version=5
 [application]
 config/name="NACHTSIEGEL"
 config/icon="res://assets/icon.svg"
-run/main_scene="res://scenes/arena.tscn"
+run/main_scene="res://scenes/front_end.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/description="NACHTSIEGEL - 2.5D Dark Fantasy Card Battler"
 

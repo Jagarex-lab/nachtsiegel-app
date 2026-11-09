@@ -8,7 +8,6 @@ var contrast_regions: Array = []
 func _ready() -> void:
 	for state in ["normal","hover","pressed","disabled","focus"]: add_theme_stylebox_override(state,StyleBoxEmpty.new())
 	mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	tooltip_text = caption
 	mouse_entered.connect(func(): hover = true; queue_redraw())
 	mouse_exited.connect(func(): hover = false; queue_redraw())
 	focus_entered.connect(queue_redraw)
