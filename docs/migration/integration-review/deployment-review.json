@@ -1,0 +1,24 @@
+{
+  "environments": [
+    {
+      "name": "github-pages",
+      "protection_rules": [
+        {
+          "id": 71163406,
+          "node_id": "GA_kwDOVh7KYc4EPd4O",
+          "type": "branch_policy"
+        }
+      ],
+      "deployment_branch_policy": {
+        "protected_branches": false,
+        "custom_branch_policies": true
+      }
+    }
+  ],
+  "develop_branch_protection_query": {
+    "http_status": 403,
+    "message": "Resource not accessible by integration",
+    "meaning": "Mandatory branch status checks/review requirements could not be verified; not evidence of absent protection."
+  },
+  "settings_changed": false
+}

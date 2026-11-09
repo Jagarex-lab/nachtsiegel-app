@@ -33,3 +33,17 @@ print(log.strip())
 assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M), 'Godot legacy engine error'
 assert re.search(r'^LEGACY ENGINE: \d+ assertions, 0 failures;',log,re.M), 'Missing successful engine summary'
 ENGINECHECK
+
+node tools/legacy/generate_p05_p06.cjs
+node tools/legacy/generate_p05_p06_edges.cjs
+node tools/legacy/generate_p05_p06_lifecycle.cjs
+node --test tests/legacy_p05_p06.test.cjs
+timeout 120s "${GODOT_BIN:-godot}" --headless --path . --script tests/legacy_p05_p06.gd > work/legacy/p05-p06.log 2>&1
+python3 - <<'P05CHECK'
+from pathlib import Path
+import re
+log=Path('work/legacy/p05-p06.log').read_text()
+print(log.strip())
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M)
+assert re.search(r'^LEGACY P05/P06: \d+ assertions, 0 failures;',log,re.M)
+P05CHECK

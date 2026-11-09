@@ -1,6 +1,6 @@
 # Integrationsprüfung PR #1–#4
 
-Stand 2026-11-09. **Keine PRs gemergt, keine Remote-Branches umgeschrieben, kein Deployment und keine Workflow-/Environment-Konfiguration geändert.** Eine ausdrückliche Mergefreigabe steht aus. Der anschließend beauftragte P05/P06-Branch basiert separat auf PR #4; diese Prüfung verändert dessen alte Commits nicht.
+Stand 2026-11-09. **Keine PRs gemergt, keine Remote-Branches umgeschrieben, kein Deployment und im Prüfschritt keine Workflow-/Environment-Konfiguration geändert. Der spätere P05/P06-Folgecommit ergänzt ausschließlich den nicht deployenden Legacy-Testworkflow um seinen gestapelten Basisbranch; der Pages-Publishworkflow und Environmenteinstellungen bleiben unangetastet.** Eine ausdrückliche Mergefreigabe steht aus. Der anschließend beauftragte P05/P06-Branch basiert separat auf PR #4; diese Prüfung verändert dessen alte Commits nicht.
 
 ## Geprüfte Ausgangspunkte und Entscheidung
 
@@ -33,7 +33,7 @@ if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'
 
 Nach erfolgreichem Test-/Exportjob hat deploy `pages:write` und `id-token:write` und ruft `actions/deploy-pages@v4` auf. **Ein Merge in develop erzeugt den passenden Push, auch bei docs-only.** Ein manueller workflow_dispatch auf develop kann denselben Pfad erfüllen. Grüne PR-CI/Deploy-SKIPPED beweist keine Sperre beim Merge.
 
-GitHub-Environment `github-pages` read-only abgefragt: custom branch policy aktiv; Schutzregel ausschließlich branch_policy, **keine required reviewers / Wartefreigabe** in der gelesenen Antwort. Auf keine unbewiesene manuelle Sperre vertrauen. Der Legacy-Testworkflow hat dagegen nur contents:read und keinen Publishjob.
+GitHub-Environment `github-pages` read-only abgefragt: custom branch policy aktiv; Schutzregel ausschließlich branch_policy, **keine required reviewers / Wartefreigabe** in der gelesenen Antwort. Auf keine unbewiesene manuelle Sperre vertrauen. Die separate Abfrage der develop-Branch-Protection scheiterte mit HTTP403 „Resource not accessible by integration“; ob Statuschecks/Reviews dort zwingend vorgeschrieben sind, konnte nicht verifiziert werden. Das ist keine Aussage, dass der Branch ungeschützt sei. [Read-only-Nachweise](integration-review/deployment-review.json). Der Legacy-Testworkflow hat dagegen nur contents:read und keinen Publishjob.
 
 Vor Integration ohne Veröffentlichung eine **gesondert autorisierte und überprüfte** Maßnahme wählen: Publishworkflow während der Integration wirksam deaktivieren, oder einen expliziten standardmäßig ausgeschalteten Deploymentgate über einen eigenen freigegebenen Workflowchange einführen, oder eine tatsächlich wirksame Environmentfreigabe konfigurieren und jede Ausführung daran blockieren. Änderungen an Repoeinstellungen/Workflows wurden in diesem Prüfauftrag **nicht** vorgenommen. `[skip ci]`, spät gestartetes Canceln und Hoffnung auf Fehler sind kein belastbarer Schutz.
 
@@ -52,7 +52,9 @@ Ein neuer P05/P06-PR wird zunächst gegen den unveränderten Kernelbranch von #4
 
 ## Tests, Risiken und Aussagegrenzen
 
-Frisch auf dem **unveränderten PR-#4-Head vor P05/P06-Codeänderungen**: `tools/test_legacy.sh` erfolgreich mit15 Node-Testgruppen,2171 Grundlagen-/2099 Kernel-Assertions und370 Differentialfällen.72 Originalfälle explizit unsupported; kein Ganzpartie-/Replay-Paritätsclaim. Vorhandene GitHub-QA für alle vier Heads erfolgreich; eigene vollständige Desktop-Godot-Regression ebenfalls erneut gestartet, Abschlussnachweis wird im neuen Testbericht verlinkt.
+Frisch auf dem **unveränderten PR-#4-Head vor P05/P06-Codeänderungen**: `tools/test_legacy.sh` erfolgreich mit15 Node-Testgruppen,2171 Grundlagen-/2099 Kernel-Assertions und370 Differentialfällen.72 Originalfälle explizit unsupported; kein Ganzpartie-/Replay-Paritätsclaim. Vorhandene GitHub-QA für alle vier Heads erfolgreich; eigene vollständige Desktop-Godot-Regression vor den Codeänderungen ebenfalls erfolgreich:9547 Assertions plus Audio/Kontrast. Der neue Folgeauftrag hat separate Nachweise im [P05/P06-Bericht](LEGACY_ENGINE_P05_P06.md). [Head-/CI-Abfrage](integration-review/pr-status.json), [unveränderter Legacy-Baselinelauf](integration-review/baseline-legacy.log), [produktiver Baselinelauf](integration-review/baseline-production.log).
+
+Bei den zusätzlichen P05/P06-Ereignisprüfungen wurde eine Lücke in der typisierten Beobachtungsspur von #4 gefunden (Feldentfernung vor Ablage nicht separat protokolliert); die Kampf-/Endzustände waren korrekt. #4 behauptet kein P11-kompatibles Ereignisprotokoll. Der Folgebranch ergänzt diese Beobachtung für strengere Ereigniszustandsvergleiche.
 
 Die historischen Upstreamfehler (20 statt25 START, unvollständiger UI-Mock, externe check.js-Eingabe fehlt), Raw-Queue-Härtung und before-AI-Grenzen von #4 sind bekannte Grenzen, keine neu entdeckte Produktionsregression. Audit-/Grundlagendokumente sind historische Nachweise; aktuelle Fortschrittsberichte dürfen ihre alten „offen“-Zeilen nicht als jetzigen Stand ausgeben.
 

@@ -1,0 +1,26 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+DUEL (844, 390) reduced false round 1
+DUEL (844, 390) reduced false round 2
+DUEL (844, 390) reduced false round 3
+DUEL (915, 412) reduced true round 1
+DUEL (915, 412) reduced true round 2
+DUEL (915, 412) reduced true round 3
+DUEL (1280, 720) reduced false round 1
+DUEL (1280, 720) reduced false round 2
+DUEL (1280, 720) reduced false round 3
+DUEL (1600, 900) reduced false round 1
+DUEL (1600, 900) reduced false round 2
+DUEL (1600, 900) reduced false round 3
+DUEL (844, 390) reduced false round 1
+DUEL (844, 390) reduced false round 2
+DUEL (844, 390) reduced false round 3
+DUEL (844, 390) reduced false round 1
+DUEL (844, 390) reduced false round 2
+DUEL (844, 390) reduced false round 3
+DUEL (844, 390) reduced false round 4
+DUEL (844, 390) reduced false round 5
+COMBAT PRESENTATION: 725 assertions, 0 failures; complete duels, event order, rapid input, resize, bounded FX/audio and persisted mixer
