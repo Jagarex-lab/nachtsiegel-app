@@ -147,12 +147,16 @@ const assert = require('assert/strict');
      h=await hub();assert.equal(h.visible_cards.length,7,'Exactly seven implemented cards');
      await hubTap('filter');await wait(()=>window.nachtsiegelHub.visible_cards.length===3);
      await hubTap('concepts');await wait(()=>window.nachtsiegelHub.visible_cards.length>3);
-     h=await hub();await tap(h.search_rect);await page.keyboard.type('Ofenlehrling');
+     h=await hub();await tap(h.search_rect);
+     await wait(()=>['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)&&!document.activeElement.disabled);
+     await page.keyboard.type('Ofenlehrling');
+     assert.equal(await page.evaluate(()=>document.activeElement.value),'Ofenlehrling','Real mobile HTML input forwards text to Godot');
      await wait(()=>window.nachtsiegelHub.visible_cards.length===1&&window.nachtsiegelHub.visible_cards[0]==='furnace_apprentice');
      await page.screenshot({path:base+'-collection-search.png'});
      if(name==='android-bars'){
       await page.setViewportSize({width:options.viewport.width,height:200});await wait(()=>window.nachtsiegelHub.keyboard_layout);
       h=await hub();assert(h.search_rect[1]+h.search_rect[3]<=200,'Typing layout keeps input above keyboard');
+      assert.equal(await page.evaluate(()=>document.activeElement.value),'Ofenlehrling','Virtual keyboard input survives viewport shrink');
       await page.screenshot({path:base+'-keyboard.png'});await page.setViewportSize(options.viewport);await page.waitForTimeout(300);
      }
      await hubTap('card_furnace_apprentice','inspect');await page.screenshot({path:base+'-concept.png'});
