@@ -1,0 +1,115 @@
+{
+  "base": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+  "checks": [
+    {
+      "path": ".github/workflows/web-preview.yml",
+      "sha256": "594dd236c85601bfcd9b3ba237107fd33a07affb50bf89c0e8563f0a01d19124",
+      "unchanged": true
+    },
+    {
+      "path": "data/brand/identity.json",
+      "sha256": "d206e81e76a2f0b4c35b2a8bfd64d133e9f8be1a449c0ed9c4f6c9c846fcdc4e",
+      "unchanged": true
+    },
+    {
+      "path": "data/card_definitions.gd",
+      "sha256": "6449cdf4d01e8e1042c4c38d3639d74910c543f9f378fa52f1d6f1a612c680c3",
+      "unchanged": true
+    },
+    {
+      "path": "data/legacy/README.md",
+      "sha256": "cd100d8690f86acf02c7964ef833d491e392b5af4290f837d96368bc6df25d25",
+      "unchanged": true
+    },
+    {
+      "path": "data/legacy/cards.json",
+      "sha256": "0e70a27c6c70e8bc5e8d527b4fbbb76201ae0d004c7b1cb29202b219cf229ffe",
+      "unchanged": true
+    },
+    {
+      "path": "data/legacy/decks.json",
+      "sha256": "fdb59708856314644bd434de8f286826aa50cb08bd46e60203aa7107a9606be5",
+      "unchanged": true
+    },
+    {
+      "path": "data/legacy/display_de.json",
+      "sha256": "a6f4ab40f8e3641395772996059007f5439d3f1ba1478fee98e9cbd569684231",
+      "unchanged": true
+    },
+    {
+      "path": "export_presets.cfg",
+      "sha256": "996d9ecb6bdd6e37438d993cf8aecf55733ebb4332da92ff3e7ea8eac39a5f40",
+      "unchanged": true
+    },
+    {
+      "path": "project.godot",
+      "sha256": "0642ef54b318c749cf3a5332a45453ea252debcb0dd579783a647fd8bb287ce7",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/arena.gd",
+      "sha256": "b703149f6bda913a6a1c9747b6d1a483f9e80682e58ba00af6c8950b53aabdd7",
+      "unchanged": true
+    },
+    {
+      "path": "scripts/battle_model.gd",
+      "sha256": "c5abda32e8baeb9271becd8d855568dda4d14e98a56aea9859668421c6835145",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/cards.json",
+      "sha256": "a31e88342c7b637ac6599e6b01505c64db71fd8cdfc2267ed3d6e21d1da975b9",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/combat_p04_v1.json",
+      "sha256": "b10be219fbfc44b1433356b5a181f4a805ffed782b33452201826dc40ee45203",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/decks.json",
+      "sha256": "a5940a8a90223e948971006cc27f6acd2834b0b20bd074bb094f0fa2848dead5",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/engine_p01_p04.json",
+      "sha256": "ddc9b286408c3db927cbf2ea85f6c657482d0be64a505bbffbd13a9141232420",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/queue_winner_p04_v1.json",
+      "sha256": "b80ce36c65a687a723018eeb8742dfbefa9ffea52cf7f85627429d12f051db90",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/rng_consumption_v1.json",
+      "sha256": "e11a9796698f8bc9586b288e2678fb9742b88a24f17b804aa536af9de414f2a6",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/transitions.json",
+      "sha256": "66ab79f38af794bf32073f08be4fbefe99b64b42e7ad10d37ff54f395a06aff4",
+      "unchanged": true
+    },
+    {
+      "path": "tests/fixtures/legacy/turns_p03_v1.json",
+      "sha256": "14c305f9342c07c61cb594eba193f1acf4ddd72ad9aa32768598d9b1ce4ac531",
+      "unchanged": true
+    },
+    {
+      "path": "tests/reference/duel_deck/README.md",
+      "sha256": "f71e13c3a9bb99eb41416b901b05092d70d4b92f58e721371af0461700758bbf",
+      "unchanged": true
+    },
+    {
+      "path": "tests/reference/duel_deck/engine.js",
+      "sha256": "abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1",
+      "unchanged": true
+    },
+    {
+      "path": "tests/reference/duel_deck/source.lock.json",
+      "sha256": "f1ffa858b55bd53297f57d4c37d650c99d332a65ddb81eb7c1a6e9003ffd4a66",
+      "unchanged": true
+    }
+  ]
+}

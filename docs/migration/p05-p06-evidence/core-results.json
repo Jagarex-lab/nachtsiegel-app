@@ -1,0 +1,143 @@
+{
+  "assertions": 2221,
+  "differential_cases": 415,
+  "failures": 0,
+  "supported_existing_scenarios": 97,
+  "unsupported_existing_scenarios": [
+    {
+      "command": "tacticalMove",
+      "id": "tacticalMove.valid_then_reject",
+      "reason": "later_package:tacticalMove"
+    },
+    {
+      "command": "tacticalMove",
+      "id": "tacticalMove.reject.far",
+      "reason": "later_package:tacticalMove"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.valid_then_reject",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.reject.resources",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "burst",
+      "id": "burst.ash",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.tide",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.thorn",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.veil",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.reject.threshold",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.reject.no_matching_unit",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "endTurn",
+      "id": "endTurn.valid.enemy_response",
+      "reason": "P10:automatic_enemy_turn"
+    },
+    {
+      "command": "play",
+      "id": "reaction.ash.tide",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.ash.thorn",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.ash.veil",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.tide.ash",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.tide.thorn",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.tide.veil",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.thorn.ash",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.thorn.tide",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.thorn.veil",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.veil.ash",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.veil.tide",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.veil.thorn",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "begin",
+      "id": "block.retained_during_other_begin",
+      "reason": "guarded_begin_wrong_side"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.full_hp_and_shield_cap",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.reject.empty_lane",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "tacticalMove",
+      "id": "tacticalMove.reject.occupied",
+      "reason": "later_package:tacticalMove"
+    }
+  ]
+}

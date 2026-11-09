@@ -18,3 +18,9 @@ func shuffle(values: Array) -> Array:
 		result[i] = result[j]
 		result[j] = saved
 	return result
+
+static func mul_u32(a: int, b: int) -> int:
+	# Math.imul low32 without overflowing int64 for two unsigned32 inputs.
+	var lo := (a & 0xffff) * (b & 0xffff)
+	var cross := ((a >> 16) & 0xffff) * (b & 0xffff) + (a & 0xffff) * ((b >> 16) & 0xffff)
+	return (lo + ((cross & 0xffff) << 16)) & MASK

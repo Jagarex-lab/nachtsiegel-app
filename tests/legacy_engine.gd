@@ -144,6 +144,12 @@ func run() -> void:
 		check(model.state.hero.discard.is_empty() and model.state.enemy.discard.is_empty(),item.id+" no post-result death")
 		same(item.remaining_queue,model._queue.size(),item.id+" queue cleared")
 		differential_cases+=1
+	var baseline=read("res://docs/migration/p01-p04-evidence/engine-results.json")
+	var originally_unsupported: Dictionary={}
+	for item: Dictionary in baseline.unsupported_existing_scenarios:originally_unsupported[item.id]=true
+	for item: Dictionary in unsupported:
+		check(originally_unsupported.has(item.id),"no originally supported P01-P04 case became unsupported: "+item.id)
+	check(differential_cases>=370,"all370 original differential cases retained, additional cases counted separately")
 	adversarial_checks(fixture,legacy)
 	queue_checks(legacy)
 	var result={"assertions":assertions,"failures":failures,"differential_cases":differential_cases,"supported_existing_scenarios":supported_legacy_cases,"unsupported_existing_scenarios":unsupported}
@@ -163,10 +169,12 @@ func execute(model, step: Dictionary) -> Dictionary:
 			if model.state.active!=args[0]:reason="guarded_begin_wrong_side"
 			if reason.is_empty():model.begin_turn(args[0])
 		"draw":value=model.draw_cards(args[0],int(args[1]))
-		"finishDraw":
-			var p: Dictionary=model.state[args[0]]
-			if model.state.winner==null and model.state.active==args[0] and p.phase=="draw":reason=model._draw_requirements(p,int(p.pendingDraw))
-			if reason.is_empty():value=model.finish_draw(args[0])
+		"finishDraw":value=model._finish_draw_reference(args[0])
+		"burn":value=model._burn_reference(args[0],args[1])
+		"recover":value=model.recover(args[0])
+		"chooseStrikeTarget":value=model.choose_strike_target(args[0],args[1])
+		"moveCreature":value=model.move_creature(args[0],args[1],args[2])
+		"skipShift":value=model._skip_shift_reference(args[0])
 		"play":
 			reason=model.play_support(args[0],args[1],args[2])
 			if not reason.begins_with("P0"):reason="";value=model.play(args[0],args[1],args[2])
@@ -210,11 +218,12 @@ func adversarial_checks(fixture: Dictionary, legacy: Dictionary) -> void:
 	var before=model.snapshot();check(not model.play("hero",0,2),"third summon rejected");same(before,model.snapshot(),"third summon immutable")
 	check(not model.play("unknown",0,2),"invalid side rejected")
 	model=EngineModel.new();model.state=runtime(legacy.cases[0].steps[0].before)
-	before=model.snapshot();check(not model.play("hero",0,0),"unsupported active summon rejected");same(before,model.snapshot(),"unsupported summon does not become vanilla")
-	model.state.enemy.deck=[];model.state.enemy.discard=["ash-1"]
-	before=model.snapshot();check(not model.advance_turn("hero"),"unsupported next begin preflight rejected");same(before,model.snapshot(),"rejected turn cannot partially attack")
+	model.state.hero.attune="tide"
+	before=model.snapshot();check(not model.play("hero",0,0),"unsupported cross-order reaction rejected");same(before,model.snapshot(),"unsupported P07 reaction is not silently omitted")
+	model.state.enemy.deck=[];model.state.enemy.discard=["ash-1"];model.state.hero.pendingTarget={"power":2,"sourceLane":0}
+	before=model.snapshot();check(not model.advance_turn("hero"),"pending target blocks turn");same(before,model.snapshot(),"rejected turn cannot partially attack")
 	check(model.events.is_empty(),"rejected preflight does not emit events")
-	for command: String in ["endTurn","burn","recover","burst","tacticalMove","fortify","chooseStrikeTarget","moveCreature","skipShift","inventedTimeRewind"]:
+	for command: String in ["endTurn","burst","tacticalMove","fortify","inventedTimeRewind"]:
 		before=model.snapshot();var count: int=model.events.size()
 		var reply: Dictionary=model.execute(command,["hero"])
 		check(not reply.ok and str(reply.reason).begins_with("unsupported_command:"),"closed API rejects "+command)
