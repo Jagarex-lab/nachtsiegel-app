@@ -640,8 +640,8 @@ func _refresh() -> void:
 	if hand.size() > previous_hand_count:
 		call_deferred("_animate_draw")
 	previous_hand_count = hand.size()
-	end_button.disabled = busy
-	end_button.caption = "BITTE WARTEN" if busy else "ZUG BEENDEN"
+	end_button.disabled = busy or finished
+	end_button.caption = "DUELL BEENDET" if finished else ("BITTE WARTEN" if busy else "ZUG BEENDEN")
 	end_button.queue_redraw()
 	restart_button.visible = finished
 	status_label.visible = not finished

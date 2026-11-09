@@ -62,13 +62,13 @@
           "role": "card name (focus available)",
           "threshold": 4.5,
           "ratio": 15.812,
-          "pixels": 605
+          "pixels": 660
         },
         {
           "role": "energy cost",
           "threshold": 4.5,
           "ratio": 15.812,
-          "pixels": 144
+          "pixels": 153
         },
         {
           "role": "attack or spell damage",
@@ -92,7 +92,7 @@
           "role": "card status",
           "threshold": 4.5,
           "ratio": 11.498,
-          "pixels": 98
+          "pixels": 105
         },
         {
           "role": "label I",
@@ -211,7 +211,7 @@
         {
           "role": "target symbol",
           "threshold": 4.5,
-          "ratio": 10.074,
+          "ratio": 10.185,
           "pixels": 204
         },
         {
@@ -3866,13 +3866,13 @@
         {
           "role": "action boundary",
           "threshold": 3.0,
-          "ratio": 10.352,
+          "ratio": 10.417,
           "pixels": 208
         },
         {
           "role": "action text",
           "threshold": 4.5,
-          "ratio": 14.236,
+          "ratio": 14.275,
           "pixels": 1824
         },
         {
@@ -4201,7 +4201,7 @@
         {
           "role": "target boundary",
           "threshold": 3.0,
-          "ratio": 13.584,
+          "ratio": 13.609,
           "pixels": 9
         },
         {
@@ -6630,13 +6630,13 @@
         {
           "role": "action boundary",
           "threshold": 3.0,
-          "ratio": 10.352,
+          "ratio": 10.417,
           "pixels": 208
         },
         {
           "role": "action text",
           "threshold": 4.5,
-          "ratio": 14.236,
+          "ratio": 14.275,
           "pixels": 1824
         },
         {
@@ -6965,7 +6965,7 @@
         {
           "role": "target boundary",
           "threshold": 3.0,
-          "ratio": 13.584,
+          "ratio": 13.609,
           "pixels": 9
         },
         {
@@ -8388,13 +8388,13 @@
         {
           "role": "action boundary",
           "threshold": 3.0,
-          "ratio": 10.352,
+          "ratio": 10.417,
           "pixels": 208
         },
         {
           "role": "action text",
           "threshold": 4.5,
-          "ratio": 14.236,
+          "ratio": 14.275,
           "pixels": 1824
         },
         {
@@ -10100,7 +10100,7 @@
         {
           "role": "target boundary",
           "threshold": 3.0,
-          "ratio": 11.636,
+          "ratio": 11.657,
           "pixels": 9
         },
         {
@@ -11214,13 +11214,13 @@
         {
           "role": "action boundary",
           "threshold": 3.0,
-          "ratio": 10.352,
+          "ratio": 10.417,
           "pixels": 208
         },
         {
           "role": "action text",
           "threshold": 4.5,
-          "ratio": 14.236,
+          "ratio": 14.275,
           "pixels": 1824
         },
         {

@@ -173,11 +173,13 @@ func run() -> void:
 		arena._close_modal()
 		arena._finish("SIEG · Der gegnerische Held fällt!")
 		await settle()
+		check(arena.end_button.disabled and arena.end_button.caption == "DUELL BEENDET","Victory disables completed turn action")
 		await capture("victory"+suffix)
 		arena._close_modal()
 		arena.finished = false
 		arena._finish("NIEDERLAGE · Dein Held ist gefallen.")
 		await settle()
+		check(arena.end_button.disabled and arena.end_button.caption == "DUELL BEENDET","Defeat disables completed turn action")
 		await capture("defeat"+suffix)
 	reset()
 	root.size = Vector2i(844,390)
