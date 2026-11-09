@@ -11,10 +11,10 @@ func emit(kind: String, origin: Vector2, target: Vector2, hue: Color, caption: S
 	if jobs.size()>=24:jobs.pop_front()
 	jobs.append({"kind":kind,"from":origin,"to":target,"hue":hue,"caption":caption,"age":0.0,"duration":.45})
 func _process(delta: float) -> void:
+	if jobs.is_empty():return
 	for job in jobs:job.age+=delta
 	jobs=jobs.filter(func(j):return j.age<j.duration)
-	if not jobs.is_empty():queue_redraw()
-	else:queue_redraw()
+	queue_redraw()
 func _draw() -> void:
 	for j in jobs:
 		var t=clampf(j.age/j.duration,0,1);var c=Color(j.hue,1-t);var center: Vector2=j.from.lerp(j.to,minf(1,t*2))

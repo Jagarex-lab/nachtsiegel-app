@@ -35,6 +35,7 @@ var hand_views: Array=[]
 var board_views: Dictionary={}
 var status: Label
 var pulse := 0.0
+var qa_elapsed := 0.0
 var render_pending := false
 var render_version := 0
 var modal_version := 0
@@ -58,8 +59,12 @@ func _ready() -> void:
 	feedback=preload("res://scripts/alpha/feedback.gd").new();feedback.z_index=100;add_child(feedback)
 	render()
 func _process(delta: float) -> void:
-	pulse=maxf(0,pulse-delta);queue_redraw()
-	if qa_enabled:publish_qa()
+	if pulse>0:
+		pulse=maxf(0,pulse-delta);queue_redraw()
+	if qa_enabled:
+		qa_elapsed+=delta
+		if qa_elapsed>=.1:
+			qa_elapsed=0;publish_qa()
 func _draw() -> void:
 	if page!="battle":return
 	var w=size.x;var h=size.y
