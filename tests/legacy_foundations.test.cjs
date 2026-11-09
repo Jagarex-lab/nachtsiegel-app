@@ -80,8 +80,8 @@ test('reordered object fields pass, missing HP, changed target and shuffled deck
  const target=plain(original);target.hero.lanes[0].id='veil-1';assert(difference(original,target));
 });
 
-test('new data namespace is not imported by production UI, battle model, scenes or autoloads',()=>{
+test('legacy namespace is confined to the explicit Alpha runtime; seven-card prototype stays isolated',()=>{
  function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?walk(path.join(dir,entry.name)):[path.join(dir,entry.name)]);}
- const files=[path.join(ROOT,'project.godot'),...walk(path.join(ROOT,'scripts')).filter(p=>p.endsWith('.gd')&&!p.includes(path.join('scripts','legacy')+path.sep)),...walk(path.join(ROOT,'scenes')).filter(p=>p.endsWith('.tscn'))];
+ const files=[path.join(ROOT,'project.godot'),...walk(path.join(ROOT,'scripts')).filter(p=>p.endsWith('.gd')&&!p.includes(path.join('scripts','legacy')+path.sep)&&!p.includes(path.join('scripts','alpha')+path.sep)),...walk(path.join(ROOT,'scenes')).filter(p=>p.endsWith('.tscn'))];
  for(const file of files)assert(!/res:\/\/(?:scripts|data)\/legacy\//.test(fs.readFileSync(file,'utf8')),path.relative(ROOT,file));
 });

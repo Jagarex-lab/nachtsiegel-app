@@ -150,7 +150,7 @@ func run() -> void:
 	for item: Dictionary in unsupported:
 		check(originally_unsupported.has(item.id),"no originally supported P01-P04 case became unsupported: "+item.id)
 	check(differential_cases>=415,"all415 prior kernel differential cases retained")
-	check(unsupported.size()==2,"all25 P07 scenarios activated; only wrong-side begin and P10 AI remain unsupported")
+	check(unsupported.size()==1,"only intentionally guarded wrong-side raw begin remains unsupported")
 	adversarial_checks(fixture,legacy)
 	queue_checks(legacy)
 	var result={"assertions":assertions,"failures":failures,"differential_cases":differential_cases,"supported_existing_scenarios":supported_legacy_cases,"unsupported_existing_scenarios":unsupported}
@@ -182,13 +182,7 @@ func execute(model, step: Dictionary) -> Dictionary:
 		"play":
 			reason=model.play_support(args[0],args[1],args[2])
 			if not reason.begins_with("P0"):reason="";value=model.play(args[0],args[1],args[2])
-		"endTurn":
-			var probe=EngineModel.new();probe.state=model.state.duplicate(true)
-			var p: Dictionary=probe.state[args[0]]
-			if step.accepted and args[0]=="hero":
-				probe.attack_phase(args[0])
-				if probe.state.winner==null:reason="P10:automatic_enemy_turn"
-			if reason.is_empty():value=model.advance_turn(args[0])
+		"endTurn":value=model.end_turn(args[0])
 		_:
 			reason="later_package:"+str(step.command)
 	if not reason.is_empty():
@@ -227,7 +221,7 @@ func adversarial_checks(fixture: Dictionary, legacy: Dictionary) -> void:
 	model.state.enemy.deck=[];model.state.enemy.discard=["ash-1"];model.state.hero.pendingTarget={"power":2,"sourceLane":0}
 	before=model.snapshot();check(not model.advance_turn("hero"),"pending target blocks turn");same(before,model.snapshot(),"rejected turn cannot partially attack")
 	check(model.events.is_empty(),"rejected preflight does not emit events")
-	for command: String in ["endTurn","inventedTimeRewind"]:
+	for command: String in ["inventedTimeRewind"]:
 		before=model.snapshot();var count: int=model.events.size()
 		var reply: Dictionary=model.execute(command,["hero"])
 		check(not reply.ok and str(reply.reason).begins_with("unsupported_command:"),"closed API rejects "+command)

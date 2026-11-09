@@ -21,7 +21,7 @@ var _queue: Array = []
 var _resolving := false
 var _dead_units: Array = []
 func capabilities() -> Dictionary:
-	return {"packages":["P01","P02","P03-core","P04","P05","P06","P07"],"summon_effects":EFFECTS.duplicate(),"automatic_enemy_controller":false,"unsupported":["P10 automatic AI","P11 replay audit"]}
+	return {"packages":["P01","P02","P03-core","P04","P05","P06","P07"],"summon_effects":EFFECTS.duplicate(),"automatic_enemy_controller":true,"unsupported":["P11 original JS audit ABI"]}
 func _valid_side(side: String) -> bool:
 	return side in ["hero","enemy"] and state.has(side)
 func _other(side: String) -> String:
@@ -179,7 +179,7 @@ func play_support(side: String, index: Variant, lane: Variant) -> String:
 	if not _integer(index) or not _integer(lane) or index<0 or index>=p.hand.size() or lane<0 or lane>=LANES:return "invalid_index"
 	var card: Dictionary=catalog.card(str(p.hand[index]))
 	if card.is_empty():return "unknown_card"
-	if int(p.summons)>=2 or int(p.energy)<int(card.cost) or p.lanes[lane]!=null:return "invalid_resources_or_lane"
+	if (summon_limit()>0 and int(p.summons)>=summon_limit()) or int(p.energy)<int(card.cost) or p.lanes[lane]!=null:return "invalid_resources_or_lane"
 	if not card.effect in EFFECTS:return "unknown_effect"
 	return ""
 func play(side: String, index: Variant, lane: Variant) -> bool:
@@ -187,7 +187,7 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
 	var p: Dictionary=state[side]
 	var card: Dictionary=catalog.card(p.hand[index])
 	p.hand.remove_at(index);p.energy=int(p.energy)-int(card.cost);p.summons=int(p.summons)+1
-	p.lanes[lane]={"id":card.id,"hp":card.hp,"atk":card.atk,"summoned":true,"stun":0}
+	p.lanes[lane]=make_unit(side,card,int(lane))
 	_trace("summon",side,{"lane":lane,"card_id":card.id})
 	if p.attune!=null and p.attune!=card.order:
 		add_res(p,2);_reaction(side,str(p.attune),str(card.order))
@@ -261,11 +261,11 @@ func attack_phase(side: String) -> bool:
 		var attack := maxi(0,int(unit.atk)-int(p.weak))
 		var target: Variant=opponent.lanes[lane]
 		if target!=null:
-			target.hp=int(target.hp)-attack
+			hit_unit(target,attack)
 			_trace("unit_hit",side,{"lane":lane,"amount":attack})
 			var target_card: Dictionary=catalog.card(target.id)
 			if attack>0 and int(target.hp)>0 and target_card.effect=="retaliate":
-				unit.hp=int(unit.hp)-int(target_card.power)
+				hit_unit(unit,int(target_card.power))
 				_trace("retaliate",other,{"lane":lane,"amount":int(target_card.power)})
 			if int(target.hp)<=0:
 				var excess := maxi(0,-int(target.hp))
@@ -314,7 +314,7 @@ func _advance_unchecked(side: String) -> bool:
 	return true
 func execute(command: String, args: Array) -> Dictionary:
 	# Player-facing facade rejects finished operations and partial raw-helper failures.
-	var arities := {"play":3,"finishDraw":1,"advanceTurnBoundary":1,"burn":2,"recover":1,"chooseStrikeTarget":2,"moveCreature":3,"skipShift":1,"burst":2,"tacticalMove":3,"fortify":2}
+	var arities := {"play":3,"finishDraw":1,"advanceTurnBoundary":1,"burn":2,"recover":1,"chooseStrikeTarget":2,"moveCreature":3,"skipShift":1,"burst":2,"tacticalMove":3,"fortify":2,"endTurn":1}
 	if not arities.has(command):return {"ok":false,"reason":"unsupported_command:"+command}
 	if args.size()!=int(arities[command]) or not args[0] is String or not _valid_side(args[0]):return {"ok":false,"reason":"invalid_arguments"}
 	if state.winner!=null:return {"ok":false,"reason":"finished"}
@@ -334,6 +334,7 @@ func execute(command: String, args: Array) -> Dictionary:
 		"burst":ok=burst(args[0],args[1])
 		"tacticalMove":ok=tactical_move(args[0],args[1],args[2])
 		"fortify":ok=fortify(args[0],args[1])
+		"endTurn":ok=end_turn(args[0])
 	return {"ok":ok,"reason":"" if ok else "invalid_action"}
 func add_res(player: Dictionary, amount: int) -> void:
 	player.resonance=mini(15,int(player.resonance)+amount)
@@ -398,7 +399,7 @@ func _strike_target(side: String, lane: Variant, power: int, _source_lane: int) 
 	var op: Dictionary=state[_other(side)]
 	var target: Variant=op.lanes[lane]
 	if target==null:return false
-	target.hp=int(target.hp)-power
+	hit_unit(target,power)
 	_trace("strike_hit",side,{"lane":lane})
 	if int(target.hp)<=0:
 		op.lanes[lane]=null;_trace("removed",_other(side),{"lane":lane})
@@ -447,7 +448,7 @@ func _resolve_formation(event: Dictionary) -> void:
 func _reaction(side: String, from: String, to: String) -> void:
 	var p: Dictionary=state[side]
 	var enemy: Dictionary=state[_other(side)]
-	var key := from+">"+to
+	var key := reaction_order(from)+">"+reaction_order(to)
 	match key:
 		"ash>tide","ash>veil":damage(enemy,2)
 		"tide>thorn":p.ward=mini(25,int(p.ward)+3)
@@ -471,7 +472,7 @@ func burst(side: String, order: Variant) -> bool:
 	# Original burst deliberately permits a pending strike/shift choice.
 	p.resonance=int(p.resonance)-8;p.burstUsed=true
 	var enemy: Dictionary=state[_other(side)]
-	match order:
+	match reaction_order(str(order)):
 		"ash":damage(enemy,4+units.size()*3)
 		"tide":p.ward=mini(25,int(p.ward)+6+units.size()*2)
 		"thorn":
@@ -501,3 +502,21 @@ func fortify(side: String, lane: Variant) -> bool:
 	unit.hp=mini(int(catalog.card(unit.id).hp),int(unit.hp)+1)
 	_trace("fortify",side,{"lane":lane})
 	return true
+
+func start_match(deck: Array, seed_value: int = 12345, level: int = 1) -> bool:
+	if not start(deck,seed_value,level):return false
+	_trace("match_start","system")
+	begin_turn(state.coin);check_winner()
+	if state.winner==null and state.coin=="enemy":preload("res://scripts/legacy/opponent.gd").take_turn(self)
+	return true
+func end_turn(side: String) -> bool:
+	if not advance_turn(side):return false
+	if state.winner==null and state.active=="enemy":preload("res://scripts/legacy/opponent.gd").take_turn(self)
+	return true
+
+# Rule-profile extension points; default behavior remains the fixed Legacy contract.
+func summon_limit() -> int:return 2
+func reaction_order(order: String) -> String:return order
+func make_unit(_side: String, card: Dictionary, _lane: int) -> Dictionary:
+	return {"id":card.id,"hp":card.hp,"atk":card.atk,"summoned":true,"stun":0}
+func hit_unit(unit: Dictionary, amount: int) -> void:unit.hp=int(unit.hp)-amount

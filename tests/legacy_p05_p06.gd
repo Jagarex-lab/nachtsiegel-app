@@ -63,7 +63,7 @@ func guard_checks(fixture: Dictionary) -> void:
 	var before=model.snapshot();var result: Dictionary=model.execute("play",["hero",0,2])
 	check(not result.ok,"pending target remains a play gate")
 	same(before,model.snapshot(),"pending play rejected before resources/card/field mutation")
-	for command: String in ["endTurn","inventedTimeRewind"]:
+	for command: String in ["inventedTimeRewind"]:
 		before=model.snapshot();check(not model.execute(command,["hero"]).ok,"unsupported "+command);same(before,model.snapshot(),"unsupported immutable")
 	model.state.winner="enemy";model.state.hero.phase="draw";model.state.hero.pendingDraw=1;model.state.hero.hand=model.catalog.deck("start").slice(0,6)
 	before=model.snapshot();check(not model.execute("burn",["hero",0]).ok,"public end guard for legacy raw burn")

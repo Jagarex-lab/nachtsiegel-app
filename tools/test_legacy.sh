@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-mkdir -p work/legacy work/xdg/{data,config,cache}
+mkdir -p work/legacy work/alpha work/xdg/{data,config,cache}
 export XDG_DATA_HOME="$PWD/work/xdg/data"
 export XDG_CONFIG_HOME="$PWD/work/xdg/config"
 export XDG_CACHE_HOME="$PWD/work/xdg/cache"
@@ -60,3 +60,14 @@ print(log.strip())
 assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M)
 assert re.search(r'^LEGACY P07: \d+ assertions, 0 failures;',log,re.M)
 P07CHECK
+
+node tools/legacy/generate_matches.cjs
+node --test tests/legacy_matches.test.cjs
+timeout 120s "${GODOT_BIN:-godot}" --headless --path . --script tests/legacy_matches.gd > work/alpha/matches-final.log 2>&1
+python3 - <<'MATCHCHECK'
+from pathlib import Path
+import re
+s=Path('work/alpha/matches-final.log').read_text();print(s)
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',s,re.M)
+assert re.search(r'LEGACY MATCHES: \d+ assertions, 0 failures;',s)
+MATCHCHECK

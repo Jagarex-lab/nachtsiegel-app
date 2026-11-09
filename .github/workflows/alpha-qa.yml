@@ -1,0 +1,75 @@
+name: ORAFOLD isolated Alpha QA (no deployment)
+on:
+  push:
+    branches: ['alpha/**']
+  pull_request:
+    branches: [develop]
+permissions:
+  contents: read
+concurrency:
+  group: alpha-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  alpha-playable:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - run: python3 -m pip install 'Pillow>=11,<14' 'PyYAML==6.0.3'
+      - run: godot --headless --editor --import --path . --quit
+      - name: All pinned Legacy differential and Alpha data tests
+        run: tools/test_legacy.sh
+      - name: New Alpha rules replay real touch and landscape render tests
+        run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
+      - name: Existing archive desktop regression
+        run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
+      - name: Release separation regression
+        run: python3 -m unittest discover -s tests/release -v
+      - name: Isolated Alpha export
+        run: tools/build_alpha.sh
+      - name: Browser runtime
+        run: |
+          npm install --prefix work/qa-browser --no-save --package-lock=false playwright@1.56.1
+          work/qa-browser/node_modules/.bin/playwright install --with-deps chromium webkit
+      - name: Existing archive browser regression
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          GAME_URL: http://127.0.0.1:8789/
+        run: |
+          tools/build_archive_qa.sh
+          python3 -m http.server 8789 --bind 127.0.0.1 --directory work/alpha/archive-web > work/alpha/archive-http.log 2>&1 &
+          node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
+      - name: Alpha actual touch complete duels and persistence in Chromium and WebKit
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          GAME_URL: http://127.0.0.1:8788/
+        run: |
+          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
+          node tools/alpha_browser_qa.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orafold-alpha-0.1-QA
+          path: |
+            work/alpha/*.log
+            work/alpha/*.json
+            work/alpha/*.png
+            work/alpha/web/
+            work/alpha/archive-web/
+            work/legacy/*.log
+            work/legacy/*results.json
+            work/*final.log
+          if-no-files-found: warn
