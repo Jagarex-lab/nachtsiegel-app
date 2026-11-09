@@ -236,7 +236,7 @@ func _build_ui() -> void:
 	help_button = _action("MENÜ",Rect2(1370,0,210,103),_show_menu)
 	for i in LANES:
 		var x = 355.0+i*180.0
-		var enemy_well = SigilSlot.new()
+		var enemy_well = SigilSlot.new();enemy_well.z_index=3
 		enemy_well.enemy = true
 		enemy_well.pressed.connect(_board_tap.bind(i,true))
 		_put(enemy_well,Rect2(x,145,160,194))
@@ -247,7 +247,7 @@ func _build_ui() -> void:
 		foe.visible = false
 		foe.pressed.connect(_board_tap.bind(i,true))
 		foe_faces.append(foe)
-		var target = SigilSlot.new()
+		var target = SigilSlot.new();target.z_index=3
 		target.pressed.connect(_board_tap.bind(i,false))
 		_put(target,Rect2(x-2,397,164,200))
 		lane_buttons.append(target)
@@ -670,8 +670,8 @@ func _card_button(index:int) -> Button:
 	button.pivot_offset = Vector2(T.HAND_WIDTH/2,T.HAND_HEIGHT)
 	button.data = data
 	button.art = _art(int(shown_hand[index]))
-	button.active = not finished and index == selected
-	button.playable = not finished and energy >= int(data.cost) and (data.kind == "spell" or summons < 2)
+	button.active = not busy and not finished and index == selected
+	button.playable = not busy and not finished and energy >= int(data.cost) and (data.kind == "spell" or summons < 2)
 	button.view_scale = ui_scale
 	button.disabled = busy
 	button.unaffordable = not finished and energy < int(data["cost"])
