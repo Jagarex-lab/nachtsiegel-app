@@ -119,3 +119,14 @@ Die neuen Prüfungen sind in `tools/test.sh` und die Paketprüfung in GitHub Act
 Zusätzliche Exportprüfung: Linux-Debugexport erfolgreich; der Katalogtest gegen dessen eingebettetes Paket besteht ebenfalls mit 97 Assertions. Der Android-Debugexport ist erfolgreich, APK-Signaturen v2/v3 sind verifiziert. Keine Installation auf physischem Android-Gerät; kein neuer nativer iOS-Build auf dieser Linux-Umgebung.
 
 Browserlauf: sechs Profile in Chromium und WebKit bestehen mit Touch-Auswahl, Inspector, Beschwörung, Zugende, Safe-Area-/Viewportänderung und reduziertem Bewegungsmodus. Die zentrale Produktidentität ist in Browser-Titel und Canvas-Beschriftung geprüft. Godots Kennzeichnung „(DEBUG)“ darf beim Debugexport als Zusatz erscheinen; sie ist kein anderer Produktname.
+
+## GitHub-Abnahme und veröffentlichter technischer Stand
+
+- [Finaler Feature-Lauf](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42570426109): erfolgreich, vollständige Suite mit 5.314 Assertions, bildbasiertem Kontrast, exportiertem Pakettest und sechs Browserprofilen.
+- [Veröffentlichung und Live-Prüfung](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42570773767): beide Jobs erfolgreich. Dieselbe vollständige Prüfung vor Veröffentlichung; danach weitere sechs Profile auf der öffentlichen HTTPS-Spielseite, einschließlich zentralem Produktnamen und Touch-Bedienung. Keine JavaScript- oder Konsolenfehler.
+- Spielbuild: `22e80a20b559469529e5336ae624b9a597f16f44`; Kanal `develop`. `build-info.json` und die versionierten JS-/PCK-Dateien wurden zusätzlich per HTTPS abgeglichen.
+- [Bestehendes Spiel mit der neuen technischen Grundlage öffnen](https://jagarex-lab.github.io/nachtsiegel-app/?v=22e80a20b559). Der sichtbare Produktname ist weiterhin NACHTSIEGEL; hier wird keine neue Kampagne oder Markenwahl vorgetäuscht.
+- Metadaten und Testausgaben: [github-feature.json](qa/github-feature.json), [github-feature-summary.log](qa/github-feature-summary.log), [github-publish.json](qa/github-publish.json), [github-publish-summary.log](qa/github-publish-summary.log), [live-build.json](qa/live-build.json). Die Browserbilder stehen außerdem in den Actions-Artefakten `nachtsiegel-arena-qa` und `nachtsiegel-live-qa`.
+- Branch `feature/brand-world-bible`, nach grüner Feature-QA per Fast-Forward nach `develop` integriert. `main` blieb bei `caaa00169a7c43eb6eabe919746a0f33131a0664`.
+
+Der abschließende Nachweiscommit enthält ausschließlich Dokumentation und Belege. Der veröffentlichte Spielbuild bleibt der oben angegebene getestete Codecommit. Physische Gerätetests, ein nativer iOS-Build, eine endgültige Namensfreigabe und vollständige amtliche Marken-/Ähnlichkeitsprüfungen bleiben ausdrücklich offen.

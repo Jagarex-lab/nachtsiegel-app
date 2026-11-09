@@ -1,0 +1,14 @@
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T06:01:06.4704072Z RULES: 684 assertions, 0 failures; 30 baseline differential duels
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T06:01:06.4704825Z CREATIVE DATA: 2253 assertions, 0 failures; 74 entities; 275 keys per locale; unchanged 7-card pool
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T06:01:06.4705400Z NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T06:01:06.4705951Z INPUT/LAYOUT: 380 assertions, 0 failures; seven landscape sizes; mouse + ScreenTouch
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T06:01:06.4706395Z UX AUDIT: 1900 assertions, 0 failures; 49 paired rendered states
+test-and-export	Rules, real GUI input, landscape layout and render tests	2026-11-09T06:01:06.4706854Z CONTRAST: 49 rendered states, 2042 regions, 0 failures
+test-and-export	Verify localized data inside the exported package	2026-11-09T06:01:14.6820472Z NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+test-and-export	Browser startup and touch smoke test	2026-11-09T06:02:09.5422300Z BROWSER PASS: chromium desktop
+test-and-export	Browser startup and touch smoke test	2026-11-09T06:02:17.5460252Z BROWSER PASS: chromium android-landscape
+test-and-export	Browser startup and touch smoke test	2026-11-09T06:02:29.1423718Z BROWSER PASS: chromium android-bars
+test-and-export	Browser startup and touch smoke test	2026-11-09T06:02:39.6219650Z BROWSER PASS: webkit iphone-landscape
+test-and-export	Browser startup and touch smoke test	2026-11-09T06:02:44.8956617Z BROWSER PASS: webkit iphone-wide
+test-and-export	Browser startup and touch smoke test	2026-11-09T06:02:49.3719227Z BROWSER PASS: webkit iphone-reduced
+test-and-export	Browser startup and touch smoke test	2026-11-09T06:02:49.4565742Z BROWSER: 6 device/engine profiles, 0 failures

@@ -4,7 +4,7 @@ Eigenständiges Dark-Fantasy-Kartenduell in Godot 4.6.3, für Querformat auf iPh
 
 ![Mondheiligtum](docs/screenshots/ux/full-board-six-hand-844x390.png)
 
-**Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/?v=e7c4f548a031
+**Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/?v=22e80a20b559
 
 ## Marken- und Lore-Entwurf
 

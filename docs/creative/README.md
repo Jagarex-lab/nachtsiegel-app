@@ -32,3 +32,7 @@ Das Spiel verspricht taktische Entscheidungen zwischen Schutz, Druck und dauerha
 | Endgültiger Produktname | Entscheidung des Auftraggebers, weiterhin offen |
 
 Lokalisierungsquelle: `data/narrative/content.json` und `data/narrative/locales/{de,en}.json`. Die drei erzählerischen Bibeldateien werden daraus erzeugt; Dokumentation und Übersetzungen können dadurch nicht unbemerkt auseinanderlaufen. IDs bleiben unabhängig von späteren Namen.
+
+## Abnahme
+
+[Lokale Tests, GitHub-Prüfung und Live-Nachweis](06-integration-and-qa.md#github-abnahme-und-veröffentlichter-technischer-stand): 5.314 Assertions, 2.042 Kontrastmessungen, Paketprüfungen und sechs Browserprofile vor sowie nach Veröffentlichung erfolgreich. Die aktuelle Lieferung ändert keinen endgültigen Produktnamen und implementiert keine spielbare Kampagne.
