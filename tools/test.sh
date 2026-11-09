@@ -12,6 +12,7 @@ python3 tools/validate_creative.py > work/creative-final.log 2>&1
 "$GODOT_BIN" --headless --path . --script tests/narrative.gd --quit-after 120 > work/narrative-final.log 2>&1
 if [[ -n "${DISPLAY:-}" ]]; then
   "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1600x900 --script tests/input_layout.gd > work/input-layout-final.log 2>&1
+  "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1600x900 --script tests/premium_layout.gd > work/premium-final.log 2>&1
   "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1600x900 --script tests/visual.gd > work/visual-final.log 2>&1
   mkdir -p work/ux
   "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1280x720 --script tests/ux_audit.gd > work/ux-final.log 2>&1
@@ -23,12 +24,12 @@ fi
 python3 - <<'VERIFY'
 from pathlib import Path
 import re
-for name in ["import", "rules", "creative", "narrative", "input-layout", "visual", "ux", "contrast"]:
+for name in ["import", "rules", "creative", "narrative", "input-layout", "premium", "visual", "ux", "contrast"]:
     path = Path("work", name + "-final.log")
     content = path.read_text()
     if re.search(r"SCRIPT ERROR|^ERROR:|^FAIL:", content, re.MULTILINE):
         raise SystemExit("Godot errors in " + str(path))
-    if name in ["rules", "creative", "narrative", "input-layout", "ux"]:
+    if name in ["rules", "creative", "narrative", "input-layout", "premium", "ux"]:
         result = re.search(r"^.*assertions, 0 failures.*$", content, re.MULTILINE)
         if not result:
             raise SystemExit("Missing successful test summary in " + str(path))

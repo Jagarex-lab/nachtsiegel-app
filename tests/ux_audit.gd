@@ -113,7 +113,7 @@ func run() -> void:
 	for role in T.palette():
 		if role in ["surface","raised","ink"]: continue
 		check(T.contrast(T.palette()[role],T.SURFACE) >= 4.5,"Palette AA "+role)
-	for dimensions in [Vector2i(1280,720),Vector2i(844,390),Vector2i(915,412)]:
+	for dimensions in [Vector2i(1600,900),Vector2i(1280,720),Vector2i(844,390),Vector2i(915,412)]:
 		root.size = dimensions
 		await settle()
 		reset()

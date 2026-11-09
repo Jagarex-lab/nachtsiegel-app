@@ -17,3 +17,7 @@ Die bestehende Projektlizenz und `LICENSE-NOTICE.md` bleiben maßgeblich für Sp
 - Diese drei Bilder sind KI-generierte Original-Konzeptassets für dieses Projekt und ersetzen noch keine abschließende manuelle Art-Produktion. Keine Behauptung exklusiver Rechte an KI-Ausgaben.
 - `fonts/Cinzel.ttf`: Cinzel, Copyright 2020 The Cinzel Project Authors, SIL Open Font License 1.1. Unveränderte Quelle: https://github.com/google/fonts/tree/main/ofl/cinzel. Lizenz: `fonts/Cinzel-OFL.txt`.
 - Shader-Licht, Gravuren, Zielfeldringe, Energie-Orb, HUD-Kristalle, gezeichnete UI-Schaltflächen und zeitlich begrenzte Zauber-/Beschwörungseffekte sind prozedurale Projektgrafik. Regeln, Bildfenster, Texte und Werte bleiben vom generierten Rahmen getrennt.
+
+## Premium-Arena (09.11.2026)
+
+- `art/premium_slate.png`: eigens mit OpenAI Image Generation erzeugte dunkle Schiefer-Materialtextur mit zurückhaltenden Metallnähten. Kein Referenzbild, kein fremdes UI. Wird als Textur auf die in Godot gezeichnete perspektivische Bühne und Plinthen gelegt; keine eingebrannten Karten, Werte oder Bedienelemente. KI-Konzeptmaterial, keine behauptete Exklusivität. Die bestehende eigene Arena- und Reliquiengrafik wird unabhängig weiterverwendet.

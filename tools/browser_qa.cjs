@@ -11,6 +11,7 @@ const assert = require('assert/strict');
  const profiles={
   chromium:[
    {name:'desktop',viewport:{width:1280,height:720},hasTouch:true},
+   {name:'desktop-wide',viewport:{width:1600,height:900},hasTouch:true},
    {...devices['Pixel 7'],name:'android-landscape',viewport:{width:915,height:412},deviceScaleFactor:1},
    {...devices['Pixel 7'],name:'android-bars',viewport:{width:844,height:320},deviceScaleFactor:2,insets:{left:44,right:44,top:0,bottom:21}}
   ],

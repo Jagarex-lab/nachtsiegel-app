@@ -125,6 +125,13 @@ var safe_override := Rect2()
 var phase := "play"
 var canvas_width := 1600.0
 var path_labels: Array[Label] = []
+var layout_concept := "mobile"
+var composition: Dictionary = {}
+var stage: Control
+var deck_back: Control
+var deck_label: Label
+var brand_label: Label
+var owner_labels: Array[Label] = []
 
 func _put(node: Control, rect: Rect2, parent: Node = null) -> void:
 	(parent if parent != null else root_ui).add_child(node)
@@ -173,6 +180,8 @@ func _build_ui() -> void:
 	root_ui.size = Vector2(1600,900)
 	var theme = Theme.new()
 	theme.default_font = BODY_FONT
+	theme.set_stylebox("panel","TooltipPanel",T.panel(T.BRONZE))
+	theme.set_color("font_color","TooltipLabel",T.TEXT)
 	root_ui.theme = theme
 	backdrop = TextureRect.new()
 	backdrop.texture = preload("res://assets/art/arena_painted.png")
@@ -183,7 +192,13 @@ func _build_ui() -> void:
 	backdrop.material = light
 	backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_put(backdrop,Rect2(0,0,1600,900))
-	_caption(Brand.display_name(),Rect2(480,12,640,68),42,T.TEXT,true).set_meta("min_css",18.0)
+	brand_label = _caption(Brand.display_name(),Rect2(24,12,390,64),32,T.TEXT,true)
+	brand_label.set_meta("min_css",14.0)
+	stage = preload("res://scripts/arena_stage.gd").new()
+	_put(stage,Rect2(0,0,1600,900))
+	deck_back = preload("res://scripts/card_back.gd").new()
+	_put(deck_back,Rect2(28,390,118,148))
+	deck_label = _caption("21",Rect2(12,542,150,56),26,T.SECONDARY)
 	hud_art = RitualHud.new()
 	_put(hud_art,Rect2(0,0,1600,900))
 	help_button = _action("MENÜ",Rect2(1370,0,210,103),_show_menu)
@@ -212,6 +227,7 @@ func _build_ui() -> void:
 		path_labels.append(_caption(["I","II","III","IV","V"][i],Rect2(x+40,99,80,42),28,T.TEXT,true))
 	var enemy = _face({"name":"Aschenkönig","attack":0,"hp":35,"tint":"#b46753"},Rect2(77,151,174,220),8,true)
 	enemy.heroic = true
+	enemy.enemy = true
 	enemy.pressed.connect(_show_hero.bind(true))
 	var player = _face({"name":"Siegelhüterin","attack":0,"hp":35,"tint":"#72beb9"},Rect2(77,426,174,220),7,true)
 	player.heroic = true
@@ -225,8 +241,8 @@ func _build_ui() -> void:
 		health.add_theme_stylebox_override("normal",health_style)
 	hero_enemy.set_meta("min_css",15.0)
 	hero_player.set_meta("min_css",15.0)
-	_caption("GEGNER",Rect2(61,107,280,48),28,T.FOE)
-	_caption("DEIN HELD",Rect2(61,380,280,48),28,T.PLAYER)
+	owner_labels.append(_caption("GEGNER",Rect2(61,107,280,48),26,T.FOE))
+	owner_labels.append(_caption("DU",Rect2(61,380,280,48),26,T.PLAYER))
 	round_label = _caption("RUNDE 1",Rect2(1370,110,210,48),26,T.TEXT)
 	energy_label = _caption("3",Rect2(1426,173,98,64),40,T.ENERGY)
 	energy_label.set_meta("min_css",18.0)
@@ -241,6 +257,7 @@ func _build_ui() -> void:
 	_put(hand_row,Rect2(318,655,932,235))
 	message_label = _caption("",Rect2(345,348,900,44),28,T.SECONDARY)
 	message_label.z_index = 7
+	message_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	status_label = _caption("",Rect2(1370,710,210,96),24,T.SECONDARY)
 	status_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	restart_button = _action("NEUES DUELL",Rect2(1370,790,210,103),_restart)
@@ -273,57 +290,44 @@ func _update_orientation() -> void:
 	root_ui.scale = Vector2.ONE*viewport_scale
 	root_ui.position = safe.position+(safe.size-Vector2(canvas_width,900)*viewport_scale)/2
 	backdrop.size.x = canvas_width
-	for label in labels:
-		if is_instance_valid(label) and label.get_parent() == root_ui and label.has_meta("base_rect"):
-			var base: Rect2 = label.get_meta("base_rect")
-			if base.position.x == 480: label.position.x = base.position.x+extra_width/2
+	backdrop.modulate = Color(.50,.55,.62,1)
+	composition = preload("res://scripts/arena_composition.gd").compose(canvas_width,ui_scale,layout_concept)
 	for i in LANES:
-		var x = 355+i*(canvas_width-880)/4
-		lane_buttons[i].position.x = x-2
-		lane_faces[i].position.x = x
-		foe_faces[i].position.x = x
-		foe_wells[i].position.x = x
-		path_labels[i].position.x = x+40
-	message_label.size.x = canvas_width-700
-	hand_row.position.x = (canvas_width-932)/2
-	for control in [help_button,round_label,energy_gems,phase_label,info_label,detail_button,end_button,status_label,restart_button]: control.position.x = 1370+extra_width
-	energy_label.position.x = 1426+extra_width
-	hud_art.position.x = extra_width
+		for pair in [[lane_buttons,composition.ally],[lane_faces,composition.ally],[foe_faces,composition.enemy],[foe_wells,composition.enemy],[path_labels,composition.paths]]:
+			var control: Control = pair[0][i]
+			var rect: Rect2 = pair[1][i]
+			control.position = rect.position; control.size = rect.size
+	for pair in [[brand_label,"title"],[help_button,"menu"],[hero_medallions[0],"player_hero"],[hero_medallions[1],"enemy_hero"],[hero_player,"player_hp"],[hero_enemy,"enemy_hp"],[owner_labels[0],"enemy_label"],[owner_labels[1],"player_label"],[round_label,"round"],[phase_label,"phase"],[energy_label,"energy"],[energy_gems,"energy_label"],[detail_button,"details"],[end_button,"end"],[restart_button,"end"],[status_label,"status"],[info_label,"info"],[message_label,"message"],[hand_row,"hand"],[deck_back,"deck"],[deck_label,"deck_count"]]:
+		var control: Control = pair[0]
+		var rect: Rect2 = composition[pair[1]]
+		control.position = rect.position; control.size = rect.size
+	stage.size = Vector2(canvas_width,900)
+	stage.layout = composition
+	stage.concept = layout_concept
+	stage.queue_redraw()
+	hud_art.position = Vector2.ZERO
+	hud_art.size = Vector2(canvas_width,900)
+	hud_art.energy_rect = composition.energy
+	hud_art.queue_redraw()
 	landscape_panel.top_level = true
 	landscape_panel.position = Vector2.ZERO
 	landscape_panel.size = available
 	landscape_panel.get_child(0).size = available
 	landscape_panel.visible = available.y > available.x
-	var touch_h = maxf(103,ceil(44.0/ui_scale))
-	var extra = touch_h-103
+	root_ui.theme.set_font_size("font_size","TooltipLabel",T.font_size(24,ui_scale,12))
 	for label in labels:
-		if not is_instance_valid(label): continue
-		if label.has_meta("screen_label"): continue
+		if not is_instance_valid(label) or label.has_meta("screen_label"): continue
 		label.add_theme_font_size_override("font_size",T.font_size(int(label.get_meta("base_font")),ui_scale,float(label.get_meta("min_css"))))
 	for button in actions:
 		if not is_instance_valid(button): continue
 		button.view_scale = ui_scale
-		button.size.y = maxf(button.size.y,touch_h)
 		button.queue_redraw()
-	help_button.size.y = touch_h
-	hud_art.position.y = extra
-	round_label.position.y = 110+extra
-	energy_label.position.y = 173+extra
-	energy_gems.position.y = 278+extra
-	phase_label.position.y = 330+extra
-	info_label.position.y = 382+extra
-	detail_button.position.y = 484+extra
-	detail_button.size.y = touch_h
-	end_button.position.y = detail_button.position.y+touch_h+10
-	end_button.size.y = touch_h
-	status_label.position.y = end_button.position.y+touch_h+10
-	status_label.size.y = 52 if ui_scale < .33 else 96
-	status_label.text = "Serie %d/2" % streak if ui_scale < .33 else "%d/2 Serien\n%d Karten" % [streak,deck.size()]
-	end_button.size.x = 270 if ui_scale < .38 else 235
-	end_button.position.x = canvas_width-end_button.size.x-10
+	status_label.text = "Serie %d/2" % streak
+	info_label.visible = not message_label.visible and selected >= 0 and not finished
 	for item in card_buttons+lane_faces+foe_faces+hero_medallions+lane_buttons+foe_wells:
 		item.view_scale = ui_scale
 		item.queue_redraw()
+	_fan_hand()
 	if modal != null: _layout_modal()
 
 func _close_modal() -> void:
@@ -340,9 +344,19 @@ func _modal_shell() -> Control:
 	modal.z_index = 100
 	_put(modal,Rect2(0,0,canvas_width,900))
 	var shade = Button.new()
-	shade.add_theme_stylebox_override("normal",T.panel(T.METAL,Color(T.SURFACE,.97)))
+	var shade_style = T.panel(Color.TRANSPARENT,Color(0,0,0,.76))
+	for state in ["normal","hover","pressed","focus","disabled"]: shade.add_theme_stylebox_override(state,shade_style)
 	shade.pressed.connect(_close_modal)
 	_put(shade,Rect2(0,0,canvas_width,900),modal)
+	var sheet = Panel.new()
+	var material = T.panel(T.BRONZE,T.SURFACE)
+	material.shadow_color = Color(0,0,0,.7)
+	material.shadow_size = 24
+	material.shadow_offset = Vector2(0,10)
+	material.set_corner_radius_all(12)
+	sheet.add_theme_stylebox_override("panel",material)
+	sheet.mouse_filter = Control.MOUSE_FILTER_STOP
+	_put(sheet,Rect2(200,30,1200,864),modal)
 	return modal
 
 func _show_help() -> void:
@@ -521,7 +535,7 @@ func _board_tap(lane: int, enemy: bool) -> void:
 		_announce("Wähle ein eigenes Feld unten", "warning")
 		return
 	if data.kind == "spell" and not enemy:
-		_announce("Wähle eine gegnerische Kreatur oben", "warning")
+		_announce("Zauber: Kreatur oben wählen", "warning")
 		return
 	_choose_lane(lane)
 func _restart() -> void: get_tree().call_deferred("reload_current_scene")
@@ -548,7 +562,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	if notification_clock > 0:
 		notification_clock -= delta
-		if notification_clock <= 0 and onboarding_step >= 3 and not busy: message_label.visible = false
+		if notification_clock <= 0 and onboarding_step >= 3 and not busy:
+			message_label.visible = false
+			info_label.visible = selected >= 0 and not finished
 	if qa_enabled:
 		qa_clock += delta
 		if qa_clock >= .1:
@@ -582,8 +598,8 @@ func _draw_card() -> void:
 func _card_button(index:int) -> Button:
 	var data: Dictionary = CARD_POOL[int(hand[index])]
 	var button = CardFace.new()
-	button.size = Vector2(156,212)
-	button.pivot_offset = Vector2(78,200)
+	button.size = Vector2(T.HAND_WIDTH,T.HAND_HEIGHT)
+	button.pivot_offset = Vector2(T.HAND_WIDTH/2,T.HAND_HEIGHT)
 	button.data = data
 	button.art = _art(int(hand[index]))
 	button.active = not finished and index == selected
@@ -597,6 +613,7 @@ func _card_button(index:int) -> Button:
 
 func _refresh() -> void:
 	if status_label == null: return
+	deck_label.text = str(deck.size())
 	hero_player.text = str(player_hp)
 	hero_enemy.text = str(foe_hp)
 	energy_label.text = str(energy)
@@ -647,7 +664,7 @@ func _refresh() -> void:
 	end_button.queue_redraw()
 	restart_button.visible = finished
 	status_label.visible = not finished
-	restart_button.position.y = 900-maxf(103,ceil(44.0/ui_scale))-6
+	restart_button.position = end_button.position
 	detail_button.visible = not finished and selected >= 0
 	if finished:
 		info_label.text = ""
@@ -660,14 +677,22 @@ func _refresh() -> void:
 
 func _fan_hand() -> void:
 	var count = card_buttons.size()
-	var span = maxf(0,count-1)*149.0+156.0
+	var card_width = clampf((hand_row.size.x-56)/6,178,220)
+	var extra = card_width*(T.SELECT_SCALE-1)+12 if selected >= 0 else 0.0
+	var span = count*card_width+extra
 	for i in count:
 		var card: Control = card_buttons[i]
+		card.size.x = card_width
+		card.pivot_offset = Vector2(card_width/2,T.HAND_HEIGHT)
 		var offset = float(i)-(count-1)*.5
-		card.position = Vector2((932-span)/2+i*149,absf(offset)*4)
-		card.rotation_degrees = offset*2.2
+		var spread = (extra/2 if i > selected else -extra/2) if selected >= 0 and i != selected else 0.0
+		card.position = Vector2((hand_row.size.x-count*card_width)/2+i*card_width+spread,absf(offset)*2)
+		card.rotation_degrees = offset*1.3
+		card.scale = Vector2.ONE
 		if i == selected:
-			card.scale = Vector2.ONE*1.07
+			card.scale = Vector2.ONE*T.SELECT_SCALE
+			card.position.y -= T.SELECT_LIFT
+			card.rotation_degrees = 0
 		card.z_index = 20 if i == selected else i
 
 func _animate_draw() -> void:
@@ -676,7 +701,7 @@ func _animate_draw() -> void:
 	var target = card.position
 	card.position += Vector2(20,-20)
 	var tween = card.create_tween().set_parallel(true)
-	tween.tween_property(card,"position",target,0.3).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(card,"position",target,T.MOTION_DRAW).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 func _card_index(data: Dictionary) -> int:
 	for i in CARD_POOL.size():
@@ -687,7 +712,7 @@ func _pulse_lane(lane: int, spell: bool) -> void:
 	var face: Control = foe_faces[lane] if spell else lane_faces[lane]
 	var effect = RitualFx.new()
 	effect.destination = face.position+face.size/2
-	effect.origin = Vector2(800,780)
+	effect.origin = Vector2(canvas_width/2,780)
 	if selected >= 0 and selected < card_buttons.size():
 		var card: Control = card_buttons[selected]
 		effect.origin = root_ui.get_global_transform().affine_inverse()*(card.get_global_transform()*(card.size/2))
@@ -716,6 +741,7 @@ func _announce(value: String, role: String = "secondary") -> void:
 	message_label.text = ("! " if role == "warning" else ("✓ " if role == "success" else ""))+value
 	message_label.add_theme_color_override("font_color",color)
 	message_label.visible = true
+	info_label.visible = false
 	notification_clock = 3.0
 
 func _select_card(index: int) -> void:
@@ -730,18 +756,22 @@ func _select_card(index: int) -> void:
 	onboarding_step = maxi(onboarding_step,1)
 	var data: Dictionary = CARD_POOL[int(hand[index])]
 	if energy < int(data.cost): _announce("Nicht genügend Energie", "warning")
-	elif data.kind == "spell": _announce("Tippe eine markierte Kreatur oben")
-	elif summons >= 2: _announce("Bereits 2 Beschwörungen in dieser Runde", "warning")
+	elif data.kind == "spell": _announce("Zauber: Kreatur oben wählen")
+	elif summons >= 2: _announce("Limit: 2 Beschwörungen/Runde", "warning")
 	elif onboarding_step < 2: _announce("2 · Wähle einen ✓-Pfad unten")
 	else: _announce(data.name+" ausgewählt")
 	_refresh.call_deferred()
 	call_deferred("_lift_selection")
 
 func _lift_selection() -> void:
-	if selected < 0 or selected >= card_buttons.size(): return
+	if reduced_motion or selected < 0 or selected >= card_buttons.size(): return
 	var card: Control = card_buttons[selected]
-	if reduced_motion: card.position.y -= 20
-	else: card.create_tween().tween_property(card,"position:y",card.position.y-20.0,0.14).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	var target = card.position.y
+	card.position.y += T.SELECT_LIFT
+	card.scale = Vector2.ONE
+	var tween = card.create_tween().set_parallel(true)
+	tween.tween_property(card,"position:y",target,T.MOTION_SELECT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(card,"scale",Vector2.ONE*T.SELECT_SCALE,T.MOTION_SELECT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _choose_lane(lane:int) -> void:
 	if finished or busy or lane < 0 or lane >= LANES or selected < 0 or selected >= hand.size():
@@ -753,7 +783,7 @@ func _choose_lane(lane:int) -> void:
 		return
 	if str(data["kind"]) == "unit":
 		if summons >= 2:
-			_announce("Maximal 2 Beschwörungen pro Runde", "warning")
+			_announce("Limit: 2 Beschwörungen/Runde", "warning")
 			return
 		if allies[lane] != null:
 			_announce("Dieses eigene Feld ist besetzt", "warning")
@@ -797,6 +827,15 @@ func _combat_phase(attacker:Array, defender:Array, attacking_player:bool) -> voi
 			if int(defender[i]["hp"]) <= 0:
 				defender[i] = null
 
+func _lunge(faces: Array, direction: float) -> void:
+	if reduced_motion: return
+	for face in faces:
+		if not face.visible: continue
+		var start: Vector2 = face.position
+		var tween = face.create_tween()
+		tween.tween_property(face,"position",start+Vector2(0,25*direction),T.MOTION_ATTACK/2)
+		tween.tween_property(face,"position",start,T.MOTION_ATTACK/2)
+
 func _end_turn() -> void:
 	if finished or busy or Time.get_ticks_msec()-last_turn_click < 350: return
 	last_turn_click = Time.get_ticks_msec()
@@ -807,15 +846,11 @@ func _end_turn() -> void:
 		_save_preferences()
 	_refresh()
 	_announce("Deine Kreaturen greifen an")
-	for face in lane_faces:
-		if face.visible and not reduced_motion:
-			var start: Vector2 = face.position
-			var tween = face.create_tween()
-			tween.tween_property(face,"position",start+Vector2(0,-25),0.18)
-			tween.tween_property(face,"position",start,0.19)
+	_lunge(lane_faces,-1)
 	await get_tree().create_timer(.06 if reduced_motion else .18).timeout
 	phase = "enemy"
 	phase_label.text = "GEGNER"
+	_lunge(foe_faces,1)
 	await get_tree().create_timer(.06 if reduced_motion else .22).timeout
 	var previous_allies = allies.duplicate(true)
 	var previous_foes = foes.duplicate(true)

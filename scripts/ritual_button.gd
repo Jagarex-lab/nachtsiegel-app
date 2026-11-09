@@ -21,8 +21,12 @@ func _draw() -> void:
 	var edge = T.GOLD if emphasis else T.SECONDARY
 	if hover or has_focus(): edge = T.FOCUS
 	if disabled: edge = T.MUTED
-	var polygon = PackedVector2Array([Vector2(13,3),Vector2(w-13,3),Vector2(w-3,h/2),Vector2(w-13,h-3),Vector2(13,h-3),Vector2(3,h/2),Vector2(13,3)])
-	draw_colored_polygon(polygon,T.SURFACE)
+	var polygon = PackedVector2Array([Vector2(13,3),Vector2(w-13,3),Vector2(w-3,13),Vector2(w-3,h-13),Vector2(w-13,h-3),Vector2(13,h-3),Vector2(3,h-13),Vector2(3,13),Vector2(13,3)])
+	var shadow = PackedVector2Array()
+	for p in polygon: shadow.append(p+Vector2(0,5))
+	draw_colored_polygon(shadow,Color(0,0,0,.55))
+	draw_colored_polygon(polygon,Color("#302b23") if emphasis and not disabled else T.SURFACE)
+	draw_line(Vector2(18,9),Vector2(w-18,9),T.BRONZE,1.5,true)
 	draw_polyline(polygon,T.INK,9,true)
 	if T.ink_visible: draw_polyline(polygon,edge,maxf(2,1.5/view_scale),true)
 	contrast_regions.append(T.sample(Rect2(w*.35,1,w*.3,4),edge,"action boundary",3))
