@@ -1,0 +1,111 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+FAIL: rng.0 value 14 {"path":"$","reason":"value"}
+FAIL: rng.0 value 18 {"path":"$","reason":"value"}
+FAIL: rng.1 value 14 {"path":"$","reason":"value"}
+FAIL: rng.-1 value 1 {"path":"$","reason":"value"}
+FAIL: rng.-1 value 6 {"path":"$","reason":"value"}
+FAIL: rng.-1 value 11 {"path":"$","reason":"value"}
+FAIL: rng.-1 value 13 {"path":"$","reason":"value"}
+FAIL: rng.-1 value 15 {"path":"$","reason":"value"}
+FAIL: rng.1000 value 8 {"path":"$","reason":"value"}
+FAIL: rng.1000 value 9 {"path":"$","reason":"value"}
+FAIL: rng.12345 value 5 {"path":"$","reason":"value"}
+FAIL: rng.12345 value 12 {"path":"$","reason":"value"}
+FAIL: rng.12345 value 16 {"path":"$","reason":"value"}
+FAIL: rng.12345 value 18 {"path":"$","reason":"value"}
+FAIL: rng.8802026 value 5 {"path":"$","reason":"value"}
+FAIL: rng.2147483648 value 8 {"path":"$","reason":"value"}
+FAIL: rng.2147483648 value 15 {"path":"$","reason":"value"}
+FAIL: rng.4294967295 value 1 {"path":"$","reason":"value"}
+FAIL: rng.4294967295 value 6 {"path":"$","reason":"value"}
+FAIL: rng.4294967295 value 11 {"path":"$","reason":"value"}
+FAIL: rng.4294967295 value 13 {"path":"$","reason":"value"}
+FAIL: rng.4294967295 value 15 {"path":"$","reason":"value"}
+FAIL: rng.4294967296 value 14 {"path":"$","reason":"value"}
+FAIL: rng.4294967296 value 18 {"path":"$","reason":"value"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: skipShift {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: moveCreature {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: chooseStrikeTarget {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: finishDraw {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burn {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burn {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: finishDraw {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: finishDraw {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: recover {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: recover {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: recover {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: tacticalMove {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: tacticalMove {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: fortify {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: fortify {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: endTurn {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: block.retained_during_other_begin after {"path":"$/enemy/drawDone","reason":"value"}
+FAIL: unsupported operation not executed: finishDraw {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: finishDraw {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: finishDraw {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: finishDraw {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: recover {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: recover {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: fortify {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: fortify {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: tacticalMove {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burn {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: skipShift {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: recover {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: invalid lane immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: invalid lane immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: invalid lane immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: invalid lane immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: invalid lane immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: third summon immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unsupported summon does not become vanilla {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: rejected turn cannot partially attack {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: rejected preflight does not emit events
+FAIL: finished immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: unknown event immutable {"path":"$/enemy","reason":"unsupported_key"}
+FAIL: post-result death cannot mutate {"path":"$/enemy","reason":"unsupported_key"}
+LEGACY ENGINE: 1328 assertions, 108 failures; 237 differential cases; 53 existing scenarios supported, 71 explicitly unsupported

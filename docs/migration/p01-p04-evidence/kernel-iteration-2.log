@@ -1,0 +1,33 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/enemy/lanes/2","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: skipShift {"path":"$/hero/lanes/1","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: moveCreature {"path":"$/hero/lanes/1","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: chooseStrikeTarget {"path":"$/enemy/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: tacticalMove {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: tacticalMove {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: fortify {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: fortify {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: burst {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/hero/lanes/1","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: play {"path":"$/hero/lanes/1","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: fortify {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: unsupported operation not executed: tacticalMove {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+FAIL: third summon immutable {"path":"$/hero/lanes/0","reason":"unsupported_key"}
+LEGACY ENGINE: 1326 assertions, 30 failures; 236 differential cases; 52 existing scenarios supported, 72 explicitly unsupported

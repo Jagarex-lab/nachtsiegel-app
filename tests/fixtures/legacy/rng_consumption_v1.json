@@ -1,0 +1,301 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository": "https://github.com/Jagarex-lab/duel-deck",
+    "commit": "34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+    "path": "engine.js",
+    "git_blob": "d3f48929c334052b2e4062264fe5c9ac39b49c6a",
+    "sha256": "abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1"
+  },
+  "notice": "Observed native Math.imul calls of unchanged source, filtered to its LCG multiplier. No reference source rewriting.",
+  "cases": [
+    {
+      "id": "opening.0.1",
+      "seed": 0,
+      "level": 1,
+      "calls": 124,
+      "state": 3426163852,
+      "next_state": 1514614395
+    },
+    {
+      "id": "opening.0.2",
+      "seed": 0,
+      "level": 2,
+      "calls": 124,
+      "state": 3426163852,
+      "next_state": 1514614395
+    },
+    {
+      "id": "opening.0.5",
+      "seed": 0,
+      "level": 5,
+      "calls": 144,
+      "state": 786704080,
+      "next_state": 1338756079
+    },
+    {
+      "id": "opening.0.30",
+      "seed": 0,
+      "level": 30,
+      "calls": 144,
+      "state": 786704080,
+      "next_state": 1338756079
+    },
+    {
+      "id": "opening.1.1",
+      "seed": 1,
+      "level": 1,
+      "calls": 124,
+      "state": 3541014525,
+      "next_state": 41777464
+    },
+    {
+      "id": "opening.1.2",
+      "seed": 1,
+      "level": 2,
+      "calls": 124,
+      "state": 3541014525,
+      "next_state": 41777464
+    },
+    {
+      "id": "opening.1.5",
+      "seed": 1,
+      "level": 5,
+      "calls": 144,
+      "state": 2510327057,
+      "next_state": 2490622780
+    },
+    {
+      "id": "opening.1.30",
+      "seed": 1,
+      "level": 30,
+      "calls": 144,
+      "state": 2510327057,
+      "next_state": 2490622780
+    },
+    {
+      "id": "opening.-1.1",
+      "seed": -1,
+      "level": 1,
+      "calls": 124,
+      "state": 3311313179,
+      "next_state": 2987451326
+    },
+    {
+      "id": "opening.-1.2",
+      "seed": -1,
+      "level": 2,
+      "calls": 124,
+      "state": 3311313179,
+      "next_state": 2987451326
+    },
+    {
+      "id": "opening.-1.5",
+      "seed": -1,
+      "level": 5,
+      "calls": 144,
+      "state": 3358048399,
+      "next_state": 186889378
+    },
+    {
+      "id": "opening.-1.30",
+      "seed": -1,
+      "level": 30,
+      "calls": 144,
+      "state": 3358048399,
+      "next_state": 186889378
+    },
+    {
+      "id": "opening.1000.1",
+      "seed": 1000,
+      "level": 1,
+      "calls": 124,
+      "state": 2312719860,
+      "next_state": 1851465923
+    },
+    {
+      "id": "opening.1000.2",
+      "seed": 1000,
+      "level": 2,
+      "calls": 124,
+      "state": 2312719860,
+      "next_state": 1851465923
+    },
+    {
+      "id": "opening.1000.5",
+      "seed": 1000,
+      "level": 5,
+      "calls": 144,
+      "state": 2127795384,
+      "next_state": 2154221751
+    },
+    {
+      "id": "opening.1000.30",
+      "seed": 1000,
+      "level": 30,
+      "calls": 144,
+      "state": 2127795384,
+      "next_state": 2154221751
+    },
+    {
+      "id": "opening.12345.1",
+      "seed": 12345,
+      "level": 1,
+      "calls": 124,
+      "state": 3918514357,
+      "next_state": 4234232464
+    },
+    {
+      "id": "opening.12345.2",
+      "seed": 12345,
+      "level": 2,
+      "calls": 124,
+      "state": 3918514357,
+      "next_state": 4234232464
+    },
+    {
+      "id": "opening.12345.5",
+      "seed": 12345,
+      "level": 5,
+      "calls": 144,
+      "state": 1644370761,
+      "next_state": 496462868
+    },
+    {
+      "id": "opening.12345.30",
+      "seed": 12345,
+      "level": 30,
+      "calls": 144,
+      "state": 1644370761,
+      "next_state": 496462868
+    },
+    {
+      "id": "opening.8802026.1",
+      "seed": 8802026,
+      "level": 1,
+      "calls": 124,
+      "state": 2698665942,
+      "next_state": 3315275069
+    },
+    {
+      "id": "opening.8802026.2",
+      "seed": 8802026,
+      "level": 2,
+      "calls": 124,
+      "state": 2698665942,
+      "next_state": 3315275069
+    },
+    {
+      "id": "opening.8802026.5",
+      "seed": 8802026,
+      "level": 5,
+      "calls": 144,
+      "state": 71789626,
+      "next_state": 2061012561
+    },
+    {
+      "id": "opening.8802026.30",
+      "seed": 8802026,
+      "level": 30,
+      "calls": 144,
+      "state": 71789626,
+      "next_state": 2061012561
+    },
+    {
+      "id": "opening.2147483648.1",
+      "seed": 2147483648,
+      "level": 1,
+      "calls": 124,
+      "state": 1278680204,
+      "next_state": 3662098043
+    },
+    {
+      "id": "opening.2147483648.2",
+      "seed": 2147483648,
+      "level": 2,
+      "calls": 124,
+      "state": 1278680204,
+      "next_state": 3662098043
+    },
+    {
+      "id": "opening.2147483648.5",
+      "seed": 2147483648,
+      "level": 5,
+      "calls": 144,
+      "state": 2934187728,
+      "next_state": 3486239727
+    },
+    {
+      "id": "opening.2147483648.30",
+      "seed": 2147483648,
+      "level": 30,
+      "calls": 144,
+      "state": 2934187728,
+      "next_state": 3486239727
+    },
+    {
+      "id": "opening.4294967295.1",
+      "seed": 4294967295,
+      "level": 1,
+      "calls": 124,
+      "state": 3311313179,
+      "next_state": 2987451326
+    },
+    {
+      "id": "opening.4294967295.2",
+      "seed": 4294967295,
+      "level": 2,
+      "calls": 124,
+      "state": 3311313179,
+      "next_state": 2987451326
+    },
+    {
+      "id": "opening.4294967295.5",
+      "seed": 4294967295,
+      "level": 5,
+      "calls": 144,
+      "state": 3358048399,
+      "next_state": 186889378
+    },
+    {
+      "id": "opening.4294967295.30",
+      "seed": 4294967295,
+      "level": 30,
+      "calls": 144,
+      "state": 3358048399,
+      "next_state": 186889378
+    },
+    {
+      "id": "opening.4294967296.1",
+      "seed": 4294967296,
+      "level": 1,
+      "calls": 124,
+      "state": 3426163852,
+      "next_state": 1514614395
+    },
+    {
+      "id": "opening.4294967296.2",
+      "seed": 4294967296,
+      "level": 2,
+      "calls": 124,
+      "state": 3426163852,
+      "next_state": 1514614395
+    },
+    {
+      "id": "opening.4294967296.5",
+      "seed": 4294967296,
+      "level": 5,
+      "calls": 144,
+      "state": 786704080,
+      "next_state": 1338756079
+    },
+    {
+      "id": "opening.4294967296.30",
+      "seed": 4294967296,
+      "level": 30,
+      "calls": 144,
+      "state": 786704080,
+      "next_state": 1338756079
+    }
+  ]
+}

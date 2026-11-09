@@ -10,13 +10,16 @@ function verify(source,bytes){
   if(crypto.createHash('sha256').update(bytes).digest('hex')!==SHA256)throw Error('Reference engine SHA-256 mismatch');
   if(crypto.createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${bytes.length}\0`),bytes])).digest('hex')!==BLOB)throw Error('Reference git blob mismatch');
 }
-function load(){
+function load(options={}){
   const dir=path.join(ROOT,'tests/reference/duel_deck');
   const source=JSON.parse(fs.readFileSync(path.join(dir,'source.lock.json'),'utf8'));
   if(source.schema_version!==1)throw Error('Unsupported reference lock schema');
   const bytes=fs.readFileSync(path.join(dir,'engine.js'));verify(source,bytes);
   // Fresh VM every time, so caller mutation cannot taint subsequent generations.
-  const context={module:{exports:{}}};vm.runInNewContext(bytes.toString('utf8'),context,{filename:'pinned-duel-deck/engine.js',timeout:5000});
+  const context={module:{exports:{}}};
+  // Optional read-only test instrumentation: same source bytes and native result.
+  if(options.onImul){const observedMath=Object.create(Math);observedMath.imul=(a,b)=>{const result=Math.imul(a,b);options.onImul(a,b,result);return result;};context.Math=observedMath;}
+  vm.runInNewContext(bytes.toString('utf8'),context,{filename:'pinned-duel-deck/engine.js',timeout:5000});
   return context.module.exports;
 }
 function verifyCheckout(repo){

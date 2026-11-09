@@ -1,0 +1,17 @@
+evalmachine.<anonymous>:44
+function render(){document.body.classList.remove('ns-commands-open');({arena,collection,deck,shop,lore}[s.tab]||arena)();save();const fx=document.querySelector('.combat-fx');if(fx&&s.battle){let latest=s.battle.log[s.battle.log.length-1]||'';fx.classList.toggle('fx-hit',/Schaden|greift|trifft/.test(latest));fx.classList.toggle('fx-heal',/Heile|Heilung|Schild/.test(latest));fx.classList.toggle('fx-summon',/Beschwört|Beschwörung/.test(latest));}}
+                                ^
+
+TypeError: Cannot read properties of undefined (reading 'classList')
+    at render (evalmachine.<anonymous>:44:33)
+    at evalmachine.<anonymous>:62:1
+    at evalmachine.<anonymous>:63:3
+    at Script.runInContext (node:vm:149:12)
+    at Script.runInNewContext (node:vm:154:17)
+    at Object.runInNewContext (node:vm:310:38)
+    at Object.<anonymous> (/workspace/duel-deck/ui-smoke.test.js:5:4)
+    at Module._compile (node:internal/modules/cjs/loader:1929:14)
+    at Object..js (node:internal/modules/cjs/loader:2060:10)
+    at Module.load (node:internal/modules/cjs/loader:1651:32)
+
+Node.js v24.22.1

@@ -1,5 +1,7 @@
 # Legacy-Grundlagen P01a–P01c / P02a–P02c
 
+> Historischer Nachweis des Grundlagen-PR #2. Der folgende offene Paketstand gilt für dessen Commit; aktueller isolierter Kernel-Fortschritt: [LEGACY_ENGINE_P01_P04.md](LEGACY_ENGINE_P01_P04.md).
+
 Stand: 2026-11-09. Feature-Branch `feature/legacy-foundations`, Basis `develop` bei `b1f5ea59a4754bac19df31e279bff8a295cb6ea8`. Referenz: [übernommener Implementierungsplan](IMPLEMENTATION_PLAN.md). Herkunft und ausdrückliche Übernahme aus dem **nicht gemergten** Audit-PR #1: [REFERENCE_PROVENANCE.md](REFERENCE_PROVENANCE.md).
 
 ## Ergebnis und strikte Umfangsgrenze
