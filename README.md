@@ -4,7 +4,7 @@ Eigenständiges Dark-Fantasy-Kartenduell in Godot 4.6.3, für Querformat auf iPh
 
 ![Neue Arena](docs/design/premium/screenshots/full-board-six-hand-844x390.png)
 
-**Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/?v=22e80a20b559
+**Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/?v=5c28c97e1aa2
 
 [Premium-Designbericht mit drei gerenderten Konzepten](docs/design/premium/README.md) · [Spielerfahrung, Kampagne und Tests](docs/experience/README.md)
 

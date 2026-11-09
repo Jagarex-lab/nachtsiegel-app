@@ -1,0 +1,30 @@
+Publish and live CI: https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42599448842
+Source: 5c28c97e1aa2056affad1b285700ad4e25f04647
+Conclusion: success
+
+test-and-export: RULES: 684 assertions, 0 failures; 30 baseline differential duels
+test-and-export: CREATIVE DATA: 2253 assertions, 0 failures; 74 entities; 275 keys per locale; unchanged 7-card pool
+test-and-export: NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+test-and-export: EXPERIENCE: 627 assertions, 0 failures; menu, tutorial, campaign, collection and persisted restart
+test-and-export: INPUT/LAYOUT: 380 assertions, 0 failures; seven landscape sizes; mouse + ScreenTouch
+test-and-export: PREMIUM: 1720 assertions, 0 failures; 4 landscape sizes; six cards, selection and actual ink visibility
+test-and-export: UX AUDIT: 2350 assertions, 0 failures; 62 paired rendered states
+test-and-export: CONTRAST: 78 rendered states, 2835 regions, 0 failures
+test-and-export: NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+test-and-export: EXPORTED EXPERIENCE: campaign, heroes, cards, narrative and entry scene; 0 failures
+test-and-export: BROWSER PASS: chromium desktop
+test-and-export: BROWSER PASS: chromium desktop-wide
+test-and-export: BROWSER PASS: chromium android-landscape
+test-and-export: BROWSER PASS: chromium android-bars
+test-and-export: BROWSER PASS: webkit iphone-landscape
+test-and-export: BROWSER PASS: webkit iphone-wide
+test-and-export: BROWSER PASS: webkit iphone-reduced
+test-and-export: BROWSER: 7 device/engine profiles, 0 failures
+deploy: BROWSER PASS: chromium desktop
+deploy: BROWSER PASS: chromium desktop-wide
+deploy: BROWSER PASS: chromium android-landscape
+deploy: BROWSER PASS: chromium android-bars
+deploy: BROWSER PASS: webkit iphone-landscape
+deploy: BROWSER PASS: webkit iphone-wide
+deploy: BROWSER PASS: webkit iphone-reduced
+deploy: BROWSER: 7 device/engine profiles, 0 failures

@@ -1,0 +1,18 @@
+[
+  {
+    "engine": "webkit",
+    "profile": "iphone-reduced",
+    "viewport": {
+      "width": 844,
+      "height": 320
+    },
+    "deviceScaleFactor": 1,
+    "metadata": {
+      "commit": "d01d242fb896f943733f639f68d269a510227fad",
+      "channel": "feature/premium-experience"
+    },
+    "target": "http://127.0.0.1:8775/?qa=1",
+    "errors": [],
+    "checks": "touch, full tutorial victory, hero selection, saved reload, locked chapters, collection search/filter, concept inspection, safe areas and motion preference"
+  }
+]

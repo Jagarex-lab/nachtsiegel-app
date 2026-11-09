@@ -1,0 +1,23 @@
+{
+  "url": "https://jagarex-lab.github.io/nachtsiegel-app/?v=5c28c97e1aa2&qa=1",
+  "metadata": {
+    "commit": "5c28c97e1aa2056affad1b285700ad4e25f04647",
+    "run_id": "42599448842",
+    "channel": "develop"
+  },
+  "viewport": [
+    844,
+    390
+  ],
+  "checks": [
+    "public source commit",
+    "startup",
+    "main menu",
+    "skippable introduction",
+    "hero screen",
+    "tutorial entry",
+    "real card selection",
+    "visual screenshots"
+  ],
+  "errors": []
+}

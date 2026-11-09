@@ -1,0 +1,3 @@
+KEYBOARD PASS: chromium, trusted touch, real HTML input, native filter update and retained focus at 844x200
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+KEYBOARD PASS: webkit, trusted touch, real HTML input, native filter update and retained focus at 844x200

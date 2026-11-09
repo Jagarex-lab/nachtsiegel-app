@@ -67,3 +67,7 @@ Weitere echte Zustände: [Zauberziele](screenshots/spell-targets-844x390.png), [
 7.484 Assertions ohne Fehler: 684 Regelassertions mit 30 Differential-Duellen, 2.253 Datenassertions, 97 Godot-Katalogabfragen, 380 reale Eingabe-/Layoutassertions, 1.720 neue Premium-Geometrieassertions und 2.350 UX-Assertions. **62 gepaarte Renderzustände, 2.627 Kontrastmessflächen, keine Unterschreitung.** Siehe [Log](qa/b-native-tests.log) und [Messwerte](qa/contrast-report.json).
 
 Geforderte Auflösungen 844×390, 915×412, 1280×720, 1600×900 sowie zusätzliche kurze Fenster und simulierte Safe Areas. Physische iPhone-/Android-Gerätetests bleiben getrennt von Browseremulation; keine vollständige WCAG-Zertifizierung. Veröffentlichung und weitere Prüfungen werden gemeinsam mit dem anschließenden Task C dokumentiert.
+
+## Gemeinsame Auslieferung mit Task C
+
+Der [Experience-Bericht](../../experience/README.md) dokumentiert die integrierte Fassung, Kampagnenwege, lokalen Speicher, endgültige Tests und Veröffentlichung. Die sechs Vergleichsrenderings in diesem Bericht wurden mit dem abschließenden Spielcode erneut erzeugt. Die grundlegenden Kampfregeln und der Produktname bleiben erhalten.

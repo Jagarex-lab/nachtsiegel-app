@@ -1,0 +1,7 @@
+Skipping host requirements validation logic because `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS` env variable is set.
+QA webkit/iphone-reduced: tutorial round 2, hp 32/33
+QA webkit/iphone-reduced: tutorial round 3, hp 31/29
+QA webkit/iphone-reduced: tutorial round 4, hp 30/22
+QA webkit/iphone-reduced: tutorial round 4, hp 30/17
+BROWSER PASS: webkit iphone-reduced
+BROWSER: 1 device/engine profiles, 0 failures

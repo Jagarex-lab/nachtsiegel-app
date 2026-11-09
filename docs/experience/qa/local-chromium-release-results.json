@@ -1,0 +1,15 @@
+[
+  {
+    "engine": "chromium",
+    "profile": "desktop",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "deviceScaleFactor": 1,
+    "metadata": null,
+    "target": "http://127.0.0.1:8775/?qa=1",
+    "errors": [],
+    "checks": "touch, full tutorial victory, hero selection, saved reload, locked chapters, collection search/filter, concept inspection, safe areas and motion preference"
+  }
+]

@@ -1,5 +1,7 @@
 # Marken- und Lore-Bibel – Master Task A
 
+> Historischer Stand von Task A. Inzwischen aktiviert [Task C](../experience/README.md) einen kuratierten Teil der Texte für die lokale Kampagne. Die übrige Kreativbibliothek und der neue Produktname bleiben Entwürfe.
+
 **Stand: 9. November 2026. Basis: `develop`, Commit `927ae10`.** Umsetzung: `feature/brand-world-bible`.
 
 **NACHTSIEGEL bleibt der angezeigte Produktname.** Der interne Entwurf heißt **GEGENMASS / COUNTERMEASURE – ARBEITSTITEL**. Weder dieser Arbeitstitel noch ein Favorit der Namensliste ist als endgültige Marke freigegeben. Sämtliche neue Weltinhalte sind Vorschläge; Bestandsbefunde stehen getrennt davon.
