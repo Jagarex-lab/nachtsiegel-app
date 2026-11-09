@@ -10,7 +10,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
-   const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync('work/alpha/browser-progress.json',JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
+   const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync(`work/alpha/browser-progress-${engine}-${name}.json`,JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
    const tap=async r=>{await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
    const action=async id=>{await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});const previous=await state();await tap(previous.actions[id].rect);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});};
@@ -42,7 +42,12 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
       }
       if(lane>=0)choice={i,lane,side};
      }
-     if(!choice){await action('end');return;}
+     if(!choice){
+      const ready=p.lanes.map((u,i)=>u&&!u.stun&&(!u.summoned||by[u.id].effect==='haste')&&u.atk>p.weak&&!b.enemy.lanes[i]?i:-1).filter(i=>i>=0);
+      if(q.mode==='alpha'&&b.round>=11&&ready.length>=3){
+       await action('convergence');for(const i of ready.slice(0,3)){await tap((await state()).board['hero'+i]);await page.waitForTimeout(150);}await action('convergence');
+      }else await action('end');return;
+     }
      await page.waitForFunction(()=>window.orafoldQA.hand.map(c=>c.id).join()===window.orafoldQA.battle.hero.hand.join());q=await state();await tap(q.hand[choice.i].rect);
      await page.waitForFunction(i=>window.orafoldQA.selected===i,choice.i);const before=(await state()).command_count;
      await tap((await state()).board[choice.side+choice.lane]);

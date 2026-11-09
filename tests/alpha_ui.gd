@@ -53,7 +53,15 @@ func run() -> void:
 		await tap(app.actions.result_restart);check(app.session.model.state.winner==null,"restart actual button")
 		app.close_modal();app.page="lobby";app.render();await settle()
 		await tap(app.actions.builder);check(app.page=="builder","deckbuilder actual touch")
+		if dimensions==Vector2i(844,390):
+			await tap(app.actions["remove_oa-neutral-c01"]);check(app.deck.size()==29,"actual builder removal")
+			await tap(app.actions.save_deck);check(not app.message.contains("gespeichert"),"UI rejects 29-card save")
+			await tap(app.actions["add_oa-neutral-c02"]);check(app.deck.size()==30 and app.deck.has("oa-neutral-c02"),"actual builder adds replacement")
 		await tap(app.actions.save_deck);check(app.message.contains("gespeichert"),"valid deck saved UI")
+		if dimensions==Vector2i(844,390):
+			var reloaded=preload("res://scripts/alpha/session.gd").new()
+			check(reloaded.profile.decks["alpha:houses"].cards.has("oa-neutral-c02"),"edited deck persisted across new session")
+			await tap(app.actions.reset_deck);await tap(app.actions.save_deck)
 		await snapshot("builder-%dx%d" % [dimensions.x,dimensions.y])
 		await tap(app.actions.builder_back)
 	app.close_modal();app.queue_free();await settle();await create_timer(.5).timeout

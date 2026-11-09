@@ -59,6 +59,8 @@ jobs:
         run: |
           python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
           node tools/alpha_browser_qa.cjs
+      - name: Package commit-addressed tested build
+        run: python3 tools/package_alpha.py > work/alpha/package-result.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -67,6 +69,7 @@ jobs:
             work/alpha/*.log
             work/alpha/*.json
             work/alpha/*.png
+            work/alpha/*.zip
             work/alpha/web/
             work/alpha/archive-web/
             work/legacy/*.log

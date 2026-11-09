@@ -1,46 +1,32 @@
-# ORAFOLD Alpha 0.1 – Integrationsgrenze vor dem ersten Merge
+# Alpha 0.1 – vorbereitet, nicht veröffentlicht
 
-Stand: 2026-11-09. Der neue Masterauftrag erlaubt Integration und genau einen getesteten Alpha-Release, verlangt aber ausdrücklich einen Halt, wenn erforderliche GitHub-Einstellungen/Freigaben nicht eingerichtet werden können. **Diese Grenze wurde erreicht. Keine PRs gemergt, keine Alpha veröffentlicht.** Dieser Bericht ist ein Nachtrag in Sicherheits-PR #6, kein neuer Dokumentations-PR und keine vermeintliche Alpha-Implementierung.
+Stand:2026-11-09. Die neueste Nutzeranweisung autorisiert Implementierung, lokale Integration, Tests und Draft-PRs unabhängig von fehlenden Adminrechten. Sie verbietet develop-Merge, produktives Pages-Deployment und Sicherheitsänderungen. Der frühere administrative Implementierungshalt ist damit aufgehoben; die Releasegrenze bleibt bestehen.
 
-## Tatsächlich ausgeführte Arbeit
+## Lokale Integration
 
-- Aktuelle Heads, Zielbranches, Mergeability und CI aller sieben offenen PRs frisch gelesen. Vor diesem Dokumentationsnachtrag alle MERGEABLE und alle erforderlichen vorhandenen Läufe SUCCESS; Deployjobs SKIPPED. #5/#7 weiterhin Entwurf. [Snapshot](evidence/preflight/pr-status.json).
-- PR #6 bei c37a244 und #7 bei 023a0e0 einschließlich ihrer zuletzt noch laufenden Web-QA inzwischen erfolgreich. Diese vorhandenen Läufe wurden geprüft, nicht als in diesem Schritt neu ausgeführte Tests ausgegeben. Der historische Legacy-Nachweis bleibt 1280 Differentialfälle / 28 Node-Gruppen; die lokalen Touch-/Shutdownfehler aus #7 bleiben offen.
-- Alten automatischen Publisher `.github/workflows/web-preview.yml`, Workflow-ID406254158, per autorisiertem PUT disable **erfolgreich deaktiviert** und Status `disabled_manually` nachgelesen. [Beleg](evidence/preflight/publisher-after.json). Keine laufenden/queued develop-Runs in der abgefragten Liste. Keine neue Veröffentlichung. Nicht wieder aktivieren, solange develop noch den automatischen Publishjob enthält.
-- Environment-Konfiguration mit erforderlichem tatsächlichem Reviewer und Self-Review-Sperre versucht: **HTTP403 Resource not accessible by integration**. Nicht angewendet. Actions-Einstellungen, Releasevariable und develop-Branchschutz ebenfalls HTTP403. [Zugriffsprüfungen](evidence/preflight/access-results.json), [abgelehnter Schreibversuch](evidence/preflight/environment-write-result.json).
-- github-pages nach dem Versuch unverändert: keine required reviewers, Admin-Bypass erlaubt, main und develop als Deploymentbranches. Pages steht bereits auf Workflowmodus. Defaultbranch ist main. [Environment](evidence/preflight/environment-after.json), [Branches](evidence/preflight/branch-policies.json).
+Draft-PR [#8](https://github.com/Jagarex-lab/nachtsiegel-app/pull/8), Branch `alpha/playable-0.1`, Basis develop. PR2→4→5→7 werden über PR7-Head `023a0e0` übernommen. Nur im Alpha-Branch lokal integriert: PR1 `c635e12`, PR6 `faea1cc`, PR3 `37d8fc5`. Auditdokumente aus PR1/2 sind identisch; der PR1-Merge erzeugte keine doppelten Baumdateien. Keine der bestehenden PRs wurde remote gemergt/retargetet. PR3 ist unabhängig,5 basiert auf4,7 auf5. Aktueller read-only GitHub-Snapshot im QA-Artefakt `pr-status-current.json`.
 
-Der alte Publisher ist eingefroren. **Das ist noch keine vollständig eingerichtete Releasekontrolle.** Es gab keinen Merge, keinen Release-Dispatch, keinen Settings-Bypass, keine neue Alpha-Karte und keine Änderung an Spielregeln/Assets. Die Live-Adresse wurde in diesem Schritt nicht ersetzt oder als neue Alpha getestet. Der zuletzt abgefragte Deploymentdatensatz zeigte SHA1d248153e27f87786b3219c69bf827825756ed84; das ist kein neuer Live-Browser-/Build-Integritätsnachweis.
+Develop bleibt `b1f5ea59a4754bac19df31e279bff8a295cb6ea8`. Main und andere Repositories wurden nicht geändert. Es gab keinen Release-Dispatch, keine Pagesveröffentlichung und keine neue öffentliche Alpha-URL.
 
-## Exakte manuelle Schritte durch einen Repository-Administrator
+## Testbuild
 
-1. **Publisher eingefroren lassen:** [Actions / Godot Web Preview](https://github.com/Jagarex-lab/nachtsiegel-app/actions/workflows/web-preview.yml). Status disabled lassen. Unter Actions sowie Environment-Deployments prüfen, dass keine alten wartenden/running Publisher nachträglich veröffentlichen können. Nicht pauschal wieder aktivieren.
-2. **Environment schützen:** [Settings / Environments](https://github.com/Jagarex-lab/nachtsiegel-app/settings/environments) → github-pages → Required reviewers aktivieren und tatsächlich berechtigten Reviewer benennen; Prevent self-review aktivieren; Allow administrators to bypass configured protection rules deaktivieren. Falls GitHub-Plan/Repository diese Optionen nicht anbietet, diese Grenze melden, keinen schwächeren Ersatz stillschweigend verwenden.
-3. **Identitäten beachten:** Die bisherigen CI-Läufe und PRs laufen als Jagarex-lab. Startet auch der Release als Jagarex-lab, kann dieses Konto bei aktiver Self-Review-Sperre nicht zugleich den eigenen Release freigeben. Ein anderes tatsächlich berechtigtes Reviewerkonto oder eine getrennte legitime Dispatcheridentität ist erforderlich. Keine erfundene Person und kein Token in den Chat. Einziger Spieltester zu sein ersetzt diese technische Freigabe nicht.
-4. **Deploymentbranches:** Im selben Environment Deployment branches and tags → Selected branches/tags → ausschließlich Branch develop. main und alle Tags/Wildcards entfernen.
-5. **Pages prüfen:** [Settings / Pages](https://github.com/Jagarex-lab/nachtsiegel-app/settings/pages) → Source GitHub Actions beibehalten. Kein Deploy-from-branch und keine gh-pages-Abkürzung.
-6. **Workflow verfügbar machen:** Nach Eigentümerentscheidung entweder [Settings / Branches](https://github.com/Jagarex-lab/nachtsiegel-app/settings/branches) → Default branch auf develop setzen, oder später denselben geprüften Releaseworkflow/Guard über separat freigegebenen Prozess auf main bereitstellen. Der neue manuelle Workflow aus #6 muss auf dem Defaultbranch vorhanden sein; keine verdeckte main-Änderung. Beim Release trotzdem Ref develop wählen.
-7. **Branch-/Actions-Regeln prüfen:** [Rulesets](https://github.com/Jagarex-lab/nachtsiegel-app/settings/rules) bzw. Branch protection für develop: erforderliche Checks/Reviews tatsächlich durchsetzen, direkte unreviewte Pushes/Forcepush/Bypass verhindern. Bestehende Reviewpflicht nicht umgehen; wenn nötig echten zweiten Reviewer benennen. [Actions / General](https://github.com/Jagarex-lab/nachtsiegel-app/settings/actions) → Default Workflow permissions read-only, Actions darf PRs nicht selbst genehmigen. Workflowautoren und Apps/PATs/alternative Publisher prüfen; CODEOWNERS allein schützt keine Feature-Push-Workflows. Details im [Sicherheitsbericht](../release/PAGES_RELEASE_SAFETY.md).
-8. **Release-Schalter auslassen:** [Actions variables](https://github.com/Jagarex-lab/nachtsiegel-app/settings/variables/actions) → PAGES_RELEASE_ENABLED nicht setzen oder false lassen. Nicht jetzt auf true setzen; weder Alpha noch integrierter Stand sind abgenommen.
-9. Änderungen bestätigen bzw. Zugriff für deren read-only-Nachprüfung ermöglichen. Bei weiterhin unlesbaren Schutzwerten Einstellungen sichtbar nachweisen; fehlenden Beleg nicht als aktive Sperre ausgeben. Keine bloße erneute allgemeine Mergefreigabe nötig: diese ist im Masterauftrag bereits enthalten. Benötigt werden wirksame Einstellungen und später die echte Environmentfreigabe.
+`tools/build_alpha.sh` exportiert Godot4.6.3-Preset `Alpha Web QA` nach `work/alpha/web`. `build-info.json` bindet Sourcecommit, Version und beide Ruleset-IDs. Startet direkt im Alpha-Einstieg; das Archiv ist separat erreichbar. Für lokale Exporttemplates XDG_DATA_HOME setzen; CI behält die vom Godot-Setup installierte Standardposition.
 
-## Konkrete Fortsetzung nach verifiziertem Schutz
+Lokal starten: `python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web`, dann `http://127.0.0.1:8788/`. HTTP erforderlich, nicht index.html als file öffnen. Der Testserver bindet nur localhost. Das Buildarchiv und QA-Nachweise werden über den Draft-PR/Actions als **Artefakt**, nicht über Pages bereitgestellt. Exakte SHA und Prüfsummen stehen im Artefaktmanifest.
 
-1. Erneut Heads/CI/Konflikte/Settings prüfen; #6 zuerst nach develop integrieren, automatische Publishschritte müssen entfernt bleiben. Danach reinen CI-Workflow kontrolliert wieder aktivieren. Erster develop-Push muss QA ohne Pages-Publisher ausführen. Release-Schalter bleibt aus.
-2. #1 → #2 → #4 → #5 → #7 integrieren, nach Elternintegration gestapelte PRs retargeten und bei Squash nur eigene Folgecommits transplantieren; #3 getrennt als Architektur erhalten. Auditdateien byteweise deduplizieren. Merge-SHAs protokollieren. Drafts/Reviewpflichten nicht unbesehen aufheben.
-3. M1: Legacy P08/P10 vervollständigen, P09-Bedienung, lokaler Deckbuilder/P12 und nachvollziehbares Replay/P11; bekannte Input-/Shutdownbefunde diagnostizieren. Gegen fixierten Oracle und vollständig integriertem Stand prüfen.
-4. M2–M4: getrenntes Alpha-Regelprofil, Ursprung/Mulligan/Zweite Möglichkeit/Konvergenz, echte Karten/Relikte/Ereignisse, vier legale 30-Karten-Starter, KI und responsive UI implementieren. Keine 550-Karten-Attrappe. Umfang des wirklich funktionsfähigen Pools offen ausweisen.
-5. M5: alle Pflichtprüfungen und Simulationen, exaktes getestetes Artefakt/SHA/Version; erst dann manuell freigegebener Alpha-Release mit echter Environmentprüfung und anschließender Live-QA. Kein Release bei fehlgeschlagenem Pflicht-Test.
+## Sicherheit bleibt unverändert
 
-## Status der angeforderten Alpha
+Alter Publisher Workflow-ID406254158 bleibt `disabled_manually`. Workflowquelle im Alpha-Branch enthält nur Tests/Artefakte und keine Pages-Schreibberechtigung. Neue `alpha-qa.yml` ist ebenfalls read-only und veröffentlicht ausschließlich Actions-Testartefakte. Manuelles `pages-release.yml`/Guard aus PR6 bleibt geschützt und wurde nicht ausgeführt oder abgeschwächt. Der zukünftige CI-Artefaktpfad enthält erst nach Archiv- und Alpha-QA den Alpha-Web-Build; kein ungeprüfter alternativer Publisher.
 
-| Ergebnis | Tatsächlicher Stand |
-|---|---|
-| Integrierte PRs / neue Mergecommits | Keine |
-| Neue ORAFOLD-Karten / vier Alpha-Starter | 0 / nicht implementiert |
-| Alpha-KI / Ursprung / Konvergenz / Relikte / Deckbuilder | Noch nicht implementiert |
-| Legacy-Basis | Offener geprüfter P07-Branch; kein integrierter vollständiger Legacy-Modus |
-| Neue Balance-/Alpha-Testbehauptungen | Keine |
-| Veröffentlichung / neuer Release-SHA | Nein / keiner |
+Die historischen read-only/abgelehnten Admin-Prüfungen sind unverändert unter `evidence/preflight/` erhalten. Keine neuen Sicherheitseinstellungen gesetzt. Fehlende Reviewer/Self-review-Sperre/Branchschutz sind **kein Entwicklungsblocker**, bleiben aber Releasevoraussetzungen. Vollständigen Schutz nicht behaupten.
 
-Die übrigen sechs Alpha-Dokumente werden mit der entsprechenden Implementierung erstellt, nicht als leere Fertigstellungsnachweise. Dieser Halt folgt Abschnitt1.1/16 des Masterauftrags und ist keine Behauptung eines fertigen Meilensteins oder Releases.
+## Spätere Freigabecheckliste
+
+1. Aktuellen Source-/Artefakt-SHA und alle Pflicht-QA prüfen; offene Pflichtfehler beheben. Draftreview abschließen.
+2. Ausdrückliche neue Integration-/Releasefreigabe einholen. Erst dann PR-Abhängigkeiten auflösen und kontrolliert nach develop integrieren; keine bestehende Reviewpflicht umgehen.
+3. Admin verifiziert required reviewer, prevent self-review, kein Adminbypass, ausschließlich develop als Deploymentbranch, Actions read-only, PagesSourceActions und Branchschutz. Ablauf in `docs/release/PAGES_RELEASE_SAFETY.md`.
+4. Alter automatischer Publisher bleibt aus, bis der rein testende Workflow tatsächlich in develop liegt; keine automatische Veröffentlichung reaktivieren. Releaseworkflow auf Defaultbranch über separat genehmigten Prozess bereitstellen.
+5. Erst nach bestätigtem Schutz Releasevariable und manuellen Release für exakt getesteten develop-SHA freigeben; tatsächlicher zweiter Reviewer nötig, wenn Dispatcher nicht selbst reviewen darf.
+6. Echtes geschütztes Deployment und Live-Integritäts-/Browserprüfung erst PhaseB. Vorherige öffentliche Testversion bleibt unverändert.
+
+Rollback: vor Veröffentlichung schlicht Alpha-PR nicht mergen/Featurebranch weiterführen. Nach einem späteren Release ausschließlich vorheriges bekannt gutes getestetes Artefakt über denselben geschützten manuellen Prozess freigeben; keine gh-pages-Abkürzung, kein Forcepush und kein pauschales Wiedereinschalten des alten Publishers.
