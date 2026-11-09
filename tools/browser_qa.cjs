@@ -134,8 +134,15 @@ const assert = require('assert/strict');
      let h=await hub();assert(h.tutorial_completed&&h.wins===1&&h.unlocked_chapter===1,'Real victory saved and chapter one unlocked');
      await wait(()=>window.nachtsiegelQA.modal==='result');q=await state();await page.screenshot({path:base+'-tutorial-result.png'});
      await tap(q.modal_actions.find(a=>a.caption==='HAUPTMENÜ').rect);await wait(()=>window.nachtsiegelHub.page==='home');
+     await hubTap('settings','settings');await hubTap('av_settings','av');
+     h=await hub();const gain=h.audio_sliders.SFX;
+     await page.touchscreen.tap(gain[0]+1,gain[1]+gain[3]/2);await wait(()=>window.nachtsiegelHub.audio.SFX===0);
+     await hubTap('effects');await wait(()=>window.nachtsiegelHub.low_effects===true);
+     await page.screenshot({path:base+'-mixer.png'});
+     await hubTap('back','settings');await hubTap('back','home');
      await page.waitForTimeout(1200);await page.reload({waitUntil:'networkidle'});await wait(()=>window.nachtsiegelHub?.page==='start');
      h=await hub();assert(h.tutorial_completed&&h.selected_hero==='ash_king'&&h.wins===1,'Reload retains tutorial, wins and selected hero');
+     assert(h.audio.SFX===0&&h.low_effects===true,'Mixer mute and low-effects mode survive reload');
      await hubTap('begin','home');await page.screenshot({path:base+'-home-progress.png'});
      if(engine==='chromium'&&name==='desktop'){
       await hubTap('settings','settings');await hubTap('fullscreen');await wait(()=>!!document.fullscreenElement);

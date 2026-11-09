@@ -2,7 +2,7 @@ extends SceneTree
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	var source = load("res://scripts/arena.gd")
-	if source == null or not source.can_instantiate(): quit(1); return
+	if source == null or not source.can_instantiate(): finish_test(1); return
 	for concept in ["ritual","table","mobile"]:
 		for dimensions in [Vector2i(1600,900),Vector2i(844,390)]:
 			root.size = dimensions
@@ -24,4 +24,7 @@ func run() -> void:
 			root.get_texture().get_image().save_png("res://work/premium/concept-%s-%dx%d.png" % [concept,dimensions.x,dimensions.y])
 			arena.queue_free(); await process_frame
 	print("CONCEPTS: 3 live layouts, identical six-card state, 2 landscape sizes")
-	quit()
+	finish_test()
+
+func finish_test(code: int=0) -> void:
+	root.get_node("GameAudio").request_quit(code)

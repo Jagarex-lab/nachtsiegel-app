@@ -123,7 +123,7 @@ func run() -> void:
 	arena._end_turn()
 	check(arena.busy and arena.round_number == 1,"Animation locks duplicate turn input")
 	# Await completion with a bounded deadline; software-rendered CI can miss a frame budget.
-	var deadline=Time.get_ticks_msec()+3000
+	var deadline=Time.get_ticks_msec()+5000
 	while arena.busy and Time.get_ticks_msec()<deadline:await process_frame
 	check(not arena.busy and arena.round_number == 2,"Animated end turn resolves exactly once")
 	print("RULES: %d assertions, %d failures; 30 baseline differential duels" % [assertions,failures])

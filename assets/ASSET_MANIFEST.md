@@ -21,3 +21,7 @@ Die bestehende Projektlizenz und `LICENSE-NOTICE.md` bleiben maßgeblich für Sp
 ## Premium-Arena (09.11.2026)
 
 - `art/premium_slate.png`: eigens mit OpenAI Image Generation erzeugte dunkle Schiefer-Materialtextur mit zurückhaltenden Metallnähten. Kein Referenzbild, kein fremdes UI. Wird als Textur auf die in Godot gezeichnete perspektivische Bühne und Plinthen gelegt; keine eingebrannten Karten, Werte oder Bedienelemente. KI-Konzeptmaterial, keine behauptete Exklusivität. Die bestehende eigene Arena- und Reliquiengrafik wird unabhängig weiterverwendet.
+
+## Original audio (Task D)
+
+`assets/audio/`: project-generated mathematical synthesis, no sampled external source. See [audio provenance](audio/README.md) and `tools/generate_audio.py`. Eleven PCM cues plus a short Vorbis atmosphere bed; commercial project use follows existing project rights.

@@ -32,8 +32,10 @@ var leaving_battle := false
 var keyboard_layout := false
 var qa_enabled := false
 var clock := 0.0
+var audio_sliders: Dictionary={}
 func _ready() -> void:
 	if store==null: store=preload("res://scripts/progress_store.gd").new()
+	get_node("/root/GameAudio").apply(store.data.settings.audio)
 	Brand.apply_window_title()
 	get_tree().quit_on_go_back=false
 	layer=CanvasLayer.new();add_child(layer)
@@ -88,7 +90,7 @@ func _label(text: String, rect: Rect2, fs: int = 30, color: Color = T.TEXT, seri
 	_put(node,rect);node.text=text;labels.append(node);return node
 func _button(id: String, title: String, rect: Rect2, callback: Callable, disabled: bool = false) -> Button:
 	var b=ButtonFace.new();b.caption=title;b.view_scale=scale_factor;b.emphasis=id in ["begin","play","start_duel","start_tutorial"];b.disabled=disabled
-	b.pressed.connect(func():callback.call_deferred());rect.size.y=maxf(rect.size.y,ceil(44/scale_factor));_put(b,rect);actions[id]=b;return b
+	b.pressed.connect(func():get_node("/root/GameAudio").cue("ui");callback.call_deferred());rect.size.y=maxf(rect.size.y,ceil(44/scale_factor));_put(b,rect);actions[id]=b;return b
 func _panel(rect: Rect2) -> Panel:
 	var p=Panel.new();p.add_theme_stylebox_override("panel",T.panel(T.BRONZE,T.SURFACE));p.mouse_filter=Control.MOUSE_FILTER_IGNORE;_put(p,rect);return p
 func _atlas(index: int) -> AtlasTexture:
@@ -102,9 +104,9 @@ func _heading(title: String, subtitle: String = "") -> void:
 func show_page(page: String) -> void:
 	current_page=page;screen.visible=true
 	for c in screen.get_children():screen.remove_child(c);c.queue_free()
-	actions.clear();labels.clear()
+	actions.clear();labels.clear();audio_sliders.clear()
 	var bg=TextureRect.new();bg.texture=preload("res://assets/art/arena_painted.png");bg.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;bg.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;bg.modulate=Color(.30,.35,.42,1);_put(bg,Rect2(0,0,logical_width,900));bg.mouse_filter=Control.MOUSE_FILTER_IGNORE
-	var mist=preload("res://scripts/atmosphere.gd").new();mist.reduced_motion=store.data.settings.reduced_motion;_put(mist,Rect2(0,0,logical_width,900))
+	var mist=preload("res://scripts/atmosphere.gd").new();mist.reduced_motion=store.data.settings.reduced_motion;mist.low_effects=store.data.settings.low_effects;_put(mist,Rect2(0,0,logical_width,900))
 	var theme=Theme.new();theme.default_font=T.FONT;theme.set_stylebox("panel","TooltipPanel",T.panel());screen.theme=theme
 	if page=="start":_start_screen()
 	elif page=="home":_home()
@@ -114,6 +116,7 @@ func show_page(page: String) -> void:
 	elif page=="chapter":_chapter()
 	elif page=="collection":_collection()
 	elif page=="settings":_settings()
+	elif page=="av":_audio_settings()
 	elif page=="inspect":_inspect_card(str(get_meta("inspect_id","ash_watch")))
 func _start_screen() -> void:
 	var x=logical_width/2
@@ -174,12 +177,25 @@ func _chapter() -> void:
 	_button("start_duel","BEGEGNUNG BEGINNEN",Rect2(76,710,logical_width-152,110),func():_start_battle("campaign",current_chapter))
 func _settings() -> void:
 	_heading("EINSTELLUNGEN","Anzeige und Bewegung · auf diesem Gerät gespeichert")
-	_panel(Rect2(76,275,logical_width-152,365))
-	_button("motion","BEWEGUNG: REDUZIERT" if store.data.settings.reduced_motion else "BEWEGUNG: NORMAL",Rect2(110,315,logical_width-220,110),func():store.set_motion(not store.data.settings.reduced_motion);show_page("settings"))
+	_panel(Rect2(76,265,logical_width-152,430))
+	_button("motion","BEWEGUNG: REDUZIERT" if store.data.settings.reduced_motion else "BEWEGUNG: NORMAL",Rect2(110,280,logical_width-220,110),func():store.set_motion(not store.data.settings.reduced_motion);show_page("settings"))
 	var supports=not OS.has_feature("web") or bool(JavaScriptBridge.eval("!!document.documentElement.requestFullscreen"))
-	_button("fullscreen","VOLLBILD" if supports else "VOLLBILD NICHT VERFÜGBAR",Rect2(110,475,logical_width-220,110),_fullscreen,not supports)
-	_label("Vollbild auf dem iPhone: Teilen → Zum Home-Bildschirm.",Rect2(110,660,logical_width-220,80),28,T.SECONDARY)
-	if not OS.has_feature("web") and not OS.has_feature("ios"):_button("quit","SPIEL VERLASSEN",Rect2(110,888-maxf(95,44/scale_factor),logical_width-220,95),func():get_tree().quit())
+	_button("fullscreen","VOLLBILD" if supports else "VOLLBILD NICHT VERFÜGBAR",Rect2(110,425,logical_width-220,110),_fullscreen,not supports)
+	_button("av_settings","AUDIO UND EFFEKTE",Rect2(110,570,logical_width-220,110),func():show_page("av"))
+	if OS.has_feature("web"):_label("Vollbild auf dem iPhone: Teilen → Zum Home-Bildschirm.",Rect2(110,705,logical_width-220,65),28,T.SECONDARY)
+	if not OS.has_feature("web") and not OS.has_feature("ios"):_button("quit","SPIEL VERLASSEN",Rect2(110,888-maxf(95,44/scale_factor),logical_width-220,95),func():get_node("/root/GameAudio").request_quit())
+func _audio_settings() -> void:
+	_heading("AUDIO UND EFFEKTE","Lautstärke je Kanal · 0 % schaltet stumm")
+	var names={"Music":"MUSIK","SFX":"EFFEKTE","UI":"OBERFLÄCHE"}
+	var row=0
+	for bus in ["Music","SFX","UI"]:
+		var y=260+row*145;row+=1
+		var label=_label("%s · %d %%" % [names[bus],roundi(store.data.settings.audio[bus]*100)],Rect2(76,y,490,110),32,T.TEXT,false,14)
+		var slider=preload("res://scripts/mixer_slider.gd").new();slider.min_value=0;slider.max_value=1;slider.step=.05;slider.value=store.data.settings.audio[bus];slider.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
+		slider.add_theme_stylebox_override("slider",T.panel(T.SECONDARY,T.SURFACE));slider.add_theme_stylebox_override("grabber_area",T.panel(T.ENERGY,T.ENERGY));slider.add_theme_stylebox_override("grabber_area_highlight",T.panel(T.FOCUS,T.FOCUS))
+		_put(slider,Rect2(600,y,logical_width-680,maxf(110,ceil(44/scale_factor))));audio_sliders[bus]=slider
+		slider.value_changed.connect(func(value):store.set_audio(bus,value);get_node("/root/GameAudio").apply(store.data.settings.audio);get_node("/root/GameAudio").preview(bus);label.text="%s · %d %%" % [names[bus],roundi(value*100)])
+	_button("effects","EFFEKTE: SPARSAM" if store.data.settings.low_effects else "EFFEKTE: VOLL",Rect2(76,735,logical_width-152,110),func():store.set_low_effects(not store.data.settings.low_effects);show_page("av"))
 func _fullscreen() -> void:
 	if OS.has_feature("web"):JavaScriptBridge.eval("if(document.fullscreenElement){document.exitFullscreen()}else if(document.documentElement.requestFullscreen){document.documentElement.requestFullscreen().catch(()=>{})}")
 	else:DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED if DisplayServer.window_get_mode()==DisplayServer.WINDOW_MODE_FULLSCREEN else DisplayServer.WINDOW_MODE_FULLSCREEN)
@@ -239,7 +255,7 @@ func _go_back() -> void:
 		else:battle_node._show_menu()
 		return
 	if current_page=="collection" and keyboard_layout and is_instance_valid(search_field):search_field.release_focus();return
-	show_page({"home":"start","inspect":"collection","chapter":"campaign","heroes":"intro","intro":"start"}.get(current_page,"home"))
+	show_page({"home":"start","inspect":"collection","chapter":"campaign","heroes":"intro","intro":"start","av":"settings"}.get(current_page,"home"))
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:_go_back();get_viewport().set_input_as_handled()
 
@@ -250,6 +266,7 @@ func _start_battle(mode: String, chapter_number: int = 0) -> void:
 	if OS.has_feature("web"):JavaScriptBridge.eval("delete window.nachtsiegelQA",true)
 	if is_instance_valid(battle_node):remove_child(battle_node);battle_node.queue_free()
 	battle_node=preload("res://scenes/arena.tscn").instantiate()
+	battle_node.low_effects=store.data.settings.low_effects
 	battle_node.managed_session=true
 	battle_node.continuation_label="NEUES DUELL" if mode=="quick" else ("KAPITELÜBERSICHT" if mode=="campaign" and chapter_number==5 else "WEITER")
 	var hero=Catalog.hero(store.data.selected_hero)
@@ -284,7 +301,9 @@ func _process(delta: float) -> void:
 	clock+=delta
 	if clock<.1:return
 	clock=0
-	var result={"page":current_page,"actions":{},"tutorial_completed":store.data.tutorial_completed,"wins":store.data.wins,"unlocked_chapter":store.data.unlocked_chapter,"selected_hero":store.data.selected_hero,"visible_cards":visible_card_ids,"reduced_motion":store.data.settings.reduced_motion,"keyboard_layout":keyboard_layout}
+	var result={"page":current_page,"actions":{},"tutorial_completed":store.data.tutorial_completed,"wins":store.data.wins,"unlocked_chapter":store.data.unlocked_chapter,"selected_hero":store.data.selected_hero,"visible_cards":visible_card_ids,"reduced_motion":store.data.settings.reduced_motion,"keyboard_layout":keyboard_layout,"audio":store.data.settings.audio,"low_effects":store.data.settings.low_effects,"audio_sliders":{}}
+	for bus in audio_sliders:
+		var r=audio_sliders[bus].get_global_rect();result.audio_sliders[bus]=[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]
 	for id in actions:
 		if not is_instance_valid(actions[id]):continue
 		var r=actions[id].get_global_rect();result.actions[id]={"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density],"disabled":actions[id].disabled}

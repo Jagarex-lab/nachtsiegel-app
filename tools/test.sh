@@ -18,6 +18,10 @@ if [[ -n "${DISPLAY:-}" ]]; then
   "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1600x900 --script tests/visual.gd > work/visual-final.log 2>&1
   mkdir -p work/ux
   "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1280x720 --script tests/ux_audit.gd > work/ux-final.log 2>&1
+  mkdir -p work/combat
+  "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1280x720 --script tests/combat_presentation.gd > work/combat-final.log 2>&1
+  "$GODOT_BIN" --path . --audio-driver Dummy --resolution 1280x720 --script tests/combat_sequence.gd > work/combat-sequence-final.log 2>&1
+  python3 tools/validate_audio.py > work/audio-final.log 2>&1
   python3 tools/contrast_report.py > work/contrast-final.log 2>&1
 else
   echo 'Render tests require DISPLAY (for example Xvfb :99 -screen 0 1600x1000x24 -ac).'
@@ -26,12 +30,12 @@ fi
 python3 - <<'VERIFY'
 from pathlib import Path
 import re
-for name in ["import", "rules", "creative", "narrative", "experience", "input-layout", "premium", "visual", "ux", "contrast"]:
+for name in ["import", "rules", "creative", "narrative", "experience", "input-layout", "premium", "visual", "ux", "combat", "combat-sequence", "audio", "contrast"]:
     path = Path("work", name + "-final.log")
     content = path.read_text()
     if re.search(r"SCRIPT ERROR|^ERROR:|^FAIL:", content, re.MULTILINE):
         raise SystemExit("Godot errors in " + str(path))
-    if name in ["rules", "creative", "narrative", "experience", "input-layout", "premium", "ux"]:
+    if name in ["rules", "creative", "narrative", "experience", "input-layout", "premium", "ux", "combat", "combat-sequence"]:
         result = re.search(r"^.*assertions, 0 failures.*$", content, re.MULTILINE)
         if not result:
             raise SystemExit("Missing successful test summary in " + str(path))

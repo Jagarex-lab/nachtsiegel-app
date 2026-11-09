@@ -12,7 +12,7 @@ func polygon(control: Control, rect: Rect2) -> PackedVector2Array:
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	var source = load("res://scripts/arena.gd")
-	if source == null or not source.can_instantiate(): quit(1); return
+	if source == null or not source.can_instantiate(): finish_test(1); return
 	var arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
 	arena._set_reduced_motion(true,false)
@@ -57,4 +57,7 @@ func run() -> void:
 					for action in [arena.end_button,arena.detail_button]:
 						check(Geometry2D.intersect_polygons(ink,polygon(action,Rect2(Vector2.ZERO,action.size))).is_empty(),"Hand info clear of command actions")
 	print("PREMIUM: %d assertions, %d failures; 4 landscape sizes; six cards, selection and actual ink visibility" % [assertions,failures])
-	quit(1 if failures else 0)
+	finish_test(1 if failures else 0)
+
+func finish_test(code: int=0) -> void:
+	root.get_node("GameAudio").request_quit(code)

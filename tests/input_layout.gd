@@ -47,7 +47,7 @@ func run() -> void:
 	var source = load("res://scripts/arena.gd")
 	if source == null or not source.can_instantiate():
 		printerr("FAIL: Arena cannot instantiate")
-		quit(1)
+		finish_test(1)
 		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
@@ -97,7 +97,8 @@ func run() -> void:
 		var round_before = arena.round_number
 		await touch(arena.end_button)
 		await touch(arena.end_button)
-		await create_timer(0.5).timeout
+		var deadline=Time.get_ticks_msec()+5000
+		while arena.busy and Time.get_ticks_msec()<deadline:await process_frame
 		check(arena.round_number == round_before+1 and not arena.busy,"Touch end turn locked against duplicate tap %s" % dimensions)
 		arena.hand = [0,1,2,3,4,5]
 		arena._refresh()
@@ -141,4 +142,7 @@ func run() -> void:
 	await settle()
 	check(not arena.landscape_panel.visible,"Rotation restores play")
 	print("INPUT/LAYOUT: %d assertions, %d failures; seven landscape sizes; mouse + ScreenTouch" % [assertions,failures])
-	quit(1 if failures else 0)
+	finish_test(1 if failures else 0)
+
+func finish_test(code: int=0) -> void:
+	root.get_node("GameAudio").request_quit(code)

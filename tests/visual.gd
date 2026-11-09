@@ -11,7 +11,7 @@ func run() -> void:
 	var source = load("res://scripts/arena.gd")
 	if source == null or not source.can_instantiate():
 		printerr("FAIL: Arena cannot instantiate")
-		quit(1)
+		finish_test(1)
 		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
@@ -44,4 +44,7 @@ func run() -> void:
 	await process_frame
 	arena._choose_lane(0)
 	await capture("res://work/spell-impact.png")
-	quit()
+	finish_test()
+
+func finish_test(code: int=0) -> void:
+	root.get_node("GameAudio").request_quit(code)

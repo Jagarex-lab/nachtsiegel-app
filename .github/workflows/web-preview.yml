@@ -40,6 +40,8 @@ jobs:
           godot --headless --path . --export-debug 'Web QA' "work/build/web/$game_name.html"
           mv "work/build/web/$game_name.html" work/build/web/index.html
           test -s "work/build/web/$game_name.wasm"
+          mkdir -p work/build/web/media
+          cp docs/combat/gameplay.mp4 work/build/web/media/gameplay.mp4
           python3 - <<'PYINFO'
           import json, os
           from pathlib import Path
@@ -98,6 +100,8 @@ jobs:
             work/ux/*.json
             work/experience/*.png
             work/experience/*.log
+            work/combat/*.json
+            work/combat/*.log
           if-no-files-found: warn
       - name: Upload checked Pages build
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'

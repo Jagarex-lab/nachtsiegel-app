@@ -103,7 +103,7 @@ func run() -> void:
 	var source = load("res://scripts/arena.gd")
 	if source == null or not source.can_instantiate():
 		printerr("FAIL: Arena cannot instantiate")
-		quit(1)
+		finish_test(1)
 		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
@@ -191,7 +191,8 @@ func run() -> void:
 	arena._end_turn()
 	check(arena.busy,"Combat locks critical actions")
 	await capture("combat-844x390")
-	await create_timer(.6).timeout
+	var deadline=Time.get_ticks_msec()+5000
+	while arena.busy and Time.get_ticks_msec()<deadline:await process_frame
 	arena._set_reduced_motion(true,false)
 	reset()
 	root.size = Vector2i(844,320)
@@ -246,4 +247,7 @@ func run() -> void:
 	check(arena != null and arena.round_number == 1 and arena.energy == 3,"Touch restarts finished duel")
 	check(arena.player_hp == 35 and arena.foe_hp == 35 and arena.hand.size() == 4,"Fresh duel resets gameplay exactly")
 	print("UX AUDIT: %d assertions, %d failures; %d paired rendered states" % [assertions,failures,reports.size()])
-	quit(1 if failures else 0)
+	finish_test(1 if failures else 0)
+
+func finish_test(code: int=0) -> void:
+	root.get_node("GameAudio").request_quit(code)

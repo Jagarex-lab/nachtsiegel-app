@@ -18,7 +18,9 @@ var finished := false
 var streak := 0
 var result := ""
 var ai_profile := "standard"
+var presentation: Array = []
 func start(seed_value: int = 8802026, profile: String = "standard") -> void:
+	presentation.clear()
 	deck.clear();hand.clear();allies=[null,null,null,null,null];foes=[null,null,null,null,null]
 	player_hp=35;foe_hp=35;energy=3;round_number=1;summons=0;selected=-1;finished=false;streak=0;result=""
 	rng.seed = seed_value
@@ -47,6 +49,7 @@ func play(lane: int) -> Dictionary:
 	return {"ok":true,"spell":spell,"message":("Funkenstoß · −3 Leben auf Pfad %d" % (lane+1)) if spell else ("%s · Pfad %d" % [card.name,lane+1])}
 func finish(value: String) -> void:
 	finished = true; result = value
+	presentation.append({"kind":"result","after":snapshot(),"attacks":[]})
 func choose_enemy_lane(options: Array) -> int:
 	if ai_profile in ["tactical","challenging"] and rng.randf() < (.75 if ai_profile=="challenging" else .65):
 		var best = -1; var threat = -1
@@ -84,11 +87,23 @@ func combat_phase(attacker:Array, defender:Array, attacking_player:bool) -> void
 			if int(defender[i]["hp"]) <= 0:
 				defender[i] = null
 
+func snapshot() -> Dictionary:
+	return {"allies":allies.duplicate(true),"foes":foes.duplicate(true),"hand":hand.duplicate(),"deck":deck.duplicate(),"player_hp":player_hp,"foe_hp":foe_hp,"energy":energy,"round_number":round_number,"summons":summons,"selected":selected,"streak":streak,"finished":finished}
+func _present_combat(player: bool) -> void:
+	var before=snapshot();var attacks: Array=[]
+	var attackers=allies if player else foes
+	var defenders=foes if player else allies
+	for lane in LANES:
+		if attackers[lane]==null:continue
+		attacks.append({"lane":lane,"player":player,"card":attackers[lane].duplicate(true),"target":"hero" if defenders[lane]==null else "unit","amount":int(attackers[lane].attack)})
+	combat_phase(attackers,defenders,player)
+	presentation.append({"kind":"player_attack" if player else "enemy_attack","before":before,"after":snapshot(),"attacks":attacks})
 func resolve_turn() -> void:
 	if finished:
 		return
 	result = ""
-	combat_phase(allies,foes,true)
+	presentation.clear()
+	_present_combat(true)
 	if foe_hp <= 0:
 		finish("SIEG · Der gegnerische Held fällt!")
 		return
@@ -107,8 +122,10 @@ func resolve_turn() -> void:
 			options.append(i)
 	if not options.is_empty():
 		var lane: int = choose_enemy_lane(options)
+		var before=snapshot()
 		foes[lane] = CARD_POOL[choose_enemy_card(lane)].duplicate(true)
-	combat_phase(foes,allies,false)
+		presentation.append({"kind":"enemy_summon","lane":lane,"before":before,"after":snapshot(),"attacks":[]})
+	_present_combat(false)
 	if player_hp <= 0:
 		finish("NIEDERLAGE · Dein Held ist gefallen.")
 		return
@@ -117,4 +134,5 @@ func resolve_turn() -> void:
 	summons = 0
 	selected = -1
 	draw_card()
+	presentation.append({"kind":"turn","after":snapshot(),"attacks":[]})
 

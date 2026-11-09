@@ -8,7 +8,7 @@ func _init(file_path: String = "user://progress_v1.json") -> void:
 	data = defaults()
 	load_progress()
 func defaults() -> Dictionary:
-	return {"schema_version":1,"tutorial_completed":false,"unlocked_chapter":0,"chapter_wins":[],"wins":0,"defeats":0,"selected_hero":"keeper","settings":{"reduced_motion":false},"run_sequence":0,"active_run":{},"recorded_runs":[]}
+	return {"schema_version":1,"tutorial_completed":false,"unlocked_chapter":0,"chapter_wins":[],"wins":0,"defeats":0,"selected_hero":"keeper","settings":{"reduced_motion":false,"low_effects":false,"audio":{"Music":.35,"SFX":.65,"UI":.5}},"run_sequence":0,"active_run":{},"recorded_runs":[]}
 func _number(value: Variant) -> int:
 	return int(value) if value is int or value is float else 0
 func _read(file: String) -> Variant:
@@ -35,7 +35,13 @@ func load_progress() -> void:
 	data.unlocked_chapter = clampi(_number(saved.get("unlocked_chapter",1)),1,5) if data.tutorial_completed else 0
 	data.selected_hero = str(saved.get("selected_hero","keeper")) if saved.get("selected_hero") in ["keeper","ash_king"] else "keeper"
 	for key in ["wins","defeats","run_sequence"]: data[key] = clampi(_number(saved.get(key,0)),0,999999)
-	if saved.get("settings") is Dictionary: data.settings.reduced_motion=saved.settings.get("reduced_motion",false)==true
+	if saved.get("settings") is Dictionary:
+		data.settings.reduced_motion=saved.settings.get("reduced_motion",false)==true
+		data.settings.low_effects=saved.settings.get("low_effects",false)==true
+		if saved.settings.get("audio") is Dictionary:
+			for bus in data.settings.audio:
+				var value=saved.settings.audio.get(bus,data.settings.audio[bus])
+				if value is int or value is float:data.settings.audio[bus]=clampf(float(value),0,1)
 	if saved.get("chapter_wins") is Array:
 		for id in saved.chapter_wins:
 			if id is int or id is float:
@@ -58,6 +64,9 @@ func save() -> bool:
 func choose_hero(id: String) -> void:
 	if id in ["keeper","ash_king"]: data.selected_hero=id;save()
 func set_motion(reduced: bool) -> void: data.settings.reduced_motion=reduced;save()
+func set_audio(bus: String, gain: float) -> void:
+	if data.settings.audio.has(bus):data.settings.audio[bus]=clampf(gain,0,1);save()
+func set_low_effects(low: bool) -> void:data.settings.low_effects=low;save()
 func begin_run(mode: String, chapter: int = 0) -> String:
 	if mode not in ["tutorial","quick","campaign"]: return ""
 	if mode=="campaign" and (chapter<1 or chapter>data.unlocked_chapter): return ""

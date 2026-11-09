@@ -85,13 +85,16 @@ func run() -> void:
 	app=load("res://scenes/front_end.tscn").instantiate();app.store=Store.new("user://qa_front.json");app.store.set_motion(true);root.add_child(app);await settle()
 	for dimensions in [Vector2i(1600,900),Vector2i(1280,720),Vector2i(844,390),Vector2i(915,412)]:
 		root.size=dimensions;await settle()
-		for page in ["start","home","intro","heroes","campaign","collection","settings"]:
+		for page in ["start","home","intro","heroes","campaign","collection","settings","av"]:
 			app.show_page(page);await settle();await RenderingServer.frame_post_draw
 			for key in app.actions:
 				var b=app.actions[key];check(b.get_global_rect().size.x>=44 and b.get_global_rect().size.y>=44,"Front-end touch target "+page+" "+key)
 				if str(key).begins_with("card_") and not Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(b.get_global_rect()):
 					app.collection_scroll.scroll_vertical=int(b.get_parent().position.y);await settle()
 				check(Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(b.get_global_rect()),"Front-end action reachable in viewport "+page+" "+key)
+			for slider in app.audio_sliders.values():
+				check(slider.get_global_rect().size.y>=44,"Audio slider touch area")
+				check(Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(slider.get_global_rect()),"Audio slider inside viewport")
 			for label in app.labels:
 				var font=label.get_theme_font("font");var fs=label.get_theme_font_size("font_size")
 				check(Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(label.get_global_rect()),"Front-end text inside viewport "+page+" "+label.text.substr(0,24))
@@ -153,4 +156,7 @@ func run() -> void:
 	var restarted=load("res://scenes/front_end.tscn").instantiate();restarted.store=Store.new(path);root.add_child(restarted);await settle()
 	check(restarted.store.data.tutorial_completed and restarted.store.data.selected_hero=="ash_king","Restart restores tutorial and hero")
 	print("EXPERIENCE: %d assertions, %d failures; menu, tutorial, campaign, collection and persisted restart" % [assertions,failures])
-	quit(1 if failures else 0)
+	finish_test(1 if failures else 0)
+
+func finish_test(code: int=0) -> void:
+	root.get_node("GameAudio").request_quit(code)

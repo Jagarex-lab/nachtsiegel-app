@@ -1,5 +1,6 @@
 extends Control
 var reduced_motion := false
+var low_effects := false
 var clock := 0.0
 var candle_glow: GradientTexture2D
 const CANDLES = [Vector2(125,329),Vector2(1529,501)]
@@ -18,7 +19,7 @@ func _process(delta: float) -> void:
 	clock += delta
 	queue_redraw()
 func _draw() -> void:
-	for i in 42:
+	for i in (12 if low_effects else 42):
 		var x = fmod(float(i)*157.7+sin(clock*.15+i)*18,1600)
 		var y = fposmod(float(i)*93.1-clock*(5+i%4),900)
 		var alpha = .10+.15*(.5+sin(clock+i)*.5)
@@ -26,7 +27,7 @@ func _draw() -> void:
 	for source in CANDLES:
 		var flicker = .7+.15*sin(clock*3.7)+.1*sin(clock*7.1)
 		if candle_glow: draw_texture_rect(candle_glow,Rect2(source-Vector2(65,75),Vector2(130,150)),false,Color(1,1,1,flicker))
-		for i in 7:
+		for i in (2 if low_effects else 7):
 			var age = fposmod(clock*.25+i*.17,1.0)
 			var p = source+Vector2(sin(i*7+clock)*6,-age*55)
 			draw_circle(p,.8,Color(.95,.57,.23,(1-age)*.25))

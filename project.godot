@@ -10,6 +10,9 @@ run/main_scene="res://scenes/front_end.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/description="NACHTSIEGEL - 2.5D Dark Fantasy Card Battler"
 
+[autoload]
+GameAudio="*res://scripts/game_audio.gd"
+
 [display]
 window/size/viewport_width=1280
 window/size/viewport_height=720

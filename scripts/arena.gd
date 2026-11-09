@@ -65,6 +65,7 @@ func _ready() -> void:
 	battle.start(battle_seed,battle_profile)
 	_load_preferences()
 	_build_ui()
+	presenter=preload("res://scripts/combat_presenter.gd").new();add_child(presenter);presenter.setup(root_ui);presenter.configure(reduced_motion,low_effects)
 	_refresh()
 	call_deferred("_introduce")
 
@@ -107,6 +108,11 @@ var info_label: Label
 var detail_button: Button
 var modal: Control
 var busy := false
+var visual_state: Dictionary = {}
+var rendered_hand_signature: Array=[]
+var presenter
+var low_effects := false
+var presentation_trace: Array = []
 var restart_button: Button
 var energy_gems: Label
 var hud_art: Control
@@ -134,6 +140,7 @@ var qa_clock := 0.0
 var safe_override := Rect2()
 var phase := "play"
 var canvas_width := 1600.0
+var last_viewport_size := Vector2.ZERO
 var path_labels: Array[Label] = []
 signal completed(victory: bool, reason: String)
 signal main_menu_requested
@@ -176,6 +183,7 @@ func _action(value: String, rect: Rect2, callback: Callable) -> Button:
 	button.caption = value
 	button.emphasis = value.begins_with("ZUG") or value.begins_with("NEUES") or value.begins_with("ZIEL")
 	button.view_scale = ui_scale
+	button.z_index=6
 	button.pressed.connect(callback)
 	_put(button,rect)
 	actions.append(button)
@@ -254,6 +262,8 @@ func _build_ui() -> void:
 	enemy.enemy = true
 	enemy.pressed.connect(_show_hero.bind(true))
 	var player = _face({"name":player_title,"attack":0,"hp":35,"tint":"#72beb9"},Rect2(77,426,174,220),player_portrait_index,true)
+	player.z_index=5
+	enemy.z_index=5
 	player.heroic = true
 	player.pressed.connect(_show_hero.bind(false))
 	hero_medallions = [player,enemy]
@@ -277,7 +287,7 @@ func _build_ui() -> void:
 	detail_button = _action("DETAILS",Rect2(1370,484,210,103),_show_card)
 	detail_button.visible = false
 	end_button = _action("ZUG BEENDEN",Rect2(1370,597,210,103),_end_turn)
-	hand_row = Control.new()
+	hand_row = Control.new();hand_row.z_index=6
 	_put(hand_row,Rect2(318,655,932,235))
 	message_label = _caption("",Rect2(345,348,900,44),28,T.SECONDARY)
 	message_label.z_index = 7
@@ -304,6 +314,9 @@ func _build_ui() -> void:
 func _update_orientation() -> void:
 	if not is_instance_valid(root_ui): return
 	var available = get_viewport().get_visible_rect().size
+	if available!=last_viewport_size and is_instance_valid(presenter):
+		presenter.cancel_all();presenter.canvas.jobs.clear()
+	last_viewport_size=available
 	display_ratio = _display_density(available)
 	var safe = _safe_rect(available)
 	viewport_scale = minf(safe.size.x/1600.0,safe.size.y/900.0)
@@ -449,8 +462,11 @@ func _set_reduced_motion(enabled: bool, persist: bool = true) -> void:
 func _apply_motion() -> void:
 	if not is_instance_valid(ambience): return
 	ambience.reduced_motion = reduced_motion
+	ambience.low_effects = low_effects
 	backdrop.material.set_shader_parameter("reduced_motion",reduced_motion)
+	backdrop.material.set_shader_parameter("low_effects",low_effects)
 	for slot in lane_buttons+foe_wells: slot.reduced_motion = reduced_motion
+	if is_instance_valid(presenter):presenter.configure(reduced_motion,low_effects)
 func _toggle_motion() -> void:
 	_set_reduced_motion(not reduced_motion)
 	_show_menu()
@@ -624,11 +640,12 @@ func _process(delta: float) -> void:
 			qa_clock = 0
 			_publish_qa()
 func _publish_qa() -> void:
-	if not OS.has_feature("web") or card_buttons.size() != hand.size(): return
-	var result = {"round":round_number,"energy":energy,"finished":finished,"summons":summons,"allies":allies,"enemies":foes,"selected":selected,"busy":busy,"phase":phase,"modal":modal_kind,"reduced_motion":reduced_motion,"onboarding":onboarding_step,"player_hp":player_hp,"foe_hp":foe_hp,"scale":ui_scale,"density":display_ratio,"cards":[],"targets":[],"foes":[],"actions":{},"text_css":{"energy":energy_label.get_theme_font_size("font_size")*ui_scale,"phase":phase_label.get_theme_font_size("font_size")*ui_scale,"focus":info_label.get_theme_font_size("font_size")*ui_scale,"values":T.font_size(30,ui_scale,12)*ui_scale}}
+	if not OS.has_feature("web"): return
+	var shown_hand: Array=visual_state.get("hand",hand)
+	var result = {"round":round_number,"energy":energy,"finished":finished and not busy,"summons":summons,"allies":allies,"enemies":foes,"selected":selected,"busy":busy,"fx_active":presenter.canvas.jobs.size(),"low_effects":low_effects,"phase":phase,"modal":modal_kind,"reduced_motion":reduced_motion,"onboarding":onboarding_step,"player_hp":player_hp,"foe_hp":foe_hp,"scale":ui_scale,"density":display_ratio,"cards":[],"targets":[],"foes":[],"actions":{},"text_css":{"energy":energy_label.get_theme_font_size("font_size")*ui_scale,"phase":phase_label.get_theme_font_size("font_size")*ui_scale,"focus":info_label.get_theme_font_size("font_size")*ui_scale,"values":T.font_size(30,ui_scale,12)*ui_scale}}
 	for i in card_buttons.size():
 		var rect = card_buttons[i].get_global_rect()
-		var data: Dictionary = CARD_POOL[int(hand[i])]
+		var data: Dictionary = CARD_POOL[int(shown_hand[i])]
 		result.cards.append({"index":i,"name":data.name,"kind":data.kind,"cost":data.cost,"attack":data.attack,"hp":data.hp,"rect":[rect.position.x/display_ratio,rect.position.y/display_ratio,rect.size.x/display_ratio,rect.size.y/display_ratio]})
 	for list in [[lane_buttons,"targets"],[foe_faces,"foes"]]:
 		for i in LANES:
@@ -646,12 +663,13 @@ func _publish_qa() -> void:
 func _draw_card() -> void: battle.draw_card()
 
 func _card_button(index:int) -> Button:
-	var data: Dictionary = CARD_POOL[int(hand[index])]
+	var shown_hand: Array=visual_state.get("hand",hand)
+	var data: Dictionary = CARD_POOL[int(shown_hand[index])]
 	var button = CardFace.new()
 	button.size = Vector2(T.HAND_WIDTH,T.HAND_HEIGHT)
 	button.pivot_offset = Vector2(T.HAND_WIDTH/2,T.HAND_HEIGHT)
 	button.data = data
-	button.art = _art(int(hand[index]))
+	button.art = _art(int(shown_hand[index]))
 	button.active = not finished and index == selected
 	button.playable = not finished and energy >= int(data.cost) and (data.kind == "spell" or summons < 2)
 	button.view_scale = ui_scale
@@ -662,6 +680,18 @@ func _card_button(index:int) -> Button:
 	return button
 
 func _refresh() -> void:
+	# A read-only visual snapshot; presentation never rewinds authoritative game state.
+	var allies: Array=visual_state.get("allies",battle.allies)
+	var foes: Array=visual_state.get("foes",battle.foes)
+	var hand: Array=visual_state.get("hand",battle.hand)
+	var deck: Array=visual_state.get("deck",battle.deck)
+	var player_hp: int=visual_state.get("player_hp",battle.player_hp)
+	var foe_hp: int=visual_state.get("foe_hp",battle.foe_hp)
+	var energy: int=visual_state.get("energy",battle.energy)
+	var round_number: int=visual_state.get("round_number",battle.round_number)
+	var streak: int=visual_state.get("streak",battle.streak)
+	var finished: bool=visual_state.get("finished",battle.finished)
+	var selected: int=-1 if busy else battle.selected
 	if status_label == null: return
 	deck_label.text = str(deck.size())
 	hero_player.text = str(player_hp)
@@ -700,15 +730,18 @@ func _refresh() -> void:
 		lane_buttons[i].queue_redraw()
 		foe_wells[i].occupied = foes[i] != null
 		foe_wells[i].queue_redraw()
-	for child in hand_row.get_children():
-		hand_row.remove_child(child)
-		child.queue_free()
-	card_buttons.clear()
-	for i in hand.size(): hand_row.add_child(_card_button(i))
-	_fan_hand()
-	if hand.size() > previous_hand_count:
-		call_deferred("_animate_draw")
-	previous_hand_count = hand.size()
+	var hand_signature=[hand.duplicate(),selected,busy,finished,energy,summons]
+	if hand_signature!=rendered_hand_signature:
+		rendered_hand_signature=hand_signature
+		for child in hand_row.get_children():
+			hand_row.remove_child(child)
+			child.queue_free()
+		card_buttons.clear()
+		for i in hand.size(): hand_row.add_child(_card_button(i))
+		_fan_hand()
+		if hand.size() > previous_hand_count:
+			call_deferred("_animate_draw",hand.size()-previous_hand_count)
+		previous_hand_count = hand.size()
 	end_button.disabled = busy or finished
 	end_button.caption = "DUELL BEENDET" if finished else ("BITTE WARTEN" if busy else "ZUG BEENDEN")
 	end_button.queue_redraw()
@@ -745,38 +778,40 @@ func _fan_hand() -> void:
 			card.rotation_degrees = 0
 		card.z_index = 20 if i == selected else i
 
-func _animate_draw() -> void:
-	if reduced_motion or card_buttons.is_empty(): return
-	var card: Control = card_buttons.back()
-	var target = card.position
-	card.position += Vector2(20,-20)
-	var tween = card.create_tween().set_parallel(true)
-	tween.tween_property(card,"position",target,T.MOTION_DRAW).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+func _animate_draw(added: int=1) -> void:
+	if card_buttons.is_empty():return
+	_audio("draw")
+	var origin=deck_back.position+deck_back.size/2
+	presenter.effect("VEIL","draw",origin,origin,.35)
+	if reduced_motion:return
+	var first=maxi(0,card_buttons.size()-added)
+	for i in range(first,card_buttons.size()):
+		var card: Control=card_buttons[i];var target=card.position
+		card.position+=Vector2(-30,-12);card.modulate.a=0
+		presenter.animate_properties(card,{"position":target,"modulate:a":1.0},T.MOTION_DRAW,(i-first)*.045)
 
 func _card_index(data: Dictionary) -> int:
 	for i in CARD_POOL.size():
 		if CARD_POOL[i].name == data.name: return i
 	return 0
 
-func _pulse_lane(lane: int, spell: bool, source_point: Vector2 = Vector2(-1,-1)) -> void:
-	var face: Control = foe_faces[lane] if spell else lane_faces[lane]
-	var effect = RitualFx.new()
-	effect.destination = face.position+face.size/2
-	effect.origin = Vector2(canvas_width/2,780)
-	if selected >= 0 and selected < card_buttons.size():
-		var card: Control = card_buttons[selected]
-		effect.origin = root_ui.get_global_transform().affine_inverse()*(card.get_global_transform()*(card.size/2))
-		effect.tint = Color(str(CARD_POOL[int(hand[selected])].tint))
-	if source_point.x >= 0: effect.origin = source_point
-	effect.spell = spell
-	effect.reduced_motion = reduced_motion
-	if reduced_motion: effect.lifetime = .18
-	_put(effect,Rect2(Vector2.ZERO,root_ui.size))
-	effect.z_index = 4
-	if face.visible and not reduced_motion:
-		face.pivot_offset = face.size/2
-		face.scale = Vector2.ONE*0.86
-		face.create_tween().tween_property(face,"scale",Vector2.ONE,0.32).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+func _audio(cue: String) -> void:
+	var audio=get_node_or_null("/root/GameAudio")
+	if audio!=null:audio.cue(cue)
+func _play_flight(data: Dictionary, origin: Vector2, destination: Vector2) -> void:
+	if reduced_motion:return
+	var ghost=_face(data,Rect2(origin-Vector2(72,90),Vector2(144,180)),_card_index(data))
+	ghost.mouse_filter=Control.MOUSE_FILTER_IGNORE;ghost.ghost_display=true;ghost.z_index=2
+	presenter.animate_properties(ghost,{"position":destination-Vector2(40,50),"scale":Vector2.ONE*.55,"modulate:a":0.0},.30)
+	var timer=get_tree().create_timer(.32);timer.timeout.connect(ghost.queue_free)
+func _pulse_lane(lane: int, spell: bool, source_point: Vector2 = Vector2(-1,-1), family: String="ASH") -> void:
+	var face: Control=foe_faces[lane] if spell else lane_faces[lane]
+	var destination=face.position+face.size*Vector2(.5,.35)
+	presenter.effect(family,"spell" if spell else "play",source_point,destination)
+	_audio(family if family!="SPELL" else "ASH")
+	if not spell and face.visible:
+		face.pivot_offset=face.size/2;face.scale=Vector2.ONE*.86
+		presenter.animate(face,"scale",Vector2.ONE,.28)
 
 func _turn_banner() -> void:
 	phase = "play"
@@ -803,6 +838,7 @@ func _select_card(index: int) -> void:
 	if selected == index:
 		_show_card()
 		return
+	_audio("ui")
 	selected = index
 	onboarding_step = maxi(onboarding_step,1)
 	var data: Dictionary = CARD_POOL[int(hand[index])]
@@ -820,21 +856,27 @@ func _lift_selection() -> void:
 	var target = card.position.y
 	card.position.y += T.SELECT_LIFT
 	card.scale = Vector2.ONE
-	var tween = card.create_tween().set_parallel(true)
-	tween.tween_property(card,"position:y",target,T.MOTION_SELECT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(card,"scale",Vector2.ONE*T.SELECT_SCALE,T.MOTION_SELECT).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	presenter.animate_properties(card,{"position:y":target,"scale":Vector2.ONE*T.SELECT_SCALE},T.MOTION_SELECT)
 
 func _choose_lane(lane: int) -> void:
-	if busy: return
+	if busy or lane<0 or lane>=LANES: return
 	var origin = Vector2(canvas_width/2,780)
 	if selected >= 0 and selected < card_buttons.size():
 		var card: Control = card_buttons[selected]
 		origin = root_ui.get_global_transform().affine_inverse()*(card.get_global_transform()*(card.size/2))
+	var played: Dictionary=CARD_POOL[int(hand[selected])] if selected>=0 and selected<hand.size() else {}
+	var old_foe=foes[lane].duplicate(true) if foes[lane]!=null else {}
 	var outcome = battle.play(lane)
 	if not outcome.ok:
 		_announce(outcome.reason,"warning")
 		return
-	_pulse_lane(lane,outcome.spell,origin)
+	_refresh()
+	_play_flight(played,origin,_center(foe_faces[lane] if outcome.spell else lane_faces[lane]))
+	_pulse_lane(lane,outcome.spell,origin,str(played.sigil))
+	if outcome.spell:
+		_damage_number(foe_faces[lane],int(played.attack))
+		if foes[lane]==null and not old_foe.is_empty():_death(foe_faces[lane],old_foe)
+
 	_announce(outcome.message,"damage" if outcome.spell else "success")
 	if onboarding_step < 2:
 		onboarding_step = 2
@@ -844,61 +886,77 @@ func _choose_lane(lane: int) -> void:
 func _combat_phase(attacker: Array, defender: Array, attacking_player: bool) -> void:
 	battle.combat_phase(attacker,defender,attacking_player)
 
-func _lunge(faces: Array, direction: float) -> void:
-	if reduced_motion: return
-	for face in faces:
-		if not face.visible: continue
-		var start: Vector2 = face.position
-		var tween = face.create_tween()
-		tween.tween_property(face,"position",start+Vector2(0,25*direction),T.MOTION_ATTACK/2)
-		tween.tween_property(face,"position",start,T.MOTION_ATTACK/2)
-
+func _center(control: Control) -> Vector2: return control.position+control.size*Vector2(.5,.35)
+func _damage_number(control: Control, amount: int) -> void:
+	if amount<=0:return
+	for old in get_tree().get_nodes_in_group("damage_feedback"):
+		if old.get_meta("damage_target",-1)==control.get_instance_id():old.queue_free()
+	var point=control.position+Vector2(control.size.x/2-75,-8)
+	point.x=clampf(point.x,8,canvas_width-158);point.y=maxf(8,point.y)
+	var label=_caption("−%d" % amount,Rect2(point,Vector2(150,64)),30,T.DANGER,true)
+	label.get_theme_stylebox("normal").bg_color=T.SURFACE
+	label.set_meta("damage_target",control.get_instance_id());label.add_to_group("damage_feedback");label.z_index=8
+	var tween=label.create_tween()
+	if not reduced_motion:tween.tween_property(label,"position:y",maxf(8,point.y-12),.18)
+	tween.tween_interval(.28);tween.tween_callback(label.queue_free)
+func _death(face: Control, data: Dictionary) -> void:
+	var ghost=_face(data,Rect2(face.position,face.size),_card_index(data),true)
+	ghost.mouse_filter=Control.MOUSE_FILTER_IGNORE;ghost.ghost_display=true
+	var tween=ghost.create_tween()
+	tween.tween_property(ghost,"modulate:a",0.0,.12 if reduced_motion else .24)
+	tween.tween_callback(ghost.queue_free)
+func _show_visual(state: Dictionary) -> void:
+	visual_state=state;_refresh()
+func _present_attacks(frame: Dictionary) -> void:
+	phase="combat" if frame.kind=="player_attack" else "enemy"
+	_show_visual(frame.before)
+	_announce("Deine Angriffe" if phase=="combat" else "Gegnerische Angriffe")
+	for attack in frame.attacks:
+		var source: Control=(lane_faces if attack.player else foe_faces)[attack.lane]
+		var target: Control=(hero_medallions[1] if attack.player else hero_medallions[0]) if attack.target=="hero" else (foe_faces if attack.player else lane_faces)[attack.lane]
+		presenter.effect(str(attack.card.sigil),"attack",_center(source),_center(target),.38)
+		presenter.strike(source,-22 if attack.player else 22)
+	if not frame.attacks.is_empty():_audio("attack")
+	await get_tree().create_timer(.035 if reduced_motion else .22).timeout
+	_show_visual(frame.after)
+	var hero_damage=0
+	for attack in frame.attacks:
+		var target: Control=(hero_medallions[1] if attack.player else hero_medallions[0]) if attack.target=="hero" else (foe_faces if attack.player else lane_faces)[attack.lane]
+		presenter.effect(str(attack.card.sigil),"impact",_center(target),_center(target),.32)
+		if attack.target=="hero":hero_damage+=attack.amount
+		else:
+			_damage_number(target,attack.amount)
+			var before=frame.before.foes if attack.player else frame.before.allies
+			var after=frame.after.foes if attack.player else frame.after.allies
+			if after[attack.lane]==null and before[attack.lane]!=null:_death(target,before[attack.lane])
+	if hero_damage>0:_damage_number(hero_medallions[1] if frame.kind=="player_attack" else hero_medallions[0],hero_damage)
+	if not frame.attacks.is_empty():_audio("hit")
+	await get_tree().create_timer(.045 if reduced_motion else .28).timeout
 func _end_turn() -> void:
-	if finished or busy or Time.get_ticks_msec()-last_turn_click < 350: return
-	last_turn_click = Time.get_ticks_msec()
-	busy = true
-	phase = "combat"
-	if onboarding_step == 2:
-		onboarding_step = 3
-		_save_preferences()
+	if finished or busy:return
+	last_turn_click=Time.get_ticks_msec();busy=true;phase="combat"
+	if onboarding_step==2:onboarding_step=3;_save_preferences()
 	_refresh()
-	_announce("Deine Kreaturen greifen an")
-	_lunge(lane_faces,-1)
-	await get_tree().create_timer(.06 if reduced_motion else .18).timeout
-	phase = "enemy"
-	phase_label.text = "GEGNER"
-	_lunge(foe_faces,1)
-	await get_tree().create_timer(.06 if reduced_motion else .22).timeout
-	var previous_allies = allies.duplicate(true)
-	var previous_foes = foes.duplicate(true)
-	var previous_player = player_hp
-	var previous_foe = foe_hp
-	busy = false
-	phase = "play"
-	_resolve_turn()
-	if not finished: _turn_banner()
-	for pair in [[previous_allies,allies,lane_faces],[previous_foes,foes,foe_faces]]:
-		for i in LANES:
-			if pair[0][i] == null: continue
-			if pair[1][i] == null and not reduced_motion:
-				var ghost = _face(pair[0][i],Rect2(pair[2][i].position,pair[2][i].size),_card_index(pair[0][i]),true)
-				ghost.mouse_filter = Control.MOUSE_FILTER_IGNORE
-				ghost.ghost_display = true
-				var fade = ghost.create_tween().set_parallel(true)
-				fade.tween_property(ghost,"modulate:a",0.0,0.4)
-				fade.tween_property(ghost,"position:y",ghost.position.y+28,0.4)
-				fade.chain().tween_callback(ghost.queue_free)
-			elif pair[1][i] != null and int(pair[1][i].hp) < int(pair[0][i].hp):
-				_announce("%d Schaden · Pfad %d" % [int(pair[0][i].hp)-int(pair[1][i].hp),i+1], "damage")
-	for pair in [[hero_player,previous_player-player_hp],[hero_enemy,previous_foe-foe_hp]]:
-		if pair[1] > 0:
-			var damage = _caption("−%d" % pair[1],Rect2(pair[0].position+Vector2(pair[0].size.x/2-82,-54),Vector2(164,48)),32,T.DANGER,true)
-			damage.z_index = 8
-			damage.add_to_group("damage_feedback")
-			var feedback = damage.create_tween()
-			if not reduced_motion: feedback.tween_property(damage,"position:y",damage.position.y-24,.65)
-			else: feedback.tween_interval(.65)
-			feedback.tween_callback(damage.queue_free)
+	await get_tree().process_frame
+	battle.resolve_turn()
+	presentation_trace=battle.presentation.duplicate(true)
+	for frame in presentation_trace:
+		if frame.kind in ["player_attack","enemy_attack"]:await _present_attacks(frame)
+		elif frame.kind=="enemy_summon":
+			_show_visual(frame.after)
+			var face: Control=foe_faces[frame.lane]
+			presenter.effect(str(frame.after.foes[frame.lane].sigil),"summon",_center(face),_center(face),.35)
+			_audio(str(frame.after.foes[frame.lane].sigil))
+			if not reduced_motion:
+				face.scale=Vector2.ONE*.86;face.pivot_offset=face.size/2;presenter.animate(face,"scale",Vector2.ONE,.25)
+			_announce("Gegner beschwört · Pfad %d" % (int(frame.lane)+1))
+			await get_tree().create_timer(.04 if reduced_motion else .28).timeout
+	if reduced_motion:await get_tree().create_timer(.20).timeout
+	visual_state={};busy=false;phase="play"
+	_refresh()
+	if finished:_finish(battle.result)
+	else:
+		_turn_banner();_audio("turn");_announce("Runde %d · Dein Zug" % round_number,"success")
 
 func _resolve_turn() -> void:
 	if finished: return
@@ -909,6 +967,7 @@ func _resolve_turn() -> void:
 		_announce("Runde %d · Dein Zug" % round_number,"success")
 
 func _finish(value:String) -> void:
+	_audio("win" if value.begins_with("SIEG") else "lose")
 	finished = true
 	phase = "finished"
 	battle.result = value
@@ -917,3 +976,9 @@ func _finish(value:String) -> void:
 	_refresh()
 	_announce(value)
 	_show_result.call_deferred(value)
+	call_deferred("_result_reveal")
+
+func _result_reveal() -> void:
+	if not is_instance_valid(modal) or reduced_motion:return
+	modal.modulate.a=.0
+	presenter.animate(modal,"modulate:a",1.0,.24)
