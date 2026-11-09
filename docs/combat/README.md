@@ -107,6 +107,7 @@ regulärer Drei-Pfade-Sieg → Hauptmenü mit gespeichertem Fortschritt. Keine
 Gesundheits-, Energie- oder Siegmanipulation im Aufnahmetreiber.
 
 ```bash
+# Nach Projektimport bzw. erfolgreichem tools/test.sh:
 DISPLAY=:99 tools/record_gameplay.sh
 ```
 
@@ -114,7 +115,7 @@ Godot MovieMaker schreibt offline mit festen 30 Bildern pro Ausgabesekunde.
 Dies ist **kein** Nachweis von 30 FPS auf einem Telefon oder auf dem Testhost.
 Die AVI-Zwischendatei bleibt unter `work/`; die komprimierte MP4 ist eingecheckt.
 Zusätzlich erzeugt `tests/combat_sequence.gd` eine nachvollziehbare Phasenfolge
-und vier getrennte Familienrenderings. Diese Bildfolge verwendet eine ausdrücklich
+und vier aufeinanderfolgende Familienbeispiele. Diese Bildfolge verwendet eine ausdrücklich
 angelegte Belastungsfixture und behauptet keine natürlich gezogene Kartenhand.
 
 ## Prüfzyklen und Abnahme
@@ -129,7 +130,102 @@ angelegte Belastungsfixture und behauptet keine natürlich gezogene Kartenhand.
    Parallele Software-Videoaufnahme beeinflusste Zeitprüfungen; finale Performance-
    und Abnahmeläufe werden deshalb seriell ausgeführt und die Messumgebung genannt.
 
-Die endgültigen Protokolle, Messwerte, Bildfolge und Veröffentlichung werden nach
-Abschluss der Gesamtsuite ergänzt. Keine physischen iPhone-/Android-Tests wurden
-durchgeführt. Xvfb/llvmpipe, Dummy-Audio und Browseremulation ersetzen diese nicht.
-Native iOS-Ausgabe und Store-Signierung stehen weiterhin aus.
+4. Abschließende Bewegungsreduktion: Untereigenschaften wie `modulate:a` und
+   `position:y` werden über Godots indizierten Setter abgeschlossen. Ein laufender
+   Kartenaufbau bleibt beim Umschalten dadurch weder halbtransparent noch verschoben.
+   [Gezielte Prüfung](qa/indexed-motion.log), zusätzlich im kompletten Kampf-Test
+   und der abschließenden CI enthalten.
+
+### Bestandene Abnahme des Spielcodes
+
+[Feature-CI 42620064084](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42620064084)
+prüft Quellstand `1d248153e27f87786b3219c69bf827825756ed84` erfolgreich:
+**9.547 Assertions, 89 Renderzustände, 3.838 Kontrastmessflächen, keine Fehler**.
+Zusätzlich bestehen 97 Katalogabfragen im Webexport und die Kontrolle der
+exportierten Kampagnenressourcen. Alle sieben Chromium-/WebKit-Profile spielen
+bis zu einem echten Tutorialsieg und prüfen danach Neustart, Audio-Stummschaltung,
+gespeicherten sparsamen Modus, Sammlung und virtuelle Tastatur.
+[CI-Protokoll](qa/feature-ci.log).
+
+Die lokale Suite beziehungsweise ihre abschließenden Nachprüfungen bestehen mit
+9.537 Assertions und 3.837 Kontrastmessflächen ebenfalls ohne Fehler.
+Zeitlich begrenzte Feedback-Elemente können die Zahl der erfassten Einzelprüfungen
+zwischen Momentaufnahmen verändern; die Ziele 4,5:1 für Text und 3:1 für wesentliche
+Grenzen bleiben unverändert. [Native Prüfungen](qa/native-final.log),
+[Messdaten](qa/contrast-report.json). Die abschließende Layerprüfung hielt die
+Pfadsiegel über dekorativen Effekten; keine Kontrastgrenze wurde abgesenkt.
+
+### Bildfolge und Sichtprüfung
+
+| Zustand | Tatsächliches Godot-Rendering |
+|---|---|
+| Vor der Aktion | [Bild 00](sequence/d-sequence-00-before.png) |
+| Eigener Angriffsauftakt | [Bild 01](sequence/d-sequence-01-windup.png) |
+| Treffer, Tod und direkter Heldenschaden | [Bild 02](sequence/d-sequence-02-impact.png) |
+| Gegner beschwört | [Bild 03](sequence/d-sequence-03-enemy-summon.png) |
+| Gegenangriff | [Bild 04](sequence/d-sequence-04-counterattack.png) |
+| Neuer Zug | [Bild 05](sequence/d-sequence-05-next-turn.png) |
+
+Die Familienbeispiele lassen Nachläufe vorheriger Effekte bewusst überlappen;
+die Auswahl zeigt jeweils die nächste Familie. Familien: [Glut](sequence/d-family-0.png), [Wasser](sequence/d-family-1.png),
+[Ranken](sequence/d-family-2.png), [Mondschatten](sequence/d-family-3.png).
+[Mischpult im Smartphone-Querformat](sequence/mixer-844x390.png).
+Die Bildfolge wurde visuell kontrolliert; die Aufnahme zeigt einen vollständigen
+regulären Spielverlauf mit Ton. Das Gameplay-Video entstand während des dritten
+Zyklus; die anschließende Pfadsiegel-/Layerkorrektur ist in der finalen Bildfolge
+und im geprüften Spielcode enthalten.
+
+### Performance: ehrliche Messgrenzen
+
+[Sechs vollständige Linux-Duelle](qa/performance.json) umfassen 844×390,
+915×412, 1280×720 und 1600×900, normalen/sparsamen Modus, reduzierte Bewegung
+sowie einen legal erspielten Verlust durch Passen. Gemessen wurden 78–84
+Spitzenknoten pro Lauf, maximal zehn aktive FX-Einträge im normalen Ablauf
+und etwa 36–39 MiB in Godots **MEMORY_STATIC**-Monitor. Der separate 500er-Burst
+bestätigt die harte Obergrenze 16. Audiostimmen bleiben bei 8 + 2 + 1.
+
+Der isolierte Prozesslauf für Quellstand `f843596` (vor der abschließenden
+Setterkorrektur, gleicher Ressourcenaufbau) auf Xvfb/Mesa llvmpipe benötigt rund 69 Sekunden für
+die gesamte Testmatrix und erreicht **250,3 MiB Spitzen-RSS**, einschließlich
+Engine und Software-Renderer. [Prozessmessung](qa/process-resources.json),
+[reproduzierbarer Python-Wrapper](qa/profile_command.py):
+
+```bash
+DISPLAY=:99 python3 docs/combat/qa/profile_command.py
+```
+
+Die Software-Rendering-Messungen erreichen kein 60-FPS-Ziel. Die gemessenen
+Framezeiten und kalten Caches erlauben keinen belastbaren Beschleunigungsfaktor
+für den sparsamen Modus; reduziert werden nachweisbar dessen Operationsbudgets.
+**Dies ist keine Leistungsfreigabe für echte Telefone.** Die MovieMaker-Framerate
+ist davon unabhängig. Es wurden keine physischen iPhone-/Android-Tests durchgeführt.
+
+Linux- und Android-Debugexport erstellt. Das Linux-Paket enthält weiterhin
+Kampagne, Karten, Lore und Einstieg ([Prüfung](qa/exported-resources.log));
+Android 0.6.0-combat ist mit APK-Signatur v2/v3 gültig
+([Prüfung](qa/android-signature.log)). Keine Geräteinstallation oder native iOS-
+Auslieferung behauptet; dafür fehlen physische Tests sowie macOS/Xcode/Signierung.
+
+## Veröffentlichte Fassung
+
+**[Spiel öffnen](https://jagarex-lab.github.io/nachtsiegel-app/?v=1d248153e27f)** ·
+**[Gameplay-Video mit Ton öffnen](https://jagarex-lab.github.io/nachtsiegel-app/media/gameplay.mp4?v=1d248153e27f)**
+
+Am 9. November 2026 über `develop` veröffentlicht: Spielcode
+`1d248153e27f87786b3219c69bf827825756ed84`.
+[Veröffentlichungslauf 42621761568](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42621761568)
+erfolgreich: gesamte Suite vor Veröffentlichung erneut bestanden; anschließend
+**sieben vollständige Browserprofile auf der öffentlichen Adresse, keine Fehler**.
+[Prüfprotokoll](qa/published-ci.log), [öffentliche Build-ID](qa/public-build-info.json).
+
+Zusätzliche öffentliche WebKit-Prüfung: Menü, Mischpult, Tutorialstart, reale
+Kartenauswahl und Beschwörung, kompletter präsentierter Zug und anschließende
+Eingabefreigabe. Keine Browser-/Godot-Fehler, Build-ID stimmt.
+[Prüfdaten](qa/public-spot.json), [Mischpult](sequence/public-mixer.png),
+[Kampf](sequence/public-combat.png), [neuer Zug](sequence/public-next-turn.png).
+Die MP4 wird mit `video/mp4`, HTTP 200 und 3.040.281 Byte ausgeliefert.
+
+Dateinamen `nachtsiegel-1d248153e27f.*` verhindern veraltete Safari-Spielressourcen.
+`main` bleibt unverändert. Der anschließende Dokumentationscommit ändert weder
+Spielcode noch den veröffentlichten Build. Physische Gerätetests und eine
+native iOS-/Store-Freigabe bleiben ausdrücklich offen.

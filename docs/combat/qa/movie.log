@@ -1,0 +1,16 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.
+     at: set_use_vsync (platform/linuxbsd/x11/gl_manager_x11.cpp:364)
+OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)
+
+Movie Maker mode enabled, recording movie in 1280×720 @ 30 FPS...
+WARNING: Current available space on disk is low (3.28 GiB). MovieWriter will fail during movie recording if the disk runs out of available space.
+     at: begin (servers/movie_writer/movie_writer.cpp:113)
+MOVIE: SIEG · Drei Pfade zweimal gehalten!; actual touch tutorial; 4 rounds
+--------------------------------------------------------------------------------
+Done recording movie at path: /workspace/nachtsiegel-app/work/combat/gameplay.avi
+522 frames at 30 FPS (movie length: 00:00:17:12), recorded in 00:03:15 (8% of real-time speed).
+CPU render time: 12.49 seconds (average: 23.92 ms/frame)
+GPU render time: 89.24 seconds (average: 170.96 ms/frame)
+Encoding time: 21.70 seconds (average: 41.58 ms/frame)
+--------------------------------------------------------------------------------

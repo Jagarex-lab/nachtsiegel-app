@@ -1,0 +1,72 @@
+{
+  "signals": [
+    {
+      "name": "ASH.wav",
+      "samples": 11520,
+      "peak": 0.243865966796875,
+      "rms": 0.04181117176427803
+    },
+    {
+      "name": "THORN.wav",
+      "samples": 9600,
+      "peak": 0.163970947265625,
+      "rms": 0.024911002937672694
+    },
+    {
+      "name": "TIDE.wav",
+      "samples": 12000,
+      "peak": 0.1536865234375,
+      "rms": 0.06115911575389287
+    },
+    {
+      "name": "VEIL.wav",
+      "samples": 14400,
+      "peak": 0.162384033203125,
+      "rms": 0.05324101160583434
+    },
+    {
+      "name": "attack.wav",
+      "samples": 6240,
+      "peak": 0.231597900390625,
+      "rms": 0.08418277310665527
+    },
+    {
+      "name": "draw.wav",
+      "samples": 5760,
+      "peak": 0.1788330078125,
+      "rms": 0.06386274884857157
+    },
+    {
+      "name": "hit.wav",
+      "samples": 5280,
+      "peak": 0.183685302734375,
+      "rms": 0.029432723297556914
+    },
+    {
+      "name": "lose.wav",
+      "samples": 19200,
+      "peak": 0.19512939453125,
+      "rms": 0.07068875147156728
+    },
+    {
+      "name": "turn.wav",
+      "samples": 9600,
+      "peak": 0.15570068359375,
+      "rms": 0.060244181074436874
+    },
+    {
+      "name": "ui.wav",
+      "samples": 2400,
+      "peak": 0.058013916015625,
+      "rms": 0.015612897817892433
+    },
+    {
+      "name": "win.wav",
+      "samples": 22800,
+      "peak": 0.2652587890625,
+      "rms": 0.07792374998210065
+    }
+  ],
+  "conservative_max_mix_bound": 0.7773915342032183,
+  "provenance": "tools/generate_audio.py; original deterministic synthesis, no sampled source"
+}

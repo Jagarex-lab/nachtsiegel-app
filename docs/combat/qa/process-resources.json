@@ -1,0 +1,9 @@
+{
+  "source": "f843596414d3e77f883e78fe0979bce8dcb8a9b2",
+  "scope": "Linux Xvfb / Mesa llvmpipe; no simultaneous movie recording; not mobile hardware",
+  "elapsed_seconds": 69.01548569399893,
+  "cpu_user_seconds": 98.406356,
+  "cpu_system_seconds": 5.9819700000000005,
+  "peak_process_rss_bytes": 262471680,
+  "exit_code": 0
+}
