@@ -53,7 +53,7 @@ func save() -> bool:
 	if OS.has_feature("web") and path=="user://progress_v1.json":
 		var quoted=JSON.stringify(JSON.stringify(data))
 		var stored=JavaScriptBridge.eval("(()=>{try{localStorage.setItem('nachtsiegel.progress.v1',"+quoted+");return true}catch(e){return false}})()")
-		if stored!=true:last_error="Browser-Speicher nicht verfügbar; Fortschritt kann beim Schließen verloren gehen";return false
+		if not bool(stored):last_error="Browser-Speicher nicht verfügbar; Fortschritt kann beim Schließen verloren gehen";return false
 	last_error="";return true
 func choose_hero(id: String) -> void:
 	if id in ["keeper","ash_king"]: data.selected_hero=id;save()
