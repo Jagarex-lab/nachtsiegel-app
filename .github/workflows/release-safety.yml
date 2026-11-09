@@ -1,0 +1,15 @@
+name: Release safety (no deployment)
+on:
+  pull_request:
+  push:
+    branches: [develop, 'security/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  release-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m pip install 'PyYAML==6.0.3'
+      - run: python3 -m unittest discover -s tests/release -v

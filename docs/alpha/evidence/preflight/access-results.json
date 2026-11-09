@@ -1,0 +1,26 @@
+[
+  {
+    "check": "disable-old-publisher",
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "check": "branch-protection",
+    "exit_code": 1,
+    "stdout": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/branches/branch-protection#get-branch-protection\",\"status\":\"403\"}",
+    "stderr": "gh: Resource not accessible by integration (HTTP 403)"
+  },
+  {
+    "check": "release-switch",
+    "exit_code": 1,
+    "stdout": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/actions/variables#get-a-repository-variable\",\"status\":\"403\"}",
+    "stderr": "gh: Resource not accessible by integration (HTTP 403)"
+  },
+  {
+    "check": "actions-permissions",
+    "exit_code": 1,
+    "stdout": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/actions/permissions#get-github-actions-permissions-for-a-repository\",\"status\":\"403\"}",
+    "stderr": "gh: Resource not accessible by integration (HTTP 403)"
+  }
+]

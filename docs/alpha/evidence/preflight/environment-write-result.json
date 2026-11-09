@@ -1,0 +1,6 @@
+{
+  "action": "configure github-pages required reviewer Jagarex-lab and prevent self review",
+  "exit_code": 1,
+  "stdout": "{\"message\":\"Resource not accessible by integration\",\"documentation_url\":\"https://docs.github.com/rest/deployments/environments#create-or-update-an-environment\",\"status\":\"403\"}",
+  "stderr": "gh: Resource not accessible by integration (HTTP 403)"
+}
