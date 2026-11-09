@@ -1,0 +1,9 @@
+{
+  "assertions": 7562,
+  "differential_cases": 474,
+  "failures": 0,
+  "match_rng_calls": 0,
+  "mixed_card_side_pairs": 200,
+  "transitions": 1084,
+  "unsupported": []
+}

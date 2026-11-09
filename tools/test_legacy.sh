@@ -47,3 +47,16 @@ print(log.strip())
 assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M)
 assert re.search(r'^LEGACY P05/P06: \d+ assertions, 0 failures;',log,re.M)
 P05CHECK
+
+node tools/legacy/generate_p07.cjs
+node tools/legacy/generate_p07_edges.cjs
+node --test tests/legacy_p07.test.cjs
+timeout 120s "${GODOT_BIN:-godot}" --headless --path . --script tests/legacy_p07.gd > work/legacy/p07.log 2>&1
+python3 - <<'P07CHECK'
+from pathlib import Path
+import re
+log=Path('work/legacy/p07.log').read_text()
+print(log.strip())
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M)
+assert re.search(r'^LEGACY P07: \d+ assertions, 0 failures;',log,re.M)
+P07CHECK

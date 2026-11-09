@@ -59,11 +59,11 @@ func compress(points: Array) -> Array:
 	return result
 func guard_checks(fixture: Dictionary) -> void:
 	var model=EngineModel.new();model.state=runtime(fixture.cases[0].steps[0].before)
-	model.state.hero.attune="tide"
+	model.state.hero.pendingTarget={"power":2,"sourceLane":0}
 	var before=model.snapshot();var result: Dictionary=model.execute("play",["hero",0,2])
-	check(not result.ok and result.reason=="P07:order_reaction","cross-order remains explicit P07 gate")
-	same(before,model.snapshot(),"P07 rejected before resources/card/field mutation")
-	for command: String in ["burst","tacticalMove","fortify","endTurn","inventedTimeRewind"]:
+	check(not result.ok,"pending target remains a play gate")
+	same(before,model.snapshot(),"pending play rejected before resources/card/field mutation")
+	for command: String in ["endTurn","inventedTimeRewind"]:
 		before=model.snapshot();check(not model.execute(command,["hero"]).ok,"unsupported "+command);same(before,model.snapshot(),"unsupported immutable")
 	model.state.winner="enemy";model.state.hero.phase="draw";model.state.hero.pendingDraw=1;model.state.hero.hand=model.catalog.deck("start").slice(0,6)
 	before=model.snapshot();check(not model.execute("burn",["hero",0]).ok,"public end guard for legacy raw burn")
