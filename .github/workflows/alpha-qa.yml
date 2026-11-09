@@ -93,6 +93,14 @@ jobs:
           python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
           GAME_URL=http://127.0.0.1:8789/ QA_PREFIX=alpha/archive node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
           GAME_URL=http://127.0.0.1:8788/ node tools/alpha_browser_qa.cjs
+      - name: Repeated fresh WebKit cold boots on both ruleset entry points
+        if: matrix.engine == 'webkit'
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          GAME_URL: http://127.0.0.1:8788/
+          ARCHIVE_URL: http://127.0.0.1:8789/
+        run: node tools/alpha_boot_qa.cjs > work/alpha/cold-boot.log 2>&1
       - name: Package the browser-verified candidate
         run: python3 tools/package_alpha.py > work/alpha/package-result.json
       - uses: actions/upload-artifact@v4
