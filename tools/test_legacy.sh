@@ -16,3 +16,20 @@ print(log.strip())
 assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M), 'Godot error in legacy test'
 assert re.search(r'^LEGACY FOUNDATIONS: \d+ assertions, 0 failures;',log,re.M), 'Missing successful legacy test summary'
 PY
+
+# P01-P04 follow-up: check additional goldens without replacing PR #2 fixtures.
+node tools/legacy/generate_engine.cjs
+node tools/legacy/generate_combat.cjs
+node tools/legacy/generate_turns.cjs
+node tools/legacy/generate_rng_consumption.cjs
+node tools/legacy/generate_queue_winner.cjs
+node --test tests/legacy_engine.test.cjs
+timeout 120s "${GODOT_BIN:-godot}" --headless --path . --script tests/legacy_engine.gd > work/legacy/engine.log 2>&1
+python3 - <<'ENGINECHECK'
+from pathlib import Path
+import re
+log=Path('work/legacy/engine.log').read_text()
+print(log.strip())
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M), 'Godot legacy engine error'
+assert re.search(r'^LEGACY ENGINE: \d+ assertions, 0 failures;',log,re.M), 'Missing successful engine summary'
+ENGINECHECK

@@ -1,8 +1,8 @@
-name: Legacy foundations (no deployment)
+name: Legacy P01-P04 (no deployment)
 
 on:
   pull_request:
-    branches: [develop]
+    branches: [develop, 'feature/legacy-foundations']
   workflow_dispatch:
 
 permissions:
@@ -24,5 +24,5 @@ jobs:
           include-templates: false
       - name: Import scripts for headless tests
         run: godot --headless --editor --import --path . --quit
-      - name: Pinned JS reference, reproducible fixtures and isolated Godot catalog
+      - name: Pinned JS reference, catalog and P01-P04 differential engine
         run: tools/test_legacy.sh
