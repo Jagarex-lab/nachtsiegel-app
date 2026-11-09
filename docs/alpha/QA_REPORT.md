@@ -1,52 +1,62 @@
-# Alpha 0.1 – reproduzierbare QA
+# Alpha 0.1 – geprüfter spielbarer Kandidat
 
-Stand:2026-11-09. Getesteter Modellstand `be60cd7`; Web-Testbuild `c2ad5b9c249ce0e52bc9f937fd38bcf443328824` (Canvas-Fix nach `6a8944e`). Buildmetadaten nennen den vollständigen Commit. Keine Live-QA und keine physischen Gerätetests.
+Stand:2026-11-09. **Spiel-/CI-Stand `8c1d3427d0208862e712dc88da5be9086c6a9194` vollständig grün**, sowohl [Branchlauf42713094196](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42713094196) als auch [PR-Testmerge42713103955](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42713103955). Native, Chromium und WebKit jeweils SUCCESS; [maschinenlesbarer Nachweis](evidence/ci-8c-summary.json). Testmerge ist keine Integration in develop.
 
-## Abgeschlossene Prüfungen
+## Tatsächlich bestandene Prüfungen
 
-| Prüfung | Ergebnis | Reproduktion / Beleg |
+| Prüfung | Ergebnis | Reproduktion |
 |---|---|---|
-| Fixierte JS-Quelle und Originaldaten | 100 Originalkarten /5 Decks; Pin unverändert | `tools/test_legacy.sh`, source.lock.json |
-| Node Legacy |30 Testgruppen ohne Fehler | Foundations8 + Engine7 + P05/P066 + P077 + komplette Partien2 |
-| Node Alpha-Daten |4 Testgruppen ohne Fehler | `node --test tests/alpha_data.test.cjs` |
-| Legacy Differential |1305 Fälle bestanden |441 Kern +366 P05/P06 +474 P07 +24 vollständige Partien |
-| Legacy vollständige Partien |24 Partien /705 Spielerkommandos,0 Abweichungen | `tests/legacy_matches.gd`, Golden `full_matches_v1.json` |
-| Alpha-Regeln |1704 Assertions,0 Fehler | `tests/alpha_rules.gd`;55 Karten auf beiden Seiten,4 Starter,64 komplette KI-Partien |
-| Alpha-Replay |173 Assertions,0 Fehler | `tests/alpha_replay.gd`;4 vollständige Partien, JSON-Roundtrip, Manipulation/Ergebnisgrenze |
-| Alpha-Touch/Layout |236 Assertions,0 Fehler | `tests/alpha_ui.gd`;844×390,915×412,844×320,1280×720,1600×900 |
-| Releaseguard |6 Python-Testgruppen bestanden | `python3 -m unittest discover -s tests/release -v` |
-| Web-Export/PCK |Export und Daten-/Feature-Smoke bestanden | `tools/build_alpha.sh`, `tests/alpha_exported.gd` |
+| Fixierte JS-Quelle / Originaldaten |100 Karten,5 Decks, Pin/Hashes unverändert | `tools/test_legacy.sh` |
+| Node |34 Gruppen,0 Fehler |30 Legacy +4 Alpha |
+| Legacy Differential |1305 Fälle,0 Abweichungen |441 Kern +366 P05/P06 +474 P07 +24 vollständige Partien |
+| Vollständige JS/Godot-Partien |24 Partien,705 Spielerkommandos inklusive Original-KI | `tests/legacy_matches.gd` |
+| Alpha-Regeln |1704 Assertions,0 Fehler;64 vollständige KI-Partien | `tests/alpha_rules.gd` |
+| Native Replays |173 Assertions,0 Fehler;4 vollständige Partien | `tests/alpha_replay.gd` |
+| Alpha-Touch/Layout |237 CI-Assertions,0 Fehler (lokal236) | `tests/alpha_ui.gd` |
+| Browser pro Gesamtlauf |7 Archiv- und7 Alpha-Profile,0 Fehler | `tools/browser_qa.cjs`, `tools/alpha_browser_qa.cjs` |
+| Wiederholte Kaltstarts |6 frische WebKitprozesse,0 Fehler,3 Archiv/3 Alpha | `tools/alpha_boot_qa.cjs` |
+| Releaseguard |6 Python-Gruppen,0 Fehler | `python3 -m unittest discover -s tests/release -v` |
+| Export |Native PCK-Smokes und tatsächliche Browserabläufe bestanden | `tests/alpha_exported.gd`, Browserjobs |
 
-Differentialfälle sind Szenarien, nicht Assertionzahl oder Anzahl jeder internen KI-Aktion. Unsupported `guarded_begin_wrong_side` ist nicht als bestanden gezählt. Ursprüngliche Referenz-Goldens/Kartenwerte nicht durch aktualisierte Sollwerte ersetzt. Der Namespace-Test wurde bewusst um die ausdrücklich autorisierte Alpha-Integrationsbrücke erweitert; das Archiv bleibt isoliert. Replayvergleiche prüfen sämtliche Alpha-Zustandsfelder statt Alpha-Instanzfelder im Legacy-Whitelistvergleich wegzulassen.
+Assertionzahlen variieren im UI-Test mit der seedabhängigen Handgröße; beide dokumentierten Läufe haben0 Fehler. Differentialfälle sind Szenarien, nicht jede interne KI-Aktion oder jede Assertion. Der defensive Raw-helper-Fall `guarded_begin_wrong_side` bleibt ausdrücklich unsupported und ist nicht in1305 enthalten. Alte Referenz-Goldens wurden nicht durch Godot-Sollwerte ersetzt. Die sieben Prototypkarten/Produktionsregeln und Originalkartendaten sind [byteidentisch zu PR7](evidence/source-isolation.json).
 
-## Browser und CI
+Alpha-Invarianten nach jedem KI-Zug:30 Karten pro Seite einschließlich Deck/Hand/Ablage/Lanes/Relikt, Ressourcen- und Handlimits, eindeutige positive Instanz-IDs und keine toten Kreaturen auf dem abgeschlossenen Spielfeld. Alle55 Alpha-Karten werden auf beiden Seiten tatsächlich ausgeführt; künstliche Grenzfallzustände sind getrennt von vollständigen Partien. Effektketten10/25/50/100 sowie expliziter Zyklusfehler geprüft. Das belegt Queue-Kapazität, nicht hundert natürlich entstehende Starter-Kombinationen.
 
-`tools/alpha_browser_qa.cjs` benutzt echte Canvas-Touches und nur eine lesende `?qa=1`-Zustandsprojektion, keine Zustandsinjektion. Profile:Chromium1280×720/1600×900/Android915×412/844×320 mit DPR2+SafeArea; WebKit844×390DPR3/915×412/844×320 mit SafeArea+reduzierter Bewegung. Prüfungen: Eröffnung,44CSS-Touchziele und Viewportgrenzen, legale Kartenaktionen, Sammlung/Speichern/Reload; zusätzlich vollständige Alpha-Desktop- und Legacy-Android-Partie samt Replayverifikation/Neustart.
+Native Replayvergleiche prüfen sämtliche Alpha-Zustandsfelder, einschließlich UID/Schutz/Relikt/Bindung. JSON-Roundtrip, komplette Endzustände, abgelehnte Aktionen, Hashmanipulation und Ergebnisverriegelung sind abgedeckt. Format ist ORAFOLD-LOCAL-REPLAY v1/SHA256; kein originaler JS audit-v4-/FNV1a-Paritätsclaim.
 
-**Lokale Browser-Gesamtprüfung bestanden:7 Profile,0 Fehler**, jeweils auf dem Build `c2ad5b9`. Chromium4 + WebKit3 getrennt ausgeführt; strukturierte [Einzelergebnisse](evidence/browser-results-c2.json). Beide vollständigen UI-Partien, Replayverifikation und Neustart bestanden. Die Alpha-Partie endete durch tatsächlich über die UI erklärte Konvergenz; die Legacy-Partie behielt ihren früheren Kontrollsieg. Keine Zustandsinjektion in diesen Partien.
+## Browserbedingungen
 
-Chromium meldete auf dem vorherigen Idle-Redraw-Stand einen Screenshot-Timeout; regelmäßige Canvas-Frames wurden wiederhergestellt und alle Profile anschließend bestanden. Früher abgebrochene diagnostische Läufe zählen nicht als bestandene Partien.
+Playwright **1.65.0**, Chromium158.0.8127.18, WebKit27.2, Godot4.6.3, Ubuntu24.04 auf CI. Chromium:1280×720,1600×900,915×412DPR1 und844×320DPR2/SafeAreas. WebKit:844×390DPR3,915×412DPR1 und844×320DPR1/SafeAreas/reduzierte Bewegung. Native zusätzlich844×390/915×412/844×320/1280×720/1600×900.
 
-Neue CI `.github/workflows/alpha-qa.yml`:read-only, kein Deployjob, Tests→Archiv-WebQA→Alpha-WebQA→Artefakt. Alte Publisher-Workflow-ID406254158 bleibt global deaktiviert. CI-Fehler1: lokaler XDG-Exportpfad verdeckte installierte CI-Templates; korrigiert. CI-Fehler2:Ubuntu-latest wechselte auf26.04, von Playwright1.56.1 nicht unterstützt; Browserrunner jetzt explizit24.04. CI-Run [42705469676](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42705469676) scheiterte nach sechs erfolgreichen Archivprofilen am Start des siebten WPE-Profils (90s, kein gelockerter Test). PR-Testmerge `7c2d5f6` und Branch `c2ad5b9` haben denselben Git-Baum `89f51ce502cee764b06fdc3c73a6af45df8cd226`. Der separate Pushlauf42705454623 hat alle sieben Archivprofile bestanden; seine Alpha-Chromiumprofile einschließlich beider vollständiger Partien bestanden, danach scheiterte der erste WebKit-Alpha-Start mit einem WASM-Nullreferenzfehler. Kein insgesamt grüner PR-Check behauptet.
+Readonly-Bridge nur mit `?qa=1`; keine Zustandsinjektion in den vollständigen Browserpartien. Tatsächliche Canvas-Touches prüfen Eröffnung,44CSS-Touchziele, Viewportgrenzen, legale Kartenaktionen und Speichern/Reload. **Nur zwei Alpha-Harnessprofile spielen vollständige Partien:** Chromium-desktop im Alpha-Modus (UI-Konvergenzsieg) und Chromium-android im Legacy-Modus (Original-Kontrollsieg), jeweils Replay identisch und Neustart erfolgreich. Die übrigen fünf Profile prüfen Eröffnung/legale Züge/Deckspeicherung. Nicht als sieben vollständige Partien zählen.
 
-Der Archiv-Testharness startet nun einen frischen Browserprozess je Profil und sichert Startdiagnosen/Screenshots im Artefakt. Alle Assertions und Timeouts bleiben erhalten. Isolierte lokale Wiederholung des betroffenen WebKit-Profils `iphone-reduced`: vollständiges Tutorial, Reload/Sammlung und0 Fehler. Neuer Gesamtlauf auf dem Folgecommit erforderlich. Der nachfolgende Alpha-Bootfehler ist als P1-Kompatibilitätsbefund offen, nicht als bloßer Timeoutharnessfehler wegklassifiziert. CI trennt deshalb native Prüfungen/Exports und Browserjobs mit je eigenem frischem Runner für Chromium/WebKit; Browserprozesse außerdem je Profil isoliert. Keine Browserprüfung wird ausgelassen oder als unsupported bestanden gezählt.
+Auch lokal sind alle sieben Alpha-Profile auf dem exakt heruntergeladenen früheren CI-ExportC2 mit dem aktuellen Browserstack bestanden, plus sechs Kaltstarts: [genau zugeordnete Ergebnisse](evidence/local-qa-current.json). SeitC2 unterscheiden sich die Spielressourcen nur in zwei Kernel-Kommentarzeilen; Folgeänderungen betreffen Tests/CI/Dokumentation. JS/WASM von lokalem und CI-C2-Export sind bytegleich; PCK-Pakete werden nicht als bytegleich behauptet.
 
-## Bekannte lokale Testbefunde
+**Keine physischen iPhone-/Android-Tests.** Keine Browser-/GPU-Simulation wird als tatsächliche Geräte-, Energieverbrauchs-, FPS- oder App-Store-Abnahme ausgegeben.
 
-- Früher Archivlauf unter gleichzeitigem Software-Rendering:1 Zeitfehler beim Doppel-Touch-Zugende1600×900. Späterer vollständiger Archivlauf erfolgreich, zusätzlich isolierte Wiederholung `archive-input-single.log`:380 Assertions,0 Fehler bei unveränderter Deadline. Die zwischenzeitlich überlappenden lokalen Archivläufe teilen historische work-Dateien; deshalb ist der isolierte Input-Nachweis ausdrücklich getrennt. Kein stilles Verlängern der Deadline.
-- Ein manueller Godot-UI-Aufruf ohne die dokumentierten XDG-Verzeichnisse konnte im eingeschränkten Dateisystem kein user:// anlegen und stürzte ab. Mit beschreibbaren Workspace-XDG-Verzeichnissen wiederholt:233 UI-Assertions erfolgreich; erweiterter Decktausch-/Neuladetest anschließend236 erfolgreich. Kein Spielregeldefekt daraus abgeleitet.
-- Frühe Entwicklungsfehler: immediate Entfernen von Controls während Input erzeugte `can_process`-Fehler, behoben durch deferred/coalesced Rendern; spätere UI-Prüfungen fehlerfrei. Touch-Helfer an `Input.parse_input_event` angepasst. Zwei frühe Schadenassertionen enthielten fälschlich nicht zurückgesetzte Test-Eröffnungsschilde; Testhelper korrigiert, keine Schadensregeln geändert.
-- Lokale WebKit-Systembibliotheken aus offizieller Debianquelle im ignorierten Browserbundle bereitgestellt. `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1` umgeht nur die ldconfig-Vorabprüfung für lokal gebündelte Libraries; tatsächlicher Browserstart/WebGL und alle Appassertionen bleiben aktiv. CI installiert regulär die Abhängigkeiten.
+## Archivregression
 
-Abgeschlossener Archivlauf: Rules684, Creative2253, Narrative97, Experience715, Input380, Premium1720, UX2350, Combat725, CombatSequence622 Assertions jeweils0 Fehler. Gerenderter Kontrast:89 Zustände/3839 Regionen ohne Fehler. Diese Archiv-Kontrastmessung ist kein separater WCAG-Gesamtnachweis der neuen Alpha-Oberfläche.
+Der grüne integrierte CI-Lauf enthält die vollständige bestehende Desktop-/Browserregression. Lokaler kompletter Archivlauf:Rules684, Creative2253, Narrative97, Experience715, Input380, Premium1720, UX2350, Combat725, CombatSequence622 Assertions jeweils0 Fehler. Archiv-Kontrast:89 Zustände/3839 Regionen ohne Fehler. Das ist kein separater WCAG-Gesamtnachweis der neuen Alpha-Oberfläche.
 
-Zusätzliche Alpha-Invarianten werden nach jedem KI-Zug geprüft:30 Karten je Seite inklusive Relikt/Lanes/Ablage, Handlimit, Ressourcenlimits, eindeutige positive Instanz-IDs und keine lebend gelisteten toten Kreaturen. Alle64 Simulationen bestanden. UI-Decktausch testet tatsächliches Entfernen/Ersetzen, Ablehnung von29 Karten und Neuladen des geänderten Decks.
+## Fehler und Iterationen – offen dokumentiert
 
-## Testartefakt
+1. Frühe Namespaceprüfung verbot noch jede UI-Anbindung des isolierten Legacy-Katalogs. Bewusst um die nun ausdrücklich autorisierte Alpha-Brücke erweitert; Archiv-Prototyp bleibt getrennt. Alte fixtures/wertgleiche Referenzen nicht geändert.
+2. Frühe GUI-Tests verwendeten die falsche Touch-Injektion; auf tatsächliches `Input.parse_input_event` umgestellt. Controls während Input sofort entfernt → `can_process`-Fehler; durch deferred/coalesced Rendern behoben. Spätere UI-Läufe fehlerfrei. Zwei Schadenassertionen hatten alte Test-Eröffnungsschilde nicht zurückgesetzt; Testhelper korrigiert, Schadensregeln unverändert.
+3. Früher lokaler Archivlauf:ein Touch-Zeitfehler bei1600×900 unter parallelem Software-Rendering. Später vollständiger Archivlauf und isolierte Wiederholung380/0 bei **unveränderter Deadline**. Überlappende historische work-Logs sind kein sauberer Einzelnachweis; deshalb isolierter Nachweis und frische CI zusätzlich.
+4. CI-Export fand Templates wegen überschriebenem XDG-Pfad nicht:Exportskripte behalten nun die installierte Standardposition. Ubuntu-latest wechselte auf26.04, vom alten Playwright nicht unterstützt:Runner explizit24.04.
+5. Idle-Redraw-Optimierung erzeugte einen Chromium-Screenshot-Timeout. Regelmäßige Canvas-Frames wiederhergestellt; anschließende komplette Profile und Partien bestanden.
+6. Playwright1.56.1/WebKit26 zeigte sporadische WASM-Nullreferenz-/Out-of-bounds-Bootfehler, auch im Archiv vor Spielstart. Prozessisolation allein war kein nachgewiesener Fix; Fehlversuche erhalten. Aktueller stabiler Stack1.65.0/27.2 ist fixiert, beide aktuellen CI-Läufe einschließlich sechs Kaltstarts grün. Kein unbewiesener Engine-Root-Cause-Claim und keine Aussage über ältere physische Safari-Versionen.
+7. Schneller neuer Chromiumstart erreichte den HTTP-Fixtureserver vor dessen Listen-Socket (`ECONNREFUSED`). Explizite HTTP-/Commit-Readiness vor Browserstart ergänzt. Kein App-Startup-Retry, keine entfernten Assertions, keine verlängerten90s-Spiel-Timeouts.
 
-Lokales ZIP `work/alpha/orafold-alpha-0.1-c2ad5b9c249c.zip` (19.856.495 Bytes), Sourcecommit `c2ad5b9c249ce0e52bc9f937fd38bcf443328824`, SHA256 `3d07e3852180ba1bcb9af1f9873dfe1c25bd29cd152b2b0066b1ff56c39a0025`. `artifact-manifest.json` enthält Einzeldateihashes. Zwei Verpackungen derselben Exportdateien mit festen ZIP-Zeitstempeln ergaben identische Bytes; keine Behauptung bitidentischer Godot-Exports auf beliebigen Betriebssystemen. `tests/alpha_exported.gd` besteht aus diesem PCK. Dies ist ein lokales Testartefakt, keine Veröffentlichung.
+Ein manueller Godot-Aufruf ohne Workspace-XDG konnte im eingeschränkten Dateisystem kein user:// anlegen; mit beschreibbaren XDG-Verzeichnissen wiederholt erfolgreich. Lokale Browserdeps aus offiziellen Debianpaketen im ignorierten Browserbundle bereitgestellt. Skip-host-validation umgeht dort nur die ldconfig-Vorabprüfung, nicht tatsächlichen Start/WebGL oder Appassertionen; CI installiert normale Dependencies.
 
-## Befehle
+## Verifiziertes Testartefakt
+
+`work/alpha/orafold-alpha-0.1-8c1d3427d020.zip` – **19.862.070 Bytes**, Sourcecommit8c1d342, SHA256 **ad7a883e316df6a087a404a80c20634a294e6d06465e67318023b25d1d7ebc43**. Direkt aus dem [erfolgreichen CI-Artefakt](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42713094196/artifacts/13715564954) heruntergeladen, innere ZIP-Prüfung und sämtliche Manifest-Dateihashes erneut geprüft. Das äußere Actions-Artefakt enthält zusätzlich Screenshots/Logs; darin liegt dieses eigenständige Spiel-ZIP.
+
+`artifact-manifest.json` bindet alle exportierten Dateien. Verpackung hat feste Zeitstempel; wiederholtes Verpacken derselben Exportdateien ergab identische Bytes. Kein Versprechen OS-unabhängig bitidentischer Godot-Exports. Dies ist ein vorbereitetes Testartefakt, keine Veröffentlichung.
+
+## Reproduktion
 
 ```sh
 node --test tests/alpha_data.test.cjs
@@ -54,33 +64,22 @@ bash tools/test_legacy.sh
 DISPLAY=:99 bash tools/test_alpha.sh
 DISPLAY=:99 bash tools/test.sh
 python3 -m unittest discover -s tests/release -v
-# Lokal exportieren; CI nutzt ihre Standardtemplateinstallation.
+# Für lokale Templates; CI behält ihren installierten Standardpfad.
 export XDG_DATA_HOME="$PWD/work/xdg/data"
 export XDG_CONFIG_HOME="$PWD/work/xdg/config"
 export XDG_CACHE_HOME="$PWD/work/xdg/cache"
 bash tools/build_alpha.sh
+python3 tools/package_alpha.py
 python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web
-# Zweites Terminal: Playwright1.56.1 installieren, Browserdeps installieren.
+# Zweites Terminal: Playwright1.65.0 und dessen Browserdeps installieren.
 NODE_PATH="$PWD/work/qa-browser/node_modules" \
 EXPECTED_COMMIT="$(git rev-parse HEAD)" node tools/alpha_browser_qa.cjs
 ```
 
-Kein erfolgreicher Alpha-Release folgt aus einem lokalen Teiltest. [Bekannte Grenzen](KNOWN_ISSUES.md) bleiben vor einer Releasefreigabe sichtbar.
+ZIP testen:entpacken, im entpackten Verzeichnis `python3 -m http.server 8788 --bind 127.0.0.1`, dann `http://127.0.0.1:8788/`. Nicht als file:// öffnen. Kein neuer Pages-Link.
 
-## Screenshots
+## Tatsächlich gerenderte Screenshots
 
-- [Arena844×390](evidence/arena-844x390.png)
-- [Arena1280×720](evidence/arena-1280x720.png)
-- [Deckbuilder915×412](evidence/deckbuilder-915x412.png)
-- [WebKit iPhone DPR3](evidence/webkit-iphone-dpr3.png)
-- [Tatsächlicher UI-Konvergenzsieg](evidence/convergence-ui-victory.png)
-- [Tatsächlicher Legacy-UI-Sieg](evidence/legacy-ui-victory.png)
+[Arena844×390](evidence/arena-844x390.png) · [Arena1280×720](evidence/arena-1280x720.png) · [Deckbuilder915×412](evidence/deckbuilder-915x412.png) · [WebKitDPR3](evidence/webkit-iphone-dpr3.png) · [UI-Konvergenzsieg](evidence/convergence-ui-victory.png) · [Legacy-UI-Sieg](evidence/legacy-ui-victory.png).
 
-Screenshots stammen aus tatsächlichen Godot-/Browser-Renderings. Keine Mockups oder Bildgenerator-Arbeitsentwürfe. Darstellung/Atlas sind Platzhalterproduktion; Screenshots beweisen keine physischen Geräteeigenschaften.
-
-
-## Browser-Kompatibilitätsnachtrag – 2026-11-09
-
-Der getrennte PR-Lauf42708751068 bestand die vollständigen WebKitprüfungen; der Pushlauf42708739069 scheiterte dagegen im dritten **Archiv**-WebKitprofil vor Spielstart mit `Out of bounds memory access (entryFunction)`. Prozessisolation allein ist damit kein verlässlich nachgewiesener Fix. Auch dieses Scheitern bleibt erhalten, kein automatischer Retry wird als uneingeschränkter Erfolg gezählt.
-
-Das exakte zuvor fehlgeschlagene CI-Alpha-Artefakt wurde lokal geöffnet: WebKit-iPhone-Flow und PCK-Smoke bestanden. JS/WASM des CI- und lokalen Exports sind bytegleich. Der verwendete Playwright1.56.1-/WebKit26-Stack wird für Folgeprüfungen auf den aktuellen stabilen, ausdrücklich fixierten Playwright1.65.0-/WebKit27.2-Stack aktualisiert. Erster lokaler iPhone-Flow des CI-Artefakts auf27.2 bestanden. Vollständige Folgeprüfungen ausstehend; keine behauptete Root-Cause-Behebung oder physische Geräteabnahme.
+Bilder sind tatsächliche Godot-/Browseraufnahmen, keine Mockups. Vollständige Rohlogs/Screenshots liegen in den benannten CI-Artefakten. [Verbleibende Grenzen](KNOWN_ISSUES.md).

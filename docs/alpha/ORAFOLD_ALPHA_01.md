@@ -23,11 +23,13 @@ Der Archivmodus bleibt erreichbar; `alpha_build` startet den neuen Einstieg. `Al
 |---|---|
 | P01–P07 | Übernommene PR-Kette, fixierter Oracle; bestehende Differentialfälle erneut geprüft |
 | P08 | Ergebnis-/Kontrollserien im Legacy-Kernel; vollständige Referenzpartien und bestehende Winner-Goldens |
-| P09 | Funktionale neue UI für beide Profile; vollständige historische Audit-Vorschau noch nicht umgesetzt |
+| P09 | Alpha-Masterumfang umgesetzt:funktionale UI für beide Profile; zusätzliche historische Audit-Vorschau fehlt |
 | P10 | Original-KI und automatische Eröffnung/Züge; 24 vollständige JS/Godot-Vergleiche, noch nicht Audit-Gate250/1000 |
-| P11 | Vollständiger nativer Replayvertrag implementiert/getestet; JS audit-v4/FNV1a-Import/Export fehlt |
-| P12 | Sammlung, Detail, lokaler Deckbau/Speicherung implementiert; v09/v06/v05-Altstandadapter und alte Ökonomie nicht implementiert |
+| P11 | Alpha-Masterumfang umgesetzt:vollständiger nativer Replay/Protokollvertrag; historischer JS audit-v4/FNV1a-Vertrag fehlt |
+| P12 | Alpha-Masterminimum umgesetzt:Sammlung/Detail/lokaler Deckbau/Speicherung; historischer Altstandadapter/alte Ökonomie fehlen |
 | Alpha M2–M4 | Regelprofil, 55 Karten, vier Starter, KI und lokale Oberfläche implementiert |
-| M5 | Lokaler Web-Build vorhanden; QA-Status und Einschränkungen in QA_REPORT; Veröffentlichung gesperrt |
+| M5 PhaseA | Verifizierter Web-Build8c1d342, zwei vollständig grüne CI-Läufe,14 Browserprofile plus6 Kaltstarts pro Lauf; nicht veröffentlicht |
 
 Dies ist ein spielbarer Alpha-Meilenstein, **keine Behauptung vollständiger historischer game.js-Parität**. [Offene Punkte](KNOWN_ISSUES.md), [Tests](QA_REPORT.md), [Releasegrenze](RELEASE_REPORT.md).
+
+Getestetes Artefakt, vollständige SHAs/Downloads und Reproduktion stehen in [QA_REPORT](QA_REPORT.md). Der anschließende Dokumentationsnachtrag ändert keine geprüften Spiel-/UI-/Karten-/Workflowbytes.

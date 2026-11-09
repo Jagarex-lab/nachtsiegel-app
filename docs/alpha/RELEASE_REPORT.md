@@ -12,7 +12,11 @@ Develop bleibt `b1f5ea59a4754bac19df31e279bff8a295cb6ea8`. Main und andere Repos
 
 `tools/build_alpha.sh` exportiert Godot4.6.3-Preset `Alpha Web QA` nach `work/alpha/web`. `build-info.json` bindet Sourcecommit, Version und beide Ruleset-IDs. Startet direkt im Alpha-Einstieg; das Archiv ist separat erreichbar. Für lokale Exporttemplates XDG_DATA_HOME setzen; CI behält die vom Godot-Setup installierte Standardposition.
 
-Lokal starten: `python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web`, dann `http://127.0.0.1:8788/`. HTTP erforderlich, nicht index.html als file öffnen. Der Testserver bindet nur localhost. Das Buildarchiv und QA-Nachweise werden über den Draft-PR/Actions als **Artefakt**, nicht über Pages bereitgestellt. Exakte SHA und Prüfsummen stehen im Artefaktmanifest.
+Lokal starten: `python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web`, dann `http://127.0.0.1:8788/`. HTTP erforderlich, nicht index.html als file öffnen. Der Testserver bindet nur localhost. Das Buildarchiv und QA-Nachweise werden über den Draft-PR/Actions als **Artefakt**, nicht über Pages bereitgestellt. Geprüfter Kandidat:`8c1d3427d0208862e712dc88da5be9086c6a9194`. Branchlauf42713094196 und PR-Testmerge42713103955 vollständig SUCCESS (Native/Chromium/WebKit plus sechs Kaltstarts). [QA und Artefakt](QA_REPORT.md).
+
+Eigenständiges ZIP:`orafold-alpha-0.1-8c1d3427d020.zip`,19.862.070 Bytes, SHA256 `ad7a883e316df6a087a404a80c20634a294e6d06465e67318023b25d1d7ebc43`. [Actions-Artefakt mit Spiel-ZIP, Screenshots und Logs](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42713094196/artifacts/13715564954). Innere ZIP-/Einzeldateihashes nach Download erneut geprüft. Kein Live-SHA; dieser SHA wurde nicht auf Pages veröffentlicht.
+
+Der finale Dokumentationsnachtrag hält diese Abnahme fest und ändert keine getesteten Runtime-/Karten-/Workflowdateien. Seine CI kann erneut laufen; er erklärt keinen anderen Build rückwirkend zum getesteten Release.
 
 ## Sicherheit bleibt unverändert
 

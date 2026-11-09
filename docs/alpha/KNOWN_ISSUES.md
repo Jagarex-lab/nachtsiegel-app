@@ -1,35 +1,30 @@
-# Bekannte Einschränkungen und nächste Schritte
+# Verbleibende Grenzen nach dem grünen Alpha-Kandidaten
 
-Stand:2026-11-09. Keine Einschränkung wird als bestandener Test gezählt.
+Stand:2026-11-09. Kandidat8c1d342 hat zwei vollständig grüne CI-Läufe einschließlich Native/Chromium/WebKit und wiederholten Kaltstarts. Kein produktiver Release. [Nachweise](QA_REPORT.md).
 
-## Noch nicht implementiert
+## Historischer Auditumfang über das spielbare Alpha-Minimum hinaus
 
-1. **P11c/d:** Originales JS audit-v4/replayVersion2 mit JS-JSON-/FNV1a-Semantik und Import echter Legacy-Exports. Der neue native SHA256-Replayvertrag ist ein separates Format. Nächster unabhängiger Schritt: Unicode/Zahlen/Feldreihenfolge-Goldens, dann Originalexport-Import gegen fixierten Oracle.
-2. **P12c:** Import/Export alter v09/v06/v05-Saves. Eigenes Alpha-Profil verhindert versehentliches Überschreiben, ersetzt aber keinen Migrationsadapter. Atomare Konvertierung einschließlich Besitz/Deck/Wins/Losses/Settings separat testen.
-3. Alte lokale Ökonomie/P12d wird nicht als Alpha-Funktion eingeführt. Kein Shop, Booster, Konto, Echtgeld oder Monetarisierungszustand. Architektur aus PR3 bleibt nur Referenz.
-4. Vollständige historische regelbasierte Angriffsvorschau und alle game.js-Nebenwege;250 Oraclepartien/1000 breite Simulationen aus Audit-GateC sind noch nicht erreicht. Aktuell24 vollständige Differentialpartien und64 Alpha-Simulationen.
+- **P11c/d:** Originales JS audit-v4/replayVersion2 mit JS-JSON-/FNV1a-Semantik und Import echter Legacy-Exports fehlt. ORAFOLD-LOCAL-REPLAY v1 ist ausdrücklich ein eigener vollständiger nativer Replayvertrag. Nächster unabhängiger Schritt:Unicode/Zahlen/Feldreihenfolge-Goldens, Originalauditimport, dann exakter Event-/Exportvertrag.
+- **P12c:** v09/v06/v05-Altstandadapter fehlt. Eigenes Alpha-Profil verhindert Überschreiben des Archivs, ersetzt aber keine Besitz-/Deck-/Ergebnis-/Settingskonvertierung. Separat atomar testen.
+- Historische Angriffsvorschau und alle game.js-Nebenwege sind nicht vollständig migriert. Audit-Gate250 vollständige Oraclepartien/1000 Simulationen ist nicht erreicht; vorhanden24 vollständige Differentialpartien und64 Alpha-Simulationen.
+- Raw-helper `block.retained_during_other_begin` bleibt `guarded_begin_wrong_side` unsupported:der reguläre Vertrag verbietet falsche aktive Seite. Nicht als bestanden gezählt. Alle regulären implementierten Spielaktionen laufen über geprüfte Commands.
 
-## Offener CI-Kompatibilitätsbefund (P1)
+Der Alpha-Master verlangt für P08–P12 die zur vollständigen Partie nötigen Funktionen, ein nachvollziehbares Protokoll und mindestens einen speichernden lokalen Deckbuilder. Dieser funktionale Umfang ist vorhanden; daraus folgt **keine vollständige historische game.js-/Audit-Parität**.
 
-Pushlauf42705454623 bestand alle Archivprofile und alle vier Alpha-Chromiumprofile samt beiden vollständigen UI-Partien, scheiterte anschließend beim ersten WebKit-Alpha-Start: `RuntimeError: access to a null reference (entryFunction(argc,argv))`. Screenshot zeigt den Godot-Bootfehler, keinen Kampfzustand. Derselbe Build bestand lokal alle drei WebKit-Profile. Ursache noch nicht bewiesen; kein behobener Gameplayfehler behauptet. CI verwendet im Folgecommit getrennte frische Runner pro Engine und frische Browser pro Profil; Bestätigung ausstehend. Vor Freigabe muss der WebKit-CI-Start reproduzierbar funktionieren oder der tatsächliche Engine-/Browserdefekt geklärt werden.
+## Geräte, Gestaltung und Balance
 
-## QA und Produktqualität
+- Keine physischen iPhone-/Android-Tests; WebKit/Chromiumprofile sind Desktop-Browser-Simulationen. Keine native Store-/FPS-/Batterie-/Thermalabnahme. Vor Geräte-/Releasefreigabe tatsächliche Zielgeräte und Safari-Versionen testen.
+- Vorhandene Atlasillustrationen sind ausdrücklich Platzhalter, nicht55 einzigartige finale Bilder. Keine abgeschlossene Premium-Art-Produktion behauptet. Eine eigenständige vollständige Alpha-WCAG-Messreihe steht noch aus; die bestehende Archivreihe bleibt grün.
+- Unter296 logischen Höhenpixeln erscheint ein Platz-/Tastaturhinweis statt abgeschnittener Kampfcontrols. Partie bleibt erhalten.
+- Balance unbewiesen. Lange Collapse-Partien und geringe Stichprobe siehe BALANCE_REPORT; keine47–53%-Aussage. Vier Archetypnamen je Macht sind Identitätsachsen, nicht16 fertige Decks.
+- Sammlung ist für lokale Tests vollständig freigeschaltet. Kein Shop, Booster, Währungssystem, Konto, Handel, Gilde oder Echtgeld. PR3 ist ausschließlich Architekturreferenz.
 
-- Browser-/Touchprofile sind Desktop-Simulationen, **keine physischen iPhone-/Android-Tests**. Kein App-Store-/Play-Store-Build abgenommen.
-- Archiv-UI meldete lokal erneut `Touch end turn locked against duplicate tap (1600,900)` unter Software-Rendering. Späterer kompletter Archivlauf und isolierter Inputlauf bestanden (380/0 bei unveränderter Deadline). Der frühe Timingbefund bleibt als Flakiness-Risiko dokumentiert, nicht als nachgewiesener Alpha-Kernfehler.
-- Originalquelle der Hilfs-API `block.retained_during_other_begin` bleibt `guarded_begin_wrong_side` unsupported: regulärer Spielvertrag verbietet falsche aktive Seite. Nicht in1305 bestandenen Fällen enthalten.
-- Bilder sind wiederverwendete Atlas-Platzhalter, nicht55 einzigartige finale Illustrationen. Neue Arena verbessert Bedienung/Trennung, erreicht aber noch keine abschließend abgenommene Premium-Art-Produktion.
-- Unter296 logischen Höhenpixeln zeigt die Arena einen verständlichen Platzhinweis statt abgeschnittener Kampfcontrols. Browserleisten/Softwaretastatur schließen; Partie bleibt erhalten.
-- Balance unbewiesen; lange Collapse-Partien und asymmetrische kleine Stichprobe siehe BALANCE_REPORT.
-- BrowserCI anfangs Exporttemplatepfad/Ubuntu26.04 inkompatibel; beide Infrastrukturursachen korrigiert. Zusätzlicher sporadischer WPE-Archivstart auf CI: sechs Profile bestanden, siebtes Timeout; separater Pushlauf bestand die Archivprofile. Browserprozesse nun je Profil isoliert; betroffener Einzellauf lokal bestanden. Gesamtlaufstatus in QA_REPORT, kein pauschales CI-Grün.
+## Behobene beziehungsweise eingegrenzte Prüfprobleme
 
-## Phase B – ausdrücklich nicht ausgeführt
+Alte Playwright1.56.1/WebKit26-Läufe hatten sporadische WASM-Boottraps vor Spielbeginn, auch im Archiv. Prozessisolation allein reichte nicht. Mit fixiertem aktuellem Stack1.65.0/27.2 bestehen zwei aktuelle CI-Läufe und Kaltstartregression; die genaue frühere Engineursache wird nicht als bewiesen ausgegeben. Alte reale Safari-Versionen sind dadurch nicht abgenommen. Sämtliche Fehlerchronik einschließlich HTTP-Server-Race, frühzeitigem UI-Renderfehler und lokalem Archiv-Timingbefund steht in QA_REPORT. Keine Timeouts/Assertions zur Schönung entfernt.
 
-Kein develop-Merge und kein produktives Deployment. Admin-Einstellungen für geschützten Pages-Release sind nicht nachweislich vollständig eingerichtet. Alte Publisher-ID406254158 deaktiviert lassen. Releaseregeln nicht durch Featurebranch-Hosting umgehen. Siehe RELEASE_REPORT.
+## Lieferung und spätere Freigabe
 
+Develop blieb unverändert. Publisher-ID406254158 ist deaktiviert. Adminschutz/Reviewer/Branchschutz sind nicht vollständig verifiziert; dies blockiert ausschließlich PhaseB, nicht weitere Entwicklung. Kein Auto-Merge oder Release-Dispatch. [Freigabeablauf](RELEASE_REPORT.md).
 
-## Browser-Kompatibilitätsnachtrag – 2026-11-09
-
-Der getrennte PR-Lauf42708751068 bestand die vollständigen WebKitprüfungen; der Pushlauf42708739069 scheiterte dagegen im dritten **Archiv**-WebKitprofil vor Spielstart mit `Out of bounds memory access (entryFunction)`. Prozessisolation allein ist damit kein verlässlich nachgewiesener Fix. Auch dieses Scheitern bleibt erhalten, kein automatischer Retry wird als uneingeschränkter Erfolg gezählt.
-
-Das exakte zuvor fehlgeschlagene CI-Alpha-Artefakt wurde lokal geöffnet: WebKit-iPhone-Flow und PCK-Smoke bestanden. JS/WASM des CI- und lokalen Exports sind bytegleich. Der verwendete Playwright1.56.1-/WebKit26-Stack wird für Folgeprüfungen auf den aktuellen stabilen, ausdrücklich fixierten Playwright1.65.0-/WebKit27.2-Stack aktualisiert. Erster lokaler iPhone-Flow des CI-Artefakts auf27.2 bestanden. Vollständige Folgeprüfungen ausstehend; keine behauptete Root-Cause-Behebung oder physische Geräteabnahme.
+Geteilter Desktop:Environment `ccarenv_b64_Y2NhcmVudl9mYTkyN2VhMzYwZjA4MTkxYTgwYTIyNzY4MDZkZGQ4Mg` meldete remote_desktop enabled/state unknown, bot aber weder Desktop-NodeREPL noch open_in_codex an. Ein gemeinsamer Browsertab konnte deshalb nicht geöffnet werden. Automatisierte reale Browserprozesse, lokale Testserver und herunterladbare ZIP-Artefakte funktionieren unabhängig davon.
