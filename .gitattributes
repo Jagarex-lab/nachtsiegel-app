@@ -1,4 +1,4 @@
 # Reproducible reference artifacts; implementation remains visible in reviews.
-tests/fixtures/legacy/*.json linguist-generated=true
-data/legacy/*.json linguist-generated=true
-tests/reference/duel_deck/engine.js linguist-vendored=true
+tests/fixtures/legacy/*.json text eol=lf linguist-generated=true
+data/legacy/*.json text eol=lf linguist-generated=true
+tests/reference/duel_deck/engine.js -text linguist-vendored=true
