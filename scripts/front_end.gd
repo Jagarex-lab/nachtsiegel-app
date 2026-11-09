@@ -35,6 +35,7 @@ var clock := 0.0
 func _ready() -> void:
 	if store==null: store=preload("res://scripts/progress_store.gd").new()
 	Brand.apply_window_title()
+	get_tree().quit_on_go_back=false
 	layer=CanvasLayer.new();add_child(layer)
 	screen=Control.new();layer.add_child(screen)
 	get_viewport().size_changed.connect(_resize)
@@ -121,11 +122,14 @@ func _start_screen() -> void:
 	var subtitle=_label("Fünf Pfade. Dein nächster Zug.",Rect2(x-500,370,1000,70),34,T.SECONDARY);subtitle.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	_button("begin","BEGINNEN",Rect2(x-390,490,780,115),func():show_page("home" if store.data.tutorial_completed else "intro"))
 	_button("home","HAUPTMENÜ",Rect2(x-390,650,780,110),func():show_page("home"))
+func _play() -> void:
+	if store.data.tutorial_completed:_start_battle("quick")
+	else:show_page("intro")
 func _home() -> void:
 	_heading(Brand.display_name(),"Lokales Kartenduell · Fortschritt auf diesem Gerät")
 	actions.back.caption="ZUM START"
 	var h=maxf(104,ceil(44/scale_factor));var y=250.0
-	for row in [["play","SPIELEN",func():show_page("intro") if not store.data.tutorial_completed else _start_battle("quick")],["campaign","KAMPAGNE",func():show_page("campaign")],["collection","KARTENSAMMLUNG",func():show_page("collection")],["settings","EINSTELLUNGEN",func():show_page("settings")]]:
+	for row in [["play","SPIELEN",_play],["campaign","KAMPAGNE",func():show_page("campaign")],["collection","KARTENSAMMLUNG",func():show_page("collection")],["settings","EINSTELLUNGEN",func():show_page("settings")]]:
 		_button(row[0],row[1],Rect2(76,y,590,h),row[2]);y+=h+14
 	var x=logical_width*.53;var width=logical_width-x-72
 	_panel(Rect2(x,250,width,590))
@@ -247,6 +251,7 @@ func _start_battle(mode: String, chapter_number: int = 0) -> void:
 	if is_instance_valid(battle_node):remove_child(battle_node);battle_node.queue_free()
 	battle_node=preload("res://scenes/arena.tscn").instantiate()
 	battle_node.managed_session=true
+	battle_node.continuation_label="NEUES DUELL" if mode=="quick" else ("KAPITELÜBERSICHT" if mode=="campaign" and chapter_number==5 else "WEITER")
 	var hero=Catalog.hero(store.data.selected_hero)
 	battle_node.player_portrait_index=int(hero.portrait);battle_node.opponent_portrait_index=8 if int(hero.portrait)==7 else 7; battle_node.player_title=hero.name
 	battle_node.opponent_title="Übungshüter" if mode=="tutorial" else (Catalog.chapter(chapter_number).opponent+" · Porträt-Platzhalter" if mode=="campaign" else "Rivalisierender Hüter")
@@ -268,6 +273,9 @@ func _leave_battle() -> void:
 	if is_instance_valid(battle_node):remove_child(battle_node);battle_node.queue_free()
 	battle_node=null;leaving_battle=false;show_page("home")
 func _continue_campaign() -> void:
+	if run_mode=="quick":_start_battle("quick");return
+	if run_mode=="campaign" and current_chapter==5:
+		_leave_battle();show_page("campaign");return
 	var next=1 if run_mode=="tutorial" else mini(5,current_chapter+1)
 	_leave_battle()
 	if run_mode in ["tutorial","campaign"]:current_chapter=next;show_page("chapter")

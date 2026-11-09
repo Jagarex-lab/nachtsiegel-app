@@ -141,6 +141,7 @@ signal retry_requested
 signal continue_requested
 signal preferences_updated(reduced: bool)
 var managed_session := false
+var continuation_label := "WEITER"
 var battle_profile := "standard"
 var battle_seed := 8802026
 var player_portrait_index := 7
@@ -588,7 +589,9 @@ func _show_result(value: String) -> void:
 	_put(text,Rect2(350,330,900,170),panel)
 	if managed_session:
 		_action_in_modal("HAUPTMENÜ",Rect2(350,650,420,110),func(): main_menu_requested.emit())
-		_action_in_modal("WEITER" if value.begins_with("SIEG") else "NOCHMAL",Rect2(830,650,420,110),func(): continue_requested.emit() if value.begins_with("SIEG") else retry_requested.emit())
+		_action_in_modal(continuation_label if value.begins_with("SIEG") else "NOCHMAL",Rect2(830,650,420,110),func():
+			if value.begins_with("SIEG"):continue_requested.emit()
+			else:retry_requested.emit())
 	else:
 		_action_in_modal("WEITER ANSEHEN",Rect2(350,650,420,110))
 		_action_in_modal("NEUES DUELL",Rect2(830,650,420,110),_restart)

@@ -10,6 +10,8 @@ Umsetzung zusammen mit [Task B: neue Arena und vier Designzyklen](../design/prem
 - **Kartensammlung** zeigt zunächst exakt die sieben tatsächlich implementierten Karten. Suche, Fraktionsfilter, Detailansicht und separat zuschaltbare 13 Konzeptkarten funktionieren. Entwürfe besitzen keine erfundenen spielbaren Werte oder Fähigkeiten.
 - **Einstellungen** speichert reduzierte Bewegung. Vollbild ist nur bei vorhandener Plattformunterstützung aktiv; native Builds bieten Beenden, Browser eine Rückkehr zum Startbildschirm. Keine funktionslosen Audio-, Account-, Kauf- oder Online-Schaltflächen.
 
+Die Plattform-Zurück-Taste wird abgefangen und folgt dem Menürouting; in einem Duell öffnet sie das Duellmenü.
+
 Die beiden Helden haben je 35 Leben, dasselbe Deck und keine Sonderfähigkeit. Die Auswahl ändert Porträt und Identität, keine Kampfwerte. Gegnerporträts sind wiederverwendete, ausdrücklich vorläufige Konzeptbilder.
 
 ## Kampagne
@@ -51,6 +53,12 @@ Im Browser schließt eine unmittelbar geschriebene, versionierte `localStorage`-
 1. **Sitzungen und Regeln:** Kampfmodell herausgelöst, Karten zentralisiert, Navigation und Speicher eingeführt. Differentialtests fanden ein nach Fixture-Reset fortlebendes Ergebnisfeld; vor jeder neuen Phasenauswertung bereinigt. Standardduelle stimmen wieder mit dem eingefrorenen unabhängigen Regelmodell überein.
 2. **Vollständige Wege:** echte Tutorial-/Kampagnenabschlüsse, Sammlung und Speicherkorruption geprüft. Kapitel-IDs aus JSON-Zahlen explizit in Ganzzahlen umgewandelt; GUI-Wechsel aus Eingabe-Callbacks werden verzögert ausgeführt, damit freigegebene Controls keine Ereignisse mehr verarbeiten.
 3. **Mobile und Wiederladen:** Touch-Ziele, kurze Browserfenster, Tastaturhöhe und alle Texte geprüft. Eine fokussierte Suche übersteht das Einblenden der Bildschirmtastatur. Die Labelgröße wird vor dem Einfügen gesetzt, um eine anfänglich auf Nullbreite umbrochene, zu hohe Mindestgröße zu vermeiden. Unmittelbarer Browser-Speicherspiegel behebt einen durch Neuladen nachgewiesenen Persistenzfehler.
+
+4. **Vollständige Kampagnenübergänge:** alle fünf Kapitel nacheinander legal gewonnen, echte Niederlage durch Passen und anschließende Wiederholung geprüft. Ein Godot-Laufzeitfehler bei bedingten Signalaufrufen im Ergebnisdialog wurde mit expliziten Zweigen behoben. Kapitel fünf kehrt zur Übersicht zurück; normale Duelle bieten einen direkten Neustart.
+
+## Screenshots
+
+[Start](screenshots/start-844x390.png) · [Hauptmenü](screenshots/home-844x390.png) · [Heldenwahl](screenshots/heroes-844x390.png) · [Sammlung](screenshots/collection-844x390.png) · [Kartenansicht](screenshots/implemented-inspection.png) · [Kapitel 1](screenshots/chapter-1.png) · [Niederlage](screenshots/campaign-defeat.png)
 
 ## Prüfung und Grenzen
 

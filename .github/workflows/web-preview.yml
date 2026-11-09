@@ -17,7 +17,7 @@ concurrency:
 jobs:
   test-and-export:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Install Godot and matching templates
@@ -65,7 +65,7 @@ jobs:
         run: |
           npm install --no-save --package-lock=false playwright
           npx playwright install --with-deps chromium webkit
-      - name: Browser startup and touch smoke test
+      - name: Full browser tutorial, saved reload and collection tests
         env:
           EXPECTED_COMMIT: ${{ github.sha }}
         run: |
@@ -97,7 +97,7 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'
     needs: test-and-export
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 45
     permissions:
       contents: read
       pages: write

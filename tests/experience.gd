@@ -115,7 +115,7 @@ func run() -> void:
 	app.battle_node._show_leave_confirmation();await settle();await tap(app.battle_node.modal_actions[1]);check(app.current_page=="home","Confirmed leave returns to menu")
 	await tap(app.actions.settings);var before=app.store.data.settings.reduced_motion
 	await tap(app.actions.motion);check(app.store.data.settings.reduced_motion!=before,"Settings toggle is functional")
-	await tap(app.actions.back);check(app.current_page=="home","Settings returns home")
+	root.go_back_requested.emit();await settle();check(app.current_page=="home","Platform back returns from settings without quitting")
 	await tap(app.actions.play);check(app.current_page=="battle" and app.run_mode=="quick","Play starts an ordinary duel after tutorial")
 	game=app.battle_node;var quick_win=autoplay(game.battle);game._finish(game.battle.result);await settle()
 	check(game.finished,"Ordinary duel reaches a real result")
@@ -131,6 +131,24 @@ func run() -> void:
 	root.size=Vector2i(844,390);await settle()
 	app.set_meta("inspect_id","furnace_apprentice");app.show_page("inspect");await settle();await capture("concept-inspection")
 	app.set_meta("inspect_id","ash_watch");app.show_page("inspect");await settle();await capture("implemented-inspection")
+	app.show_page("home");await tap(app.actions.campaign);await tap(app.actions.chapter_1)
+	for chapter in range(1,6):
+		check(app.current_page=="chapter" and app.current_chapter==chapter,"Campaign continuation reaches story %d" % chapter)
+		await capture("chapter-"+str(chapter))
+		await tap(app.actions.start_duel);game=app.battle_node
+		if chapter==1:
+			for turn in 60:
+				if game.battle.finished:break
+				game.battle.resolve_turn()
+			check(game.battle.finished and game.battle.result.begins_with("NIEDERLAGE"),"Passing every turn produces a genuine defeat")
+			game._finish(game.battle.result);await settle();await capture("campaign-defeat")
+			await tap(game.modal_actions[1]);game=app.battle_node
+			check(app.current_page=="battle" and not game.finished,"Defeat retry creates a fresh encounter")
+		check(autoplay(game.battle),"Real campaign victory %d" % chapter)
+		game._finish(game.battle.result);await settle()
+		check(app.store.data.chapter_wins.has(chapter),"Campaign victory saved %d" % chapter)
+		await tap(game.modal_actions[1])
+	check(app.current_page=="campaign","Final chapter returns to chapter overview")
 	var path=app.store.path;app.queue_free();await process_frame
 	var restarted=load("res://scenes/front_end.tscn").instantiate();restarted.store=Store.new(path);root.add_child(restarted);await settle()
 	check(restarted.store.data.tutorial_completed and restarted.store.data.selected_hero=="ash_king","Restart restores tutorial and hero")
