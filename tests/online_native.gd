@@ -33,7 +33,10 @@ func _run() -> void:
 		var client := Client.new()
 		clients.append(client)
 		client.request_completed.connect(func(operation: String, response: Dictionary): completed[index][operation] = response)
-		client.message_received.connect(func(message: Dictionary): received[index].append(message))
+		client.message_received.connect(func(message: Dictionary):
+			received[index].append(message)
+			if message.get("type") == "error":
+				errors.append(message.get("code", "WS_ERROR")))
 		client.online_error.connect(func(code: String): errors.append(code))
 		root.add_child(client)
 		check(client.register_account("native_%d_%s" % [index, suffix], password, "Native Smoke %d" % index) == OK, "native registration starts")

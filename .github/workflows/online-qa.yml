@@ -1,0 +1,37 @@
+name: ORAFOLD isolated online prototype QA (no deployment)
+on:
+  pull_request:
+    branches: [develop]
+    paths: ['server/**', 'scripts/online/**', 'shared/**', 'tests/online*', 'data/online/**', 'docs/online/**', '.github/workflows/online-qa.yml']
+  push:
+    branches: [feature/orafold-online]
+permissions:
+  contents: read
+jobs:
+  online:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.13.0'
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - run: npm ci
+        working-directory: server
+      - run: npm run typecheck && npm test && npm run demo && npm audit --omit=dev --audit-level=high
+        working-directory: server
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+      - run: godot --headless --editor --import --path . --quit
+      - run: godot --headless --path . --script tests/online_client.gd
+      - name: Local Compose and real native Godot adapter smoke
+        run: |
+          docker compose -f server/compose.yaml up -d --build --wait
+          godot --headless --path . --script tests/online_native.gd
+      - name: Stop local fixture server
+        if: always()
+        run: docker compose -f server/compose.yaml down
