@@ -53,6 +53,8 @@ Entwicklungsnachweise vor der abschließenden Integrations-CI:
 | Öffnung / Touch / Drag | 852 Assertions, null Fehler; Safe-Area-Fullboard-Fixture eingeschlossen |
 | Bibliothek mit aktivem Artenoverlay | 677 Assertions, null Fehler |
 | Zehn Strategievorlagen | 2.031 Assertions, null Fehler; 20 vollständige KI-Partien; tatsächliche Control-/Scrollgeometrie bei 390×844, 844×390, 320×568 und 756×320 |
+| Unveränderter Gesamtwrapper nach allen Runtimekorrekturen | Exitcode 0; alle fünf nativen Suiten zusammen 4.248 Assertions und alle 44 Node-Testgruppen bestanden |
+| Neuer Export, Chromium und WebKit | Je 493 Assertions, null Fehler: beide Eröffnungslose, drei Kartentypen per Maus/Touch, Abbruch/ungültiges Ziel/Rotation, identisches Replay und offene Inspektion; Runtime-Commit `5597b187`, danach nur Markdownänderung bis `67f89fd4` |
 | Ressourcenexperiment | 1.125 Assertions, null Fehler; 192 Matrixpartien + sieben Verifikationspartien |
 | Release-Sicherheit | Acht Python-Tests, null Fehler |
 | Vollständiger Legacy-Wrapper | Erneut mit Exitcode 0; reproduziert die fixierte JavaScript-Referenz und vorhandene Kernel-/KI-/Replay-Prüfungen |
@@ -61,6 +63,12 @@ Entwicklungsnachweise vor der abschließenden Integrations-CI:
 Die Anzahl der Assertions ist kein Maß für die Anzahl fertiger Karten. Ein erster lokaler Gesamtwrapper endete nach drei erfolgreichen nativen Teilsuiten mit Shell-Exit 2, weil seine Datei während der Ausführung parallel geändert wurde. Dieser Versuch zählt nicht als erfolgreicher Gesamtlauf. Die endgültige Integrationsentscheidung verlangt die unverändert ausgeführte CI; lokale Teilnachweise allein reichen dafür nicht. Browserresultate und veröffentlichter SHA werden erst nach tatsächlicher Verifikation bestätigt.
 
 Die erste echte neue Drag-Browserprüfung fand einen kritischen, zuvor nativ nicht sichtbaren Eingabefehler: Godot 4.6.3 Web bildet DOM-`touchcancel` und `touchend` auf denselben Release-Typ ab. Dadurch konnte ein abgebrochener Touch eine Karte ausspielen. Der neue Capture-Listener erhält einen monotonen Abbruchzähler; die Godot-UI prüft ihn synchron vor jeder Freigabe. Blur und Hintergrundwechsel brechen dieselbe Geste ab. Der Browserfall bleibt streng: ein Abbruch auf einem gültigen Ziel darf weder Zustand noch Befehlszahl ändern. Erst seine erfolgreiche Wiederholung erlaubt die Freigabe des neuen Drag-Standes.
+
+Diese strenge Wiederholung bestand anschließend in beiden Browsern. Je Engine entstanden zehn unterschiedliche PNG-Dateien aus elf Aufnahmen. WebKit-Touch wurde ausdrücklich als synthetischer DOM-Touch und Chromium-Touch über das Browserprotokoll geprüft; kein echter Gerätetest.
+
+Eine weitere CI fand eine veraltete Testannahme in der Sammlung: Der feste Pfadkundiger war nach der neuen Energie-/Namenssortierung die fünfte Karte. Bei 844×390 lag sein Mittelpunkt bei y=426 außerhalb des sichtbaren Bereichs. Der unveränderte Sammlungsscroll war funktionsfähig. Der Harness wählt nun eine tatsächlich vollständig sichtbare Karte und prüft weiterhin echten Touch, Modal-/Schließenaktionen und unveränderte Deckdaten. Zwei gezielte WebKit-Profile (844×390/DPR3 sowie 844×320 mit Safe Areas) bestanden; sie ersetzen nicht die vollständige abschließende CI.
+
+Die Release-CI trennt nun Native-/Exportprüfungen von einer Chromium-/WebKit-Matrix. Keine Suite entfällt. Beide Browser prüfen denselben vorher exportierten Kandidaten; der manuelle Release-Guard verlangt unverändert den erfolgreichen **Gesamtrun**. Ein bereits hochgeladenes Kandidat-Artefakt allein erlaubt keine Veröffentlichung.
 
 ```bash
 tools/test_legacy.sh

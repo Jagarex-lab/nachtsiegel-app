@@ -11,6 +11,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
+   let inspectedCard=null;
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
    const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync(`work/alpha/browser-progress-${engine}-${name}.json`,JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
@@ -81,7 +82,30 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
     console.log('LOBBY',engine,name);let menu=await state();
     for(const key of ['start','builder','collection','settings'])assert(menu.actions[key],key);
     for(const key of ['archive','mode_alpha','mode_legacy'])assert(!menu.actions[key],'no public route '+key);
-    await shot('lobby');await action('collection');assert.equal((await state()).page,'collection');assert(!(await state()).actions.save_deck);if(!legacyOnly){await action('card_oa-neutral-c01');await action('modal_close');}await action('builder_back');
+    await shot('lobby');await action('collection');assert.equal((await state()).page,'collection');assert(!(await state()).actions.save_deck);
+    if(!legacyOnly){
+     const collection=await state(),viewport=page.viewportSize();
+     const inside=r=>r[0]>=(insets?.left||0)&&r[1]>=(insets?.top||0)&&r[0]+r[2]<=viewport.width-(insets?.right||0)+1&&r[1]+r[3]<=viewport.height-(insets?.bottom||0)+1;
+     // Cards are sorted by energy/name. A fixed card ID can be below the
+     // ScrollContainer's visible first row; its full rect still exists in QA.
+     // Inspect an actual fully visible card using browser touch, never an
+     // offscreen coordinate or a direct game-model/test-hook call.
+     const visible=Object.entries(collection.actions).filter(([id,a])=>id.startsWith('card_')&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9&&inside(a.rect)).sort((a,b)=>a[1].rect[1]-b[1].rect[1]||a[1].rect[0]-b[1].rect[0]);
+     assert(visible.length>0,'collection has an actual visible >=44CSS card');
+     const [id,target]=visible[0],card=by[id.slice('card_'.length)];assert(card,'visible collection action identifies a real card');
+     inspectedCard={id:card.id,name:card.name,rect:target.rect};
+     await action(id);const detail=await state();
+     assert(detail.modal&&detail.actions.inspect_target&&detail.actions.modal_close,'card inspector with explicit close actions');
+     assert(detail.modal_version>collection.modal_version,'inspection opened a new modal');
+     assert.deepEqual(detail.deck_ids,collection.deck_ids,'read-only collection inspection preserves the deck');
+     assert.equal(detail.page,'collection','inspection stays in the collection');
+     assert(inside(detail.actions.modal_close.rect)&&detail.actions.modal_close.rect[2]>=43.9&&detail.actions.modal_close.rect[3]>=43.9,'inspector close is visible >=44CSS');
+     await shot('collection-inspection');await action('modal_close');
+     const closed=await state();assert(!closed.modal&&closed.page==='collection','closing inspection restores collection');
+     assert.deepEqual(closed.deck_ids,collection.deck_ids,'closing inspection preserves the deck');
+     console.log('COLLECTION INSPECTION',engine,name,card.id,card.name);
+    }
+    await action('builder_back');
     if(!legacyOnly){await action('settings');const power={desktop:'houses','desktop-wide':'stillwatch',android:'ninth',iphone:'morph','android-bars':'houses','iphone-wide':'stillwatch','iphone-bars':'morph'}[name];await action('faction_'+power);await action('settings_back');}
     await opening();let q=await state();assert.equal(q.battle.hero.maxHp,legacyOnly?35:30);if(!legacyOnly)assert.equal(q.battle.enemy.maxHp,30);
     for(const key of (legacyOnly?['end','actions','inspect','menu','log']:['end','actions','inspect','menu','log'])){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
@@ -96,7 +120,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
      q=await state();assert(q.battle.winner,'complete UI duel');await shot('result');await action('result_log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
      await action('restart');await action('confirm_restart');await wait(()=>!window.orafoldQA.battle.winner);await shot('restart');
     }
-    assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,checks:'real touch, menu, collection, settings, opening, 44CSS bounds, cards, saved deck reload',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null});
+    assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,checks:'real touch, menu, collection, visible card inspector/close with unchanged deck, settings, opening, 44CSS bounds, cards, saved deck reload',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null});
     console.log('ALPHA BROWSER PASS:',engine,name);
    }catch(error){await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,errors,diagnostic:await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,page:window.orafoldQA?.page})).catch(()=>null)},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}
