@@ -149,9 +149,14 @@ func _finish_draw_reference(side: String) -> bool:
 		p.fatigue=0;_trace("fatigue_reset",side)
 	return true
 func finish_draw(side: String) -> bool:
-	var probe=get_script().new();probe.state=state.duplicate(true)
+	var probe=_validation_probe()
 	if not probe._finish_draw_reference(side):return false
 	return _finish_draw_reference(side)
+func _validation_probe():
+	# Profile extension point: optional instance configuration must be cloned too.
+	# The default remains the original disposable state-only validation kernel.
+	var probe=get_script().new();probe.state=state.duplicate(true)
+	return probe
 func _burn_reference(side: String, index: Variant) -> bool:
 	if not _valid_side(side) or state.active!=side:return false
 	var p: Dictionary=state[side]
@@ -193,8 +198,12 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
 		add_res(p,2);_reaction(side,str(p.attune),str(card.order))
 	p.attune=card.order
 	check_winner()
+	if state.winner==null:_after_card_played(side,card,int(lane))
 	if state.winner==null:enqueue({"type":"summon","side":side,"card_id":card.id,"lane":lane})
 	return true
+func _after_card_played(_side: String, _card: Dictionary, _lane: int) -> void:
+	# Empty unless a separately instantiated rule profile explicitly opts in.
+	pass
 func _death_seen(unit: Dictionary) -> bool:
 	for previous: Dictionary in _dead_units:
 		if is_same(previous,unit):return true
@@ -239,10 +248,14 @@ func _resolve_death(event: Dictionary) -> void:
 	pending_death={"side":event.side,"lane":event.get("lane"),"card":unit.id,"overkill":maxi(0,-int(unit.hp))}
 	p.discard.append(unit.id)
 	_trace("death",event.side,{"pendingDeath":pending_death})
+	_apply_death_effect(event,card)
+	pending_death=null
+func _apply_death_effect(event: Dictionary, card: Dictionary) -> void:
+	var p: Dictionary=state[event.side]
+	var unit: Dictionary=event.unit
 	if card.effect=="harvest":
 		p.resonance=mini(15,int(p.resonance)+int(card.power)+1)
 		_trace("harvest",event.side,{"card_id":unit.id})
-	pending_death=null
 func attack_phase(side: String) -> bool:
 	if not _valid_side(side) or state.winner!=null:return false
 	var p: Dictionary=state[side]
@@ -298,8 +311,7 @@ func advance_turn(side: String) -> bool:
 	if not _valid_side(side) or state.winner!=null or state.active!=side:return false
 	var p: Dictionary=state[side]
 	if p.phase!="main" or p.pendingShift!=null or p.pendingTarget!=null or p.hand.size()>6:return false
-	var probe = get_script().new()
-	probe.state=state.duplicate(true)
+	var probe = _validation_probe()
 	if not probe._advance_unchecked(side):return false
 	return _advance_unchecked(side)
 func _advance_unchecked(side: String) -> bool:

@@ -177,7 +177,14 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
 	p.energy=int(p.energy)-int(card.cost);p.hand.remove_at(index)
 	if card.kind=="relic":
 		if p.relic!=null:p.discard.append(p.relic.id)
-		p.relic={"id":card.id};_trace("relic_installed",side,{"card_id":card.id});return true
+		p.relic={"id":card.id};_trace("relic_installed",side,{"card_id":card.id})
+		_after_card_played(side,card,int(lane));return true
+	_resolve_event_effect(side,card,int(lane))
+	p.discard.append(card.id);_refresh_bindings();_trace("event",side,{"card_id":card.id,"lane":lane});check_winner();return true
+func _resolve_event_effect(side: String, card: Dictionary, lane: int) -> void:
+	# Default original effect dispatcher. Optional profiles may replace this single
+	# effect boundary while preserving play validation/payment/zone transitions.
+	var p: Dictionary=state[side]
 	var op: Dictionary=state[_other(side)]
 	match str(card.effect):
 		"bolt":_lane_damage(_other(side),int(lane),int(card.power))
@@ -197,7 +204,6 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
 				if to>=0 and to<5 and op.lanes[to]==null:
 					var u: Dictionary=op.lanes[lane];_break_uid(int(u.uid));op.lanes[to]=u;op.lanes[lane]=null;break
 		"cascade":enqueue({"type":"echo","side":side,"remaining":int(card.power)})
-	p.discard.append(card.id);_refresh_bindings();_trace("event",side,{"card_id":card.id,"lane":lane});check_winner();return true
 func _lane_damage(side: String, lane: int, power: int) -> void:
 	var p: Dictionary=state[side]
 	if p.lanes[lane]==null:damage(p,power);return
