@@ -8,10 +8,11 @@ const {chromium,webkit}=require('playwright');
 const profile=process.env.AUDIO_QA_PROFILE||'chromium';
 const url=process.env.AUDIO_PRODUCT_URL||'http://127.0.0.1:8766';
 const evidence={profile,url,scope:'Actual exported product in browser; no physical device or human listening claim.',checks:[],errors:[],graphicsDiagnostics:[]};
+evidence.checks.push = function (...items) {console.error(items.join("; "));return Array.prototype.push.apply(this,items)};
 let browser;
 const deadline=setTimeout(()=>{console.error('Audio product browser deadline exceeded');process.exit(2)},300000);
 try {
-  browser=await (profile==='webkit'?webkit:chromium).launch(profile==='webkit'?{headless:true}:{headless:true,channel:'chromium',ignoreDefaultArgs:['--mute-audio'],args:['--no-sandbox','--autoplay-policy=user-gesture-required']});
+  browser=await (profile==='webkit'?webkit:chromium).launch(profile==='webkit'?{headless:true}:{headless:true,channel:'chromium',ignoreDefaultArgs:['--mute-audio'],args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader','--autoplay-policy=user-gesture-required']});
   const context=await browser.newContext({viewport:{width:1100,height:800}});
   await context.addInitScript(() => {
     const contexts = [];
@@ -138,6 +139,16 @@ try {
   evidence.checks.push('Actual menu pause/resume, master checkbox and immediate reload preserve all gains/mute/reduced intensity');
   await settings();await tap('audio_mute');
   await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
+  await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
+  s=await state();if(s.battle.stage==='origins')await tap('origin_0');
+  s=await state();if(s.battle.stage==='second')await tap('opening_done');
+  await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
+  evidence.audibleBeforePause=await capture();
+  await tap('menu');evidence.audibleMusicPaused=await capture();assert(evidence.audibleMusicPaused.maxRms<1e-7);
+  await tap('modal_close');await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
+  evidence.audibleAfterResume=await capture();
+  await tap('menu');await tap('confirm_menu');await settings();
+  evidence.checks.push('Actual audible battle music becomes zero during menu pause and resumes audibly');
   await page.evaluate(()=>{window.__audioOriginalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k.startsWith('orafold.audio.'))throw new DOMException('QA quota','QuotaExceededError');return window.__audioOriginalSet.call(this,k,v)}});
   await volume('ui',.31);assert.notEqual((await state()).audio.last_save_error,0);assert((await state()).audio_persistence_note.includes('nicht möglich'));
   await page.evaluate(()=>Storage.prototype.setItem=window.__audioOriginalSet);await volume('ui',.32);assert.equal((await state()).audio.last_save_error,0);
@@ -157,4 +168,4 @@ try {
   evidence.checks.push('Mobile390x844 actual scroll/control editing and44px targets');
   evidence.final=(await state()).audio;assert.equal(evidence.errors.length,0,JSON.stringify(evidence.errors));evidence.result='passed';
 } catch(error){evidence.result='failed';evidence.failure=error.stack||String(error);process.exitCode=1}
-finally{clearTimeout(deadline);if(browser)await browser.close();await mkdir('work/audio/product-browser',{recursive:true});await writeFile(`work/audio/product-browser/${profile}.json`,JSON.stringify(evidence,null,2));console.log(JSON.stringify(evidence,null,2))}
+finally{if(browser)await Promise.race([browser.close(),new Promise(resolve=>setTimeout(resolve,10000))]);clearTimeout(deadline);await mkdir('work/audio/product-browser',{recursive:true});await writeFile(`work/audio/product-browser/${profile}.json`,JSON.stringify(evidence,null,2));console.log(JSON.stringify(evidence,null,2))}

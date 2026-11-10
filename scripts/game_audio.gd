@@ -28,6 +28,7 @@ func apply(values: Dictionary) -> void:
 
 func cue(cue_name: String) -> void:
 	if quitting or not LEGACY_EVENTS.has(cue_name): return
+	if cue_name in ["win","lose"]: set_music("victory" if cue_name=="win" else "defeat")
 	if play_event(LEGACY_EVENTS[cue_name]):
 		history.append(cue_name)
 		if history.size() > 64: history.pop_front()
