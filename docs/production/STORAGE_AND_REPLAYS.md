@@ -4,9 +4,12 @@ Stand: 10. November 2026. Implementierung: `scripts/production/profile_store.gd`
 
 ## Implementierter Speichervertrag
 
-Profilversion **2** verwendet weiterhin die bestehende Datei `user://orafold_alpha_profile_v1.json`. Der historische Dateiname bleibt zur Migration erhalten. Gespeichert werden lokale Decklisten, Siege, Seed, Macht, Schwierigkeit und reduzierte Bewegung. Es gibt keine serverseitige Sammlung, Eigentumsprüfung, Währung oder Echtgeldfunktion.
+Profilversion **2** verwendet die getrennte Datei `user://orafold_profile_v2.json`. Der historische Dateiname `user://orafold_alpha_profile_v1.json` bleibt ausschließlich als lesbare Importquelle erhalten. Gespeichert werden lokale Decklisten, Siege, Seed, Macht, Schwierigkeit und reduzierte Bewegung. Es gibt keine serverseitige Sammlung, Eigentumsprüfung, Währung oder Echtgeldfunktion.
 
 - Version-1-Profile werden mit unveränderten stabilen Karten-IDs und unveränderter Deckreihenfolge geprüft und auf Version 2 übertragen. Laden allein überschreibt die Quelldatei nicht.
+- Nur wenn weder neue Hauptdatei noch neue Sicherung existieren, wird die alte Datei beziehungsweise ihre `.bak` gelesen. Auch ein unterstütztes vorläufiges Version-2-Profil im alten Dateinamen kann importiert werden. Eigene Storepfade erhalten keine automatische globale Importquelle; ein optionaler zweiter Konstruktorparameter muss sie ausdrücklich nennen.
+- Der erste ausdrückliche neue Save legt die exakt beim Import gelesenen Bytes unter `orafold_profile_v2.json.bak` ab. Die alte Hauptdatei und alte Sicherung bleiben unverändert. Die Importbytes werden beim Lesen eingefroren: Schreibt ein alter Client zwischen Import und Save seine alte Datei neu, verändert dies weder den bereits importierten Stand noch dessen Sicherungsnachweis.
+- Sobald die neue Hauptdatei oder ihre Sicherung vorhanden ist, erhält diese neue Namenswelt Vorrang. Änderungen eines alten Clients an seinem alten Dateinamen werden nicht erneut importiert. Eine fehlende neue Hauptdatei wird zunächst aus der neuen Sicherung rekonstruiert, nicht aus einem inzwischen möglicherweise überschriebenen Altprofil.
 - Gültige Decks werden anhand des aktiven Katalogs geprüft. Ungültige, entfernte oder unbekannten Profilen zugehörige Decks bleiben mit Originaldaten und Reparaturgrund unter `quarantined_decks` erhalten. Kein automatischer Zufallsersatz und kein stilles Löschen.
 - Fehlerhaft formatierte frühere Quarantänedaten werden selbst als Wiederherstellungsdatensatz bewahrt. Ungültige aktive Deckprofile und eine nicht als Dictionary vorliegende Quarantäne werden beim Speichern zurückgewiesen.
 - Eine unbekannte neuere Profil-/Katalogversion sperrt das automatische Schreiben. Dadurch können angezeigte Standardwerte die unbekannte Originaldatei nicht überschreiben.
@@ -21,6 +24,29 @@ Eine fehlende oder vollständig beschädigte Datei führt zu Standardwerten und 
 `project.godot` verwendet nun den Anzeigenamen **ORAFOLD**, setzt aber `config/use_custom_user_dir=true` und `config/custom_user_dir_name="godot/app_userdata/NACHTSIEGEL"`. Unter Linux bleibt dadurch der ursprüngliche Pfad `$XDG_DATA_HOME/godot/app_userdata/NACHTSIEGEL` erhalten. Die Prüfung vergleicht den tatsächlichen `OS.get_user_data_dir()` mit diesem Pfad; eine bloße Aussage über den Konfigurationsstring wäre kein Migrationsnachweis.
 
 Die Dateinamen und die bisherige Pages-URL werden deshalb nicht pauschal umbenannt. Andere native Betriebssysteme und tatsächliche Browser-Upgrades benötigen ihre eigenen Persistenzprüfungen; die Linux-Probe ist kein iOS-Gerätenachweis.
+
+### Unabhängige Web-Sicherung gegen alte Tabs
+
+Die native Dateitrennung allein genügt im Web nicht: Die alte Emscripten-IDBFS-Synchronisation gleicht ihren gesamten alten Dateibaum mit IndexedDB ab und kann neuere Dateien löschen oder auf einen älteren lokalen Stand zurücksetzen. Das betrifft auch einen neuen Dateinamen.
+
+Deshalb verwendet der normale Web-Store zusätzlich die unabhängigen synchronen `localStorage`-Schlüssel **`orafold.profile.v2`** und **`orafold.profile.v2.bak`**. Der alte Client verwendet diese Schlüssel nicht. Eine gültige unabhängige Hauptkopie hat beim Laden Vorrang vor der Dateisicherung, auch wenn diese noch vorhanden, aber veraltet ist. Danach folgen eine gültige unabhängige Sicherung und erst dann FileAccess/Altimport. Ein unbekannter neuerer Primärstand bleibt schreibgeschützt; er wird nicht durch eine ältere Dateisicherung ersetzt.
+
+Ein Web-Save validiert zunächst die Profildaten, liest die beiden unabhängigen Schlüssel und schreibt synchron deren Sicherung und neue Hauptkopie. Ändern sich die Schlüssel zwischen Snapshot und Transaktionsaufruf, schlägt dieser Versuch ohne Überschreiben fehl. Scheitert die Hauptkopie wegen Quota/Berechtigungen, wird die vorherige unabhängige Sicherung wiederhergestellt; es werden keine FileAccess-Dateien verändert. Falls der Browser selbst diesen Rollback verweigert, meldet das Backend einen gesonderten Fehler und niemals einen erfolgreichen Save. Die bisherige Primärkopie bleibt bei einem fehlgeschlagenen atomaren `setItem` erhalten.
+
+Erst nach erfolgreicher unabhängiger Speicherung wird FileAccess als **sekundäre** Kopie geschrieben. Scheitert nur diese zusätzliche Kopie, bleibt der Save erfolgreich und erzeugt einen Wiederherstellungshinweis: Ein synchron bereits dauerhaft gespeichertes Profil wird nicht nachträglich als fehlgeschlagen ausgegeben. Die Session setzt bei tatsächlich fehlgeschlagenen Deck-/Einstellungs-Saves ihren vorherigen Speicherstand im Arbeitsspeicher zurück.
+
+Das technische Profillimit von vier MiB ist keine Garantie ausreichender Browserquota: Zwei Kopien plus andere Site-Daten können die verfügbare Quota überschreiten. In diesem Fall wird ein ausdrücklicher Speicherfehler zurückgegeben. Es gibt keine stillschweigende Abschaltung der unabhängigen Sicherung zugunsten eines unsicheren FileAccess-only-Erfolgs. Browserdatenlöschung oder privater Speicher ohne Persistenzgarantie bleiben Plattformgrenzen; dies ist keine Cloud-Sicherung und kein allgemeiner Zusammenführungsmechanismus mehrerer gleichzeitig bearbeitender neuer Clients.
+
+Der tatsächliche Browsernachweis muss einen alten Tab **vor** Erstellung des neuen Profils offenhalten, ein neues Produktionsdeck speichern, danach den alten echten Schreibvorgang auslösen und die neue Partie/Deckdaten nach Reload prüfen. Native Backendfixtures und JavaScript-Unitprüfungen ersetzen diesen Nachweis nicht.
+
+Die Transaktion selbst ist zusätzlich über neun Node-Testgruppen mit exakt dem
+eingebetteten JavaScript geprüft, einschließlich real ausgeführter Fehlerpfade des
+Testbackends. Der nachfolgende native Gesamtlauf erreichte 511 funktionale Prüfungen
+und vier vollständige Sessionpartien ohne fachlichen Fehler. Sein strenger Wrapper
+schlug dennoch wegen zweier beim Engine-Ende verbliebener Katalog-Skriptressourcen
+fehl. Diese Deklarations-/Ladeabhängigkeit wird separat korrigiert; der Lauf wird
+bis zum sauberen Wiederholungslauf ausdrücklich nicht als bestandene Gesamtprüfung
+gezählt. Eine lokale Exportvorprüfung ersetzt weder diesen Gate noch Browser-QA.
 
 ## Replayvertrag
 
@@ -55,6 +81,10 @@ Godot liest JSON-Zahlen als Floats. Der neue `event_digest` normalisiert daher a
 Der vollständige lokale Lauf am **10.11.2026, 20:00 UTC**, bestand mit **398 Assertions, null Fehlern**, ohne Scriptfehler oder Ressourcenlecks. Er führte vier vollständige Produktionspartien über die tatsächliche Session bis zum Endzustand aus, eine je Macht, und exportierte/importierte deren JSON-Replays. Vollständige Zustände und geordnete Ereignisinhalte stimmten überein. Hinzu kamen der unveränderte Version-1-Nachweis, Manipulationen, Präfixe, Korruptions-/Sicherungs-/Quarantänefälle und reale Dateisystemfehler mit Rollback. Ein ausdrücklich benanntes Modell-Fehlerinjektionsfixture prüft nur die Protokollierung bereits angenommener technischer Fehler; es ist keine Karte oder zusätzliche Spielmechanik.
 
 Dieser Nachweis bezieht sich auf den damaligen lokalen Arbeitsstand **vor der anschließenden Umstellung auf mechanische statt redaktionelle Katalogfingerprints**. Er ist kein erfolgreicher CI-Nachweis eines danach veränderten oder eingefrorenen Integrationscommits. Die neu ergänzten mechanischen Fingerprintregressionen werden erst mit dem nächsten vollständigen Lauf als bestanden gezählt. Der aktuelle Rohlog liegt unter `work/production-storage/native.log` und kann bei Wiederholung ersetzt werden.
+
+Die anschließende fokussierte Prüfung der neuen Dateinamenisolation und Fingerprintregressionen bestand mit **373 Assertions, null Fehlern** und einem sauberen nativen Log. Sie enthält reale Import-/Backupdateien, Altprofil-Versionen 1/2, einen alten Schreiber vor und nach dem neuen Save, tatsächliche neue `of-`-Karten im gespeicherten Deck, byteidentische alte Quellen und Sicherungen, unbekannte Versionen sowie fehlgeschlagene Import-Sicherungen. Dieser fokussierte Lauf meldet die vier vollständigen Produktionspartien ausdrücklich als ausstehend; er wird nicht als neuer Gesamtlauf oder stale-IDBFS-Browsernachweis ausgegeben.
+
+Nach der unabhängigen Web-Sicherung bestand der fokussierte Lauf mit **404 nativen Assertions, null Fehlern**, ohne Scriptfehler oder Leaks. Die zusätzlichen ausdrücklich nativen Backendfixtures prüfen Primär-/Backupvorrang gegenüber veralteten/gelöschten Dateien, Import, unbekannte Versionen, Sessionrollback und sekundäre Dateifehler. Daneben bestanden **neun Node-Testgruppen**, die den **exakten eingebetteten JavaScript-Transaktionscode** in einer isolierten VM ausführen, mit gezielten Quota-/Security-/Rollbackfehlern. Diese Fehler sind injizierte Unitfixtures, keine behaupteten realen Safari-/Quotaergebnisse. Der vollständige Vier-Partien-Lauf und reale Browsernachweise dieses neuesten Stands stehen bis zu ihrer tatsächlichen Wiederholung aus.
 
 ```sh
 tools/test_production_storage.sh

@@ -3,17 +3,21 @@ const Legacy=preload("res://scripts/legacy/battle_engine.gd")
 const Alpha=preload("res://scripts/alpha/model.gd")
 const LegacyCatalog=preload("res://scripts/legacy/catalog.gd")
 const AlphaCatalog=preload("res://scripts/alpha/catalog.gd")
-const PROFILE="user://orafold_alpha_profile_v1.json"
+const PROFILE="user://orafold_profile_v2.json"
 var model
 var mode := "alpha"
 var setup: Dictionary={}
 var commands: Array=[]
 const Store=preload("res://scripts/production/profile_store.gd")
 const ProductionCatalog=preload("res://scripts/production/catalog.gd")
+# Keep the dynamically selected production module a declared dependency so
+# Godot can release its static caches and font/UI dependencies in order.
+const Production=preload("res://scripts/card_system/production_model.gd")
 const PRODUCTION_PROFILE := "production-550-v1"
 const ARCHIVE_PROFILE := "alpha-55-v1"
 var profile: Dictionary=Store.defaults()
 var profile_issues: Array=[]
+var _saved_profile: Dictionary={}
 var legacy_text: Dictionary
 var production_catalog
 var store=Store.new(PROFILE)
@@ -21,6 +25,7 @@ func _init() -> void:
 	legacy_text=JSON.parse_string(FileAccess.get_file_as_string("res://data/legacy/display_de.json")).cards
 	var loaded=store.load_profile()
 	profile=loaded.profile;profile_issues=loaded.issues
+	_saved_profile=profile.duplicate(true)
 
 func active_catalog():
 	if production_catalog==null:production_catalog=ProductionCatalog.new()
@@ -36,7 +41,7 @@ func start_match(rule_mode: String, deck: Array, seed_value: int, difficulty: in
 	var candidate
 	if rule_mode=="legacy":candidate=Legacy.new();rules_profile="legacy-34b3062"
 	elif rules_profile==ARCHIVE_PROFILE:candidate=Alpha.new()
-	else:candidate=load("res://scripts/card_system/production_model.gd").new()
+	else:candidate=Production.new()
 	var ok := false
 	if rule_mode=="alpha":
 		candidate.convergence_enabled=convergence
@@ -110,13 +115,21 @@ func save_deck(key: String, ids: Array, rule_mode: String) -> Dictionary:
 	if not result.ok:return result
 	var slot=key.get_slice(":",key.get_slice_count(":")-1)
 	if rule_mode=="alpha" and slot in active_catalog().deck_ids() and result.faction not in [slot,"neutral"]:return {"ok":false,"message":"Deck passt nicht zur gewählten Macht."}
-	var previous=profile.decks.duplicate(true)
+	var previous=profile.duplicate(true)
 	profile.decks[key]={"mode":rule_mode,"cards":ids.duplicate(),"catalog_profile":PRODUCTION_PROFILE if rule_mode=="alpha" else "legacy-34b3062"}
 	if not save_profile():
-		profile.decks=previous
+		profile=previous
 		return {"ok":false,"message":"Speichern fehlgeschlagen; bisheriges Deck beibehalten."}
 	return {"ok":true,"message":"Deck gespeichert."}
-func save_profile() -> bool:return store.save_profile(profile)
+func save_profile() -> bool:
+	if not store.save_profile(profile):
+		profile=_saved_profile.duplicate(true)
+		var message="Speichern fehlgeschlagen; der vorherige lokale Stand bleibt erhalten. Prüfe freien Browser-Speicher und Speicherberechtigungen."
+		if not profile_issues.has(message):profile_issues.append(message)
+		return false
+	_saved_profile=profile.duplicate(true)
+	if not store.last_warning.is_empty() and not profile_issues.has(store.last_warning):profile_issues.append(store.last_warning)
+	return true
 
 func export_replay() -> bool:
 	var text=JSON.stringify(audit(),"  ")
