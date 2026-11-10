@@ -1,35 +1,29 @@
-# Implementierungs- und Qualitätsbericht — 10.11.2026
-**Status: struktureller Entwurf, nicht fertig redigierter Kanon.**
+# Qualitätsprüfung — Revision 3 · 10.11.2026
+**Status: VORSCHLAG. Kein Kanon, kein Merge.**
 
-## Tatsächlich erstellt
-- 17 Markdown-Lore-Dokumente einschließlich Navigation, Ursprungsszenarien, Kausalitätsmodell, Regionen, vier Mächten, Gesellschaft, Eira-Alternativen, Haupthandlung, fünfteiliger Kampagne, Erweiterungen, Audit und Entscheidungsregister.
-- Sieben JSON-Datensätze: 80 Figurenprofile als **kurze Konzeptskizzen**, 20 Orte, 10 Unterorganisationen, 7 relative Zeitereignisse, 550 Kartenkonzepte, 140 vorläufige Kartenfamilien und 5 Erweiterungsansätze.
-- Alle neuen Inhalte sind `VORSCHLAG`, keine Engine- oder produktiven Kartendaten wurden geändert.
+## Geprüfte Kriterien
+**Plausibilität:** Der Ursprung hat nun eine konkrete Wasser-/Versorgungskrise, eine politische Fehlentscheidung, eine nachvollziehbare Rettungsmotivation und eine klar markierte noch offene physikalische Lücke. Figuren haben begrenztes Wissen und persönliche Kosten. **Teilweise bestanden**, nicht vollständig: selbsttragende Kopplung, Archiv und Eira bleiben ungelöst.
 
-## Strukturelle Validierung der Kartenkonzepte
-- 550 Datensätze, 550 eindeutige IDs, 550 eindeutige Namen **nach Disambiguierung**.
-- Zugehörigkeiten: 110 × Zwölf Häuser, Stillwacht, Vielgestalt, Neunte Stunde und Neutral.
-- Typen: 350 Wesen, 125 Impulse, 75 Relikte.
-- Seltenheiten: 250 Gewöhnlich, 160 Selten, 100 Episch, 40 Legendär.
-- Pflichtfelder `name`, `lore`, `flavor`, `visual_brief` nicht leer.
-- Diese Prüfung wurde durch Auslesen und Auswerten der auf GitHub gespeicherten JSON-Datei durchgeführt. Keine vollständige Spiel- oder CI-Prüfung.
+**Originalität:** Der besondere Kern liegt in gesellschaftlichen Rechts- und Rettungskonflikten konkurrierender Vergangenheiten, nicht im bloßen Vorhandensein von Zeitlinien. **Teilweise bestanden:** Viele Kartennamen und Flavor-Texte sind weiterhin schematisch; externe Vergleichsrecherche fehlt.
 
-## Qualitätsmängel — vor Freigabe beheben
-1. **Die 550 Karten sind Produktionsrohlinge.** Viele Namen, Flavor-Texte und Lore-Sätze folgen wiederholten Mustern. Das erfüllt eine erste Datenstruktur, aber **noch nicht** die geforderte originelle, individuelle Kartenredaktion.
-2. **Die 80 Charaktere sind keine vollständigen Biografien.** Beziehungen, Entwicklungsbögen und eigene Stimmen fehlen größtenteils.
-3. **Kartenfamilien** sind derzeit systematisch gruppiert, aber nicht durchgehend als konkrete mehrteilige Erzählungen ausgearbeitet.
-4. **Eiras Rolle** und der Mechanismus der ersten Zeitkorrektur bleiben absichtlich unentschieden; eine widerspruchsfreie Endauflösung wurde nicht nachgewiesen.
-5. **Geografie** ist topologisch, nicht maßstäblich; Reisezeiten, Bevölkerungszahlen und Kapazitätsgrenzen benötigen Modellierung.
-6. **Originalität** ist redaktionell eingeschätzt, aber nicht unabhängig recherchiert oder mit Spielern getestet.
-7. **Keine vollständige Schemaprüfung** gegen die produktive Engine, da es ausdrücklich narrative Konzepte und keine spielbereiten Karten sind.
-8. **Keine fünf komplett ausgearbeiteten Erweiterungssets**, sondern fünf konkrete Richtungen.
+**Spannung:** Erste Kampagne besitzt einen konkreten verschwundenen Registereintrag, Eskalation über fünf Regionen, widerstreitende Figuren und eine begrenzte Rettung mit Kosten. **Teilweise bestanden:** Dialoge, Begegnungsdramaturgie und emotionale Folgen müssen noch in Szenen geschrieben und getestet werden.
 
-## Freigabegates
-- G1: Ursprungsszenario, Kausalitätsgrenzen und Eira-Ansatz entscheiden.
-- G2: Figurenensemble redaktionell ausarbeiten und Beziehungen prüfen.
-- G3: 50 exemplarische Karten **individuell** überarbeiten und gegen Weltregeln testen.
-- G4: restliche 500 Karten lektorieren, Flavor-Texte und visuelle Konzepte differenzieren.
-- G5: konsistente Verknüpfungen, Gameplay-Migration, externe Originalitätsprüfung und Tests.
-- G6: Erst danach Kanonisierung/PR-Merge durch ausdrückliche Nutzerfreigabe.
+**Verständlichkeit:** Ein-Satz-Pitch: 'Eine Welt wurde vor einer Hungersnot gerettet – aber die Menschen aus der Welt, in der sie geschah, waren noch da.' Drei Ebenen: Fortsetzung, Kontaktzone, Fortbestand. **Redaktionell bestanden**, noch kein Spielertest.
 
-**Fazit:** Der Auftrag ist als überprüfbares GitHub-Arbeitsgerüst und vollständiger numerischer Konzeptbestand umgesetzt. Er ist **noch kein veröffentlichungsreifer Lore- und Kartensatz**. Kein automatischer Merge.
+## Nachweisbare Datenänderungen
+- Sechs Perspektivfiguren mit konkreten Wünschen, Fehlern, Beziehungen und Wendepunkten in `docs/lore/08-character-bible.md`; JSON enthält 80 Kurzprofile, darunter die sechs synchronisierten Leads.
+- 550 Kartenkonzepte enthalten nun `story_hook`, `causal_link`, `narrative_role_detail` und `art_direction`; 50 erste Referenzkarten besitzen erweiterte Lore-Skizzen; 40 legendäre Karten enthalten eine Begründung ihrer narrativen Rolle.
+- Alle Karten bleiben **Entwürfe**. Die ersten 50 sind keine vollständig einzeln lektorierten Endkarten; mehrere Story-Hooks wiederholen sich absichtlich als Familienkonflikte, müssen aber später mit einzigartigen Szenen ausgestaltet werden.
+
+## Verifikation
+Der auf GitHub gespeicherte 550er-Bestand wurde zuvor auf 550 IDs und Namen, 110 je Zugehörigkeit, 350/125/75 Typen, 250/160/100/40 Seltenheiten geprüft. Die spätere Überarbeitung fügte Felder hinzu und änderte keine IDs, Zugehörigkeiten, Typen oder Seltenheiten. **Eine neue vollständige automatisierte Prüfung aller Referenzen, Wesensarten und Familien ist noch ausstehend.**
+
+## Blockierende Punkte vor Freigabe
+1. Die physikalische Ursache dauerhafter Kopplung beweisen oder als erklärtes, begrenztes Mysterium gestalten.
+2. Eiras interne Lösung und Archivzugriff konsistent festlegen.
+3. Die 74 weiteren Figuren individuell differenzieren und Beziehungen zu Szenen verbinden.
+4. Alle 550 Karten auf eindeutige konkrete Namen, originelle Flavor-Texte, differenzierte visuelle Motive und tatsächliche erzählerische Funktion lektorieren. Kompositionale Rohtexte sind noch kein veröffentlichungsreifes Set.
+5. Die 40 Legenden einzeln auf historische Einzigartigkeit prüfen, nicht nur mit einem Standardfeld versehen.
+6. Kontinuitäts-, Referenz-, Schema- und Spielertests durchführen.
+
+**Fazit:** Wesentlich konkreter und besser strukturiert, aber die geforderte Qualitätsstufe 'fertige Lore + 550 individuelle Karten' ist noch **nicht** erreicht. Keine Kanonisierung empfohlen.
