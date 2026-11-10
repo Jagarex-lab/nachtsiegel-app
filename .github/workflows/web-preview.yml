@@ -2,7 +2,7 @@ name: NACHTSIEGEL CI (no deployment)
 
 on:
   push:
-    branches: [develop, 'feature/**', 'production/**']
+    branches: [develop, 'feature/**']
   pull_request:
     branches: [develop, 'production/**']
   workflow_dispatch:

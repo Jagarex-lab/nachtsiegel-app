@@ -8,6 +8,11 @@ const DIFFICULTY={"houses":"Zugänglich · 1/3","stillwatch":"Bedacht · 2/3","m
 const RARITIES={"common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär"}
 const KINDS={"creature":"Wesen","event":"Impuls","relic":"Relikt"}
 static var power_names: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/alpha/cards.json")).powers
+# These four original burst descriptions describe the unchanged Alpha rules.
+# Presentation must not assume every rules catalog duplicates this metadata.
+static var power_identities: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/alpha/cards.json")).identities
+static func burst_description(power: String) -> String:
+	return str(power_identities.get(power,{}).get("burst",""))
 static var font: FontFile=make_font()
 static func make_font() -> FontFile:
 	var f: FontFile=T.FONT.duplicate()

@@ -534,7 +534,7 @@ func show_actions() -> void:
 			var matching=0
 			for u in p.lanes:
 				if u!=null and session.card(u.id).order==order:matching+=1
-			if mode=="alpha":text(alpha_catalog.source.identities[order].burst+" n = eigene Kreaturen dieser Macht.",box,14)
+			if mode=="alpha":text(S.burst_description(order)+" n = eigene Kreaturen dieser Macht.",box,14)
 			button("burst_"+order,str(alpha_catalog.source.powers.get(order,order.to_upper()))+" entfesseln\n15 benötigt · verbraucht 8 Resonanz",func():close_modal();act("burst",["hero",order]),box,not usable or int(p.resonance)<15 or p.burstUsed or matching==0)
 	)
 func res_caption(title: String, cost: int) -> String:
