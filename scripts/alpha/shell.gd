@@ -6,6 +6,7 @@ const AlphaCatalog=preload("res://scripts/alpha/catalog.gd")
 const LegacyCatalog=preload("res://scripts/legacy/catalog.gd")
 const CardView=preload("res://scripts/alpha/card_view.gd")
 const FullCardFace=preload("res://scripts/card_system/card_face.gd")
+const LibraryFilter=preload("res://scripts/card_system/library_filter.gd")
 var session=Session.new()
 var page := "lobby"
 var mode := "alpha"
@@ -27,6 +28,8 @@ var filter_type := "all"
 var filter_cost := "all"
 var filter_rarity := "all"
 var filter_power := "all"
+var filter_species := "all"
+var filter_sort := "cost_asc"
 var message := "Lokale Testversion · keine Echtgeldfunktionen"
 var layout: Control
 var density := 1.0
@@ -127,8 +130,9 @@ func button(id: String, caption: String, callback: Callable, parent: Node=null, 
 	if parent==null:parent=body
 	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;b.pressed.connect(callback);parent.add_child(b);actions[id]=b;return b
 func dropdown(id: String, items: Array, current: String, callback: Callable, parent: Node) -> Button:
-	var labels={"all":"Alle","creature":"Kreatur","event":"Ereignis","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral"}
-	var role={"difficulty":"KI","filter_type":"Typ","filter_cost":"Kosten","filter_rarity":"Seltenheit","filter_power":"Macht"}.get(id,"Auswahl")
+	var labels={"all":"Alle","creature":"Wesen","event":"Impuls","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral","cost_asc":"Energie aufsteigend","cost_desc":"Energie absteigend","name_asc":"Name A–Z"}
+	labels.merge(LibraryFilter.species_labels())
+	var role={"difficulty":"KI","filter_type":"Typ","filter_cost":"Kosten","filter_rarity":"Seltenheit","filter_power":"Macht","filter_species":"Wesensart","filter_sort":"Sortierung"}.get(id,"Auswahl")
 	return button(id,role+": "+str(labels.get(current,current))+" ▾",func():
 		show_modal(role+" auswählen",func(box):
 			for value in items:
@@ -174,7 +178,7 @@ func lobby() -> void:
 	text("Illustrationen: Platzhalter · Fortschritt auf diesem Gerät",body,12)
 func open_cards(read_only: bool) -> void:
 	collection_mode=mode;collection_only=read_only;save_key=faction;deck=current_deck()
-	filter_power="all";filter_type="all";filter_cost="all";filter_rarity="all";filter_text=""
+	filter_power="all";filter_type="all";filter_cost="all";filter_rarity="all";filter_species="all";filter_sort="cost_asc";filter_text=""
 	page="collection" if read_only else "builder";render()
 func save_preferences() -> void:
 	if mode=="alpha":session.profile.faction=faction
@@ -522,7 +526,7 @@ func builder() -> void:
 			button("builder_power_"+power,S.SYMBOLS[power]+" "+AlphaCatalog.new().source.powers[power]+(" ●" if faction==power else ""),func():faction=power;save_preferences();deck=current_deck();filter_power="all";render(),powers)
 		text(AlphaCatalog.new().source.powers.get(faction,faction)+" · %d / 30 Karten" % deck.size(),body,18)
 	var search_row=row()
-	var search=LineEdit.new();search.placeholder_text="Name oder Fähigkeit suchen";search.text=filter_text;search.custom_minimum_size=Vector2(80,44);search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;search_row.add_child(search)
+	var search=LineEdit.new();search.placeholder_text="Name, Fähigkeit oder Wesensart suchen";search.text=filter_text;search.custom_minimum_size=Vector2(80,44);search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;search_row.add_child(search)
 	search.add_theme_font_size_override("font_size",16)
 	search.text_changed.connect(func(v):filter_text=v)
 	search.text_submitted.connect(func(v):filter_text=v;search.release_focus();render());actions.search=search
@@ -545,20 +549,25 @@ func builder() -> void:
 		var starter_catalog=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
 		button("reset_deck","Starter kopieren",func():deck=starter_catalog.deck(faction);message="Starter als bearbeitbare Vorlage kopiert.";render(),footer)
 		if not small_builder:text(message,body,12)
+func library_cards() -> Array:
+	var cards: Array=[]
+	var cat=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
+	for raw in cat.all_cards():
+		var c: Dictionary=raw.duplicate(true)
+		if collection_mode=="legacy":c.name=session.legacy_text[c.id].name;c.description=session.legacy_text[c.id].description
+		if not collection_only and collection_mode=="alpha" and c.faction not in [faction,"neutral"]:continue
+		cards.append(c)
+	return cards
+func library_query() -> Dictionary:
+	return LibraryFilter.select(library_cards(),{"query":filter_text,"kind":filter_type,"cost":filter_cost,"rarity":filter_rarity,"power":filter_power,"species":filter_species,"sort":filter_sort})
 func library_panel(parent: Node, desktop: bool) -> void:
 	var pane=VBoxContainer.new();pane.size_flags_horizontal=Control.SIZE_EXPAND_FILL;pane.size_flags_stretch_ratio=1.6;parent.add_child(pane)
 	var sc=ScrollContainer.new();sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.size_flags_horizontal=Control.SIZE_EXPAND_FILL;sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;sc.scroll_deadzone=10;pane.add_child(sc)
 	var grid=GridContainer.new();grid.columns=3 if desktop else 2 if layout.size.x<700 else 4;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",10);sc.add_child(grid)
-	var cat=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
-	for raw in cat.all_cards():
-		var c: Dictionary=raw.duplicate()
-		if collection_mode=="legacy":c.name=session.legacy_text[c.id].name;c.description=session.legacy_text[c.id].description
-		if not collection_only and collection_mode=="alpha" and c.faction not in [faction,"neutral"]:continue
-		if not filter_text.is_empty() and not (str(c.name)+str(c.description)).to_lower().contains(filter_text.to_lower()):continue
-		if filter_type!="all" and c.kind!=filter_type:continue
-		if filter_cost!="all" and int(c.cost)!=int(filter_cost):continue
-		if filter_rarity!="all" and c.rarity!=filter_rarity:continue
-		if filter_power!="all" and c.get("faction",c.order)!=filter_power:continue
+	var query=library_query()
+	if not query.ok:
+		text("Filter konnte nicht angewendet werden: "+str(query.error),pane);return
+	for c: Dictionary in query.cards:
 		var tile=VBoxContainer.new();tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_child(tile)
 		var v=CardView.new();v.card=c;v.library=true;v.color=S.color(c);v.custom_minimum_size=Vector2(0,176);v.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.add_child(v);actions["card_"+c.id]=v
 		v.pressed.connect(func():inspect(c) if collection_only or not can_add(c) else add_card(c))
@@ -755,12 +764,20 @@ func cancel_selection() -> void:
 	selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];message="Auswahl aufgehoben.";render()
 
 func show_filters() -> void:
+	var choices=LibraryFilter.choice_options(library_cards())
 	show_modal("KARTENFILTER",func(box):
-		dropdown("filter_type",["all","creature","event","relic"],filter_type,func(v):filter_type=v;close_modal();render(),box)
-		dropdown("filter_cost",["all","1","2","3","4","5","6"],filter_cost,func(v):filter_cost=v;close_modal();render(),box)
-		dropdown("filter_rarity",["all","common","rare","epic","legendary"],filter_rarity,func(v):filter_rarity=v;close_modal();render(),box)
-		dropdown("filter_power",["all","neutral","houses","stillwatch","morph","ninth"] if collection_mode=="alpha" else ["all","ash","tide","thorn","veil"],filter_power,func(v):filter_power=v;close_modal();render(),box)
-		button("reset_filters","Alle Filter zurücksetzen",func():filter_text="";filter_type="all";filter_cost="all";filter_rarity="all";filter_power="all";close_modal();render(),box)
+		dropdown("filter_type",["all"]+choices.kind,filter_type,func(v):filter_type=v;close_modal();render(),box)
+		var costs: Array=["all"]
+		for value in choices.cost:costs.append(str(value))
+		dropdown("filter_cost",costs,filter_cost,func(v):filter_cost=v;close_modal();render(),box)
+		dropdown("filter_rarity",["all"]+choices.rarity,filter_rarity,func(v):filter_rarity=v;close_modal();render(),box)
+		dropdown("filter_power",["all"]+choices.power,filter_power,func(v):filter_power=v;close_modal();render(),box)
+		if choices.species.is_empty():
+			var no_species=button("filter_species","Wesensart: noch keine zugewiesen",func():pass,box,true)
+			no_species.tooltip_text="Für diese Karten wurden noch keine Wesensarten zugewiesen. Es werden keine Arten aus Namen oder Bildern erfunden."
+		else:dropdown("filter_species",["all"]+choices.species,filter_species,func(v):filter_species=v;close_modal();render(),box)
+		dropdown("filter_sort",choices.sort,filter_sort,func(v):filter_sort=v;close_modal();render(),box)
+		button("reset_filters","Alle Filter zurücksetzen",func():filter_text="";filter_type="all";filter_cost="all";filter_rarity="all";filter_power="all";filter_species="all";filter_sort="cost_asc";close_modal();render(),box)
 	)
 func show_power_picker() -> void:
 	show_modal("MACHT DER DECKVORLAGE",func(box):

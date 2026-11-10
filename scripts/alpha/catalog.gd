@@ -4,6 +4,17 @@ var source: Dictionary
 var cards: Dictionary={}
 func _init() -> void:
 	source=JSON.parse_string(FileAccess.get_file_as_string("res://data/alpha/cards.json"))
+	# Editorial identity metadata is separate from the pinned mechanical pool.
+	# Every listed species has equal rank; this adds no automatic combat triggers.
+	var metadata: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/card_system/alpha_species.json"))
+	var known_species: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/card_system/registry.json")).species
+	for c in source.cards:
+		if c.kind=="creature":
+			assert(metadata.species_by_card_id.has(c.id),"Missing species metadata: "+c.id)
+			var types: Array=metadata.species_by_card_id[c.id]
+			assert(types.size() in [1,2],"Invalid species count: "+c.id)
+			for type in types:assert(known_species.has(type),"Unknown species: "+str(type))
+			c.species=types.duplicate()
 	for c in source.cards:cards[c.id]=c
 func card(id: String) -> Dictionary:return cards.get(id,{}).duplicate(true)
 func all_cards() -> Array:
