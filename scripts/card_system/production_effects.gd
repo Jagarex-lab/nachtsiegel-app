@@ -38,6 +38,8 @@ static func validate(a: Variant) -> String:
  elif a.has("trigger"):return "unexpected_trigger"
  if a.mode=="passive" and (a.effect!="haste" or a.target!="self" or a.limit!="while_on_board"):return "unsupported_passive"
  if a.effect=="haste" and a.mode!="passive":return "haste_is_passive"
+ if a.effect in ["modify_attack","weaken_unit","move_unit","stun_unit"] and a.target in ["own_hero","enemy_hero"]:return "unit_target_required"
+ if a.effect=="delay_damage" and a.target!="enemy_lane":return "delayed_lane_required"
  if a.mode in ["activated","reactive"]:
   if not a.get("activation") is Dictionary or a.activation.size()!=2:return "invalid_activation"
   if not integer(a.activation.get("energy"),0,8) or not integer(a.activation.get("resonance"),0,15):return "invalid_cost"

@@ -13,9 +13,12 @@ var _damage_depth := 0
 var _armed: Array=[]
 var _armed_serial := 0
 var _relic_serial := 0
+var _play_serial := 0
 
-func _init() -> void:
- super._init()
+func _init(probe_from: RefCounted=null) -> void:
+ if probe_from!=null:
+  catalog=probe_from.catalog;_bindings=probe_from._bindings;_binding_hash=probe_from._binding_hash
+  effect_runtime=ObservedRuntime.new(self);ai_policy=probe_from.ai_policy;return
  catalog = ProductionCatalog.new()
  ai_policy = preload("res://scripts/production/ai_policy.gd").new()
  var definitions: Array=[]
@@ -52,21 +55,32 @@ func configure_v2(cards: Array) -> Dictionary:
 
 func start_alpha(deck: Array, opponent_deck: Array, seed_value: int, difficulty: int=2) -> bool:
  if not _configuration_error.is_empty():return false
- _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0
+ _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0
  return super.start_alpha(deck,opponent_deck,seed_value,difficulty)
 
 func snapshot() -> Dictionary:
  var result:=super.snapshot()
- if not result.is_empty():result["production"]={"profile":PROFILE_ID,"ability_uses":_ability_uses.duplicate(true),"condition_latches":_condition_latches.duplicate(true),"armed":_armed.duplicate(true),"armed_serial":_armed_serial,"relic_serial":_relic_serial}
+ if not result.is_empty():result["production"]={"profile":PROFILE_ID,"ability_uses":_ability_uses.duplicate(true),"condition_latches":_condition_latches.duplicate(true),"armed":_armed.duplicate(true),"armed_serial":_armed_serial,"relic_serial":_relic_serial,"play_serial":_play_serial}
  return result
 
 func _validation_probe():
- var probe=super._validation_probe()
- probe.catalog=catalog
- probe.ai_policy=ai_policy
+ # Immutable catalog/configuration are shared; only mutable battle/FIFO state is cloned.
+ # Validation must not rebuild and revalidate 550 definitions on every turn/draw.
+ var probe=get_script().new(self)
+ probe.state=state.duplicate(true)
+ probe._probe_instance=true
+ probe._trigger_serial=_trigger_serial
+ probe.trigger_journal=trigger_journal.duplicate(true)
+ probe._journal_ids=_journal_ids.duplicate(true)
+ probe._runtime_log_cursor=_runtime_log_cursor
+ probe._summoned_uids=_summoned_uids.duplicate(true)
+ probe._dead_uids=_dead_uids.duplicate(true)
+ probe.effect_runtime.log=effect_runtime.log.duplicate(true)
+ probe.effect_runtime._seen=effect_runtime._seen.duplicate(true)
+ probe.effect_runtime._chain=effect_runtime._chain
  probe._ability_uses=_ability_uses.duplicate(true)
  probe._condition_latches=_condition_latches.duplicate(true)
- probe._armed=_armed.duplicate(true);probe._armed_serial=_armed_serial;probe._relic_serial=_relic_serial
+ probe._armed=_armed.duplicate(true);probe._armed_serial=_armed_serial;probe._relic_serial=_relic_serial;probe._play_serial=_play_serial
  return probe
 
 func supports_creature_effect(card: Dictionary) -> bool:
@@ -105,7 +119,7 @@ func play_support(side: String, index: Variant, lane: Variant) -> String:
    var a: Dictionary=card.abilities[i]
    if a.get("trigger")!="on_play":continue
    has_play=true
-   var context: Dictionary={"event_id":"preflight","source_card_id":card.id,"target_lane":int(lane),"ability_index":i}
+   var context: Dictionary={"event_id":"preflight","playing_from_hand":true,"source_card_id":card.id,"target_lane":int(lane),"ability_index":i}
    var reason:=production_preflight(side,a,context)
    if not reason.is_empty():return reason
   if not has_play:
@@ -141,7 +155,7 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
  p.hand.remove_at(int(index))
  if card.kind=="relic":
   if p.relic!=null:p.discard.append(p.relic.id)
-  _relic_serial+=1;p.relic={"id":card.id,"uid":_relic_serial};p.relic_used=false
+  _relic_serial+=1;p.relic={"id":card.id,"uid":_relic_serial}
   _trace("relic_installed",side,{"card_id":card.id})
   _emit_trigger("on_play",side,card.id,{"source_relic":true,"source_relic_uid":int(state[side].relic.get("uid",0)),"target_lane":int(lane)},{"cause":"card_play"})
  else:
@@ -167,7 +181,8 @@ func _after_card_played(side: String, card: Dictionary, lane: int) -> void:
 
 func _resolve_event_effect(side: String, card: Dictionary, lane: int) -> void:
  if card.get("effect")!="v2":super._resolve_event_effect(side,card,lane);return
- _emit_trigger("on_play",side,card.id,{"target_lane":lane},{"cause":"card_play"})
+ _play_serial+=1
+ _emit_trigger("on_play",side,card.id,{"target_lane":lane,"source_instance":_play_serial},{"cause":"card_play"})
 
 func _emit_trigger(trigger: String, side: String, card_id: String, context: Dictionary, detail: Dictionary) -> void:
  if not _bindings.has(card_id) or state.get("stage")!="battle" or state.winner!=null:return
@@ -273,7 +288,7 @@ func _trace(kind: String, side: String, detail: Dictionary={}) -> void:
   if unit!=null:_combat_hook("on_lane_change",side,int(detail.to),unit,{"from":detail.get("from"),"to":detail.to})
 
 func _use_key(side: String, a: Dictionary, context: Dictionary) -> String:
- return side+":"+str(context.get("source_uid",context.get("source_armed","relic:"+str(context.get("source_card_id","")))))+":"+str(context.get("ability_index",0))+":"+str(state.round)
+ return side+":"+str(context.get("source_uid",context.get("source_armed",context.get("source_relic_uid",context.get("source_instance","card:"+str(context.get("source_card_id","")))))))+":"+str(context.get("ability_index",0))+":"+str(state.round)
 
 func _source_valid(side: String, context: Dictionary, trigger: String) -> bool:
  if context.has("source_armed"):
@@ -303,10 +318,17 @@ func production_preflight(side: String, a: Dictionary, context: Dictionary) -> S
   for unit in state[side].lanes:
    if unit==null:free=true
   if not free:return "no_effect_target"
- if a.effect=="return_card" and (_discard_unit(side)<0 or state[side].hand.size()>=6):return "no_effect_target"
- if a.effect=="draw_cards" and (state[side].deck.is_empty() or state[side].hand.size()>=6):return "no_effect_target"
- if a.effect=="discard_card" and state[side].hand.is_empty():return "no_effect_target"
+ var future_hand_size: int=state[side].hand.size()-(1 if context.get("playing_from_hand",false) else 0)
+ if a.effect=="return_card" and (_discard_unit(side)<0 or future_hand_size>=6):return "no_effect_target"
+ if a.effect=="draw_cards" and (state[side].deck.is_empty() or future_hand_size>=6):return "no_effect_target"
+ if a.effect=="discard_card" and future_hand_size<=0:return "no_effect_target"
  if a.effect in ["deal_damage","grant_shield","grant_block","heal_target","modify_attack","weaken_unit","move_unit","stun_unit"] and a.target in ["self","opposite_enemy_unit","own_lowest_health","enemy_lowest_health","own_neighbors","own_all","enemy_all","own_species"] and _targets(side,a,context).is_empty():return "no_effect_target"
+ if a.effect=="move_unit":
+  var can_move:=false
+  for target in _targets(side,a,context):
+   var to:=int(target.lane)+int(a.params.steps)
+   if to>=0 and to<5 and state[target.side].lanes[to]==null:can_move=true
+  if not can_move:return "no_effect_target"
  return ""
 
 func _targets(side: String, a: Dictionary, context: Dictionary) -> Array:
@@ -343,6 +365,8 @@ func _targets(side: String, a: Dictionary, context: Dictionary) -> Array:
     if unit!=null and int(unit.hp)>0:
      if a.target=="own_species" and not catalog.card(unit.id).get("species",[]).has(a.params.species):continue
      result.append({"side":chosen_side,"lane":i})
+ for target in result:
+  if int(target.lane)>=0 and state[target.side].lanes[int(target.lane)]!=null:target["uid"]=int(state[target.side].lanes[int(target.lane)].uid)
  return result
 
 func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dictionary:
@@ -361,6 +385,7 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
  for target in targets:
   var tp: Dictionary=state[target.side]
   var unit: Variant=tp.lanes[target.lane] if int(target.lane)>=0 else null
+  if target.has("uid") and (unit==null or int(unit.uid)!=int(target.uid)):continue
   match str(a.effect):
    "deal_damage":
     if unit==null:
@@ -467,7 +492,7 @@ func can_activate_relic(side: String) -> bool:
  if card.get("effect")!="v2":return int(p.energy)>=1 and not (card.effect=="relic_draw" and (p.hand.size()>=6 or p.deck.is_empty()))
  for i in card.abilities.size():
   var a: Dictionary=card.abilities[i]
-  if a.mode=="activated":return production_preflight(side,a,{"source_card_id":card.id,"source_relic":true,"target_lane":0,"ability_index":i}).is_empty()
+  if a.mode=="activated":return production_preflight(side,a,{"source_card_id":card.id,"source_relic":true,"source_relic_uid":int(p.relic.get("uid",0)),"target_lane":0,"ability_index":i}).is_empty()
  return false
 
 func activate_relic(side: String) -> bool:
@@ -481,7 +506,7 @@ func activate_relic(side: String) -> bool:
   var a: Dictionary=card.abilities[i]
   if a.mode!="activated":continue
   _trigger_serial+=1
-  var result: Dictionary=effect_runtime.activate(side,a,{"event_id":"activate:"+str(_trigger_serial),"source_card_id":card.id,"source_relic":true,"target_lane":0,"ability_index":i})
+  var result: Dictionary=effect_runtime.activate(side,a,{"event_id":"activate:"+str(_trigger_serial),"source_card_id":card.id,"source_relic":true,"source_relic_uid":int(p.relic.get("uid",0)),"target_lane":0,"ability_index":i})
   if not result.ok:return false
   p.relic_used=true;_trace("relic_activated",side,{"card_id":card.id,"cost":a.activation})
   _publish_watchers("on_relic_activate",side,{"card_id":card.id});_evaluate_conditions()
