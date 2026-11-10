@@ -44,6 +44,7 @@ func _initialize() -> void:
 	reject("booster_pools", ["pools", "standard", "price_gold"], -5, "negative boosterprice")
 	reject("booster_pools", ["pools", "standard", "price_gold"], 0.5, "fractional boosterprice")
 	reject("booster_pools", ["pools", "standard", "card_filter"], [], "invalid filter type")
+	reject("booster_pools", ["pools", "standard", "card_filter"], {"catalog": "ignored"}, "unsupported catalog filter rejected")
 	reject("booster_pools", ["pools", "standard", "card_filter"], {"set": 7}, "invalid filterset")
 	reject("booster_pools", ["pools", "standard", "card_filter"], {"ids": ["missing", "missing"]}, "duplicate explicit poolids")
 	reject("booster_rules", ["cards_per_booster"], 6, "slotcount mismatch")

@@ -57,7 +57,7 @@ func validate(candidate: Dictionary = {}) -> Array:
 				continue
 			var filter: Dictionary = pool_data.card_filter
 			for field in filter:
-				if field not in ["set", "faction", "ids", "catalog"]: issues.append("pool_filter_unknown:" + str(field))
+				if field not in ["set", "faction", "ids"]: issues.append("pool_filter_unknown:" + str(field))
 			for field in ["set", "faction", "catalog"]:
 				if filter.has(field) and (not filter[field] is String or str(filter[field]).is_empty()): issues.append("pool_filter_invalid:" + field)
 			if filter.has("ids"):

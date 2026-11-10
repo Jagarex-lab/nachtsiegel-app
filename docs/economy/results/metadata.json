@@ -1,0 +1,58 @@
+{
+  "seed": 5502026,
+  "repetitions_per_profile_scenario": 200,
+  "profile_scenario_trajectories": 3000,
+  "sensitivity_trajectories": 1000,
+  "paired_milestone_trajectories": 400,
+  "booster_pack_trials": 100000,
+  "booster": {
+    "packs": 100000,
+    "max_legendary_gap": 20,
+    "p95_legendary_gap": 20.0,
+    "mean_legendary_gap": 14.138574660633484,
+    "max_epic_or_better_gap": 5,
+    "legendary_pack_fraction": 0.07072,
+    "rates": [
+      {
+        "rarity": "common",
+        "base_expected_card_share": 0.64,
+        "base_observed_card_share": 0.6401,
+        "base_ci95_low": 0.6387695887577264,
+        "base_ci95_high": 0.6414304112422736,
+        "with_pity_card_share": 0.640328,
+        "card_samples": 500000
+      },
+      {
+        "rarity": "rare",
+        "base_expected_card_share": 0.296,
+        "base_observed_card_share": 0.29596,
+        "base_ci95_low": 0.2946947211585256,
+        "base_ci95_high": 0.2972252788414744,
+        "with_pity_card_share": 0.279866,
+        "card_samples": 500000
+      },
+      {
+        "rarity": "epic",
+        "base_expected_card_share": 0.05600000000000001,
+        "base_observed_card_share": 0.055902,
+        "base_ci95_low": 0.05526521433102358,
+        "base_ci95_high": 0.056538785668976424,
+        "with_pity_card_share": 0.065568,
+        "card_samples": 500000
+      },
+      {
+        "rarity": "legendary",
+        "base_expected_card_share": 0.008,
+        "base_observed_card_share": 0.008038,
+        "base_ci95_low": 0.007790490092481414,
+        "base_ci95_high": 0.008285509907518586,
+        "with_pity_card_share": 0.014238,
+        "card_samples": 500000
+      }
+    ]
+  },
+  "elapsed_seconds": 69.7,
+  "config_sha256": "9d4509ecbf72d4f05c9410305d3c39c77be4d9a390b02fd9237c418d0c319e7b",
+  "model_sha256": "9c8ac24bd4008127a2152b4faf20cf4b407a31497e153e904481b42f89eadd83",
+  "status": "provisional_synthetic_catalog_no_winrate_or_revenue_validation"
+}
