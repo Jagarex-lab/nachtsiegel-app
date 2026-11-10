@@ -3,67 +3,85 @@
     "id": "CHAR-001",
     "name": "Nera Sol",
     "category": "Perspektivfigur",
-    "affiliation": "Zwölf Häuser",
+    "affiliation": "Neutral",
     "region": "Keldor-Becken",
     "status": "VORSCHLAG",
-    "motivation": "einen Angehörigen schützen",
+    "motivation": "Eine gestrichene Gerettete finden",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "flaw": "Verfahren mit Gerechtigkeit verwechseln",
+    "relationship": "Daren Holt",
+    "turning_point": "Beweis öffentlich machen trotz persönlicher Gefahr"
   },
   {
     "id": "CHAR-002",
     "name": "Daren Holt",
     "category": "Perspektivfigur",
-    "affiliation": "Zwölf Häuser",
-    "region": "Serev-Küste",
+    "affiliation": "Stillwacht",
+    "region": "Namar-Hochland",
     "status": "VORSCHLAG",
-    "motivation": "die eigene Forschung verantworten",
+    "motivation": "Eine Evakuierungsroute sichern",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "flaw": "Zu lange gehorchen",
+    "relationship": "Seren Hal",
+    "turning_point": "Einen unhaltbaren Sperrbefehl verweigern"
   },
   {
     "id": "CHAR-003",
     "name": "Siva Ren",
     "category": "Perspektivfigur",
-    "affiliation": "Zwölf Häuser",
-    "region": "Namar-Hochland",
+    "affiliation": "Vielgestalt",
+    "region": "Ilyr-Wildmark",
     "status": "VORSCHLAG",
-    "motivation": "ein öffentliches Versprechen einlösen",
+    "motivation": "Schadensfreie Stabilisierung entwickeln",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "flaw": "Einzelne Erfolge überbewerten",
+    "relationship": "Ilan Voss",
+    "turning_point": "Gefährliches Experiment stoppen"
   },
   {
     "id": "CHAR-004",
     "name": "Ilan Voss",
     "category": "Perspektivfigur",
-    "affiliation": "Zwölf Häuser",
-    "region": "Keldor-Becken",
+    "affiliation": "Neunte Stunde",
+    "region": "Veyr-Stufen",
     "status": "VORSCHLAG",
-    "motivation": "die Herkunft eines Zeugen beweisen",
+    "motivation": "Fehlprognose erklären",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "flaw": "Elegante Modelle verteidigen",
+    "relationship": "Siva Ren",
+    "turning_point": "Eigene Fehlergrenzen offenlegen"
   },
   {
     "id": "CHAR-005",
     "name": "Tavian Rook",
     "category": "Perspektivfigur",
-    "affiliation": "Zwölf Häuser",
+    "affiliation": "Neutral",
     "region": "Serev-Küste",
     "status": "VORSCHLAG",
-    "motivation": "eine Rettungsroute offen halten",
+    "motivation": "Rettungsroute offenhalten",
     "conflict": "Pflicht gegen Familie",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "flaw": "Schuld hinter Humor verstecken",
+    "relationship": "Nera Sol",
+    "turning_point": "Mittellose kostenlos durchlassen"
   },
   {
     "id": "CHAR-006",
-    "name": "Seren Sol",
+    "name": "Seren Hal",
     "category": "Perspektivfigur",
-    "affiliation": "Zwölf Häuser",
+    "affiliation": "Stillwacht",
     "region": "Namar-Hochland",
     "status": "VORSCHLAG",
-    "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
+    "motivation": "Grenzorte und Einheit schützen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "flaw": "Untergebene decken",
+    "relationship": "Daren Holt",
+    "turning_point": "Evakuierung gegen Weisung anordnen"
   },
   {
     "id": "CHAR-007",
@@ -74,7 +92,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-018",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-008",
@@ -85,7 +106,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-019",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-009",
@@ -96,7 +120,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-020",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-010",
@@ -107,7 +134,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-021",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-011",
@@ -118,7 +148,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-022",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-012",
@@ -129,7 +162,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-023",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-013",
@@ -140,7 +176,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-024",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-014",
@@ -151,7 +190,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-025",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-015",
@@ -162,7 +204,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-026",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-016",
@@ -173,7 +218,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-027",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-017",
@@ -184,7 +232,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-028",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-018",
@@ -195,7 +246,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-029",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-019",
@@ -206,7 +260,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-030",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-020",
@@ -217,7 +274,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Pflicht gegen Familie",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-031",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-021",
@@ -228,7 +288,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-032",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-022",
@@ -239,7 +302,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-033",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-023",
@@ -250,7 +316,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-034",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-024",
@@ -261,7 +330,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-035",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-025",
@@ -272,18 +344,24 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-036",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-026",
-    "name": "Seren Hal",
+    "name": "Seren Hal (CHAR-026)",
     "category": "Nebenfigur",
     "affiliation": "Stillwacht",
     "region": "Keldor-Becken",
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-037",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-027",
@@ -294,7 +372,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-038",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-028",
@@ -305,7 +386,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-039",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-029",
@@ -316,7 +400,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-040",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-030",
@@ -327,7 +414,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-041",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-031",
@@ -338,7 +428,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-042",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-032",
@@ -349,7 +442,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-043",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-033",
@@ -360,7 +456,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-044",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-034",
@@ -371,7 +470,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-045",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-035",
@@ -382,7 +484,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Pflicht gegen Familie",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-046",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-036",
@@ -393,7 +498,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-047",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-037",
@@ -404,7 +512,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-048",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-038",
@@ -415,7 +526,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-049",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-039",
@@ -426,7 +540,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-050",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-040",
@@ -437,7 +554,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-051",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-041",
@@ -448,7 +568,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-052",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-042",
@@ -459,7 +582,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-053",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-043",
@@ -470,7 +596,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-054",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-044",
@@ -481,7 +610,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-055",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-045",
@@ -492,7 +624,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-056",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-046",
@@ -503,7 +638,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-057",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-047",
@@ -514,7 +652,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-058",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-048",
@@ -525,7 +666,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-059",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-049",
@@ -536,7 +680,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-060",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-050",
@@ -547,7 +694,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Pflicht gegen Familie",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-061",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-051",
@@ -558,7 +708,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-062",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-052",
@@ -569,7 +722,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-063",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-053",
@@ -580,7 +736,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-064",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-054",
@@ -591,7 +750,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-065",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-055",
@@ -602,7 +764,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-066",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-056",
@@ -613,7 +778,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-067",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-057",
@@ -624,7 +792,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-068",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-058",
@@ -635,7 +806,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-069",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-059",
@@ -646,7 +820,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-070",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-060",
@@ -657,7 +834,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-071",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-061",
@@ -668,7 +848,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-072",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-062",
@@ -679,7 +862,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-073",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-063",
@@ -690,7 +876,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-074",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-064",
@@ -701,7 +890,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-075",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-065",
@@ -712,7 +904,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Pflicht gegen Familie",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-076",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-066",
@@ -723,7 +918,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-077",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-067",
@@ -734,7 +932,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-078",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-068",
@@ -745,7 +946,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-079",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-069",
@@ -756,7 +960,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-080",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-070",
@@ -767,7 +974,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-001",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-071",
@@ -778,7 +988,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-002",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-072",
@@ -789,7 +1002,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-003",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-073",
@@ -800,7 +1016,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-004",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-074",
@@ -811,7 +1030,10 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-005",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   },
   {
     "id": "CHAR-075",
@@ -822,7 +1044,10 @@
     "status": "VORSCHLAG",
     "motivation": "ein öffentliches Versprechen einlösen",
     "conflict": "Pflicht gegen Familie",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-006",
+    "specific_stake": "Sperrung der Handelsroute",
+    "story_function": "Verbündeter"
   },
   {
     "id": "CHAR-076",
@@ -833,7 +1058,10 @@
     "status": "VORSCHLAG",
     "motivation": "die Herkunft eines Zeugen beweisen",
     "conflict": "Loyalität gegen Gewissen",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-007",
+    "specific_stake": "Beweis eines falschen Herkunftsregisters",
+    "story_function": "Opfer einer Entscheidung"
   },
   {
     "id": "CHAR-077",
@@ -844,7 +1072,10 @@
     "status": "VORSCHLAG",
     "motivation": "eine Rettungsroute offen halten",
     "conflict": "Sicherheit gegen Offenheit",
-    "voice": "trocken und präzise"
+    "voice": "trocken und präzise",
+    "relationship": "CHAR-008",
+    "specific_stake": "Schutz einer gefährdeten Siedlung",
+    "story_function": "Lokaler Vermittler"
   },
   {
     "id": "CHAR-078",
@@ -855,7 +1086,10 @@
     "status": "VORSCHLAG",
     "motivation": "den Ruf einer Gemeinschaft wiederherstellen",
     "conflict": "Wahrheit gegen Rücksicht",
-    "voice": "warm und eigensinnig"
+    "voice": "warm und eigensinnig",
+    "relationship": "CHAR-009",
+    "specific_stake": "Konflikt mit dem eigenen Lehrmeister",
+    "story_function": "Unzuverlässiger Informant"
   },
   {
     "id": "CHAR-079",
@@ -866,7 +1100,10 @@
     "status": "VORSCHLAG",
     "motivation": "einen Angehörigen schützen",
     "conflict": "Herkunft gegen neue Bindung",
-    "voice": "ruhig und unbequem"
+    "voice": "ruhig und unbequem",
+    "relationship": "CHAR-010",
+    "specific_stake": "Verlust des Familienhauses",
+    "story_function": "Zeuge"
   },
   {
     "id": "CHAR-080",
@@ -877,6 +1114,9 @@
     "status": "VORSCHLAG",
     "motivation": "die eigene Forschung verantworten",
     "conflict": "Pflicht gegen Familie",
-    "voice": "schnell und spöttisch"
+    "voice": "schnell und spöttisch",
+    "relationship": "CHAR-011",
+    "specific_stake": "Entzug einer Behandlungslizenz",
+    "story_function": "Widersacher"
   }
 ]
