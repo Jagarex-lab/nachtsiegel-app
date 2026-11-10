@@ -11,8 +11,8 @@ trap 'rm -rf -- "$campaign_stage" "$campaign_candidate"' EXIT
 campaign_web_template="${CAMPAIGN_WEB_TEMPLATE:-}"
 # CI setup-godot installs templates in the ordinary user data directory.
 # Resolve that installed Web template before isolating generated QA user data.
-if [[ -z "$campaign_web_template" && -f "${XDG_DATA_HOME:-$HOME/.local/share}/godot/export_templates/4.6.3.stable/web_debug.zip" ]]; then
-  campaign_web_template="${XDG_DATA_HOME:-$HOME/.local/share}/godot/export_templates/4.6.3.stable/web_debug.zip"
+if [[ -z "$campaign_web_template" && -f "${XDG_DATA_HOME:-$HOME/.local/share}/godot/export_templates/4.6.3.stable/web_nothreads_debug.zip" ]]; then
+  campaign_web_template="${XDG_DATA_HOME:-$HOME/.local/share}/godot/export_templates/4.6.3.stable/web_nothreads_debug.zip"
 fi
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$PWD/work/xdg/data}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$PWD/work/xdg/config}"
@@ -29,7 +29,9 @@ assert project.count(old)==1, 'Main scene changed; review staging setup before e
 project=project.replace(old,'run/main_scene="res://scenes/campaign_orafold/campaign_overview.tscn"',1)
 (stage/'project.godot').write_text(project)
 template=Path(sys.argv[2]).resolve() if sys.argv[2] else None
-if template: assert template.is_file(),f'Missing custom Web template: {template}'
+if template:
+    assert template.is_file(),f'Missing custom Web template: {template}'
+    assert template.name != 'web_debug.zip', 'Threaded web_debug.zip is incompatible; use official web_nothreads_debug.zip.'
 custom='custom_template/debug='+json.dumps(str(template) if template else '')+'\n'
 (stage/'export_presets.cfg').write_text('''[preset.0]
 name="Campaign Web QA"

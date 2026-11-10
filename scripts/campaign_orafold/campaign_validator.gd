@@ -186,7 +186,9 @@ static func _array_refs(value: Variant, table: Dictionary, where: String, errors
 static func _asset(path: Variant, where: String, errors: Array) -> void:
 	if not path is String:
 		errors.append(where + ": expected path string")
-	elif not path.is_empty() and (not path.begins_with("res://") or not FileAccess.file_exists(path)):
+	# Imported textures are remapped in exported PCKs; their source SVG/PNG may
+	# intentionally be absent while the resource remains fully loadable.
+	elif not path.is_empty() and (not path.begins_with("res://") or not ResourceLoader.exists(path)):
 		errors.append(where + ": missing asset " + path)
 
 static func _has_info(data: Dictionary, id: Variant) -> bool:

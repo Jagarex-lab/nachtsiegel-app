@@ -185,5 +185,6 @@ func save() -> bool:
 		var quoted := JSON.stringify(JSON.stringify(next))
 		var mirrored: Variant = JavaScriptBridge.eval("(()=>{try{localStorage.setItem('"+WEB_KEY+"',"+quoted+");return true}catch(e){return false}})()")
 		# IDBFS write remains valid; surface mirror failure instead of claiming a rollback.
-		if mirrored != true: last_error = "save.browser_mirror_unavailable"
+		# The Web bridge may return JS booleans as numeric 0/1 Variants.
+		if not bool(mirrored): last_error = "save.browser_mirror_unavailable"
 	return true

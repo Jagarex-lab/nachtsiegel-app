@@ -553,7 +553,7 @@ func _publish_qa() -> void:
 	var controls: Dictionary = {}
 	_qa_controls(self, controls)
 	var campaign: Dictionary = manager.content.get("campaigns",{}).get(manager.state.data.campaign_id,{})
-	var payload = {"screen":screen,"title":_t(campaign.get("title_id","ui.prototype")),"scene_id":manager.state.data.active.get("scene_id",""),"flags":manager.state.data.flags,"actions":controls,"save_error":manager.last_error,"logical_viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"compact":compact}
+	var payload = {"screen":screen,"title":_t(campaign.get("title_id","ui.prototype")),"scene_id":manager.state.data.active.get("scene_id",""),"flags":manager.state.data.flags,"actions":controls,"save_error":manager.last_error,"validation_errors":manager.validation.get("errors",[]),"logical_viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"compact":compact}
 	JavaScriptBridge.eval("window.orafoldCampaignQA="+JSON.stringify(payload))
 
 func _qa_controls(node: Node, output: Dictionary) -> void:
