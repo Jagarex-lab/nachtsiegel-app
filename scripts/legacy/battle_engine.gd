@@ -177,6 +177,8 @@ func recover(side: String) -> bool:
 	return true
 func _integer(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and float(value)==floor(float(value)) and abs(float(value))<=9007199254740991.0
+func supports_creature_effect(card: Dictionary) -> bool:
+	return card.get("effect") in EFFECTS
 func play_support(side: String, index: Variant, lane: Variant) -> String:
 	if not _valid_side(side):return "invalid_side"
 	var p: Dictionary=state[side]
@@ -185,7 +187,7 @@ func play_support(side: String, index: Variant, lane: Variant) -> String:
 	var card: Dictionary=catalog.card(str(p.hand[index]))
 	if card.is_empty():return "unknown_card"
 	if (summon_limit()>0 and int(p.summons)>=summon_limit()) or int(p.energy)<int(card.cost) or p.lanes[lane]!=null:return "invalid_resources_or_lane"
-	if not card.effect in EFFECTS:return "unknown_effect"
+	if not supports_creature_effect(card):return "unknown_effect"
 	return ""
 func play(side: String, index: Variant, lane: Variant) -> bool:
 	if not play_support(side,index,lane).is_empty():return false

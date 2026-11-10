@@ -3,6 +3,11 @@ extends "res://scripts/legacy/battle_engine.gd"
 const AlphaCatalog=preload("res://scripts/alpha/catalog.gd")
 var convergence_enabled := true
 var longest_chain := 0
+var ai_policy: RefCounted = null
+func _phase_hook(_trigger: String, _side: String) -> void: pass
+func _combat_hook(_trigger: String, _side: String, _lane: int, _unit: Dictionary, _detail: Dictionary = {}) -> void: pass
+func _attack_damage_hero(_source_side: String, _source_lane: int, target: Dictionary, amount: int) -> int: return damage(target, amount)
+func _has_haste(card: Dictionary) -> bool: return card.effect == "haste"
 func _init() -> void:catalog=AlphaCatalog.new()
 func summon_limit() -> int:return 0
 func reaction_order(order: String) -> String:
@@ -97,6 +102,7 @@ func begin_turn(side: String) -> bool:
 	p.pendingDraw=0 if int(p.turns)==1 and state.coin==side else 1
 	_refill_deck(side)
 	if state.winner!=null:return true
+	_phase_hook("on_turn_start",side)
 	_trace("begin",side)
 	if side=="enemy":
 		while p.hand.size()+mini(int(p.pendingDraw),p.deck.size())>6:_burn_reference(side,0)
@@ -123,10 +129,10 @@ func _refresh_bindings() -> void:
 		if binding!=null:
 			for i in 3:
 				var u: Variant=state[side].lanes[binding.lanes[i]]
-				if u==null or int(u.uid)!=int(binding.uids[i]) or int(u.stun)>0 or (u.summoned and catalog.card(u.id).effect!="haste") or int(u.atk)<=int(state[side].weak):binding.broken=true
+				if u==null or int(u.uid)!=int(binding.uids[i]) or int(u.stun)>0 or (u.summoned and not _has_haste(catalog.card(u.id))) or int(u.atk)<=int(state[side].weak):binding.broken=true
 func can_fight(side: String, lane: int) -> bool:
 	var u: Variant=state[side].lanes[lane]
-	return u!=null and int(u.hp)>0 and int(u.stun)==0 and (not u.summoned or catalog.card(u.id).effect=="haste") and int(u.atk)>int(state[side].weak)
+	return u!=null and int(u.hp)>0 and int(u.stun)==0 and (not u.summoned or _has_haste(catalog.card(u.id))) and int(u.atk)>int(state[side].weak)
 func controlled(side: String, lane: int) -> bool:
 	return can_fight(side,lane) and state[_other(side)].lanes[lane]==null
 func legal_targets(side: String, index: int) -> Array:
@@ -234,7 +240,7 @@ func enqueue_many(batch: Array) -> bool:
 			if e.type=="death" and (not e.get("unit") is Dictionary or catalog.card(str(e.unit.get("id",""))).is_empty() or int(e.unit.get("hp",1))>0):return false
 			if e.type=="summon":
 				var card: Dictionary=catalog.card(str(e.get("card_id","")))
-				if card.is_empty() or card.kind!="creature" or not card.effect in EFFECTS:return false
+				if card.is_empty() or card.kind!="creature" or not supports_creature_effect(card):return false
 	_queue.append_array(batch)
 	if _resolving:return true
 	_resolving=true
@@ -266,22 +272,36 @@ func attack_phase(side: String) -> bool:
 		if u==null:continue
 		var c: Dictionary=catalog.card(u.id)
 		if int(u.stun)>0:u.stun=int(u.stun)-1;u.summoned=false;u.extra_attacks=0;_trace("stun_skip",side,{"lane":lane});continue
-		if u.summoned and c.effect!="haste":u.summoned=false;u.extra_attacks=0;_trace("summon_wait",side,{"lane":lane});continue
+		if u.summoned and not _has_haste(c):u.summoned=false;u.extra_attacks=0;_trace("summon_wait",side,{"lane":lane});continue
 		u.summoned=false
 		var count: int=1+int(u.extra_attacks);u.extra_attacks=0
 		for _strike in count:
 			if state.winner!=null or p.lanes[lane]==null:break
-			var amount: int=maxi(0,int(u.atk)-int(p.weak));var target: Variant=op.lanes[lane]
-			if target==null:damage(op,amount)
+			_combat_hook("on_attack",side,lane,u)
+			if p.lanes[lane]==null or int(p.lanes[lane].uid)!=int(u.uid) or state.winner!=null:break
+			var target: Variant=op.lanes[lane]
+			_combat_hook("on_defend",_other(side),lane,target if target!=null else {},{"attacker_side":side,"attacker_lane":lane,"attacker_uid":u.uid})
+			if p.lanes[lane]==null or int(p.lanes[lane].uid)!=int(u.uid) or int(u.hp)<=0 or int(u.stun)>0 or state.winner!=null:break
+			target=op.lanes[lane]
+			var amount: int=maxi(0,int(u.atk)-int(p.weak))
+			if target==null:_attack_damage_hero(side,lane,op,amount)
 			else:
+				var target_hp: int=int(target.hp)
 				hit_unit(target,amount)
+				if int(target.hp)<target_hp:_combat_hook("on_deal_damage",side,lane,u,{"amount":target_hp-int(target.hp)})
 				if amount>0 and target.hp>0 and catalog.card(target.id).effect=="retaliate":hit_unit(u,int(catalog.card(target.id).power))
 				if target.hp<=0:
 					if c.effect=="pierce":damage(op,maxi(0,-int(target.hp)))
-					op.lanes[lane]=null;enqueue({"type":"death","side":_other(side),"lane":lane,"unit":target})
-				if u.hp<=0:p.lanes[lane]=null;enqueue({"type":"death","side":side,"lane":lane,"unit":u})
+					if _remove_attack_casualty(_other(side),lane,target):_combat_hook("on_kill",side,lane,u,{"defeated_uid":target.uid})
+				if u.hp<=0:_remove_attack_casualty(side,lane,u)
 			_trace("attack",side,{"lane":lane,"amount":amount,"hero_target":target==null});check_winner()
 	p.weak=0;_refresh_bindings();return true
+func _remove_attack_casualty(side: String, original_lane: int, unit: Dictionary) -> bool:
+	for lane in 5:
+		var current: Variant=state[side].lanes[lane]
+		if current!=null and int(current.uid)==int(unit.uid):
+			state[side].lanes[lane]=null;enqueue({"type":"death","side":side,"lane":lane,"unit":unit});return true
+	return false
 func declare_convergence(side: String, lanes: Array) -> bool:
 	if not state.convergence_enabled or state.winner!=null or state.stage!="battle" or state.active!=side or state[side].phase!="main" or int(floor(float(state.round-1)/2))<5 or lanes.size()!=3 or state[side].convergence!=null:return false
 	var seen: Dictionary={}
@@ -295,6 +315,7 @@ func _advance_unchecked(side: String) -> bool:
 	state[side].phase="attack";_trace("phase_attack",side);attack_phase(side)
 	if state.winner!=null or not state.error.is_empty():return true
 	var p: Dictionary=state[side];p.phase="end"
+	_phase_hook("on_turn_end",side)
 	if not p.declaring.is_empty():
 		var valid := true;var ids: Array=[]
 		for lane in p.declaring:
@@ -310,6 +331,7 @@ func end_turn(side: String) -> bool:
 	if state.active=="enemy" and state.winner==null and state.error.is_empty():ai_turn("enemy")
 	return true
 func ai_turn(side: String) -> void:
+	if ai_policy!=null:ai_policy.take_turn(self,side);return
 	var p: Dictionary=state[side];var op: Dictionary=state[_other(side)]
 	if p.phase=="draw":
 		while p.hand.size()+mini(int(p.pendingDraw),p.deck.size())>6:_burn_reference(side,0)

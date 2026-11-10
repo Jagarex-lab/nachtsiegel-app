@@ -86,6 +86,8 @@ func _submit(trigger: String, side: String, abilities: Array, context: Dictionar
 		var ability: Variant = abilities[index]
 		reason = registry.validate_ability(ability, activated)
 		if not reason.is_empty(): return _rejected(reason)
+		if activated and ability.mode!="activated":return _rejected("not_activated")
+		if not activated and not ability.mode in ["triggered","reactive"]:return _rejected("unsupported_mode")
 		if not activated and ability.trigger != trigger: continue
 		reason = _preflight(side, ability, context, activated)
 		if not reason.is_empty(): return _rejected(reason)
@@ -147,6 +149,7 @@ func _ready(side: String) -> bool:
 
 func _validate_context(context: Dictionary) -> String:
 	var allowed := ["event_id", "source_lane", "source_uid", "target_lane", "target_uid", "target_species"]
+	if model != null and model.has_method("production_preflight"): allowed.append_array(["source_card_id", "ability_index", "source_relic", "event_lane", "event_side", "event_uid", "source_armed", "source_relic_uid"])
 	for key in context:
 		if not key in allowed: return "unknown_context_field:" + str(key)
 	if not context.get("event_id") is String or context.event_id.is_empty() or context.event_id.length() > 100: return "invalid_event_id"
@@ -171,6 +174,8 @@ func _source(side: String, context: Dictionary) -> String:
 
 func _preflight(side: String, ability: Dictionary, context: Dictionary, activated: bool) -> String:
 	if not _ready(side): return "not_battle"
+	if Registry.ProductionEffects.OPS.has(ability.get("effect")):
+		return model.production_preflight(side, ability, context) if model.has_method("production_preflight") else "production_profile_required"
 	var p: Dictionary = model.state[side]
 	var other: String = model._other(side)
 	var op: Dictionary = model.state[other]
@@ -227,6 +232,8 @@ func _preflight(side: String, ability: Dictionary, context: Dictionary, activate
 	return ""
 
 func _apply(item: Dictionary) -> Dictionary:
+	if Registry.ProductionEffects.OPS.has(item.ability.get("effect")):
+		return model.production_apply(item.side, item.ability, item.context)
 	var side: String = item.side
 	var p: Dictionary = model.state[side]
 	var other: String = model._other(side)

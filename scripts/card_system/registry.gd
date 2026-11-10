@@ -1,5 +1,6 @@
 extends RefCounted
 ## Executable subset of the isolated V2 contract. Registration is not production wiring.
+const ProductionEffects = preload("res://scripts/card_system/production_effects.gd")
 const CONTRACT_PATH := "res://data/card_system/registry.json"
 const MAX_CHAIN := 1000
 const MAX_EVENT_HISTORY := 10000
@@ -23,6 +24,7 @@ func capabilities() -> Dictionary:
 
 func validate_ability(ability: Variant, activated: bool = false) -> String:
 	if not ability is Dictionary: return "invalid_ability"
+	if ProductionEffects.OPS.has(ability.get("effect")): return ProductionEffects.validate(ability)
 	var required := ["mode", "effect", "target", "params", "limit"]
 	var allowed := required + ["trigger", "activation"]
 	for key in ability:
