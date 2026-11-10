@@ -123,7 +123,14 @@ func card_score(model: RefCounted, side: String, card: Dictionary, lane: int) ->
 		if not bool(model.state.origin_used[side]) and int(model.state.origins[side]) == lane: score += 0.35
 	elif kind == "relic":
 		score += 3.2 if p.relic == null else -3.5
-		if difficulty >= 2 and p.relic != null and p.relic.id == card.id: score -= 3.0
+		if p.relic != null:
+			var current: Dictionary=model.catalog.card(p.relic.id)
+			if current.id==card.id:score-=50.0
+			elif _blocked_board(model,side):
+				var next_growth:=_growth_strength(card)
+				var current_growth:=_growth_strength(current)
+				if next_growth>current_growth:score+=14.0+float(next_growth-current_growth)
+				elif current_growth>0 and next_growth==0:score-=14.0
 	elif kind == "event": score += 0.1
 	for ability in _abilities(card):
 		score += _effect_score(model, side, ability, lane, kind, card)
@@ -151,9 +158,13 @@ func _effect_score(model: RefCounted, side: String, ability: Dictionary, lane: i
 	var target := str(ability.get("target", ""))
 	var enemy: Variant = op.lanes[lane]
 	var own: Variant = p.lanes[lane]
+	var enemy_lane:=lane
 	# Automatic targets are evaluated as automatic targets, rather than pretending
 	# a chosen lane can redirect a lowest-health or all-units ability.
-	if target in ["enemy_lowest_health", "enemy_all"]: enemy = _lowest_unit(op.lanes)
+	if target in ["enemy_lowest_health", "enemy_all"]:
+		enemy = _lowest_unit(op.lanes)
+		for candidate_lane in 5:
+			if op.lanes[candidate_lane]!=null and is_same(op.lanes[candidate_lane],enemy):enemy_lane=candidate_lane;break
 	elif target == "enemy_hero": enemy = null
 	if target == "own_lowest_health": own = _lowest_unit(p.lanes)
 	var affected := 1.0
@@ -181,7 +192,7 @@ func _effect_score(model: RefCounted, side: String, ability: Dictionary, lane: i
 			else:
 				score = minf(amount, float(enemy.hp) + float(enemy.get("ward",0))) * 0.85
 				if amount >= int(enemy.hp) + int(enemy.get("ward",0)): score += 1.5 + float(enemy.atk) * 0.25
-				if op.convergence != null and op.convergence.lanes.has(lane): score += 32.0
+				if op.convergence != null and op.convergence.lanes.has(enemy_lane): score += 32.0
 		"heal", "heal_target", "mend", "relic_heal":
 			var missing := float(p.maxHp - p.hp)
 			if target in ["self_unit", "own_unit", "source", "chosen_ally", "own_lowest_health"] and own != null:
@@ -204,8 +215,8 @@ func _effect_score(model: RefCounted, side: String, ability: Dictionary, lane: i
 		"weaken", "weaken_unit", "silence": score = minf(amount, _incoming(model,other)) * 0.55
 		"stun", "stun_unit", "stasis":
 			if enemy != null:
-				score = _unit_threat(model, other, lane) * 0.7 + amount * 0.25
-				if op.convergence != null and op.convergence.lanes.has(lane): score += 36.0
+				score = _unit_threat(model, other, enemy_lane) * 0.7 + amount * 0.25
+				if op.convergence != null and op.convergence.lanes.has(enemy_lane): score += 36.0
 			else: score = -2.0
 		"return", "return_card", "recall":
 			score = 5.5 if model._discard_unit(side) >= 0 else -3.0
@@ -215,8 +226,8 @@ func _effect_score(model: RefCounted, side: String, ability: Dictionary, lane: i
 			else: score = -3.0
 		"move", "move_unit", "shift", "displace":
 			if target.begins_with("enemy") or effect == "displace":
-				score = _unit_threat(model, other, lane) * 0.5 if enemy != null else -1.0
-				if enemy != null and op.convergence != null and op.convergence.lanes.has(lane): score += 35.0
+				score = _unit_threat(model, other, enemy_lane) * 0.5 if enemy != null else -1.0
+				if enemy != null and op.convergence != null and op.convergence.lanes.has(enemy_lane): score += 35.0
 			else: score = 1.25
 		"delay", "delay_damage":
 			score = amount * 0.6
@@ -242,6 +253,24 @@ func _lowest_unit(lanes: Array) -> Variant:
 		if unit != null and (chosen == null or int(unit.hp) < int(chosen.hp)): chosen = unit
 	return chosen
 
+func _growth_strength(card: Dictionary) -> int:
+	if card.get("kind")!="relic":return 0
+	var strength:=0
+	for ability in card.get("abilities",[]):
+		if ability.get("effect")=="modify_attack" and ability.get("trigger")=="on_turn_start":strength=maxi(strength,int(ability.get("params",{}).get("amount",0)))
+	return strength
+
+func _blocked_board(model: RefCounted, side: String) -> bool:
+	var p: Dictionary=model.state[side]
+	var op: Dictionary=model.state[model._other(side)]
+	var powerless:=0
+	var opposing_protection:=0
+	for lane in 5:
+		if p.lanes[lane]==null or op.lanes[lane]==null:return false
+		if int(p.lanes[lane].atk)<=int(p.weak)+1:powerless+=1
+		opposing_protection+=int(op.lanes[lane].get("ward",0))+int(op.lanes[lane].get("block",0))
+	return powerless>=3 or opposing_protection>=10
+
 func _unit_threat(model: RefCounted, side: String, lane: int) -> float:
 	var u: Variant = model.state[side].lanes[lane]
 	if u == null or int(u.stun) > 0: return 0.0
@@ -258,10 +287,21 @@ func _burn_index(model: RefCounted, side: String) -> int:
 	var p: Dictionary = model.state[side]
 	var worst := -1
 	var score := INF
+	var preserve_growth: int=-1
+	var preserve_value: float=-INF
+	var has_growth:=p.relic!=null and _growth_strength(model.catalog.card(p.relic.id))>0
+	if not has_growth:
+		for i in p.hand.size():
+			var candidate: Dictionary=model.catalog.card(p.hand[i])
+			var strength:=_growth_strength(candidate)
+			if strength<=0:continue
+			var utility:=float(strength)*3.0-float(candidate.cost)*0.25
+			if preserve_growth<0 or utility>preserve_value:preserve_growth=i;preserve_value=utility
 	for i in p.hand.size():
 		var card: Dictionary = model.catalog.card(p.hand[i])
 		var value := -float(card.get("cost",0)) * 0.5
 		for lane in 5: value = maxf(value, card_score(model,side,card,lane) - maxf(0.0, float(card.cost) - float(p.energy)) * 0.8)
+		if i==preserve_growth:value+=9.0
 		if worst < 0 or value < score: worst = i; score = value
 	return worst
 

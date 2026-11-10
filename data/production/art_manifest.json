@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "source_catalog": "data/production/cards.json",
-  "source_catalog_sha256": "dc925d5083102a0ef01bd4bfe292231b76c07fca31b7763e29c1100324a27bb9",
+  "source_catalog_sha256": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
   "provenance": "data/production/art_sources.json",
   "inventory_card_count": 550,
   "individual_original_count": 5,

@@ -54,6 +54,9 @@ func test_choices() -> void:
 		m.state[other].convergence={"lanes":[1,2,3],"uids":[1,2,3],"broken":false}
 		best=m.policy.choose_play(m,side)
 		check(best.lane in [1,2,3],"blocks prepared convergence lane "+side)
+		var automatic: Dictionary={"id":"fixture-policy-lowest","kind":"event","cost":1,"abilities":[{"mode":"triggered","trigger":"on_play","effect":"stun_unit","target":"enemy_lowest_health","params":{"count":1}}]}
+		unit(m,other,"oa-neutral-c02",0).hp=1
+		check(is_equal_approx(m.policy.card_score(m,side,automatic,0),m.policy.card_score(m,side,automatic,1)),"automatic target outside convergence cannot be redirected by chosen lane "+side)
 		m=fixture(side)
 		var heal: Dictionary={}
 		for c in m.catalog.all_cards():

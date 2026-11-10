@@ -77,12 +77,28 @@ def build(cards: list[dict], cfg: dict) -> dict:
             chosen.append(card["id"])
             counts[card["id"]] += 1
             curve[int(card["cost"])] += 1
+    # Actual shield/control seed2 reached the500-call horizon: pure repeated
+    # protection had no credible way through a full weakened board. An existing
+    # recurring attack-growth relic supplies a legal win plan without changing
+    # any card, resource, lane or victory rule.
+    has_growth_finisher = cfg["strategy"] in {"control", "shield", "block", "convergence"}
+    if has_growth_finisher:
+        finisher="of-stillwatch-097"
+        assert by_id[finisher]["rarity"]!="legendary"
+        chosen=[finisher if by_id[id]["kind"]=="relic" else id for id in chosen]
+        counts=collections.Counter(chosen)
+        curve=collections.Counter(int(by_id[id]["cost"]) for id in chosen)
     chosen.sort(key=lambda id: (int(by_id[id]["cost"]), by_id[id]["kind"], id))
     assert len(chosen) == 30
     assert {by_id[id]["faction"] for id in chosen} <= {cfg["power"], "neutral"}
     assert all(n <= (1 if by_id[id]["rarity"] == "legendary" else 3) for id,n in counts.items())
     focus = sorted({e for id in counts for e in card_effects(by_id[id]) if e in cfg["effects"]})
     matched = sorted(id for id in counts if cfg["strategy"] in by_id[id].get("archetypes", []))
+    if has_growth_finisher:
+        if "modify_attack" not in focus:focus.append("modify_attack");focus.sort()
+        matched=["of-stillwatch-097"]+[id for id in matched if id!="of-stillwatch-097"]
+        cfg=cfg.copy()
+        cfg["text"]+=" Ungebrochene Scheibe verstärkt zu Zugbeginn den Angriff des eigenen Wesens mit dem wenigsten Leben und öffnet eine Gewinnlinie durch lange defensive Blockaden."
     return dict(id=cfg["id"], name_de=cfg["name"], strategy=cfg["strategy"], power=cfg["power"], description_de=cfg["text"], limitations_de="Reproduzierbare Referenzzusammensetzung, kein Nachweis optimaler Spielweise oder gleicher Gewinnchancen. Die KI bewertet Ketten heuristisch.", key_card_ids=matched[:6], focus_effects=focus, species_focus=[cfg["species"]] if cfg.get("species") else [], cards=chosen, metrics=dict(kind_counts=dict(collections.Counter(by_id[id]["kind"] for id in chosen)), cost_curve={str(k):v for k,v in sorted(curve.items())}, unique_cards=len(counts), archetype_matching_unique_cards=len(matched)))
 
 

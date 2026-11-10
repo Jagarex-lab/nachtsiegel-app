@@ -156,18 +156,19 @@
       "name_de": "Die ruhende Linie",
       "strategy": "control",
       "power": "stillwatch",
-      "description_de": "Stasis und Schwächung begrenzen gegnerische Angriffe; gezielter Schaden öffnet Gegenpfade.",
+      "description_de": "Stasis und Schwächung begrenzen gegnerische Angriffe; gezielter Schaden öffnet Gegenpfade. Ungebrochene Scheibe verstärkt zu Zugbeginn den Angriff des eigenen Wesens mit dem wenigsten Leben und öffnet eine Gewinnlinie durch lange defensive Blockaden.",
       "limitations_de": "Reproduzierbare Referenzzusammensetzung, kein Nachweis optimaler Spielweise oder gleicher Gewinnchancen. Die KI bewertet Ketten heuristisch.",
       "key_card_ids": [
+        "of-stillwatch-097",
         "oa-stillwatch-c07",
         "oa-stillwatch-e02",
         "of-neutral-039",
         "of-stillwatch-003",
-        "of-stillwatch-005",
-        "of-stillwatch-009"
+        "of-stillwatch-005"
       ],
       "focus_effects": [
         "delay_damage",
+        "modify_attack",
         "stun_unit",
         "weaken_unit"
       ],
@@ -186,7 +187,6 @@
         "of-stillwatch-069",
         "of-stillwatch-071",
         "of-stillwatch-086",
-        "of-stillwatch-088",
         "of-neutral-039",
         "of-stillwatch-033",
         "of-stillwatch-045",
@@ -197,8 +197,9 @@
         "of-stillwatch-040",
         "of-stillwatch-084",
         "of-stillwatch-087",
-        "of-stillwatch-093",
-        "of-stillwatch-094",
+        "of-stillwatch-097",
+        "of-stillwatch-097",
+        "of-stillwatch-097",
         "oa-stillwatch-c07",
         "of-stillwatch-012",
         "of-stillwatch-017",
@@ -212,13 +213,13 @@
         },
         "cost_curve": {
           "2": 7,
-          "3": 7,
+          "3": 6,
           "4": 6,
-          "5": 6,
+          "5": 7,
           "6": 4
         },
-        "unique_cards": 29,
-        "archetype_matching_unique_cards": 29
+        "unique_cards": 27,
+        "archetype_matching_unique_cards": 27
       }
     },
     {
@@ -226,19 +227,20 @@
       "name_de": "Kristallene Schwelle",
       "strategy": "shield",
       "power": "stillwatch",
-      "description_de": "Schild schützt Wesen und Held über mehrere Züge. Pfadkontrolle bleibt für den Sieg erforderlich.",
+      "description_de": "Schild schützt Wesen und Held über mehrere Züge. Pfadkontrolle bleibt für den Sieg erforderlich. Ungebrochene Scheibe verstärkt zu Zugbeginn den Angriff des eigenen Wesens mit dem wenigsten Leben und öffnet eine Gewinnlinie durch lange defensive Blockaden.",
       "limitations_de": "Reproduzierbare Referenzzusammensetzung, kein Nachweis optimaler Spielweise oder gleicher Gewinnchancen. Die KI bewertet Ketten heuristisch.",
       "key_card_ids": [
+        "of-stillwatch-097",
         "of-neutral-043",
         "of-neutral-050",
         "of-neutral-057",
         "of-neutral-059",
-        "of-neutral-064",
-        "of-neutral-066"
+        "of-neutral-064"
       ],
       "focus_effects": [
         "grant_shield",
-        "heal_target"
+        "heal_target",
+        "modify_attack"
       ],
       "species_focus": [],
       "cards": [
@@ -258,7 +260,6 @@
         "of-stillwatch-056",
         "of-stillwatch-083",
         "of-stillwatch-083",
-        "of-stillwatch-089",
         "of-stillwatch-081",
         "of-neutral-057",
         "of-neutral-064",
@@ -266,10 +267,11 @@
         "of-stillwatch-046",
         "of-stillwatch-057",
         "of-stillwatch-057",
-        "of-stillwatch-094",
+        "of-stillwatch-097",
+        "of-stillwatch-097",
+        "of-stillwatch-097",
         "of-neutral-059",
         "of-stillwatch-053",
-        "of-stillwatch-099",
         "of-stillwatch-048",
         "of-neutral-066"
       ],
@@ -281,15 +283,15 @@
         },
         "cost_curve": {
           "2": 9,
-          "3": 8,
+          "3": 7,
           "4": 1,
-          "5": 7,
-          "6": 3,
+          "5": 9,
+          "6": 2,
           "7": 1,
           "8": 1
         },
-        "unique_cards": 21,
-        "archetype_matching_unique_cards": 21
+        "unique_cards": 19,
+        "archetype_matching_unique_cards": 19
       }
     },
     {
@@ -297,19 +299,20 @@
       "name_de": "Ein gehaltener Augenblick",
       "strategy": "block",
       "power": "stillwatch",
-      "description_de": "Block absorbiert Schaden nach den Kampfregeln; schwächere gegnerische Angriffe erleichtern die Stabilisierung.",
+      "description_de": "Block absorbiert Schaden nach den Kampfregeln; schwächere gegnerische Angriffe erleichtern die Stabilisierung. Ungebrochene Scheibe verstärkt zu Zugbeginn den Angriff des eigenen Wesens mit dem wenigsten Leben und öffnet eine Gewinnlinie durch lange defensive Blockaden.",
       "limitations_de": "Reproduzierbare Referenzzusammensetzung, kein Nachweis optimaler Spielweise oder gleicher Gewinnchancen. Die KI bewertet Ketten heuristisch.",
       "key_card_ids": [
+        "of-stillwatch-097",
         "oa-stillwatch-c02",
         "oa-stillwatch-c07",
         "of-neutral-016",
         "of-neutral-025",
-        "of-neutral-073",
-        "of-neutral-087"
+        "of-neutral-073"
       ],
       "focus_effects": [
         "grant_block",
         "guard",
+        "modify_attack",
         "stun_unit",
         "weaken_unit"
       ],
@@ -339,8 +342,8 @@
         "of-neutral-016",
         "of-stillwatch-016",
         "of-stillwatch-016",
-        "of-stillwatch-093",
-        "of-stillwatch-093",
+        "of-stillwatch-097",
+        "of-stillwatch-097",
         "oa-stillwatch-c07",
         "of-stillwatch-017",
         "of-stillwatch-017",
@@ -799,15 +802,15 @@
       "name_de": "Drei gehaltene Wege",
       "strategy": "convergence",
       "power": "stillwatch",
-      "description_de": "Drei kontrollierte Pfade bereiten Konvergenz vor. Der Gegner erhält die reguläre Gelegenheit, diese Vorbereitung zu brechen.",
+      "description_de": "Drei kontrollierte Pfade bereiten Konvergenz vor. Der Gegner erhält die reguläre Gelegenheit, diese Vorbereitung zu brechen. Ungebrochene Scheibe verstärkt zu Zugbeginn den Angriff des eigenen Wesens mit dem wenigsten Leben und öffnet eine Gewinnlinie durch lange defensive Blockaden.",
       "limitations_de": "Reproduzierbare Referenzzusammensetzung, kein Nachweis optimaler Spielweise oder gleicher Gewinnchancen. Die KI bewertet Ketten heuristisch.",
       "key_card_ids": [
+        "of-stillwatch-097",
         "oa-stillwatch-c07",
         "oa-stillwatch-e02",
         "of-neutral-043",
         "of-neutral-050",
-        "of-neutral-057",
-        "of-neutral-059"
+        "of-neutral-057"
       ],
       "focus_effects": [
         "grant_shield",
@@ -830,7 +833,6 @@
         "of-stillwatch-056",
         "of-stillwatch-056",
         "of-stillwatch-083",
-        "of-stillwatch-089",
         "of-stillwatch-045",
         "of-stillwatch-045",
         "of-stillwatch-051",
@@ -842,7 +844,8 @@
         "of-neutral-064",
         "of-stillwatch-046",
         "of-stillwatch-057",
-        "of-stillwatch-094",
+        "of-stillwatch-097",
+        "of-stillwatch-097",
         "oa-stillwatch-c07",
         "of-neutral-059",
         "of-stillwatch-053",
@@ -856,14 +859,14 @@
         },
         "cost_curve": {
           "2": 7,
-          "3": 7,
+          "3": 6,
           "4": 6,
-          "5": 6,
+          "5": 7,
           "6": 3,
           "7": 1
         },
-        "unique_cards": 23,
-        "archetype_matching_unique_cards": 23
+        "unique_cards": 22,
+        "archetype_matching_unique_cards": 22
       }
     },
     {
@@ -1038,18 +1041,18 @@
     "prod-midrange/prod-convergence": 30,
     "prod-midrange/prod-time": 30,
     "prod-midrange/prod-resource": 30,
-    "prod-control/prod-shield": 28,
-    "prod-control/prod-block": 23,
+    "prod-control/prod-shield": 26,
+    "prod-control/prod-block": 22,
     "prod-control/prod-recurrence": 30,
     "prod-control/prod-resonance": 30,
     "prod-control/prod-movement": 30,
     "prod-control/prod-species": 30,
     "prod-control/prod-relic": 30,
     "prod-control/prod-impulse": 30,
-    "prod-control/prod-convergence": 23,
+    "prod-control/prod-convergence": 22,
     "prod-control/prod-time": 30,
     "prod-control/prod-resource": 29,
-    "prod-shield/prod-block": 30,
+    "prod-shield/prod-block": 28,
     "prod-shield/prod-recurrence": 30,
     "prod-shield/prod-resonance": 30,
     "prod-shield/prod-movement": 30,
@@ -1065,7 +1068,7 @@
     "prod-block/prod-species": 30,
     "prod-block/prod-relic": 30,
     "prod-block/prod-impulse": 30,
-    "prod-block/prod-convergence": 29,
+    "prod-block/prod-convergence": 27,
     "prod-block/prod-time": 30,
     "prod-block/prod-resource": 30,
     "prod-recurrence/prod-resonance": 30,
