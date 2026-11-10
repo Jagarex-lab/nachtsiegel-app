@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "scope": "real_v2_pilot_references_only",
+  "generator": "node tools/card_system/assets.cjs",
+  "source_catalog_card_count": 55,
+  "inventory_card_count": 8,
+  "shared_concept_card_count": 8,
+  "missing_individual_original_count": 8,
+  "final_individual_original_count": 0,
+  "atlas": {
+    "path": "assets/art/atlas.png",
+    "sha256": "3655610a243d792b90115ba752805a28d3e1f3491e1f70e3fba1c17660ad1db3",
+    "width": 1245,
+    "height": 1263,
+    "columns": 3,
+    "rows": 3,
+    "cell_width": 415,
+    "cell_height": 421,
+    "available_portrait_cells": 9,
+    "alpha_reused_portrait_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "selection_source": "scripts/alpha/card_view.gd",
+    "provenance": "assets/ASSET_MANIFEST.md"
+  },
+  "future_plan": {
+    "desired_catalogue_cards": 550,
+    "desired_per_power": 110,
+    "generated_future_card_rows": 0,
+    "individual_artwork_status": "not_created_by_this_tool"
+  },
+  "original_metadata_required": [
+    "asset_id",
+    "card_id",
+    "creator_or_generator",
+    "creation_date",
+    "source_or_prompt",
+    "reference_sources",
+    "commercial_usage_basis",
+    "original_width",
+    "original_height",
+    "sha256",
+    "edits",
+    "review_status",
+    "alternative_text"
+  ],
+  "entries": [
+    {
+      "card_id": "oa-neutral-c02",
+      "name": "Torwache",
+      "power": "neutral",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-neutral-c02.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    },
+    {
+      "card_id": "oa-neutral-c03",
+      "name": "Prismaträger",
+      "power": "neutral",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-neutral-c03.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    },
+    {
+      "card_id": "oa-neutral-c04",
+      "name": "Feldärztin",
+      "power": "neutral",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-neutral-c04.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    },
+    {
+      "card_id": "oa-neutral-c09",
+      "name": "Resonanzträger",
+      "power": "neutral",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-neutral-c09.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    },
+    {
+      "card_id": "oa-morph-c04",
+      "name": "Sporenträger",
+      "power": "morph",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-morph-c04.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    },
+    {
+      "card_id": "oa-neutral-e02",
+      "name": "Atempause",
+      "power": "neutral",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-neutral-e02.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    },
+    {
+      "card_id": "oa-houses-e01",
+      "name": "Wiederkehr",
+      "power": "houses",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-houses-e01.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    },
+    {
+      "card_id": "oa-neutral-r01",
+      "name": "Wanderkompass",
+      "power": "neutral",
+      "current_status": "shared_concept",
+      "shared_reference": {
+        "asset_id": "shared:orafold-atlas",
+        "path": "assets/art/atlas.png",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "individual_original": {
+        "expected_path": "assets/cards/originals/oa-neutral-r01.png",
+        "exists": false,
+        "status": "missing",
+        "commercially_cleared": false
+      },
+      "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
+    }
+  ]
+}

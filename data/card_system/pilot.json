@@ -1,0 +1,299 @@
+{
+  "schema_version": 2,
+  "status": "authored_contract_pilot_not_active_catalog",
+  "species_status": "editorial_proposals_not_preexisting_lore",
+  "cards": [
+    {
+      "schema_version": 2,
+      "id": "oa-neutral-c02",
+      "name": "Torwache",
+      "power": "neutral",
+      "kind": "creature",
+      "rarity": "common",
+      "energy_cost": 2,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "triggered",
+          "effect": "guard",
+          "target": "own_hero",
+          "params": {
+            "amount": 3
+          },
+          "limit": "once_per_summon",
+          "trigger": "on_summon"
+        }
+      ],
+      "text_de": "Beim Beschwören: Dein Held erhält 3 Block bis zu deinem nächsten Zugbeginn.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-neutral-c02",
+        "effect": "guard",
+        "power": 1
+      },
+      "species": [
+        "human"
+      ],
+      "attack": 2,
+      "health": 4
+    },
+    {
+      "schema_version": 2,
+      "id": "oa-neutral-c03",
+      "name": "Prismaträger",
+      "power": "neutral",
+      "kind": "creature",
+      "rarity": "common",
+      "energy_cost": 2,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "triggered",
+          "effect": "ward",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_summon",
+          "trigger": "on_summon"
+        }
+      ],
+      "text_de": "Beim Beschwören: Dein Held erhält 2 Schild, höchstens 25 insgesamt.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-neutral-c03",
+        "effect": "ward",
+        "power": 1
+      },
+      "species": [
+        "human",
+        "construct"
+      ],
+      "attack": 1,
+      "health": 4
+    },
+    {
+      "schema_version": 2,
+      "id": "oa-neutral-c04",
+      "name": "Feldärztin",
+      "power": "neutral",
+      "kind": "creature",
+      "rarity": "common",
+      "energy_cost": 2,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "triggered",
+          "effect": "mend",
+          "target": "own_hero",
+          "params": {
+            "amount": 3
+          },
+          "limit": "once_per_summon",
+          "trigger": "on_summon"
+        }
+      ],
+      "text_de": "Beim Beschwören: Heile deinen Helden um 3 Leben, höchstens bis zu seinen maximalen Lebenspunkten.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-neutral-c04",
+        "effect": "mend",
+        "power": 1
+      },
+      "species": [
+        "human"
+      ],
+      "attack": 2,
+      "health": 4
+    },
+    {
+      "schema_version": 2,
+      "id": "oa-neutral-c09",
+      "name": "Resonanzträger",
+      "power": "neutral",
+      "kind": "creature",
+      "rarity": "rare",
+      "energy_cost": 2,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "triggered",
+          "effect": "weave",
+          "target": "own_resonance",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_summon",
+          "trigger": "on_summon"
+        }
+      ],
+      "text_de": "Beim Beschwören: Erzeuge 2 Resonanz, höchstens 15 insgesamt.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-neutral-c09",
+        "effect": "weave",
+        "power": 1
+      },
+      "species": [
+        "elemental"
+      ],
+      "attack": 1,
+      "health": 4
+    },
+    {
+      "schema_version": 2,
+      "id": "oa-morph-c04",
+      "name": "Sporenträger",
+      "power": "morph",
+      "kind": "creature",
+      "rarity": "common",
+      "energy_cost": 2,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "triggered",
+          "effect": "harvest",
+          "target": "own_resonance",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_death_instance",
+          "trigger": "on_death"
+        }
+      ],
+      "text_de": "Wenn dieses Wesen besiegt wird: Erzeuge 2 Resonanz, höchstens 15 insgesamt.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-morph-c04",
+        "effect": "harvest",
+        "power": 1
+      },
+      "species": [
+        "plant",
+        "amalgam"
+      ],
+      "attack": 2,
+      "health": 4
+    },
+    {
+      "schema_version": 2,
+      "id": "oa-neutral-e02",
+      "name": "Atempause",
+      "power": "neutral",
+      "kind": "event",
+      "rarity": "rare",
+      "energy_cost": 2,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "triggered",
+          "effect": "heal",
+          "target": "own_hero",
+          "params": {
+            "amount": 5
+          },
+          "limit": "once_per_play",
+          "trigger": "on_play"
+        }
+      ],
+      "text_de": "Beim Ausspielen: Heile deinen Helden um 5 Leben, höchstens bis zu seinen maximalen Lebenspunkten.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-neutral-e02",
+        "effect": "heal",
+        "power": 5
+      }
+    },
+    {
+      "schema_version": 2,
+      "id": "oa-houses-e01",
+      "name": "Wiederkehr",
+      "power": "houses",
+      "kind": "event",
+      "rarity": "rare",
+      "energy_cost": 3,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "triggered",
+          "effect": "recall",
+          "target": "own_free_lane",
+          "params": {},
+          "limit": "once_per_play",
+          "trigger": "on_play"
+        }
+      ],
+      "text_de": "Beim Ausspielen: Beschwöre das zuletzt abgelegte eigene Wesen auf einem freien eigenen Pfad. Seine Beschwörungsfähigkeiten werden ausgelöst.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-houses-e01",
+        "effect": "recall",
+        "power": 1
+      }
+    },
+    {
+      "schema_version": 2,
+      "id": "oa-neutral-r01",
+      "name": "Wanderkompass",
+      "power": "neutral",
+      "kind": "relic",
+      "rarity": "rare",
+      "energy_cost": 2,
+      "art": {
+        "status": "shared_concept",
+        "asset_id": "shared:orafold-atlas",
+        "provenance": "assets/ASSET_MANIFEST.md"
+      },
+      "abilities": [
+        {
+          "mode": "activated",
+          "effect": "relic_res",
+          "target": "own_resonance",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_own_turn",
+          "activation": {
+            "energy": 1,
+            "resonance": 0
+          }
+        }
+      ],
+      "text_de": "Aktivieren (1 Energie, einmal je eigenem Zug): Erzeuge 1 Resonanz, höchstens 15 insgesamt.",
+      "source_binding": {
+        "catalog": "orafold-alpha-0.1",
+        "card_id": "oa-neutral-r01",
+        "effect": "relic_res",
+        "power": 1
+      }
+    }
+  ]
+}
