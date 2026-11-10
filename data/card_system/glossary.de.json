@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "status": "redaktioneller_vertrag_keine_neuen_kampfregeln",
+  "terms": {
+    "Wesen": "Hauptkartentyp creature. Belegt einen Kampfpfad und besitzt Angriff, Leben und eine oder zwei gleichwertige Wesensarten.",
+    "Impuls": "Hauptkartentyp event. Besitzt weder Angriff noch Leben. Ein Impuls kann sofort, verzögert oder reaktiv wirken, sobald der jeweilige Effektpfad implementiert ist.",
+    "Relikt": "Hauptkartentyp relic. Belegt keinen Kampfpfad und besitzt weder Angriff noch Leben. Je Spieler ist höchstens ein Relikt aktiv.",
+    "Ausspielen": "Eine Karte wird regelkonform aus der Hand bezahlt und gespielt. Dies ist kein Synonym für Beschwören.",
+    "Beschwören": "Ein Wesen betritt einen Kampfpfad, entweder durch Ausspielen oder durch einen ausdrücklich beschwörenden Effekt. Rückholung löst im bestehenden Alpha-Profil Beschwörungsfähigkeiten erneut aus.",
+    "Energie": "Primäre Zugressource. Das bestehende Alpha-Profil erneuert sie zu eigenen Zugbeginn von 1 bis höchstens 8; der neue Kostenraum bis 10 ist noch keine Änderung dieser Regel.",
+    "Resonanz": "Gespeicherte Ressource für besondere Eingriffe; im bestehenden Alpha-Profil höchstens 15. Gedruckte Resonanzkosten sind im V2-Vertrag vorbereitet, aber noch nicht produktiv integriert.",
+    "Block": "Absorbiert normalen Heldenschaden vor Schild und Leben. Verfällt zu Beginn des nächsten eigenen Zuges.",
+    "Schild": "Absorbiert nach Block und bleibt im bestehenden Alpha-Profil über Züge bestehen. Heldenschild ist auf 25 begrenzt. Kreaturenschutz ist ein eigener Zustandswert.",
+    "Durchdringender Beschwörungsschaden": "Der bestehende pierce-Beschwörungseffekt umgeht sowohl Block als auch Heldenschild. Sein tödlicher Angriffsüberschuss wird dagegen durch Block und Schild absorbiert.",
+    "Besiegt": "Ein Wesen hat keine verbleibenden Lebenspunkte und wird über die bestehende Todesqueue abgelegt. Erzählerische Wiederbelebung ist daraus nicht automatisch abzuleiten.",
+    "Direkter Heldenangriff": "Ist der gegenüberliegende gegnerische Pfad leer, trifft ein kampfbereites Wesen den gegnerischen Helden. Normaler Schaden wird durch Block, dann Schild, dann Leben abgewickelt.",
+    "Wesensarten": "Eine ungeordnete Menge aus einer oder zwei Arten. Beide Einträge sind gleichwertig. Eine Abfrage trifft ein Wesen je Effekt einmal, auch wenn beide Arten passen.",
+    "Konvergenz": "Die zweite bestehende Siegbedingung des Alpha-Profils. Dieser Datenvertrag ändert weder Voraussetzungen noch Timing.",
+    "Dauerhaft": "Solange die ausdrücklich beschriebene Quelle oder Wirkung besteht; bedeutet keine Änderung der gespeicherten Basiskartendaten."
+  },
+  "editorial_rules": [
+    "Auslöser oder Aktivierung stehen vor dem Doppelpunkt.",
+    "Kartenregeln werden aus validierten Effektparametern erzeugt; Lore steht getrennt.",
+    "Block, Heldenschild und Kreaturenschutz werden ausdrücklich benannt.",
+    "Beim Ausspielen und Beim Beschwören dürfen nicht vertauscht werden.",
+    "Kreatur und Ereignis sind historische Anzeigenamen, keine weiteren Hauptkartentypen.",
+    "Keine Begriffe wie geschützter Schaden ohne Erklärung der tatsächlich absorbierenden Schutzwerte."
+  ]
+}

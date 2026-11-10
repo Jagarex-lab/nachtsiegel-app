@@ -1,0 +1,1166 @@
+{
+  "schema_version": 2,
+  "status": "isolated_data_foundation_not_a_playable_550_card_release",
+  "kinds": {
+    "creature": "Wesen",
+    "event": "Impuls",
+    "relic": "Relikt"
+  },
+  "powers": [
+    "houses",
+    "stillwatch",
+    "morph",
+    "ninth",
+    "neutral"
+  ],
+  "rarities": [
+    "common",
+    "rare",
+    "epic",
+    "legendary"
+  ],
+  "ability_modes": [
+    "triggered",
+    "activated",
+    "passive",
+    "reactive"
+  ],
+  "species": {
+    "human": {
+      "de": "Menschen",
+      "definition_de": "Menschen; Beruf, Herkunft und Zugehörigkeit sind keine zweite Wesensart."
+    },
+    "beast": {
+      "de": "Bestien",
+      "definition_de": "Eigenständige tierische Lebewesen, auch ungewöhnliche Arten."
+    },
+    "spirit": {
+      "de": "Geister",
+      "definition_de": "Nichtkörperliche, handlungsfähige Erscheinungen; ein bloßes Erinnerungsbild genügt nicht."
+    },
+    "construct": {
+      "de": "Konstrukte",
+      "definition_de": "Künstlich geschaffene Wesen ohne vorherrschenden mechanischen Antrieb."
+    },
+    "plant": {
+      "de": "Pflanzen",
+      "definition_de": "Eigenständig handelnde pflanzliche Wesen."
+    },
+    "amalgam": {
+      "de": "Amalgame",
+      "definition_de": "Dauerhafte Verbindung unterschiedlicher Körper oder Ursprünge."
+    },
+    "morphid": {
+      "de": "Morphiden",
+      "definition_de": "Wesen, deren eigene Körperform beständig veränderlich ist."
+    },
+    "paradox": {
+      "de": "Paradoxe",
+      "definition_de": "Wesen mit gleichzeitig unvereinbaren Zuständen; Ungewöhnlichkeit allein genügt nicht."
+    },
+    "revenant": {
+      "de": "Wiedergänger",
+      "definition_de": "Tatsächlich zurückgekehrte Tote; nicht jede Erinnerung oder Rückholung ist Wiederbelebung."
+    },
+    "elemental": {
+      "de": "Elementare",
+      "definition_de": "Wesen, deren Körper aus einem wirksamen Natur- oder Energieelement besteht."
+    },
+    "devourer": {
+      "de": "Zehrer",
+      "definition_de": "Wesen, deren Existenz auf dem Entzug fremder Substanz, Kraft oder Zustände beruht."
+    },
+    "mechanoid": {
+      "de": "Mechanoide",
+      "definition_de": "Wesen mit vorherrschender mechanischer Funktionsweise."
+    }
+  },
+  "categories": {
+    "damage": "Schaden",
+    "protection": "Schutz",
+    "healing": "Heilung",
+    "enhancement": "Verstärkung",
+    "weakening": "Schwächung",
+    "movement": "Bewegung",
+    "summoning": "Beschwörung",
+    "recurrence": "Wiederkehr",
+    "resources": "Ressourcen",
+    "card_manipulation": "Kartenmanipulation",
+    "time_manipulation": "Zeitmanipulation",
+    "control": "Kontrolle"
+  },
+  "triggers": {
+    "on_play": {
+      "de": "Beim Ausspielen",
+      "generic_runtime_implemented": false
+    },
+    "on_summon": {
+      "de": "Beim Beschwören",
+      "generic_runtime_implemented": false
+    },
+    "on_attack": {
+      "de": "Beim Angreifen",
+      "generic_runtime_implemented": false
+    },
+    "on_defend": {
+      "de": "Beim Verteidigen",
+      "generic_runtime_implemented": false
+    },
+    "on_deal_damage": {
+      "de": "Beim Verursachen von Schaden",
+      "generic_runtime_implemented": false
+    },
+    "on_take_damage": {
+      "de": "Beim Erleiden von Schaden",
+      "generic_runtime_implemented": false
+    },
+    "on_kill": {
+      "de": "Beim Besiegen eines Wesens",
+      "generic_runtime_implemented": false
+    },
+    "on_death": {
+      "de": "Wenn dieses Wesen besiegt wird",
+      "generic_runtime_implemented": false
+    },
+    "on_turn_start": {
+      "de": "Zu Zugbeginn",
+      "generic_runtime_implemented": false
+    },
+    "on_turn_end": {
+      "de": "Zu Zugende",
+      "generic_runtime_implemented": false
+    },
+    "on_lane_change": {
+      "de": "Beim Pfadwechsel",
+      "generic_runtime_implemented": false
+    },
+    "on_draw": {
+      "de": "Beim Kartenziehen",
+      "generic_runtime_implemented": false
+    },
+    "on_discard": {
+      "de": "Beim Abwerfen",
+      "generic_runtime_implemented": false
+    },
+    "on_spend_resonance": {
+      "de": "Beim Ausgeben von Resonanz",
+      "generic_runtime_implemented": false
+    },
+    "on_relic_activate": {
+      "de": "Beim Aktivieren eines Relikts",
+      "generic_runtime_implemented": false
+    },
+    "on_condition": {
+      "de": "Wenn die festgelegte Bedingung erfüllt ist",
+      "generic_runtime_implemented": false
+    }
+  },
+  "effects": {
+    "strike": {
+      "category": "damage",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "enemy_unit_or_hero_if_no_units"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Füge einem gegnerischen Wesen {amount} Schaden zu. Ist kein gegnerisches Wesen vorhanden, trifft der Schaden den gegnerischen Helden; Block und Schild absorbieren ihn.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "strike",
+        "parameter_semantics": {
+          "amount": "power + 1"
+        }
+      }
+    },
+    "guard": {
+      "category": "protection",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_hero"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Dein Held erhält {amount} Block bis zu deinem nächsten Zugbeginn.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "guard",
+        "parameter_semantics": {
+          "amount": "power + 2"
+        }
+      }
+    },
+    "ward": {
+      "category": "protection",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_hero"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Dein Held erhält {amount} Schild, höchstens 25 insgesamt.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "ward",
+        "parameter_semantics": {
+          "amount": "power + 1"
+        }
+      }
+    },
+    "mend": {
+      "category": "healing",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_hero"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Heile deinen Helden um {amount} Leben, höchstens bis zu seinen maximalen Lebenspunkten.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "mend",
+        "parameter_semantics": {
+          "amount": "power + 2"
+        }
+      }
+    },
+    "weave": {
+      "category": "resources",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_resonance"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 15
+        }
+      },
+      "text_de": "Erzeuge {amount} Resonanz, höchstens 15 insgesamt.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "weave",
+        "parameter_semantics": {
+          "amount": "power + 1"
+        }
+      }
+    },
+    "drain": {
+      "category": "damage",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "enemy_hero"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Füge dem gegnerischen Helden {amount} Schaden zu; Block und Schild absorbieren ihn. Heile deinen Helden um die tatsächlich verlorenen gegnerischen Lebenspunkte.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "drain",
+        "parameter_semantics": {
+          "amount": "power + 1"
+        }
+      }
+    },
+    "rally": {
+      "category": "enhancement",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_left_then_right_neighbor"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 15
+        }
+      },
+      "text_de": "Dein linker Nachbar erhält dauerhaft {amount} Angriff. Ist dort kein eigenes Wesen, erhält ihn stattdessen dein rechter Nachbar.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "rally",
+        "parameter_semantics": {
+          "amount": "power"
+        }
+      }
+    },
+    "silence": {
+      "category": "control",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "opposite_enemy_unit"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {},
+      "text_de": "Das gegenüberliegende gegnerische Wesen setzt seinen nächsten Angriff aus.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "silence",
+        "parameter_semantics": {}
+      }
+    },
+    "pierce": {
+      "category": "damage",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "enemy_hero"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Füge dem gegnerischen Helden {amount} Schaden zu, der Block und Schild umgeht. Tödlicher Überschussschaden bei Angriffen trifft ebenfalls den Helden; dabei absorbieren Block und Schild den Schaden.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "pierce",
+        "parameter_semantics": {
+          "amount": "power + 2"
+        }
+      }
+    },
+    "shift": {
+      "category": "movement",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_source_neighbor_to_free_own_lane"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {},
+      "text_de": "Verschiebe ein benachbartes eigenes Wesen auf einen freien eigenen Pfad. Du darfst darauf verzichten.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "shift",
+        "parameter_semantics": {}
+      }
+    },
+    "harvest": {
+      "category": "resources",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_death"
+      ],
+      "targets": [
+        "own_resonance"
+      ],
+      "limits": [
+        "once_per_death_instance"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 15
+        }
+      },
+      "text_de": "Erzeuge {amount} Resonanz, höchstens 15 insgesamt.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "harvest",
+        "parameter_semantics": {
+          "amount": "power + 1"
+        }
+      }
+    },
+    "retaliate": {
+      "category": "damage",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_defend"
+      ],
+      "targets": [
+        "attacking_unit"
+      ],
+      "limits": [
+        "each_survived_positive_attack"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Überlebt dieses Wesen einen Angriff mit mindestens 1 Angriffsstärke nach Schwächung, füge dem Angreifer {amount} Schaden zu.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "retaliate",
+        "parameter_semantics": {
+          "amount": "power"
+        }
+      }
+    },
+    "draw": {
+      "category": "card_manipulation",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_hand"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "count": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "text_de": "Ziehe {count} Karte. Das Handlimit ist 6; ein leerer Stapel löst hier weder Erschöpfung noch Kreislauf aus.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "draw",
+        "parameter_semantics": {
+          "count": "constant 1"
+        }
+      }
+    },
+    "haste": {
+      "category": "time_manipulation",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "passive"
+      ],
+      "triggers": [],
+      "targets": [
+        "self"
+      ],
+      "limits": [
+        "while_on_board"
+      ],
+      "params": {},
+      "text_de": "Dieses Wesen darf bereits im Beschwörungszug angreifen.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "haste",
+        "parameter_semantics": {}
+      }
+    },
+    "weaken": {
+      "category": "weakening",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "opponent_attack_phase"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 15
+        }
+      },
+      "text_de": "Gegnerische Angriffe sind in der nächsten gegnerischen Angriffsphase um mindestens {amount} schwächer.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "weaken",
+        "parameter_semantics": {
+          "amount": "power"
+        }
+      }
+    },
+    "pulse": {
+      "category": "enhancement",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "creature"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_summon"
+      ],
+      "targets": [
+        "own_resources_and_neighbors"
+      ],
+      "limits": [
+        "once_per_summon"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 15
+        }
+      },
+      "text_de": "Erzeuge {amount} Resonanz und gib deinem Helden {amount} Schild. Beide eigenen Nachbarn erhalten 1 Angriff. Die Obergrenzen bleiben 15 Resonanz und 25 Schild.",
+      "source_binding": {
+        "path": "scripts/legacy/battle_engine.gd",
+        "effect": "pulse",
+        "parameter_semantics": {
+          "amount": "power"
+        }
+      }
+    },
+    "bolt": {
+      "category": "damage",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "enemy_lane"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Füge dem Wesen auf dem gewählten gegnerischen Pfad {amount} Schaden zu. Ist der Pfad frei, trifft der Schaden den gegnerischen Helden; Block und Schild absorbieren ihn.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "bolt",
+        "parameter_semantics": {
+          "amount": "power"
+        }
+      }
+    },
+    "heal": {
+      "category": "healing",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "own_hero"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        }
+      },
+      "text_de": "Heile deinen Helden um {amount} Leben, höchstens bis zu seinen maximalen Lebenspunkten.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "heal",
+        "parameter_semantics": {
+          "amount": "power"
+        }
+      }
+    },
+    "stasis": {
+      "category": "control",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "enemy_unit"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {
+        "count": {
+          "min": 1,
+          "max": 5
+        }
+      },
+      "text_de": "Ein gegnerisches Wesen setzt seine nächsten {count} Angriffe aus.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "stasis",
+        "parameter_semantics": {
+          "count": "power"
+        }
+      }
+    },
+    "surge": {
+      "category": "time_manipulation",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "own_ready_unit"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {},
+      "text_de": "Ein kampfbereites eigenes Wesen greift in dieser Angriffsphase einmal zusätzlich an.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "surge",
+        "parameter_semantics": {}
+      }
+    },
+    "recall": {
+      "category": "recurrence",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "own_free_lane"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {},
+      "text_de": "Beschwöre das zuletzt abgelegte eigene Wesen auf einem freien eigenen Pfad. Seine Beschwörungsfähigkeiten werden ausgelöst.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "recall",
+        "parameter_semantics": {}
+      }
+    },
+    "delay": {
+      "category": "time_manipulation",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "enemy_lane"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 30
+        },
+        "turn_changes": {
+          "min": 2,
+          "max": 2
+        }
+      },
+      "text_de": "Füge nach {turn_changes} Zugwechseln dem Wesen auf dem gewählten gegnerischen Pfad {amount} Schaden zu. Ist der Pfad dann frei, trifft der Schaden den gegnerischen Helden; Block und Schild absorbieren ihn.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "delay",
+        "parameter_semantics": {
+          "amount": "power",
+          "turn_changes": "constant 2"
+        }
+      }
+    },
+    "redirect": {
+      "category": "control",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "enemy_lane"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {},
+      "text_de": "Leite deinen ältesten verzögerten Schaden auf den gewählten gegnerischen Pfad um.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "redirect",
+        "parameter_semantics": {}
+      }
+    },
+    "displace": {
+      "category": "movement",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "enemy_unit_with_free_neighbor"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {},
+      "text_de": "Verschiebe ein gegnerisches Wesen auf seinen ersten freien Nachbarpfad: zuerst links, sonst rechts.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "displace",
+        "parameter_semantics": {}
+      }
+    },
+    "cascade": {
+      "category": "damage",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "enemy_hero"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {
+        "count": {
+          "min": 1,
+          "max": 100
+        }
+      },
+      "text_de": "Füge dem gegnerischen Helden nacheinander {count} einzelne Treffer zu je 1 Schaden zu. Jeder Treffer wird vollständig abgewickelt; Block und Schild absorbieren den Schaden.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "cascade",
+        "parameter_semantics": {
+          "count": "power"
+        }
+      }
+    },
+    "relic_res": {
+      "category": "resources",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "relic"
+      ],
+      "modes": [
+        "activated"
+      ],
+      "triggers": [],
+      "targets": [
+        "own_resonance"
+      ],
+      "limits": [
+        "once_per_own_turn"
+      ],
+      "params": {
+        "amount": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "text_de": "Erzeuge {amount} Resonanz, höchstens 15 insgesamt.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "relic_res",
+        "parameter_semantics": {
+          "amount": "constant 1"
+        }
+      },
+      "activation": {
+        "energy": 1,
+        "resonance": 0
+      }
+    },
+    "relic_ward": {
+      "category": "protection",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "relic"
+      ],
+      "modes": [
+        "activated"
+      ],
+      "triggers": [],
+      "targets": [
+        "own_hero"
+      ],
+      "limits": [
+        "once_per_own_turn"
+      ],
+      "params": {
+        "amount": {
+          "min": 2,
+          "max": 2
+        }
+      },
+      "text_de": "Dein Held erhält {amount} Schild, höchstens 25 insgesamt.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "relic_ward",
+        "parameter_semantics": {
+          "amount": "constant 2"
+        }
+      },
+      "activation": {
+        "energy": 1,
+        "resonance": 0
+      }
+    },
+    "relic_heal": {
+      "category": "healing",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "relic"
+      ],
+      "modes": [
+        "activated"
+      ],
+      "triggers": [],
+      "targets": [
+        "own_hero"
+      ],
+      "limits": [
+        "once_per_own_turn"
+      ],
+      "params": {
+        "amount": {
+          "min": 2,
+          "max": 2
+        }
+      },
+      "text_de": "Heile deinen Helden um {amount} Leben, höchstens bis zu seinen maximalen Lebenspunkten.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "relic_heal",
+        "parameter_semantics": {
+          "amount": "constant 2"
+        }
+      },
+      "activation": {
+        "energy": 1,
+        "resonance": 0
+      }
+    },
+    "relic_draw": {
+      "category": "card_manipulation",
+      "implemented": false,
+      "reference_implemented": true,
+      "runtime_status": "adapter_required",
+      "kinds": [
+        "relic"
+      ],
+      "modes": [
+        "activated"
+      ],
+      "triggers": [],
+      "targets": [
+        "own_hand"
+      ],
+      "limits": [
+        "once_per_own_turn"
+      ],
+      "params": {
+        "count": {
+          "min": 1,
+          "max": 1
+        }
+      },
+      "text_de": "Ziehe {count} Karte. Benötigt einen freien Handplatz und eine Karte im Stapel; kein Kreislauf.",
+      "source_binding": {
+        "path": "scripts/alpha/model.gd",
+        "effect": "relic_draw",
+        "parameter_semantics": {
+          "count": "constant 1"
+        }
+      },
+      "activation": {
+        "energy": 1,
+        "resonance": 0
+      }
+    },
+    "summon": {
+      "category": "summoning",
+      "implemented": false,
+      "reference_implemented": false,
+      "runtime_status": "not_implemented",
+      "kinds": [
+        "event"
+      ],
+      "modes": [
+        "triggered"
+      ],
+      "triggers": [
+        "on_play"
+      ],
+      "targets": [
+        "own_free_lane"
+      ],
+      "limits": [
+        "once_per_play"
+      ],
+      "params": {
+        "count": {
+          "min": 1,
+          "max": 5
+        }
+      },
+      "text_de": "Beschwöre {count} Wesen aus der angegebenen Quelle."
+    }
+  },
+  "capability_note_de": "Registrierung ist kein Laufzeitnachweis. implemented=false bezeichnet den fehlenden generischen V2-Adapter. reference_implemented=true belegt nur den genannten bestehenden Effektpfad, nicht beliebige Auslöser oder Kombinationen."
+}

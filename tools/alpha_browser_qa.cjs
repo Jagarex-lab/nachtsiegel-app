@@ -7,17 +7,31 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
  const results=[],profiles={chromium:[{name:'desktop',viewport:{width:1280,height:720},hasTouch:true},{name:'desktop-wide',viewport:{width:1600,height:900},hasTouch:true},{...devices['Pixel 7'],name:'android',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['Pixel 7'],name:'android-bars',viewport:{width:844,height:320},deviceScaleFactor:2,insets:{left:44,right:44,top:0,bottom:21}}],webkit:[{...devices['iPhone 13'],name:'iphone',viewport:{width:844,height:390},deviceScaleFactor:3},{...devices['iPhone 13 Pro Max'],name:'iphone-wide',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['iPhone 13'],name:'iphone-bars',viewport:{width:844,height:320},deviceScaleFactor:1,reducedMotion:'reduce',insets:{left:44,right:44,top:0,bottom:21}}]};
  for(const engine of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
   for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
-  const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
+  const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(process.env.QA_PROXY?{proxy:{server:process.env.QA_PROXY,bypass:"localhost,127.0.0.1"}}:{}),...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
+   let inspectedCard=null;
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
    const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync(`work/alpha/browser-progress-${engine}-${name}.json`,JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
    const tap=async r=>{await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
    const action=async id=>{if(id==='convergence'&&!(await state()).actions[id])await action('actions');await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});let previous=await state();if(id==='convergence'&&!previous.actions[id]){await action('actions');previous=await state();}await tap(previous.actions[id].rect);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});};
-   const shot=tag=>page.screenshot({path:`work/alpha/${engine}-${name}-${tag}.png`});
+   const capture=engine==='chromium'?await context.newCDPSession(page):null;
+   const shot=async tag=>{
+    let buffer;
+    if(capture){
+     const viewport=page.viewportSize();let expiry;
+     const response=await Promise.race([capture.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:opts.deviceScaleFactor||1}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
+     buffer=Buffer.from(response.data,'base64');
+    }else buffer=await page.screenshot();
+    assert.equal(buffer.readUInt32BE(16),opts.viewport.width*(opts.deviceScaleFactor||1),'native screenshot width');
+    assert.equal(buffer.readUInt32BE(20),opts.viewport.height*(opts.deviceScaleFactor||1),'native screenshot height');
+    assert(buffer.length>20000,'nonempty rendered screenshot');
+    fs.writeFileSync(`work/alpha/${engine}-${name}-${tag}.png`,buffer);
+    return buffer;
+   };
    async function opening(){await action('start');if(!legacyOnly)await action('deck_play');if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);}
    async function playTurn(){
     for(let n=0;n<22;n++){
@@ -68,7 +82,30 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
     console.log('LOBBY',engine,name);let menu=await state();
     for(const key of ['start','builder','collection','settings'])assert(menu.actions[key],key);
     for(const key of ['archive','mode_alpha','mode_legacy'])assert(!menu.actions[key],'no public route '+key);
-    await shot('lobby');await action('collection');assert.equal((await state()).page,'collection');assert(!(await state()).actions.save_deck);if(!legacyOnly){await action('card_oa-neutral-c01');await action('modal_close');}await action('builder_back');
+    await shot('lobby');await action('collection');assert.equal((await state()).page,'collection');assert(!(await state()).actions.save_deck);
+    if(!legacyOnly){
+     const collection=await state(),viewport=page.viewportSize();
+     const inside=r=>r[0]>=(insets?.left||0)&&r[1]>=(insets?.top||0)&&r[0]+r[2]<=viewport.width-(insets?.right||0)+1&&r[1]+r[3]<=viewport.height-(insets?.bottom||0)+1;
+     // Cards are sorted by energy/name. A fixed card ID can be below the
+     // ScrollContainer's visible first row; its full rect still exists in QA.
+     // Inspect an actual fully visible card using browser touch, never an
+     // offscreen coordinate or a direct game-model/test-hook call.
+     const visible=Object.entries(collection.actions).filter(([id,a])=>id.startsWith('card_')&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9&&inside(a.rect)).sort((a,b)=>a[1].rect[1]-b[1].rect[1]||a[1].rect[0]-b[1].rect[0]);
+     assert(visible.length>0,'collection has an actual visible >=44CSS card');
+     const [id,target]=visible[0],card=by[id.slice('card_'.length)];assert(card,'visible collection action identifies a real card');
+     inspectedCard={id:card.id,name:card.name,rect:target.rect};
+     await action(id);const detail=await state();
+     assert(detail.modal&&detail.actions.inspect_target&&detail.actions.modal_close,'card inspector with explicit close actions');
+     assert(detail.modal_version>collection.modal_version,'inspection opened a new modal');
+     assert.deepEqual(detail.deck_ids,collection.deck_ids,'read-only collection inspection preserves the deck');
+     assert.equal(detail.page,'collection','inspection stays in the collection');
+     assert(inside(detail.actions.modal_close.rect)&&detail.actions.modal_close.rect[2]>=43.9&&detail.actions.modal_close.rect[3]>=43.9,'inspector close is visible >=44CSS');
+     await shot('collection-inspection');await action('modal_close');
+     const closed=await state();assert(!closed.modal&&closed.page==='collection','closing inspection restores collection');
+     assert.deepEqual(closed.deck_ids,collection.deck_ids,'closing inspection preserves the deck');
+     console.log('COLLECTION INSPECTION',engine,name,card.id,card.name);
+    }
+    await action('builder_back');
     if(!legacyOnly){await action('settings');const power={desktop:'houses','desktop-wide':'stillwatch',android:'ninth',iphone:'morph','android-bars':'houses','iphone-wide':'stillwatch','iphone-bars':'morph'}[name];await action('faction_'+power);await action('settings_back');}
     await opening();let q=await state();assert.equal(q.battle.hero.maxHp,legacyOnly?35:30);if(!legacyOnly)assert.equal(q.battle.enemy.maxHp,30);
     for(const key of (legacyOnly?['end','actions','inspect','menu','log']:['end','actions','inspect','menu','log'])){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
@@ -83,7 +120,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
      q=await state();assert(q.battle.winner,'complete UI duel');await shot('result');await action('result_log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
      await action('restart');await action('confirm_restart');await wait(()=>!window.orafoldQA.battle.winner);await shot('restart');
     }
-    assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,checks:'real touch, menu, collection, settings, opening, 44CSS bounds, cards, saved deck reload',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null});
+    assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,checks:'real touch, menu, collection, visible card inspector/close with unchanged deck, settings, opening, 44CSS bounds, cards, saved deck reload',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null});
     console.log('ALPHA BROWSER PASS:',engine,name);
    }catch(error){await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,errors,diagnostic:await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,page:window.orafoldQA?.page})).catch(()=>null)},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}

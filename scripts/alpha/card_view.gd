@@ -66,8 +66,8 @@ func _draw() -> void:
 			title_paragraph(size.x-16).draw(get_canvas_item(),Vector2(8,5),T.TEXT)
 			var bottom=60 if library else 20
 			draw_rect(Rect2(5,size.y-bottom-4,size.x-10,bottom),T.SURFACE)
-			var stats="%d ANG   %d LP" % [card.get("atk",0),card.get("hp",0)] if card.kind=="creature" else S.KINDS.get(card.kind,card.kind)
-			_ink(stats,Vector2(8,size.y-10),13,T.TEXT,size.x-45)
+			var stats=stat_layout(size.x-45)
+			_ink(stats.text,Vector2(8,size.y-10),stats.font_size,T.TEXT,stats.available_width)
 			draw_circle(Vector2(size.x-16,size.y-15),13,T.INK)
 			_ink(str(int(card.cost)),Vector2(size.x-21,size.y-10),15,T.ENERGY,24)
 			if library:
@@ -80,6 +80,16 @@ func _draw() -> void:
 	if invalid_target:
 		draw_line(Vector2(size.x-12,7),Vector2(size.x-5,14),T.DANGER,2,true);draw_line(Vector2(size.x-5,7),Vector2(size.x-12,14),T.DANGER,2,true)
 	if has_focus():draw_rect(rect.grow(-1),T.FOCUS,false,1)
+func stat_layout(available_width: float) -> Dictionary:
+	# Measure the same glyphs/font used for drawing. Values must end before the
+	# energy circle, including in a six-card hand inside mobile safe areas.
+	var caption="%d ANG %d LP" % [card.get("atk",0),card.get("hp",0)] if card.get("kind")=="creature" else S.KINDS.get(card.get("kind",""),card.get("kind",""))
+	var font_size := 13
+	var width := 0.0
+	for candidate in [13,12,11,10]:
+		font_size=candidate;width=S.font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,candidate).x
+		if width<=maxf(0,available_width):break
+	return {"text":caption,"font_size":font_size,"ink_width":width,"available_width":maxf(0,available_width),"fits":width<=maxf(0,available_width)}
 func title_paragraph(width: float, maximum_size: int=12) -> TextParagraph:
 	var paragraph: TextParagraph
 	for fs in [12,11,10]:

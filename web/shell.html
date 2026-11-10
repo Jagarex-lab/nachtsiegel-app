@@ -126,6 +126,17 @@ body {
 // offscreen canvas through its supported textured-quad path, avoiding a
 // WebKit glBlitFramebuffer read/write attachment error. Godot owns scene AA.
 const gameCanvas = document.getElementById('canvas');
+// Godot 4.6 Web currently maps both DOM touchend and touchcancel to release
+// type 1. Preserve cancellation synchronously in the capture phase, before
+// Godot's canvas handler can turn a canceled drag into a card play.
+window.orafoldTouchCancelVersion = 0;
+function cancelGamePointer() {
+ window.orafoldTouchCancelVersion += 1;
+}
+window.addEventListener('touchcancel',cancelGamePointer,{capture:true,passive:true});
+window.addEventListener('pointercancel',cancelGamePointer,{capture:true,passive:true});
+window.addEventListener('blur',cancelGamePointer,{capture:true});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelGamePointer();},{capture:true});
 const createGameContext = gameCanvas.getContext.bind(gameCanvas);
 gameCanvas.getContext = function(kind, options) {
  return createGameContext(kind, kind === 'webgl2' ? {...options, antialias:true} : options);

@@ -59,7 +59,7 @@ Alle kosten **0 Resonanz** und laufen automatisch nach dem +2-Wechselgewinn vor 
 
 n = eigene passende Kreaturen; zuerst8 Resonanz abziehen, dann Effekt und Siegprüfung. ash/NeunteStunde:4+3n geschützter Heldenschaden. tide/Stillwacht:6+2n Schild bis25. thorn/Häuser:alle eigenen Kreaturen bis3 zur originalen Karten-HP heilen, Held um3+n bisMaximum. veil/Vielgestalt:gegnerische Schwäche2, passende Kreaturen erhalten+2 Angriff. Kein zusätzlicher Energiepreis; offene Strike-/Shift-Auswahl sperrt die Entfesselung in der Originalregel ausdrücklich nicht. UI bildet diese Ausnahme ab.
 
-Block wird vor Schild verbraucht und am nächsten eigenen Beginn gelöscht. Schild bleibt bestehen, maximal25. Ein leerer Gegenpfad bedeutet direkten Heldenangriff. Durchdringender Ankunftsschaden umgeht Heldenschild, nicht Block; Alphakampf-Überlauf ist eigener, weiterhin geschützter Schaden. Diese Unterscheidungen dürfen nicht zur allgemeinen „ignoriert allen Schutz“-Behauptung vereinfacht werden.
+Block wird vor Schild verbraucht und am nächsten eigenen Beginn gelöscht. Schild bleibt bestehen, maximal25. Ein leerer Gegenpfad bedeutet direkten Heldenangriff. **Berichtigung vom 10.11.2026:** Durchdringender Ankunftsschaden (`pierce`) umgeht nach der fixierten JavaScript-Referenz und dem vorhandenen Kernel sowohl Block als auch Schild. Die frühere Aussage „nicht Block“ war ein Dokumentationsfehler; es wurde keine Kampfregel geändert. Alphakampf-Überlauf ist ein eigener, weiterhin geschützter Schaden. Ankunftseffekt und gewöhnliche Angriffe dürfen deshalb nicht gleichgesetzt werden.
 
 ## Ressourcenvarianten – Empfehlung
 

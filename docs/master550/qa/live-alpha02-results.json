@@ -1,0 +1,159 @@
+{
+  "verified_at": "2026-11-10T15:21:54.662324+00:00",
+  "url": "https://jagarex-lab.github.io/nachtsiegel-app/",
+  "commit": "5d37cd937d7fcc50912a565e96f3cc4aa87f506d",
+  "normal_tls_verified": true,
+  "real_device_test": false,
+  "browsers": [
+    {
+      "engine": "chromium",
+      "version": "158.0.8127.18"
+    },
+    {
+      "engine": "webkit",
+      "version": "27.2"
+    }
+  ],
+  "playwright": "1.65.0",
+  "results": [
+    {
+      "engine": "chromium",
+      "profile": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": "real touch, menu, collection, settings, opening, 44CSS bounds, cards, saved deck reload",
+      "full_duel": "alpha"
+    },
+    {
+      "engine": "webkit",
+      "profile": "iphone",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "dpr": 3,
+      "errors": [],
+      "checks": "real touch, menu, collection, settings, opening, 44CSS bounds, cards, saved deck reload",
+      "full_duel": "alpha"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "work/master550/live-alpha02-desktop/chromium-desktop-after-turn.png",
+      "bytes": 919990,
+      "sha256": "d96507341ce946ca1675861f007336dff7c20d434458487908078c661673b658",
+      "pixels": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-desktop/chromium-desktop-battle.png",
+      "bytes": 924416,
+      "sha256": "81d84788ef301693b3e14322f667784e8f7e1539f700cc764e0dbe874dfd748b",
+      "pixels": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-desktop/chromium-desktop-builder.png",
+      "bytes": 688482,
+      "sha256": "0462e639b1c3789740c67025c93684d3f83cf550f6a55fe976a4fbe443ae8880",
+      "pixels": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-desktop/chromium-desktop-lobby.png",
+      "bytes": 902605,
+      "sha256": "399c75139d59ce2f12df589895b38dc23d22835950c5b4eefef08bf55f2167bd",
+      "pixels": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-desktop/chromium-desktop-restart.png",
+      "bytes": 647560,
+      "sha256": "7a8955083aac3aabdb9c6eb1e75a66af13199250a7fb41d1ec52917fdeb652ae",
+      "pixels": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-desktop/chromium-desktop-result.png",
+      "bytes": 142711,
+      "sha256": "b6c173821ff16b4e79b1679ffb972b24c9343cee7a54629c59ab9301b927570e",
+      "pixels": [
+        1280,
+        720
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-iphone/webkit-iphone-after-turn.png",
+      "bytes": 2470576,
+      "sha256": "3e57ee805455cb9daa7b52843d18f17667c379902e9562b68df5707069c09a00",
+      "pixels": [
+        2532,
+        1170
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-iphone/webkit-iphone-battle.png",
+      "bytes": 2323337,
+      "sha256": "84922e8bb79692eaf3d5e62df6be467740724cc6f567f33f9ebfe686c6ba32b8",
+      "pixels": [
+        2532,
+        1170
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-iphone/webkit-iphone-builder.png",
+      "bytes": 2005845,
+      "sha256": "fe2255714c4574eddea8d48d5238defeab413cbb6fd3abb0edb83028e8dfe9c6",
+      "pixels": [
+        2532,
+        1170
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-iphone/webkit-iphone-lobby.png",
+      "bytes": 2206187,
+      "sha256": "890d8bd7fd60dc073a6b6ca8d0236c2a3a3b218af34fbccb23aec88c979a6f2e",
+      "pixels": [
+        2532,
+        1170
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-iphone/webkit-iphone-restart.png",
+      "bytes": 1205081,
+      "sha256": "8f4a3a796c58ac81980b32fb885f3477b96db89811f282e037af94a1b8f2b1bf",
+      "pixels": [
+        2532,
+        1170
+      ]
+    },
+    {
+      "path": "work/master550/live-alpha02-iphone/webkit-iphone-result.png",
+      "bytes": 296995,
+      "sha256": "62806cc63ebb7355847cd29b1ab53f6085c4345e79f1a753b8d128f76f635f56",
+      "pixels": [
+        2532,
+        1170
+      ]
+    }
+  ],
+  "logs": [
+    "live-alpha02-chromium-desktop-cdp.log",
+    "live-alpha02-webkit-iphone.log"
+  ],
+  "incomplete_attempts": "live-tls-diagnostic.json"
+}

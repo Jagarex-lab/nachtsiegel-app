@@ -1,0 +1,1831 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:orafold:card-system:2",
+  "title": "ORAFOLD V2 isolated card data contract",
+  "description": "Structural validation only. Runtime support and original source bindings require tools/card_system/validate.cjs. Planned registry effects are not playable.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "power",
+    "kind",
+    "rarity",
+    "energy_cost",
+    "art",
+    "abilities",
+    "text_de"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)+$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "power": {
+      "enum": [
+        "houses",
+        "stillwatch",
+        "morph",
+        "ninth",
+        "neutral"
+      ]
+    },
+    "kind": {
+      "enum": [
+        "creature",
+        "event",
+        "relic"
+      ]
+    },
+    "rarity": {
+      "enum": [
+        "common",
+        "rare",
+        "epic",
+        "legendary"
+      ]
+    },
+    "energy_cost": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10
+    },
+    "resonance_cost": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 15
+    },
+    "attack": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 30
+    },
+    "health": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 40
+    },
+    "species": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "human",
+          "beast",
+          "spirit",
+          "construct",
+          "plant",
+          "amalgam",
+          "morphid",
+          "paradox",
+          "revenant",
+          "elemental",
+          "devourer",
+          "mechanoid"
+        ]
+      }
+    },
+    "art": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "asset_id",
+        "provenance"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "missing",
+            "shared_concept",
+            "concept",
+            "final"
+          ]
+        },
+        "asset_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "provenance": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 240
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "missing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "asset_id": {
+                "pattern": "^missing:[a-z][a-z0-9-]+$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "shared_concept"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "asset_id": {
+                "const": "shared:orafold-atlas"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "concept",
+                  "final"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "asset_id": {
+                "pattern": "^res://assets/.+\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[sS][vV][gG])$"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "abilities": {
+      "type": "array",
+      "maxItems": 16,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "strike"
+              },
+              "target": {
+                "enum": [
+                  "enemy_unit_or_hero_if_no_units"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "guard"
+              },
+              "target": {
+                "enum": [
+                  "own_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "ward"
+              },
+              "target": {
+                "enum": [
+                  "own_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "mend"
+              },
+              "target": {
+                "enum": [
+                  "own_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "weave"
+              },
+              "target": {
+                "enum": [
+                  "own_resonance"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 15
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "drain"
+              },
+              "target": {
+                "enum": [
+                  "enemy_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "rally"
+              },
+              "target": {
+                "enum": [
+                  "own_left_then_right_neighbor"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 15
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "silence"
+              },
+              "target": {
+                "enum": [
+                  "opposite_enemy_unit"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "pierce"
+              },
+              "target": {
+                "enum": [
+                  "enemy_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "shift"
+              },
+              "target": {
+                "enum": [
+                  "own_source_neighbor_to_free_own_lane"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "harvest"
+              },
+              "target": {
+                "enum": [
+                  "own_resonance"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_death_instance"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 15
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_death"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "retaliate"
+              },
+              "target": {
+                "enum": [
+                  "attacking_unit"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "each_survived_positive_attack"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_defend"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "draw"
+              },
+              "target": {
+                "enum": [
+                  "own_hand"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "count"
+                ],
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "passive"
+                ]
+              },
+              "effect": {
+                "const": "haste"
+              },
+              "target": {
+                "enum": [
+                  "self"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "while_on_board"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "weaken"
+              },
+              "target": {
+                "enum": [
+                  "opponent_attack_phase"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 15
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "pulse"
+              },
+              "target": {
+                "enum": [
+                  "own_resources_and_neighbors"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_summon"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 15
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_summon"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "bolt"
+              },
+              "target": {
+                "enum": [
+                  "enemy_lane"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "heal"
+              },
+              "target": {
+                "enum": [
+                  "own_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "stasis"
+              },
+              "target": {
+                "enum": [
+                  "enemy_unit"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "count"
+                ],
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "surge"
+              },
+              "target": {
+                "enum": [
+                  "own_ready_unit"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "recall"
+              },
+              "target": {
+                "enum": [
+                  "own_free_lane"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "delay"
+              },
+              "target": {
+                "enum": [
+                  "enemy_lane"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount",
+                  "turn_changes"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 30
+                  },
+                  "turn_changes": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "maximum": 2
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "redirect"
+              },
+              "target": {
+                "enum": [
+                  "enemy_lane"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "displace"
+              },
+              "target": {
+                "enum": [
+                  "enemy_unit_with_free_neighbor"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [],
+                "properties": {}
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "cascade"
+              },
+              "target": {
+                "enum": [
+                  "enemy_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "count"
+                ],
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "activation"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "activated"
+                ]
+              },
+              "effect": {
+                "const": "relic_res"
+              },
+              "target": {
+                "enum": [
+                  "own_resonance"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_own_turn"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1
+                  }
+                }
+              },
+              "activation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "energy",
+                  "resonance"
+                ],
+                "properties": {
+                  "energy": {
+                    "const": 1
+                  },
+                  "resonance": {
+                    "const": 0
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "activation"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "activated"
+                ]
+              },
+              "effect": {
+                "const": "relic_ward"
+              },
+              "target": {
+                "enum": [
+                  "own_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_own_turn"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "maximum": 2
+                  }
+                }
+              },
+              "activation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "energy",
+                  "resonance"
+                ],
+                "properties": {
+                  "energy": {
+                    "const": 1
+                  },
+                  "resonance": {
+                    "const": 0
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "activation"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "activated"
+                ]
+              },
+              "effect": {
+                "const": "relic_heal"
+              },
+              "target": {
+                "enum": [
+                  "own_hero"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_own_turn"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "amount"
+                ],
+                "properties": {
+                  "amount": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "maximum": 2
+                  }
+                }
+              },
+              "activation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "energy",
+                  "resonance"
+                ],
+                "properties": {
+                  "energy": {
+                    "const": 1
+                  },
+                  "resonance": {
+                    "const": 0
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "activation"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "activated"
+                ]
+              },
+              "effect": {
+                "const": "relic_draw"
+              },
+              "target": {
+                "enum": [
+                  "own_hand"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_own_turn"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "count"
+                ],
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 1
+                  }
+                }
+              },
+              "activation": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "energy",
+                  "resonance"
+                ],
+                "properties": {
+                  "energy": {
+                    "const": 1
+                  },
+                  "resonance": {
+                    "const": 0
+                  }
+                }
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mode",
+              "effect",
+              "target",
+              "params",
+              "limit",
+              "trigger"
+            ],
+            "properties": {
+              "mode": {
+                "enum": [
+                  "triggered"
+                ]
+              },
+              "effect": {
+                "const": "summon"
+              },
+              "target": {
+                "enum": [
+                  "own_free_lane"
+                ]
+              },
+              "limit": {
+                "enum": [
+                  "once_per_play"
+                ]
+              },
+              "params": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "count"
+                ],
+                "properties": {
+                  "count": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 5
+                  }
+                }
+              },
+              "trigger": {
+                "enum": [
+                  "on_play"
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    "text_de": {
+      "type": "string"
+    },
+    "lore_key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "source_binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "catalog",
+        "card_id",
+        "effect",
+        "power"
+      ],
+      "properties": {
+        "catalog": {
+          "const": "orafold-alpha-0.1"
+        },
+        "card_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "effect": {
+          "enum": [
+            "strike",
+            "guard",
+            "ward",
+            "mend",
+            "weave",
+            "drain",
+            "rally",
+            "silence",
+            "pierce",
+            "shift",
+            "harvest",
+            "retaliate",
+            "draw",
+            "haste",
+            "weaken",
+            "pulse",
+            "bolt",
+            "heal",
+            "stasis",
+            "surge",
+            "recall",
+            "delay",
+            "redirect",
+            "displace",
+            "cascade",
+            "relic_res",
+            "relic_ward",
+            "relic_heal",
+            "relic_draw",
+            "summon"
+          ]
+        },
+        "power": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "creature"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "attack",
+          "health",
+          "species"
+        ],
+        "properties": {
+          "energy_cost": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "not": {
+          "required": [
+            "resonance_cost"
+          ]
+        }
+      },
+      "else": {
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "attack"
+              ]
+            },
+            {
+              "required": [
+                "health"
+              ]
+            },
+            {
+              "required": [
+                "species"
+              ]
+            }
+          ]
+        },
+        "properties": {
+          "abilities": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

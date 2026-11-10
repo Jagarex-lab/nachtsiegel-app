@@ -32,6 +32,8 @@ jobs:
         run: tools/test_legacy.sh
       - name: New Alpha rules replay real touch and landscape render tests
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
+      - name: New card contract, effect adapter, card faces and battlefield opening
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
       - name: Existing archive desktop regression
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
       - name: Release separation regression
@@ -62,6 +64,7 @@ jobs:
             work/alpha02/*.log
             work/alpha02/*.json
             work/alpha02/*.png
+            work/master550/
             work/legacy/*.log
             work/*final.log
   browser:
@@ -109,6 +112,13 @@ jobs:
           QA_ENGINES: ${{ matrix.engine }}
           GAME_URL: http://127.0.0.1:8788/nachtsiegel-app/
         run: node tools/alpha02_browser_qa.cjs
+      - name: Battlefield opening and guarded real pointer dragging
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          QA_ENGINES: ${{ matrix.engine }}
+          GAME_URL: http://127.0.0.1:8788/nachtsiegel-app/
+        run: node tools/master550_browser_qa.cjs
       - name: Preserved Legacy UI duel in private QA export
         if: matrix.engine == 'chromium'
         env:
@@ -141,6 +151,7 @@ jobs:
             work/alpha02/*.log
             work/alpha02/*.json
             work/alpha02/*.png
+            work/master550/
 
   balance-audit:
     runs-on: ubuntu-24.04
@@ -161,8 +172,12 @@ jobs:
           mkdir -p work/alpha02
           godot --headless --path . --script tests/alpha02_balance.gd > work/alpha02/balance.log 2>&1
           python3 tools/alpha02_balance_report.py
+      - name: Paired resource experiments with unchanged production defaults
+        run: tools/test_master550_resources.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: alpha02-balance-audit
-          path: work/alpha02/
+          path: |
+            work/alpha02/
+            work/master550/

@@ -88,17 +88,29 @@ const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Objec
    await action('remove_oa-neutral-c01');assert.equal((await q()).deck_size,29);assert((await q()).actions.save_deck.disabled);
    await action('library_tab');
    const candidate=cards.find(c=>c.id!=='oa-neutral-c01'&&['neutral','houses'].includes(c.faction)&&original.filter(id=>id===c.id).length<(c.rarity==='legendary'?1:3));
-   // Find a visible first-row legal card; the deterministic starter has neutral c02.
+   // Pick a different legal identity, then locate it through the real search UI.
+   // Catalog order does not determine the energy/name-sorted library position.
    assert(candidate);const add='add_'+candidate.id;
-   // Library starts at the top; candidates are in its first displayed row.
+   const beforeSearch=await q(),searchRect=beforeSearch.actions.search.rect;
+   assert.equal(beforeSearch.search_text,'','previous filter reset left an empty search');
+   assert(searchRect[2]>=43.9&&searchRect[3]>=43.9,'card-name search touch');
+   assert(searchRect[0]>=0&&searchRect[1]>=0&&searchRect[0]+searchRect[2]<=page.viewportSize().width+1&&searchRect[1]+searchRect[3]<=page.viewportSize().height+1,'card-name search visible bounds');
+   await page.touchscreen.tap(searchRect[0]+searchRect[2]/2,searchRect[1]+searchRect[3]/2);await page.keyboard.type(candidate.name);
+   await page.waitForFunction(value=>window.orafoldQA.search_text===value,candidate.name,{timeout:90000});
+   await action('search_apply');const found=await q();
+   assert.deepEqual(Object.keys(found.actions).filter(key=>key.startsWith('card_')),['card_'+candidate.id],'name search returns the intended real card');
+   assert.deepEqual(found.deck_ids,beforeSearch.deck_ids,'searching does not edit the deck');
+   assert(found.deck_ids.filter(id=>id===candidate.id).length<(candidate.rarity==='legendary'?1:3),'chosen card remains below its legal copy cap');
+   assert(found.actions[add]&&!found.actions[add].disabled,'actual filtered add action is legal');
    await action(add);const edited=(await q()).deck_ids;assert.equal(edited.length,30);assert.notDeepEqual(edited,original);
+   assert.deepEqual(edited,[...beforeSearch.deck_ids,candidate.id],'exact replacement card added in the stored order');
    await action('save_deck');await page.waitForTimeout(300);
    await shot('portrait-builder');
    await page.reload({waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');await action('builder');assert.deepEqual((await q()).deck_ids,edited);console.log('ALPHA02',name,'edited deck persisted');
    await action('builder_back');await action('start');await action('custom_houses');await action('deck_play');
    const played=(await q()).battle.hero;assert.deepEqual([...played.hand,...played.deck].sort(),[...edited].sort());
    assert.equal(errors.length,0,errors.join('\n'));
-   records.push({engine:name,boot_ms:boot,metrics,rotationMetrics,captures,timings,errors,checks:['portrait menu and four starters','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
+   records.push({engine:name,boot_ms:boot,metrics,rotationMetrics,captures,timings,errors,deck_edit:{removed_id:'oa-neutral-c01',added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
    console.log('ALPHA02 BROWSER PASS',name);await context.close();
   }catch(error){const diagnostic=lastPage?await Promise.race([lastPage.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(r=>setTimeout(()=>r(null),5000))]):null;fs.writeFileSync('work/alpha02/'+name+'-error.json',JSON.stringify({error:String(error),console:lastErrors,diagnostic},null,2));throw error;}finally{await browser.close();}
  }

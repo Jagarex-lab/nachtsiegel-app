@@ -17,7 +17,8 @@ concurrency:
 jobs:
   test-and-export:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    # Native regression suites and three exports; browser engines run separately.
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - name: Install Godot and matching templates
@@ -40,19 +41,21 @@ jobs:
         run: |
           tools/test_legacy.sh
           xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
-      - name: Export tested browser build
+          xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
+          tools/test_master550_resources.sh
+      - name: Export archive regression build
         run: |
-          mkdir -p work/build/web
+          mkdir -p work/build/archive-web
           game_name="nachtsiegel-${GITHUB_SHA:0:12}"
-          godot --headless --path . --export-debug 'Archive Web QA' "work/build/web/$game_name.html"
-          mv "work/build/web/$game_name.html" work/build/web/index.html
-          test -s "work/build/web/$game_name.wasm"
-          mkdir -p work/build/web/media
-          cp docs/combat/gameplay.mp4 work/build/web/media/gameplay.mp4
+          godot --headless --path . --export-debug 'Archive Web QA' "work/build/archive-web/$game_name.html"
+          mv "work/build/archive-web/$game_name.html" work/build/archive-web/index.html
+          test -s "work/build/archive-web/$game_name.wasm"
+          mkdir -p work/build/archive-web/media
+          cp docs/combat/gameplay.mp4 work/build/archive-web/media/gameplay.mp4
           python3 - <<'PYINFO'
           import json, os
           from pathlib import Path
-          Path('work/build/web/build-info.json').write_text(json.dumps({
+          Path('work/build/archive-web/build-info.json').write_text(json.dumps({
               'commit': os.environ['GITHUB_SHA'],
               'run_id': os.environ['GITHUB_RUN_ID'],
               'channel': os.environ['GITHUB_REF_NAME'],
@@ -61,7 +64,7 @@ jobs:
       - name: Verify localized data inside the exported package
         run: |
           game_name="nachtsiegel-${GITHUB_SHA:0:12}"
-          godot --headless --main-pack "work/build/web/$game_name.pck" --script "$PWD/tests/narrative.gd" --quit-after 120 > work/exported-narrative-final.log 2>&1
+          godot --headless --main-pack "work/build/archive-web/$game_name.pck" --script "$PWD/tests/narrative.gd" --quit-after 120 > work/exported-narrative-final.log 2>&1
           python3 - <<'PYCHECK'
           import re
           from pathlib import Path
@@ -73,7 +76,7 @@ jobs:
       - name: Verify campaign foundation in the exported package
         run: |
           game_name="nachtsiegel-${GITHUB_SHA:0:12}"
-          godot --headless --main-pack "work/build/web/$game_name.pck" --script "$PWD/tests/exported_experience.gd" --quit-after 120 > work/exported-experience-final.log 2>&1
+          godot --headless --main-pack "work/build/archive-web/$game_name.pck" --script "$PWD/tests/exported_experience.gd" --quit-after 120 > work/exported-experience-final.log 2>&1
           python3 - <<'PYCHECK'
           import re
           from pathlib import Path
@@ -82,36 +85,21 @@ jobs:
           assert 'entry scene; 0 failures' in log, log
           print(log)
           PYCHECK
-      - name: Install browser test runtime
-        run: |
-          npm install --no-save --package-lock=false playwright@1.65.0
-          # Browser tooling is not a Godot asset directory.
-          touch node_modules/.gdignore
-          npx playwright install --with-deps chromium webkit
-      - name: Full browser tutorial, saved reload and collection tests
-        env:
-          EXPECTED_COMMIT: ${{ github.sha }}
-        run: |
-          python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/web > work/http.log 2>&1 &
-          python3 tools/wait_http.py http://127.0.0.1:8765/build-info.json
-          node tools/browser_qa.cjs
-      - name: Export and test Alpha default entry after archive browser regression
-        env:
-          EXPECTED_COMMIT: ${{ github.sha }}
-          GAME_URL: http://127.0.0.1:8788/
+      - name: Export Alpha candidate and Legacy UI regression build
         run: |
           tools/build_alpha.sh
           tools/build_legacy_ui_qa.sh
-          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
-          python3 tools/wait_http.py http://127.0.0.1:8788/build-info.json
-          node tools/alpha_browser_qa.cjs
-          node tools/alpha02_browser_qa.cjs
-          python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
-          python3 tools/wait_http.py http://127.0.0.1:8787/build-info.json
-          QA_ENGINES=chromium QA_PROFILES=android QA_LEGACY_ONLY=1 GAME_URL=http://127.0.0.1:8787/ node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1
-          mv work/build/web work/build/archive-web
-          cp -a work/alpha/web work/build/web
-      - name: Preserve QA evidence and browser build
+          mv work/alpha/web work/build/web
+          python3 - <<'PYBUILDS'
+          import json, os
+          from pathlib import Path
+          for folder in ('work/build/web', 'work/build/archive-web', 'work/alpha/legacy-web'):
+              root = Path(folder)
+              assert (root / 'index.html').is_file(), folder
+              info = json.loads((root / 'build-info.json').read_text())
+              assert info['commit'] == os.environ['GITHUB_SHA'], (folder, info)
+          PYBUILDS
+      - name: Preserve native QA evidence and single release candidate
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -122,16 +110,109 @@ jobs:
             work/browser-results.json
             work/*.png
             work/build/web/
+            work/build/archive-web/
+            work/alpha/legacy-web/
+            work/legacy/*.log
             work/alpha/*.log
             work/alpha/*.json
             work/alpha/*.png
             work/alpha02/*.log
             work/alpha02/*.json
             work/alpha02/*.png
+            work/master550/
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png
             work/experience/*.log
             work/combat/*.json
             work/combat/*.log
+          if-no-files-found: warn
+
+  browser:
+    needs: test-and-export
+    runs-on: ubuntu-24.04
+    # Full archive/Alpha/mobile/Master suites per engine, with WebGL startup and
+    # reloads; independent workers remove the former sequential-engine deadline.
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    env:
+      EXPECTED_COMMIT: ${{ github.sha }}
+      QA_ENGINES: ${{ matrix.engine }}
+      GAME_URL: http://127.0.0.1:8788/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download the exact native-tested builds
+        uses: actions/download-artifact@v4
+        with:
+          name: nachtsiegel-arena-qa
+          path: work
+      - name: Install isolated browser runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.65.0
+          npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Serve the three tested builds
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/archive-web > work/http.log 2>&1 &
+          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/build/web > work/alpha/http.log 2>&1 &
+          python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8765/build-info.json
+          python3 tools/wait_http.py http://127.0.0.1:8788/build-info.json
+          python3 tools/wait_http.py http://127.0.0.1:8787/build-info.json
+      - name: Archive tutorial, saved reload and collection browser regression
+        env:
+          GAME_URL: http://127.0.0.1:8765/
+        run: node tools/browser_qa.cjs
+      - name: Complete Alpha browser duels and replay
+        run: node tools/alpha_browser_qa.cjs
+      - name: Mobile orientation, Retina and deckbuilder browser regression
+        run: node tools/alpha02_browser_qa.cjs
+      - name: Master card system and battlefield opening browser regression
+        run: node tools/master550_browser_qa.cjs
+      - name: Legacy UI Android regression
+        if: matrix.engine == 'chromium'
+        env:
+          QA_ENGINES: chromium
+          QA_PROFILES: android
+          QA_LEGACY_ONLY: '1'
+          GAME_URL: http://127.0.0.1:8787/
+        run: |
+          # Legacy uses the same harness filenames; retain the Alpha evidence.
+          mkdir -p work/alpha/main-browser
+          cp work/alpha/browser-results.json work/alpha/main-browser/browser-results.json
+          for screenshot in work/alpha/chromium-android-*.png; do
+            test ! -f "$screenshot" || mv "$screenshot" work/alpha/main-browser/
+          done
+          node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1
+          mv work/alpha/browser-results.json work/alpha/legacy-browser-results.json
+          cp work/alpha/main-browser/browser-results.json work/alpha/browser-results.json
+      - name: Preserve engine-specific browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nachtsiegel-browser-${{ matrix.engine }}
+          path: |
+            work/web-*.png
+            work/web-*.json
+            work/browser-results.json
+            work/http.log
+            work/alpha/http.log
+            work/alpha/legacy-http.log
+            work/alpha/legacy-browser.log
+            work/alpha/legacy-browser-results.json
+            work/alpha/browser-*.json
+            work/alpha/${{ matrix.engine }}-*.png
+            work/alpha/main-browser/
+            work/alpha02/${{ matrix.engine }}-*.png
+            work/alpha02/${{ matrix.engine }}-*.json
+            work/alpha02/browser-results.json
+            work/master550/browser/
           if-no-files-found: warn
