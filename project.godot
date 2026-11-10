@@ -11,7 +11,7 @@ config/icon="res://assets/icon.svg"
 run/main_scene="res://scenes/alpha_shell.tscn"
 run/main_scene.archive_qa="res://scenes/front_end.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
-config/description="ORAFOLD – strategisches Kartenspiel in fünf Kampfpfaden"
+config/description="ORAFOLD - Strategisches Kartenspiel in fünf Kampfpfaden"
 
 [autoload]
 GameAudio="*res://scripts/game_audio.gd"

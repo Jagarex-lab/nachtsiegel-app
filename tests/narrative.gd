@@ -9,13 +9,15 @@ func check(value: bool, message: String) -> void:
 		failures += 1
 		printerr("FAIL: ",message)
 func _initialize() -> void:
-	check(Brand.display_name() == "NACHTSIEGEL","Release identity unchanged")
+	check(Brand.display_name() == "ORAFOLD","Explicitly approved release identity")
 	check(Brand.preview_name("de").contains("ARBEITSTITEL"),"German draft label")
 	check(Brand.preview_name("en").contains("WORKING TITLE"),"English draft label")
 	check(Brand.preview_name("fr") == Brand.preview_name("de"),"Explicit preview fallback")
 	var identity = Brand.definition()
 	identity.legacy_product_name = "Unapproved"
-	check(Brand.display_name() == "NACHTSIEGEL","Identity cannot be mutated through returned copy")
+	identity.approved_product_name = "Unapproved"
+	identity.approval_reference = "Unapproved"
+	check(Brand.display_name() == "ORAFOLD","Identity cannot be mutated through returned copy")
 	check(Catalog.text("cards.ash_watch.name","de") == "Aschenwache","German card lookup")
 	check(Catalog.text("cards.ash_watch.name","en") == "Ash Watch","English card lookup")
 	check(Catalog.text("cards.ash_watch.name","en-GB") == "Ash Watch","Regional English locale")

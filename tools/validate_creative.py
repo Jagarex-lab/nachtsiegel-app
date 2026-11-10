@@ -71,11 +71,11 @@ def main():
         check(i['speaker_id']in characters,'Intro speaker')
     check(end==m['intro_duration_seconds']and 30<=end<=45,'30–45 second intro')
     brand=read('data/brand/identity.json')
-    check(release_name(brand)=='NACHTSIEGEL' and brand['approved_product_name']is None,'No unapproved product rename')
-    check(brand['approval_reference']is None,'No fabricated name approval')
+    check(release_name(brand)=='ORAFOLD' and brand['approved_product_name']=='ORAFOLD','Explicitly approved ORAFOLD release identity')
+    check(isinstance(brand['approval_reference'],str) and 'MASTER PRODUCTION ORDER' in brand['approval_reference'],'Approval references the actual user production order')
     for language in ['de','en']:check('ARBEITSTITEL' in brand['preview'][language]or 'WORKING TITLE'in brand['preview'][language],'Labeled preview '+language)
     rejected=False
-    try:release_name({**brand,'approved_product_name':'KERUVANT'})
+    try:release_name({**brand,'approved_product_name':'KERUVANT','approval_reference':None})
     except ValueError:rejected=True
     check(rejected,'Unapproved promotion is rejected')
     for path,expected in expected_files().items():check(path.read_text()==expected,'Synchronized release metadata '+path.name)

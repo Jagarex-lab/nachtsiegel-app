@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
   "legacy_product_name": "NACHTSIEGEL",
-  "approved_product_name": null,
-  "approval_reference": null,
+  "approved_product_name": "ORAFOLD",
+  "approval_reference": "Auftraggeber: ORAFOLD – MASTER PRODUCTION ORDER, Produktname: ORAFOLD; ausdrücklicher Nutzerauftrag vom 10. November 2026.",
   "default_locale": "de",
-  "description": "2.5D Dark Fantasy Card Battler",
+  "description": "Strategisches Kartenspiel in fünf Kampfpfaden",
   "application_id": "com.jagarex.nachtsiegel",
   "preview": {
     "status": "working_title_not_approved",
