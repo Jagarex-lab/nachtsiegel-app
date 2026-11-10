@@ -41,7 +41,16 @@ func _draw() -> void:
 	else:
 		draw_style_box(T.panel(edge,Color(.025,.04,.065,.88)),rect)
 		draw_line(Vector2(8,4),Vector2(size.x-10,4),Color(edge,.7),1,true)
-		if not unit.is_empty():
+		if not unit.is_empty() and size.y<66:
+			# Browser-height view: full-width stats and a separate name area.
+			# Two-line names must never intersect the values below them.
+			illustration(Rect2(size.x-40,5,35,maxf(18,size.y-25)))
+			title_paragraph(size.x-54,11).draw(get_canvas_item(),Vector2(8,4),T.TEXT)
+			draw_rect(Rect2(5,size.y-19,size.x-10,15),T.SURFACE)
+			var marks=("✓" if combat_ready else "Z" if int(unit.get("stun",0))>0 else "…")+(" U" if origin else "")+(" K" if convergence else " K×" if broken_convergence else "")
+			if int(unit.get("ward",0))>0:marks+=" S%d" % int(unit.ward)
+			_ink("%s %d ANG %d LP %s" % [owner_label,unit.atk,unit.hp,marks],Vector2(7,size.y-7),10,T.TEXT,size.x-14)
+		elif not unit.is_empty():
 			# Board units are portraits + a readable nameplate, not compressed full cards.
 			var art_width=minf(66,size.x*.35)
 			illustration(Rect2(5,5,art_width,size.y-10))
@@ -71,9 +80,10 @@ func _draw() -> void:
 	if invalid_target:
 		draw_line(Vector2(size.x-12,7),Vector2(size.x-5,14),T.DANGER,2,true);draw_line(Vector2(size.x-5,7),Vector2(size.x-12,14),T.DANGER,2,true)
 	if has_focus():draw_rect(rect.grow(-1),T.FOCUS,false,1)
-func title_paragraph(width: float) -> TextParagraph:
+func title_paragraph(width: float, maximum_size: int=12) -> TextParagraph:
 	var paragraph: TextParagraph
 	for fs in [12,11,10]:
+		if fs>maximum_size:continue
 		paragraph=TextParagraph.new();paragraph.width=maxf(24,width)
 		paragraph.break_flags=TextServer.BREAK_MANDATORY|TextServer.BREAK_WORD_BOUND|TextServer.BREAK_ADAPTIVE
 		paragraph.add_string(str(card.get("name",card.get("id",""))),S.font,fs)
