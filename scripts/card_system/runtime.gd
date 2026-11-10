@@ -84,14 +84,17 @@ func _submit(trigger: String, side: String, abilities: Array, context: Dictionar
 	var batch: Array = []
 	for index in abilities.size():
 		var ability: Variant = abilities[index]
+		var ability_context: Dictionary=context.duplicate(true)
 		reason = registry.validate_ability(ability, activated)
 		if not reason.is_empty(): return _rejected(reason)
+		if model.has_method("production_bind_context"):
+			ability_context=model.production_bind_context(side,ability,ability_context)
 		if activated and ability.mode!="activated":return _rejected("not_activated")
 		if not activated and not ability.mode in ["triggered","reactive"]:return _rejected("unsupported_mode")
 		if not activated and ability.trigger != trigger: continue
-		reason = _preflight(side, ability, context, activated)
+		reason = _preflight(side, ability, ability_context, activated)
 		if not reason.is_empty(): return _rejected(reason)
-		batch.append({"trigger": trigger, "side": side, "ability": ability.duplicate(true), "context": context.duplicate(true), "index": index, "activated": activated})
+		batch.append({"trigger": trigger, "side": side, "ability": ability.duplicate(true), "context": ability_context, "index": index, "activated": activated})
 	if batch.is_empty(): return {"ok": true, "queued": 0, "processed": 0, "reason": "no_matching_abilities"}
 	return _queue_batch(trigger, side, batch, context)
 
@@ -149,7 +152,7 @@ func _ready(side: String) -> bool:
 
 func _validate_context(context: Dictionary) -> String:
 	var allowed := ["event_id", "source_lane", "source_uid", "target_lane", "target_uid", "target_species"]
-	if model != null and model.has_method("production_preflight"): allowed.append_array(["source_card_id", "ability_index", "source_relic", "event_lane", "event_side", "event_uid", "source_armed", "source_relic_uid", "source_instance"])
+	if model != null and model.has_method("production_preflight"): allowed.append_array(["source_card_id", "ability_index", "source_relic", "event_lane", "event_side", "event_uid", "source_armed", "source_relic_uid", "source_instance", "selected_enemy_lane", "selected_enemy_uid", "opposite_enemy_lane", "opposite_enemy_uid"])
 	for key in context:
 		if not key in allowed: return "unknown_context_field:" + str(key)
 	if not context.get("event_id") is String or context.event_id.is_empty() or context.event_id.length() > 100: return "invalid_event_id"
@@ -158,6 +161,15 @@ func _validate_context(context: Dictionary) -> String:
 	for key in ["source_uid", "target_uid"]:
 		if context.has(key) and not Registry.integer(context[key], 1, 9007199254740991): return "invalid_uid"
 	if context.has("target_species") and not registry.contract.species.has(context.target_species): return "unknown_species"
+	if model != null and model.has_method("production_preflight"):
+		for key in ["selected_enemy_lane","opposite_enemy_lane"]:
+			if context.has(key) and not Registry.integer(context[key],0,4):return "invalid_lane"
+		for key in ["selected_enemy_uid","opposite_enemy_uid","source_relic_uid"]:
+			if context.has(key) and not Registry.integer(context[key],0,9007199254740991):return "invalid_uid"
+		for key in ["source_armed","source_instance"]:
+			if context.has(key) and not Registry.integer(context[key],1,9007199254740991):return "invalid_uid"
+		if context.has("ability_index") and not Registry.integer(context.ability_index,0,3):return "invalid_ability_index"
+		if context.has("source_card_id") and (not context.source_card_id is String or context.source_card_id.is_empty() or context.source_card_id.length()>100):return "invalid_source_card_id"
 	return ""
 
 func _target(side: String, context: Dictionary) -> String:

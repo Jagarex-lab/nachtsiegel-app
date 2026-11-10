@@ -40,6 +40,7 @@ static func validate(a: Variant) -> String:
  if a.effect=="haste" and a.mode!="passive":return "haste_is_passive"
  if a.effect in ["modify_attack","weaken_unit","move_unit","stun_unit"] and a.target in ["own_hero","enemy_hero"]:return "unit_target_required"
  if a.effect=="delay_damage" and a.target!="enemy_lane":return "delayed_lane_required"
+ if a.effect in ["gain_resonance","gain_energy","draw_cards","discard_card","return_card","summon_card"] and a.target!="self":return "sidewide_target_must_be_self"
  if a.mode in ["activated","reactive"]:
   if not a.get("activation") is Dictionary or a.activation.size()!=2:return "invalid_activation"
   if not integer(a.activation.get("energy"),0,8) or not integer(a.activation.get("resonance"),0,15):return "invalid_cost"
@@ -58,4 +59,7 @@ static func validate(a: Variant) -> String:
   if not a.get("condition") is Dictionary or a.condition.size()!=2:return "invalid_condition"
   if not a.condition.get("resource") in ["resonance","energy","hand","controlled_paths"] or not integer(a.condition.get("at_least"),1,15):return "invalid_condition"
  elif a.has("condition"):return "unexpected_condition"
+ if a.has("condition"):
+  var caps: Dictionary={"resonance":15,"energy":8,"hand":6,"controlled_paths":5}
+  if int(a.condition.at_least)>int(caps[a.condition.resource]):return "unreachable_condition"
  return ""

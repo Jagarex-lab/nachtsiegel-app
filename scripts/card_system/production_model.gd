@@ -56,7 +56,10 @@ func configure_v2(cards: Array) -> Dictionary:
    if definition.kind=="event" and ability.mode=="reactive" and definition.abilities.size()!=1:return {"ok":false,"reason":"single_reactive_impulse_ability_required"}
   candidate[definition.id]=definition.duplicate(true)
  _bindings=candidate
- _binding_hash=JSON.stringify(candidate,"",true).sha256_text()
+ var mechanics: Array=[]
+ for definition in candidate.values():mechanics.append(ProductionCatalog.mechanical_card(definition))
+ mechanics.sort_custom(func(a: Dictionary,b: Dictionary):return str(a.id)<str(b.id))
+ _binding_hash=JSON.stringify(mechanics,"",true).sha256_text()
  effect_runtime=ObservedRuntime.new(self)
  if not effect_runtime.bind_species(cards):return {"ok":false,"reason":"invalid_species"}
  return {"ok":true,"reason":"","bound_cards":candidate.size()}
@@ -199,11 +202,12 @@ func _emit_trigger(trigger: String, side: String, card_id: String, context: Dict
   return
  _publishing+=1
  var card: Dictionary=_bindings[card_id]
+ var captured:=production_bind_context(side,{},context)
  for i in card.abilities.size():
   if state.winner!=null or not state.error.is_empty():break
   var a: Dictionary=card.abilities[i]
   if not a.get("mode") in ["triggered","reactive"] or a.get("trigger")!=trigger:continue
-  var c:=context.duplicate(true);c.source_card_id=card_id;c.ability_index=i
+  var c:=captured.duplicate(true);c.source_card_id=card_id;c.ability_index=i
   var record:=_note_trigger(trigger,side,card_id,c,detail,"published")
   c.event_id=record.event_id
   var reason:=production_preflight(side,a,c)
@@ -315,6 +319,14 @@ func production_preflight(side: String, a: Dictionary, context: Dictionary) -> S
  var reason:=Generic.validate(a)
  if not reason.is_empty():return reason
  if not _source_valid(side,context,str(a.get("trigger",""))):return "stale_source"
+ if a.target in ["enemy_lane","opposite_enemy_unit"]:
+  var prefix: String="selected" if a.target=="enemy_lane" else "opposite"
+  if context.has(prefix+"_enemy_uid"):
+   var bound_lane:=int(context[prefix+"_enemy_lane"])
+   var bound_uid:=int(context[prefix+"_enemy_uid"])
+   var current: Variant=state[_other(side)].lanes[bound_lane]
+   if bound_uid==0 and current!=null:return "stale_target"
+   if bound_uid>0 and (current==null or int(current.uid)!=bound_uid or int(current.hp)<=0):return "stale_target"
  if a.limit=="once_per_turn" and _ability_uses.has(_use_key(side,a,context)):return "ability_already_used"
  if a.mode=="activated" and (state.active!=side or state[side].phase!="main" or state[side].pendingTarget!=null or state[side].pendingShift!=null or state[side].relic==null or state[side].relic_used):return "invalid_activation_phase"
  if a.mode in ["activated","reactive"]:
@@ -341,7 +353,7 @@ func production_preflight(side: String, a: Dictionary, context: Dictionary) -> S
 
 func _targets(side: String, a: Dictionary, context: Dictionary) -> Array:
  var result: Array=[]
- var lane:=int(context.get("target_lane",context.get("source_lane",0)))
+ var lane:=int(context.get("selected_enemy_lane",context.get("target_lane",context.get("source_lane",0))))
  var source_lane:=int(context.get("source_lane",lane))
  if context.has("source_uid"):
   for i in 5:
@@ -355,7 +367,8 @@ func _targets(side: String, a: Dictionary, context: Dictionary) -> Array:
    for i in 5:
     if own.lanes[i]!=null and int(own.lanes[i].uid)==int(context.get("source_uid",-1)):result.append({"side":side,"lane":i})
   "opposite_enemy_unit":
-   if op.lanes[source_lane]!=null:result.append({"side":other,"lane":source_lane})
+   var bound_lane:=int(context.get("opposite_enemy_lane",source_lane))
+   if op.lanes[bound_lane]!=null:result.append({"side":other,"lane":bound_lane})
   "own_lowest_health","enemy_lowest_health":
    var chosen_side:=side if a.target=="own_lowest_health" else other
    var chosen: int=-1
@@ -567,3 +580,16 @@ func _hero_damage(player: Dictionary, amount: float, pierce: bool=false) -> int:
   for side in ["hero","enemy"]:
    if is_same(state.get(side),player):_publish_relic("on_take_damage",side,0);break
  return lost
+
+func production_bind_context(side: String, _ability: Dictionary, context: Dictionary) -> Dictionary:
+ var result:=context.duplicate(true)
+ var selected:=int(result.get("target_lane",result.get("source_lane",0)))
+ var opposite:=int(result.get("source_lane",selected))
+ if result.has("source_uid"):
+  for lane in 5:
+   if state[side].lanes[lane]!=null and int(state[side].lanes[lane].uid)==int(result.source_uid):opposite=lane;break
+ for pair in [["selected",selected],["opposite",opposite]]:
+  if result.has(str(pair[0])+"_enemy_uid"):continue
+  var unit: Variant=state[_other(side)].lanes[int(pair[1])]
+  result[str(pair[0])+"_enemy_lane"]=int(pair[1]);result[str(pair[0])+"_enemy_uid"]=0 if unit==null else int(unit.uid)
+ return result

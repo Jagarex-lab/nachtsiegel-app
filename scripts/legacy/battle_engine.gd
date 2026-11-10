@@ -197,13 +197,17 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
 	var card: Dictionary=catalog.card(p.hand[index])
 	p.hand.remove_at(index);p.energy=int(p.energy)-int(card.cost);p.summons=int(p.summons)+1
 	p.lanes[lane]=make_unit(side,card,int(lane))
+	var played_unit: Dictionary=p.lanes[lane]
 	_trace("summon",side,{"lane":lane,"card_id":card.id})
 	if p.attune!=null and p.attune!=card.order:
 		add_res(p,2);_reaction(side,str(p.attune),str(card.order))
 	p.attune=card.order
 	check_winner()
 	if state.winner==null:_after_card_played(side,card,int(lane))
-	if state.winner==null:enqueue({"type":"summon","side":side,"card_id":card.id,"lane":lane})
+	if state.winner==null:
+		for current_lane in LANES:
+			if p.lanes[current_lane]!=null and is_same(p.lanes[current_lane],played_unit):
+				enqueue({"type":"summon","side":side,"card_id":card.id,"lane":lane if current_lane==int(lane) else current_lane});break
 	return true
 func _after_card_played(_side: String, _card: Dictionary, _lane: int) -> void:
 	# Empty unless a separately instantiated rule profile explicitly opts in.

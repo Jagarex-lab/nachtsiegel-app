@@ -71,6 +71,10 @@ func run() -> void:
  test_rules_and_identity()
  test_reactions_and_boundaries()
  test_all_cards_play()
+ test_queue_target_identity()
+ var categories: Dictionary={}
+ for id in exercised:categories[Generic.OPS[id].category]=true
+ check(categories.size()==12,"all twelve executable effect categories covered")
  print(JSON.stringify({"suite":"production_engine","assertions":assertions,"failures":failures,"generic_cards":model._bindings.size(),"ability_fixtures":ability_count,"effects_executed":exercised.keys(),"automatic_triggers_executed":covered_triggers.keys(),"fixture_limit":"ability fixtures explicitly arrange battle boundaries; separate cases use real actions for all sixteen automatic hooks"}))
  quit(1 if failures else 0)
 func find_trigger(trigger: String) -> Dictionary:
@@ -154,6 +158,11 @@ func test_rules_and_identity() -> void:
 
 func test_reactions_and_boundaries() -> void:
  battle()
+ model.state.hero.hand=["oa-morph-c07"]
+ check(model.play("hero",0,2),"actual haste creature moves during its on_play")
+ var arrived: Variant=model.state.hero.lanes[3]
+ check(arrived!=null and arrived.id=="oa-morph-c07" and model._summoned_uids.has(int(arrived.uid)),"arrival queue follows played instance after on_play movement")
+ battle()
  var attacker:=put("hero",2);attacker.hp=1;attacker.atk=9
  var defender:=put("enemy",2,"of-ninth-009");var hp_before:=int(defender.hp)
  var discard_before: int=model.state.hero.discard.size()
@@ -236,3 +245,51 @@ func test_all_cards_play() -> void:
    if model.state[side].pendingShift!=null:check(model.skip_shift(side),"resolve optional native shift "+card.id)
  check(plays==1100,"all550actualcards legally played for both sides")
  print("PRODUCTION CARD COMMAND MATRIX: ",plays," accepted plays; explicitly arranged prerequisites, not1100completegames")
+
+func test_queue_target_identity() -> void:
+ for target_rule in ["enemy_lane","opposite_enemy_unit"]:
+  for initially_empty in [false,true]:
+   if initially_empty and target_rule=="opposite_enemy_unit":continue
+   battle()
+   var source: Dictionary={};var ability: Dictionary={}
+   for card in model.catalog.all_cards():
+    if card.get("effect")!="v2":continue
+    for a in card.abilities:
+     if a.effect=="deal_damage" and a.target==target_rule and a.mode=="triggered":source=card;ability=a;break
+    if not source.is_empty():break
+   check(not source.is_empty(),"real damage card for queued target binding "+target_rule)
+   if source.is_empty():continue
+   var context:=source_context(source,0);context.event_id="binding-test";context.target_lane=2
+   if not initially_empty:put("enemy",2).hp=20
+   var flag: Dictionary={"done":false,"replacement":null}
+   var callback:=func(entry: Dictionary):
+    if entry.event_id=="binding-test" and entry.status=="applied" and not flag.done:
+     flag.done=true;flag.replacement=put("enemy",2)
+   model.effect_runtime.effect_processed.connect(callback)
+   var offset: int=model.effect_runtime.log.size()
+   var reply: Dictionary=model.effect_runtime.publish(ability.trigger,"hero",[ability.duplicate(true),ability.duplicate(true)],context)
+   model.effect_runtime.effect_processed.disconnect(callback)
+   check(reply.ok and flag.done,"queued replacement fixture processed first effect")
+   var rows: Array=model.effect_runtime.log.slice(offset)
+   check(rows.size()==2 and rows[0].status=="applied" and rows[1].status=="fizzled" and rows[1].actual.reason=="stale_target","replacement or newly appeared defender does not inherit queued chosen target")
+   check(flag.replacement.hp==model.catalog.card(flag.replacement.id).hp,"replacement takes no inherited damage")
+ # A source-bound queued relic effect cannot move to a fresh copy of the same identity.
+ battle()
+ var relic: Dictionary={};var a: Dictionary={}
+ for c in model.catalog.all_cards():
+  if c.kind!="relic" or c.get("effect")!="v2":continue
+  for candidate in c.abilities:
+   if candidate.mode=="triggered" and candidate.effect in ["gain_resonance","gain_energy","draw_cards"]:relic=c;a=candidate;break
+  if not relic.is_empty():break
+ if not relic.is_empty():
+  var context:=source_context(relic,0);context.event_id="relic-replacement"
+  var flag: Dictionary={"done":false}
+  var callback:=func(entry: Dictionary):
+   if entry.event_id=="relic-replacement" and entry.status=="applied" and not flag.done:
+    flag.done=true;model._relic_serial+=1;model.state.hero.relic={"id":relic.id,"uid":model._relic_serial}
+  model.effect_runtime.effect_processed.connect(callback)
+  var offset: int=model.effect_runtime.log.size()
+  var reply: Dictionary=model.effect_runtime.publish(a.trigger,"hero",[a.duplicate(true),a.duplicate(true)],context)
+  model.effect_runtime.effect_processed.disconnect(callback)
+  var rows: Array=model.effect_runtime.log.slice(offset)
+  check(reply.ok and rows.size()==2 and rows[0].status=="applied" and rows[1].status=="fizzled" and rows[1].actual.reason=="stale_source","same-ID relic replacement cannot inherit queued source ability")
