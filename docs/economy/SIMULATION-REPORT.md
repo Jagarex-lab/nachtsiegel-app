@@ -4,7 +4,7 @@
 
 ## Reproduktion und Unsicherheit
 
-`python3 tools/economy/simulate_progression.py` liest sämtliche Parameter aus `data/economy/*.json`. Python-Standardbibliothek; keine zusätzlichen Pakete. Seed 5502026; 200 unabhängige Trajektorien je Profil und Szenario, insgesamt 3000, zusätzlich 1000 Sensitivitätsläufe und 400 gepaarte Meilensteinläufe; 100,000 Booster für Raten/Pity. 
+`python3 tools/economy/simulate_progression.py` liest sämtliche Parameter aus `data/economy/*.json`. Python-Standardbibliothek; keine zusätzlichen Pakete. Seed 5502026; 200 unabhängige Trajektorien je Profil und Szenario, insgesamt 3000, zusätzlich 1000 Sensitivitätsläufe und 400 gepaarte Meilensteinläufe; 100,000 Booster für Raten/Pity.
 `target_completion.csv` verwendet Tag366 für bis Tag 365 unvollständige Decks; Mittelwert und Quantile sind dann rechtszensierte Kennzahlen. Bei den aktuellen Szenarien erreichen alle200 Trajektorien je Profil das vollständige Upgrade innerhalb365 Tagen.
 
 CSV-Dateien enthalten Mittelwert, empirische P05/P95 und approximatives 95%-Konfidenzintervall des Mittelwerts. P05/P95 beschreiben Spielerstreuung, nicht Konfidenz. Normalintervalle binärer Erfolgswerte sind nur Näherungen; 200 Läufe lösen extreme 0,1%-Randfälle nicht auf. Der harte Pity-Grenzwert wird zusätzlich deterministisch getestet.
