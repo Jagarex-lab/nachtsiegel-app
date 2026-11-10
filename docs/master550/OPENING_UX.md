@@ -23,6 +23,8 @@ Normal Alpha combat now accepts either the original tap-to-select/tap-target int
 
 Drag start records the source index and stable card ID, the full model-state digest and a snapshot of currently legal targets. Release requires all of these to remain valid before sending one original `play` command. There is no new effect implementation or second rules engine. Invalid drops, canceled touches, rotation/layout reconstruction, focus loss and an eight-second inactive pointer cancel the presentation without changing the model. Other touch pointers cannot take over the gesture. Synthesized mouse/touch duplicates are excluded from gesture ownership.
 
+The first real Chromium Web run exposed an additional platform boundary: Godot 4.6's exported adapter registers both `touchend` and `touchcancel` as release type 1. A browser cancellation on a valid target consequently played a card despite the native `event.canceled` check. The Web shell now increments a monotonic cancellation version in a window capture listener, before Godot's canvas listener. Drag press records the version and release reads it synchronously before either a play or ordinary tap release; native cancellation remains supported. `pointercancel`, blur and hiding the page also invalidate the version. No battle rule is involved. New-export Chromium and WebKit confirmation remains required before release; the strict browser cancellation test is retained.
+
 Mulligan and optional-opening exchanges continue to use explicit tap and confirmation rather than drag. A drag does not bypass targeting restrictions, pending choices, resource costs, summoning limits or the current phase. Reduced motion does not change input behavior.
 
 ## Input and rotation

@@ -75,3 +75,5 @@ godot --headless --path . --audio-driver Dummy --script tests/master550_test_dec
 ```
 
 Der dokumentierte Lauf benötigt kein Display. Für einen zusätzlichen Bildrenderlauf kann `--headless` an einer vorhandenen Anzeige entfallen; der Test selbst erzeugt keine Screenshots. Kein zusätzliches Paket wird benötigt. Das Ergebnisartefakt wird unter `work/master550/test_decks.json` geschrieben: Quellhash, Godot-Version, Assertionzahlen sowie pro Partie Vorlage, Gegner, Seed, tatsächlicher Startspieler, Sieger, Halbzugzahl, Kettenmaximum und Ereignis-/Endzustandshashes. Das ignorierte `work/`-Artefakt ersetzt nicht den abschließenden Prüfbericht. Dieser Test löst keinen Merge oder Release aus.
+
+Zusätzliche Kleinstgrößenprüfung nach dem ersten Lauf: Der vollständige Test wurde um **320×568 und 756×320** erweitert und erneut headless ausgeführt. Ergebnis: **2.031 Assertions, null Fehler, 20 vollständige Partien**. Alle Vorlagen blieben über die echte Scrollgeometrie erreichbar; die zusätzliche Abdeckung ist weiterhin kein Pixel- oder echter Gerätetest.

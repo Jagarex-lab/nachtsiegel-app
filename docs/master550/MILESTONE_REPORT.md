@@ -16,6 +16,7 @@ Stand: 10.11.2026. Dies ist ein zusammenhängender Entwicklungsmeilenstein, **ke
 | Kampfstart | Mulligan, Ursprung und Zweite Möglichkeit auf dem tatsächlichen Fünf-Pfade-Spielfeld. Karten markieren, vollständig lesen und bestätigen. |
 | Kartenbedienung | Maus-/Touch-Drag-and-drop zusätzlich zum Antippen; gültige Ziele, Reliktbereich, Abbruch bei ungültiger Ablage, Rotation oder veraltetem Zustand. Kein neuer Kampfregelpfad. |
 | Deckbibliothek | Reale Macht-/Typ-/Kosten-/Seltenheits-/Artenfilter, Fähigkeits-/Artensuche und drei stabile Sortierungen; Quelle der Optionen sind tatsächlich vorhandene Karten. |
+| Strategievorlagen | Zehn unterschiedliche, validierte 30er-Testdecks mit jeweils mindestens neun ausgetauschten Kopien Unterschied. Über „Testdecks“ in der Deckwerkstatt laden, bearbeiten und ausdrücklich speichern. |
 | Ressourcen | Drei isolierte Testmodelle, 192 Matrixpartien und sieben Wiederholungs-/Referenzpartien. Produktiv bleiben Energie 8 und Resonanz 15. |
 | Illustrationen | Bestehende geteilte Konzeptbilder. Keine 550 Einzelillustrationen erzeugt. Die Pipeline lehnt fehlende oder vorgetäuschte fertige Bilddateien ab. |
 
@@ -51,12 +52,15 @@ Entwicklungsnachweise vor der abschließenden Integrations-CI:
 | Kartenmaster | 374 Assertions, null Fehler; 20 Material-/Machtansichten und identische Rückseiten |
 | Öffnung / Touch / Drag | 852 Assertions, null Fehler; Safe-Area-Fullboard-Fixture eingeschlossen |
 | Bibliothek mit aktivem Artenoverlay | 677 Assertions, null Fehler |
+| Zehn Strategievorlagen | 2.031 Assertions, null Fehler; 20 vollständige KI-Partien; tatsächliche Control-/Scrollgeometrie bei 390×844, 844×390, 320×568 und 756×320 |
 | Ressourcenexperiment | 1.125 Assertions, null Fehler; 192 Matrixpartien + sieben Verifikationspartien |
 | Release-Sicherheit | Acht Python-Tests, null Fehler |
 | Vollständiger Legacy-Wrapper | Erneut mit Exitcode 0; reproduziert die fixierte JavaScript-Referenz und vorhandene Kernel-/KI-/Replay-Prüfungen |
 | Echter Web-Export mit neuem Staging | Erfolgreich; einzelner Kandidat rund 45 MB statt sieben angesammelten Exporten; keine Test-/Toolassets im PCK |
 
 Die Anzahl der Assertions ist kein Maß für die Anzahl fertiger Karten. Ein erster lokaler Gesamtwrapper endete nach drei erfolgreichen nativen Teilsuiten mit Shell-Exit 2, weil seine Datei während der Ausführung parallel geändert wurde. Dieser Versuch zählt nicht als erfolgreicher Gesamtlauf. Die endgültige Integrationsentscheidung verlangt die unverändert ausgeführte CI; lokale Teilnachweise allein reichen dafür nicht. Browserresultate und veröffentlichter SHA werden erst nach tatsächlicher Verifikation bestätigt.
+
+Die erste echte neue Drag-Browserprüfung fand einen kritischen, zuvor nativ nicht sichtbaren Eingabefehler: Godot 4.6.3 Web bildet DOM-`touchcancel` und `touchend` auf denselben Release-Typ ab. Dadurch konnte ein abgebrochener Touch eine Karte ausspielen. Der neue Capture-Listener erhält einen monotonen Abbruchzähler; die Godot-UI prüft ihn synchron vor jeder Freigabe. Blur und Hintergrundwechsel brechen dieselbe Geste ab. Der Browserfall bleibt streng: ein Abbruch auf einem gültigen Ziel darf weder Zustand noch Befehlszahl ändern. Erst seine erfolgreiche Wiederholung erlaubt die Freigabe des neuen Drag-Standes.
 
 ```bash
 tools/test_legacy.sh
@@ -75,6 +79,6 @@ Die Testumgebung bietet keine physischen iPhone-/Android-Geräte. WebKit mit Tou
 
 ## Integration und Veröffentlichung
 
-PR #9 wurde nach grüner CI gemäß der ausdrücklichen aktuellen Nutzerfreigabe integriert. Der manuelle Pages-Lauf **42836632754** veröffentlichte Commit **5d37cd937d7fcc50912a565e96f3cc4aa87f506d** unter <https://jagarex-lab.github.io/nachtsiegel-app/>. Dies ist die freigegebene Alpha-0.2-Basis, nicht automatisch der gesamte neue Masterauftrag.
+PR #9 wurde nach grüner CI gemäß der ausdrücklichen aktuellen Nutzerfreigabe integriert. Der manuelle Pages-Lauf **42836632754** veröffentlichte Commit **5d37cd937d7fcc50912a565e96f3cc4aa87f506d** unter <https://jagarex-lab.github.io/nachtsiegel-app/>. Diese Basis hat inzwischen beide vollständigen öffentlichen Browserprüfungen bestanden: [Live-Nachweis](LIVE_VERIFICATION.md). Sie ist nicht automatisch der gesamte neue Masterauftrag.
 
 Der neue Meilenstein liegt in [PR #10](https://github.com/Jagarex-lab/nachtsiegel-app/pull/10). Nur ein erfolgreich geprüfter Integrationscommit darf anschließend über den vorhandenen ausdrücklich manuell ausgelösten Releaseprozess veröffentlicht werden. Es gibt keine automatische Veröffentlichung durch diesen PR und keine Änderung von GitHub-Schutzregeln.
