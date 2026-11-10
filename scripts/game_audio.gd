@@ -1,63 +1,67 @@
-extends Node
-## Original licensed project cues; bounded voices and three independently persisted buses.
-const CUES={"ui":"res://assets/audio/ui.wav","draw":"res://assets/audio/draw.wav","attack":"res://assets/audio/attack.wav","hit":"res://assets/audio/hit.wav","ASH":"res://assets/audio/ASH.wav","TIDE":"res://assets/audio/TIDE.wav","THORN":"res://assets/audio/THORN.wav","VEIL":"res://assets/audio/VEIL.wav","turn":"res://assets/audio/turn.wav","win":"res://assets/audio/win.wav","lose":"res://assets/audio/lose.wav"}
-var streams: Dictionary={}
-var volumes={"Music":.35,"SFX":.65,"UI":.5}
-var voices: Array=[]
-var music: AudioStreamPlayer
-var unlocked := false
-var history: Array=[]
-var last_ui_ms := -1000
+extends "res://scripts/audio/audio_manager.gd"
+## Sole product audio owner. Archive API delegates to the same bounded mixer.
+const LEGACY_EVENTS := {"ui":"ui.confirm", "draw":"card.draw", "attack":"creature.attack", "hit":"creature.hit", "turn":"ui.confirm", "win":"battle.victory", "lose":"battle.defeat", "ASH":"combat.reaction", "TIDE":"combat.reaction", "THORN":"combat.reaction", "VEIL":"combat.reaction"}
+var history: Array = []
 var quitting := false
 var last_preview_ms := -1000
-func _ready() -> void:
-	if Engine.is_editor_hint():return
-	for name in CUES:streams[name]=load(CUES[name])
-	for name in volumes:
-		if AudioServer.get_bus_index(name)<0:
-			AudioServer.add_bus();AudioServer.set_bus_name(AudioServer.bus_count-1,name)
-	for i in 10:
-		var player=AudioStreamPlayer.new();player.bus="UI" if i>=8 else "SFX";player.volume_db=-8 if i>=8 else -10;add_child(player);voices.append(player)
-	music=AudioStreamPlayer.new();music.bus="Music";music.volume_db=-6;music.stream=load("res://assets/audio/atmosphere.ogg");music.stream.loop=true;add_child(music)
-	apply(volumes)
-	get_tree().auto_accept_quit=false
-	get_tree().root.close_requested.connect(request_quit)
-func apply(values: Dictionary) -> void:
-	for name in volumes:
-		volumes[name]=clampf(float(values.get(name,volumes[name])),0,1)
-		var index=AudioServer.get_bus_index(name)
-		AudioServer.set_bus_mute(index,volumes[name]<=.001)
-		AudioServer.set_bus_volume_db(index,linear_to_db(maxf(.001,volumes[name])))
-func _input(event: InputEvent) -> void:
-	if not quitting and not unlocked and ((event is InputEventScreenTouch and event.pressed) or (event is InputEventMouseButton and event.pressed) or (event is InputEventKey and event.pressed)):
-		unlocked=true;music.play()
-func cue(name: String) -> void:
-	if quitting or not streams.has(name):return
-	if name=="ui" and Time.get_ticks_msec()-last_ui_ms<55:return
-	if name=="ui":last_ui_ms=Time.get_ticks_msec()
-	var group=voices.slice(8,10) if name=="ui" else voices.slice(0,8)
-	var player: AudioStreamPlayer=group[0]
-	for candidate in group:
-		if not candidate.playing:player=candidate;break
-	player.stop();player.stream=streams[name];player.play()
-	history.append(name)
-	if history.size()>64:history.pop_front()
-func stop_all() -> void:
-	for player in voices:
-		player.stop();player.stream=null
-	if is_instance_valid(music):music.stop();music.stream=null
-	streams.clear()
+var volumes: Dictionary:
+	get: return {"Music":settings.music, "SFX":settings.sfx, "UI":settings.ui}
+var voices: Array:
+	get:
+		var players: Array = []
+		for voice in _voices: players.append(voice.player)
+		return players
 
-func request_quit(code: int=0) -> void:
-	if quitting:return
-	quitting=true;stop_all()
-	# Give the mixer one real update before engine teardown releases cached streams.
-	await get_tree().create_timer(.10).timeout
-	get_tree().quit(code)
-func _exit_tree() -> void:stop_all()
+func _ready() -> void:
+	super._ready()
+	_migrate_archive_gains()
+	get_tree().auto_accept_quit = false
+	get_tree().root.close_requested.connect(request_quit)
+
+func apply(values: Dictionary) -> void:
+	for channel in {"Music":"music", "SFX":"sfx", "UI":"ui"}:
+		var value: Variant = values.get(channel)
+		if value is float or value is int:
+			set_volume({"Music":"music", "SFX":"sfx", "UI":"ui"}[channel], value, false)
+	# Archive applies its own already-persisted profile; no second settings writer.
+	_apply_settings(false)
+
+func cue(cue_name: String) -> void:
+	if quitting or not LEGACY_EVENTS.has(cue_name): return
+	if play_event(LEGACY_EVENTS[cue_name]):
+		history.append(cue_name)
+		if history.size() > 64: history.pop_front()
 
 func preview(bus: String) -> void:
-	if Time.get_ticks_msec()-last_preview_ms<180:return
-	last_preview_ms=Time.get_ticks_msec()
-	if bus=="SFX":cue("hit")
-	elif bus=="UI":cue("ui")
+	if Time.get_ticks_msec() - last_preview_ms < 180: return
+	last_preview_ms = Time.get_ticks_msec()
+	if bus == "SFX": cue("hit")
+	elif bus == "UI": cue("ui")
+
+func request_quit(code: int = 0) -> void:
+	if quitting: return
+	quitting = true
+	stop_all(true)
+	await get_tree().create_timer(0.10).timeout
+	get_tree().quit(code)
+
+func _legacy_audio(document: Variant) -> Dictionary:
+	if not document is Dictionary or document.get("schema_version") != 1 or not document.get("settings") is Dictionary: return {}
+	var values: Variant = document.settings.get("audio")
+	if not values is Dictionary: return {}
+	for key in ["Music","SFX","UI"]:
+		var value: Variant = values.get(key)
+		if not (value is int or value is float) or not is_finite(float(value)) or float(value) < 0.0 or float(value) > 1.0: return {}
+	return values.duplicate()
+
+func _migrate_archive_gains() -> void:
+	# Read only; never instantiate or rewrite the archived progress store.
+	if FileAccess.file_exists(settings_path) or _web_storage_status not in ["native","missing"]: return
+	var document: Variant = _read_dictionary("user://progress_v1.json")
+	if OS.has_feature("web"):
+		var raw: Variant = JavaScriptBridge.eval("(()=>{try{return localStorage.getItem('nachtsiegel.progress.v1')}catch(e){return null}})()",true)
+		if raw is String:
+			var mirrored: Variant = JSON.parse_string(raw)
+			if not _legacy_audio(mirrored).is_empty(): document = mirrored
+	var gains := _legacy_audio(document)
+	if not gains.is_empty(): migrate_legacy_settings(gains)

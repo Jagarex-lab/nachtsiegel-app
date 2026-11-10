@@ -16,14 +16,16 @@ func _ready() -> void:
 	title.text = "Audioeinstellungen"
 	title.add_theme_font_size_override("font_size", 24)
 	add_child(title)
-	for channel in ["master", "music", "sfx", "ambience"]:
-		_add_volume(channel, {"master": "Gesamtlautstärke", "music": "Musik", "sfx": "Effekte", "ambience": "Umgebung"}[channel])
+	for channel in ["master", "music", "sfx", "ui", "ambience"]:
+		_add_volume(channel, {"master": "Gesamtlautstärke", "music": "Musik", "sfx": "Effekte", "ui": "Bedienung", "ambience": "Umgebung"}[channel])
 	mute_toggle = CheckBox.new()
+	mute_toggle.name = "AudioMute"
 	mute_toggle.text = "Stummschaltung"
 	mute_toggle.custom_minimum_size.y = 44
 	mute_toggle.toggled.connect(_on_mute)
 	add_child(mute_toggle)
 	reduced_toggle = CheckBox.new()
+	reduced_toggle.name = "AudioReducedIntensity"
 	reduced_toggle.text = "Reduzierte Audiointensität"
 	reduced_toggle.tooltip_text = "Dezentere Effekte und weniger zusätzliche Klangschichten."
 	reduced_toggle.custom_minimum_size.y = 44
@@ -67,6 +69,7 @@ func _add_volume(channel: String, label_text: String) -> void:
 	caption.add_child(value)
 	row.add_child(caption)
 	var slider := HSlider.new()
+	slider.name = "AudioVolume_" + channel
 	slider.min_value = 0.0
 	slider.max_value = 1.0
 	slider.step = 0.01
@@ -87,7 +90,7 @@ func sync_settings() -> void:
 	var settings: Dictionary = state.get("settings", {})
 	var volumes: Dictionary = settings.get("volumes", settings)
 	for channel in sliders:
-		var value: float = float(volumes.get(channel, {"master": 0.8, "music": 0.45, "sfx": 0.7, "ambience": 0.35}[channel]))
+		var value: float = float(volumes.get(channel, {"master": 0.8, "music": 0.45, "sfx": 0.7, "ui": 0.7, "ambience": 0.35}[channel]))
 		sliders[channel].value = value
 		value_labels[channel].text = "%d %%" % roundi(value * 100.0)
 	mute_toggle.button_pressed = bool(settings.get("muted", false))

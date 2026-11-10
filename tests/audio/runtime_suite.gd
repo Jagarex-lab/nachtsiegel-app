@@ -179,6 +179,9 @@ func run() -> void:
 	corrupt.save(clone.settings_path)
 	check(clone.load_settings() == ERR_INVALID_DATA, "future settings schema rejected safely")
 	check(clone.snapshot().settings == Audio.DEFAULT_SETTINGS, "unknown schema restores defaults")
+	var future_text := FileAccess.get_file_as_string(clone.settings_path)
+	check(clone.save_settings() == ERR_INVALID_DATA, "future native schema blocks writes")
+	check(FileAccess.get_file_as_string(clone.settings_path) == future_text, "future native settings remain intact")
 	corrupt.set_value("audio","version",1)
 	corrupt.set_value("audio","music","loud")
 	corrupt.set_value("audio","muted",123)
@@ -188,7 +191,7 @@ func run() -> void:
 	check(manager.set_volume("sfx",0,false), "zero SFX accepted")
 	await wait_realtime(150)
 	check(AudioServer.is_bus_mute(AudioServer.get_bus_index("ORAFOLD SFX")), "zero SFX fully muted")
-	check(AudioServer.is_bus_mute(AudioServer.get_bus_index("ORAFOLD UI")), "zero SFX also mutes UI")
+	check(not AudioServer.is_bus_mute(AudioServer.get_bus_index("ORAFOLD UI")), "zero SFX preserves independent UI gain")
 	manager.set_volume("sfx",0.37,false)
 	await wait_realtime(150)
 	check(not AudioServer.is_bus_mute(AudioServer.get_bus_index("ORAFOLD SFX")), "raising SFX restores bus")
@@ -218,7 +221,10 @@ func run() -> void:
 	for key in Audio.DEFAULT_SETTINGS:
 		var incomplete := mirror_settings.duplicate()
 		incomplete.erase(key)
-		check(manager._validate_mirror_settings(incomplete).is_empty(), "mirror requires field " + key)
+		if key == "ui":
+			check(manager._validate_mirror_settings(incomplete).ui == incomplete.sfx, "old v1 mirror inherits original UI/SFX gain")
+		else:
+			check(manager._validate_mirror_settings(incomplete).is_empty(), "mirror requires field " + key)
 	for invalid_number in [NAN,INF,-0.01,1.01,true,"0.5",null]:
 		var invalid_settings := mirror_settings.duplicate()
 		invalid_settings.music = invalid_number

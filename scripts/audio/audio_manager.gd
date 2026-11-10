@@ -1,6 +1,6 @@
 extends Node
-## Opt-in presentation service. No game model, rules, cards or global RNG dependencies.
-## Add as AudioManager autoload only in the later documented integration step.
+## Presentation service. GameAudio subclasses this as the sole product mixer.
+## No game model, rules, cards or global RNG dependencies.
 signal event_played(event_name: String, clip_id: String)
 signal settings_changed(settings: Dictionary)
 signal settings_save_failed(error: Error)
@@ -8,7 +8,7 @@ signal settings_save_failed(error: Error)
 const MusicController = preload("res://scripts/audio/music_controller.gd")
 const POOL_SIZE := 16
 const BUS_NAMES := {"master": "ORAFOLD", "music": "ORAFOLD Music", "sfx": "ORAFOLD SFX", "ui": "ORAFOLD UI", "ambience": "ORAFOLD Ambience"}
-const DEFAULT_SETTINGS := {"master": 0.8, "music": 0.55, "sfx": 0.75, "ambience": 0.4, "muted": false, "reduced_intensity": false}
+const DEFAULT_SETTINGS := {"master": 0.8, "music": 0.55, "sfx": 0.75, "ui": 0.75, "ambience": 0.4, "muted": false, "reduced_intensity": false}
 const FACTION_ALIASES := {"houses": "zwoelf_haeuser", "stillwatch": "stillwacht", "morph": "vielgestalt", "ninth": "neunte_stunde"}
 
 var catalog_path := "res://data/audio/audio_catalog.json"
@@ -271,7 +271,7 @@ func _begin_ambience(stream: AudioStream) -> void:
 
 func set_volume(channel: String, value: Variant, persist: bool = true) -> bool:
 	channel = channel.to_lower()
-	if channel not in ["master", "music", "sfx", "ambience"] or not (value is float or value is int) or not is_finite(float(value)):
+	if channel not in ["master", "music", "sfx", "ui", "ambience"] or not (value is float or value is int) or not is_finite(float(value)):
 		return false
 	settings[channel] = clampf(float(value), 0.0, 1.0)
 	_apply_settings(true)
@@ -311,7 +311,7 @@ func _apply_settings(smooth: bool) -> void:
 		var index := AudioServer.get_bus_index(bus)
 		if index < 0:
 			continue
-		var target := float(settings.sfx if channel == "ui" else settings[channel])
+		var target := float(settings[channel])
 		if _volume_tweens.has(channel):
 			_volume_tweens[channel].kill()
 			_volume_tweens.erase(channel)
@@ -338,6 +338,10 @@ func _validate_mirror_settings(value: Variant) -> Dictionary:
 	var validated: Dictionary = {}
 	for key in DEFAULT_SETTINGS:
 		if not value.has(key):
+			# Original v1 mirrors used one effects gain for both buses.
+			if key == "ui" and value.has("sfx"):
+				validated.ui = _number(value.sfx, DEFAULT_SETTINGS.ui, 0.0, 1.0)
+				continue
 			return {}
 		var item: Variant = value[key]
 		if DEFAULT_SETTINGS[key] is bool:
@@ -398,6 +402,18 @@ func _write_browser_mirror() -> Error:
 	return OK
 
 func save_settings() -> Error:
+	# Preserve unknown native versions and invalid/future browser mirrors intact.
+	var existing := ConfigFile.new()
+	if FileAccess.file_exists(settings_path):
+		var existing_error := existing.load(settings_path)
+		if existing_error != OK or existing.get_value("audio", "version", 0) != 1:
+			last_save_error = ERR_INVALID_DATA
+			settings_save_failed.emit(last_save_error)
+			return last_save_error
+	if OS.has_feature("web") and (_mirror_write_blocked or _read_browser_mirror().status == "invalid"):
+		last_save_error = ERR_INVALID_DATA
+		settings_save_failed.emit(last_save_error)
+		return last_save_error
 	var config := ConfigFile.new()
 	config.set_value("audio", "version", 1)
 	for key in DEFAULT_SETTINGS:
@@ -426,6 +442,9 @@ func load_settings() -> Error:
 					settings[key] = value if value is bool else DEFAULT_SETTINGS[key]
 				else:
 					settings[key] = _number(value, DEFAULT_SETTINGS[key], 0.0, 1.0)
+	# v1 ConfigFiles also predate the independent UI channel.
+	if result == OK and not config.has_section_key("audio", "ui"):
+		settings.ui = settings.sfx
 	if OS.has_feature("web"):
 		var mirror := _read_browser_mirror()
 		_web_storage_status = mirror.status
@@ -435,6 +454,7 @@ func load_settings() -> Error:
 			result = OK
 		elif mirror.status == "invalid":
 			result = ERR_INVALID_DATA
+	last_save_error = OK if result == ERR_FILE_NOT_FOUND else result
 	_apply_settings(false)
 	settings_changed.emit(settings.duplicate())
 	return result
@@ -443,6 +463,7 @@ func migrate_legacy_settings(legacy: Dictionary, persist: bool = true) -> void:
 	# Explicit opt-in migration only. Caller keeps ownership of its old save schema.
 	settings.music = _number(legacy.get("Music", settings.music), settings.music, 0.0, 1.0)
 	settings.sfx = _number(legacy.get("SFX", settings.sfx), settings.sfx, 0.0, 1.0)
+	settings.ui = _number(legacy.get("UI", settings.ui), settings.ui, 0.0, 1.0)
 	_apply_settings(false)
 	if persist:
 		save_settings()
@@ -500,6 +521,13 @@ func _update_suspension() -> void:
 		var pending := _pending_ambience
 		_pending_ambience = ""
 		set_ambience(pending)
+
+func stop_ambience() -> void:
+	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid(): _ambience_tween.kill()
+	if is_instance_valid(_ambience):
+		_ambience.stop()
+		_ambience.stream = null
+	_pending_ambience = ""
 
 func stop_all(clear_cache: bool = false) -> void:
 	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():

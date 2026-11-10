@@ -87,14 +87,14 @@ func run() -> void:
 		var slider=app.audio_sliders[bus];var rect=slider.get_global_rect()
 		check(rect.size.y>=44,"Audio slider has 44px touch area")
 		slider.value=0
-		check(AudioServer.is_bus_mute(AudioServer.get_bus_index(bus)),"Independent mute "+bus)
+		check(AudioServer.is_bus_mute(AudioServer.get_bus_index(audio.BUS_NAMES[bus.to_lower()])),"Independent mute "+bus)
 		slider.value=.55
 		check(is_equal_approx(audio.volumes[bus],.55),"Independent gain "+bus)
 	var loaded=Store.new(app.store.path)
 	check(is_equal_approx(float(loaded.data.settings.audio.SFX),.55),"Audio settings persist")
-	check(audio.voices.size()==10 and audio.get_child_count()==11,"Audio voice/node budget remains fixed")
+	check(audio.voices.size()==16 and audio.get_child_count()==18,"Audio voice/node budget remains fixed")
 	for i in 100:audio.cue("hit")
-	check(audio.history.size()<=64 and audio.voices.size()==10,"Audio burst cannot allocate unbounded players")
+	check(audio.history.size()<=64 and audio.voices.size()==16,"Audio burst cannot allocate unbounded players")
 	app.queue_free();await create_timer(.5).timeout
 	var file=FileAccess.open("res://work/combat/performance.json",FileAccess.WRITE);file.store_string(JSON.stringify({"environment":"Linux Xvfb / llvmpipe, Dummy audio; software renderer, NOT physical mobile hardware","duels":metrics},"  "))
 	print("COMBAT PRESENTATION: %d assertions, %d failures; complete duels, event order, rapid input, resize, bounded FX/audio and persisted mixer" % [assertions,failures])

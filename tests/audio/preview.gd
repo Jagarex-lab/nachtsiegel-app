@@ -20,8 +20,8 @@ func _run() -> void:
 	var panel = load("res://scripts/audio/audio_settings_panel.gd").new()
 	panel.bind_manager(manager)
 	root.add_child(panel)
-	_check(panel.sliders.size() == 4, "four volume controls")
-	for channel in ["master", "music", "sfx", "ambience"]:
+	_check(panel.sliders.size() == 5, "five independent volume controls")
+	for channel in ["master", "music", "sfx", "ui", "ambience"]:
 		_check(is_equal_approx(panel.sliders[channel].value, manager.settings[channel]), channel + " loaded into slider")
 		panel.sliders[channel].value = 0.23
 		_check(is_equal_approx(manager.settings[channel], 0.23), channel + " slider updates real settings")
