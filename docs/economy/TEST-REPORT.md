@@ -1,5 +1,15 @@
 # Testnachweise und verbleibende Grenzen
 
+## Ergänzung: Monetarisierungsanalyse
+
+Die ergänzende Analyse zu PR #16 besitzt 24 neue Python-Tests: acht Sammlungstests, zwölf Umsatz-/Abrechnungsprüfungen und vier modulübergreifende Integrationsprüfungen. Zusammen mit den bisherigen 16 Modelltests bestehen **40 Python-Tests**. Die bestehende Economy-CI führt sie über `tools/economy/test.sh` automatisch aus.
+
+Geprüft werden unter anderem die unveränderten 96 Booster im Referenzmonat, dauerhafte Zielkartenmeilensteine trotz verpasster Spieltage, kopienbezogener Sammlungsfortschritt, unveränderte Inventare bei marginalen Boosterproben, Erweiterungs-IDs, null Käufer/Retention, begrenzte Einsteigerangebote, Produktüberschneidungen, ARPPU, Erstattungen/Gebühren, Kostendeckung, Aktivitätstage, alternative Nachfragehypothesen, reproduzierbare Artefakte und die Ablehnung veralteter Sammlungsnachweise bei geänderten Annahmen. Ein Integrationstest führt den vollständigen Analyseweg mit einem Seed aus und prüft, dass aktive Economy-Dateien byteidentisch bleiben.
+
+Der vollständige Nachweis umfasst 4000 Sammlungs-Grundtrajektorien und 1000 Sensitivitätsläufe über 730 Tage sowie 2400 endliche Finanzkohortenstichproben über 24 Modellmonate. Reproduktion: `python3 tools/economy/simulate_monetization.py`. Seed, Konfiguration, Quellenhashes, CSV, JSON und SVG liegen unter `docs/economy/monetization-results/`; der Bericht steht in [MONETIZATION-REPORT.md](MONETIZATION-REPORT.md). `--reuse-collection` akzeptiert nur zum aktuellen Quell-/Konfigurationsstand passende Artefakte.
+
+Diese Tests validieren Modellrechnung und Datenfluss. Sie messen weder tatsächliche Retention noch Zahlungsbereitschaft oder die Kampfstärke finaler Karten. Runtime, Echtgeldprodukte und Kampf-Engine bleiben unverändert. Der folgende ursprüngliche Testbericht beschreibt weiterhin die technische Prototypabnahme.
+
 Stand: 10. November 2026, Godot 4.6.3, Python 3, Node/Playwright und Chromium unter Linux. Alle Tests betreffen den isolierten lokalen Prototyp. Kein Merge oder Release wurde ausgeführt.
 
 ## Ausgeführt

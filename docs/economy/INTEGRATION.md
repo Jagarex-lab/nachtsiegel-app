@@ -1,5 +1,7 @@
 # Integration des isolierten Wirtschaftspakets
 
+Ergänzung zu PR #16: Die [Monetarisierungsanalyse](MONETIZATION-REPORT.md) verwendet ausschließlich `data/economy/analysis/monetization.json` und neue Python-Werkzeuge. Ihre alternativen Goldbudgets, Zielkartenpfade und hypothetischen Geldbeträge sind nicht in den Godot-Managern aktiviert. Reproduktion: `python3 tools/economy/simulate_monetization.py`. Die vorhandene Testsuite nimmt die neuen `economy_monetization*_test.py` automatisch auf. Eine spätere Freigabe eines Modells benötigt gesondertes Produktbalancing, Server-/Zahlungsintegration und reale Nachfrage-/Decktests.
+
 Stand:2026-11-10. **Nicht in das Hauptspiel integriert. Alle Zahlen vorläufig.** Der Ausgangsstand ist `develop@17121e40a49838f479d1655d88d354ed836ad20e`; Arbeitsbranch `feature/orafold-economy`. Dieses Paket darf separat geprüft werden. Es erteilt keine Merge-/Releasefreigabe und enthält keine Echtgeldkäufe oder produktiven Handelsfunktionen.
 
 ## Grenzen und wiederverwendete Systeme
