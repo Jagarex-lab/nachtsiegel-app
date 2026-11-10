@@ -39,7 +39,7 @@ def validate(context, evidence):
     require(str(run['id']) == context['run_id'], 'wrong QA run')
     require(run['repository']['full_name'] == repo, 'foreign QA run')
     require(run['head_sha'] == sha and run['head_branch'] == 'develop', 'QA commit/branch mismatch')
-    require(run['event'] == 'push' and run['status'] == 'completed' and run['conclusion'] == 'success', 'successful develop push QA required')
+    require(run['event'] in ('push', 'workflow_dispatch') and run['status'] == 'completed' and run['conclusion'] == 'success', 'successful exact-develop push or manual QA required')
     require(run['path'] == '.github/workflows/web-preview.yml', 'wrong QA workflow')
     artifacts = evidence['artifacts']
     require(len(artifacts) == 1 and not artifacts[0]['expired'], 'one unexpired QA artifact required')

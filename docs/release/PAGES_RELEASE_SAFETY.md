@@ -63,3 +63,10 @@ Die tatsächlichen gelesenen Environment-/Pages-/Branch-Policy-Snapshots wurden 
 ### Neuer Masterauftrag Alpha 0.1
 
 Der spätere Masterauftrag genehmigt Integration und einen getesteten Alpha-Release unter wirksamer Releasekontrolle. Unter dieser neuen Autorisierung wurde der alte automatische Web-Publisher erfolgreich deaktiviert (`disabled_manually`). Die Environment-Konfiguration scheiterte dagegen mit HTTP403; bis zur erforderlichen manuellen Einrichtung weiterhin kein Merge oder Release. Aktueller Status und genaue Administrator-Schritte: [Alpha-Integrationsgrenze](../alpha/RELEASE_REPORT.md). Frühere Aussagen „keine Einstellungen geändert“ beschreiben den ursprünglichen PR-Stand, nicht diese spätere erfolgreiche Workflow-Deaktivierung.
+
+
+### Hauptanwendung / genehmigter Testrelease, 2026-11-10
+
+Der Auftraggeber genehmigt jetzt den Ersatz durch ORAFOLD unter der bestehenden URL. PR8 enthält bereits die Heads1–7; nach wirksamer Einrichtung der oben beschriebenen Schutzmaßnahmen genügt dessen einmalige Integration bei noch deaktiviertem Publisher. Danach ausschließlich die reine CI-Version des Workflows aktivieren. Um keinen zusätzlichen Commit nur zur CI-Auslösung zu benötigen, akzeptiert der Guard zusätzlich einen erfolgreichen `workflow_dispatch`-QA-Lauf desselben vertrauenswürdigen Workflowpfads auf exakt aktuellem develop-SHA. Dies ist **kein zusätzlicher Publisher**. Release bleibt ausschließlich manueller Dispatch und benötigt alle bisherigen Bestätigungs-, Reviewer-, Self-review-, Adminbypass-, Branch-, SHA- und Artefaktprüfungen; negative Tests erhalten.
+
+Die aktuelle App kann Administration/Actions-Variablen weiterhin nicht lesen (HTTP403); das gelesene Pages-Environment erfüllt die Revieweranforderungen nicht. Deshalb kein Merge/Deploy vor nachweislicher Einrichtung. Kurze konkrete Schritte: [Hauptanwendungsrelease](../alpha/MAIN_APP_RELEASE.md).

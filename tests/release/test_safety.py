@@ -18,6 +18,13 @@ class Safety(unittest.TestCase):
     def test_approved_candidate_only(self):
         c,e=valid();self.assertEqual(g.validate(c,e),SHA)
 
+    def test_manual_qa_still_requires_exact_trusted_develop(self):
+        c,e=valid();e['run']['event']='workflow_dispatch'
+        self.assertEqual(g.validate(c,e),SHA)
+        for key,value in [('head_sha','b'*40),('head_branch','feature/test'),('path','.github/workflows/other.yml'),('conclusion','failure')]:
+            bad=copy.deepcopy(e);bad['run'][key]=value
+            with self.subTest(key=key),self.assertRaises(g.Denied):g.validate(c,bad)
+
     def test_event_ref_switch_matrix(self):
         # 6 events x 5 refs x 3 switch values; no API/deployment side effects.
         for event in ['push','pull_request','workflow_dispatch','workflow_run','repository_dispatch','release']:
