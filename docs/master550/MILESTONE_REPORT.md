@@ -42,6 +42,22 @@ Die Bilder wurden tatsächlich in Godot gerendert. Die volle Spielfeldbelegung i
 
 ## Reproduzieren
 
+Entwicklungsnachweise vor der abschließenden Integrations-CI:
+
+| Prüfpaket | Tatsächlich beobachtetes Ergebnis |
+|---|---|
+| Node: Text, Vertrag, Arten, Assets, Export-Fehlerpfade | 44 Testgruppen, null Fehler, null übersprungen |
+| Expliziter Effektadapter | 314 Assertions, null Fehler |
+| Kartenmaster | 374 Assertions, null Fehler; 20 Material-/Machtansichten und identische Rückseiten |
+| Öffnung / Touch / Drag | 852 Assertions, null Fehler; Safe-Area-Fullboard-Fixture eingeschlossen |
+| Bibliothek mit aktivem Artenoverlay | 677 Assertions, null Fehler |
+| Ressourcenexperiment | 1.125 Assertions, null Fehler; 192 Matrixpartien + sieben Verifikationspartien |
+| Release-Sicherheit | Acht Python-Tests, null Fehler |
+| Vollständiger Legacy-Wrapper | Erneut mit Exitcode 0; reproduziert die fixierte JavaScript-Referenz und vorhandene Kernel-/KI-/Replay-Prüfungen |
+| Echter Web-Export mit neuem Staging | Erfolgreich; einzelner Kandidat rund 45 MB statt sieben angesammelten Exporten; keine Test-/Toolassets im PCK |
+
+Die Anzahl der Assertions ist kein Maß für die Anzahl fertiger Karten. Ein erster lokaler Gesamtwrapper endete nach drei erfolgreichen nativen Teilsuiten mit Shell-Exit 2, weil seine Datei während der Ausführung parallel geändert wurde. Dieser Versuch zählt nicht als erfolgreicher Gesamtlauf. Die endgültige Integrationsentscheidung verlangt die unverändert ausgeführte CI; lokale Teilnachweise allein reichen dafür nicht. Browserresultate und veröffentlichter SHA werden erst nach tatsächlicher Verifikation bestätigt.
+
 ```bash
 tools/test_legacy.sh
 xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_alpha.sh
