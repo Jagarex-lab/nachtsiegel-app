@@ -171,7 +171,7 @@ func shell_checks(entries: Array) -> void:
 		check(is_instance_valid(app.modal) and bounded(app.actions.modal_close), "template modal has a visible dismissal " + str(dimensions))
 		for entry in entries:
 			var action := "template_" + str(entry.id)
-			check(app.actions.has(action) and is_instance_valid(app.actions[action]) and not app.actions[action].disabled, "all ten real valid template actions " + action + str(dimensions))
+			check(app.actions.has(action) and is_instance_valid(app.actions[action]) and not app.actions[action].disabled, "all14 realvalid productiontemplate actions " + action + str(dimensions))
 		app.close_modal();await settle()
 		for entry in entries:
 			app.show_test_decks();await settle()
@@ -201,7 +201,9 @@ func run() -> void:
 		root.get_node("GameAudio").request_quit(1);return
 	var mechanical_data_before := FileAccess.get_sha256("res://data/alpha/cards.json")
 	full_games(data.decks)
-	await shell_checks(data.decks)
+	var active_templates: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/production/test_decks.json"))
+	check(active_templates.decks.size()==14,"actualproductiontemplates cover14strategies")
+	await shell_checks(active_templates.decks)
 	check(games.size() == 20, "twenty full deterministic games")
 	check(FileAccess.get_sha256("res://data/alpha/cards.json") == mechanical_data_before, "production cards and starters unchanged")
 	DirAccess.make_dir_recursive_absolute("res://work/master550")
@@ -209,5 +211,5 @@ func run() -> void:
 	check(file != null, "write reproducible test deck artifact")
 	if file != null:
 		file.store_string(JSON.stringify({"godot_version":Engine.get_version_info().string, "source_sha256":FileAccess.get_sha256(SOURCE), "assertions":assertions, "failures":failures, "games":games}, "\t", true));file.close()
-	print("MASTER550 TEST DECKS: %d assertions, %d failures; %d complete games; 10 strategies, 2 first positions, 4 actual shell sizes" % [assertions, failures, games.size()])
+	print("MASTER550 TEST DECKS: %d assertions, %d failures; %d complete games; 10archivedstrategies/20games,2firstpositions,14productiontemplateactions/4actualshellsizes" % [assertions, failures, games.size()])
 	root.get_node("GameAudio").request_quit(0 if failures == 0 else 1)

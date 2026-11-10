@@ -100,7 +100,7 @@ func drag_checks() -> void:
 		from=await drag_press(index);await drag_move(from+Vector2(0,-45));await drag_release(from+Vector2(0,-45),false,true)
 		check(Session.digest(app.session.model.snapshot())==before and app.session.commands.size()==count,"canceled touch cannot play a card")
 		var card=app.session.card(app.session.model.state.hero.hand[index]);var lane=app.session.model.legal_targets("hero",index)[0]
-		var side="enemy" if card.effect in ["bolt","stasis","delay","redirect","displace"] else "hero"
+		var side=app.card_target_side(card)
 		from=await drag_press(index,kind=="event");await drag_move(from+Vector2(0,-45),kind=="event")
 		check(bool(app.hand_drag.get("active",false)),"valid drop has an active owned gesture: "+kind)
 		var target=app.actions.relic_slot if kind=="relic" else app.board_views[side+str(lane)]
@@ -209,6 +209,7 @@ func run() -> void:
 	await drag_checks()
 	await safe_area_checks()
 	root.size=Vector2i(390,844);app.open_cards(true);await settle()
+	app.filter_text=Catalog.new().all_cards()[0].name;app.render();await settle()
 	await tap(app.actions["card_"+Catalog.new().all_cards()[0].id])
 	var face=full_face_in(app.modal)
 	check(face!=null and is_equal_approx(face.size.x/face.size.y,63.0/88.0),"portrait inspector uses the canonical full-card aspect")

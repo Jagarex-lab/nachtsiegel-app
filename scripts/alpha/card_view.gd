@@ -2,6 +2,7 @@ extends Button
 const T=preload("res://scripts/ui_tokens.gd")
 const S=preload("res://scripts/alpha/style.gd")
 const ATLAS=preload("res://assets/art/atlas.png")
+const ART=preload("res://scripts/production/art_resolver.gd")
 var card: Dictionary={}
 var unit: Dictionary={}
 var selected := false
@@ -11,6 +12,7 @@ var color=Color("79ddd4")
 var lane := -1
 var origin := false
 var combat_ready := false
+var attack_penalty := 0
 var convergence := false
 var broken_convergence := false
 var library := false
@@ -22,6 +24,16 @@ func _ready() -> void:
 func _ink(value: String, at: Vector2, fs: int, tint: Color, width: float) -> void:
 	draw_string(S.font,at,value,HORIZONTAL_ALIGNMENT_LEFT,width,fs,tint)
 func illustration(aperture: Rect2, tint: Color=Color.WHITE) -> void:
+	var resolved=ART.resolve(card)
+	if resolved.texture!=null:
+		var texture: Texture2D=resolved.texture
+		var original=Vector2(texture.get_size());var aperture_ratio=aperture.size.x/aperture.size.y
+		var crop=Rect2(Vector2.ZERO,original)
+		if original.x/original.y>aperture_ratio:
+			crop.size.x=original.y*aperture_ratio;crop.position.x=(original.x-crop.size.x)*.5
+		else:
+			crop.size.y=original.x/aperture_ratio;crop.position.y=(original.y-crop.size.y)*.38
+		draw_texture_rect_region(texture,aperture,crop,tint);return
 	var cell=ATLAS.get_size()/3.0;var index=absi(str(card.id).hash())%7
 	var source=Rect2(Vector2(index%3,floori(float(index)/3))*cell,cell)
 	var aspect=aperture.size.x/aperture.size.y
@@ -42,24 +54,34 @@ func _draw() -> void:
 		draw_style_box(T.panel(edge,Color(.025,.04,.065,.88)),rect)
 		draw_line(Vector2(8,4),Vector2(size.x-10,4),Color(edge,.7),1,true)
 		if not unit.is_empty() and size.y<72:
-			# Browser-height view: full-width stats and a separate name area.
-			# Two-line names must never intersect the values below them.
-			illustration(Rect2(size.x-40,5,35,maxf(18,size.y-25)))
-			title_paragraph(size.x-54,11).draw(get_canvas_item(),Vector2(8,4),T.TEXT)
-			draw_rect(Rect2(5,size.y-19,size.x-10,15),T.SURFACE)
-			var marks=("✓" if combat_ready else "Z" if int(unit.get("stun",0))>0 else "…")+(" U" if origin else "")+(" K" if convergence else " K×" if broken_convergence else "")
-			if int(unit.get("ward",0))>0:marks+=" S%d" % int(unit.ward)
-			_ink("%s %d ANG %d LP %s" % [owner_label,unit.atk,unit.hp,marks],Vector2(7,size.y-7),11,T.TEXT,size.x-14)
+			# The narrow battlefield has a name/stat area and a separate status
+			# column. Shield and readiness can never disappear behind a long name.
+			var status_width=37.0;var name_width=size.x-status_width-14
+			illustration(Rect2(size.x-status_width-2,5,status_width-3,maxf(18,size.y-10)),Color(.5,.55,.65))
+			title_paragraph(name_width,11,maxf(14,size.y-23)).draw(get_canvas_item(),Vector2(8,4),T.TEXT)
+			draw_rect(Rect2(5,size.y-19,size.x-status_width-8,15),T.SURFACE)
+			_ink("%d ANG %d LP" % [current_attack(),unit.hp],Vector2(7,size.y-7),11,T.TEXT,name_width)
+			var marks=board_status()
+			draw_rect(Rect2(size.x-status_width-3,5,status_width,size.y-10),Color(.015,.025,.04,.92))
+			var ready_caption=marks.ready_short+(" U" if origin else "")+(" K" if convergence else " ×" if broken_convergence else "")
+			_ink(ready_caption,Vector2(size.x-status_width,15),8 if ready_caption.length()>5 else 10,T.SUCCESS if combat_ready else T.WARNING,status_width-3)
+			var shield_caption="S%d B%d" % [marks.shield,marks.block]
+			var shield_font=10
+			while shield_font>8 and S.font.get_string_size(shield_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,shield_font).x>status_width-3:shield_font-=1
+			_ink(shield_caption,Vector2(size.x-status_width,28),shield_font,T.ENERGY,status_width-3)
+			if size.y>=48:_ink(marks.extra_short,Vector2(size.x-status_width,size.y-8),10,T.GOLD,status_width-3)
 		elif not unit.is_empty():
-			# Board units are portraits + a readable nameplate, not compressed full cards.
+			# Portrait, complete compact nameplate and permanent combat values.
 			var art_width=minf(66,size.x*.35)
 			illustration(Rect2(5,5,art_width,size.y-10))
 			var x=art_width+10;var width=size.x-x-7
-			title_paragraph(width).draw(get_canvas_item(),Vector2(x,4),T.TEXT)
-			_ink("%d ANG  %d LP" % [unit.atk,unit.hp],Vector2(x,size.y-23),12,T.TEXT,width)
-			var marks=owner_label+" "+("✓" if combat_ready else "Z" if int(unit.get("stun",0))>0 else "…")+(" U" if origin else "")+(" K" if convergence else " K×" if broken_convergence else "")
-			if int(unit.get("ward",0))>0:marks+=" S%d" % int(unit.ward)
-			_ink(marks,Vector2(x,size.y-7),10,T.GOLD,width)
+			title_paragraph(width,12,maxf(20,size.y-47)).draw(get_canvas_item(),Vector2(x,4),T.TEXT)
+			_ink("%d ANG  %d LP" % [current_attack(),unit.hp],Vector2(x,size.y-24),12,T.TEXT,width)
+			var marks=board_status()
+			_ink("S%d B%d · %s" % [marks.shield,marks.block,marks.ready_short],Vector2(x,size.y-8),10,T.ENERGY,width)
+			if not marks.extra_short.is_empty():
+				draw_rect(Rect2(6,size.y-21,art_width-2,15),Color(.015,.025,.04,.94))
+				_ink(marks.extra_short,Vector2(8,size.y-9),10,T.GOLD,art_width-6)
 		else:
 			illustration(Rect2(5,5,size.x-10,size.y-10),Color(.8,.85,.9))
 			draw_rect(Rect2(5,5,size.x-10,32),Color(.025,.04,.065,.94))
@@ -90,12 +112,27 @@ func stat_layout(available_width: float) -> Dictionary:
 		font_size=candidate;width=S.font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,candidate).x
 		if width<=maxf(0,available_width):break
 	return {"text":caption,"font_size":font_size,"ink_width":width,"available_width":maxf(0,available_width),"fits":width<=maxf(0,available_width)}
-func title_paragraph(width: float, maximum_size: int=12) -> TextParagraph:
+func current_attack() -> int:
+	return maxi(0,int(unit.get("atk",card.get("atk",0)))-attack_penalty)
+func board_status() -> Dictionary:
+	# Production creatures may own temporary block as well as persistent shield.
+	# Archived units default to zero block; no rules are changed by this view.
+	var stun=int(unit.get("stun",0))
+	var ready="✓" if combat_ready else "Z%d" % stun if stun>0 else "NEU" if bool(unit.get("summoned",false)) else "—"
+	var extra: Array=[]
+	if origin:extra.append("U")
+	if convergence:extra.append("K")
+	elif broken_convergence:extra.append("K×")
+	var attack_delta=current_attack()-int(card.get("atk",0))
+	if attack_delta!=0:extra.append(("+" if attack_delta>0 else "")+str(attack_delta))
+	if int(unit.get("extra_attacks",0))>0:extra.append("×"+str(1+int(unit.extra_attacks)))
+	return {"shield":maxi(0,int(unit.get("ward",0))),"block":maxi(0,int(unit.get("block",0))),"stun":stun,"ready":combat_ready,"ready_short":ready,"extra_short":" ".join(extra)}
+func title_paragraph(width: float, maximum_size: int=12, available_height: float=-1) -> TextParagraph:
 	var paragraph: TextParagraph
-	for fs in [12,11,10]:
+	for fs in [12,11,10,9,8]:
 		if fs>maximum_size:continue
 		paragraph=TextParagraph.new();paragraph.width=maxf(24,width)
 		paragraph.break_flags=TextServer.BREAK_MANDATORY|TextServer.BREAK_WORD_BOUND|TextServer.BREAK_ADAPTIVE
 		paragraph.add_string(str(card.get("name",card.get("id",""))),S.font,fs)
-		if paragraph.get_line_count()<=2:break
+		if paragraph.get_line_count()<=2 and (available_height<0 or paragraph.get_size().y<=available_height):break
 	return paragraph

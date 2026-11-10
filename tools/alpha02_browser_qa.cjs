@@ -1,6 +1,6 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict');
-const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Object.fromEntries(cards.map(c=>[c.id,c]));
+const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=Object.fromEntries(cards.map(c=>[c.id,c]));
 (async()=>{
  fs.mkdirSync('work/alpha02',{recursive:true});const records=[];
  for(const name of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
