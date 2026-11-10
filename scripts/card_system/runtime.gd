@@ -4,7 +4,13 @@ extends RefCounted
 signal effect_processed(entry: Dictionary)
 const Registry = preload("res://scripts/card_system/registry.gd")
 var registry = Registry.new()
-var model: RefCounted
+var _strong_model: RefCounted
+var _weak_model: WeakRef
+var model: RefCounted:
+	get: return _weak_model.get_ref() if _weak_model != null else _strong_model
+	set(value):
+		_strong_model = value
+		_weak_model = null
 var log: Array = []
 var last_error := ""
 var _queue: Array = []
@@ -14,8 +20,11 @@ var _chain := 0
 var _seen: Dictionary = {}
 var _species: Dictionary = {}
 
-func _init(battle_model: RefCounted = null) -> void:
-	model = battle_model
+func _init(battle_model: RefCounted = null, weak_model := false) -> void:
+	# Explicit adapters own their model by default, as before. A model-owned
+	# opt-in adapter must use a weak back-reference to avoid a RefCounted cycle.
+	if weak_model and battle_model != null: _weak_model = weakref(battle_model)
+	else: model = battle_model
 
 func capabilities() -> Dictionary:
 	return registry.capabilities()
@@ -85,6 +94,10 @@ func _submit(trigger: String, side: String, abilities: Array, context: Dictionar
 	return _queue_batch(trigger, side, batch, context)
 
 func _queue_batch(trigger: String, side: String, batch: Array, context: Dictionary) -> Dictionary:
+	# Weak ownership prevents a model/adapter cycle; this local reference keeps
+	# a synchronous drain safe if an observer releases its last external owner.
+	var active_model: RefCounted = model
+	if active_model == null: return _rejected("not_battle")
 	var key := side + ":" + trigger + ":" + str(context.event_id)
 	if _seen.has(key): return _rejected("duplicate_event")
 	if _seen.size() >= Registry.MAX_EVENT_HISTORY: return _rejected("event_history_limit")
@@ -99,7 +112,7 @@ func _queue_batch(trigger: String, side: String, batch: Array, context: Dictiona
 	_resolving = true
 	last_error = ""
 	while not _queue.is_empty():
-		if model.state.winner != null:
+		if active_model.state.winner != null:
 			_cancel_remaining("battle_finished")
 			break
 		var item: Dictionary = _queue.pop_front()
@@ -113,13 +126,19 @@ func _queue_batch(trigger: String, side: String, batch: Array, context: Dictiona
 		var failed_native := false
 		for native_key in ["activated", "summon_resolved", "chain_resolved"]:
 			if actual.has(native_key) and not actual[native_key]: failed_native = true
-		if failed_native or not model.state.get("error", "").is_empty():
+		if failed_native or not active_model.state.get("error", "").is_empty():
 			last_error = "native_effect_failed"
 			_record(item, "error", actual)
 			_cancel_remaining(last_error)
 			break
 		_record(item, "applied", actual)
-		model.check_winner()
+		# effect_processed is synchronous. An observer can cause a native failure
+		# after _apply succeeded; do not report the enclosing chain as successful.
+		if not active_model.state.get("error", "").is_empty():
+			last_error = "native_effect_failed"
+			_cancel_remaining(last_error)
+			break
+		active_model.check_winner()
 	_resolving = false
 	return {"ok": last_error.is_empty(), "queued": batch.size(), "processed": _processed, "reason": last_error}
 
