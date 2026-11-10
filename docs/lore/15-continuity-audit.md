@@ -1,14 +1,25 @@
-# Kontinuitäts- und Risikoprüfung
-**Nicht bestanden als endgültiger Kanon, bis folgende Fragen beantwortet sind:**
-1. Wie wurde das erste Korrekturverfahren ohne vorherige Überlagerungen entwickelt?
-2. Warum führte der große Eingriff zu dauerhafter Kopplung, kleine Tests aber nicht?
-3. Was genau messen Stabilisatoren und wie hoch ist ihr Fehlerrisiko?
-4. Warum sind Zeitlinien nicht frei anwählbar?
-5. Wie entstehen weitere Fortsetzungen, ohne unendlich viele Kopien verfügbar zu machen?
-6. Ist das Archiv Ort, Institution oder Medium und wer schützt es?
-7. Was ist Eira ontologisch, und warum bleibt ihr Name bekannt?
-8. Wie unterscheiden sich Geister, Wiedergänger, Paradoxe und Echos?
-9. Wie übersetzen sich Resonanz und Konvergenz in Szenen, ohne Spielregeln zu Naturgesetzen zu erklären?
-10. Welche der vorgeschlagenen Figuren/Orte existieren tatsächlich im Kanon?
+# Kontinuitäts- und Plausibilitätsprüfung — Revision 2
+**Prüfmaßstab:** Ursache → Mechanismus → verfügbares Wissen → Motivation → Konsequenz → Gegenprobe.
 
-**Gegenproben:** kein beliebiges Zurückholen Verstorbener; keine unbegrenzten Doppelgängerarmeen; keine globale Wirklichkeitsumschreibung durch normales Kartenduell; keine Institution mit vollständigem Wissen; jede Rettung braucht Material, Zeit und Entscheidungen. **Status: offene Risiken, keine Behauptung vollständiger Widerspruchsfreiheit.**
+| Behauptung | Gegenprobe | Status |
+|---|---|---|
+| Korrektur erzeugt zweite Fortsetzung | Warum bleibt die erste erhalten? | Modell erklärt das als Nicht-Überschreibbarkeit; **Entwurf** |
+| Überlagerungen entstehen | Warum koppelt der Messverbund dauerhaft? | **OFFEN – kritische Physiklücke** |
+| Hybride Stabilisierung | Warum rettet man nicht alle? | Zugangs-, Zeit-, Material- und Platzgrenzen; konkrete Kapazitätswerte offen |
+| Zwei Versionen leben | Warum keine Armee? | Keine frei anwählbaren Übergänge; praktische Grenzen |
+| Eira wurde gelöscht | Warum existiert ihr Name? | Drei alternative Modelle; **OFFEN – kritischer Plotpunkt** |
+| Archiv bewahrt Zeugnisse | Warum ist es nicht monopolisiert? | Trägerschaft/Zugriff noch **OFFEN** |
+| Rettungslisten sind falsch | Warum fällt es niemandem auf? | Geteilte Hardware und Interessenkonflikte plausibel, konkrete Kontrollen fehlen |
+| Die vier Mächte kooperieren | Warum führen sie keinen totalen Krieg? | Wechselseitige Infrastrukturabhängigkeit, keine moralisch einheitlichen Blöcke |
+| 550 Karten repräsentieren die Welt | Warum so viele Wiederholungen? | **Nicht bestanden**: systematisch erzeugte Rohtexte brauchen Einzelredaktion |
+
+## Pflichtprüfung vor Freigabe
+- Jede wichtige Entscheidung mindestens einmal gegen eine einfachere Alternative testen.
+- Figuren wissen nur, was sie beobachtet oder glaubwürdig erfahren haben.
+- Keine Szene benutzt eine Fähigkeit, die zuvor nicht eingeführt oder begrenzt wurde.
+- Keine verschwundene Person wird ohne eigenständige Erklärung als 'wiederbelebt' bezeichnet.
+- Wirtschaft, Versorgung und Reisemöglichkeiten müssen in mindestens einer Karte/Handlungsszene konkret vorkommen.
+- Alle Karten mit `Legendär` brauchen individuelle Bedeutung, nicht nur Seltenheitslabel.
+- Finale enthüllt keine völlig neue Naturregel.
+
+**Gesamturteil:** Dramaturgische Struktur verbessert, Kernmechanismus und Eira weiterhin ungelöst. **Keine Kanonfreigabe empfohlen.**
