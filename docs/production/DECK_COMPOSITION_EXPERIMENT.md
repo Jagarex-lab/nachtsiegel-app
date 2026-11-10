@@ -64,3 +64,32 @@ Rohberichts und des ausgeführten Experimentskripts bleibt darin erhalten.
 Der vollständige Lauf nach der Übernahme wird separat in `BALANCE_REPORT.md`
 und `simulation-results.json` ausgewiesen. Die240 Kontrollpartien werden
 weder zur ersten noch zur abschließenden848er-Matrix addiert.
+
+## Vollständige Matrix nach der Deckübernahme
+
+Die anschließenden848 tatsächlichen Partien mit18 zusätzlichen
+Wiederholungskontrollen bestanden2688 Prüfungen und10 negative Nachweiswächter,
+ohne Enginefehler, zensierte Fälle oder Änderungen gebundener Quellen.
+Dieser Lauf ist als `POST_DECK_BEFORE_KILL_WATCHER_FIX.json` erhalten;
+sein Rohbericht hat SHA-256
+`49dc29f09f1cfb2c374eec83ffff5d6ca6b1aa3bfd3020f061a21209b8f6de21`.
+Er liegt zeitlich vor der separat nachgewiesenen und anschließend korrigierten
+Reliktbeobachtung generischer Wesen-Tötungen. Er wird deshalb als historischer
+Lauf erhalten und ersetzt nicht die Matrix der korrigierten Engine.
+
+| Referenzdeck | Siege / Teilnahmen | Sieganteil |
+|---|---:|---:|
+| Bewegung |56/112 |50,0% |
+| Wiederkehr |51/112 |45,5% |
+| Relikt |83/112 |74,1% |
+| Resonanz |79/112 |70,5% |
+| Ressourcen-/Kartenfluss |72/112 |64,3% |
+| Unverändertes Zeitdeck |70/112 |62,5% |
+
+Die wirksamen Verbesserungen gleichen das Feld nicht vollständig an: Relikt
+und Resonanz sind nun auffällig erfolgreich, während das unveränderte Blockdeck
+20/112 und Schild35/112 Teilnahmen gewinnt. Der erste Spieler gewinnt528/848
+Partien (62,3%). Die sichtbaren Starterlisten und ihre32 Teilnahmen pro Deck
+bleiben exakt wie im ersten Lauf. Es wurden176 unterschiedliche Karten
+tatsächlich gespielt; weder die Referenzauswahl noch die erfasste längste
+generische Kette von sechs Queueeinträgen ist ein550-Karten-Vollbeweis.
