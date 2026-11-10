@@ -13,5 +13,5 @@ mv "work/alpha/web/$alpha_build_name.html" work/alpha/web/index.html
 python3 - "$alpha_build_commit" <<'PY'
 import json,sys,os
 from pathlib import Path
-Path('work/alpha/web/build-info.json').write_text(json.dumps({'commit':sys.argv[1],'version':'ORAFOLD Alpha 0.1','channel':os.environ.get('GITHUB_REF_NAME','isolated-test'),'rulesets':['legacy-34b3062','orafold-alpha-0.1']},indent=2))
+Path('work/alpha/web/build-info.json').write_text(json.dumps({'commit':sys.argv[1],'version':'ORAFOLD Alpha 0.2','channel':os.environ.get('GITHUB_REF_NAME','isolated-test'),'rulesets':['legacy-34b3062','orafold-alpha-0.1']},indent=2))
 PY

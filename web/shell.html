@@ -134,6 +134,11 @@ function syncGameHeight() {
 syncGameHeight();
 if(window.visualViewport) window.visualViewport.addEventListener('resize',() => {syncGameHeight();window.dispatchEvent(new Event('resize'));});
 window.addEventListener('resize',syncGameHeight);
+window.addEventListener('orientationchange',()=>requestAnimationFrame(syncGameHeight));
+window.addEventListener('pageshow',syncGameHeight);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncGameHeight();});
+// Diagnostic measurements, not an orientation lock or rotated canvas.
+window.orafoldDisplayMetrics=()=>{const c=document.querySelector('canvas'),r=c.getBoundingClientRect();return {cssWidth:r.width,cssHeight:r.height,pixelsWidth:c.width,pixelsHeight:c.height,dpr:window.devicePixelRatio||1,zoom:window.visualViewport?.scale||1,lockAvailable:typeof screen.orientation?.lock==='function'};};
 </script>
 <script src="$GODOT_URL"></script>
 		<script>

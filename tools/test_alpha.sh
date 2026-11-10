@@ -22,3 +22,14 @@ s=Path('work/alpha/alpha_ui.log').read_text();print(s)
 assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',s,re.M)
 assert re.search(r'ALPHA UI: \d+ assertions, 0 failures;',s)
 PY
+
+mkdir -p work/alpha02 docs/alpha02/after
+"${GODOT_BIN:-godot}" --path . --audio-driver Dummy --script tests/alpha02_ui.gd > work/alpha02/native-ui.log 2>&1
+python3 - <<'PYQA'
+import re
+from pathlib import Path
+s=Path('work/alpha02/native-ui.log').read_text();print(s)
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',s,re.M)
+assert re.search(r'ALPHA02 UI: \d+ assertions, 0 failures;',s)
+PYQA
+cp docs/alpha02/after/*.png work/alpha02/

@@ -9,6 +9,10 @@ func check(ok: bool, label: String) -> void:
 func settle() -> void:
 	await process_frame;await process_frame;await process_frame
 func tap(control: Control) -> void:
+	var ancestor=control.get_parent()
+	while ancestor!=null:
+		if ancestor is ScrollContainer:ancestor.ensure_control_visible(control);await settle()
+		ancestor=ancestor.get_parent()
 	var center=control.get_global_rect().get_center()
 	var event=InputEventScreenTouch.new();event.index=0;event.position=center;event.pressed=true;Input.parse_input_event(event);await settle()
 	event=InputEventScreenTouch.new();event.index=0;event.position=center;event.pressed=false;Input.parse_input_event(event);await settle()
@@ -40,13 +44,16 @@ func run() -> void:
 		check(app.actions.start.get_global_rect().size.y>=44,"start touch")
 		await snapshot("lobby-%dx%d" % [dimensions.x,dimensions.y])
 		await tap(app.actions.start)
+		check(app.page=="decks","visible deck selection before battle")
+		for power_id in ["houses","stillwatch","morph","ninth"]:check(app.actions.has("choose_"+power_id) and app.actions.has("preview_"+power_id),"all four actual starter sources")
+		await tap(app.actions.deck_play)
 		check(app.page=="battle" and app.session.model.state.stage=="mulligan","actual touch starts Alpha")
 		await tap(app.actions.mulligan_done);check(app.session.model.state.stage=="origins","actual mulligan confirm")
 		await tap(app.actions.origin_2)
 		if app.session.model.state.stage=="second":await tap(app.actions.opening_done)
 		check(app.session.model.state.stage=="battle","opening completes")
 		if app.session.model.state.hero.phase=="draw":await tap(app.actions.end)
-		for key in ["end","actions","inspect","convergence","menu","log"]:
+		for key in ["end","actions","inspect","menu","log"]:
 			var b=app.actions[key];var r=b.get_global_rect()
 			check(r.size.y>=44 and r.size.x>=44,"touch target "+key+str(dimensions))
 			check(Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(r),"action in viewport "+key+str(dimensions))
@@ -71,8 +78,10 @@ func run() -> void:
 		app.close_modal();app.page="lobby";app.render();await settle()
 		await tap(app.actions.builder);check(app.page=="builder","deckbuilder actual touch")
 		if dimensions==Vector2i(844,390):
+			await tap(app.actions.deck_tab)
 			await tap(app.actions["remove_oa-neutral-c01"]);check(app.deck.size()==29,"actual builder removal")
-			await tap(app.actions.save_deck);check(not app.message.contains("gespeichert"),"UI rejects 29-card save")
+			check(app.actions.save_deck.disabled,"UI prevents invalid 29-card save")
+			await tap(app.actions.library_tab)
 			await tap(app.actions["add_oa-neutral-c02"]);check(app.deck.size()==30 and app.deck.has("oa-neutral-c02"),"actual builder adds replacement")
 		await tap(app.actions.save_deck);check(app.message.contains("gespeichert"),"valid deck saved UI")
 		if dimensions==Vector2i(844,390):

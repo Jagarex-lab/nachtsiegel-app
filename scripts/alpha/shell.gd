@@ -1,4 +1,5 @@
 extends Control
+const S=preload("res://scripts/alpha/style.gd")
 const T=preload("res://scripts/ui_tokens.gd")
 const Session=preload("res://scripts/alpha/session.gd")
 const AlphaCatalog=preload("res://scripts/alpha/catalog.gd")
@@ -26,6 +27,11 @@ var message := "Lokale Testversion · keine Echtgeldfunktionen"
 var layout: Control
 var density := 1.0
 var compact := false
+var portrait := false
+var deck_tab := "library"
+var match_use_starter := false
+var deck_filter_box: Control
+var menu_return := "lobby"
 var outer_margin: MarginContainer
 var qa_enabled := false
 var feedback
@@ -39,14 +45,18 @@ var pulse := 0.0
 var qa_elapsed := 0.0
 var first_frame := true
 var render_pending := false
+var last_primary_ms := -1000
+var rotation_block_until := 0
 var render_version := 0
 var modal_version := 0
 var save_key := "houses"
-const COLORS={"houses":Color("c4aae9"),"stillwatch":Color("8cd5e8"),"morph":Color("add895"),"ninth":Color("eac17b"),"neutral":Color("b9c4d5"),"ash":Color("eac17b"),"tide":Color("8cd5e8"),"thorn":Color("add895"),"veil":Color("c4aae9")}
+var restore_search_focus := false
+var search_caret := 0
+const LEGACY_COLORS={"houses":Color("c4aae9"),"stillwatch":Color("8cd5e8"),"morph":Color("add895"),"ninth":Color("eac17b"),"neutral":Color("b9c4d5"),"ash":Color("eac17b"),"tide":Color("8cd5e8"),"thorn":Color("add895"),"veil":Color("c4aae9")}
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	var theme=Theme.new();theme.default_font=T.FONT;theme.default_font_size=14
-	theme.set_color("font_color","Label",T.TEXT);theme.set_color("font_color","Button",T.TEXT)
+	var theme=Theme.new();theme.default_font=S.font;theme.default_font_size=14
+	theme.set_color("font_color","Label",T.TEXT);theme.set_color("font_color","Button",T.TEXT);theme.set_color("font_disabled_color","Button",T.MUTED)
 	for state in ["normal","hover","pressed","focus","disabled"]:theme.set_stylebox(state,"Button",T.panel(T.GOLD if state in ["hover","focus"] else T.METAL,T.SURFACE_RAISED))
 	theme.set_stylebox("panel","PopupMenu",T.panel());theme.set_constant("v_separation","PopupMenu",30);self.theme=theme
 	var bg=TextureRect.new();bg.texture=preload("res://assets/art/arena_painted.png");bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);bg.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;bg.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;bg.modulate=Color(.24,.30,.40,1);add_child(bg)
@@ -54,10 +64,10 @@ func _ready() -> void:
 	for side in ["left","right","top","bottom"]:margin.add_theme_constant_override("margin_"+side,8)
 	layout=Control.new();add_child(layout);layout.add_child(margin);outer_margin=margin;body=VBoxContainer.new();body.add_theme_constant_override("separation",4);margin.add_child(body)
 	resized.connect(func():if is_node_ready():call_deferred("render"))
-	DisplayServer.window_set_title("ORAFOLD · Alpha 0.1 · Testbuild")
+	DisplayServer.window_set_title("ORAFOLD · Alpha 0.2 · Testbuild")
 	if OS.has_feature("web"):
 		density=maxf(1,float(JavaScriptBridge.eval("window.devicePixelRatio||1")));qa_enabled=bool(JavaScriptBridge.eval("new URLSearchParams(location.search).get('qa')==='1'"))
-		JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.1';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.1')")
+		JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.2';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.2')")
 	faction=session.profile.faction;difficulty=int(session.profile.difficulty)
 	if OS.has_feature("legacy_ui_qa"):mode="legacy";faction="start"
 	feedback=preload("res://scripts/alpha/feedback.gd").new();feedback.z_index=100;add_child(feedback)
@@ -66,8 +76,8 @@ func _process(delta: float) -> void:
 	if first_frame:
 		first_frame=false
 		# Godot applies the project window title after the initial main scene's ready.
-		DisplayServer.window_set_title("ORAFOLD · Alpha 0.1")
-		if OS.has_feature("web"):JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.1';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.1')")
+		DisplayServer.window_set_title("ORAFOLD · Alpha 0.2")
+		if OS.has_feature("web"):JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.2';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.2')")
 	pulse=maxf(0,pulse-delta)
 	# Keep a canvas frame available to browser compositors and capture tools.
 	queue_redraw()
@@ -100,12 +110,13 @@ func button(id: String, caption: String, callback: Callable, parent: Node=null, 
 	if parent==null:parent=body
 	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;b.pressed.connect(callback);parent.add_child(b);actions[id]=b;return b
 func dropdown(id: String, items: Array, current: String, callback: Callable, parent: Node) -> Button:
-	var index=maxi(0,items.find(current))
-	var labels={"all":"Alle","creature":"Kreatur","event":"Ereignis","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"9. Stunde","neutral":"Neutral"}
-	var role={"difficulty":"KI","filter_type":"Typ","filter_cost":"Kosten","filter_rarity":"Seltenheit","filter_power":"Macht"}.get(id,"")
-	var b=button(id,role+": "+str(labels.get(current,current))+" ↻",func():callback.call(str(items[(index+1)%items.size()])),parent)
-	b.tooltip_text="Antippen: nächste Auswahl"
-	return b
+	var labels={"all":"Alle","creature":"Kreatur","event":"Ereignis","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral"}
+	var role={"difficulty":"KI","filter_type":"Typ","filter_cost":"Kosten","filter_rarity":"Seltenheit","filter_power":"Macht"}.get(id,"Auswahl")
+	return button(id,role+": "+str(labels.get(current,current))+" ▾",func():
+		show_modal(role+" auswählen",func(box):
+			for value in items:
+				button("option_"+id+"_"+str(value),("✓ " if current==value else "")+str(labels.get(value,value)),func():callback.call(str(value));close_modal();render(),box)
+		),parent)
 func scroll(parent: Node=null) -> VBoxContainer:
 	if parent==null:parent=body
 	var sc=ScrollContainer.new();sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.size_flags_horizontal=Control.SIZE_EXPAND_FILL;sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;sc.scroll_deadzone=8;parent.add_child(sc)
@@ -118,28 +129,32 @@ func _render_now() -> void:
 	render_pending=false;render_version+=1
 	if not is_instance_valid(body):return
 	_layout()
+	restore_search_focus=actions.has("search") and is_instance_valid(actions.search) and actions.search.has_focus()
+	if restore_search_focus:search_caret=actions.search.caret_column
 	_clear()
+	if is_instance_valid(modal):modal.visible=not (page=="battle" and portrait)
 	if page=="lobby":lobby()
+	elif page=="decks":deck_selection()
 	elif page in ["builder","collection"]:builder()
 	elif page=="settings":settings_page()
 	elif page=="battle":
-		if layout.size.y<296:
-			text("Mehr Platz für das Spielfeld benötigt",body,20)
-			text("Bitte Tastatur schließen, Browserleisten einklappen oder ins Querformat drehen. Die Partie bleibt erhalten.")
-			button("small_menu","Zum Menü",confirm_menu)
+		if portrait or layout.size.y<296:rotation_page()
 		else:battle()
 	queue_redraw()
 func lobby() -> void:
-	text("ORAFOLD  /  ALPHA 0.1",body,26)
-	text("30 Leben · 30 Karten · fünf Pfade · Partie gegen KI")
-	var box=scroll()
-	text("Dein Deck: "+(AlphaCatalog.new().source.powers[faction] if mode=="alpha" else "Legacy-Testprofil"),box,18)
-	var primary=row(box);var secondary=row(box)
-	button("start","SPIELEN",start_battle,primary)
-	button("builder","DECKBUILDER",func():open_cards(false),primary)
-	button("collection","SAMMLUNG",func():open_cards(true),secondary)
-	button("settings","EINSTELLUNGEN",func():page="settings";render(),secondary)
-	text("Alpha-Testversion · Illustrationen: Platzhalter · lokaler Fortschritt",body,12)
+	var center=CenterContainer.new();center.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(center)
+	var panel=VBoxContainer.new();panel.custom_minimum_size.x=minf(layout.size.x-24,440);panel.add_theme_constant_override("separation",10 if portrait else 4);center.add_child(panel)
+	text("O R A F O L D",panel,32 if portrait else 26).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	text("ALPHA 0.2  ·  FÜNF PFADE",panel,13).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	text("Dein Deck · "+AlphaCatalog.new().source.powers.get(faction,"Testprofil"),panel,16).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	var play=button("start","SPIELEN  →",choose_match,panel)
+	play.custom_minimum_size.y=58 if portrait else 48
+	play.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
+	button("builder","DECKBUILDER",func():open_cards(false),panel)
+	button("collection","SAMMLUNG",func():open_cards(true),panel)
+	button("settings","EINSTELLUNGEN",func():page="settings";render(),panel)
+	text("30 Karten · 30 Leben · gegen KI",panel,13).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	text("Illustrationen: Platzhalter · Fortschritt auf diesem Gerät",body,12)
 func open_cards(read_only: bool) -> void:
 	collection_mode=mode;collection_only=read_only;save_key=faction;deck=current_deck()
 	filter_power="all";filter_type="all";filter_cost="all";filter_rarity="all";filter_text=""
@@ -158,7 +173,7 @@ func settings_page() -> void:
 			if power_index%2==0:power_row=row(box)
 			power_index+=1
 			var b=button("faction_"+power,("● " if faction==power else "○ ")+AlphaCatalog.new().source.powers[power],func():faction=power;save_preferences();render(),power_row)
-			b.modulate=COLORS[power]
+			b.modulate=S.POWER_COLORS[power]
 	var options=row(box)
 	dropdown("difficulty",["Normal","Einfach","Taktisch"],"Einfach" if difficulty==1 else "Taktisch" if difficulty==5 else "Normal",func(v):difficulty={"Normal":2,"Einfach":1,"Taktisch":5}[v];save_preferences();render(),options)
 	button("motion","Bewegung: "+("reduziert" if session.profile.reduced_motion else "normal"),func():session.profile.reduced_motion=not session.profile.reduced_motion;save_preferences();render(),options)
@@ -175,12 +190,15 @@ func current_deck() -> Array:
 func start_battle() -> void:
 	var seed_value=int(session.profile.last_seed)+1
 	var enemy=AlphaCatalog.new().deck(["houses","stillwatch","morph","ninth"][(seed_value%4)]) if mode=="alpha" else []
-	if not session.start_match(mode,current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
-	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];message="Seed %d · %s" % [seed_value,mode];render()
+	if not session.start_match(mode,AlphaCatalog.new().deck(faction) if mode=="alpha" and match_use_starter else current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
+	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];message="Wähle deine Starthand. Danach legst du den Ursprung fest.";render()
 func act(command: String, args: Array) -> void:
+	var primary_command=command in ["endTurn","finishDraw","burn","converge"]
+	if primary_command and Time.get_ticks_msec()-last_primary_ms<180:return
 	var event_offset: int=session.model.events.size()
 	var before=session.model.snapshot()
 	var reply=session.command(command,args)
+	if primary_command:last_primary_ms=Time.get_ticks_msec()
 	var names={"play":"Karte ausgespielt.","endTurn":"Angriffe und KI-Zug abgeschlossen.","finishDraw":"Nachziehphase abgeschlossen.","burn":"Karte abgelegt. Bestätige anschließend das Nachziehen.","mulligan":"Austausch abgeschlossen.","origin":"Ursprünge aufgedeckt.","openingDone":"Der Kampf beginnt.","secondOrigin":"Zweiter Ursprung gewählt.","secondCard":"Handkarte ausgetauscht.","converge":"Konvergenz am Zugende geprüft.","activateRelic":"Relikt aktiviert.","burst":"Entfesselung ausgeführt.","recover":"Karte zurückgeholt.","tacticalMove":"Kreatur verschoben.","fortify":"Pfadwacht ausgeführt.","moveCreature":"Positionswechsel abgeschlossen.","skipShift":"Positionswechsel übersprungen.","chooseStrikeTarget":"Ankunftsschlag ausgeführt."}
 	message=names.get(command,"Aktion ausgeführt.") if reply.ok else "Bedingungen fehlen: Energie, Resonanz, gültiges Ziel oder eine noch offene Auswahl prüfen."
 	if reply.ok:
@@ -190,51 +208,74 @@ func act(command: String, args: Array) -> void:
 	if session.model.state.winner!=null:result_dialog()
 func battle() -> void:
 	var m=session.model;var s: Dictionary=m.state
-	var top=row();button("menu","Menü",confirm_menu,top);text("ORAFOLD  /  "+("Runde %d" % (floori(float(s.round-1)/2)+1) if mode=="alpha" else "Legacy · Zug%d" % int(s.round)),top,16);button("log","Protokoll",show_log,top);button("restart","Neu",func():show_modal("Neue Partie?",func(box):button("confirm_restart","Neu starten",func():close_modal();start_battle(),box)),top)
-	if mode=="alpha" and s.stage!="battle":opening();return
-	var stats=row()
-	_portrait(stats,7,24 if compact else 32)
-	text("DU  ♥%d  ◇%d  Block%d   ⚡%d  Resonanz%d" % [s.hero.hp,s.hero.ward,s.hero.block,s.hero.energy,s.hero.resonance],stats,13)
-	_portrait(stats,8,24 if compact else 32)
-	text("KI  ♥%d  ◇%d  Block%d   ⚡%d  Resonanz%d" % [s.enemy.hp,s.enemy.ward,s.enemy.block,s.enemy.energy,s.enemy.resonance],stats,13)
-	var board=VBoxContainer.new();board.size_flags_vertical=Control.SIZE_EXPAND_FILL;board.add_theme_constant_override("separation",4);body.add_child(board)
+	var top=row()
+	button("menu","Menü",confirm_menu,top).size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
+	var center=VBoxContainer.new();center.size_flags_horizontal=Control.SIZE_EXPAND_FILL;center.add_theme_constant_override("separation",1);top.add_child(center)
+	text(battle_heading(s),center,14)
+	if mode=="alpha" and s.stage!="battle":
+		button("log","Protokoll",show_log,top).size_flags_horizontal=Control.SIZE_SHRINK_END
+		opening();return
+	var stats=row(center)
+	text("DU %d LP · Schild %d · Block %d" % [s.hero.hp,s.hero.ward,s.hero.block],stats,13)
+	var res=text("Energie %d / Resonanz %d" % [s.hero.energy,s.hero.resonance],stats,13);res.add_theme_color_override("font_color",T.ENERGY)
+	text("KI %d LP · Schild %d · Block %d" % [s.enemy.hp,s.enemy.ward,s.enemy.block],stats,13)
+	button("log","Protokoll",show_log,top).size_flags_horizontal=Control.SIZE_SHRINK_END
+	button("restart","Neu",func():show_modal("Neue Partie?",func(box):button("confirm_restart","Neu starten",func():close_modal();start_battle(),box)),top).size_flags_horizontal=Control.SIZE_SHRINK_END
+	var board=VBoxContainer.new();board.size_flags_vertical=Control.SIZE_EXPAND_FILL;board.add_theme_constant_override("separation",3);body.add_child(board)
 	for side in ["enemy","hero"]:
 		var line=row(board);line.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		for lane in 5:
-			var u: Variant=s[side].lanes[lane];var view=CardView.new();view.lane=lane;view.color=T.FOE if side=="enemy" else T.PLAYER
-			if u!=null:view.card=session.card(u.id);view.unit=u
-			if mode=="alpha" and s.origins[side]==lane:view.color=T.GOLD
-			view.custom_minimum_size=Vector2(44,44 if compact else 50);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
+			var u: Variant=s[side].lanes[lane];var view=CardView.new();view.lane=lane;view.owner_label="KI" if side=="enemy" else "DU";view.color=T.FOE if side=="enemy" else T.PLAYER
+			if u!=null:view.card=session.card(u.id);view.unit=u;view.combat_ready=m.can_fight(side,lane) if mode=="alpha" else int(u.stun)==0 and (not u.summoned or view.card.effect=="haste")
+			view.origin=mode=="alpha" and s.origins[side]==lane
+			view.custom_minimum_size=Vector2(44,44);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
 			view.selected=convergence_lanes.has(lane) and side=="hero" or source_lane==lane and side=="hero"
-			view.target=target_allowed(side,lane);view.tooltip_text=("Ursprung · " if mode=="alpha" and s.origins[side]==lane else "")+(str(view.card.get("description","Freier Pfad")))
-			if mode=="alpha" and s[side].convergence!=null and s[side].convergence.lanes.has(lane):view.selected=true;view.color=T.WARNING
+			view.target=target_allowed(side,lane);view.invalid_target=selected>=0 and not view.target and s.hero.phase=="main"
+			if mode=="alpha" and s[side].convergence!=null and s[side].convergence.lanes.has(lane):view.convergence=not s[side].convergence.broken;view.broken_convergence=bool(s[side].convergence.broken)
 			view.pressed.connect(func():field_click(side,lane));line.add_child(view);board_views[side+str(lane)]=view
-	var hand=row();hand.custom_minimum_size.y=56 if compact else 90
+	var hand=row();hand.custom_minimum_size.y=66 if compact else 80
 	for index in s.hero.hand.size():
-		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=COLORS.get(view.card.get("faction",view.card.order),T.PLAYER);view.selected=selected==index
-		view.custom_minimum_size=Vector2(44,56 if compact else 90);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
-		view.pressed.connect(func():_hand_click(index))
-		view.tooltip_text=view.card.description;hand.add_child(view);hand_views.append(view)
+		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card);view.selected=selected==index
+		view.custom_minimum_size=Vector2(44,66 if compact else 80);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		view.size_flags_stretch_ratio=1.4 if selected==index else 1.0
+		view.pressed.connect(func():_hand_click(index));hand.add_child(view);hand_views.append(view)
 	var bar=row()
 	var overflow: bool=s.hero.phase=="draw" and s.hero.hand.size()+mini(int(s.hero.pendingDraw),s.hero.deck.size())>6
-	button("end","Verbrennen" if overflow else "Nachziehen" if s.hero.phase=="draw" else "Zug beenden",func():act("burn",["hero",selected]) if overflow else act("finishDraw",["hero"]) if s.hero.phase=="draw" else act("endTurn",["hero"]),bar,s.winner!=null or s.active!="hero" or overflow and selected<0)
-	button("actions","Aktionen",show_actions,bar,s.winner!=null)
-	button("inspect","Karte",func():if selected>=0:inspect(session.card(s.hero.hand[selected])),bar,selected<0)
-	if mode=="alpha":button("convergence","Konvergenz" if action_mode!="converge" else "Erklären (%d/3)" % convergence_lanes.size(),convergence_action,bar,s.winner!=null or s.active!="hero" or int(s.round)<11)
-	if s.hero.pendingShift!=null:button("skip","Überspringen",func():act("skipShift",["hero"]),bar)
-	status=text(("FEHLER: "+s.error) if mode=="alpha" and not s.error.is_empty() else "SIEG / NIEDERLAGE – neue Partie im Menü" if s.winner!=null else phase_message(),body,12)
-	status.max_lines_visible=1 if compact else 2
+	var picking=selected>=0 and s.hero.phase=="main"
+	var caption="KONVERGENZ ERKLÄREN %d/3" % convergence_lanes.size() if action_mode=="converge" else "ZIEL FÜR ANKUNFT WÄHLEN" if s.hero.pendingTarget!=null else "POSITION WÄHLEN" if s.hero.pendingShift!=null else "GÜLTIGES ZIEL ANTIPPEN" if picking else "KARTE VERBRENNEN" if overflow else "KARTEN NACHZIEHEN" if s.hero.phase=="draw" else "ZUG BEENDEN  →"
+	var blocked=s.winner!=null or s.active!="hero" or overflow and selected<0 or s.hero.pendingTarget!=null or s.hero.pendingShift!=null or picking or action_mode=="converge" and convergence_lanes.size()!=3
+	var primary=button("end",caption,func():convergence_action() if action_mode=="converge" else act("burn",["hero",selected]) if overflow else act("finishDraw",["hero"]) if s.hero.phase=="draw" else act("endTurn",["hero"]),bar,blocked)
+	primary.size_flags_stretch_ratio=3;primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
+	button("actions","Mehr / Ressourcen",show_actions,bar,s.winner!=null).size_flags_horizontal=Control.SIZE_SHRINK_END
+	button("inspect","Details",func():if selected>=0:inspect(session.card(s.hero.hand[selected])),bar,selected<0).size_flags_horizontal=Control.SIZE_SHRINK_END
+	if selected>=0 or not action_mode.is_empty():button("cancel_selection","Abbrechen",cancel_selection,bar).size_flags_horizontal=Control.SIZE_SHRINK_END
+	if action_mode=="converge":actions.convergence=primary
+	if s.hero.pendingShift!=null:button("skip","Überspringen",func():act("skipShift",["hero"]),bar).size_flags_horizontal=Control.SIZE_SHRINK_END
+	status=text(phase_message(),body,12);status.max_lines_visible=1
 func phase_message() -> String:
 	var p: Dictionary=session.model.state.hero
 	if p.pendingTarget!=null:return "Ankunftsschlag: tippe eine gegnerische Kreatur an."
 	if p.phase=="draw":return "Nachziehen: bei Handüberlauf zuerst eine Karte auswählen und verbrennen. Sonst Nachziehen bestätigen."
 	if p.pendingShift!=null:return "Positionswechsel: tippe einen Nachbarn der Quelle, dann ein freies eigenes Feld an."
 	if action_mode=="converge":return "Wähle drei kampffähige unbestrittene Pfade, dann Erklären."
+	if mode=="alpha" and session.model.state.enemy.convergence!=null and selected<0:return "KI-Konvergenz unterbrochen." if session.model.state.enemy.convergence.broken else "KI-Konvergenz: einen markierten Pfad bestreiten oder eine gebundene Kreatur ausschalten."
 	return message
 func target_allowed(side: String, lane: int) -> bool:
 	var m=session.model;var p: Dictionary=m.state.hero
+	if m.state.winner!=null or m.state.active!="hero":return false
 	if p.pendingTarget!=null:return side=="enemy" and m.state.enemy.lanes[lane]!=null
-	if p.pendingShift!=null:return side=="hero" and (p.lanes[lane]!=null if source_lane<0 else p.lanes[lane]==null)
+	if p.pendingShift!=null:
+		if side!="hero":return false
+		for choice in m.shift_choices("hero",int(p.pendingShift.origin)):
+			if source_lane<0 and choice.from==lane or source_lane==choice.from and choice.to==lane:return true
+		return false
+	if action_mode=="move":
+		if side!="hero":return false
+		if source_lane>=0:return p.lanes[lane]==null and abs(source_lane-lane)==1
+		for neighbor in [lane-1,lane+1]:
+			if p.lanes[lane]!=null and neighbor>=0 and neighbor<5 and p.lanes[neighbor]==null:return true
+		return false
+	if action_mode=="fortify":return side=="hero" and p.lanes[lane]!=null
 	if action_mode=="converge":return side=="hero" and m.controlled("hero",lane)
 	if selected<0:return false
 	var c=session.card(p.hand[selected]);var enemy_target: bool=mode=="alpha" and c.effect in ["bolt","stasis","delay","redirect","displace"]
@@ -246,7 +287,7 @@ func field_click(side: String, lane: int) -> void:
 		if side=="enemy":act("chooseStrikeTarget",["hero",lane])
 		return
 	if p.pendingShift!=null:
-		if side!="hero":return
+		if side!="hero" or not target_allowed(side,lane):message="Wähle einen markierten Nachbarn oder ein gültiges freies Feld.";render();return
 		if source_lane<0:source_lane=lane;render()
 		else:act("moveCreature",["hero",source_lane,lane])
 		return
@@ -267,7 +308,7 @@ func field_click(side: String, lane: int) -> void:
 	if selected>=0:
 		if target_allowed(side,lane):act("play",["hero",selected,lane])
 		else:message="Ungültiges Ziel. Karte oder Aktion prüfen.";render()
-	elif m.state[side].lanes[lane]!=null:inspect(session.card(m.state[side].lanes[lane].id))
+	elif m.state[side].lanes[lane]!=null:inspect(session.card(m.state[side].lanes[lane].id),m.state[side].lanes[lane])
 func opening() -> void:
 	var s: Dictionary=session.model.state
 	text("30 Leben · fünf Starthandkarten · Ursprünge werden erst gemeinsam aufgedeckt.",body,14)
@@ -292,17 +333,41 @@ func convergence_action() -> void:
 	elif convergence_lanes.size()==3:act("converge",["hero",convergence_lanes]);convergence_lanes=[]
 	else:message="Es müssen genau drei Pfade sein.";render()
 func show_actions() -> void:
+	var p: Dictionary=session.model.state.hero
+	var usable: bool=session.model.state.active=="hero" and session.model.state.winner==null and p.phase=="main"
+	var pending: bool=p.pendingTarget!=null or p.pendingShift!=null
+	var friends=0
+	var moves=false
+	for lane in 5:
+		if p.lanes[lane]==null:continue
+		friends+=1
+		for to in [lane-1,lane+1]:
+			if to>=0 and to<5 and p.lanes[to]==null:moves=true
 	show_modal("RESSOURCEN / SONDERAKTIONEN",func(box):
-		button("recover","Rückholung · 5 Resonanz",func():close_modal();act("recover",["hero"]),box)
-		button("move","Pfadmanöver · 3 Resonanz",func():close_modal();selected=-1;action_mode="move";source_lane=-1;message="Eigene Kreatur, dann Nachbarpfad wählen.";render(),box)
-		button("fortify","Pfadwacht · 2 Resonanz",func():close_modal();selected=-1;action_mode="fortify";message="Eigene Kreatur wählen.";render(),box)
+		text("Energie %d · Resonanz %d/15" % [p.energy,p.resonance],box,22)
+		button("resource_help","Energie, Resonanz und Schlüsselwörter erklärt",resource_help,box)
+		if mode=="alpha":button("convergence","Konvergenz · drei unbestrittene bereite Pfade",func():close_modal();convergence_action(),box,not usable or pending or int(session.model.state.round)<11)
+		button("recover",res_caption("Rückholung",5),func():close_modal();act("recover",["hero"]),box,not usable or p.cycled or p.resonance<5 or p.hand.size()>=6 or p.discard.is_empty())
+		button("move",res_caption("Pfadmanöver",3),func():close_modal();selected=-1;action_mode="move";source_lane=-1;message="Eigene Kreatur, dann freien Nachbarpfad wählen.";render(),box,not usable or pending or p.tacticUsed or p.resonance<3 or not moves)
+		button("fortify",res_caption("Pfadwacht",2),func():close_modal();selected=-1;action_mode="fortify";message="Markierte eigene Kreatur wählen.";render(),box,not usable or pending or p.fortifyUsed or p.resonance<2 or friends==0)
 		if mode=="alpha":
-			var p: Dictionary=session.model.state.hero
-			button("relic","Relikt aktivieren · 1 Energie",func():close_modal();act("activateRelic",["hero"]),box,p.relic==null or p.relic_used)
+			button("relic","Relikt aktivieren · 1 Energie",func():close_modal();act("activateRelic",["hero"]),box,not usable or pending or p.relic==null or p.relic_used or p.energy<1)
 			text("Aktives Relikt: "+(session.card(p.relic.id).name if p.relic!=null else "keines"),box)
-		for order in (["houses","stillwatch","morph","ninth"] if mode=="alpha" else ["ash","tide","thorn","veil"]):
-			if mode=="alpha":text(AlphaCatalog.new().source.powers[order]+": "+AlphaCatalog.new().source.identities[order].burst+" n = eigene Kreaturen dieser Macht.",box,13)
-			button("burst_"+order,"Entfesseln "+str(AlphaCatalog.new().source.powers.get(order,order.to_upper()))+" · benötigt15, kostet8 Resonanz",func():close_modal();act("burst",["hero",order]),box,int(session.model.state.hero.resonance)<15)
+		for order in ([faction] if mode=="alpha" else ["ash","tide","thorn","veil"]):
+			var matching=0
+			for u in p.lanes:
+				if u!=null and session.card(u.id).order==order:matching+=1
+			if mode=="alpha":text(AlphaCatalog.new().source.identities[order].burst+" n = eigene Kreaturen dieser Macht.",box,14)
+			button("burst_"+order,str(AlphaCatalog.new().source.powers.get(order,order.to_upper()))+" entfesseln\n15 benötigt · verbraucht 8 Resonanz",func():close_modal();act("burst",["hero",order]),box,not usable or int(p.resonance)<15 or p.burstUsed or matching==0)
+	)
+func res_caption(title: String, cost: int) -> String:
+	var have=int(session.model.state.hero.resonance)
+	return "%s · %d Resonanz%s" % [title,cost," (fehlen %d)" % (cost-have) if have<cost else ""]
+func resource_help() -> void:
+	show_modal("ENERGIE & RESONANZ",func(box):
+		var help=S.RESOURCE_HELP
+		if mode=="legacy":help=help.replace("Alpha: Zu Beginn deines eigenen Zuges wird sie auf 1, 2, … bis 8 erneuert; Rest verfällt am Zugende.","Legacy: 2 Basisenergie, je +1 bei 5/10/15 Resonanz; weitere Start-/KI-Boni gemäß Originalregeln.")
+		text(help,box,16);text(S.KEYWORDS,box,15)
 	)
 func show_modal(title: String, content: Callable) -> void:
 	modal_version+=1
@@ -311,20 +376,23 @@ func show_modal(title: String, content: Callable) -> void:
 	modal=PanelContainer.new();modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);modal.add_theme_stylebox_override("panel",T.panel(T.GOLD,Color(.025,.04,.065,.98)));layout.add_child(modal)
 	var margin=MarginContainer.new();margin.add_theme_constant_override("margin_left",16);margin.add_theme_constant_override("margin_right",16);margin.add_theme_constant_override("margin_top",8);margin.add_theme_constant_override("margin_bottom",8);modal.add_child(margin)
 	var box=VBoxContainer.new();margin.add_child(box)
-	var top=row(box);text(title,top,18);button("modal_close","ZURÜCK",close_modal,top)
+	var top=row(box);text(title,top,18);button("modal_close","ZURÜCK",close_modal,top).size_flags_horizontal=Control.SIZE_SHRINK_END
 	var content_box=scroll(box);content.call(content_box)
 func close_modal() -> void:
 	modal_version+=1
 	if is_instance_valid(modal):modal.hide();modal.queue_free()
 	modal=null
-func inspect(c: Dictionary) -> void:
+func inspect(c: Dictionary, current: Dictionary={}) -> void:
 	show_modal(str(c.get("name",c.id)),func(box):
-		_portrait(box,absi(str(c.id).hash())%7,120)
-		text("%s · %s · %s · Energie%d" % [c.get("faction",c.order),c.kind,c.rarity,c.cost],box,16)
-		if c.kind=="creature":text("Angriff%d / Leben%d" % [c.atk,c.hp],box,22)
-		text(str(c.get("description","")),box,20)
-		text("Vollständig implementiert · Illustration: Platzhalter",box,12)
-		button("inspect_target","ZIEL WÄHLEN" if page=="battle" else "SCHLIESSEN",close_modal,box)
+		var portrait_card=CardView.new();portrait_card.card=c;portrait_card.color=S.color(c);portrait_card.library=true;portrait_card.custom_minimum_size=Vector2(160,210 if portrait else 140);var center=CenterContainer.new();box.add_child(center);portrait_card.custom_minimum_size.x=240;center.add_child(portrait_card)
+		text(str(c.name),box,24)
+		text("%s · %s · %s · %s" % [AlphaCatalog.new().source.powers.get(c.get("faction","neutral"),c.get("order","")),S.KINDS.get(c.kind,c.kind),S.RARITIES.get(c.rarity,c.rarity),"Energie %d" % c.cost],box,16)
+		if c.kind=="creature":text("Angriff %d  /  Leben %d" % [current.get("atk",c.atk),current.get("hp",c.hp)],box,22)
+		if not current.is_empty():text("Schild %d · Stasis %d" % [current.get("ward",0),current.get("stun",0)],box,16)
+		text(str(c.get("description","")),box,18)
+		text("SCHLÜSSELWÖRTER",box,14);text(S.card_keywords(c),box,14)
+		text("Vollständig implementiert · Illustration: Atlas-Platzhalter",box,12)
+		button("inspect_target","ZUR ZIELWAHL" if page=="battle" else "SCHLIESSEN",close_modal,box)
 	)
 func show_log() -> void:
 	show_modal("KAMPFPROTOKOLL / REPLAY",func(box):
@@ -350,47 +418,101 @@ func confirm_menu() -> void:
 		button("confirm_menu","Zum Hauptmenü",func():close_modal();page="lobby";render(),box)
 	)
 func builder() -> void:
-	var top=row();text("SAMMLUNG · %d Karten" % (55 if mode=="alpha" else 100) if collection_only else "DECKBUILDER · %d / 30 Karten" % deck.size(),top,20);button("builder_back","Menü",func():page="lobby";render(),top)
-	var filters=row()
-	var search=LineEdit.new();search.placeholder_text="Karte suchen";search.text=filter_text;search.custom_minimum_size=Vector2(100,44);search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;filters.add_child(search)
-	search.text_submitted.connect(func(v):filter_text=v;render());actions.search=search
-	button("search_apply","Suchen",func():filter_text=search.text;render(),filters)
-	dropdown("filter_type",["all","creature","event","relic"],filter_type,func(v):filter_type=v;render(),filters)
-	dropdown("filter_cost",["all","1","2","3","4","5","6"],filter_cost,func(v):filter_cost=v;render(),filters)
-	dropdown("filter_rarity",["all","common","rare","epic","legendary"],filter_rarity,func(v):filter_rarity=v;render(),filters)
-	var powers: Array=["all","neutral","houses","stillwatch","morph","ninth"] if collection_mode=="alpha" else ["all","ash","tide","thorn","veil"]
-	dropdown("filter_power",powers,filter_power,func(v):filter_power=v;render(),filters)
+	var small_builder=layout.size.y<600
+	var top=row();text("SAMMLUNG" if collection_only else "DECKWERKSTATT",top,22);button("builder_back","Menü",func():page="lobby";render(),top).size_flags_horizontal=Control.SIZE_SHRINK_END
+	if not collection_only and not small_builder and collection_mode=="alpha":
+		var powers: HBoxContainer
+		var index=0
+		for power in AlphaCatalog.new().deck_ids():
+			if index%2==0 or not portrait:powers=row() if index==0 or portrait else powers
+			index+=1
+			button("builder_power_"+power,S.SYMBOLS[power]+" "+AlphaCatalog.new().source.powers[power]+(" ●" if faction==power else ""),func():faction=power;save_preferences();deck=current_deck();filter_power="all";render(),powers)
+		text(AlphaCatalog.new().source.powers.get(faction,faction)+" · %d / 30 Karten" % deck.size(),body,18)
+	var search_row=row()
+	var search=LineEdit.new();search.placeholder_text="Name oder Fähigkeit suchen";search.text=filter_text;search.custom_minimum_size=Vector2(80,44);search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;search_row.add_child(search)
+	search.add_theme_font_size_override("font_size",16)
+	search.text_changed.connect(func(v):filter_text=v)
+	search.text_submitted.connect(func(v):filter_text=v;search.release_focus();render());actions.search=search
+	if restore_search_focus:search.call_deferred("grab_focus");search.set_deferred("caret_column",search_caret)
+	button("search_apply","Suchen",func():filter_text=search.text;render(),search_row).size_flags_horizontal=Control.SIZE_SHRINK_END
+	button("filters","Filter",show_filters,search_row).size_flags_horizontal=Control.SIZE_SHRINK_END
+	if small_builder and not collection_only and collection_mode=="alpha":button("builder_power",AlphaCatalog.new().source.powers[faction],show_power_picker,top if layout.size.x<700 else search_row).size_flags_horizontal=Control.SIZE_SHRINK_END
+	var desktop=layout.size.x>=1000
+	if not collection_only and not desktop:
+		var tabs=top if small_builder and layout.size.x>=700 else row();button("library_tab","BIBLIOTHEK",func():deck_tab="library";render(),tabs);button("deck_tab","DECKLISTE · %d/%d" % [deck.size(),30 if collection_mode=="alpha" else 25],func():deck_tab="deck";render(),tabs)
+	var region=row();region.size_flags_vertical=Control.SIZE_EXPAND_FILL
+	if collection_only or desktop or deck_tab=="library":library_panel(region,desktop)
+	if not collection_only and (desktop or deck_tab=="deck"):deck_panel(region)
+	if not collection_only:
+		var valid=deck_check()
+		text(("Deck gültig · eine Macht + neutrale Karten" if collection_mode=="alpha" else "Legacy-Deck gültig · 20–25 Kreaturen") if valid.ok else valid.message,body,13).add_theme_color_override("font_color",T.SUCCESS if valid.ok else T.WARNING)
+		var footer=row()
+		button("save_deck","SPEICHERN",save_current_deck,footer,not valid.ok)
+		button("load_deck","Laden",func():deck=current_deck();message="Gespeichertes Deck geladen.";render(),footer)
+		var starter_catalog=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
+		button("reset_deck","Starter kopieren",func():deck=starter_catalog.deck(faction);message="Starter als bearbeitbare Vorlage kopiert.";render(),footer)
+		if not small_builder:text(message,body,12)
+func library_panel(parent: Node, desktop: bool) -> void:
+	var pane=VBoxContainer.new();pane.size_flags_horizontal=Control.SIZE_EXPAND_FILL;pane.size_flags_stretch_ratio=1.6;parent.add_child(pane)
+	var sc=ScrollContainer.new();sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.size_flags_horizontal=Control.SIZE_EXPAND_FILL;sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;sc.scroll_deadzone=10;pane.add_child(sc)
+	var grid=GridContainer.new();grid.columns=3 if desktop else 2 if layout.size.x<700 else 4;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",10);sc.add_child(grid)
 	var cat=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
-	var box=scroll()
 	for raw in cat.all_cards():
 		var c: Dictionary=raw.duplicate()
 		if collection_mode=="legacy":c.name=session.legacy_text[c.id].name;c.description=session.legacy_text[c.id].description
+		if not collection_only and collection_mode=="alpha" and c.faction not in [faction,"neutral"]:continue
 		if not filter_text.is_empty() and not (str(c.name)+str(c.description)).to_lower().contains(filter_text.to_lower()):continue
 		if filter_type!="all" and c.kind!=filter_type:continue
 		if filter_cost!="all" and int(c.cost)!=int(filter_cost):continue
 		if filter_rarity!="all" and c.rarity!=filter_rarity:continue
 		if filter_power!="all" and c.get("faction",c.order)!=filter_power:continue
-		var line=row(box);line.custom_minimum_size.y=50
-		button("card_"+c.id,"%s · %d Energie · %s" % [c.name,c.cost,"%d Angriff / %d Leben" % [c.atk,c.hp] if c.kind=="creature" else "Ereignis" if c.kind=="event" else "Relikt"],func():inspect(c),line)
-		if collection_only:continue
-		button("remove_"+c.id,"−",func():_remove_card(c.id),line,not deck.has(c.id)).size_flags_horizontal=Control.SIZE_SHRINK_END
-		text(str(deck.count(c.id)),line,16).size_flags_horizontal=Control.SIZE_SHRINK_CENTER
-		button("add_"+c.id,"+",func():deck.append(c.id);render(),line,deck.count(c.id)>=(1 if c.rarity=="legendary" else 3)).size_flags_horizontal=Control.SIZE_SHRINK_END
-	if collection_only:return
-	var bottom=row()
-	button("save_deck","DECK SPEICHERN",func():var result=session.save_deck(collection_mode+":"+faction,deck,collection_mode);message=result.get("message","");render(),bottom)
-	button("load_deck","GESPEICHERTES LADEN",func():mode=collection_mode;deck=current_deck();message="Deck geladen.";render(),bottom)
-	button("reset_deck","STARTER LADEN",func():deck=cat.deck(faction);message="Starter geladen.";render(),bottom)
-	button("clear_deck","LEEREN",func():deck=[];render(),bottom)
-	text(message,body,12)
+		var tile=VBoxContainer.new();tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_child(tile)
+		var v=CardView.new();v.card=c;v.library=true;v.color=S.color(c);v.custom_minimum_size=Vector2(0,176);v.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.add_child(v);actions["card_"+c.id]=v
+		v.pressed.connect(func():inspect(c) if collection_only or not can_add(c) else add_card(c))
+		var controls=row(tile)
+		button("detail_"+c.id,"Details",func():inspect(c),controls)
+		if not collection_only:button("add_"+c.id,"+  %d/%d" % [deck.count(c.id),1 if c.rarity=="legendary" else 3],func():add_card(c),controls,not can_add(c))
+	if grid.get_child_count()==0:text("Keine Karten für diese Filter. Suche oder Filter ändern.",pane)
+func deck_panel(parent: Node) -> void:
+	var pane=VBoxContainer.new();pane.size_flags_horizontal=Control.SIZE_EXPAND_FILL;parent.add_child(pane)
+	text("DEINE KARTEN · %d/%d" % [deck.size(),30 if collection_mode=="alpha" else 25],pane,16)
+	var curve=row(pane);var counts=[];counts.resize(9);counts.fill(0)
+	var cat=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
+	for id in deck:counts[mini(8,int(cat.card(id).cost))]+=1
+	for cost in 9:
+		var column=VBoxContainer.new();column.size_flags_horizontal=Control.SIZE_EXPAND_FILL;curve.add_child(column)
+		var bar=ProgressBar.new();bar.custom_minimum_size=Vector2(8,25);bar.show_percentage=false;bar.max_value=maxi(1,counts.max());bar.value=counts[cost];column.add_child(bar)
+		text("%d:%d" % [cost,counts[cost]],column,10).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	var box=scroll(pane)
+	for raw in cat.all_cards():
+		var c: Dictionary=raw.duplicate()
+		if collection_mode=="legacy":c.name=session.legacy_text[c.id].name;c.description=session.legacy_text[c.id].description
+		if not deck.has(c.id):continue
+		var line=row(box)
+		button("deck_detail_"+c.id,"%d× %s\n%d Energie" % [deck.count(c.id),c.name,c.cost],func():inspect(c),line)
+		button("remove_"+c.id,"−",func():_remove_card(c.id),line).size_flags_horizontal=Control.SIZE_SHRINK_END
+	button("clear_deck","Deck leeren …",func():show_modal("Deck wirklich leeren?",func(box):button("confirm_clear","Leeren",func():deck=[];close_modal();render(),box)),pane)
+func can_add(c: Dictionary) -> bool:
+	return deck.size()<(30 if collection_mode=="alpha" else 25) and deck.count(c.id)<(1 if c.rarity=="legendary" else 3) and (collection_mode=="legacy" or c.faction in [faction,"neutral"])
+func add_card(c: Dictionary) -> void:
+	if can_add(c):deck.append(c.id);message="Hinzugefügt: "+c.name;render()
+	else:message="Deck voll oder Kopien-/Machtgrenze erreicht.";render()
+func deck_check() -> Dictionary:
+	var result=AlphaCatalog.new().validate(deck) if collection_mode=="alpha" else preload("res://scripts/legacy/deck_validator.gd").new().validate(deck)
+	if result.ok and collection_mode=="alpha" and result.faction!=faction:return {"ok":false,"message":"Mindestens eine Karte der gewählten Macht erforderlich."}
+	return result
+func save_current_deck() -> void:
+	var valid=deck_check()
+	if not valid.ok:message=valid.message;render();return
+	var result=session.save_deck(collection_mode+":"+faction,deck,collection_mode);message=result.get("message","");render()
 func publish_qa() -> void:
-	var state={"page":page,"mode":mode,"actions":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version}
+	var state={"page":page,"mode":mode,"actions":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"font_msdf":S.font.multichannel_signed_distance_field}
 	for key in actions:
 		var b=actions[key]
 		if is_instance_valid(b) and b.is_visible_in_tree():
 			var r=b.get_global_rect();state.actions[key]={"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density],"disabled":b.disabled if b is BaseButton else false}
 	for b in hand_views:
-		var r=b.get_global_rect();state.hand.append({"id":b.card.id,"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]})
+		var r=b.get_global_rect();state.hand.append({"id":b.card.id,"name":b.card.name,"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]})
 	for key in board_views:
 		var r=board_views[key].get_global_rect();state.board[key]=[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]
 	if session.model!=null:state.battle=session.model.snapshot();state.command_count=session.commands.size()
@@ -400,7 +522,7 @@ func _hand_click(index: int) -> void:
 	if index<0 or index>=session.model.state.hero.hand.size():return
 	var c=session.card(session.model.state.hero.hand[index])
 	if selected==index:inspect(c)
-	else:selected=index;source_lane=-1;message=c.description;render()
+	else:selected=index;source_lane=-1;action_mode="";message=c.name+" · leuchtendes Ziel wählen. Nochmals tippen: Details.";render()
 func _toggle_mulligan(index: int) -> void:
 	if mulligan_indices.has(index):mulligan_indices.erase(index)
 	else:mulligan_indices.append(index)
@@ -413,7 +535,7 @@ func _remove_card(id: String) -> void:
 func _portrait(parent: Node, index: int, height: int=32) -> void:
 	var tex=AtlasTexture.new();tex.atlas=preload("res://assets/art/atlas.png")
 	var cell=tex.atlas.get_size()/3.0;tex.region=Rect2(Vector2(index%3,floori(float(index)/3))*cell,cell)
-	var image=TextureRect.new();image.texture=tex;image.custom_minimum_size=Vector2(height,height);image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(image)
+	var image=TextureRect.new();image.texture=tex;image.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS;image.custom_minimum_size=Vector2(height,height);image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(image)
 
 func load_last_replay() -> void:
 	var data=JSON.parse_string(FileAccess.get_file_as_string("user://orafold_last_replay.json"))
@@ -444,12 +566,18 @@ func _layout() -> void:
 	if OS.has_feature("web"):
 		var value=JSON.parse_string(str(JavaScriptBridge.eval("JSON.stringify(window.nachtsiegelInsets?window.nachtsiegelInsets():{})")))
 		if value is Dictionary:insets=value
+	if OS.has_feature("web"):
+		var ratio=JavaScriptBridge.eval("(()=>{const c=document.querySelector('canvas');return c.width/Math.max(1,c.getBoundingClientRect().width)})()")
+		if ratio!=null:density=maxf(.5,float(ratio))
 	var left=float(insets.get("left",0));var right=float(insets.get("right",0));var top=float(insets.get("top",0));var bottom=float(insets.get("bottom",0))
 	layout.position=Vector2(left,top)*density;layout.scale=Vector2.ONE*density
 	layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(160,size.y/density-top-bottom))
+	var next_portrait=layout.size.y>layout.size.x
+	if OS.has_feature("web") and page=="battle" and next_portrait!=portrait:rotation_block_until=Time.get_ticks_msec()+180
+	portrait=next_portrait
 	compact=layout.size.y<380
 	for side in ["left","right","top","bottom"]:outer_margin.add_theme_constant_override("margin_"+side,4 if compact else 8)
-	body.add_theme_constant_override("separation",2 if compact else 4)
+	body.add_theme_constant_override("separation",2 if compact or page=="battle" else 4)
 
 func _feedback_events(events: Array, previous: Dictionary) -> void:
 	if not is_instance_valid(feedback) or is_instance_valid(modal):return
@@ -475,3 +603,74 @@ func _feedback_events(events: Array, previous: Dictionary) -> void:
 			if hp_loss>0:feedback.emit("damage",point,point,T.DANGER,"−"+str(hp_loss))
 			if absorb>0:feedback.emit("absorb",point,point,T.ENERGY,"◇"+str(absorb))
 		previous=e.state
+
+func choose_match() -> void:
+	if mode=="legacy":start_battle();return
+	match_use_starter=true;page="decks";render()
+func select_power(power: String, starter: bool) -> void:
+	faction=power;match_use_starter=starter;save_preferences();render()
+func deck_selection() -> void:
+	var top=row();text("WÄHLE DEIN DECK",top,22);button("decks_back","Menü",func():page="lobby";render(),top).size_flags_horizontal=Control.SIZE_SHRINK_END
+	text("Vier Mächte. Ein eigenes Spielgefühl. Je 30 Karten.",body,14)
+	var sc=ScrollContainer.new();sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.scroll_deadzone=10;body.add_child(sc)
+	var grid=GridContainer.new();grid.columns=1 if portrait else 2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",10);sc.add_child(grid)
+	var cat=AlphaCatalog.new()
+	for power in cat.deck_ids():
+		var frame=PanelContainer.new();frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",T.panel(S.POWER_COLORS[power],Color("15212d")));grid.add_child(frame)
+		var box=VBoxContainer.new();frame.add_child(box)
+		var heading=row(box);_portrait(heading,{"houses":4,"stillwatch":5,"morph":1,"ninth":3}[power],48)
+		text(S.SYMBOLS[power]+"  "+cat.source.powers[power],heading,22).add_theme_color_override("font_color",S.POWER_COLORS[power])
+		text(S.STYLES[power]+"\n"+S.DIFFICULTY[power],box,14)
+		var choices=row(box)
+		button("preview_"+power,"Eigenes ansehen" if faction==power and not match_use_starter else "Starter ansehen",func():preview_deck(power,not(faction==power and not match_use_starter)),choices)
+		button("choose_"+power,("✓ " if faction==power and match_use_starter else "")+"Starter",func():select_power(power,true),choices)
+		if session.profile.decks.has("alpha:"+power):button("custom_"+power,"Eigenes",func():select_power(power,false),choices)
+	text(("STARTER · " if match_use_starter else "EIGENES DECK · ")+cat.source.powers[faction],body,16)
+	var candidate=cat.deck(faction) if match_use_starter else current_deck()
+	var valid=cat.validate(candidate)
+	var allowed=valid.ok and valid.faction==faction
+	if not allowed:text("Eine Macht plus neutrale Karten erforderlich. Bitte Deck in der Werkstatt korrigieren.",body,14)
+	var play=button("deck_play","PARTIE STARTEN  →",start_battle,body,not allowed)
+	play.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
+func preview_deck(power: String, starter: bool) -> void:
+	var cat=AlphaCatalog.new();var ids=cat.deck(power)
+	if not starter and session.profile.decks.has("alpha:"+power):ids=session.profile.decks["alpha:"+power].cards.duplicate()
+	show_modal(("Starter · " if starter else "Eigenes Deck · ")+cat.source.powers[power]+" · 30 Karten",func(box):
+		text(S.STYLES[power]+" · "+S.DIFFICULTY[power],box,18)
+		var seen: Array=[]
+		for id in ids:
+			if seen.has(id):continue
+			seen.append(id);var c=cat.card(id)
+			button("preview_card_"+id,"%d× %s · %d Energie" % [ids.count(id),c.name,c.cost],func():inspect(c),box)
+		button("preview_select","DIESES DECK WÄHLEN",func():close_modal();select_power(power,starter),box)
+	)
+func rotation_page() -> void:
+	var center=CenterContainer.new();center.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(center)
+	var box=VBoxContainer.new();box.custom_minimum_size.x=minf(330,layout.size.x-24);box.add_theme_constant_override("separation",16);center.add_child(box)
+	text("↻",box,64).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	text("FÜNF PFADE BRAUCHEN QUERFORMAT",box,24).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	text("Drehe dein Gerät (Desktop: Fenster breiter ziehen). Karten, Auswahl und Spielzustand bleiben erhalten. Bei Bedarf die iPhone-Drehsperre im Kontrollzentrum ausschalten.",box,16)
+	text("Menüs und Deckwerkstatt sind für Hochformat gestaltet.",box,14)
+	button("rotate_menu","Sicher zum Menü",confirm_menu,box)
+func cancel_selection() -> void:
+	selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];message="Auswahl aufgehoben. Es wurde keine Spielaktion rückgängig gemacht.";render()
+
+func show_filters() -> void:
+	show_modal("KARTENFILTER",func(box):
+		dropdown("filter_type",["all","creature","event","relic"],filter_type,func(v):filter_type=v;close_modal();render(),box)
+		dropdown("filter_cost",["all","1","2","3","4","5","6"],filter_cost,func(v):filter_cost=v;close_modal();render(),box)
+		dropdown("filter_rarity",["all","common","rare","epic","legendary"],filter_rarity,func(v):filter_rarity=v;close_modal();render(),box)
+		dropdown("filter_power",["all","neutral","houses","stillwatch","morph","ninth"] if collection_mode=="alpha" else ["all","ash","tide","thorn","veil"],filter_power,func(v):filter_power=v;close_modal();render(),box)
+		button("reset_filters","Alle Filter zurücksetzen",func():filter_text="";filter_type="all";filter_cost="all";filter_rarity="all";filter_power="all";close_modal();render(),box)
+	)
+func show_power_picker() -> void:
+	show_modal("MACHT DER DECKVORLAGE",func(box):
+		for power in AlphaCatalog.new().deck_ids():button("builder_power_"+power,AlphaCatalog.new().source.powers[power],func():faction=power;save_preferences();deck=current_deck();filter_power="all";close_modal();render(),box)
+	)
+
+func _input(event: InputEvent) -> void:
+	if OS.has_feature("web") and Time.get_ticks_msec()<rotation_block_until and event is InputEventScreenTouch:get_viewport().set_input_as_handled()
+
+func battle_heading(s: Dictionary) -> String:
+	if mode=="alpha" and s.stage!="battle":return {"mulligan":"STARTHAND WÄHLEN","origins":"URSPRUNG WÄHLEN","second":"ZWEITE MÖGLICHKEIT"}.get(s.stage,"VORBEREITUNG")
+	return ("PARTIE BEENDET" if s.winner!=null else "DEIN ZUG" if s.active=="hero" else "KI AM ZUG")+" · "+{"draw":"NACHZIEHEN","main":"AKTIONSPHASE","attack":"ANGRIFFE","end":"ZUGENDE"}.get(s.hero.phase,"VORBEREITUNG")+" · Runde %d" % (floori(float(s.round-1)/2)+1)

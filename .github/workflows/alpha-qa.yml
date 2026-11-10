@@ -59,6 +59,9 @@ jobs:
             work/alpha/*.json
             work/alpha/*.png
             work/alpha/*.zip
+            work/alpha02/*.log
+            work/alpha02/*.json
+            work/alpha02/*.png
             work/legacy/*.log
             work/*final.log
   browser:
@@ -99,6 +102,13 @@ jobs:
           python3 tools/wait_http.py http://127.0.0.1:8789/build-info.json http://127.0.0.1:8788/nachtsiegel-app/build-info.json http://127.0.0.1:8787/build-info.json
           GAME_URL=http://127.0.0.1:8789/ QA_PREFIX=alpha/archive node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
           GAME_URL=http://127.0.0.1:8788/nachtsiegel-app/ node tools/alpha_browser_qa.cjs
+      - name: Portrait, rotation, Retina and edited deck persistence
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          QA_ENGINES: ${{ matrix.engine }}
+          GAME_URL: http://127.0.0.1:8788/nachtsiegel-app/
+        run: node tools/alpha02_browser_qa.cjs
       - name: Preserved Legacy UI duel in private QA export
         if: matrix.engine == 'chromium'
         env:
@@ -128,3 +138,31 @@ jobs:
             work/alpha/*.json
             work/alpha/*.png
             work/alpha/*.zip
+            work/alpha02/*.log
+            work/alpha02/*.json
+            work/alpha02/*.png
+
+  balance-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - run: godot --headless --editor --import --path . --quit
+      - name: Paired deterministic balance screening without production rule changes
+        run: |
+          mkdir -p work/alpha02
+          godot --headless --path . --script tests/alpha02_balance.gd > work/alpha02/balance.log 2>&1
+          python3 tools/alpha02_balance_report.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: alpha02-balance-audit
+          path: work/alpha02/
