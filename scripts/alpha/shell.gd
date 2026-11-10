@@ -249,7 +249,10 @@ func battle() -> void:
 	var remaining=180-(Time.get_ticks_msec()-last_primary_ms)
 	if remaining>0:
 		primary.disabled=true
-		get_tree().create_timer(float(remaining)/1000.0).timeout.connect(func():if is_instance_valid(primary):primary.disabled=blocked)
+		var primary_ref=weakref(primary)
+		get_tree().create_timer(float(remaining)/1000.0).timeout.connect(func():
+			var current=primary_ref.get_ref()
+			if current!=null:current.disabled=blocked)
 	primary.size_flags_stretch_ratio=3;primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
 	button("actions","Mehr / Ressourcen",show_actions,bar,s.winner!=null).size_flags_horizontal=Control.SIZE_SHRINK_END
 	button("inspect","Details",func():if selected>=0:inspect(session.card(s.hero.hand[selected])),bar,selected<0).size_flags_horizontal=Control.SIZE_SHRINK_END
