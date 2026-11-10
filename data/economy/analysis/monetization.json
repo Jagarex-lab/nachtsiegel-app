@@ -1,0 +1,296 @@
+{
+  "schema_version": 1,
+  "status": "illustrative_unapproved_commercial_analysis_only_no_prices_or_runtime_changes",
+  "seed": 56112026,
+  "repetitions": 200,
+  "horizon_days": 730,
+  "checkpoints": [
+    1,
+    7,
+    30,
+    90,
+    180,
+    365,
+    730
+  ],
+  "models": {
+    "baseline96": {
+      "recurring_gold_multiplier": 1.0,
+      "booster_price_gold": 100,
+      "target_protection": {
+        "enabled": false,
+        "once_per_account": true,
+        "matches_per_cycle": 40,
+        "checkpoints": [
+          10,
+          20,
+          30,
+          40
+        ],
+        "essence_per_checkpoint": 300
+      },
+      "payer_basket_weights": {
+        "cosmetic_only": 0.25,
+        "pass_and_cosmetic": 0.2,
+        "packs_and_cosmetic": 0.3,
+        "packs_only": 0.2,
+        "all": 0.05
+      },
+      "status": "analysis_only_not_implemented"
+    },
+    "scarcity": {
+      "recurring_gold_multiplier": 0.6,
+      "booster_price_gold": 150,
+      "target_protection": {
+        "enabled": false,
+        "once_per_account": true,
+        "matches_per_cycle": 40,
+        "checkpoints": [
+          10,
+          20,
+          30,
+          40
+        ],
+        "essence_per_checkpoint": 300
+      },
+      "payer_basket_weights": {
+        "cosmetic_only": 0.25,
+        "pass_and_cosmetic": 0.2,
+        "packs_and_cosmetic": 0.3,
+        "packs_only": 0.2,
+        "all": 0.05
+      },
+      "status": "analysis_only_not_implemented"
+    },
+    "protected_weekly": {
+      "recurring_gold_multiplier": 0.65,
+      "booster_price_gold": 100,
+      "target_protection": {
+        "enabled": true,
+        "once_per_account": true,
+        "matches_per_cycle": 40,
+        "checkpoints": [
+          10,
+          20,
+          30,
+          40
+        ],
+        "essence_per_checkpoint": 300
+      },
+      "payer_basket_weights": {
+        "cosmetic_only": 0.25,
+        "pass_and_cosmetic": 0.2,
+        "packs_and_cosmetic": 0.3,
+        "packs_only": 0.2,
+        "all": 0.05
+      },
+      "status": "analysis_only_not_implemented"
+    },
+    "cosmetics_first": {
+      "recurring_gold_multiplier": 1.0,
+      "booster_price_gold": 100,
+      "target_protection": {
+        "enabled": true,
+        "once_per_account": true,
+        "matches_per_cycle": 40,
+        "checkpoints": [
+          10,
+          20,
+          30,
+          40
+        ],
+        "essence_per_checkpoint": 300
+      },
+      "payer_basket_weights": {
+        "cosmetic_only": 0.6,
+        "pass_and_cosmetic": 0.25,
+        "packs_and_cosmetic": 0.05,
+        "packs_only": 0.05,
+        "all": 0.05
+      },
+      "status": "analysis_only_not_implemented"
+    }
+  },
+  "profiles": {
+    "F2P20": {
+      "minutes_per_day": 20,
+      "purchased_boosters_per_30_days": 0
+    },
+    "F2P45": {
+      "minutes_per_day": 45,
+      "purchased_boosters_per_30_days": 0
+    },
+    "F2P90": {
+      "minutes_per_day": 90,
+      "purchased_boosters_per_30_days": 0
+    },
+    "paid4": {
+      "minutes_per_day": 45,
+      "purchased_boosters_per_30_days": 4
+    },
+    "paid40": {
+      "minutes_per_day": 45,
+      "purchased_boosters_per_30_days": 40
+    }
+  },
+  "cohort": {
+    "acquired_players": 10000,
+    "months": 24,
+    "days_per_month": 30,
+    "new_players_per_month": 0,
+    "acquisition_cost_per_player_eur": 0.8,
+    "note": "Single age cohort acquired at calendar month0. No new or replacement players; no DAU claim."
+  },
+  "revenue_scenarios": {
+    "pessimistic": {
+      "retention_probability": {
+        "1": 0.25,
+        "7": 0.1,
+        "30": 0.035,
+        "90": 0.012,
+        "180": 0.006,
+        "365": 0.002,
+        "730": 0.0005
+      },
+      "monthly_payer_probability": 0.015,
+      "active_days_per_retained_month": 6,
+      "status": "hypothetical_survival_and_conversion_assumptions_not_observed_data"
+    },
+    "base": {
+      "retention_probability": {
+        "1": 0.4,
+        "7": 0.2,
+        "30": 0.08,
+        "90": 0.04,
+        "180": 0.025,
+        "365": 0.012,
+        "730": 0.004
+      },
+      "monthly_payer_probability": 0.04,
+      "active_days_per_retained_month": 10,
+      "status": "hypothetical_survival_and_conversion_assumptions_not_observed_data"
+    },
+    "optimistic": {
+      "retention_probability": {
+        "1": 0.5,
+        "7": 0.3,
+        "30": 0.15,
+        "90": 0.085,
+        "180": 0.06,
+        "365": 0.035,
+        "730": 0.015
+      },
+      "monthly_payer_probability": 0.07,
+      "active_days_per_retained_month": 14,
+      "status": "hypothetical_survival_and_conversion_assumptions_not_observed_data"
+    }
+  },
+  "products": {
+    "cosmetic_unit_gross_eur": 8.0,
+    "season_pass_gross_eur": 6.0,
+    "season_length_months": 3,
+    "season_pass_auto_renew": false,
+    "season_pass_expiring_gameplay_rewards": false,
+    "pack_gross_eur": 1.5,
+    "packs_per_purchase": 4,
+    "beginner_package_gross_eur": 3.0,
+    "beginner_addon_probability": 0.25,
+    "beginner_max_purchases_per_account": 1,
+    "note": "Hypothetical ex-VAT customer receipts before fees/refunds; not approved prices. Spending multiplier changes assumed basket value only, not causally observed demand or collection purchases.",
+    "beginner_package_cosmetics_only": true,
+    "season_pass_cosmetics_only": true
+  },
+  "baskets": {
+    "cosmetic_only": {
+      "cosmetic_units": 1,
+      "season_pass": false,
+      "packs": false
+    },
+    "pass_and_cosmetic": {
+      "cosmetic_units": 1,
+      "season_pass": true,
+      "packs": false
+    },
+    "packs_and_cosmetic": {
+      "cosmetic_units": 1,
+      "season_pass": false,
+      "packs": true
+    },
+    "packs_only": {
+      "cosmetic_units": 0,
+      "season_pass": false,
+      "packs": true
+    },
+    "all": {
+      "cosmetic_units": 1,
+      "season_pass": true,
+      "packs": true
+    }
+  },
+  "costs": {
+    "platform_fee_fraction": 0.3,
+    "refund_fraction": 0.03,
+    "variable_per_retained_account_month_eur": 0.04,
+    "variable_per_payer_month_eur": 0.1,
+    "fixed_cost_per_month_eur": 5000.0,
+    "tax_fraction": 0.0,
+    "note": "No tax determination; taxes0 is an explicit omission. Fixed-cost attribution to this one cohort is illustrative, not a business forecast."
+  },
+  "collection_demand": {
+    "profile": "paid4",
+    "elasticity": 1.0,
+    "missing_report_policy": "error",
+    "note": "Measured paid4 trajectory (four exogenous packs every30days) is a conservative inventory proxy for intermittent four-pack buyers, not endogenous revenue feedback. Willingness-to-pay remains a hypothesis; paid40 and total pack-demand-collapse sensitivity are separate."
+  },
+  "behavior_sensitivities": {
+    "scarcity_frustration": {
+      "apply_to_models": [
+        "scarcity"
+      ],
+      "retention_probability_multiplier": 0.75,
+      "payer_probability_multiplier": 1.0,
+      "note": "Conjecture only; not controlled-case evidence."
+    },
+    "low_cosmetic_demand": {
+      "apply_to_models": [
+        "baseline96",
+        "scarcity",
+        "protected_weekly",
+        "cosmetics_first"
+      ],
+      "cosmetic_purchase_probability": 0.25,
+      "pass_purchase_probability": 0.5,
+      "note": "Conjectural opt-in demand stress, equal acrossmodels."
+    },
+    "pack_demand_collapse": {
+      "apply_to_models": [
+        "baseline96",
+        "scarcity",
+        "protected_weekly",
+        "cosmetics_first"
+      ],
+      "pack_purchase_probability_multiplier": 0.0,
+      "note": "Severe pack-demand collapse stress; cosmetics/pass purchase assumptions remain separate."
+    }
+  },
+  "analysis_notes": [
+    "All models share each revenue scenario retention and payer propensity; no model-specific retention benefit assumed.",
+    "Payer baskets are disjoint categories; product overlap occurs within baskets and distinct payers are counted once per month.",
+    "Monthly payer probability is a pre-utility purchase-intent assumption. Realized payer probability and ARPPU are derived after demand and season eligibility.",
+    "Monte Carlo intervals quantify finite-cohort sampling only, not empirical parameter confidence.",
+    "Full collection suppresses only pack demand. No artificial starvation, required login streaks or expiring gameplay rewards assumed.",
+    "Target grants are permanent match-count milestones once per account; protected_weekly is a scenario name, not an implemented timed requirement.",
+    "Modelled accounting starts at first return day1; no acquisition-day purchases assumed. Month membership counts all accounts retained at the month-start day, including accounts that churn later in that month."
+  ],
+  "spending_sensitivity_multipliers": [
+    0.5,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "steady_state_organic_new_users_per_month": [
+    10000,
+    50000,
+    100000
+  ]
+}
