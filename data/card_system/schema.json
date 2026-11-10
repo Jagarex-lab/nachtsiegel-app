@@ -123,7 +123,60 @@
           "minLength": 1,
           "maxLength": 240
         }
-      }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "missing"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "asset_id": {
+                "pattern": "^missing:[a-z][a-z0-9-]+$"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "shared_concept"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "asset_id": {
+                "const": "shared:orafold-atlas"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "concept",
+                  "final"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "asset_id": {
+                "pattern": "^res://assets/.+\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[sS][vV][gG])$"
+              }
+            }
+          }
+        }
+      ]
     },
     "abilities": {
       "type": "array",

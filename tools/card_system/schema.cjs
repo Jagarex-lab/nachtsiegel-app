@@ -32,7 +32,11 @@ const schema = {
     power: {enum: registry.powers}, kind: {enum: Object.keys(registry.kinds)}, rarity: {enum: registry.rarities},
     energy_cost: integer(0, 10), resonance_cost: integer(0, 15), attack: integer(0, 30), health: integer(1, 40),
     species: {type: 'array', minItems: 1, maxItems: 2, uniqueItems: true, items: {enum: Object.keys(registry.species)}},
-    art: {type: 'object', additionalProperties: false, required: ['status', 'asset_id', 'provenance'], properties: {status: {enum: ['missing', 'shared_concept', 'concept', 'final']}, asset_id: text(120), provenance: text(240)}},
+    art: {type: 'object', additionalProperties: false, required: ['status', 'asset_id', 'provenance'], properties: {status: {enum: ['missing', 'shared_concept', 'concept', 'final']}, asset_id: text(120), provenance: text(240)}, allOf: [
+      {if: {properties: {status: {const: 'missing'}}}, then: {properties: {asset_id: {pattern: '^missing:[a-z][a-z0-9-]+$'}}}},
+      {if: {properties: {status: {const: 'shared_concept'}}}, then: {properties: {asset_id: {const: 'shared:orafold-atlas'}}}},
+      {if: {properties: {status: {enum: ['concept', 'final']}}}, then: {properties: {asset_id: {pattern: '^res://assets/.+\\.([pP][nN][gG]|[jJ][pP][eE]?[gG]|[wW][eE][bB][pP]|[sS][vV][gG])$'}}}},
+    ]},
     abilities: {type: 'array', maxItems: 16, items: {oneOf: Object.entries(registry.effects).map(([id, effect]) => ability(id, effect))}},
     text_de: {type: 'string'}, lore_key: text(120),
     source_binding: {type: 'object', additionalProperties: false, required: ['catalog', 'card_id', 'effect', 'power'], properties: {catalog: {const: 'orafold-alpha-0.1'}, card_id: text(120), effect: {enum: Object.keys(registry.effects)}, power: integer(0, 100)}},

@@ -7,6 +7,7 @@ const {spawnSync} = require('node:child_process');
 const {registry, renderText, validateCard, validateCatalogue, validateNamesAcrossPools, hasSpecies, matchingSpecies, mechanicalFingerprint} = require('../../tools/card_system/contract.cjs');
 const {inventory} = require('../../tools/card_system/assets.cjs');
 const {diagnose} = require('../../tools/card_system/diagnose.cjs');
+const {resolveArtAsset} = require('../../tools/card_system/art.cjs');
 const ROOT = path.resolve(__dirname, '../..');
 const pilot = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card_system/pilot.json')));
 const clone = value => structuredClone(value);
@@ -208,4 +209,49 @@ test('display names are unique across different power pools while original ident
   assert.equal(conflict.ok, false); assert.match(conflict.errors[0], /Duplicate name across pools/u);
   card.name = 'To\u0072wache';
   assert.equal(validateNamesAcrossPools([{name: 'old', cards: alpha.cards}, {name: 'new', cards: [card]}]).ok, false);
+});
+
+test('individual concept and final IDs require a real safe image file; file checks grant no artistic approval', () => {
+  for (const status of ['concept', 'final']) {
+    const card = creature();
+    card.art = {status, asset_id: 'res://assets/art/arena_painted.png', provenance: 'Test of existing-file resolution only; no claim of a final card illustration.'};
+    assert.equal(validateCard(card).ok, true);
+    card.art.asset_id = 'res://assets/art/nonexistent-card.png'; rejects(card, /asset_file_missing/);
+    card.art.asset_id = 'arbitrary-unregistered-id'; rejects(card, /requires_res_assets_path/);
+    card.art.asset_id = 'missing:uncreated-card'; rejects(card, /requires_res_assets_path/);
+    card.art.asset_id = 'res://scripts/alpha/model.gd'; rejects(card, /requires_res_assets_path/);
+  }
+});
+
+test('shared concepts cannot be relabelled final or hidden behind an atlas file path', () => {
+  for (const status of ['concept', 'final']) for (const id of ['shared:orafold-atlas', 'res://assets/art/atlas.png']) {
+    const card = creature(); card.art.status = status; card.art.asset_id = id; rejects(card, /requires_res_assets_path|shared_atlas_requires/);
+  }
+  const card = creature(); card.art.asset_id = 'shared:unknown-atlas'; rejects(card, /unknown_shared_asset/);
+  card.art = {status: 'missing', asset_id: 'missing:uncreated-card', provenance: 'No image created.'};
+  assert.equal(validateCard(card).ok, true);
+  card.art.asset_id = 'res://assets/art/arena_painted.png'; rejects(card, /missing_status_requires/);
+});
+
+test('art resolver rejects traversal, symlink escape, directories and disguised non-images', () => {
+  for (const id of ['res://assets/../assets/art/arena_painted.png', 'res://assets/art/../../data/alpha/cards.json', 'res://assets/art/%2e%2e/arena.png', 'res://assets\\art\\arena.png', 'res://assets//art/arena.png', 'res://assets/art/arena_painted.png?version=1']) {
+    assert.equal(resolveArtAsset({status: 'final', asset_id: id}).ok, false, id);
+  }
+  const temporary = fs.mkdtempSync(path.join(require('node:os').tmpdir(), 'orafold-art-test-'));
+  try {
+    fs.mkdirSync(path.join(temporary, 'assets'));
+    fs.copyFileSync(path.join(ROOT, 'assets/art/arena.svg'), path.join(temporary, 'outside.svg'));
+    fs.symlinkSync(path.join(temporary, 'outside.svg'), path.join(temporary, 'assets/escape.svg'));
+    assert.equal(resolveArtAsset({status: 'final', asset_id: 'res://assets/escape.svg'}, {root: temporary}).reason, 'asset_symlink_escape');
+    fs.mkdirSync(path.join(temporary, 'assets/directory.png'));
+    assert.equal(resolveArtAsset({status: 'concept', asset_id: 'res://assets/directory.png'}, {root: temporary}).reason, 'asset_is_not_regular_file');
+    fs.writeFileSync(path.join(temporary, 'assets/fake.png'), 'This file is plain text, not a PNG image.');
+    assert.equal(resolveArtAsset({status: 'final', asset_id: 'res://assets/fake.png'}, {root: temporary}).reason, 'file_does_not_match_image_format');
+    fs.unlinkSync(path.join(temporary, 'assets/escape.svg'));
+    fs.rmSync(path.join(temporary, 'assets'), {recursive: true});
+    fs.mkdirSync(path.join(temporary, 'elsewhere'));
+    fs.copyFileSync(path.join(ROOT, 'assets/art/arena.svg'), path.join(temporary, 'elsewhere/borrowed.svg'));
+    fs.symlinkSync(path.join(temporary, 'elsewhere'), path.join(temporary, 'assets'));
+    assert.equal(resolveArtAsset({status: 'final', asset_id: 'res://assets/borrowed.svg'}, {root: temporary}).reason, 'asset_root_symlink_redirect');
+  } finally { fs.rmSync(temporary, {recursive: true, force: true}); }
 });

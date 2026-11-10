@@ -4,6 +4,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const {resolveArtAsset} = require('./art.cjs');
 const ROOT = path.resolve(__dirname, '../..');
 const registry = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/card_system/registry.json'), 'utf8'));
 const sourceCards = JSON.parse(fs.readFileSync(path.join(ROOT, 'data/alpha/cards.json'), 'utf8')).cards;
@@ -112,7 +113,8 @@ function validateCard(card, options = {}) {
     member(card.art.status, ['missing', 'shared_concept', 'concept', 'final'], 'art.status', errors);
     nonempty(card.art.asset_id, 120, 'art.asset_id', errors);
     nonempty(card.art.provenance, 240, 'art.provenance', errors);
-    if (card.art.status === 'final' && card.art.asset_id.startsWith('missing:')) errors.push('art: missing asset cannot be final');
+    const resolved = resolveArtAsset(card.art);
+    if (!resolved.ok) errors.push(`art.asset_id: ${resolved.reason}`);
   }
   if (!Array.isArray(card.abilities) || card.abilities.length > 16) errors.push('abilities: array with at most sixteen abilities required');
   else {
