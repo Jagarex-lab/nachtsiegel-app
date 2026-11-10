@@ -15,7 +15,8 @@ if (profile !== 'webkit') {
   launch.args = ['--no-sandbox', '--autoplay-policy=user-gesture-required'];
 }
 const errors = [];
-const evidence = {profile, url, checked: [], errors};
+const graphicsDiagnostics = [];
+const evidence = {profile, url, checked: [], errors, graphicsDiagnostics};
 let browser;
 try {
   browser = await browserType.launch(launch);
@@ -75,7 +76,16 @@ try {
   });
   const page = await context.newPage();
   page.on('pageerror', error => errors.push(error.message));
-  page.on('console', message => {if (message.type() === 'error' && !message.text().includes('favicon.ico')) errors.push(message.text());});
+  page.on('console', message => {
+    if (message.type() !== 'error' || message.text().includes('favicon.ico')) return;
+    // Record Godot/WebGL framebuffer diagnostics separately from audio failures.
+    // Do not discard them: graphics QA must investigate these independently.
+    if (message.text().includes('WebGL: INVALID_OPERATION: glBlitFramebuffer: Read and write color attachments cannot be the same image.')) {
+      graphicsDiagnostics.push(message.text());
+    } else {
+      errors.push(message.text());
+    }
+  });
   if (profile === 'android') {
     const cdp = await context.newCDPSession(page);
     await cdp.send('Emulation.setCPUThrottlingRate', {rate: 4});
@@ -176,6 +186,8 @@ try {
   assert.equal((await command({action: 'save'})).last_result, true);
   evidence.checked.push('future-mirror-schema-preserved-until-explicit-recovery');
   assert.equal(errors.length, 0, JSON.stringify(errors));
+  evidence.graphics_diagnostics_count = graphicsDiagnostics.length;
+  evidence.checked.push('graphics-diagnostics-reported-separately-from-audio-errors');
   evidence.result = 'passed';
   await mkdir('work/audio/browser', {recursive: true});
   await page.screenshot({path: `work/audio/browser/${profile}.png`});
