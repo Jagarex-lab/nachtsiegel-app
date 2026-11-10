@@ -42,6 +42,7 @@ var message := "Lokale Testversion · keine Echtgeldfunktionen"
 var layout: Control
 var density := 1.0
 var compact := false
+var short_landscape := false
 var portrait := false
 var deck_tab := "library"
 var match_use_starter := false
@@ -180,7 +181,7 @@ func _render_now() -> void:
 	elif page in ["builder","collection"]:builder()
 	elif page=="settings":settings_page()
 	elif page=="battle":
-		if portrait or layout.size.y<296:rotation_page()
+		if portrait or layout.size.y<248:rotation_page()
 		else:battle()
 	queue_redraw()
 func lobby() -> void:
@@ -281,25 +282,34 @@ func battle() -> void:
 	var top=row()
 	button("menu","Menü",confirm_menu,top).size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
 	var center=VBoxContainer.new();center.size_flags_horizontal=Control.SIZE_EXPAND_FILL;center.add_theme_constant_override("separation",1);top.add_child(center)
-	text(battle_heading(s),center,14)
+	var heading=battle_heading(s)
+	if short_landscape and mode=="alpha" and s.stage!="battle":
+		heading={"mulligan":"STARTHAND · Karten zum Tauschen antippen","origins":"URSPRUNG · Eigenen Pfad antippen","second":"ZWEITE MÖGLICHKEIT · Karte oder Ursprung ändern"}.get(s.stage,heading)
+	text(heading,center,13 if short_landscape else 14)
 	if mode=="alpha" and s.stage!="battle":
 		text("DU %d LP  ·  KI %d LP  ·  FÜNF PFADE" % [s.hero.hp,s.enemy.hp],center,13)
 		button("log","Protokoll",show_log,top).size_flags_horizontal=Control.SIZE_SHRINK_END
 		opening();return
 	var stats=row(center)
-	text("DU %d LP · Schild %d · Block %d" % [s.hero.hp,s.hero.ward,s.hero.block],stats,13)
-	var res=text("Energie %d / Resonanz %d" % [s.hero.energy,s.hero.resonance],stats,13);res.add_theme_color_override("font_color",T.ENERGY)
-	text("KI %d LP · Schild %d · Block %d" % [s.enemy.hp,s.enemy.ward,s.enemy.block],stats,13)
+	var own_caption=("DU %d LP · S%d B%d" if short_landscape else "DU %d LP · Schild %d · Block %d") % [s.hero.hp,s.hero.ward,s.hero.block]
+	var own_stats=text(own_caption,stats,12 if short_landscape else 13)
+	own_stats.tooltip_text="Dein Held: %d Leben, %d Schild, %d Block. S = Schild, B = Block; Mehr / Ressourcen erklärt beide Werte." % [s.hero.hp,s.hero.ward,s.hero.block]
+	var res=text("Energie %d / Resonanz %d" % [s.hero.energy,s.hero.resonance],stats,12 if short_landscape else 13);res.add_theme_color_override("font_color",T.ENERGY)
+	var enemy_caption=("KI %d LP · S%d B%d" if short_landscape else "KI %d LP · Schild %d · Block %d") % [s.enemy.hp,s.enemy.ward,s.enemy.block]
+	var enemy_stats=text(enemy_caption,stats,12 if short_landscape else 13)
+	enemy_stats.tooltip_text="Gegnerischer Held: %d Leben, %d Schild, %d Block. S = Schild, B = Block." % [s.enemy.hp,s.enemy.ward,s.enemy.block]
 	if mode=="alpha":
 		_relic_slot(top)
 		if not armed_impulses().is_empty():button("armed_impulses","REAKTIV\n%d" % armed_impulses().size(),show_armed_impulses,top).size_flags_horizontal=Control.SIZE_SHRINK_END
 	button("log","Protokoll",show_log,top).size_flags_horizontal=Control.SIZE_SHRINK_END
 	button("restart","Neu",func():show_modal("Neue Partie?",func(box):button("confirm_restart","Neu starten",func():close_modal();start_battle(),box)),top).size_flags_horizontal=Control.SIZE_SHRINK_END
 	_battle_board()
-	var hand=row();hand.custom_minimum_size.y=66 if compact else 80
+	var hand_height=60 if short_landscape else 66 if compact else 80
+	var hand=row();hand.custom_minimum_size.y=hand_height
 	for index in s.hero.hand.size():
 		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card);view.selected=selected==index
-		view.custom_minimum_size=Vector2(44,66 if compact else 80);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		view.title_maximum_size=11 if short_landscape else 12;view.title_available_height=float(hand_height-29) if short_landscape else -1.0
+		view.custom_minimum_size=Vector2(44,hand_height);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		view.size_flags_stretch_ratio=1.4 if selected==index else 1.0
 		_bind_press(view,func():_hand_click(index));hand.add_child(view);hand_views.append(view)
 	var bar=row()
@@ -317,11 +327,13 @@ func battle() -> void:
 	if selected>=0 or not action_mode.is_empty():button("cancel_selection","Abbrechen",cancel_selection,bar).size_flags_horizontal=Control.SIZE_SHRINK_END
 	if action_mode=="converge":actions.convergence=primary
 	if s.hero.pendingShift!=null:button("skip","Überspringen",func():act("skipShift",["hero"]),bar).size_flags_horizontal=Control.SIZE_SHRINK_END
-	status=text(phase_message(),body,12);status.max_lines_visible=1
+	status=null
+	if not short_landscape:
+		status=text(phase_message(),body,12);status.max_lines_visible=1
 func _battle_board(preparing: bool=false) -> void:
 	# The opening and combat share these exact lane controls and state data.
 	var m=session.model;var s: Dictionary=m.state
-	var board=VBoxContainer.new();board.size_flags_vertical=Control.SIZE_EXPAND_FILL;board.add_theme_constant_override("separation",3);body.add_child(board)
+	var board=VBoxContainer.new();board.size_flags_vertical=Control.SIZE_EXPAND_FILL;board.add_theme_constant_override("separation",1 if short_landscape else 3);body.add_child(board)
 	for side in ["enemy","hero"]:
 		var line=row(board);line.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		for lane in 5:
@@ -447,16 +459,18 @@ func field_click(side: String, lane: int) -> void:
 func opening() -> void:
 	var s: Dictionary=session.model.state
 	var instructions={"mulligan":"1 / 3 · Tippe Karten zum Tauschen an. Details zeigt den vollständigen Kartentext.","origins":"2 / 3 · "+("Du beginnst. " if s.coin=="hero" else "Die KI beginnt. ")+"Wähle deinen Ursprung auf einem leuchtenden eigenen Pfad.","second":"3 / 3 · Zweite Möglichkeit: optional einmal Ursprung ändern und einmal eine Handkarte tauschen."}
-	text(instructions.get(s.stage,"Vorbereitung"),body,13)
+	if not short_landscape:text(instructions.get(s.stage,"Vorbereitung"),body,13)
 	_battle_board(true)
-	var hand=row();hand.custom_minimum_size.y=80 if compact else 112
+	var hand_height=60 if short_landscape else 80 if compact else 112
+	var hand=row();hand.custom_minimum_size.y=hand_height
 	var signature=JSON.stringify(s.hero.hand)
 	var animate=signature!=opening_hand_signature and not session.profile.reduced_motion
 	opening_hand_signature=signature
 	for index in s.hero.hand.size():
 		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card)
 		view.selected=mulligan_indices.has(index) if s.stage=="mulligan" else selected==index
-		view.custom_minimum_size=Vector2(44,80 if compact else 112);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		view.title_maximum_size=11 if short_landscape else 12;view.title_available_height=float(hand_height-29) if short_landscape else -1.0
+		view.custom_minimum_size=Vector2(44,hand_height);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		view.tooltip_text=view.card.name+"\n"+str(view.card.get("description",""))
 		_bind_press(view,func():_opening_hand_click(index));hand.add_child(view);hand_views.append(view)
 		if s.stage=="mulligan":
@@ -849,8 +863,9 @@ func _layout() -> void:
 	if OS.has_feature("web") and page=="battle" and next_portrait!=portrait:rotation_block_until=Time.get_ticks_msec()+180
 	portrait=next_portrait
 	compact=layout.size.y<380
+	short_landscape=not portrait and layout.size.y<296
 	for side in ["left","right","top","bottom"]:outer_margin.add_theme_constant_override("margin_"+side,4 if compact else 8)
-	body.add_theme_constant_override("separation",2 if compact or page=="battle" else 4)
+	body.add_theme_constant_override("separation",1 if short_landscape and page=="battle" else 2 if compact or page=="battle" else 4)
 
 func _feedback_events(events: Array, previous: Dictionary) -> void:
 	if not is_instance_valid(feedback) or is_instance_valid(modal):return
@@ -940,6 +955,14 @@ func preview_deck(power: String, starter: bool) -> void:
 		button("preview_select","DIESES DECK WÄHLEN",func():close_modal();select_power(power,starter),box)
 	)
 func rotation_page() -> void:
+	if not portrait:
+		# A short landscape window needs more vertical space, not another turn.
+		# Keep the safe exit pinned while the explanation can scroll.
+		var top=row();text("MEHR PLATZ FÜR FÜNF PFADE",top,18)
+		button("rotate_menu","Sicher zum Menü",confirm_menu,top).size_flags_horizontal=Control.SIZE_SHRINK_END
+		var box=scroll()
+		text("Blende die Browserleisten kurz aus oder vergrößere das Fenster. Unter 248 nutzbaren Pixeln würden Karten und Touchflächen zu klein. Dein Spielzustand bleibt erhalten.",box,16)
+		return
 	var center=CenterContainer.new();center.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(center)
 	var box=VBoxContainer.new();box.custom_minimum_size.x=minf(330,layout.size.x-24);box.add_theme_constant_override("separation",16);center.add_child(box)
 	text("↻",box,64).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER

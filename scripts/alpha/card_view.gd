@@ -17,6 +17,9 @@ var convergence := false
 var broken_convergence := false
 var library := false
 var owner_label := ""
+# Optional view-only constraints for browser-toolbar hand heights.
+var title_maximum_size := 12
+var title_available_height := -1.0
 func _ready() -> void:
 	for key in ["normal","hover","pressed","focus","disabled"]:add_theme_stylebox_override(key,StyleBoxEmpty.new())
 	mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
@@ -128,6 +131,8 @@ func board_status() -> Dictionary:
 	if int(unit.get("extra_attacks",0))>0:extra.append("×"+str(1+int(unit.extra_attacks)))
 	return {"shield":maxi(0,int(unit.get("ward",0))),"block":maxi(0,int(unit.get("block",0))),"stun":stun,"ready":combat_ready,"ready_short":ready,"extra_short":" ".join(extra)}
 func title_paragraph(width: float, maximum_size: int=12, available_height: float=-1) -> TextParagraph:
+	maximum_size=mini(maximum_size,title_maximum_size)
+	if title_available_height>=0:available_height=minf(available_height,title_available_height) if available_height>=0 else title_available_height
 	var paragraph: TextParagraph
 	for fs in [12,11,10,9,8]:
 		if fs>maximum_size:continue
