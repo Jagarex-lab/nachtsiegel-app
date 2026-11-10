@@ -1,0 +1,42 @@
+[
+  {
+    "id": "EXP-1",
+    "title": "Salz der verlorenen Häfen",
+    "status": "VORSCHLAG",
+    "focus": "Handel und Flucht",
+    "region": "Keldor-Becken",
+    "rule": "Keine neue Macht, Wesensart oder Hauptkartenart"
+  },
+  {
+    "id": "EXP-2",
+    "title": "Die zwölfte Unterschrift",
+    "status": "VORSCHLAG",
+    "focus": "Erbrecht und Erinnerung",
+    "region": "Serev-Küste",
+    "rule": "Keine neue Macht, Wesensart oder Hauptkartenart"
+  },
+  {
+    "id": "EXP-3",
+    "title": "Wurzeln ohne Boden",
+    "status": "VORSCHLAG",
+    "focus": "Ökologie und Einwilligung",
+    "region": "Namar-Hochland",
+    "rule": "Keine neue Macht, Wesensart oder Hauptkartenart"
+  },
+  {
+    "id": "EXP-4",
+    "title": "Die Nacht der Prognosen",
+    "status": "VORSCHLAG",
+    "focus": "Prognosen und Vertrauen",
+    "region": "Ilyr-Wildmark",
+    "rule": "Keine neue Macht, Wesensart oder Hauptkartenart"
+  },
+  {
+    "id": "EXP-5",
+    "title": "Der Pass der zwei Winter",
+    "status": "VORSCHLAG",
+    "focus": "Grenzen und Familien",
+    "region": "Veyr-Stufen",
+    "rule": "Keine neue Macht, Wesensart oder Hauptkartenart"
+  }
+]
