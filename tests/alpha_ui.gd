@@ -17,9 +17,26 @@ func snapshot(tag: String) -> void:
 	root.get_texture().get_image().save_png("res://work/alpha/"+tag+".png")
 func _initialize() -> void:call_deferred("run")
 func run() -> void:
+	check(str(ProjectSettings.get_setting_with_override("application/run/main_scene")).ends_with("alpha_shell.tscn"),"ORAFOLD is the regular main scene")
 	app=Shell.new();root.add_child(app);await settle()
 	for dimensions in [Vector2i(844,390),Vector2i(915,412),Vector2i(844,320),Vector2i(1280,720),Vector2i(1600,900)]:
 		root.size=dimensions;await settle();app.page="lobby";app.render();await settle()
+		for id in ["start","builder","collection","settings"]:
+			check(app.actions.has(id),"functional main menu "+id)
+			var rect=app.actions[id].get_global_rect()
+			check(rect.size.x>=44 and rect.size.y>=44,"main menu touch size "+id)
+			check(Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(rect),"main menu within viewport "+id)
+		for id in ["archive","mode_legacy","mode_alpha"]:check(not app.actions.has(id),"no public compatibility navigation "+id)
+		await tap(app.actions.collection);check(app.page=="collection" and not app.actions.has("save_deck") and not app.actions.has("add_oa-neutral-c01"),"read-only functional collection")
+		await tap(app.actions["card_oa-neutral-c01"]);check(is_instance_valid(app.modal),"collection actual card detail");await tap(app.actions.modal_close)
+		await tap(app.actions.builder_back)
+		await tap(app.actions.settings)
+		var powers=["houses","stillwatch","morph","ninth","houses"]
+		var power=powers[[Vector2i(844,390),Vector2i(915,412),Vector2i(844,320),Vector2i(1280,720),Vector2i(1600,900)].find(dimensions)]
+		await tap(app.actions["faction_"+power]);check(preload("res://scripts/alpha/session.gd").new().profile.faction==power,"deck selection persisted")
+		await tap(app.actions.motion);var reduced=app.session.profile.reduced_motion
+		check(preload("res://scripts/alpha/session.gd").new().profile.reduced_motion==reduced,"motion setting persisted")
+		await tap(app.actions.settings_back)
 		check(app.actions.start.get_global_rect().size.y>=44,"start touch")
 		await snapshot("lobby-%dx%d" % [dimensions.x,dimensions.y])
 		await tap(app.actions.start)

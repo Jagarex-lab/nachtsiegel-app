@@ -40,6 +40,7 @@ jobs:
         run: |
           tools/build_alpha.sh
           tools/build_archive_qa.sh
+          tools/build_legacy_ui_qa.sh
       - name: Package isolated candidate for browser verification
         run: python3 tools/package_alpha.py > work/alpha/package-result.json
       - uses: actions/upload-artifact@v4
@@ -48,6 +49,7 @@ jobs:
           path: |
             work/alpha/web/
             work/alpha/archive-web/
+            work/alpha/legacy-web/
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -90,16 +92,29 @@ jobs:
           QA_ENGINES: ${{ matrix.engine }}
         run: |
           python3 -m http.server 8789 --bind 127.0.0.1 --directory work/alpha/archive-web > work/alpha/archive-http.log 2>&1 &
-          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
-          python3 tools/wait_http.py http://127.0.0.1:8789/build-info.json http://127.0.0.1:8788/build-info.json
+          mkdir -p work/alpha/site
+          cp -a work/alpha/web work/alpha/site/nachtsiegel-app
+          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/site > work/alpha/http.log 2>&1 &
+          python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8789/build-info.json http://127.0.0.1:8788/nachtsiegel-app/build-info.json http://127.0.0.1:8787/build-info.json
           GAME_URL=http://127.0.0.1:8789/ QA_PREFIX=alpha/archive node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
-          GAME_URL=http://127.0.0.1:8788/ node tools/alpha_browser_qa.cjs
+          GAME_URL=http://127.0.0.1:8788/nachtsiegel-app/ node tools/alpha_browser_qa.cjs
+      - name: Preserved Legacy UI duel in private QA export
+        if: matrix.engine == 'chromium'
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          QA_ENGINES: chromium
+          QA_PROFILES: android
+          QA_LEGACY_ONLY: '1'
+          GAME_URL: http://127.0.0.1:8787/
+        run: node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1
       - name: Repeated fresh WebKit cold boots on both ruleset entry points
         if: matrix.engine == 'webkit'
         env:
           NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
           EXPECTED_COMMIT: ${{ github.sha }}
-          GAME_URL: http://127.0.0.1:8788/
+          GAME_URL: http://127.0.0.1:8788/nachtsiegel-app/
           ARCHIVE_URL: http://127.0.0.1:8789/
         run: node tools/alpha_boot_qa.cjs > work/alpha/cold-boot.log 2>&1
       - name: Package the browser-verified candidate

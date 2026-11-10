@@ -34,9 +34,6 @@ var qa_enabled := false
 var clock := 0.0
 var audio_sliders: Dictionary={}
 func _ready() -> void:
-	if OS.has_feature("alpha_build") and not get_tree().root.has_meta("alpha_archive"):
-		get_tree().call_deferred("change_scene_to_file","res://scenes/alpha_shell.tscn")
-		return
 	if store==null: store=preload("res://scripts/progress_store.gd").new()
 	get_node("/root/GameAudio").apply(store.data.settings.audio)
 	Brand.apply_window_title()
@@ -122,7 +119,6 @@ func show_page(page: String) -> void:
 	elif page=="av":_audio_settings()
 	elif page=="inspect":_inspect_card(str(get_meta("inspect_id","ash_watch")))
 func _start_screen() -> void:
-	_button("alpha_preview","ORAFOLD · ALPHA 0.1",Rect2(60,35,650,110),func():get_tree().change_scene_to_file("res://scenes/alpha_shell.tscn"))
 	var x=logical_width/2
 	_panel(Rect2(x-600,160,1200,570))
 	var name=_label(Brand.display_name(),Rect2(x-560,210,1120,145),80,T.TEXT,true,24);name.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER

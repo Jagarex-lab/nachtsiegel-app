@@ -44,7 +44,7 @@ jobs:
         run: |
           mkdir -p work/build/web
           game_name="nachtsiegel-${GITHUB_SHA:0:12}"
-          godot --headless --path . --export-debug 'Web QA' "work/build/web/$game_name.html"
+          godot --headless --path . --export-debug 'Archive Web QA' "work/build/web/$game_name.html"
           mv "work/build/web/$game_name.html" work/build/web/index.html
           test -s "work/build/web/$game_name.wasm"
           mkdir -p work/build/web/media
@@ -99,9 +99,13 @@ jobs:
           GAME_URL: http://127.0.0.1:8788/
         run: |
           tools/build_alpha.sh
+          tools/build_legacy_ui_qa.sh
           python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
           python3 tools/wait_http.py http://127.0.0.1:8788/build-info.json
           node tools/alpha_browser_qa.cjs
+          python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8787/build-info.json
+          QA_ENGINES=chromium QA_PROFILES=android QA_LEGACY_ONLY=1 GAME_URL=http://127.0.0.1:8787/ node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1
           mv work/build/web work/build/archive-web
           cp -a work/alpha/web work/build/web
       - name: Preserve QA evidence and browser build

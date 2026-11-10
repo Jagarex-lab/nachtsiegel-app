@@ -16,6 +16,7 @@ var convergence_lanes: Array=[]
 var mulligan_indices: Array=[]
 var deck: Array=[]
 var collection_mode := "alpha"
+var collection_only := false
 var filter_text := ""
 var filter_type := "all"
 var filter_cost := "all"
@@ -56,6 +57,8 @@ func _ready() -> void:
 	if OS.has_feature("web"):
 		density=maxf(1,float(JavaScriptBridge.eval("window.devicePixelRatio||1")));qa_enabled=bool(JavaScriptBridge.eval("new URLSearchParams(location.search).get('qa')==='1'"))
 		JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.1';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.1')")
+	faction=session.profile.faction;difficulty=int(session.profile.difficulty)
+	if OS.has_feature("legacy_ui_qa"):mode="legacy";faction="start"
 	feedback=preload("res://scripts/alpha/feedback.gd").new();feedback.z_index=100;add_child(feedback)
 	render()
 func _process(delta: float) -> void:
@@ -111,7 +114,8 @@ func _render_now() -> void:
 	_layout()
 	_clear()
 	if page=="lobby":lobby()
-	elif page=="builder":builder()
+	elif page in ["builder","collection"]:builder()
+	elif page=="settings":settings_page()
 	elif page=="battle":
 		if layout.size.y<296:
 			text("Mehr Platz für das Spielfeld benötigt",body,20)
@@ -120,29 +124,40 @@ func _render_now() -> void:
 		else:battle()
 	queue_redraw()
 func lobby() -> void:
-	var top=row();text("ORAFOLD  /  ALPHA 0.1",top,24);button("archive","Prototyp-Archiv",func():get_tree().root.set_meta("alpha_archive",true);get_tree().change_scene_to_file("res://scenes/front_end.tscn"),top)
-	text("Zwei getrennte Regelwerke. Vollständige lokale Partie gegen KI. Keine Onlinekonten, keine Käufe.")
-	var options=row()
-	button("mode_alpha",("● " if mode=="alpha" else "○ ")+"ORAFOLD",func():mode="alpha";faction="houses";render(),options)
-	button("mode_legacy",("● " if mode=="legacy" else "○ ")+"LEGACY",func():mode="legacy";faction="start";render(),options)
-	dropdown("difficulty",["Normal","Einfach","Taktisch"],"Einfach" if difficulty==1 else "Taktisch" if difficulty==5 else "Normal",func(v):difficulty={"Normal":2,"Einfach":1,"Taktisch":5}[v],options)
+	text("ORAFOLD  /  ALPHA 0.1",body,26)
+	text("30 Leben · 30 Karten · fünf Pfade · Partie gegen KI")
 	var box=scroll()
+	text("Dein Deck: "+(AlphaCatalog.new().source.powers[faction] if mode=="alpha" else "Legacy-Testprofil"),box,18)
+	var primary=row(box);var secondary=row(box)
+	button("start","SPIELEN",start_battle,primary)
+	button("builder","DECKBUILDER",func():open_cards(false),primary)
+	button("collection","SAMMLUNG",func():open_cards(true),secondary)
+	button("settings","EINSTELLUNGEN",func():page="settings";render(),secondary)
+	text("Alpha-Testversion · Illustrationen: Platzhalter · lokaler Fortschritt",body,12)
+func open_cards(read_only: bool) -> void:
+	collection_mode=mode;collection_only=read_only;save_key=faction;deck=current_deck()
+	filter_power="all";filter_type="all";filter_cost="all";filter_rarity="all";filter_text=""
+	page="collection" if read_only else "builder";render()
+func save_preferences() -> void:
+	if mode=="alpha":session.profile.faction=faction
+	session.profile.difficulty=difficulty;session.save_profile()
+func settings_page() -> void:
+	var top=row();text("EINSTELLUNGEN",top,22);button("settings_back","Hauptmenü",func():page="lobby";render(),top)
+	var box=scroll()
+	text("Starterdeck / gespeichertes Deck",box,18)
 	if mode=="alpha":
-		text("30 Leben · 30 Karten · 5 Starthandkarten · Ursprung · Konvergenz",box,16)
-		for power in ["houses","stillwatch","morph","ninth"]:
-			var line=row(box);var label=AlphaCatalog.new().source.powers[power]
-			var b=button("faction_"+power,("● " if faction==power else "○ ")+label,func():faction=power;render(),line);b.modulate=COLORS[power]
-			text({"houses":"Erinnerung / Rückkehr / Opfer","stillwatch":"Schutz / Stasis / Aufschub","morph":"Anpassung / Schwarm / Positionsspiel","ninth":"Kausalität / Umleitung / Echos"}[power],line)
-	else:
-		text("Originalregelwerk · 100 Karten / 16 Fähigkeiten · 20–25 Karten · Original-KI",box,16)
-		for id in LegacyCatalog.new().deck_ids():button("faction_"+id,("● " if faction==id else "○ ")+id.to_upper(),func():faction=id;render(),box)
-	text(message,box,12)
-	var bottom=row()
-	button("start","PARTIE STARTEN",start_battle,bottom)
-	button("builder","DECKS / SAMMLUNG",func():collection_mode=mode;save_key=faction;deck=current_deck();filter_power="all";filter_type="all";filter_cost="all";filter_rarity="all";filter_text="";page="builder";render(),bottom)
-	button("motion","Bewegung: "+("reduziert" if session.profile.reduced_motion else "normal"),func():session.profile.reduced_motion=not session.profile.reduced_motion;session.save_profile();render(),bottom)
-	button("last_replay","LETZTES REPLAY",load_last_replay,bottom,not FileAccess.file_exists("user://orafold_last_replay.json"))
-	text("Arbeitsnamen. Illustrationen sind wiederverwendete Platzhalter. Nicht veröffentlicht.",body,12)
+		var power_row: HBoxContainer
+		var power_index=0
+		for power in AlphaCatalog.new().deck_ids():
+			if power_index%2==0:power_row=row(box)
+			power_index+=1
+			var b=button("faction_"+power,("● " if faction==power else "○ ")+AlphaCatalog.new().source.powers[power],func():faction=power;save_preferences();render(),power_row)
+			b.modulate=COLORS[power]
+	var options=row(box)
+	dropdown("difficulty",["Normal","Einfach","Taktisch"],"Einfach" if difficulty==1 else "Taktisch" if difficulty==5 else "Normal",func(v):difficulty={"Normal":2,"Einfach":1,"Taktisch":5}[v];save_preferences();render(),options)
+	button("motion","Bewegung: "+("reduziert" if session.profile.reduced_motion else "normal"),func():session.profile.reduced_motion=not session.profile.reduced_motion;save_preferences();render(),options)
+	if FileAccess.file_exists("user://orafold_last_replay.json"):button("last_replay","LETZTES REPLAY ÖFFNEN",load_last_replay,box)
+	text("Deckwahl, Schwierigkeit und Bewegung werden lokal gespeichert. Keine Konten oder Käufe.",box,14)
 func current_deck() -> Array:
 	var key=mode+":"+faction
 	if session.profile.decks.has(key) and session.profile.decks[key] is Dictionary:
@@ -303,7 +318,7 @@ func inspect(c: Dictionary) -> void:
 		if c.kind=="creature":text("Angriff%d / Leben%d" % [c.atk,c.hp],box,22)
 		text(str(c.get("description","")),box,20)
 		text("Vollständig implementiert · Illustration: Platzhalter",box,12)
-		button("inspect_target","ZIEL WÄHLEN",close_modal,box)
+		button("inspect_target","ZIEL WÄHLEN" if page=="battle" else "SCHLIESSEN",close_modal,box)
 	)
 func show_log() -> void:
 	show_modal("KAMPFPROTOKOLL / REPLAY",func(box):
@@ -329,7 +344,7 @@ func confirm_menu() -> void:
 		button("confirm_menu","Zum Hauptmenü",func():close_modal();page="lobby";render(),box)
 	)
 func builder() -> void:
-	var top=row();text("SAMMLUNG / DECKBAU · %d Karten" % deck.size(),top,20);button("builder_back","Menü",func():page="lobby";render(),top)
+	var top=row();text("SAMMLUNG · %d Karten" % (55 if mode=="alpha" else 100) if collection_only else "DECKBUILDER · %d / 30 Karten" % deck.size(),top,20);button("builder_back","Menü",func():page="lobby";render(),top)
 	var filters=row()
 	var search=LineEdit.new();search.placeholder_text="Karte suchen";search.text=filter_text;search.custom_minimum_size=Vector2(100,44);search.size_flags_horizontal=Control.SIZE_EXPAND_FILL;filters.add_child(search)
 	search.text_submitted.connect(func(v):filter_text=v;render());actions.search=search
@@ -351,9 +366,11 @@ func builder() -> void:
 		if filter_power!="all" and c.get("faction",c.order)!=filter_power:continue
 		var line=row(box);line.custom_minimum_size.y=50
 		button("card_"+c.id,"%s · %d Energie · %s" % [c.name,c.cost,"%d Angriff / %d Leben" % [c.atk,c.hp] if c.kind=="creature" else "Ereignis" if c.kind=="event" else "Relikt"],func():inspect(c),line)
+		if collection_only:continue
 		button("remove_"+c.id,"−",func():_remove_card(c.id),line,not deck.has(c.id)).size_flags_horizontal=Control.SIZE_SHRINK_END
 		text(str(deck.count(c.id)),line,16).size_flags_horizontal=Control.SIZE_SHRINK_CENTER
 		button("add_"+c.id,"+",func():deck.append(c.id);render(),line,deck.count(c.id)>=(1 if c.rarity=="legendary" else 3)).size_flags_horizontal=Control.SIZE_SHRINK_END
+	if collection_only:return
 	var bottom=row()
 	button("save_deck","DECK SPEICHERN",func():var result=session.save_deck(collection_mode+":"+faction,deck,collection_mode);message=result.get("message","");render(),bottom)
 	button("load_deck","GESPEICHERTES LADEN",func():mode=collection_mode;deck=current_deck();message="Deck geladen.";render(),bottom)

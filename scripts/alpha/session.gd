@@ -8,7 +8,7 @@ var model
 var mode := "alpha"
 var setup: Dictionary={}
 var commands: Array=[]
-var profile: Dictionary={"version":1,"decks":{},"wins":0,"reduced_motion":false,"last_seed":8802026}
+var profile: Dictionary={"version":1,"decks":{},"wins":0,"reduced_motion":false,"last_seed":8802026,"faction":"houses","difficulty":2}
 var legacy_text: Dictionary
 func _init() -> void:
 	legacy_text=JSON.parse_string(FileAccess.get_file_as_string("res://data/legacy/display_de.json")).cards
@@ -17,6 +17,8 @@ func _init() -> void:
 		if parser.parse(FileAccess.get_file_as_string(PROFILE))==OK:
 			var loaded=parser.data
 			if loaded is Dictionary and loaded.get("version")==1 and loaded.get("decks") is Dictionary:
+				if loaded.get("faction") in ["houses","stillwatch","morph","ninth"]:profile.faction=loaded.faction
+				if loaded.get("difficulty") in [1,2,5]:profile.difficulty=int(loaded.difficulty)
 				if loaded.get("reduced_motion") is bool:profile.reduced_motion=loaded.reduced_motion
 				if loaded.get("wins") is float or loaded.get("wins") is int:profile.wins=maxi(0,int(loaded.wins))
 				if loaded.get("last_seed") is float or loaded.get("last_seed") is int:profile.last_seed=int(loaded.last_seed)
