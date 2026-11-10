@@ -1,0 +1,40 @@
+[
+  {
+    "profile": "desktop",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "dpr": 1,
+    "boot_ms": 3806,
+    "checks": [
+      "isolated QA metadata",
+      "correct campaign title",
+      "rendered full viewport canvas",
+      "real pointer/touch chapter start and choice",
+      "44px controls",
+      "choice and safe scene reload persistence",
+      "real UI resume"
+    ],
+    "errors": []
+  },
+  {
+    "profile": "portrait",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "dpr": 2,
+    "boot_ms": 2884,
+    "checks": [
+      "isolated QA metadata",
+      "correct campaign title",
+      "rendered full viewport canvas",
+      "real pointer/touch chapter start and choice",
+      "44px controls",
+      "choice and safe scene reload persistence",
+      "real UI resume"
+    ],
+    "errors": []
+  }
+]

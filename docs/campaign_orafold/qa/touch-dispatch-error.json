@@ -1,0 +1,45 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: ERROR: Condition \"!is_inside_tree()\" is true. Returning: false\n   at: can_process (scene/main/node.cpp:902)\nERROR: Condition \"!is_inside_tree()\" is true. Returning: false\n   at: can_process (scene/main/node.cpp:902)\nERROR: Condition \"!is_inside_tree()\" is true. Returning: false\n   at: can_process (scene/main/node.cpp:902)\nERROR: Condition \"!is_inside_tree()\" is true. Returning: false\n   at: can_process (scene/main/node.cpp:902)\nERROR: Condition \"!is_inside_tree()\" is true. Returning: false\n   at: can_process (scene/main/node.cpp:902)\nERROR: Condition \"!is_inside_tree()\" is true. Returning: false\n   at: can_process (scene/main/node.cpp:902)\nERROR: Condition \"!is_inside_tree()\" is true. Returning: false\n   at: can_process (scene/main/node.cpp:902)\n\n14 !== 0\n",
+  "errors": [
+    "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false",
+    "   at: can_process (scene/main/node.cpp:902)",
+    "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false",
+    "   at: can_process (scene/main/node.cpp:902)",
+    "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false",
+    "   at: can_process (scene/main/node.cpp:902)",
+    "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false",
+    "   at: can_process (scene/main/node.cpp:902)",
+    "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false",
+    "   at: can_process (scene/main/node.cpp:902)",
+    "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false",
+    "   at: can_process (scene/main/node.cpp:902)",
+    "ERROR: Condition \"!is_inside_tree()\" is true. Returning: false",
+    "   at: can_process (scene/main/node.cpp:902)"
+  ],
+  "state": {
+    "actions": {
+      "next": {
+        "disabled": false,
+        "rect": [
+          34,
+          519,
+          322,
+          52
+        ]
+      }
+    },
+    "compact": true,
+    "flags": {
+      "approach": "preserve"
+    },
+    "logical_viewport": [
+      390,
+      844
+    ],
+    "save_error": "",
+    "scene_id": "preserve",
+    "screen": "dialogue",
+    "title": "Die unbeschriebene Zeile",
+    "validation_errors": []
+  }
+}
