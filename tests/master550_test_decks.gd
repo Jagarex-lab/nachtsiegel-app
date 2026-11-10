@@ -159,9 +159,10 @@ func shell_checks(entries: Array) -> void:
 	var app = Shell.new()
 	root.add_child(app);await settle()
 	var fixture_saved: Dictionary = {}
-	for power in Catalog.new().deck_ids():fixture_saved["alpha:" + power] = {"mode":"alpha", "cards":Catalog.new().deck(power)}
+	for power in Catalog.new().deck_ids():fixture_saved["alpha:" + power] = {"mode":"alpha", "cards":Catalog.new().deck(power), "catalog_profile":Session.PRODUCTION_PROFILE}
 	app.session.profile.decks = fixture_saved.duplicate(true)
 	app.session.profile.reduced_motion = true
+	check(app.session.save_profile(), "valid version2 saved-deck fixture is accepted before loading templates")
 	app.mode = "alpha";app.faction = "houses"
 	for dimensions in [Vector2i(390, 844), Vector2i(844, 390), Vector2i(320, 568), Vector2i(756, 320)]:
 		root.size = dimensions
