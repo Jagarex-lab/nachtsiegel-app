@@ -17,7 +17,20 @@ const cards=[...JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).card
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
    const tap=async r=>{await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
    const action=async id=>{if(id==='convergence'&&!(await state()).actions[id])await action('actions');await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});let previous=await state();if(id==='convergence'&&!previous.actions[id]){await action('actions');previous=await state();}await tap(previous.actions[id].rect);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});};
-   const shot=tag=>page.screenshot({path:`work/alpha/${engine}-${name}-${tag}.png`});
+   const capture=engine==='chromium'?await context.newCDPSession(page):null;
+   const shot=async tag=>{
+    let buffer;
+    if(capture){
+     const viewport=page.viewportSize();let expiry;
+     const response=await Promise.race([capture.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:opts.deviceScaleFactor||1}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
+     buffer=Buffer.from(response.data,'base64');
+    }else buffer=await page.screenshot();
+    assert.equal(buffer.readUInt32BE(16),opts.viewport.width*(opts.deviceScaleFactor||1),'native screenshot width');
+    assert.equal(buffer.readUInt32BE(20),opts.viewport.height*(opts.deviceScaleFactor||1),'native screenshot height');
+    assert(buffer.length>20000,'nonempty rendered screenshot');
+    fs.writeFileSync(`work/alpha/${engine}-${name}-${tag}.png`,buffer);
+    return buffer;
+   };
    async function opening(){await action('start');if(!legacyOnly)await action('deck_play');if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);}
    async function playTurn(){
     for(let n=0;n<22;n++){
