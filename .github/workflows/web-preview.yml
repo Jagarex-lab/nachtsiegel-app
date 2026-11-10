@@ -85,6 +85,8 @@ jobs:
       - name: Install browser test runtime
         run: |
           npm install --no-save --package-lock=false playwright@1.65.0
+          # Browser tooling is not a Godot asset directory.
+          touch node_modules/.gdignore
           npx playwright install --with-deps chromium webkit
       - name: Full browser tutorial, saved reload and collection tests
         env:

@@ -2,6 +2,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p work/alpha/web work/xdg/{data,config,cache}
+# Generated browsers, logs and previous builds must never become game assets.
+touch work/.gdignore
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}" XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}" XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 alpha_build_commit="$(git rev-parse HEAD)"
 alpha_build_name="orafold-${alpha_build_commit:0:12}"
