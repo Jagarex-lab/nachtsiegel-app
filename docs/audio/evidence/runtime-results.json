@@ -1,10 +1,10 @@
 {
-  "assertions": 332,
+  "assertions": 389,
   "audio_driver": "Dummy",
   "failures": 0,
   "godot": "4.6.3-stable (official)",
   "measurements": {
-    "burst_10000_dispatch_ms": 61.752,
+    "burst_10000_dispatch_ms": 64.14,
     "peak_voices": 16,
     "pool_size": 16
   },

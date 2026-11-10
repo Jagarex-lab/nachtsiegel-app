@@ -1,0 +1,73 @@
+name: ORAFOLD audio QA (no deployment)
+on:
+  pull_request:
+    branches: [develop]
+    paths:
+      - 'assets/audio/**'
+      - 'scripts/audio/**'
+      - 'data/audio/**'
+      - 'tests/audio/**'
+      - '.github/workflows/audio-qa.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: audio-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audio:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - name: Audio validation dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python3 -m pip install 'numpy==2.3.5'
+      - name: Audio runtime, preview and complete asset checks
+        run: bash tests/audio/run.sh
+      - name: Export disposable audio project
+        run: |
+          python3 tests/audio/build_fixture.py
+          godot --headless --editor --import --path work/audio/fixture --quit
+          godot --headless --path work/audio/fixture --export-debug 'Audio Web QA'
+          godot --headless --path work/audio/fixture --export-debug 'Audio Linux QA'
+          work/audio/fixture/build/audio-qa.x86_64 --headless --audio-driver Dummy -- --audio-fixture-native | tee work/audio/native-export-test.log
+      - name: Isolated browser dependencies
+        run: |
+          npm install --prefix work/audio/browser-tools --no-save --package-lock=false playwright@1.62.1
+          work/audio/browser-tools/node_modules/.bin/playwright install --with-deps chromium webkit
+      - name: Desktop, Android emulation and WebKit audio checks
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/audio/browser-tools/node_modules
+        run: |
+          export CHROMIUM_PATH="$(node -e "process.stdout.write(require('playwright').chromium.executablePath())")"
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory work/audio/fixture/build/web > work/audio/browser-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          AUDIO_QA_PROFILE=chromium node tests/audio/browser_smoke.mjs
+          AUDIO_QA_PROFILE=android node tests/audio/browser_smoke.mjs
+          AUDIO_QA_PROFILE=webkit node tests/audio/browser_smoke.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orafold-audio-qa
+          path: |
+            work/audio/*.log
+            work/audio/*-results.json
+            work/audio/browser/

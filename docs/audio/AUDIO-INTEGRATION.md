@@ -131,6 +131,14 @@ UI-Gain kann nicht ohne Produktentscheidung verlustfrei in den gemeinsamen
 Effektregler eingehen. Der neue Gesamtregler, Umgebung, Mute und reduzierte
 Intensität erhalten eigene Defaults.
 
+Im Web ergänzt ein synchroner localStorage-Mirror das asynchron persistierte
+ConfigFile. Sein eigener Schlüssel beginnt mit `orafold.audio.v1:` und enthält
+den SHA-256 des Settingspfads; er berührt keine Gameplay-Speicherwerte.
+Nur vollständige, streng typisierte Version-1-Daten werden übernommen.
+Unbekannte/ungültige Mirrors bleiben erhalten und blockieren deren Überschreiben;
+Speicherfehler werden gemeldet. Dies wurde einschließlich sofortigem Reload
+und verweigertem Speicherzugriff im echten Webexport geprüft.
+
 Der bereits vorhandene opt-in-Helfer
 `audio.migrate_legacy_settings(old_audio_dictionary)` übernimmt nur `Music` und
 `SFX`, liest oder verändert aber selbst kein altes Profil. Nur einmal bei einer

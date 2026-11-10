@@ -54,6 +54,16 @@ func run() -> void:
 	check(initial.pool_size == 16, "fixed sixteen player pool")
 	check(initial.active_voices == 0, "idle pool")
 	check(initial.music.players == 2, "exactly two music players")
+	var all_players: Array[AudioStreamPlayer] = []
+	for child in manager.get_children():
+		if child is AudioStreamPlayer:
+			all_players.append(child)
+		for grandchild in child.get_children():
+			if grandchild is AudioStreamPlayer:
+				all_players.append(grandchild)
+	check(all_players.size() == 19, "nineteen bounded one-shot/music/ambience players")
+	for player in all_players:
+		check(player.playback_type == AudioServer.PLAYBACK_TYPE_STREAM, "explicit stream backend " + player.name)
 	check(not manager.play_event("unknown.event"), "unknown event returns false")
 	check(not manager.play_event(""), "empty event returns false")
 	check(not manager.set_music("unknown.context"), "unknown music returns false")
@@ -191,6 +201,42 @@ func run() -> void:
 	check(manager.save_settings() == OK, "save recovers after valid destination restored")
 	manager.set_muted(false,false)
 	manager.set_reduced_intensity(false,false)
+	# Validate the browser mirror schema in native pure helpers; browser tests cover actual localStorage.
+	var mirror_settings: Dictionary = Audio.DEFAULT_SETTINGS.duplicate()
+	mirror_settings.music = 0.23
+	mirror_settings.reduced_intensity = true
+	var valid_raw := JSON.stringify({"version":1,"settings":mirror_settings})
+	var decoded: Dictionary = manager._decode_mirror(valid_raw)
+	check(decoded.status == "valid" and decoded.settings == mirror_settings, "complete mirror roundtrip")
+	check(manager._decode_mirror(null).status == "missing", "absent mirror distinguishable from corruption")
+	for invalid_raw in ["{", "[]", "null", "42", "true", "\"text\"", 123, false]:
+		check(manager._decode_mirror(invalid_raw).status == "invalid", "mirror rejects malformed/root type " + str(invalid_raw))
+	for version in [0,2,"1",true,null]:
+		var invalid_version := JSON.stringify({"version":version,"settings":mirror_settings})
+		check(manager._decode_mirror(invalid_version).status == "invalid", "mirror rejects unsupported version " + str(version))
+	check(manager._decode_mirror(JSON.stringify({"version":1})).status == "invalid", "mirror requires settings payload")
+	for key in Audio.DEFAULT_SETTINGS:
+		var incomplete := mirror_settings.duplicate()
+		incomplete.erase(key)
+		check(manager._validate_mirror_settings(incomplete).is_empty(), "mirror requires field " + key)
+	for invalid_number in [NAN,INF,-0.01,1.01,true,"0.5",null]:
+		var invalid_settings := mirror_settings.duplicate()
+		invalid_settings.music = invalid_number
+		check(manager._validate_mirror_settings(invalid_settings).is_empty(), "mirror rejects invalid numeric value " + str(invalid_number))
+	for invalid_flag in [0,1,"true",null]:
+		var invalid_settings := mirror_settings.duplicate()
+		invalid_settings.muted = invalid_flag
+		check(manager._validate_mirror_settings(invalid_settings).is_empty(), "mirror requires boolean flag " + str(invalid_flag))
+	check(manager._validate_mirror_settings([]).is_empty(), "mirror rejects non-dictionary settings")
+	var prior_settings: Dictionary = manager.settings.duplicate()
+	manager._decode_mirror("{\"version\":99,\"settings\":{}}")
+	check(manager.settings == prior_settings, "invalid mirror decoding does not mutate live settings")
+	var prior_key: String = manager._browser_settings_key()
+	var prior_path: String = manager.settings_path
+	manager.settings_path = prior_path + ".other"
+	check(manager._browser_settings_key() != prior_key, "browser mirror namespaced by settings path")
+	manager.settings_path = prior_path
+	check(manager._browser_settings_key() == prior_key, "browser mirror namespace stable across restarts")
 	# Music must stream through bounded players, fade continuously and coalesce rapid changes.
 	check(manager.configure("res://data/audio/audio_catalog.json","res://data/audio/audio_events.json"), "restore production events")
 	var music_names: Array = catalog.music.keys()

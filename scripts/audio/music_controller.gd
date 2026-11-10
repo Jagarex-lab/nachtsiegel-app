@@ -22,6 +22,8 @@ var _bus := "ORAFOLD Music"
 func _ready() -> void:
 	for index in range(2):
 		var player := AudioStreamPlayer.new()
+		# Keep Web playback on the engine mixer so buses and fades stay consistent.
+		player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
 		player.name = "Music%d" % index
 		player.bus = _bus
 		player.volume_db = -80.0

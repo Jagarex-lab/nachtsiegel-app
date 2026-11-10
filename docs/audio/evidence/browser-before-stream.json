@@ -1,0 +1,68 @@
+{
+  "profile": "chromium",
+  "url": "http://127.0.0.1:8765",
+  "checked": [
+    "locked-before-gesture",
+    "gesture-unlock-and-safe-invalid-event"
+  ],
+  "errors": [],
+  "audio_before_gesture": {
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100
+      }
+    ],
+    "analysers": 1,
+    "peak": 0,
+    "rms": 0
+  },
+  "after_unlock_snapshot": {
+    "accepted": 1,
+    "active_voices": 1,
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "menu",
+      "gains": [
+        1,
+        0
+      ],
+      "pending_context": "",
+      "players": 2,
+      "playing": 1,
+      "suspended": false,
+      "transitioning": false
+    },
+    "peak_voices": 1,
+    "pool_size": 16,
+    "rejected": 2,
+    "settings": {
+      "ambience": 0.4,
+      "master": 0.8,
+      "music": 0.55,
+      "muted": false,
+      "reduced_intensity": false,
+      "sfx": 0.75
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "unlocked": true,
+    "web_storage_status": "missing"
+  },
+  "audio_after_gesture": {
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100
+      }
+    ],
+    "analysers": 2,
+    "peak": 0,
+    "rms": 0
+  },
+  "result": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: Exported audio graph produced no measurable signal\n    at file:///workspace/nachtsiegel-audio/tests/audio/browser_smoke.mjs:117:10"
+}

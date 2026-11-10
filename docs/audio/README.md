@@ -53,6 +53,7 @@ python3 scripts/audio/generate_audio.py
 - [Klangstil](AUDIO-STYLE-GUIDE.md): Mächte, Musik, Materialien und Mixbudget.
 - [Assets und Rechte](AUDIO-LICENSES.md): Generator, Herkunft, per-Datei-Hashes.
 - [QA](AUDIO-QA.md): tatsächliche Nachweise und offene Abnahmen.
+- [Abschlussbericht](AUDIO-DELIVERY.md): Lieferumfang, Status und Grenzen.
 
 Audioverfügbarkeit darf niemals die Gültigkeit oder Ausführung eines Spielzugs
 bestimmen. `play_event()` liefert ausschließlich einen Audiostatus. Keine
