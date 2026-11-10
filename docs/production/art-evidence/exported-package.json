@@ -1,0 +1,21 @@
+{
+  "tested_export_commit": "c8b2d1da07e825f59d9cc8dde6f3134161dad7b9",
+  "pck_bytes": 33488316,
+  "pck_sha256": "ab9f113688a6b4d5e04f30c921e9cb5b54ce3958266095438dc2e84edd6c0f2f",
+  "assertions": 97,
+  "failures": 0,
+  "originals": 15,
+  "previews": 15,
+  "project_source_visible": false,
+  "isolation": "Both working directory and --path point to an empty temporary directory; probe script supplied by absolute path.",
+  "scope": "Actual Web PCK loaded and pixel streams decoded by native Godot4.6.3; this is not a browser, deployment or physical-device test.",
+  "native_probe": {
+    "actual_originals": 15,
+    "actual_previews": 15.0,
+    "assertions": 97,
+    "failures": 0,
+    "process_working_directory": "/workspace/orafold-art-production/work/production-art/.pack-inspection.OXAitq",
+    "resource_root": "",
+    "source_files_visible": false
+  }
+}

@@ -124,3 +124,32 @@ resources; a bounded verbose retry imported all 15 originals successfully. The
 initial timeout is not counted as a passed test. A temporary one-image profile
 attempt also lacked writable XDG directories; it was stopped and rerun with
 explicit writable state before recording the successful measurement above.
+
+## Exported package verification
+
+The actual Web export of art head
+`c8b2d1da07e825f59d9cc8dde6f3134161dad7b9` produced a 33,488,316-byte PCK.
+`tools/test_production_art_package.sh PATH_TO_PCK` verifies it from an empty
+temporary working directory with `--path` pointing to that same empty directory.
+The probe script is supplied by absolute path, so it can only load game resources
+from the mounted PCK. The checks also require `res://AGENTS.md`, tests, the
+historical reference PNG and build-time conditioning code to be invisible.
+
+All 97 assertions passed: fifteen 1448 × 1086 full textures and fifteen real
+512 × 384 previews loaded, their actual pixel streams decoded, final display
+states matched the inventory, no commercial clearance was implied, and no project
+source was visible. `art-evidence/exported-package.json` records the exact package
+hash, size, tested commit and probe context. This is a native load of the Web
+artifact, not a browser/device test or a production deployment.
+
+A first local export failed because a template symlink was nested one directory
+too deep; correcting the version-directory link resolved it. A source-directory
+PCK probe then correctly failed the exclusion check: Godot can fall back to
+project files while running a pack from the project directory. That attempt is
+not counted as package proof. The passing probe uses both an empty working
+directory and an empty `--path`; this isolation is required when reusing the test.
+
+The source-quality validator now requires at least native 1024 × 768 for a full
+illustration. An eighth Python test replaces an original with its actual 512px
+derivative and matching low-resolution hash/metadata, then requires rejection.
+A compact derivative cannot acquire original status merely through declaration.

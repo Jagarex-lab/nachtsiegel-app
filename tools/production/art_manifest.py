@@ -124,7 +124,7 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
             width, height, digest = png_info(path)
             if source.get("sha256") != digest or (width, height) != (source.get("original_width"), source.get("original_height")):
                 raise ValueError(f"Original hash/dimensions changed: {card_id}")
-            if width < 672 or height < 500: raise ValueError(f"Insufficient native source dimensions: {card_id}")
+            if width < 1024 or height < 768: raise ValueError(f"Insufficient native source dimensions for full-card inspection: {card_id}")
             if digest in hashes: raise ValueError(f"One image assigned as two originals: {card_id}/{hashes[digest]}")
             hashes[digest] = card_id
             if source.get("status") not in ["concept", "final"]: raise ValueError(f"Unsupported source status: {card_id}")

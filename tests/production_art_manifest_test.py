@@ -122,5 +122,23 @@ class ProductionArtManifest(unittest.TestCase):
                 path.write_text(json.dumps(changed), encoding="utf-8")
                 with self.assertRaises(ValueError): ART.build(root)
 
+    def test_compact_derivative_cannot_masquerade_as_original(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            shutil.copytree(ROOT / "data/production", root / "data/production")
+            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals")
+            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews")
+            sources = ART.load(root / "data/production/art_sources.json")
+            card_id = next(iter(sources["entries"]))
+            preview = root / "assets/cards/previews" / (card_id + ".png")
+            original = root / "assets/cards/originals" / (card_id + ".png")
+            shutil.copyfile(preview, original)
+            width, height, digest = ART.png_info(original)
+            self.assertEqual((width, height), (512, 384))
+            sources["entries"][card_id].update({"sha256": digest, "original_width": width, "original_height": height})
+            (root / "data/production/art_sources.json").write_text(json.dumps(sources), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Insufficient native source dimensions"):
+                ART.build(root)
+
 
 if __name__ == "__main__": unittest.main()
