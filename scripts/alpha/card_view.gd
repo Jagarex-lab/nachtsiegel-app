@@ -4,6 +4,8 @@ const S=preload("res://scripts/alpha/style.gd")
 const ATLAS=preload("res://assets/art/atlas.png")
 const ART=preload("res://scripts/production/art_resolver.gd")
 var card: Dictionary={}
+var _illustration_binding := ""
+var _illustration_data: Dictionary = {}
 var unit: Dictionary={}
 var selected := false
 var target := false
@@ -27,7 +29,10 @@ func _ready() -> void:
 func _ink(value: String, at: Vector2, fs: int, tint: Color, width: float) -> void:
 	draw_string(S.font,at,value,HORIZONTAL_ALIGNMENT_LEFT,width,fs,tint)
 func illustration(aperture: Rect2, tint: Color=Color.WHITE) -> void:
-	var resolved=ART.resolve(card)
+	var binding := ART.binding_key(card, "compact")
+	if binding != _illustration_binding:
+		_illustration_data = ART.resolve(card, "compact"); _illustration_binding = binding
+	var resolved = _illustration_data
 	if resolved.texture!=null:
 		var texture: Texture2D=resolved.texture
 		var original=Vector2(texture.get_size());var aperture_ratio=aperture.size.x/aperture.size.y

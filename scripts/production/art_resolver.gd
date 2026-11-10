@@ -3,7 +3,8 @@ extends RefCounted
 ## A bounded LRU retains only visible/recent originals; missing art remains labelled.
 const MANIFEST_PATH := "res://data/production/art_manifest.json"
 const MAX_CACHE_BYTES := 32 * 1024 * 1024
-const MAX_CACHE_ENTRIES := 8
+const MAX_CACHE_ENTRIES := 48
+const COMPACT_MAX_EDGE := 512
 const MAX_SOURCE_PIXELS := 4096 * 4096
 static var _manifest: Dictionary = {}
 static var _manifest_loaded := false
@@ -12,6 +13,8 @@ static var _lru: Array[String] = []
 static var _cache_bytes := 0
 static var _loads := 0
 static var _hits := 0
+static var _generation := 0
+static var _thumbnail_builds := 0
 
 static func safe_asset_path(value: String) -> bool:
 	if not value.begins_with("res://assets/"): return false
@@ -31,12 +34,18 @@ static func manifest_entry(card_id: String) -> Dictionary:
 	_load_manifest()
 	return _manifest.get(card_id, {}).duplicate(true)
 
-static func _texture(path: String) -> Texture2D:
+static func binding_key(card: Dictionary, profile := "full") -> String:
+	var art: Dictionary = card.get("art", {}) if card.get("art", {}) is Dictionary else {}
+	return JSON.stringify([card.get("id", ""), card.get("schema_version", 1), art.get("status", "shared_concept"), art.get("asset_id", ""), art.get("path", ""), profile, _generation])
+
+static func _texture(path: String, profile: String) -> Texture2D:
 	if not safe_asset_path(path): return null
-	if _cache.has(path):
+	if profile not in ["full", "compact"]: return null
+	var cache_key := path + "|" + profile
+	if _cache.has(cache_key):
 		_hits += 1
-		_lru.erase(path); _lru.append(path)
-		return _cache[path].texture
+		_lru.erase(cache_key); _lru.append(cache_key)
+		return _cache[cache_key].texture
 	var parent := "res://"
 	for part in path.trim_prefix("res://").split("/"):
 		var directory := DirAccess.open(parent)
@@ -47,6 +56,18 @@ static func _texture(path: String) -> Texture2D:
 	if not value is Texture2D: return null
 	var pixels := int(value.get_width()) * int(value.get_height())
 	if pixels <= 0 or pixels > MAX_SOURCE_PIXELS: return null
+	if profile == "compact" and maxi(value.get_width(), value.get_height()) > COMPACT_MAX_EDGE:
+		# This runtime preview never replaces or enlarges the original. Compact
+		# controls need a much smaller GPU texture than the full card inspector.
+		var image: Image = value.get_image()
+		if image == null or image.is_empty(): return null
+		var ratio := float(COMPACT_MAX_EDGE) / float(maxi(image.get_width(), image.get_height()))
+		var width := maxi(1, roundi(float(image.get_width()) * ratio))
+		var height := maxi(1, roundi(float(image.get_height()) * ratio))
+		image.clear_mipmaps(); image.resize(width, height, Image.INTERPOLATE_LANCZOS)
+		if image.generate_mipmaps() != OK: return null
+		value = ImageTexture.create_from_image(image)
+		pixels = width * height; _thumbnail_builds += 1
 	# RGBA8 plus mip pyramid is a conservative desktop/mobile staging estimate.
 	# Driver-specific GPU formats and external references are not measured here.
 	var byte_estimate := int(ceil(float(pixels * 4) * 4.0 / 3.0))
@@ -55,11 +76,11 @@ static func _texture(path: String) -> Texture2D:
 		var oldest: String = _lru.pop_front()
 		_cache_bytes -= int(_cache[oldest].bytes)
 		_cache.erase(oldest)
-	_cache[path] = {"texture": value, "bytes": byte_estimate}
-	_lru.append(path); _cache_bytes += byte_estimate; _loads += 1
+	_cache[cache_key] = {"texture": value, "bytes": byte_estimate, "profile": profile}
+	_lru.append(cache_key); _cache_bytes += byte_estimate; _loads += 1
 	return value
 
-static func resolve(card: Dictionary) -> Dictionary:
+static func resolve(card: Dictionary, profile := "full") -> Dictionary:
 	var artwork: Dictionary = card.get("art", {}) if card.get("art", {}) is Dictionary else {}
 	var status := str(artwork.get("status", "shared_concept"))
 	var path := str(artwork.get("asset_id", ""))
@@ -74,19 +95,26 @@ static func resolve(card: Dictionary) -> Dictionary:
 	# Final is a reviewed pipeline state, never a claim a card can self-assign.
 	if status == "final":
 		if path != str(entry.get("asset_path", "")) or entry.get("status", "concept") != "final" or entry.get("production_review", "pending") != "approved" or not bool(entry.get("individual_original", false)): status = "concept"
-	var texture: Texture2D = _texture(path) if status in ["concept", "final"] else null
+	var texture_path := path
+	if profile == "compact" and path == str(entry.get("asset_path", "")) and not str(entry.get("preview_asset_path", "")).is_empty():
+		texture_path = str(entry.preview_asset_path)
+	var texture: Texture2D = _texture(texture_path, profile) if status in ["concept", "final"] else null
 	if texture == null: status = "shared_concept"
 	return {
 		"texture": texture, "status": status,
 		"label": "GETEILTES KONZEPTBILD" if texture == null else "KONZEPTILLUSTRATION" if status != "final" else "",
 		"asset_path": path if texture != null else "",
+		"texture_asset_path": texture_path if texture != null else "", "profile": profile,
 		"individual": texture != null and bool(entry.get("individual_original", false)) and path == str(entry.get("asset_path", "")),
 		"commercially_cleared": bool(entry.get("commercially_cleared", false)) if path == str(entry.get("asset_path", "")) else false
 	}
 
 static func stats() -> Dictionary:
-	return {"retained_textures": _cache.size(), "estimated_retained_bytes": _cache_bytes, "cache_byte_limit": MAX_CACHE_BYTES, "cache_entry_limit": MAX_CACHE_ENTRIES, "loads": _loads, "hits": _hits}
+	var profiles := {"full": 0, "compact": 0}
+	for entry in _cache.values(): profiles[entry.profile] += 1
+	return {"retained_textures": _cache.size(), "estimated_retained_bytes": _cache_bytes, "cache_byte_limit": MAX_CACHE_BYTES, "cache_entry_limit": MAX_CACHE_ENTRIES, "loads": _loads, "hits": _hits, "thumbnail_builds": _thumbnail_builds, "profiles": profiles}
 
 static func clear_cache(reload_manifest := false) -> void:
 	_cache.clear(); _lru.clear(); _cache_bytes = 0; _loads = 0; _hits = 0
+	_generation += 1; _thumbnail_builds = 0
 	if reload_manifest: _manifest.clear(); _manifest_loaded = false

@@ -22,6 +22,8 @@ const INK = Color("10151f")
 const RULES = Color("161d29")
 const TEXT = Color("f3ede2")
 const SECONDARY = Color("c5ccd7")
+var _illustration_binding := ""
+var _illustration_data: Dictionary = {}
 var card: Dictionary = {}:
 	set(value):
 		card=value
@@ -48,7 +50,10 @@ func normalized() -> Dictionary:
 	var species_names: Array[String]=[]
 	for species_id in card.get("species",[]):
 		if SPECIES.has(str(species_id)):species_names.append(SPECIES[str(species_id)])
-	var resolved=ART.resolve(card)
+	var binding := ART.binding_key(card)
+	if binding != _illustration_binding:
+		_illustration_data = ART.resolve(card); _illustration_binding = binding
+	var resolved = _illustration_data
 	var illustration: Texture2D=resolved.texture
 	var art_status: String=resolved.status
 	var art_label: String=resolved.label
