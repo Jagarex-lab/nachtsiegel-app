@@ -1,29 +1,35 @@
-# Kausalität, Fortbestand und Magie — vorläufiges Regelmodell
-**Status: VORSCHLAG.** Diese Regeln gelten für Autorenentwürfe; sie sind nicht Engine-Spezifikation.
+# Kausalitätsmodell — Revision 2 (VORSCHLAG)
 
-1. **Geschlossene Herkunft:** Jedes Objekt hat eine kausale Herkunft. Kein Wesen erscheint ohne Ursprung.
-2. **Übergang nur durch Kontaktzone:** Zeitlinien sind nicht frei anwählbar. Eine Überlagerung ist regional, zeitlich begrenzt und kartografierbar.
-3. **Tragende Herkunft:** Solange die Herkunft besteht oder die Kontaktzone offen ist, kann eine fremde Person im Kontaktgebiet existieren.
-4. **Bedingter Fortbestand:** Bei Verlust der Herkunft überlebt nur, wer zuvor hinreichend an die aufnehmende Wirklichkeit gekoppelt wurde.
-5. **Hybridverfahren:** Kopplung kann durch wiederholte physische Wechselwirkungen wachsen; technische Stabilisatoren beschleunigen nur vorhandene Kopplung. Sie erzeugen keine Menschen und keine Zeitlinien.
-6. **Keine moralische Messung:** Liebe, Ruhm oder gesellschaftlicher Status bestimmen den Kopplungswert nicht. Ungleichheit entsteht durch Zugang, Geld und politische Kontrolle, nicht durch ein metaphysisches Werturteil.
-7. **Begrenzte Kapazität:** Kontaktzonen, Energieversorgung, Materialbelastbarkeit und sichere Behandlungsplätze begrenzen Rettungen. Überlastung bedroht auch bereits Gerettete.
-8. **Dauerhaftigkeit:** Erfolgreich verankerte Menschen bleiben grundsätzlich real, auch wenn die Herkunft verloren geht. Normale Verletzung und Tod bleiben möglich.
-9. **Doppelgänger:** Zwei bereits vorhandene Versionen können eigenständig fortbestehen; sie teilen weder automatisch Schuld noch Erinnerungen. Keine beliebige Vervielfältigung.
-10. **Echos:** Spuren einer verlorenen Kausalkette, nicht automatisch vollständige Personen. Keine dreizehnte Wesensart.
-11. **Archiv:** Bewahrt Zeugnisse; seine Unfehlbarkeit, Trägerschaft und Zugriffsregeln bleiben offen. Eine Aufzeichnung beweist nicht automatisch, welche Wirklichkeit moralisch Vorrang hat.
-12. **Konvergenz:** Lokale Bevorzugung eines stabilen Fortgangs; niemals automatisch eine globale Umschreibung durch ein gewöhnliches Duell. Die fünf Kampfpfade können eine taktische Abstraktion bleiben.
+## Drei Ebenen, keine beliebige Zeitreise
+**Fortsetzung:** Eine kausal geschlossene Geschichte. Ein späterer Eingriff kann sie nicht ungeschehen machen, sondern nur eine zweite Fortsetzung anregen. **Kontaktzone:** Ein räumlich und zeitlich begrenzter Bereich, in dem zwei Fortsetzungen wechselwirken. **Fortbestand:** Ein aus der Herkunft gelöstes Wesen kann nach hinreichender Kopplung in der aufnehmenden Fortsetzung bleiben.
 
-## Messmodell als offene technische Frage
-Ein Stabilisator kann den Verlauf der Kopplung beobachten, nicht Identität, Tugend oder 'Wahrheit' messen. Ein robustes Modell benötigt definierte Messfehler, Mindestdauer, Risiko bei Unterbrechung und Belastungsgrenzen. **Keine Zahlen erfinden, bis Szenen und Tests sie erfordern.**
+## Zwölf Regeln und ihre Konsequenzen
+1. Jede Person und jeder Gegenstand hat eine Herkunft. Kein Erschaffen aus dem Nichts.
+2. Ein Eingriff erfordert einen dokumentierten Entscheidungspunkt und eine physische Referenz. Keine beliebige Zielzeit.
+3. Ein Eingriff erzeugt eine weitere Fortsetzung; er überschreibt keine bereits gelebte Biografie.
+4. Kontaktzonen sind nicht frei öffnende Portale. Sie folgen bestehenden, begrenzten Kopplungen.
+5. Während aktiver Kontaktzonen bleibt die Herkunft eines Reisenden tragfähig.
+6. Natürliche Stabilisierung ist langsam und abhängig von messbaren physischen Wechselwirkungen, nicht von Beliebtheit, Liebe oder 'Wert'.
+7. Technische Stabilisierung beschleunigt vorhandene Kopplung; sie benötigt Material, Fachkräfte, Energie und verfügbare Plätze.
+8. Ohne ausreichende Kopplung kann ein Reisender nach Ende der Herkunftsverbindung nicht fortbestehen. Das ist keine Strafe und keine moralische Entscheidung des Universums.
+9. Erfolgreicher Fortbestand ist grundsätzlich dauerhaft, solange die aufnehmende Wirklichkeit stabil bleibt. Gewöhnlicher Tod bleibt endgültig.
+10. Zwei Versionen derselben Person sind nach ihrer Trennung eigenständige Menschen; keine automatische Übertragung von Schuld, Erinnerung oder Eigentum.
+11. Ein Echo ist eine unvollständige Spur, kein kostenloser Ersatz für einen Verstorbenen und keine dreizehnte Wesensart.
+12. Konvergenz bezeichnet in der Welt eine lokale Bevorzugung einer Fortsetzung; der Sieg durch Pfadkontrolle ist eine Spielabstraktion, keine Erlaubnis, mit jedem Duell Städte auszulöschen.
 
-## Kausalitätsprobe
-- Warum keine Massenarmee? Zugänge sind selten; jede Person braucht individuelle Zeit und Kapazität.
-- Warum kein Rückholen der Toten? Stabilisierung erhält nur vorhandene lebende Existenzen; eine alternative lebende Person ist nicht dieselbe Biografie.
-- Warum kein sofortiges Weltende? Die meisten Regionen bleiben stabil; Überlagerungen sind örtlich und können über Generationen begrenzt werden.
-- Warum keine einfache Abschaltung? Ein erzeugter kausaler Kontakt kann nach dem Eingriff selbsttragend sein. **Mechanismus noch offen, kein Kanon.**
-- Warum keine willkürliche Erinnerung? Erinnerungen sind biologische Spuren von Erlebtem, keine universell gültigen Wahrheitsmarker.
-- Warum Eira? **Noch ungelöst.** Eine spätere Lösung muss Spuren und vollständige Löschung ohne Regelbruch erklären.
+## Präzise Grenzen der technischen Kopplung
+**Messung:** Geräte vergleichen Reaktionen eines Objekts auf bekannte Veränderungen in der aufnehmenden Fortsetzung. Sie schätzen Stabilität, nicht Identität oder moralischen Wert. **Fehlerquellen:** unvollständige Messreihen, Materialermüdung, Überlagerungsschwankungen, bewusste Fälschung von Wartungsprotokollen. **Ausfall:** Ein Gerät kann keine Person erschaffen; bei vorzeitigem Ausfall ist die Kopplung unter Umständen unzureichend. **Kapazität:** Jede Anlage hat nur so viele gleichzeitig sichere Mess- und Behandlungsplätze, wie ihre Infrastruktur erlaubt.
 
-## Redaktionelle rote Linien
-Keine kostenlose Auferstehung; keine kostenlose Kopie; keine spontane 'einmalige Ausnahme' ohne zuvor erkennbare Ursache; keine Fraktion darf auf Knopfdruck ganze Kontinente überschreiben.
+**Keine erfundenen Zahlen:** Dauer, Reichweite und Grenzwerte werden erst mit nachvollziehbarem Maßstab für Reisezeiten, Wirtschaft und Szenen festgelegt.
+
+## Grenzfalltests
+- **Warum keine Armee aus Doppelgängern?** Niemand kann beliebige Fortsetzungen anwählen; ein Übergang ist selten und Stabilisierung ressourcenintensiv.
+- **Warum keine Rückkehr eines Toten?** Eine alternative Version wäre eine andere Person mit eigenem Leben; ein Echo ist keine vollständige Person.
+- **Warum bleibt die Welt bewohnbar?** Die meisten Gebiete sind über längere Zeit stabil. Kontaktzonen sind seltene, kartierte Risiken.
+- **Warum kann keine Macht alles kontrollieren?** Anlagen und Wissen sind regional verteilt; Fehlmessungen, politische Widerstände und knappe Kapazitäten begrenzen Macht.
+- **Was ist mit Kleidung und Werkzeug?** Materie benötigt ebenfalls Kopplung; Geräte können mehrere Gegenstände in einem gemeinsamen geschützten Raum stabilisieren, nicht beliebig viel Material.
+- **Was ist mit Kindern?** Ein Kind, das nach erfolgreicher Stabilisierung seiner Eltern in der neuen Fortsetzung entsteht, hat dort seine eigene Herkunft.
+- **Was geschieht bei zwei gleichzeitig lebenden Versionen?** Beide behalten Rechte als eigenständige Personen. Eine spätere Konvergenz entscheidet nicht rückwirkend, welche 'echt' war.
+
+## Offene Fragen, die nicht als gelöst gelten
+Wie genau die erste Synchronisation selbsttragend wurde; ob zusätzliche Fortsetzungen entstehen können; wie Eiras Löschung und die bekannten Spuren zusammenpassen; was das Archiv physisch ist; welche Grenzen Resonanz und Relikte besitzen. Keine Überraschung im Finale darf diese offenen Fragen mit einer plötzlich erfundenen Ausnahme erledigen.
