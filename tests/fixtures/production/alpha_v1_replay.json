@@ -1,0 +1,126 @@
+{
+  "commands": [
+    {
+      "after": "741c0686d97830a296d5dfb2affb7642827e139021f180a87b275549400f842b",
+      "args": [
+        []
+      ],
+      "before": "6b82c37a62c6a9d28c0ea83e0787418a27228f737a34f382ae08fb45374c9f2d",
+      "first_event": 1,
+      "last_event": 1,
+      "name": "mulligan"
+    },
+    {
+      "after": "5154977639763b5f8c597d835ded2632bab62f6db1c4cb5c12e314992c4209ee",
+      "args": [
+        2
+      ],
+      "before": "741c0686d97830a296d5dfb2affb7642827e139021f180a87b275549400f842b",
+      "first_event": 2,
+      "last_event": 2,
+      "name": "origin"
+    },
+    {
+      "after": "f290efa4d9e2731331e0b86824e13a72228cabeef5b4e06fae46a1f3386ec51c",
+      "args": [],
+      "before": "5154977639763b5f8c597d835ded2632bab62f6db1c4cb5c12e314992c4209ee",
+      "first_event": 3,
+      "last_event": 9,
+      "name": "openingDone"
+    },
+    {
+      "after": "398eda5093c1b364de3f1f1b4b252f0989d4f8b0959fb188cf425759627ee277",
+      "args": [
+        "hero"
+      ],
+      "before": "f290efa4d9e2731331e0b86824e13a72228cabeef5b4e06fae46a1f3386ec51c",
+      "first_event": 10,
+      "last_event": 10,
+      "name": "finishDraw"
+    },
+    {
+      "after": "5e4cd2a9fa077b8f6cefa44a9800d2faba803206d559bcfd6e51926f1b212667",
+      "args": [
+        "hero"
+      ],
+      "before": "398eda5093c1b364de3f1f1b4b252f0989d4f8b0959fb188cf425759627ee277",
+      "first_event": 11,
+      "last_event": 21,
+      "name": "endTurn"
+    }
+  ],
+  "final": "5e4cd2a9fa077b8f6cefa44a9800d2faba803206d559bcfd6e51926f1b212667",
+  "format": "ORAFOLD-LOCAL-REPLAY",
+  "setup": {
+    "convergence": true,
+    "deck": [
+      "oa-houses-c01",
+      "oa-houses-c01",
+      "oa-houses-c01",
+      "oa-houses-c02",
+      "oa-houses-c02",
+      "oa-houses-c02",
+      "oa-houses-c03",
+      "oa-houses-c03",
+      "oa-houses-c03",
+      "oa-houses-c04",
+      "oa-houses-c04",
+      "oa-houses-c04",
+      "oa-houses-c05",
+      "oa-houses-c05",
+      "oa-houses-c05",
+      "oa-houses-c06",
+      "oa-houses-c06",
+      "oa-houses-c06",
+      "oa-houses-c07",
+      "oa-houses-e01",
+      "oa-houses-e01",
+      "oa-houses-e01",
+      "oa-houses-e02",
+      "oa-houses-e02",
+      "oa-houses-e02",
+      "oa-houses-r01",
+      "oa-houses-r01",
+      "oa-neutral-c01",
+      "oa-neutral-c01",
+      "oa-neutral-c01"
+    ],
+    "difficulty": 5,
+    "enemy_deck": [
+      "oa-morph-c01",
+      "oa-morph-c01",
+      "oa-morph-c01",
+      "oa-morph-c02",
+      "oa-morph-c02",
+      "oa-morph-c02",
+      "oa-morph-c03",
+      "oa-morph-c03",
+      "oa-morph-c03",
+      "oa-morph-c04",
+      "oa-morph-c04",
+      "oa-morph-c04",
+      "oa-morph-c05",
+      "oa-morph-c05",
+      "oa-morph-c05",
+      "oa-morph-c06",
+      "oa-morph-c06",
+      "oa-morph-c06",
+      "oa-morph-c07",
+      "oa-morph-e01",
+      "oa-morph-e01",
+      "oa-morph-e01",
+      "oa-morph-e02",
+      "oa-morph-e02",
+      "oa-morph-e02",
+      "oa-morph-r01",
+      "oa-morph-r01",
+      "oa-neutral-c01",
+      "oa-neutral-c01",
+      "oa-neutral-c01"
+    ],
+    "mode": "alpha",
+    "seed": 12345
+  },
+  "version": 1,
+  "winner": null
+}
