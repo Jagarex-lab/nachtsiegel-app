@@ -82,6 +82,7 @@ func _build_shell() -> void:
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	body.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	body.follow_focus = true
+	body.scroll_deadzone = 8
 	layout.add_child(body)
 	main = VBoxContainer.new()
 	main.name = "NarrativeContent"
@@ -152,6 +153,8 @@ func _button(text_value: String, action: Callable, primary: bool = false, qa_id:
 
 func _panel(parent: Node, border: Color = Color("3d4b63")) -> VBoxContainer:
 	var panel = PanelContainer.new()
+	# Decorative panels must let touch drags reach the ancestor scroll view.
+	panel.mouse_filter = Control.MOUSE_FILTER_PASS
 	panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	panel.add_theme_stylebox_override("panel", _box(Color(0.055, 0.08, 0.13, 0.96), border, 12, 18 if compact else 26))
 	parent.add_child(panel)

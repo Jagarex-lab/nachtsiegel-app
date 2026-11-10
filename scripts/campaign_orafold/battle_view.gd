@@ -77,6 +77,7 @@ func render() -> void:
 	else: label(tx("main"))
 	for lane in 5:
 		var panel = PanelContainer.new()
+		panel.mouse_filter = Control.MOUSE_FILTER_PASS
 		var box = VBoxContainer.new()
 		box.add_theme_constant_override("separation", 8)
 		panel.add_child(box)
