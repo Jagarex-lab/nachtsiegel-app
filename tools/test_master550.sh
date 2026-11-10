@@ -3,13 +3,16 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p work/master550 work/xdg/{data,config,cache}
 export XDG_DATA_HOME="$PWD/work/xdg/data" XDG_CONFIG_HOME="$PWD/work/xdg/config" XDG_CACHE_HOME="$PWD/work/xdg/cache"
-node --test tests/alpha_card_texts.test.cjs tests/card_system/*.test.cjs
+# Software-rendered CI must not spawn a worker per reported host CPU. A stalled
+# scene fails its own suite instead of consuming the complete workflow deadline.
+export LP_NUM_THREADS="${LP_NUM_THREADS:-2}"
+node --test tests/alpha_card_texts.test.cjs tests/build_alpha_staging.test.cjs tests/card_system/*.test.cjs
 node tools/alpha_card_texts.cjs --check
 node tools/card_system/schema.cjs --check
 node tools/card_system/assets.cjs --check
 node tools/card_system/validate.cjs
-for suite in card_system_runtime master550_card_visual master550_opening_ui; do
-  "${GODOT_BIN:-godot}" --path . --audio-driver Dummy --script "tests/$suite.gd" > "work/master550/$suite.log" 2>&1
+for suite in card_system_runtime master550_card_visual master550_opening_ui master550_library_filter; do
+  timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --path . --audio-driver Dummy --script "tests/$suite.gd" > "work/master550/$suite.log" 2>&1
   python3 - "$suite" <<'PY'
 import json,re,sys
 from pathlib import Path

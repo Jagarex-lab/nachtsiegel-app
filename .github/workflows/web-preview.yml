@@ -41,6 +41,7 @@ jobs:
           tools/test_legacy.sh
           xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
           xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
+          tools/test_master550_resources.sh
       - name: Export tested browser build
         run: |
           mkdir -p work/build/web
@@ -107,6 +108,7 @@ jobs:
           python3 tools/wait_http.py http://127.0.0.1:8788/build-info.json
           node tools/alpha_browser_qa.cjs
           node tools/alpha02_browser_qa.cjs
+          node tools/master550_browser_qa.cjs
           python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
           python3 tools/wait_http.py http://127.0.0.1:8787/build-info.json
           QA_ENGINES=chromium QA_PROFILES=android QA_LEGACY_ONLY=1 GAME_URL=http://127.0.0.1:8787/ node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1

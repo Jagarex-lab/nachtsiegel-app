@@ -112,6 +112,13 @@ jobs:
           QA_ENGINES: ${{ matrix.engine }}
           GAME_URL: http://127.0.0.1:8788/nachtsiegel-app/
         run: node tools/alpha02_browser_qa.cjs
+      - name: Battlefield opening and guarded real pointer dragging
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          QA_ENGINES: ${{ matrix.engine }}
+          GAME_URL: http://127.0.0.1:8788/nachtsiegel-app/
+        run: node tools/master550_browser_qa.cjs
       - name: Preserved Legacy UI duel in private QA export
         if: matrix.engine == 'chromium'
         env:
@@ -166,19 +173,7 @@ jobs:
           godot --headless --path . --script tests/alpha02_balance.gd > work/alpha02/balance.log 2>&1
           python3 tools/alpha02_balance_report.py
       - name: Paired resource experiments with unchanged production defaults
-        run: |
-          mkdir -p work/master550
-          godot --headless --path . --script tests/master550_resources.gd > work/master550/resources.log 2>&1
-          python3 - <<'PYCHECK'
-          import json,re
-          from pathlib import Path
-          log=Path('work/master550/resources.log').read_text()
-          assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M),log
-          assert re.search(r'\d+ assertions; 0 failures',log),log
-          report=json.loads(Path('work/master550/resource_experiments.json').read_text())
-          assert report, 'Missing resource experiment evidence'
-          print(log)
-          PYCHECK
+        run: tools/test_master550_resources.sh
       - uses: actions/upload-artifact@v4
         if: always()
         with:
