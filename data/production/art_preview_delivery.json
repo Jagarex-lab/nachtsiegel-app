@@ -1,0 +1,170 @@
+{
+  "entries": {
+    "oa-houses-c01": {
+      "asset_path": "res://assets/cards/previews/oa-houses-c01.png",
+      "delivery": "packed",
+      "height": 384,
+      "preview_sha256": "e8ed8df0dda7e97f4193b12d2bd2f624bcacb22987b8031838d7b1a2e58421ad",
+      "source_sha256": "2f743c3c56ca64d9b8a6cff4e8f6ce9eb24651e42f24363d4fb9a914341c1708",
+      "width": 512
+    },
+    "oa-morph-c01": {
+      "asset_path": "res://assets/cards/previews/oa-morph-c01.png",
+      "delivery": "packed",
+      "height": 384,
+      "preview_sha256": "fee2312ce983043f9de4702a99796d1ebb00aa03483cfb818a97204abf95bd8e",
+      "source_sha256": "7f91bdd40c9baffc455d6df7207521b81349dfa2392c21fa4efbedcf916f2718",
+      "width": 512
+    },
+    "oa-neutral-c02": {
+      "asset_path": "res://assets/cards/previews/oa-neutral-c02.png",
+      "delivery": "packed",
+      "height": 384,
+      "preview_sha256": "c046b6ae053499e1f375b3a7cce7c23cf489ae4178a2b2146a82c050e9a36421",
+      "source_sha256": "27b495c5a9dd1567a1d36f65de9b90a2c91c3bebc93101b2985d184bec93aa8c",
+      "width": 512
+    },
+    "oa-ninth-c01": {
+      "asset_path": "res://assets/cards/previews/oa-ninth-c01.png",
+      "delivery": "packed",
+      "height": 384,
+      "preview_sha256": "04456a3fff8b9977d53a65ed4ad41a7fc13dc898c821ed3779de80fc426478d5",
+      "source_sha256": "c6b2b421e83ef0fefeb3c4548121ada9bc31f5d340f82325768a4fc4dd545384",
+      "width": 512
+    },
+    "oa-stillwatch-c01": {
+      "asset_path": "res://assets/cards/previews/oa-stillwatch-c01.png",
+      "delivery": "packed",
+      "height": 384,
+      "preview_sha256": "a72ffaa47ca8f0fc6368d3e228a84b6b033cd3fb1f2d59eb71852942d7fc1320",
+      "source_sha256": "5c70da48d444318dfad98a7055d9e45a440888c9e4c4d146841d79e478954543",
+      "width": 512
+    },
+    "of-houses-020": {
+      "asset_path": "res://assets/cards/previews/of-houses-020.png",
+      "bytes": 67450,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "2e93679785eb2adf418119641ccea159e33778871a6be0348f18007069d33631",
+      "relative_url": "art/preview/797c0ddd7fcdaaf036f2753266e73a747b99e35846099980658f37b3f6dac219.webp",
+      "source_sha256": "b2ba35d90b4a5a8509d74e68fb6796eba03d873372861e61813ee4c0b2fbef31",
+      "web_sha256": "797c0ddd7fcdaaf036f2753266e73a747b99e35846099980658f37b3f6dac219",
+      "width": 512
+    },
+    "of-houses-094": {
+      "asset_path": "res://assets/cards/previews/of-houses-094.png",
+      "bytes": 39958,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "a35210bfac754ca8aa759eb62ed1b90c3191a1e8e1e1e6f37e8558986ea0a201",
+      "relative_url": "art/preview/19e89d07c060200dece0b89a453f947f509d5b7c7e6b93eb0ba0245a14493c1b.webp",
+      "source_sha256": "cbca8fd11884aadcf4eff7985ec3338ca88233e94c7534994a0024ac7b44d554",
+      "web_sha256": "19e89d07c060200dece0b89a453f947f509d5b7c7e6b93eb0ba0245a14493c1b",
+      "width": 512
+    },
+    "of-morph-003": {
+      "asset_path": "res://assets/cards/previews/of-morph-003.png",
+      "bytes": 92170,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "e29df605c5e2c828d49e22205ff0cba53140a993cd627020734617b8e9090629",
+      "relative_url": "art/preview/4f85e1081fd81aff8f450420110a87b8069132ed21aa6dc7963c6f51d1160045.webp",
+      "source_sha256": "c2bfb3723d9e50e161697d84f0f3a9d5ace6b377c1a514456f7723f95fe5ba18",
+      "web_sha256": "4f85e1081fd81aff8f450420110a87b8069132ed21aa6dc7963c6f51d1160045",
+      "width": 512
+    },
+    "of-morph-082": {
+      "asset_path": "res://assets/cards/previews/of-morph-082.png",
+      "bytes": 87848,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "12c84c6ce3812c4f491decfb16404138ffa97a6cce3fbc5ba2e3cb1a5b982b00",
+      "relative_url": "art/preview/5fe964b6af6c3d0a6dc885750dd4cc7c0fc2a92bc83213a1f00a37b809eba673.webp",
+      "source_sha256": "a166f8b1048b11d88383a4e72d1c02b8c9304c44d805ddc7a4d43d7cdf45208f",
+      "web_sha256": "5fe964b6af6c3d0a6dc885750dd4cc7c0fc2a92bc83213a1f00a37b809eba673",
+      "width": 512
+    },
+    "of-neutral-049": {
+      "asset_path": "res://assets/cards/previews/of-neutral-049.png",
+      "bytes": 54334,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "67a49b4cb2ecf106d15ef5489eb7d30d22fa11152f4002f65c18b58a5130ec58",
+      "relative_url": "art/preview/3eb4237a139ec868f6a94bb861fadec9226770f77015b24d1d279c60609d7a6f.webp",
+      "source_sha256": "7a08f26c156a69f1227b9e34ed6c73eb168a9b4f2b324b5d9817b203f479b6ae",
+      "web_sha256": "3eb4237a139ec868f6a94bb861fadec9226770f77015b24d1d279c60609d7a6f",
+      "width": 512
+    },
+    "of-neutral-083": {
+      "asset_path": "res://assets/cards/previews/of-neutral-083.png",
+      "bytes": 72234,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "85bcf4f200a39eac5ab83d0cb46a67370a44a64e4dd631b6ccdf332ea7101e3a",
+      "relative_url": "art/preview/1d1252f3a7ce1eb990e8739240058b8964794a1f6f9f7a37086c84a251f02e77.webp",
+      "source_sha256": "c540bf9c3af9b1ace7cd37ab2461d9203250560575bcbf8f8c002f9ff7e345fa",
+      "web_sha256": "1d1252f3a7ce1eb990e8739240058b8964794a1f6f9f7a37086c84a251f02e77",
+      "width": 512
+    },
+    "of-ninth-019": {
+      "asset_path": "res://assets/cards/previews/of-ninth-019.png",
+      "bytes": 41208,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "5742f88206ec290058aba9b219cb6e094b60f60f8fb4a214d9d520b7b67ca910",
+      "relative_url": "art/preview/f7802c0e983c4d7e5bc258e9d50cf6dd3831cdbce8e06fc62bf175e60e41cdff.webp",
+      "source_sha256": "402df569abf58aaf49732f5ab538443a1357633803892f0f1eab6615f37d0cc6",
+      "web_sha256": "f7802c0e983c4d7e5bc258e9d50cf6dd3831cdbce8e06fc62bf175e60e41cdff",
+      "width": 512
+    },
+    "of-ninth-095": {
+      "asset_path": "res://assets/cards/previews/of-ninth-095.png",
+      "bytes": 54448,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "aedc13096b7a3a75862e934cf188e44982e29f40f4e40900598b5cf92492a2a3",
+      "relative_url": "art/preview/2d1235181ac2b3e756ab41a6a0b8755cb72290f39eb4fde8284578bcbbfcae93.webp",
+      "source_sha256": "acbe5bb70ba75eed43b378bbae83a83ac48bdb165b420f20ed5314d2b4cc9eae",
+      "web_sha256": "2d1235181ac2b3e756ab41a6a0b8755cb72290f39eb4fde8284578bcbbfcae93",
+      "width": 512
+    },
+    "of-stillwatch-043": {
+      "asset_path": "res://assets/cards/previews/of-stillwatch-043.png",
+      "bytes": 77224,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "f3cbfa3a6086f71fac46a1ca43d60539784c81d908cd46e33951e90105a65de7",
+      "relative_url": "art/preview/d3ef5a5f22256e6f1be3a16baa4350af60d94c2da48e585cc618a18b37577bbb.webp",
+      "source_sha256": "d114e7c485c9e66f854935786c78651e1d6e8c9dfa83847379c2698dd08730ad",
+      "web_sha256": "d3ef5a5f22256e6f1be3a16baa4350af60d94c2da48e585cc618a18b37577bbb",
+      "width": 512
+    },
+    "of-stillwatch-055": {
+      "asset_path": "res://assets/cards/previews/of-stillwatch-055.png",
+      "bytes": 69818,
+      "delivery": "external",
+      "height": 384,
+      "preview_sha256": "ac68c927c426ee9f6c2b5fa0d5bada25eadf30c4d48d50718ad3bf13e5866f70",
+      "relative_url": "art/preview/11cf343d0c6c697eb368886777a728af08e2c4d97b9f7daf2d2e3197c518cab3.webp",
+      "source_sha256": "1afb6b88a991b63b0c26fcc90ff996785dfa84b52db5c71a6c590e9315b8b357",
+      "web_sha256": "11cf343d0c6c697eb368886777a728af08e2c4d97b9f7daf2d2e3197c518cab3",
+      "width": 512
+    }
+  },
+  "external_codec": "webp",
+  "external_lossless": true,
+  "external_preview_count": 10,
+  "individual_original_count_added": 0,
+  "maximum_edge": 512,
+  "pinned_card_ids": [
+    "oa-houses-c01",
+    "oa-stillwatch-c01",
+    "oa-morph-c01",
+    "oa-ninth-c01",
+    "oa-neutral-c02"
+  ],
+  "preview_count": 15,
+  "profile": "orafold-web-preview-v1",
+  "resource_kind": "compact_preview",
+  "schema_version": 1
+}

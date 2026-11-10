@@ -26,6 +26,6 @@ text=Path(sys.argv[1]).read_text();print(text)
 assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:|instances leaked|resources still in use',text,re.M)
 assert re.search(r'PRODUCTION ART EXPORTED: \d+ assertions, 0 failures',text)
 rows=[json.loads(line) for line in text.splitlines() if line.startswith('{')]
-assert len(rows)==1 and rows[0]['failures']==0 and rows[0]['actual_originals']==(15 if sys.argv[2]=='native' else 0) and rows[0]['actual_previews']==15 and not rows[0]['source_files_visible'] and rows[0]['mode']==sys.argv[2]
+assert len(rows)==1 and rows[0]['failures']==0 and rows[0]['actual_originals']==(rows[0]['declared_originals'] if sys.argv[2]=='native' else 0) and rows[0]['actual_previews']==(rows[0]['declared_originals'] if sys.argv[2]=='native' else 5) and not rows[0]['source_files_visible'] and rows[0]['mode']==sys.argv[2]
 assert '.pack-inspection.' in rows[0]['process_working_directory']
 PY

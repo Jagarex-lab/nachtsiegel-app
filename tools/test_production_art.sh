@@ -19,6 +19,15 @@ assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:|instances leaked|resources st
 assert re.search(r'PRODUCTION ART DELIVERY DATA: \d+ assertions, 0 failures',text)
 PY
 bash tools/test_production_art_delivery.sh
+bash tools/test_production_art_preview_delivery.sh
+timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tools/production/prepare_preview_delivery.gd -- --check > work/production-art/prepare_preview_delivery.log 2>&1
+python3 - <<'PY'
+from pathlib import Path
+import re
+text=Path('work/production-art/prepare_preview_delivery.log').read_text();print(text)
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:|instances leaked|resources still in use',text,re.M)
+assert re.search(r'PRODUCTION PREVIEW DELIVERY DATA: \d+ assertions, 0 failures',text)
+PY
 timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tools/production/prepare_art_previews.gd -- --check > work/production-art/prepare_art_previews.log 2>&1
 python3 - <<'PY'
 from pathlib import Path

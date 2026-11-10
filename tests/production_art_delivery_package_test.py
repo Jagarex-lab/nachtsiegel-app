@@ -111,5 +111,72 @@ class ProductionArtDeliveryPackage(unittest.TestCase):
         (self.web / "art").mkdir()
         with self.assertRaisesRegex(ValueError, "Unmanifested"): package(self.web, self.root / "packages")
 
+    def preview_fixture(self):
+        cache = self.source / "work/art-preview-delivery-cache"
+        cache.mkdir()
+        body = b"explicit compact encoded-byte filesystem fixture"
+        digest = hashlib.sha256(body).hexdigest()
+        pinned = [f"pilot-{i}" for i in range(5)]
+        def item(card_id, delivery):
+            value = {"delivery": delivery, "asset_path": f"res://assets/cards/previews/{card_id}.png", "source_sha256": "1" * 64, "preview_sha256": "2" * 64, "width": 512, "height": 362}
+            if delivery == "external": value.update(web_sha256=digest, relative_url=f"art/preview/{digest}.webp", bytes=len(body))
+            return value
+        entries = {id: item(id, "packed") for id in pinned}
+        entries["preview-fixture"] = item("preview-fixture", "external")
+        manifest = {"schema_version": 1, "profile": "orafold-web-preview-v1", "resource_kind": "compact_preview", "pinned_card_ids": pinned, "preview_count": 6, "external_preview_count": 1, "entries": entries}
+        (self.source / "data/production/art_preview_delivery.json").write_text(json.dumps(manifest))
+        original = cache / (digest + ".webp"); original.write_bytes(body)
+        return manifest, original, body
+
+    def test_stages_and_packages_both_real_manifest_groups(self):
+        previews, original, body = self.preview_fixture()
+        result = stage(self.web, self.source)
+        self.assertEqual((result["full_assets"], result["preview_assets"]), (1, 1))
+        entry = previews["entries"]["preview-fixture"]
+        target = self.web / entry["relative_url"]
+        self.assertEqual(target.stat().st_ino, original.stat().st_ino)
+        self.assertEqual(target.read_bytes(), body)
+        packaged = package(self.web, self.root / "packages")
+        self.assertEqual((packaged["full_art_assets"], packaged["preview_art_assets"]), (1, 1))
+        with zipfile.ZipFile(packaged["archive"]) as zipped:
+            self.assertEqual(json.loads(zipped.read("art-preview-delivery.json")), previews)
+            self.assertEqual(zipped.read(entry["relative_url"]), body)
+            self.assertFalse(any("pilot-" in name for name in zipped.namelist()))
+
+    def test_preview_path_hash_counts_and_data_only_metadata_are_strict(self):
+        previews, _, _ = self.preview_fixture()
+        bad = []
+        for field, value in [("relative_url", "https://elsewhere/compact.webp"), ("width", 513), ("height", 0), ("bytes", 1024 * 1024 + 1), ("script", "untrusted.gd")]:
+            candidate = copy.deepcopy(previews); candidate["entries"]["preview-fixture"][field] = value; bad.append(candidate)
+        candidate = copy.deepcopy(previews); candidate["external_preview_count"] = 2; bad.append(candidate)
+        candidate = copy.deepcopy(previews); candidate["pinned_card_ids"] = ["absent"] * 5; bad.append(candidate)
+        candidate = copy.deepcopy(previews); candidate["entries"]["pilot-0"]["delivery"] = "external"; bad.append(candidate)
+        for candidate in bad:
+            with self.subTest(candidate=candidate):
+                with self.assertRaises(ValueError): checked_delivery_files(self.web, self.manifest, candidate)
+
+    def test_rejects_preview_cache_and_destination_symlinks(self):
+        previews, original, body = self.preview_fixture()
+        external = self.root / "outside-compact.webp"; external.write_bytes(body)
+        original.unlink(); original.symlink_to(external)
+        with self.assertRaisesRegex(ValueError, "Missing safe"): stage(self.web, self.source)
+        original.unlink(); original.write_bytes(body)
+        # A fresh staging destination avoids counting a partly written first
+        # group as a safe output after a deliberately failed preparation.
+        self.web = self.root / "second-export"; self.web.mkdir()
+        (self.web / "art").mkdir(); (self.web / "art/preview").symlink_to(self.root, target_is_directory=True)
+        with self.assertRaisesRegex(ValueError, "Symlink"): stage(self.web, self.source)
+
+    def test_rejects_tampered_compact_export_and_metadata_symlink(self):
+        previews, _, body = self.preview_fixture()
+        stage(self.web, self.source)
+        entry = previews["entries"]["preview-fixture"]
+        (self.web / entry["relative_url"]).write_bytes(b"x" * len(body))
+        with self.assertRaisesRegex(ValueError, "body/hash mismatch"): package(self.web, self.root / "packages")
+        (self.web / entry["relative_url"]).write_bytes(body)
+        metadata = self.web / "art-preview-delivery.json"; metadata.unlink()
+        metadata.symlink_to(self.source / "data/production/art_preview_delivery.json")
+        with self.assertRaisesRegex(ValueError, "Unsafe"): package(self.web, self.root / "packages")
+
 
 if __name__ == "__main__": unittest.main()

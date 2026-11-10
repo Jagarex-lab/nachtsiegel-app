@@ -23,7 +23,7 @@ func run() -> void:
 		var resolved = ART.resolve({"id": id})
 		check(resolved.texture is Texture2D, "real imported illustration is loadable " + id)
 		if resolved.texture == null: continue
-		check(resolved.texture.get_size() == Vector2(1448, 1086), "native dimensions retained; no upscaling " + id)
+		check(resolved.texture.get_size() == Vector2(record.original_width, record.original_height), "native dimensions retained; no upscaling " + id)
 		check(resolved.status == "final" and resolved.label.is_empty() and resolved.individual, "visually approved individual rendered as final " + id)
 		var pixels = resolved.texture.get_image()
 		var digest = hash(pixels.get_data())

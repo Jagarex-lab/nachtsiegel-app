@@ -23,8 +23,8 @@ func run() -> void:
 	var by_id: Dictionary = {}
 	for card in data.cards: by_id[card.id] = card
 	var source: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_sources.json"))
-	var ids: Array = source.entries.keys(); ids.sort()
-	check(ids.size() == 15, "actual fifteen delivered originals exercise simultaneous view")
+	var ids: Array = source.entries.keys(); ids.sort(); ids = ids.slice(0,24)
+	check(ids.size() >= 15 and ids.size() <= 24, "actual bounded current page of15..24 delivered originals exercises simultaneous view")
 	ART.clear_cache(true)
 	viewport = SubViewport.new(); viewport.size = Vector2i(1280, 900)
 	viewport.transparent_bg = true; viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
@@ -41,12 +41,12 @@ func run() -> void:
 	await frames()
 	var first_draw_usec := Time.get_ticks_usec() - start
 	var initial: Dictionary = ART.stats().duplicate(true)
-	check(initial.profiles.compact == 15 and initial.profiles.full == 1, "fifteen compact previews plus one native inspector retained")
-	check(initial.loads == 16 and initial.thumbnail_builds == 0, "each prepared compact preview loads once, no source resampling on first display")
+	check(initial.profiles.compact == ids.size() and initial.profiles.full == 1, "fifteen compact previews plus one native inspector retained")
+	check(initial.loads == ids.size()+1 and initial.thumbnail_builds == 0, "each prepared compact preview loads once, no source resampling on first display")
 	check(initial.estimated_retained_bytes < ART.MAX_CACHE_BYTES, "actual fifteen compact views plus inspector remain under 32 MiB cache estimate")
 	for id in ids:
 		var preview = ART.resolve(by_id[id], "compact")
-		check(preview.texture is Texture2D and preview.texture.get_size() == Vector2(512, 384), "compact preview has explicit appropriate dimensions " + str(id))
+		check(preview.texture is Texture2D and preview.texture.get_size() == Vector2(ART.manifest_entry(id).preview_width, ART.manifest_entry(id).preview_height), "compact preview has explicit appropriate dimensions " + str(id))
 		check(preview.texture.get_image().has_mipmaps(), "compact preview has real mip pyramid " + str(id))
 	var before: Dictionary = ART.stats().duplicate(true)
 	for redraw in 20:
@@ -60,7 +60,7 @@ func run() -> void:
 	check(ART.binding_key(by_id[ids[0]], "compact") != previous_key, "explicit cache release invalidates control keys")
 	for control in controls: control.queue_redraw()
 	await frames()
-	check(ART.stats().loads == 16, "explicit release rebinds each visible profile exactly once")
+	check(ART.stats().loads == ids.size()+1, "explicit release rebinds each visible profile exactly once")
 	DirAccess.make_dir_recursive_absolute("res://work/production-art")
 	var f = FileAccess.open("res://work/production-art/cache-measurement.json", FileAccess.WRITE)
 	f.store_string(JSON.stringify({"originals": ids.size(), "first_draw_usec": first_draw_usec, "before_redraws": before, "after_redraws": after, "redraws": 20, "renderer_texture_bytes": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED), "assertions": assertions, "failures": failures, "scope": "Linux software renderer; no physical iPhone claim; estimates exclude other browser memory"}, "  ")); f.close()

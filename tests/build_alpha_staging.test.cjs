@@ -15,6 +15,8 @@ function fixture(mode) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'orafold-staging-test-'));
   for (const dir of ['tools/production', 'data/production', 'bin', 'work/alpha/web', 'work/art-delivery-cache']) fs.mkdirSync(path.join(root, dir), {recursive: true});
   fs.copyFileSync(path.join(REPO, 'tools/build_alpha.sh'), path.join(root, 'tools/build_alpha.sh'));
+  fs.copyFileSync(path.join(REPO, 'tools/test_production_art_package.sh'), path.join(root, 'tools/test_production_art_package.sh'));
+  fs.copyFileSync(path.join(REPO, 'tools/production/art_export_inventory.gd'), path.join(root, 'tools/production/art_export_inventory.gd'));
   fs.copyFileSync(path.join(REPO, 'tools/alpha02_pack_inventory.gd'), path.join(root, 'tools/alpha02_pack_inventory.gd'));
   fs.copyFileSync(path.join(REPO, 'tools/production/stage_art_delivery.py'), path.join(root, 'tools/production/stage_art_delivery.py'));
   const artBody = Buffer.from('explicitly simulated encoded art for filesystem staging unit test');
@@ -45,9 +47,14 @@ if(args.includes('--export-debug')) {
 }
 if(args.includes('--main-pack')) {
  if(process.env.STAGING_TEST_MODE==='pack-failure')process.exit(8);
+ if(args.some(value=>value.endsWith('/tools/production/art_export_inventory.gd'))) {
+  if(process.env.STAGING_TEST_MODE==='art-pack-failure')process.exit(11);
+  console.log('PRODUCTION ART EXPORTED: 1 assertions, 0 failures; explicitly simulated package metadata');
+  console.log(JSON.stringify({test_double:true,failures:0,assertions:1,actual_originals:0,actual_previews:5,declared_originals:5,source_files_visible:false,mode:'web',process_working_directory:process.cwd()}));process.exit(0);
+ }
  console.log(JSON.stringify({test_double:true,forbidden:[]}));process.exit(0);
 }
-if(args.includes('tools/production/prepare_art_delivery.gd')) {
+if(args.includes('tools/production/prepare_art_delivery.gd') || args.includes('tools/production/prepare_preview_delivery.gd')) {
  if(process.env.STAGING_TEST_MODE==='art-preparation-failure')process.exit(10);
  process.exit(0);
 }
@@ -60,7 +67,7 @@ process.exit(9);
   return {root, result, original};
 }
 
-for (const mode of ['export-failure', 'pack-failure', 'missing-file', 'art-preparation-failure', 'rename-failure']) test(`failed staging preserves complete previous directory: ${mode}`, () => {
+for (const mode of ['export-failure', 'pack-failure', 'art-pack-failure', 'missing-file', 'art-preparation-failure', 'rename-failure']) test(`failed staging preserves complete previous directory: ${mode}`, () => {
   const {root, result, original} = fixture(mode);
   try {
     assert.notEqual(result.status, 0, result.stdout + result.stderr);

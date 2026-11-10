@@ -7,6 +7,8 @@ var card: Dictionary={}
 var _illustration_binding := ""
 var _illustration_data: Dictionary = {}
 var art_profile := "compact"
+var _delivery_card_id := ""
+var _delivery_profile := ""
 var unit: Dictionary={}
 var selected := false
 var target := false
@@ -30,12 +32,23 @@ func _ready() -> void:
 func _ink(value: String, at: Vector2, fs: int, tint: Color, width: float) -> void:
 	draw_string(S.font,at,value,HORIZONTAL_ALIGNMENT_LEFT,width,fs,tint)
 func _process(_delta: float) -> void:
-	if art_profile == "full" and not card.is_empty() and ART.binding_key(card, art_profile) != _illustration_binding: queue_redraw()
+	if _delivery_card_id != str(card.get("id", "")) or _delivery_profile != art_profile or not ART.visible_owner(self):
+		ART.release_owner(self); _delivery_card_id = ""; _delivery_profile = ""
+	if not card.is_empty() and ART.visible_owner(self):
+		if _delivery_card_id.is_empty(): _illustration_binding = ""
+		if ART.binding_key(card, art_profile) != _illustration_binding: queue_redraw()
+func _exit_tree() -> void: ART.release_owner(self)
 func illustration(aperture: Rect2, tint: Color=Color.WHITE) -> void:
 	var binding := ART.binding_key(card, art_profile)
 	if binding != _illustration_binding:
-		_illustration_data = ART.resolve(card, art_profile); _illustration_binding = binding
+		_illustration_data = ART.resolve(card, art_profile, self); _illustration_binding = binding
+		_delivery_card_id = str(card.get("id", "")); _delivery_profile = art_profile
 	var resolved = _illustration_data
+	if resolved.get("preview_pending", false):
+		draw_rect(aperture, Color(.045,.06,.075))
+		if aperture.size.x >= 64 and aperture.size.y >= 40:
+			_ink("Bild lädt …" if resolved.delivery_state == "loading" else "Bild offline", aperture.position + Vector2(7,aperture.size.y*.5), 10, T.SECONDARY, aperture.size.x-14)
+		return
 	if resolved.texture!=null:
 		var texture: Texture2D=resolved.texture
 		var original=Vector2(texture.get_size());var aperture_ratio=aperture.size.x/aperture.size.y

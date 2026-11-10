@@ -15,11 +15,13 @@ from urllib.parse import urlsplit
 def run(root: Path, ready: Path, log: Path) -> None:
     manifest = json.loads((root / "data/production/art_delivery.json").read_text())
     bodies = {}
-    for entry in manifest["entries"].values():
-        body = (root / "work/art-delivery-cache" / (entry["web_sha256"] + ".webp")).read_bytes()
-        if len(body) != entry["bytes"] or hashlib.sha256(body).hexdigest() != entry["web_sha256"]:
-            raise ValueError("Actual encoded-art cache is missing/stale; prepare it before this test")
-        bodies[entry["relative_url"]] = body
+    previews = json.loads((root / "data/production/art_preview_delivery.json").read_text())
+    for entries, cache in [(manifest["entries"], "art-delivery-cache"), ({key: item for key, item in previews["entries"].items() if item["delivery"] == "external"}, "art-preview-delivery-cache")]:
+        for entry in entries.values():
+            body = (root / "work" / cache / (entry["web_sha256"] + ".webp")).read_bytes()
+            if len(body) != entry["bytes"] or hashlib.sha256(body).hexdigest() != entry["web_sha256"]:
+                raise ValueError("Actual encoded-art cache is missing/stale; prepare it before this test")
+            bodies[entry["relative_url"]] = body
     lock = threading.Lock()
     log.write_text("")
 

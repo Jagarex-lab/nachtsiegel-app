@@ -29,7 +29,7 @@ Remove a temporary test CA trust profile after testing.
 Full procedure: docs/production/PLAN.md and docs/release/PAGES_RELEASE_SAFETY.md.
 No production site, account, shop or online service is changed.
 Data is local to the browser origin; changing HTTP/HTTPS host changes storage.
-Keep art-delivery.json and the complete art/ directory beside index.html.
+Keep both art delivery JSON files and the complete art/ directory beside index.html.
 '''
 
 def package(root: Path, output: Path, project: Path = ROOT) -> dict:
@@ -42,16 +42,22 @@ def package(root: Path, output: Path, project: Path = ROOT) -> dict:
     files = [root / "index.html", root / "build-info.json", *sorted(root.glob(prefix + ".*"))]
     if not any(p.suffix == ".wasm" for p in files) or not any(p.suffix == ".pck" for p in files): raise ValueError("Missing actual Web core files")
     art_count = 0
+    preview_count = 0
     if (root / "art-delivery.json").exists():
         delivery = json.loads((root / "art-delivery.json").read_text())
-        art = checked_delivery_files(root, delivery)
-        files.extend([root / "art-delivery.json", *art]); art_count = len(art)
+        preview_path = root / "art-preview-delivery.json"
+        previews = json.loads(preview_path.read_text()) if preview_path.exists() else None
+        art = checked_delivery_files(root, delivery, previews)
+        files.extend([root / "art-delivery.json", *art])
+        if previews is not None: files.append(preview_path)
+        art_count = sum(path.parent.name == "full" for path in art)
+        preview_count = sum(path.parent.name == "preview" for path in art)
     elif (root / "art").exists(): raise ValueError("Unmanifested art directory")
     for path in files:
         if not path.is_file() or any(p.is_symlink() for p in [path, *path.parents] if p != root.parent): raise ValueError(f"Unsafe export file: {path.name}")
         if not path.resolve().is_relative_to(root.resolve()): raise ValueError("Export traversal")
     entries = {p.relative_to(root).as_posix(): p.read_bytes() for p in files}
-    manifest = {"source_commit": commit, "version": meta["version"], "status": "prepared-not-published", "full_art_assets": art_count, "files": {name: hashlib.sha256(body).hexdigest() for name, body in entries.items()}}
+    manifest = {"source_commit": commit, "version": meta["version"], "status": "prepared-not-published", "full_art_assets": art_count, "preview_art_assets": preview_count, "files": {name: hashlib.sha256(body).hexdigest() for name, body in entries.items()}}
     output.mkdir(parents=True, exist_ok=True)
     manifest_data = (json.dumps(manifest, indent=2) + "\n").encode()
     entries["artifact-manifest.json"] = manifest_data
@@ -73,7 +79,7 @@ def package(root: Path, output: Path, project: Path = ROOT) -> dict:
         (output / "artifact-manifest.json").write_bytes(manifest_data)
     finally:
         if Path(temporary).exists(): Path(temporary).unlink()
-    return {"archive": str(archive), "bytes": archive.stat().st_size, "sha256": hashlib.sha256(archive.read_bytes()).hexdigest(), "commit": commit, "full_art_assets": art_count}
+    return {"archive": str(archive), "bytes": archive.stat().st_size, "sha256": hashlib.sha256(archive.read_bytes()).hexdigest(), "commit": commit, "full_art_assets": art_count, "preview_art_assets": preview_count}
 
 if __name__ == "__main__":
     print(json.dumps(package(ROOT / "work/alpha/web", ROOT / "work/alpha"), indent=2))

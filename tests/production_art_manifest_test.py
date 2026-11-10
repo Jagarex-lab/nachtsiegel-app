@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import tempfile
@@ -18,10 +19,12 @@ class ProductionArtManifest(unittest.TestCase):
         manifest, briefs = ART.build()
         self.assertEqual(manifest["inventory_card_count"], 550)
         self.assertEqual(len(briefs["entries"]), 550)
-        self.assertEqual(manifest["individual_original_count"], 15)
-        self.assertEqual(manifest["missing_individual_count"], 535)
-        self.assertEqual(manifest["final_individual_count"], 15)
-        self.assertEqual(manifest["compact_preview_count"], 15)
+        source_count = len(ART.load(ROOT / "data/production/art_sources.json")["entries"])
+        self.assertGreaterEqual(source_count, 15)
+        self.assertEqual(manifest["individual_original_count"], source_count)
+        self.assertEqual(manifest["missing_individual_count"], 550 - source_count)
+        self.assertEqual(manifest["final_individual_count"], source_count)
+        self.assertEqual(manifest["compact_preview_count"], source_count)
         self.assertEqual(manifest["orphan_preview_files"], [])
         self.assertEqual(manifest["commercially_cleared_count"], 0)
         self.assertEqual(manifest["orphan_files"], [])
@@ -38,16 +41,17 @@ class ProductionArtManifest(unittest.TestCase):
         for entry in source["entries"].values():
             path = ART.checked_asset(ROOT, entry["asset_path"])
             width, height, digest = ART.png_info(path)
-            self.assertEqual((width, height), (1448, 1086))
+            self.assertEqual((width, height), (entry["original_width"], entry["original_height"]))
+            self.assertGreaterEqual(width, 1024); self.assertGreaterEqual(height, 768)
             self.assertEqual(digest, entry["sha256"])
             self.assertNotIn(digest, digests)
-            for edit in entry["edits"]:
+            for edit in entry.get("edits", []):
                 self.assertEqual(edit["method"], "OpenAI Image Generation")
                 self.assertGreater(len(edit["instruction"]), 100)
             for reference in entry["reference_sources"]:
                 self.assertEqual(reference["kind"], "project_generated_illustration")
                 self.assertEqual(len(reference["sha256"]), 64)
-                self.assertTrue(entry["edits"])
+                self.assertTrue(entry.get("edits"))
                 archive = ROOT / reference["repository_path"]
                 self.assertTrue(archive.resolve().is_relative_to((ROOT / "docs/production/art-evidence/source-references").resolve()))
                 self.assertFalse(archive.is_symlink())
@@ -57,7 +61,7 @@ class ProductionArtManifest(unittest.TestCase):
 
     def test_corruption_not_accepted_as_image(self):
         original = (ROOT / "assets/cards/originals/oa-neutral-c02.png").read_bytes()
-        with tempfile.TemporaryDirectory() as temp:
+        with tempfile.TemporaryDirectory(dir=ROOT / "work") as temp:
             path = Path(temp) / "bad.png"
             for payload in [b"not a PNG", original[:40], original[:-5], original + b"trailing"]:
                 path.write_bytes(payload)
@@ -69,18 +73,18 @@ class ProductionArtManifest(unittest.TestCase):
     def test_path_traversal_and_aliases_rejected(self):
         for path in ["res://scripts/model.gd", "res://assets/cards/originals/../../outside.png", "res://assets/cards/originals/%2e.png", "res://assets/cards/originals/x\\y.png", "https://elsewhere/a.png"]:
             with self.assertRaises(ValueError): ART.checked_asset(ROOT, path)
-        with tempfile.TemporaryDirectory() as temp:
+        with tempfile.TemporaryDirectory(dir=ROOT / "work") as temp:
             root = Path(temp); (root / "assets/cards/originals").mkdir(parents=True)
             outside = root / "outside.png"; outside.write_bytes(b"unused")
             (root / "assets/cards/originals/link.png").symlink_to(outside)
             with self.assertRaises(ValueError): ART.checked_asset(root, "res://assets/cards/originals/link.png")
 
     def test_stale_and_misrepresented_original_metadata(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with tempfile.TemporaryDirectory(dir=ROOT / "work") as temp:
             root = Path(temp)
             shutil.copytree(ROOT / "data/production", root / "data/production")
-            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals")
-            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews")
+            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals", copy_function=os.link)
+            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews", copy_function=os.link)
             path = root / "data/production/art_sources.json"
             original = ART.load(path)
             first = next(iter(original["entries"]))
@@ -100,7 +104,8 @@ class ProductionArtManifest(unittest.TestCase):
         for card_id, preview in previews.items():
             path = ART.checked_asset(ROOT, preview["asset_path"], "previews")
             width, height, digest = ART.png_info(path)
-            self.assertEqual((width, height), (512, 384))
+            ratio = 512 / max(sources[card_id]["original_width"], sources[card_id]["original_height"])
+            self.assertEqual((width, height), (int(sources[card_id]["original_width"] * ratio + 0.5), int(sources[card_id]["original_height"] * ratio + 0.5)))
             self.assertEqual(preview["source_sha256"], sources[card_id]["sha256"])
             self.assertEqual(preview["sha256"], digest)
             self.assertNotIn(digest, hashes)
@@ -109,11 +114,11 @@ class ProductionArtManifest(unittest.TestCase):
             hashes.add(digest)
 
     def test_stale_preview_metadata_rejected(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with tempfile.TemporaryDirectory(dir=ROOT / "work") as temp:
             root = Path(temp)
             shutil.copytree(ROOT / "data/production", root / "data/production")
-            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals")
-            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews")
+            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals", copy_function=os.link)
+            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews", copy_function=os.link)
             path = root / "data/production/art_previews.json"
             original = ART.load(path)
             first = next(iter(original["entries"]))
@@ -123,18 +128,19 @@ class ProductionArtManifest(unittest.TestCase):
                 with self.assertRaises(ValueError): ART.build(root)
 
     def test_compact_derivative_cannot_masquerade_as_original(self):
-        with tempfile.TemporaryDirectory() as temp:
+        with tempfile.TemporaryDirectory(dir=ROOT / "work") as temp:
             root = Path(temp)
             shutil.copytree(ROOT / "data/production", root / "data/production")
-            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals")
-            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews")
+            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals", copy_function=os.link)
+            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews", copy_function=os.link)
             sources = ART.load(root / "data/production/art_sources.json")
             card_id = next(iter(sources["entries"]))
             preview = root / "assets/cards/previews" / (card_id + ".png")
             original = root / "assets/cards/originals" / (card_id + ".png")
+            original.unlink()  # Break immutable hardlink before corruption fixture.
             shutil.copyfile(preview, original)
             width, height, digest = ART.png_info(original)
-            self.assertEqual((width, height), (512, 384))
+            self.assertEqual(max(width, height), 512)
             sources["entries"][card_id].update({"sha256": digest, "original_width": width, "original_height": height})
             (root / "data/production/art_sources.json").write_text(json.dumps(sources), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "Insufficient native source dimensions"):

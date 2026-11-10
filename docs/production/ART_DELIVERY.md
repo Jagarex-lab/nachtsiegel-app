@@ -1,5 +1,7 @@
 # On-demand full illustration delivery
 
+Historical fifteen-image full-only stage. The subsequent [visible compact streaming](ART_PREVIEW_STREAMING.md) stage packs only five pilots and requests other compact images as needed. Counts and byte measurements below refer to this earlier measured artifact.
+
 The Web candidate packages the 15 prepared 512 × 384 previews in its initial PCK.
 Its 15 full illustrations are separate, content-addressed WebP files requested
 when an inspector needs them. Native exports retain their full imported textures.

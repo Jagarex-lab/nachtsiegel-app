@@ -198,7 +198,10 @@ func lobby() -> void:
 	button("collection","SAMMLUNG",func():open_cards(true),panel)
 	button("settings","EINSTELLUNGEN",func():page="settings";render(),panel)
 	text("30 Karten · 30 Leben · gegen KI",panel,13).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	text("Illustrationen: Konzeptbilder und gekennzeichnete Einzelmotive · Fortschritt lokal",body,12)
+	var art_counts=CardView.ART.inventory_counts()
+	var art_caption="%d individuelle Illustrationen" % int(art_counts.get("final",0))
+	if int(art_counts.get("missing",550))>0:art_caption+=" · %d Konzeptplatzhalter" % int(art_counts.missing)
+	text(art_caption+" · Fortschritt lokal",body,12)
 	if not session.get("profile_issues")==null and not session.profile_issues.is_empty():text("Lokale Daten: Wiederherstellungshinweise in Einstellungen.",body,12)
 func show_profile_issues() -> void:
 	show_modal("LOKALE DATEN",func(box):
@@ -788,8 +791,14 @@ func publish_qa() -> void:
 	if is_instance_valid(inspector_rules) and is_instance_valid(modal):
 		var r=inspector_rules.get_global_rect()
 		state.inspection={"id":inspector_card_id,"title":inspector_title.text,"rules":inspector_rules.text,"rules_font_size":inspector_rules.get_theme_font_size("font_size"),"rules_rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]}
-		var art=CardView.ART.resolve({"id":inspector_card_id})
+		var art=CardView.ART.resolve({"id":inspector_card_id},"full",null,false)
 		state.inspection.art={"preview_only":art.preview_only,"state":art.delivery_state,"pixels":[art.texture.get_width(),art.texture.get_height()] if art.texture!=null else [],"asset":art.asset_path}
+	state.library_art={}
+	for card_id in library_visible_ids:
+		var compact_art=CardView.ART.resolve({"id":card_id},"compact",null,false)
+		state.library_art[card_id]={"state":compact_art.delivery_state,"pixels":[compact_art.texture.get_width(),compact_art.texture.get_height()] if compact_art.texture!=null else [],"pending":compact_art.preview_pending}
+	var art_service=get_tree().root.get_node_or_null("ArtDelivery")
+	if art_service!=null:state.art_delivery=art_service.metrics();state.art_cache=CardView.ART.stats()
 	state.opening_marks=mulligan_indices.duplicate();state.drag={"active":bool(hand_drag.get("active",false)),"targets":hand_drag.get("targets",{}).keys()}
 	for key in actions:
 		var b=actions[key]
