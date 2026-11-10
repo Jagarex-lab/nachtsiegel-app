@@ -6,6 +6,7 @@ export XDG_DATA_HOME="$PWD/work/production-storage/xdg/data"
 export XDG_CONFIG_HOME="$PWD/work/production-storage/xdg/config"
 export XDG_CACHE_HOME="$PWD/work/production-storage/xdg/cache"
 export LP_NUM_THREADS="${LP_NUM_THREADS:-2}"
+node --test tests/production_storage_mirror.test.cjs
 args=()
 if [[ "${PRODUCTION_STORAGE_FOCUSED:-0}" == "1" ]]; then args+=(-- --focused); fi
 timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --headless --path . --script tests/production_storage.gd "${args[@]}" > work/production-storage/native.log 2>&1

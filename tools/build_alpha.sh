@@ -33,7 +33,15 @@ if ! "${GODOT_BIN:-godot}" --headless --path . --export-debug 'Alpha Web QA' "$a
 fi
 mv "$alpha_stage_dir/$alpha_build_name.html" "$alpha_stage_dir/index.html"
 for alpha_extension in pck wasm js; do test -s "$alpha_stage_dir/$alpha_build_name.$alpha_extension"; done
-"${GODOT_BIN:-godot}" --headless --main-pack "$alpha_stage_dir/$alpha_build_name.pck" --script "$PWD/tools/alpha02_pack_inventory.gd" -- --reject-test-assets > work/alpha/package-inspection.log 2>&1
+# A source checkout must never satisfy a missing packaged resource. Both the
+# working directory and project path are an empty directory during inspection.
+alpha_inventory_script="$PWD/tools/alpha02_pack_inventory.gd"
+mkdir "$alpha_stage_dir/.inspection"
+(
+  cd "$alpha_stage_dir/.inspection"
+  "${GODOT_BIN:-godot}" --headless --path . --main-pack "$alpha_stage_dir/$alpha_build_name.pck" --script "$alpha_inventory_script" -- --reject-test-assets
+) > work/alpha/package-inspection.log 2>&1
+rmdir "$alpha_stage_dir/.inspection"
 python3 - "$alpha_build_commit" "$alpha_stage_dir" <<'PY'
 import json,sys,os
 from pathlib import Path

@@ -5,9 +5,14 @@ cd "$(dirname "$0")/.."
 mkdir -p work/production/platforms work/xdg/{data,config,cache}
 export XDG_DATA_HOME="$PWD/work/xdg/data" XDG_CONFIG_HOME="$PWD/work/xdg/config" XDG_CACHE_HOME="$PWD/work/xdg/cache"
 export LP_NUM_THREADS="${LP_NUM_THREADS:-2}"
+repo_dir="$PWD"
 out="$PWD/work/production/platforms"
+mkdir -p "$out/isolated-resource-root"
 "${GODOT_BIN:-godot}" --headless --path . --export-debug 'Linux QA' "$out/orafold-preview.x86_64" > "$out/linux-export.log" 2>&1
-timeout 300 "$out/orafold-preview.x86_64" --headless --audio-driver Dummy --script "$PWD/tests/production_exported.gd" > "$out/linux-runtime.log" 2>&1
+(
+  cd "$out/isolated-resource-root"
+  timeout 300 "$out/orafold-preview.x86_64" --headless --path . --audio-driver Dummy --script "$repo_dir/tests/production_exported.gd"
+) > "$out/linux-runtime.log" 2>&1
 "${GODOT_BIN:-godot}" --headless --path . --export-debug 'Android QA' "$out/orafold-preview.apk" > "$out/android-export.log" 2>&1
 # Paths can be supplied by any installed, appropriate Android SDK.
 android_build_tools="${ANDROID_BUILD_TOOLS:-$PWD/work/tools/android-sdk/build-tools/35.0.0}"

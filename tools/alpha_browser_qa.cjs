@@ -4,6 +4,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
 (async()=>{
  const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
  const legacyOnly=process.env.QA_LEGACY_ONLY==='1';
+ fs.rmSync('work/alpha/browser-results.json',{force:true});
  const results=[],profiles={chromium:[{name:'desktop',viewport:{width:1280,height:720},hasTouch:true},{name:'desktop-wide',viewport:{width:1600,height:900},hasTouch:true},{...devices['Pixel 7'],name:'android',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['Pixel 7'],name:'android-bars',viewport:{width:844,height:320},deviceScaleFactor:2,insets:{left:44,right:44,top:0,bottom:21}}],webkit:[{...devices['iPhone 13'],name:'iphone',viewport:{width:844,height:390},deviceScaleFactor:3},{...devices['iPhone 13 Pro Max'],name:'iphone-wide',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['iPhone 13'],name:'iphone-bars',viewport:{width:844,height:320},deviceScaleFactor:1,reducedMotion:'reduce',insets:{left:44,right:44,top:0,bottom:21}}]};
  for(const engine of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
   for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
@@ -11,7 +12,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
-   let inspectedCard=null;
+   let inspectedCard=null,profileTemplate=null;const relicActivations=[],toolbarTests=[];
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
    const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync(`work/alpha/browser-progress-${engine}-${name}.json`,JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
@@ -37,13 +38,43 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
      const response=await Promise.race([capture.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:opts.deviceScaleFactor||1}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
      buffer=Buffer.from(response.data,'base64');
     }else buffer=await page.screenshot();
-    assert.equal(buffer.readUInt32BE(16),opts.viewport.width*(opts.deviceScaleFactor||1),'native screenshot width');
-    assert.equal(buffer.readUInt32BE(20),opts.viewport.height*(opts.deviceScaleFactor||1),'native screenshot height');
+    assert.equal(buffer.readUInt32BE(16),page.viewportSize().width*(opts.deviceScaleFactor||1),'native screenshot width');
+    assert.equal(buffer.readUInt32BE(20),page.viewportSize().height*(opts.deviceScaleFactor||1),'native screenshot height');
     assert(buffer.length>20000,'nonempty rendered screenshot');
     fs.writeFileSync(`work/alpha/${engine}-${name}-${tag}.png`,buffer);
     return buffer;
    };
    async function opening(customPower=null){await action('start');if(!legacyOnly){if(customPower)await action('custom_'+customPower);await action('deck_play');}if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);}
+   async function toolbarViewportChecks(){
+    // Obtain six real cards by drawing, or by holding the first hand for one
+    // legal turn. No HP, cards, phase, seed or model state is injected.
+    let current=await state();
+    if(current.battle.hero.phase==='draw'){await action('end');current=await state();}
+    if(current.battle.hero.hand.length<6){
+     assert.equal(current.battle.hero.phase,'main','real hold-turn starts in main phase');await action('end');
+     await page.waitForFunction(()=>window.orafoldQA.battle.active==='hero'&&window.orafoldQA.battle.hero.phase==='draw');await action('end');current=await state();
+    }
+    assert.equal(current.battle.hero.hand.length,6,'six-card toolbar case is reached through real draw/turn commands');
+    const expected=current.battle,commands=current.command_count,previousViewport=page.viewportSize();
+    await page.evaluate(()=>{window.__orafoldToolbarPriorInsets=Object.getOwnPropertyDescriptor(window,'nachtsiegelInsets');Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,value:()=>({left:44,right:44,top:0,bottom:21})});});
+    try{
+     for(const height of [270,320]){
+      const version=(await state()).render_version;await page.setViewportSize({width:844,height});
+      await page.waitForFunction(({version,height})=>{const q=window.orafoldQA;return q?.render_version>version&&Math.abs(q.layout_size[0]-756)<1&&Math.abs(q.layout_size[1]-(height-21))<1;},{version,height},{timeout:90000});
+      const resized=await state();assert.deepEqual(resized.battle,expected,'toolbar resize preserves full model state');assert.equal(resized.command_count,commands,'toolbar resize issues no command');assert(!resized.actions.rotate_menu,'landscape browser toolbars must not show an orientation guard');assert.equal(Object.keys(resized.board).length,10,'all five paired paths remain available with toolbars');assert.equal(resized.hand.length,6,'all six actual hand cards stay present');
+      const safe=r=>r&&r[0]>=43.9&&r[1]>=-.1&&r[0]+r[2]<=800.1&&r[1]+r[3]<=height-21+.1;
+      for(const [id,r]of Object.entries(resized.board)){assert(safe(r),id+' remains inside simulated safe area');assert(r[2]>=43.9&&r[3]>=43.9,id+' remains44CSS');}
+      for(const c of resized.hand){assert(safe(c.rect),'six-card hand safe area '+c.id);assert(c.rect[2]>=43.9&&c.rect[3]>=43.9,'six-card touch44CSS '+c.id);}
+      for(const id of ['menu','end']){const r=resized.actions[id]?.rect;assert(safe(r),id+' toolbar primary action remains visible');assert(r[2]>=43.9&&r[3]>=43.9,id+' remains44CSS with toolbars');}
+      await action('menu');assert((await state()).modal,'safe menu really opens through touch at toolbar height');await action('modal_close');assert.deepEqual((await state()).battle,expected,'menu inspection is read-only during toolbar test');
+      await shot('toolbar-'+height+'-six-cards');toolbarTests.push({viewport:{width:844,height},simulated_safe_insets:{left:44,right:44,top:0,bottom:21},available_height:height-21,hand_size:6,real_device_test:false});
+     }
+    }finally{
+     await page.evaluate(()=>{const descriptor=window.__orafoldToolbarPriorInsets;if(descriptor)Object.defineProperty(window,'nachtsiegelInsets',descriptor);else delete window.nachtsiegelInsets;delete window.__orafoldToolbarPriorInsets;});
+     const version=(await state()).render_version;await page.setViewportSize(previousViewport);await page.waitForFunction(v=>window.orafoldQA.render_version>v,version);
+    }
+    assert.deepEqual((await state()).battle,expected,'restoring browser geometry preserves all gameplay state');
+   }
    async function playTurn(){
     for(let n=0;n<22;n++){
      let q=await state(),b=q.battle,p=b.hero;if(b.winner)return;
@@ -58,9 +89,17 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       if(legal.lanes.length){choice={i:legal.index,lane:legal.lanes[0],side:legal.side,relic:legal.relic};break;}
      }
      if(!choice){
-      if(q.mode==='alpha'&&p.relic&&!p.relic_used&&p.energy>=1){
-       const effect=by[p.relic.id].effect,benefit=effect==='relic_res'&&p.resonance<15||effect==='relic_ward'&&p.ward<25||effect==='relic_heal'&&p.hp<p.maxHp||effect==='relic_draw'&&p.hand.length<6&&p.deck.length;
-       if(benefit){const before=q.command_count;await action('actions');await action('relic');await page.waitForFunction(n=>window.orafoldQA.command_count>n,before);continue;}
+      if(q.mode==='alpha'&&p.relic&&!p.relic_used){
+       // The actual enabled button is the model's activation contract. Generic
+       // relics must not disappear behind an obsolete four-effect lookup table.
+       await action('actions');const activation=(await state()).actions.relic;
+       assert(activation,'installed relic has an actual activation control');
+       if(!activation.disabled){
+        const before=await state(),id=before.battle.hero.relic.id;await action('relic');await page.waitForFunction(n=>window.orafoldQA.command_count>n,before.command_count);
+        const after=await state();assert.equal(after.command_count,before.command_count+1,'relic activation issues exactly one command');assert(after.battle.hero.relic_used,'actual activation consumes its per-turn use');
+        relicActivations.push({id,generic:by[id]?.effect==='v2',remaining_relic:after.battle.hero.relic?.id||null,round:before.battle.round,command:after.command_count});continue;
+       }
+       await action('modal_close');
       }
       const ready=q.controlled_lanes||[];
       if(q.mode==='alpha'&&b.round>=11&&ready.length>=3){
@@ -108,25 +147,26 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     await opening();let q=await state();assert.equal(q.battle.hero.maxHp,legacyOnly?35:30);if(!legacyOnly)assert.equal(q.battle.enemy.maxHp,30);
     for(const key of (legacyOnly?['end','actions','inspect','menu','log']:['end','actions','inspect','menu','log'])){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
     for(const r of Object.values(q.board))assert(r[2]>=43.9&&r[3]>=43.9&&r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,'board safe bounds');
-    await shot('battle');await playTurn();await shot('after-turn');
+    await shot('battle');if(!legacyOnly&&['desktop','iphone'].includes(name))await toolbarViewportChecks();await playTurn();await shot('after-turn');
     if((await state()).battle.winner){await action('result_menu');}else{await action('menu');await action('confirm_menu');}
     await action('builder');await action('save_deck');await wait(()=>window.orafoldQA.message.includes('gespeichert'));await shot('builder');
     await page.reload({waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');await action('builder');assert.equal((await state()).deck_size,legacyOnly?25:30);await action('builder_back');
     if(['desktop','desktop-wide','android','iphone'].includes(name)){
      let productionTemplate=null;
      if(!legacyOnly){
-      await action('builder');await action('strategy_templates');await action('template_prod-aggro');
-      const loaded=await state();productionTemplate=JSON.parse(fs.readFileSync('data/production/test_decks.json','utf8')).decks.find(deck=>deck.id==='prod-aggro');
+      const templateId=['desktop','iphone'].includes(name)?'prod-relic':'prod-aggro';
+      await action('builder');await action('strategy_templates');await action('template_'+templateId);
+      const loaded=await state();productionTemplate=JSON.parse(fs.readFileSync('data/production/test_decks.json','utf8')).decks.find(deck=>deck.id===templateId);profileTemplate=templateId;
       assert.deepEqual(loaded.deck_ids,productionTemplate.cards,'realproductiontemplate loads exact30cards');
       assert(loaded.deck_ids.some(id=>id.startsWith('of-')),'fullbrowsergame uses actual genericproductioncards');
       await action('save_deck');await action('builder_back');
      }
      await opening(productionTemplate?.power);
      let turns=0;while(!(await state()).battle.winner&&turns++<160){const q=await state();console.log('UI DUEL',engine,name,'turn',q.battle.round,'HP',q.battle.hero.hp,q.battle.enemy.hp,'commands',q.command_count);await playTurn();}
-     q=await state();assert(q.battle.winner,'complete UI duel');await shot('result');await action('result_log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
+     q=await state();assert(q.battle.winner,'complete UI duel');if(profileTemplate==='prod-relic')assert(relicActivations.some(value=>value.generic),'Reliktstrategie must exercise at least one real generic activation through UI');await shot('result');await action('result_log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
      await action('restart');await action('confirm_restart');await wait(()=>!window.orafoldQA.battle.winner);await shot('restart');
     }
-    assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,checks:'real touch, menu, collection, visible card inspector/close with unchanged deck, settings, opening, 44CSS bounds, cards, saved deck reload; fullAlpha games load realproductionAggrotemplate throughbuilder',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null});
+    assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,checks:'real touch, menu, collection, visible card inspector/close with unchanged deck, settings, opening, 44CSS bounds, cards, saved deck reload; fullAlpha games load real production strategy templates through builder; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null});
     console.log('ALPHA BROWSER PASS:',engine,name);
    }catch(error){await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,errors,diagnostic:await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,page:window.orafoldQA?.page})).catch(()=>null)},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}

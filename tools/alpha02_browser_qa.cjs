@@ -2,7 +2,7 @@
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict');
 const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=Object.fromEntries(cards.map(c=>[c.id,c]));
 (async()=>{
- fs.mkdirSync('work/alpha02',{recursive:true});const records=[];
+ fs.mkdirSync('work/alpha02',{recursive:true});fs.rmSync('work/alpha02/browser-results.json',{force:true});const records=[];
  for(const name of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
   const engine=name==='webkit'?webkit:chromium;
   let lastPage,lastErrors=[];
@@ -35,6 +35,7 @@ const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=
    };
    const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
    const began=Date.now();await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');
+   const buildResponse=await page.request.get(new URL('build-info.json',url).href);assert(buildResponse.ok(),'actual candidate metadata reachable');const buildInfo=await buildResponse.json();if(process.env.EXPECTED_COMMIT)assert.equal(buildInfo.commit,process.env.EXPECTED_COMMIT,'actual tested commit');
    const boot=Date.now()-began;console.log('ALPHA02',name,'portrait lobby',boot);
    const metrics=await page.evaluate(()=>({...window.orafoldDisplayMetrics(),transform:getComputedStyle(document.querySelector('canvas')).transform}));
    assert.equal(metrics.transform,'none');assert(Math.abs(metrics.pixelsWidth/metrics.cssWidth-3)<.02);assert((await q()).font_msdf);
@@ -85,9 +86,9 @@ const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=
    await wait(()=>window.orafoldQA.layout_size[1]>700);
    await action('deck_tab');
    const original=(await q()).deck_ids;
-   await action('remove_oa-neutral-c01');assert.equal((await q()).deck_size,29);assert((await q()).actions.save_deck.disabled);
+   const removed=original[0];assert(by[removed],'actual starter first identity exists');await action('remove_'+removed);assert.equal((await q()).deck_size,29);assert.deepEqual((await q()).deck_ids,original.slice(1),'actual first deck copy removed in order');assert((await q()).actions.save_deck.disabled);
    await action('library_tab');
-   const candidate=cards.find(c=>c.id!=='oa-neutral-c01'&&['neutral','houses'].includes(c.faction)&&original.filter(id=>id===c.id).length<(c.rarity==='legendary'?1:3));
+   const candidate=cards.find(c=>c.id!==removed&&['neutral','houses'].includes(c.faction)&&original.filter(id=>id===c.id).length<(c.rarity==='legendary'?1:3));
    // Pick a different legal identity, then locate it through the real search UI.
    // Catalog order does not determine the energy/name-sorted library position.
    assert(candidate);const add='add_'+candidate.id;
@@ -110,7 +111,7 @@ const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=
    await action('builder_back');await action('start');await action('custom_houses');await action('deck_play');
    const played=(await q()).battle.hero;assert.deepEqual([...played.hand,...played.deck].sort(),[...edited].sort());
    assert.equal(errors.length,0,errors.join('\n'));
-   records.push({engine:name,boot_ms:boot,metrics,rotationMetrics,captures,timings,errors,deck_edit:{removed_id:'oa-neutral-c01',added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
+   records.push({engine:name,build:buildInfo,boot_ms:boot,metrics,rotationMetrics,captures,timings,errors,deck_edit:{removed_id:removed,added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
    console.log('ALPHA02 BROWSER PASS',name);await context.close();
   }catch(error){const diagnostic=lastPage?await Promise.race([lastPage.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(r=>setTimeout(()=>r(null),5000))]):null;fs.writeFileSync('work/alpha02/'+name+'-error.json',JSON.stringify({error:String(error),console:lastErrors,diagnostic},null,2));throw error;}finally{await browser.close();}
  }
