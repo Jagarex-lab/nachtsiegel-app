@@ -80,8 +80,16 @@ test('reordered object fields pass, missing HP, changed target and shuffled deck
  const target=plain(original);target.hero.lanes[0].id='veil-1';assert(difference(original,target));
 });
 
-test('legacy namespace is confined to the explicit Alpha runtime; seven-card prototype stays isolated',()=>{
+test('legacy namespace is confined to explicit archive runtime and historical deck validation; seven-card prototype stays isolated',()=>{
  function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?walk(path.join(dir,entry.name)):[path.join(dir,entry.name)]);}
  const files=[path.join(ROOT,'project.godot'),...walk(path.join(ROOT,'scripts')).filter(p=>p.endsWith('.gd')&&!p.includes(path.join('scripts','legacy')+path.sep)&&!p.includes(path.join('scripts','alpha')+path.sep)),...walk(path.join(ROOT,'scenes')).filter(p=>p.endsWith('.tscn'))];
- for(const file of files)assert(!/res:\/\/(?:scripts|data)\/legacy\//.test(fs.readFileSync(file,'utf8')),path.relative(ROOT,file));
+ for(const file of files){
+  const relative=path.relative(ROOT,file),content=fs.readFileSync(file,'utf8');
+  if(relative===path.join('scripts','production','profile_store.gd')){
+   // The production store must still validate preserved historical decks. This
+   // precise dependency does not activate the Legacy catalog in the collection.
+   assert.deepEqual(content.match(/res:\/\/(?:scripts|data)\/legacy\/[^"\s]+/g),['res://scripts/legacy/deck_validator.gd'],relative);
+   assert.match(content,/if mode=="legacy":return LegacyValidator\.new\(\)\.validate\(ids\)/);
+  }else assert(!/res:\/\/(?:scripts|data)\/legacy\//.test(content),relative);
+ }
 });
