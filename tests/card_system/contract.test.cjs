@@ -164,12 +164,13 @@ test('pierce terminology follows real kernel semantics instead of the old toolti
   assert.match(registry.effects.pierce.text_de, /dabei absorbieren Block und Schild/u);
 });
 
-test('illustration manifest contains real eight pilot references, missing originals and no fake future rows', () => {
+test('historical eight-pilot inventory reports real file presence without automatically approving production art', () => {
   const manifest = inventory();
   assert.equal(manifest.inventory_card_count, 8);
   assert.equal(manifest.entries.length, 8);
   assert.equal(manifest.shared_concept_card_count, 8);
-  assert.equal(manifest.missing_individual_original_count, 8);
+  const missing = pilot.cards.filter(card => !fs.existsSync(path.join(ROOT, 'assets/cards/originals',card.id+'.png'))).length;
+  assert.equal(manifest.missing_individual_original_count, missing);
   assert.equal(manifest.final_individual_original_count, 0);
   assert.equal(manifest.future_plan.generated_future_card_rows, 0);
   assert.equal(manifest.future_plan.desired_catalogue_cards, 550);
@@ -177,7 +178,11 @@ test('illustration manifest contains real eight pilot references, missing origin
   assert.equal(manifest.atlas.cell_width, 415); assert.equal(manifest.atlas.cell_height, 421);
   for (const entry of manifest.entries) {
     assert.ok(pilot.cards.some(card => card.id === entry.card_id));
-    assert.equal(entry.individual_original.status, 'missing');
+    const expectedPath=path.posix.join('assets/cards/originals',entry.card_id+'.png');
+    assert.equal(entry.individual_original.expected_path,expectedPath);
+    const exists=fs.existsSync(path.join(ROOT,expectedPath));
+    assert.equal(entry.individual_original.exists,exists);
+    assert.equal(entry.individual_original.status,exists?'unreviewed':'missing','file presence cannot promote the historical pilot mapping');
     assert.equal(entry.individual_original.commercially_cleared, false);
     assert.equal(fs.existsSync(path.join(ROOT, entry.shared_reference.path)), true);
   }
