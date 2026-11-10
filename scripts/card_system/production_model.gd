@@ -19,6 +19,10 @@ var _relic_serial := 0
 var _play_serial := 0
 var _share_event_snapshots := true
 var _last_history_state: Dictionary={}
+var _pending_arrivals: Array=[]
+var _native_choice_uids: Dictionary={}
+var _draining_arrivals := false
+var _resolving_native_choice := false
 
 func _init(probe_from: RefCounted=null) -> void:
  if probe_from!=null:
@@ -68,12 +72,12 @@ func configure_v2(cards: Array) -> Dictionary:
 
 func start_alpha(deck: Array, opponent_deck: Array, seed_value: int, difficulty: int=2) -> bool:
  if not _configuration_error.is_empty():return false
- _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0;longest_chain=0;_last_history_state={}
+ _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0;longest_chain=0;_last_history_state={};_pending_arrivals=[];_native_choice_uids={};_draining_arrivals=false;_resolving_native_choice=false
  return super.start_alpha(deck,opponent_deck,seed_value,difficulty)
 
 func snapshot() -> Dictionary:
  var result:=super.snapshot()
- if not result.is_empty():result["production"]={"profile":PROFILE_ID,"ability_uses":_ability_uses.duplicate(true),"condition_latches":_condition_latches.duplicate(true),"armed":_armed.duplicate(true),"armed_serial":_armed_serial,"relic_serial":_relic_serial,"play_serial":_play_serial}
+ if not result.is_empty():result["production"]={"profile":PROFILE_ID,"ability_uses":_ability_uses.duplicate(true),"condition_latches":_condition_latches.duplicate(true),"armed":_armed.duplicate(true),"armed_serial":_armed_serial,"relic_serial":_relic_serial,"play_serial":_play_serial,"pending_arrivals":_pending_arrivals.duplicate(true),"native_choice_uids":_native_choice_uids.duplicate(true)}
  return result
 
 func _validation_probe():
@@ -96,6 +100,7 @@ func _validation_probe():
  probe._condition_latches=_condition_latches.duplicate(true)
  probe._armed=_armed.duplicate(true);probe._armed_serial=_armed_serial;probe._relic_serial=_relic_serial;probe._play_serial=_play_serial
  probe.effect_runtime._publication_digest=effect_runtime._publication_digest
+ probe._pending_arrivals=_pending_arrivals.duplicate(true);probe._native_choice_uids=_native_choice_uids.duplicate(true)
  return probe
 
 func supports_creature_effect(card: Dictionary) -> bool:
@@ -206,12 +211,11 @@ func _emit_trigger(trigger: String, side: String, card_id: String, context: Dict
   return
  _publishing+=1
  var card: Dictionary=_bindings[card_id]
- var captured:=production_bind_context(side,{},context)
  for i in card.abilities.size():
   if state.winner!=null or not state.error.is_empty():break
   var a: Dictionary=card.abilities[i]
   if not a.get("mode") in ["triggered","reactive"] or a.get("trigger")!=trigger:continue
-  var c:=captured.duplicate(true);c.source_card_id=card_id;c.ability_index=i
+  var c:=production_bind_context(side,a,context);c.source_card_id=card_id;c.ability_index=i
   var record:=_note_trigger(trigger,side,card_id,c,detail,"published")
   c.event_id=record.event_id
   var reason:=production_preflight(side,a,c)
@@ -387,7 +391,7 @@ func _targets(side: String, a: Dictionary, context: Dictionary) -> Array:
    if chosen>=0:result.append({"side":chosen_side,"lane":chosen})
   "own_neighbors":
    for i in [source_lane-1,source_lane+1]:
-    if i>=0 and i<5 and own.lanes[i]!=null:result.append({"side":side,"lane":i})
+    if i>=0 and i<5 and own.lanes[i]!=null and int(own.lanes[i].hp)>0:result.append({"side":side,"lane":i})
   "own_all","enemy_all","own_species":
    var chosen_side:=other if a.target=="enemy_all" else side
    for i in 5:
@@ -462,11 +466,10 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
    if index>=0 and p.hand.size()<6:
     var id: String=p.discard.pop_at(index);p.hand.append(id);actual.returned=id;_trace("generic_return",side,{"card_id":id})
   "summon_card":
-   var lane:=int(context.get("target_lane",0))
-   if p.lanes[lane]!=null:
-    for i in 5:
-     if p.lanes[i]==null:lane=i;break
-   if p.lanes[lane]==null:
+   var lane: int=-1
+   for i in 5:
+    if p.lanes[i]==null:lane=i;break
+   if lane>=0:
     var id: String=a.params.card_id;p.lanes[lane]=make_unit(side,catalog.card(id),lane)
     _trace("effect_summon",side,{"card_id":id,"lane":lane});actual.summon_resolved=enqueue({"type":"summon","side":side,"card_id":id,"lane":lane})
   "delay_damage":state.delayed.append({"side":side,"lane":int(context.get("target_lane",0)),"due":int(state.round)+int(a.params.turn_changes),"power":amount})
@@ -596,7 +599,7 @@ func production_bind_context(side: String, _ability: Dictionary, context: Dictio
  var opposite:=int(result.get("source_lane",selected))
  if result.has("source_uid"):
   for lane in 5:
-   if state[side].lanes[lane]!=null and int(state[side].lanes[lane].uid)==int(result.source_uid):opposite=lane;break
+   if state[side].lanes[lane]!=null and int(state[side].lanes[lane].uid)==int(result.source_uid):opposite=lane;result.source_lane=lane;break
  for pair in [["selected",selected],["opposite",opposite]]:
   if result.has(str(pair[0])+"_enemy_uid"):continue
   var unit: Variant=state[_other(side)].lanes[int(pair[1])]
@@ -659,3 +662,117 @@ func _share_closed_snapshot(current: Dictionary, previous: Dictionary) -> void:
   elif key in ["production","v2_bridge"]:
    for field in current[key]:
     if previous[key].has(field) and current[key][field]==previous[key][field]:current[key][field]=previous[key][field]
+
+func enqueue_many(batch: Array) -> bool:
+ var captured: Array=[]
+ for item in batch:
+  if not item is Dictionary:return false
+  var event: Dictionary=item.duplicate(false)
+  if event.get("type")=="summon":
+   var side:=str(event.get("side",""));var lane: Variant=event.get("lane")
+   if not _valid_side(side) or not _integer(lane) or lane<0 or lane>4:return false
+   var unit: Variant=state[side].lanes[int(lane)]
+   if unit==null or unit.id!=event.get("card_id"):return false
+   if event.has("production_source_uid"):
+    if not Generic.integer(event.production_source_uid,1,9007199254740991):return false
+   else:event.production_source_uid=int(unit.uid)
+  captured.append(event)
+ var ok:=super.enqueue_many(captured)
+ if ok:_drain_pending_arrivals()
+ return ok
+
+func _any_native_choice() -> bool:
+ for side in ["hero","enemy"]:
+  if state[side].pendingTarget!=null or state[side].pendingShift!=null:return true
+ return false
+
+func _arrival_lane(side: String, uid: int) -> int:
+ for lane in 5:
+  var unit: Variant=state[side].lanes[lane]
+  if unit!=null and int(unit.uid)==uid and int(unit.hp)>0:return lane
+ return -1
+
+func _resolve_summon(event: Dictionary) -> void:
+ if _any_native_choice():
+  if _pending_arrivals.size()>=EffectRegistry.MAX_CHAIN:
+   state.error="Zu viele wartende Beschwörungen; Partie angehalten.";_trace("error","system");return
+  _pending_arrivals.append(event.duplicate(true))
+  _trace("arrival_deferred",event.side,{"card_id":event.card_id,"uid":event.get("production_source_uid"),"lane":event.lane})
+  return
+ var side:=str(event.side);var uid:=int(event.get("production_source_uid",event.get("v2_source_uid",-1)))
+ var lane:=_arrival_lane(side,uid)
+ if lane<0 or state[side].lanes[lane].id!=event.card_id:
+  _trace("arrival_fizzled",side,{"card_id":event.card_id,"uid":uid,"reason":"stale_source"});return
+ if _summoned_uids.has(uid):
+  _trace("arrival_fizzled",side,{"card_id":event.card_id,"uid":uid,"reason":"duplicate_instance"});return
+ var current:=event.duplicate(true);current.lane=lane
+ if _bindings.has(str(event.card_id)):super._resolve_summon(current)
+ else:
+  _summoned_uids[uid]=true
+  super._resolve_summon(current)
+ _refresh_bindings()
+ if state[side].pendingTarget!=null or state[side].pendingShift!=null:_native_choice_uids[side]=uid
+
+func _refresh_native_choices() -> void:
+ for side in ["hero","enemy"]:
+  var p: Dictionary=state[side]
+  if p.pendingTarget==null and p.pendingShift==null:_native_choice_uids.erase(side);continue
+  if _native_choice_uids.has(side):
+   var uid:=int(_native_choice_uids[side]);var lane:=_arrival_lane(side,uid)
+   if lane<0:
+    p.pendingTarget=null;p.pendingShift=null;_native_choice_uids.erase(side)
+    _trace("arrival_choice_fizzled",side,{"source_uid":uid,"reason":"stale_source"});continue
+   if p.pendingTarget!=null:p.pendingTarget.sourceLane=lane
+   if p.pendingShift!=null:p.pendingShift.origin=lane
+  if p.pendingTarget!=null:
+   var has_enemy:=false
+   for unit in state[_other(side)].lanes:
+    if unit!=null and int(unit.hp)>0:has_enemy=true
+   if not has_enemy:
+    var amount:=int(p.pendingTarget.power)
+    p.pendingTarget=null;_native_choice_uids.erase(side)
+    _hero_damage(state[_other(side)],amount);_trace("strike_hero",side,{"reason":"selected_window_no_enemy_units","amount":amount});check_winner()
+
+func _drain_pending_arrivals() -> void:
+ if _draining_arrivals or _resolving or _resolving_native_choice or state.is_empty() or state.get("stage")!="battle":return
+ _draining_arrivals=true
+ _refresh_native_choices()
+ while not _pending_arrivals.is_empty() and not _any_native_choice() and state.winner==null and state.error.is_empty():
+  var event: Dictionary=_pending_arrivals.pop_front()
+  _resolve_summon(event)
+  _refresh_native_choices()
+ _draining_arrivals=false
+
+func choose_strike_target(side: String,lane: Variant) -> bool:
+ _resolving_native_choice=true
+ var ok:=super.choose_strike_target(side,lane)
+ _resolving_native_choice=false
+ if ok:_native_choice_uids.erase(side);_drain_pending_arrivals()
+ return ok
+
+func move_creature(side: String,from: Variant,to: Variant) -> bool:
+ _resolving_native_choice=true
+ var ok:=super.move_creature(side,from,to)
+ _resolving_native_choice=false
+ if ok:_native_choice_uids.erase(side);_drain_pending_arrivals()
+ return ok
+
+func skip_shift(side: String) -> bool:
+ _resolving_native_choice=true
+ var ok:=super.skip_shift(side)
+ _resolving_native_choice=false
+ if ok:_native_choice_uids.erase(side);_drain_pending_arrivals()
+ return ok
+
+func _strike_target(side: String,lane: Variant,power: int,source_lane: int) -> bool:
+ if not _valid_side(side) or not _integer(lane) or lane<0 or lane>4:return false
+ var other:=_other(side);var target: Variant=state[other].lanes[int(lane)]
+ if target==null:return false
+ var hp_before:=int(target.hp)
+ hit_unit(target,power);_trace("strike_hit",side,{"lane":lane})
+ if int(target.hp)<hp_before and state[side].lanes[source_lane]!=null:_combat_hook("on_deal_damage",side,source_lane,state[side].lanes[source_lane],{"amount":hp_before-int(target.hp),"cause":"arrival_strike"})
+ if int(target.hp)<=0:
+  _trace("removed",other,{"lane":lane})
+  _remove_attack_casualty(other,int(lane),target)
+ check_winner()
+ return true

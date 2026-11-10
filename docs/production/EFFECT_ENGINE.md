@@ -157,3 +157,24 @@ still exposes its complete normal Dictionary state and its original sequence.
 Validation probes shallow-copy closed history containers while appending their
 own rows; a resolving queue uses a deep-copy fallback. Consumers needing mutable
 history must explicitly duplicate it. See `ENGINE_PERFORMANCE.md` for measurements.
+
+## Native arrival choices in mixed effect chains
+
+Production retains the native strike/optional-shift handlers and choice commands.
+If an arrival already awaits a target or optional shift, later arrivals wait in
+one UID-bound FIFO backlog instead of overwriting the existing selection. Choosing
+a strike target, moving a creature or skipping a shift drains that backlog until
+the next actual choice. The backlog and original choice-source UIDs are included
+in snapshots, validation probes and new-match reset; at most 1,000 arrivals wait.
+
+A removed source fizzles with an explicit record. A moved surviving source is
+located by UID; a new copy with the same card ID never inherits the queued arrival.
+If a strike window has no remaining enemy creature, it applies the existing
+empty-board strike-to-hero rule automatically and continues. Each of several
+strikes/optional shifts resolves or is skipped separately. Other already queued
+native death/automatic effects retain their existing handlers.
+
+Generic `summon_card` now always uses the leftmost free own lane, matching its
+printed text. Own-neighbor selectors follow the source's current UID/lane when
+alive, or its last lane for death triggers; defeated neighbors are not buff targets.
+A later printed ability published after movement captures that current position.

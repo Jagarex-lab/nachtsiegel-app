@@ -35,6 +35,8 @@ func source_context(card: Dictionary,index: int,side: String="hero") -> Dictiona
 func run() -> void:
  model=Model.new()
  check(model._configuration_error.is_empty() and model._bindings.size()>=495,"all generic identities configure against actual catalog")
+ if OS.get_environment("PRODUCTION_CHOICES_ONLY")=="1":
+  test_pending_arrival_choices();print("PENDING ARRIVALS: ",assertions," assertions, ",failures," failures");quit(1 if failures else 0);return
  if OS.get_environment("PRODUCTION_PERF_ONLY")=="1":
   test_performance_bookkeeping();print("PERF BOOKKEEPING: ",assertions," assertions, ",failures," failures");quit(1 if failures else 0);return
  var ability_count:=0
@@ -75,6 +77,7 @@ func run() -> void:
  test_all_cards_play()
  test_queue_target_identity()
  test_performance_bookkeeping()
+ test_pending_arrival_choices()
  var categories: Dictionary={}
  for id in exercised:categories[Generic.OPS[id].category]=true
  check(categories.size()==12,"all twelve executable effect categories covered")
@@ -335,3 +338,54 @@ func test_performance_bookkeeping() -> void:
  model._trace("perf_after","hero")
  check(JSON.stringify(before_state,"",true)==before_json,"published historical snapshot is not mutated by later real state changes")
  check(is_same(before_state.enemy,model.events[-1].state.enemy),"unchanged immutable history branch is shared, not copied repeatedly")
+
+func test_pending_arrival_choices() -> void:
+ battle()
+ put("hero",0,"oa-ninth-c01");put("hero",1,"oa-ninth-c01")
+ var target:=put("enemy",0);target.hp=4
+ check(model.enqueue_many([{"type":"summon","side":"hero","lane":0,"card_id":"oa-ninth-c01"},{"type":"summon","side":"hero","lane":1,"card_id":"oa-ninth-c01"}]),"two actual native arrival effects enter existing FIFO")
+ check(model.state.hero.pendingTarget!=null and model.state.hero.pendingTarget.sourceLane==0 and model._pending_arrivals.size()==1,"second native target choice does not overwrite the first")
+ var probe=model._validation_probe()
+ check(probe.snapshot()==model.snapshot() and not is_same(probe._pending_arrivals,model._pending_arrivals),"pending arrival and choice source identity are cloned for validation/replay")
+ check(model.choose_strike_target("hero",0) and target.hp==2 and model.state.hero.pendingTarget!=null and model.state.hero.pendingTarget.sourceLane==1,"first choice resolves once and exposes second arrival choice")
+ check(model.choose_strike_target("hero",0) and model.state.enemy.lanes[0]==null and model.state.hero.pendingTarget==null and model._pending_arrivals.is_empty(),"both original arrival strikes resolve with no lost effect")
+ battle()
+ var arrivals: Array=[]
+ for lane in [0,1,2]:put("hero",lane,"oa-ninth-c01");arrivals.append({"type":"summon","side":"hero","lane":lane,"card_id":"oa-ninth-c01"})
+ target=put("enemy",0);target.hp=1
+ check(model.enqueue_many(arrivals),"three native target arrivals enqueue")
+ check(model.choose_strike_target("hero",0) and model.state.enemy.hp==16 and model.state.hero.pendingTarget==null and model._pending_arrivals.is_empty(),"after last defender dies later arrivals hit hero under existing empty-board rule")
+ battle()
+ put("hero",0,"oa-ninth-c01");put("hero",1,"oa-ninth-c01");target=put("enemy",0);target.hp=4
+ check(model.enqueue_many([{"type":"summon","side":"hero","lane":0,"card_id":"oa-ninth-c01"},{"type":"summon","side":"hero","lane":1,"card_id":"oa-ninth-c01"}]),"stale arrival setup")
+ var old_uid: int=model.state.hero.lanes[1].uid
+ model._lane_damage("hero",1,99)
+ var replacement:=put("hero",1,"oa-ninth-c01")
+ check(int(replacement.uid)!=old_uid and model.choose_strike_target("hero",0),"actual native choice can complete after deferred source replacement")
+ check(target.hp==2 and model.state.hero.pendingTarget==null and model._pending_arrivals.is_empty() and not model._summoned_uids.has(int(replacement.uid)),"same-ID replacement does not inherit removed source's deferred arrival")
+ battle()
+ put("hero",0);put("hero",1,"oa-morph-c03");put("hero",2);put("hero",3,"oa-morph-c03")
+ check(model.enqueue_many([{"type":"summon","side":"hero","lane":1,"card_id":"oa-morph-c03"},{"type":"summon","side":"hero","lane":3,"card_id":"oa-morph-c03"}]),"two real native shift arrivals enqueue")
+ check(model.state.hero.pendingShift!=null and model.state.hero.pendingShift.origin==1,"first shift choice remains visible")
+ check(model.skip_shift("hero") and model.state.hero.pendingShift!=null and model.state.hero.pendingShift.origin==3,"skipping first shift exposes second distinct shift")
+ check(model.skip_shift("hero") and model.state.hero.pendingShift==null and model._pending_arrivals.is_empty(),"second optional choice closes cleanly")
+ battle()
+ var summoner: Dictionary={};var summon_a: Dictionary={}
+ for card in model.catalog.all_cards():
+  if card.get("effect")!="v2":continue
+  for a in card.abilities:
+   if a.effect=="summon_card":summoner=card;summon_a=a;break
+  if not summoner.is_empty():break
+ var context:=source_context(summoner,0);context.event_id="first-free-spawn";context.target_lane=4
+ var reply: Dictionary=model.effect_runtime.publish(summon_a.trigger,"hero",[summon_a],context)
+ check(reply.ok and model.state.hero.lanes[0]!=null and model.state.hero.lanes[0].id==summon_a.params.card_id,"generic summon follows printed first-free lane even when source/selected lane is4")
+ battle()
+ var moving:=put("hero",0,"oa-morph-c07");put("hero",2)
+ context={"source_uid":moving.uid,"source_lane":0,"target_lane":0}
+ model.state.hero.lanes[1]=moving;model.state.hero.lanes[0]=null
+ var neighbors: Array=model._targets("hero",{"target":"own_neighbors","params":{}},context)
+ check(neighbors.size()==1 and neighbors[0].lane==2,"own-neighbor selector follows live source UID after movement")
+ model.state.hero.lanes[2].hp=0
+ check(model._targets("hero",{"target":"own_neighbors","params":{}},context).is_empty(),"neighbor selectors exclude defeated units")
+ var bound: Dictionary=model.production_bind_context("hero",{},context)
+ check(bound.source_lane==1 and bound.opposite_enemy_lane==1,"later printed ability captures current source lane after prior movement")
