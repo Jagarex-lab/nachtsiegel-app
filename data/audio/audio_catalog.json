@@ -1,0 +1,994 @@
+{
+  "version": 1,
+  "clips": {
+    "faction.zwoelf_haeuser": {
+      "path": "res://assets/audio/factions/zwoelf_haeuser.wav",
+      "bus": "SFX",
+      "gain_db": -5,
+      "loop": false
+    },
+    "faction.stillwacht": {
+      "path": "res://assets/audio/factions/stillwacht.wav",
+      "bus": "SFX",
+      "gain_db": -5,
+      "loop": false
+    },
+    "faction.vielgestalt": {
+      "path": "res://assets/audio/factions/vielgestalt.wav",
+      "bus": "SFX",
+      "gain_db": -5,
+      "loop": false
+    },
+    "faction.neunte_stunde": {
+      "path": "res://assets/audio/factions/neunte_stunde.wav",
+      "bus": "SFX",
+      "gain_db": -5,
+      "loop": false
+    },
+    "rarity.rare": {
+      "path": "res://assets/audio/relics/rarity_rare.wav",
+      "bus": "SFX",
+      "gain_db": -8,
+      "loop": false
+    },
+    "rarity.epic": {
+      "path": "res://assets/audio/relics/rarity_epic.wav",
+      "bus": "SFX",
+      "gain_db": -8,
+      "loop": false
+    },
+    "rarity.legendary": {
+      "path": "res://assets/audio/relics/rarity_legendary.wav",
+      "bus": "SFX",
+      "gain_db": -8,
+      "loop": false
+    },
+    "ui.hover.01": {
+      "path": "res://assets/audio/ui/ui_hover_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.hover.02": {
+      "path": "res://assets/audio/ui/ui_hover_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.hover.03": {
+      "path": "res://assets/audio/ui/ui_hover_03.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.select.01": {
+      "path": "res://assets/audio/ui/ui_select_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.select.02": {
+      "path": "res://assets/audio/ui/ui_select_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.select.03": {
+      "path": "res://assets/audio/ui/ui_select_03.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.confirm.01": {
+      "path": "res://assets/audio/ui/ui_confirm_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.confirm.02": {
+      "path": "res://assets/audio/ui/ui_confirm_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.cancel.01": {
+      "path": "res://assets/audio/ui/ui_cancel_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.cancel.02": {
+      "path": "res://assets/audio/ui/ui_cancel_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.error.01": {
+      "path": "res://assets/audio/ui/ui_error_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "ui.error.02": {
+      "path": "res://assets/audio/ui/ui_error_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.draw.01": {
+      "path": "res://assets/audio/cards/card_draw_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.draw.02": {
+      "path": "res://assets/audio/cards/card_draw_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.draw.03": {
+      "path": "res://assets/audio/cards/card_draw_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.draw.04": {
+      "path": "res://assets/audio/cards/card_draw_04.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.hover.01": {
+      "path": "res://assets/audio/cards/card_hover_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.hover.02": {
+      "path": "res://assets/audio/cards/card_hover_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.hover.03": {
+      "path": "res://assets/audio/cards/card_hover_03.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.select.01": {
+      "path": "res://assets/audio/cards/card_select_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.select.02": {
+      "path": "res://assets/audio/cards/card_select_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.select.03": {
+      "path": "res://assets/audio/cards/card_select_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.enlarge.01": {
+      "path": "res://assets/audio/cards/card_enlarge_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.enlarge.02": {
+      "path": "res://assets/audio/cards/card_enlarge_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.enlarge.03": {
+      "path": "res://assets/audio/cards/card_enlarge_03.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.move.01": {
+      "path": "res://assets/audio/cards/card_move_01.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.move.02": {
+      "path": "res://assets/audio/cards/card_move_02.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.move.03": {
+      "path": "res://assets/audio/cards/card_move_03.wav",
+      "bus": "UI",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.return.01": {
+      "path": "res://assets/audio/cards/card_return_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.return.02": {
+      "path": "res://assets/audio/cards/card_return_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.return.03": {
+      "path": "res://assets/audio/cards/card_return_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.01": {
+      "path": "res://assets/audio/cards/card_play_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.02": {
+      "path": "res://assets/audio/cards/card_play_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.03": {
+      "path": "res://assets/audio/cards/card_play_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.creature.01": {
+      "path": "res://assets/audio/cards/card_play_creature_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.creature.02": {
+      "path": "res://assets/audio/cards/card_play_creature_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.creature.03": {
+      "path": "res://assets/audio/cards/card_play_creature_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.impulse.01": {
+      "path": "res://assets/audio/cards/card_play_impulse_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.impulse.02": {
+      "path": "res://assets/audio/cards/card_play_impulse_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.impulse.03": {
+      "path": "res://assets/audio/cards/card_play_impulse_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.relic.01": {
+      "path": "res://assets/audio/relics/card_play_relic_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.relic.02": {
+      "path": "res://assets/audio/relics/card_play_relic_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.play.relic.03": {
+      "path": "res://assets/audio/relics/card_play_relic_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.discard.01": {
+      "path": "res://assets/audio/cards/card_discard_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.discard.02": {
+      "path": "res://assets/audio/cards/card_discard_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.discard.03": {
+      "path": "res://assets/audio/cards/card_discard_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.destroy.01": {
+      "path": "res://assets/audio/cards/card_destroy_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.destroy.02": {
+      "path": "res://assets/audio/cards/card_destroy_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.destroy.03": {
+      "path": "res://assets/audio/cards/card_destroy_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.shuffle.01": {
+      "path": "res://assets/audio/cards/card_shuffle_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.shuffle.02": {
+      "path": "res://assets/audio/cards/card_shuffle_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "card.shuffle.03": {
+      "path": "res://assets/audio/cards/card_shuffle_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.summon.01": {
+      "path": "res://assets/audio/combat/creature_summon_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.summon.02": {
+      "path": "res://assets/audio/combat/creature_summon_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.summon.03": {
+      "path": "res://assets/audio/combat/creature_summon_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.attack.prepare.01": {
+      "path": "res://assets/audio/combat/creature_attack_prepare_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.attack.prepare.02": {
+      "path": "res://assets/audio/combat/creature_attack_prepare_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.attack.prepare.03": {
+      "path": "res://assets/audio/combat/creature_attack_prepare_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.attack.01": {
+      "path": "res://assets/audio/combat/creature_attack_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.attack.02": {
+      "path": "res://assets/audio/combat/creature_attack_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.attack.03": {
+      "path": "res://assets/audio/combat/creature_attack_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.hit.01": {
+      "path": "res://assets/audio/combat/creature_hit_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.hit.02": {
+      "path": "res://assets/audio/combat/creature_hit_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.hit.03": {
+      "path": "res://assets/audio/combat/creature_hit_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.hit.strong.01": {
+      "path": "res://assets/audio/combat/creature_hit_strong_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.hit.strong.02": {
+      "path": "res://assets/audio/combat/creature_hit_strong_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.hit.strong.03": {
+      "path": "res://assets/audio/combat/creature_hit_strong_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.defeated.01": {
+      "path": "res://assets/audio/combat/creature_defeated_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.defeated.02": {
+      "path": "res://assets/audio/combat/creature_defeated_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.defeated.03": {
+      "path": "res://assets/audio/combat/creature_defeated_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.return.01": {
+      "path": "res://assets/audio/combat/creature_return_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "creature.return.02": {
+      "path": "res://assets/audio/combat/creature_return_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "hero.damage.01": {
+      "path": "res://assets/audio/combat/hero_damage_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "hero.damage.02": {
+      "path": "res://assets/audio/combat/hero_damage_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "hero.damage.03": {
+      "path": "res://assets/audio/combat/hero_damage_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "shield.gain.01": {
+      "path": "res://assets/audio/combat/shield_gain_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "shield.gain.02": {
+      "path": "res://assets/audio/combat/shield_gain_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "shield.gain.03": {
+      "path": "res://assets/audio/combat/shield_gain_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "shield.absorb.01": {
+      "path": "res://assets/audio/combat/shield_absorb_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "shield.absorb.02": {
+      "path": "res://assets/audio/combat/shield_absorb_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "shield.absorb.03": {
+      "path": "res://assets/audio/combat/shield_absorb_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "block.activate.01": {
+      "path": "res://assets/audio/combat/block_activate_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "block.activate.02": {
+      "path": "res://assets/audio/combat/block_activate_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "block.activate.03": {
+      "path": "res://assets/audio/combat/block_activate_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.heal.01": {
+      "path": "res://assets/audio/combat/combat_heal_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.heal.02": {
+      "path": "res://assets/audio/combat/combat_heal_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.heal.03": {
+      "path": "res://assets/audio/combat/combat_heal_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.buff.01": {
+      "path": "res://assets/audio/combat/combat_buff_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.buff.02": {
+      "path": "res://assets/audio/combat/combat_buff_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.debuff.01": {
+      "path": "res://assets/audio/combat/combat_debuff_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.debuff.02": {
+      "path": "res://assets/audio/combat/combat_debuff_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.path_change.01": {
+      "path": "res://assets/audio/combat/combat_path_change_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.path_change.02": {
+      "path": "res://assets/audio/combat/combat_path_change_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.time.01": {
+      "path": "res://assets/audio/combat/combat_time_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.time.02": {
+      "path": "res://assets/audio/combat/combat_time_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.time.03": {
+      "path": "res://assets/audio/combat/combat_time_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.reaction.01": {
+      "path": "res://assets/audio/combat/combat_reaction_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.reaction.02": {
+      "path": "res://assets/audio/combat/combat_reaction_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.reaction.03": {
+      "path": "res://assets/audio/combat/combat_reaction_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.interrupt.01": {
+      "path": "res://assets/audio/combat/combat_interrupt_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.interrupt.02": {
+      "path": "res://assets/audio/combat/combat_interrupt_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "combat.interrupt.03": {
+      "path": "res://assets/audio/combat/combat_interrupt_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.gain.01": {
+      "path": "res://assets/audio/resonance/resonance_gain_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.gain.02": {
+      "path": "res://assets/audio/resonance/resonance_gain_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.gain.03": {
+      "path": "res://assets/audio/resonance/resonance_gain_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.gain.04": {
+      "path": "res://assets/audio/resonance/resonance_gain_04.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.low.01": {
+      "path": "res://assets/audio/resonance/resonance_low_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.low.02": {
+      "path": "res://assets/audio/resonance/resonance_low_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.low.03": {
+      "path": "res://assets/audio/resonance/resonance_low_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.medium.01": {
+      "path": "res://assets/audio/resonance/resonance_medium_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.medium.02": {
+      "path": "res://assets/audio/resonance/resonance_medium_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.medium.03": {
+      "path": "res://assets/audio/resonance/resonance_medium_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.high.01": {
+      "path": "res://assets/audio/resonance/resonance_high_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.high.02": {
+      "path": "res://assets/audio/resonance/resonance_high_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.high.03": {
+      "path": "res://assets/audio/resonance/resonance_high_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.spend.01": {
+      "path": "res://assets/audio/resonance/resonance_spend_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.spend.02": {
+      "path": "res://assets/audio/resonance/resonance_spend_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.spend.03": {
+      "path": "res://assets/audio/resonance/resonance_spend_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.spend.04": {
+      "path": "res://assets/audio/resonance/resonance_spend_04.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.unleash.01": {
+      "path": "res://assets/audio/resonance/resonance_unleash_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.unleash.02": {
+      "path": "res://assets/audio/resonance/resonance_unleash_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "resonance.unleash.03": {
+      "path": "res://assets/audio/resonance/resonance_unleash_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.activate.01": {
+      "path": "res://assets/audio/relics/relic_activate_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.activate.02": {
+      "path": "res://assets/audio/relics/relic_activate_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.activate.03": {
+      "path": "res://assets/audio/relics/relic_activate_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.passive.01": {
+      "path": "res://assets/audio/relics/relic_passive_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.passive.02": {
+      "path": "res://assets/audio/relics/relic_passive_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.passive.03": {
+      "path": "res://assets/audio/relics/relic_passive_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.spend.01": {
+      "path": "res://assets/audio/relics/relic_spend_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.spend.02": {
+      "path": "res://assets/audio/relics/relic_spend_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.spend.03": {
+      "path": "res://assets/audio/relics/relic_spend_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.replace.01": {
+      "path": "res://assets/audio/relics/relic_replace_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.replace.02": {
+      "path": "res://assets/audio/relics/relic_replace_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.destroy.01": {
+      "path": "res://assets/audio/relics/relic_destroy_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.destroy.02": {
+      "path": "res://assets/audio/relics/relic_destroy_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "relic.destroy.03": {
+      "path": "res://assets/audio/relics/relic_destroy_03.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "convergence.prepare.01": {
+      "path": "res://assets/audio/combat/convergence_prepare_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "convergence.prepare.02": {
+      "path": "res://assets/audio/combat/convergence_prepare_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "convergence.complete.01": {
+      "path": "res://assets/audio/combat/convergence_complete_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "convergence.complete.02": {
+      "path": "res://assets/audio/combat/convergence_complete_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "convergence.interrupt.01": {
+      "path": "res://assets/audio/combat/convergence_interrupt_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "convergence.interrupt.02": {
+      "path": "res://assets/audio/combat/convergence_interrupt_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "battle.victory.01": {
+      "path": "res://assets/audio/combat/battle_victory_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "battle.victory.02": {
+      "path": "res://assets/audio/combat/battle_victory_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "battle.defeat.01": {
+      "path": "res://assets/audio/combat/battle_defeat_01.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "battle.defeat.02": {
+      "path": "res://assets/audio/combat/battle_defeat_02.wav",
+      "bus": "SFX",
+      "gain_db": 0.0,
+      "loop": false
+    },
+    "music.menu": {
+      "path": "res://assets/audio/music/menu.ogg",
+      "bus": "Music",
+      "gain_db": -9,
+      "loop": true
+    },
+    "music.collection": {
+      "path": "res://assets/audio/music/collection.ogg",
+      "bus": "Music",
+      "gain_db": -9,
+      "loop": true
+    },
+    "music.deckbuilder": {
+      "path": "res://assets/audio/music/deckbuilder.ogg",
+      "bus": "Music",
+      "gain_db": -9,
+      "loop": true
+    },
+    "music.duel": {
+      "path": "res://assets/audio/music/duel.ogg",
+      "bus": "Music",
+      "gain_db": -9,
+      "loop": true
+    },
+    "music.tense": {
+      "path": "res://assets/audio/music/tense.ogg",
+      "bus": "Music",
+      "gain_db": -9,
+      "loop": true
+    },
+    "music.convergence": {
+      "path": "res://assets/audio/music/convergence.ogg",
+      "bus": "Music",
+      "gain_db": -9,
+      "loop": true
+    },
+    "music.campaign": {
+      "path": "res://assets/audio/music/campaign.ogg",
+      "bus": "Music",
+      "gain_db": -9,
+      "loop": true
+    },
+    "music.victory": {
+      "path": "res://assets/audio/music/victory.ogg",
+      "bus": "Music",
+      "gain_db": -7,
+      "loop": false
+    },
+    "music.defeat": {
+      "path": "res://assets/audio/music/defeat.ogg",
+      "bus": "Music",
+      "gain_db": -7,
+      "loop": false
+    },
+    "ambience.rift": {
+      "path": "res://assets/audio/ambience/rift.ogg",
+      "bus": "Ambience",
+      "gain_db": -20,
+      "loop": true
+    }
+  },
+  "music": {
+    "menu": "music.menu",
+    "collection": "music.collection",
+    "deckbuilder": "music.deckbuilder",
+    "duel": "music.duel",
+    "tense": "music.tense",
+    "convergence": "music.convergence",
+    "campaign": "music.campaign",
+    "victory": "music.victory",
+    "defeat": "music.defeat"
+  }
+}
