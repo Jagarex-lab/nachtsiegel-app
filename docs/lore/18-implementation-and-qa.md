@@ -27,3 +27,12 @@ Der auf GitHub gespeicherte 550er-Bestand wurde zuvor auf 550 IDs und Namen, 110
 6. Kontinuitäts-, Referenz-, Schema- und Spielertests durchführen.
 
 **Fazit:** Wesentlich konkreter und besser strukturiert, aber die geforderte Qualitätsstufe 'fertige Lore + 550 individuelle Karten' ist noch **nicht** erreicht. Keine Kanonisierung empfohlen.
+
+
+## Abschlussprüfung des **Gerüsts** — 10.11.2026
+- Drei neue Dokumente: interne Autorenwahrheit/Mechanismus, Welt- und Kartenproduktionsgerüst, Kampagnen-Hinweisledger.
+- Chronologie, Eira-Alternativen und Einstieg wurden auf das bevorzugte Ursprungsszenario abgestimmt; weiterhin **VORSCHLAG**.
+- **Direkt aus GitHub erneut geprüfte JSON-Struktur:** 550 Karten, 550 eindeutige IDs und Namen; je 110 pro Zugehörigkeit; 350 Wesen/125 Impulse/75 Relikte; 250 Gewöhnlich/160 Selten/100 Episch/40 Legendär; 80 Charaktere, 20 Orte, 10 Unterorganisationen, 140 Familien, fünf Erweiterungen.
+- **Referenzprüfung:** 0 ungültige Figuren-, Orts- oder Familienreferenzen; 0 fehlende zentrale Kartenfelder; 0 ungültige Anzahl von Wesensarten je Kartentyp.
+- **Redaktionelle Grenzen:** 74 Figurenprofile, die 140 Familien und ein großer Teil der 550 Karten bleiben schematische Konzepte; keine Veröffentlichung oder Kanonisierung empfohlen. Das Gerüst ist strukturell vollständig, nicht literarisch fertig.
+- **Kritischer offener Punkt:** Das interne Eira-Modell erklärt nur alle **zugänglichen** Fortsetzungen, nicht zwingend die bisherige Formulierung 'aus sämtlichen Zeitlinien'. Eine ausdrückliche Kanonentscheidung ist erforderlich.
