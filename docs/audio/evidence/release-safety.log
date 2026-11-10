@@ -1,0 +1,13 @@
+test_api_errors_are_not_swallowed (test_safety.Safety.test_api_errors_are_not_swallowed) ... ok
+test_approved_candidate_only (test_safety.Safety.test_approved_candidate_only) ... ok
+test_context_rejections (test_safety.Safety.test_context_rejections) ... ok
+test_event_ref_switch_matrix (test_safety.Safety.test_event_ref_switch_matrix) ... ok
+test_manual_qa_still_requires_exact_trusted_develop (test_safety.Safety.test_manual_qa_still_requires_exact_trusted_develop) ... ok
+test_missing_or_weakened_settings_and_qa (test_safety.Safety.test_missing_or_weakened_settings_and_qa) ... ok
+test_solo_alpha_and_existing_environment_rules (test_safety.Safety.test_solo_alpha_and_existing_environment_rules) ... ok
+test_workflow_privilege_boundaries (test_safety.Safety.test_workflow_privilege_boundaries) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.016s
+
+OK

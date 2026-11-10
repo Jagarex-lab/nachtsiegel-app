@@ -1,0 +1,138 @@
+{
+  "profile": "chromium",
+  "url": "http://127.0.0.1:8765",
+  "checked": [
+    "locked-before-gesture",
+    "gesture-unlock-and-safe-invalid-event",
+    "running-audio-context-and-nonzero-mixed-signal",
+    "rapid-music-crossfades",
+    "pool-bound-under-burst",
+    "explicit-suspend-resume",
+    "master-mute-silences-real-output-and-recovers",
+    "persisted-settings-after-immediate-reload",
+    "storage-denial-is-observable-and-recovers",
+    "future-mirror-schema-preserved-until-explicit-recovery"
+  ],
+  "errors": [],
+  "audio_before_gesture": {
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100
+      }
+    ],
+    "analysers": 1,
+    "peak": 0,
+    "rms": 0
+  },
+  "after_unlock_snapshot": {
+    "accepted": 1,
+    "active_voices": 1,
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "menu",
+      "gains": [
+        1,
+        0
+      ],
+      "pending_context": "",
+      "players": 2,
+      "playing": 1,
+      "suspended": false,
+      "transitioning": false
+    },
+    "peak_voices": 1,
+    "pool_size": 16,
+    "rejected": 2,
+    "settings": {
+      "ambience": 0.4,
+      "master": 0.8,
+      "music": 0.55,
+      "muted": false,
+      "reduced_intensity": false,
+      "sfx": 0.75
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "unlocked": true,
+    "web_storage_status": "missing"
+  },
+  "audio_after_gesture": {
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100
+      }
+    ],
+    "analysers": 2,
+    "peak": 0.042144775390625,
+    "rms": 0.012707271058399295
+  },
+  "burst_roundtrip_ms": 83.1504689999997,
+  "audio_muted": {
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100
+      }
+    ],
+    "analysers": 2,
+    "peak": 0,
+    "rms": 0
+  },
+  "before_reload": {
+    "ambience": 0.4,
+    "master": 0.8,
+    "music": 0.37,
+    "muted": false,
+    "reduced_intensity": true,
+    "sfx": 0.75
+  },
+  "after_reload": {
+    "ambience": 0.4,
+    "master": 0.8,
+    "music": 0.37,
+    "muted": false,
+    "reduced_intensity": true,
+    "sfx": 0.75
+  },
+  "result": "passed",
+  "final_snapshot": {
+    "accepted": 0,
+    "active_voices": 0,
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "",
+      "gains": [
+        0,
+        0
+      ],
+      "pending_context": "menu",
+      "players": 2,
+      "playing": 0,
+      "suspended": false,
+      "transitioning": false
+    },
+    "peak_voices": 0,
+    "pool_size": 16,
+    "rejected": 0,
+    "settings": {
+      "ambience": 0.4,
+      "master": 0.8,
+      "music": 0.37,
+      "muted": false,
+      "reduced_intensity": true,
+      "sfx": 0.75
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "unlocked": false,
+    "web_storage_status": "saved"
+  }
+}
