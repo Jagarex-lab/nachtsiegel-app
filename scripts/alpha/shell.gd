@@ -191,6 +191,7 @@ func start_battle() -> void:
 	var seed_value=int(session.profile.last_seed)+1
 	var enemy=AlphaCatalog.new().deck(["houses","stillwatch","morph","ninth"][(seed_value%4)]) if mode=="alpha" else []
 	if not session.start_match(mode,AlphaCatalog.new().deck(faction) if mode=="alpha" and match_use_starter else current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
+	last_primary_ms=-1000
 	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];message="Wähle deine Starthand. Danach legst du den Ursprung fest.";render()
 func act(command: String, args: Array) -> void:
 	var primary_command=command in ["endTurn","finishDraw","burn","converge"]
@@ -245,6 +246,10 @@ func battle() -> void:
 	var caption="KONVERGENZ ERKLÄREN %d/3" % convergence_lanes.size() if action_mode=="converge" else "ZIEL FÜR ANKUNFT WÄHLEN" if s.hero.pendingTarget!=null else "POSITION WÄHLEN" if s.hero.pendingShift!=null else "GÜLTIGES ZIEL ANTIPPEN" if picking else "KARTE VERBRENNEN" if overflow else "KARTEN NACHZIEHEN" if s.hero.phase=="draw" else "ZUG BEENDEN  →"
 	var blocked=s.winner!=null or s.active!="hero" or overflow and selected<0 or s.hero.pendingTarget!=null or s.hero.pendingShift!=null or picking or action_mode=="converge" and convergence_lanes.size()!=3
 	var primary=button("end",caption,func():convergence_action() if action_mode=="converge" else act("burn",["hero",selected]) if overflow else act("finishDraw",["hero"]) if s.hero.phase=="draw" else act("endTurn",["hero"]),bar,blocked)
+	var remaining=180-(Time.get_ticks_msec()-last_primary_ms)
+	if remaining>0:
+		primary.disabled=true
+		get_tree().create_timer(float(remaining)/1000.0).timeout.connect(func():if is_instance_valid(primary):primary.disabled=blocked)
 	primary.size_flags_stretch_ratio=3;primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
 	button("actions","Mehr / Ressourcen",show_actions,bar,s.winner!=null).size_flags_horizontal=Control.SIZE_SHRINK_END
 	button("inspect","Details",func():if selected>=0:inspect(session.card(s.hero.hand[selected])),bar,selected<0).size_flags_horizontal=Control.SIZE_SHRINK_END
@@ -506,7 +511,7 @@ func save_current_deck() -> void:
 	if not valid.ok:message=valid.message;render();return
 	var result=session.save_deck(collection_mode+":"+faction,deck,collection_mode);message=result.get("message","");render()
 func publish_qa() -> void:
-	var state={"page":page,"mode":mode,"actions":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"font_msdf":S.font.multichannel_signed_distance_field}
+	var state={"page":page,"mode":mode,"actions":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"search_text":filter_text,"font_msdf":S.font.multichannel_signed_distance_field}
 	for key in actions:
 		var b=actions[key]
 		if is_instance_valid(b) and b.is_visible_in_tree():
@@ -653,7 +658,7 @@ func rotation_page() -> void:
 	text("Menüs und Deckwerkstatt sind für Hochformat gestaltet.",box,14)
 	button("rotate_menu","Sicher zum Menü",confirm_menu,box)
 func cancel_selection() -> void:
-	selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];message="Auswahl aufgehoben. Es wurde keine Spielaktion rückgängig gemacht.";render()
+	selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];message="Auswahl aufgehoben.";render()
 
 func show_filters() -> void:
 	show_modal("KARTENFILTER",func(box):

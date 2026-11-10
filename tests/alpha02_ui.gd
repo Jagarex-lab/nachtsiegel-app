@@ -98,6 +98,16 @@ func run():
  root.size=Vector2i(844,390);app.close_modal();app.start_battle();await settle()
  await tap(app.actions.mulligan_done);await tap(app.actions.origin_2)
  if app.session.model.state.stage=="second":await tap(app.actions.opening_done)
+ if app.session.model.state.hero.phase=="draw":await tap(app.actions.end)
+ await create_timer(.22).timeout
+ var before_double=app.session.commands.size();var target=app.actions.end.get_global_rect().get_center()
+ for pressed in [true,false,true,false]:
+  var e=InputEventScreenTouch.new();e.index=0;e.position=target;e.pressed=pressed;Input.parse_input_event(e)
+ await settle()
+ check(app.session.commands.size()==before_double+1,"rapid primary taps perform exactly one legal command")
+ var elapsed=Time.get_ticks_msec()-app.last_primary_ms
+ check(elapsed>=180 or app.actions.end.disabled,"guarded primary is visibly unavailable until ready")
+ await create_timer(.22).timeout
  await shot("battle-opening")
  # Clearly labelled layout fixture: ten units, six cards, shields/stasis/readiness.
  var m=app.session.model
