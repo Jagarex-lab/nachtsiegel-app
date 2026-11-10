@@ -1245,7 +1245,7 @@
   },
   {
     "id": "ZH-059",
-    "name": "Siegel Sammler",
+    "name": "Siegel Sammler von Namar-Hochland (ZH-059)",
     "affiliation": "Zwölf Häuser",
     "card_type": "Wesen",
     "rarity": "Selten",
@@ -1749,7 +1749,7 @@
   },
   {
     "id": "ZH-083",
-    "name": "Chronik Schreiberin",
+    "name": "Chronik Schreiberin von Serev-Küste (ZH-083)",
     "affiliation": "Zwölf Häuser",
     "card_type": "Wesen",
     "rarity": "Episch",
@@ -2013,7 +2013,7 @@
   },
   {
     "id": "ZH-095",
-    "name": "Unerwartete rückkehrprobe",
+    "name": "Unerwartete rückkehrprobe von Namar-Hochland (ZH-095)",
     "affiliation": "Zwölf Häuser",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -2033,7 +2033,7 @@
   },
   {
     "id": "ZH-096",
-    "name": "Verlorene kupfernacht",
+    "name": "Verlorene kupfernacht von Keldor-Becken (ZH-096)",
     "affiliation": "Zwölf Häuser",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -3585,7 +3585,7 @@
   },
   {
     "id": "SW-059",
-    "name": "Schild Rufer",
+    "name": "Schild Rufer von Veyr-Stufen (SW-059)",
     "affiliation": "Stillwacht",
     "card_type": "Wesen",
     "rarity": "Selten",
@@ -4089,7 +4089,7 @@
   },
   {
     "id": "SW-083",
-    "name": "Wacht Sanitäter",
+    "name": "Wacht Sanitäter von Keldor-Becken (SW-083)",
     "affiliation": "Stillwacht",
     "card_type": "Wesen",
     "rarity": "Episch",
@@ -4353,7 +4353,7 @@
   },
   {
     "id": "SW-095",
-    "name": "Unerwartete wallprobe",
+    "name": "Unerwartete wallprobe von Veyr-Stufen (SW-095)",
     "affiliation": "Stillwacht",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -4373,7 +4373,7 @@
   },
   {
     "id": "SW-096",
-    "name": "Verlorene frostnacht",
+    "name": "Verlorene frostnacht von Namar-Hochland (SW-096)",
     "affiliation": "Stillwacht",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -5925,7 +5925,7 @@
   },
   {
     "id": "VG-059",
-    "name": "Moos Kundschafterin",
+    "name": "Moos Kundschafterin von Keldor-Becken (VG-059)",
     "affiliation": "Vielgestalt",
     "card_type": "Wesen",
     "rarity": "Selten",
@@ -6429,7 +6429,7 @@
   },
   {
     "id": "VG-083",
-    "name": "Blüte Sammler",
+    "name": "Blüte Sammler von Serev-Küste (VG-083)",
     "affiliation": "Vielgestalt",
     "card_type": "Wesen",
     "rarity": "Episch",
@@ -6693,7 +6693,7 @@
   },
   {
     "id": "VG-095",
-    "name": "Unerwartete rindeprobe",
+    "name": "Unerwartete rindeprobe von Keldor-Becken (VG-095)",
     "affiliation": "Vielgestalt",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -6713,7 +6713,7 @@
   },
   {
     "id": "VG-096",
-    "name": "Verlorene wurzelnacht",
+    "name": "Verlorene wurzelnacht von Ilyr-Wildmark (VG-096)",
     "affiliation": "Vielgestalt",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -8265,7 +8265,7 @@
   },
   {
     "id": "NS-059",
-    "name": "Stern Zeuge",
+    "name": "Stern Zeuge von Serev-Küste (NS-059)",
     "affiliation": "Neunte Stunde",
     "card_type": "Wesen",
     "rarity": "Selten",
@@ -8769,7 +8769,7 @@
   },
   {
     "id": "NS-083",
-    "name": "Paradox Berechner",
+    "name": "Paradox Berechner von Namar-Hochland (NS-083)",
     "affiliation": "Neunte Stunde",
     "card_type": "Wesen",
     "rarity": "Episch",
@@ -9033,7 +9033,7 @@
   },
   {
     "id": "NS-095",
-    "name": "Unerwartete spiegelprobe",
+    "name": "Unerwartete spiegelprobe von Serev-Küste (NS-095)",
     "affiliation": "Neunte Stunde",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -9053,7 +9053,7 @@
   },
   {
     "id": "NS-096",
-    "name": "Verlorene stundenacht",
+    "name": "Verlorene stundenacht von Veyr-Stufen (NS-096)",
     "affiliation": "Neunte Stunde",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -10605,7 +10605,7 @@
   },
   {
     "id": "NE-059",
-    "name": "Fluss Sänger",
+    "name": "Fluss Sänger von Namar-Hochland (NE-059)",
     "affiliation": "Neutral",
     "card_type": "Wesen",
     "rarity": "Selten",
@@ -11109,7 +11109,7 @@
   },
   {
     "id": "NE-083",
-    "name": "Nebel Reisender",
+    "name": "Nebel Reisender von Ilyr-Wildmark (NE-083)",
     "affiliation": "Neutral",
     "card_type": "Wesen",
     "rarity": "Episch",
@@ -11373,7 +11373,7 @@
   },
   {
     "id": "NE-095",
-    "name": "Unerwartete hafenprobe",
+    "name": "Unerwartete hafenprobe von Serev-Küste (NE-095)",
     "affiliation": "Neutral",
     "card_type": "Impuls",
     "rarity": "Episch",
@@ -11393,7 +11393,7 @@
   },
   {
     "id": "NE-096",
-    "name": "Verlorene marktnacht",
+    "name": "Verlorene marktnacht von Namar-Hochland (NE-096)",
     "affiliation": "Neutral",
     "card_type": "Impuls",
     "rarity": "Episch",
