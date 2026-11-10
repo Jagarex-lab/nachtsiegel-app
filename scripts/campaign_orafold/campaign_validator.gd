@@ -143,6 +143,10 @@ static func validate(value: Variant, locales: Dictionary = {}) -> Dictionary:
 			for target in _edges(data, id):
 				if data.scenes[target].chapter_id != data.scenes[id].chapter_id: errors.append("scenes." + id + ": cross-chapter edge; unlock chapter through an effect")
 		_graph(data, errors)
+	# UI labels share the locale files; a key present in either language also needs its counterpart.
+	for translations in locales.values():
+		if translations is Dictionary:
+			for text_id in translations: text_ids[text_id] = true
 	for language in ["de", "en"]:
 		if not locales.get(language) is Dictionary:
 			errors.append("locales." + language + ": required dictionary")

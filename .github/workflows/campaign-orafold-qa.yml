@@ -1,0 +1,65 @@
+name: ORAFOLD campaign QA (no deployment)
+on:
+  push:
+    branches: [feature/orafold-campaign]
+  pull_request:
+    branches: [develop]
+    paths:
+      - 'data/campaign_orafold/**'
+      - 'scripts/campaign_orafold/**'
+      - 'scenes/campaign_orafold/**'
+      - 'assets/campaign_orafold/**'
+      - 'tests/campaign_orafold/**'
+      - 'tools/*campaign_orafold*'
+      - '.github/workflows/campaign-orafold-qa.yml'
+permissions:
+  contents: read
+concurrency:
+  group: campaign-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  isolated-campaign:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      LP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - name: Import assets
+        run: godot --headless --editor --import --path . --quit
+      - name: Campaign validation runtime and mobile layouts
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_campaign_orafold.sh
+      - name: Isolated Web export with generated staging project
+        run: tools/build_campaign_orafold.sh
+      - name: Chromium runtime
+        run: |
+          npm install --prefix work/campaign-browser --no-save --package-lock=false playwright@1.65.0
+          work/campaign-browser/node_modules/.bin/playwright install --with-deps chromium
+      - name: Desktop and portrait Web touch smoke
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/campaign-browser/node_modules
+          GAME_URL: http://127.0.0.1:8791/
+        run: |
+          python3 -m http.server 8791 --bind 127.0.0.1 --directory work/campaign_orafold/web > work/campaign_orafold/web-http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8791/build-info.json
+          node tools/campaign_orafold_browser_qa.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orafold-campaign-QA
+          path: |
+            work/campaign_orafold/*.log
+            work/campaign_orafold/*.json
+            work/campaign_orafold/*.png
+            work/campaign_orafold/web/
