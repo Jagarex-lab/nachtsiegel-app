@@ -10,6 +10,7 @@ var actions: Dictionary = {}
 var message := ""
 var confirm_surrender := false
 var return_sent := false
+var _render_pending := false
 
 func setup(value, language) -> void:
 	adapter = value
@@ -53,6 +54,12 @@ func act(name: String, args: Array) -> void:
 	render()
 
 func render() -> void:
+	if _render_pending: return
+	_render_pending = true
+	call_deferred("_render_now")
+
+func _render_now() -> void:
+	_render_pending = false
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()

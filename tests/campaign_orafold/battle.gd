@@ -10,6 +10,8 @@ func check(ok: bool, name: String) -> void:
 		failures += 1
 		printerr("FAIL: ", name)
 func _initialize() -> void: call_deferred("run")
+func settle() -> void:
+	for frame in 3: await process_frame
 func fresh(seed_value: int = 42):
 	var a = Adapter.new()
 	check(a.begin({"deck_profile":"houses","enemy_profile":"stillwatch","ai_profile":"practice","seed":seed_value}, "run-"+str(seed_value)), "configured Alpha encounter starts")
@@ -49,20 +51,27 @@ func run() -> void:
 	var view = BattleView.new()
 	root.add_child(view)
 	view.setup(a, null)
-	await process_frame
+	await settle()
 	check(view.actions.has("keep") and view.actions.has("card_0"), "battle view exposes opening hand")
 	view.actions.keep.pressed.emit()
+	await settle()
 	check(a.snapshot().stage=="origins" and view.actions.has("origin_2"), "opening UI dispatches model command")
 	view.actions.origin_2.pressed.emit()
-	if a.snapshot().stage=="second": view.actions.begin.pressed.emit()
+	await settle()
+	if a.snapshot().stage=="second":
+		view.actions.begin.pressed.emit()
+		await settle()
 	check(a.snapshot().stage=="battle", "battle UI completes opening")
 	view.actions.surrender.pressed.emit()
+	await settle()
 	check(a.outcome.is_empty() and view.actions.has("confirm"), "concede requires deliberate confirmation")
 	view.actions.confirm.pressed.emit()
+	await settle()
 	check(a.outcome=="defeat" and view.actions.has("return"), "concede yields return action")
 	var returned: Array = []
 	view.returned.connect(func(token,outcome):returned.append([token,outcome]))
 	view.actions["return"].pressed.emit()
+	await settle()
 	view._return_to_story()
 	check(returned==[[a.token,"defeat"]], "UI returns exact token once")
 	view.queue_free()

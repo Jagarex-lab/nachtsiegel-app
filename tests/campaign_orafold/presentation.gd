@@ -64,8 +64,10 @@ func _run() -> void:
 	check(ui.manager.current_scene().id == "practice", "Late callback does not route narrative")
 	# Confirm actual surrender through BattleView controls and return to correct story route.
 	ui.battle_view.actions.surrender.pressed.emit()
+	await settle()
 	check(ui.battle_view.actions.has("confirm"), "Surrender needs confirmation")
 	ui.battle_view.actions.confirm.pressed.emit()
+	await settle()
 	check(ui.battle_adapter.outcome == "defeat" and ui.battle_view.actions.has("return"), "Current adapter supplies defeat result")
 	ui.battle_view.actions["return"].pressed.emit()
 	await settle()

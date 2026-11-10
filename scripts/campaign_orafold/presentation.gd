@@ -30,6 +30,7 @@ var battle_view
 var compact := false
 var _last_compact := false
 var _rendering := false
+var _render_pending := false
 var _web_poll := 0.0
 var _qa_enabled := false
 
@@ -196,6 +197,14 @@ func _manager_changed() -> void:
 		_render()
 
 func _render() -> void:
+	# Rebuilding controls inside a touch release invalidates Godot's current GUI
+	# propagation list. Coalesce changes and rebuild after input dispatch ends.
+	if _render_pending: return
+	_render_pending = true
+	call_deferred("_render_now")
+
+func _render_now() -> void:
+	_render_pending = false
 	if main == null or manager == null:
 		return
 	_rendering = true
