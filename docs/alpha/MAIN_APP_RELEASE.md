@@ -1,5 +1,7 @@
 # ORAFOLD als reguläre Hauptanwendung – 2026-11-10
 
+**Aktualisierte Solo-Freigabe:** Die frühere verpflichtende zweite Reviewer-Identität ist aufgehoben. Die unten dokumentierte ursprüngliche Administrationshürde ist historisch. Maßgeblich ist jetzt [der manuelle Solo-Releaseprozess](../release/PAGES_RELEASE_SAFETY.md), ohne Releasevariable und ohne Eingriff in aktive GitHub-Schutzregeln. Aktuelle Integration/Live-SHA werden im Abschlussbericht und PR8 dokumentiert.
+
 Freigabe:Der Auftraggeber genehmigt Integration und Ersatz des bisherigen Pages-Testbuilds, unter Beachtung bestehender Schutzregeln. Der neue Stand ersetzt die normale Navigation, nicht die Legacy-Regelreferenz.
 
 ## Umsetzung

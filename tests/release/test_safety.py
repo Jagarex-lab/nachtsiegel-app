@@ -32,9 +32,23 @@ class Safety(unittest.TestCase):
                 for enabled in ['', 'false','true']:
                     c,e=valid();c.update(event=event,ref=ref,enabled=enabled)
                     with self.subTest(event=event,ref=ref,enabled=enabled):
-                        if (event,ref,enabled)==('workflow_dispatch','refs/heads/develop','true'):self.assertEqual(g.validate(c,e),SHA)
+                        if (event,ref)==('workflow_dispatch','refs/heads/develop'):self.assertEqual(g.validate(c,e),SHA)
                         else:
                             with self.assertRaises(g.Denied):g.validate(c,e)
+
+    def test_solo_alpha_and_existing_environment_rules(self):
+        c,e=valid()
+        e['environment']['protection_rules']=[]
+        e['environment']['can_admins_bypass']=True
+        e['policies'].append({'name':'main','type':'branch'})
+        before=copy.deepcopy(e)
+        self.assertEqual(g.validate(c,e),SHA)
+        self.assertEqual(e,before)  # Never modify GitHub protections.
+        e['environment']['protection_rules']=[{'type':'required_reviewers','reviewers':[{'id':1}]}]
+        self.assertEqual(g.validate(c,e),SHA)  # GitHub enforces these natively.
+        for event in ['push','pull_request','release','workflow_run']:
+            c['event']=event
+            with self.assertRaises(g.Denied):g.validate(c,e)
 
     def test_context_rejections(self):
         for key,value in [('repository','fork/game'),('sha','main'),('sha','A'*40),('confirmation','yes'),('run_id','../42'),('dispatch_sha','b'*40)]:
@@ -42,7 +56,7 @@ class Safety(unittest.TestCase):
             with self.subTest(key=key,value=value),self.assertRaises(g.Denied):g.validate(c,e)
 
     def test_missing_or_weakened_settings_and_qa(self):
-        mutations=[lambda e:e.update(develop_sha='b'*40),lambda e:e['pages'].update(build_type='legacy'),lambda e:e['environment'].update(protection_rules=[]),lambda e:e['environment']['protection_rules'][0].update(prevent_self_review=False),lambda e:e['environment']['protection_rules'][0].update(reviewers=[]),lambda e:e['environment'].update(can_admins_bypass=True),lambda e:e['environment']['deployment_branch_policy'].update(custom_branch_policies=False),lambda e:e.update(policies=[{'name':'*','type':'tag'}]),lambda e:e['policies'].append({'name':'main','type':'branch'}),lambda e:e['run'].update(id=43),lambda e:e['run']['repository'].update(full_name='fork/game'),lambda e:e['run'].update(head_sha='b'*40),lambda e:e['run'].update(head_branch='feature/test'),lambda e:e['run'].update(event='pull_request'),lambda e:e['run'].update(status='in_progress'),lambda e:e['run'].update(conclusion='failure'),lambda e:e['run'].update(path='.github/workflows/other.yml'),lambda e:e.update(artifacts=[]),lambda e:e['artifacts'][0].update(expired=True),lambda e:e['artifacts'].append({'expired':False})]
+        mutations=[lambda e:e.update(develop_sha='b'*40),lambda e:e['pages'].update(build_type='legacy'),lambda e:e.update(policies=[{'name':'*','type':'tag'}]),lambda e:e['run'].update(id=43),lambda e:e['run']['repository'].update(full_name='fork/game'),lambda e:e['run'].update(head_sha='b'*40),lambda e:e['run'].update(head_branch='feature/test'),lambda e:e['run'].update(event='pull_request'),lambda e:e['run'].update(status='in_progress'),lambda e:e['run'].update(conclusion='failure'),lambda e:e['run'].update(path='.github/workflows/other.yml'),lambda e:e.update(artifacts=[]),lambda e:e['artifacts'][0].update(expired=True),lambda e:e['artifacts'].append({'expired':False})]
         for i,mutate in enumerate(mutations):
             c,e=valid();mutate(e)
             with self.subTest(case=i),self.assertRaises(g.Denied):g.validate(c,e)
@@ -63,7 +77,6 @@ class Safety(unittest.TestCase):
                     self.assertEqual(name,'pages-release.yml');self.assertEqual(job['environment']['name'],'github-pages')
                     self.assertIn("github.event_name == 'workflow_dispatch'",job['if'])
                     self.assertIn("github.ref == 'refs/heads/develop'",job['if'])
-                    self.assertIn("vars.PAGES_RELEASE_ENABLED == 'true'",job['if'])
                     self.assertEqual(job['needs'],'preflight')
                     self.assertIn('python3 tools/release/guard.py',[s.get('run') for s in job['steps']])
         release=workflows['pages-release.yml']

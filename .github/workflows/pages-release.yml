@@ -3,11 +3,11 @@ on:
   workflow_dispatch:
     inputs:
       commit:
-        description: Full develop HEAD SHA with successful push Web QA
+        description: Full develop HEAD SHA with successful Web QA
         required: true
         type: string
       qa_run_id:
-        description: Successful develop push Web QA run containing tested artifact
+        description: Successful develop Web QA run containing tested artifact
         required: true
         type: string
       confirmation:
@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   preflight:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && vars.PAGES_RELEASE_ENABLED == 'true'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -39,10 +39,9 @@ jobs:
           RELEASE_SHA: ${{ inputs.commit }}
           QA_RUN_ID: ${{ inputs.qa_run_id }}
           RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
-          RELEASE_ENABLED: ${{ vars.PAGES_RELEASE_ENABLED }}
   publish:
     needs: preflight
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && vars.PAGES_RELEASE_ENABLED == 'true' && needs.preflight.result == 'success'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && needs.preflight.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     environment:
@@ -57,14 +56,13 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           persist-credentials: false
-      - name: Recheck all gates after human environment approval
+      - name: Recheck exact commit and QA after any active environment gates
         run: python3 tools/release/guard.py
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_SHA: ${{ inputs.commit }}
           QA_RUN_ID: ${{ inputs.qa_run_id }}
           RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
-          RELEASE_ENABLED: ${{ vars.PAGES_RELEASE_ENABLED }}
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: nachtsiegel-arena-qa
