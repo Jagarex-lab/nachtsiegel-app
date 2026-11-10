@@ -87,6 +87,7 @@ async function runEngine(name){
    await action('mulligan_1');await action('mulligan_1');await wait(()=>JSON.stringify(window.orafoldQA.opening_marks)==='[0]');
    await exactState(before,'marking and unmarking');
    if(detailed){
+    await canceledTap((await q()).actions.menu.rect,'canceled menu tap');
     await shot('mulligan-five-paths-marked');await action('inspect');check((await q()).modal,'mulligan inspector is open');await shot('mulligan-inspection-844');await action('modal_close');
     before=await q();await resize(390,844);await wait(()=>window.orafoldQA.actions.rotate_menu);equal(Object.keys((await q()).board).length,0,'portrait never squeezes battlefield');await exactState(before,'mulligan rotation');equal((await q()).opening_marks,[0],'exchange selection retained in portrait');
     await resize(844,390);await wait(()=>window.orafoldQA.actions.mulligan_done);await paths('restored mulligan');equal((await q()).opening_marks,[0],'exchange selection restored');
@@ -94,6 +95,8 @@ async function runEngine(name){
    before=await q();await action('mulligan_done');await wait(()=>window.orafoldQA.battle.stage==='origins');equal((await q()).command_count,before.command_count+1,'one mulligan confirmation command');await paths('origin selection');
    const origin=await q();for(let lane=0;lane<5;lane++)equal(origin.actions['origin_'+lane].rect,origin.board['hero'+lane],'origin action is actual own path');
    const enemy=center(origin.board.enemy2);await page.touchscreen.tap(enemy.x,enemy.y);await exactState(origin,'enemy path cannot choose origin');
+   await canceledTap((await q()).actions.origin_2.rect,'canceled origin tap');
+   await canceledTap((await q()).actions.origin_2.rect,'same-turn canceled origin tap',0);
    if(detailed)await shot('origin-on-battlefield');await action('origin_2');await wait(()=>window.orafoldQA.battle.stage!=='origins');
    let state=await q();equal(state.battle.origins.hero,2,'origin chosen on actual path');const coin=state.battle.coin;seeds.push({seed:state.battle.seed,coin});
    if(state.battle.stage==='second'){
@@ -123,6 +126,10 @@ async function runEngine(name){
    async move(method,at){if(method==='mouse')await page.mouse.move(at.x,at.y,{steps:4});else await this.touch('touchMove',at);},
    async end(method,at,canceled=false){if(method==='mouse'){await page.mouse.move(at.x,at.y);await page.mouse.up();}else await this.touch(canceled?'touchCancel':'touchEnd',at);}
   };
+  async function canceledTap(rect,label,holdMs=120){
+   const before=await q(),at=center(rect);await pointer.touch('touchStart',at);if(holdMs)await page.waitForTimeout(holdMs);await pointer.touch('touchCancel',at);
+   await exactState(before,label);const after=await q();equal(after.selected,before.selected,label+': selection retained');equal(after.page,before.page,label+': page retained');equal(after.modal,before.modal,label+': no modal action');equal(after.opening_marks,before.opening_marks,label+': mulligan marks retained');
+  }
   async function lift(index,method){
    const before=await q();equal(before.hand[index].id,before.battle.hero.hand[index],'drag source identity matches actual hand');
    const at=center(before.hand[index].rect);await pointer.start(method,at);const lifted={x:at.x,y:at.y-34};await pointer.move(method,lifted);
@@ -136,12 +143,15 @@ async function runEngine(name){
    lastStep='drag '+method+' index '+index;
    if((await q()).selected>=0)await action('cancel_selection');
    if(safety){
-    let gesture=await lift(index,method);await releaseInvalid(gesture,method,'invalid '+method+' drop');
+    let gesture=await lift(index,method);const tapTarget=gesture.targets[0];check(tapTarget,'tap-cancel test has a real legal target');await releaseInvalid(gesture,method,'invalid '+method+' drop');
     if(method==='touch'){
      gesture=await lift(index,method);const current=await q(),key=gesture.targets[0];check(key,'touch-cancel case has a legal target');const at=center(key==='relic_slot'?current.actions.relic_slot.rect:current.board[key]);
      await pointer.move(method,at);await pointer.end(method,at,true);await wait(()=>!window.orafoldQA.drag.active);await exactState(gesture.before,'touchcancel on a legal target');equal((await q()).selected,gesture.before.selected,'touchcancel restores previous selection');
     }
     gesture=await lift(index,method);await resize(390,844);await wait(()=>window.orafoldQA.actions.rotate_menu&&!window.orafoldQA.drag.active);await pointer.end(method,{x:180,y:350});await exactState(gesture.before,'rotation cancels '+method+' drag');equal((await q()).selected,gesture.before.selected,'rotation restores previous selection');await resize(844,390);await wait(()=>window.orafoldQA.actions.end);
+    const state=await q(),handPoint=center(state.hand[index].rect);await page.touchscreen.tap(handPoint.x,handPoint.y);await wait(i=>window.orafoldQA.selected===i,index);
+    const selected=await q(),targetRect=tapTarget==='relic_slot'?selected.actions.relic_slot.rect:selected.board[tapTarget];
+    await canceledTap(targetRect,'canceled selected-card target tap');await canceledTap(targetRect,'same-turn canceled selected-card target tap',0);await action('cancel_selection');
    }
    const gesture=await lift(index,method),state=await q(),card=by[state.hand[index].id];
    check(gesture.targets.length>0,'playable card has a kernel-approved drag target');
@@ -212,7 +222,7 @@ async function runEngine(name){
    else if(legal.length){await dragPlay(legal[0].index,'mouse',{capture:false});}
    else{await action('end');}
   }
-  equal(Object.keys(completed).sort(),['creature','event','relic'],'all three card types played using actual browser drag');checks.push('touch creature/relic and mouse impulse drag; invalid and rotation drops');
+  equal(Object.keys(completed).sort(),['creature','event','relic'],'all three card types played using actual browser drag');checks.push('touch creature/relic and mouse impulse drag; invalid/rotation drops and canceled menu/origin/selected-target taps');
   // A legal third play may win immediately; use the visible result-dialog path.
   await action((await q()).battle.winner?'result_log':'log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');checks.push('actual interaction commands replay identically');
   await action('menu');await action('confirm_menu');await resize(390,844);await action('collection');

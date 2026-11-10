@@ -128,7 +128,15 @@ func text(value: String, parent: Node=null, fs: int=14) -> Label:
 	var label=Label.new();label.text=value;label.add_theme_font_size_override("font_size",fs);label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;parent.add_child(label);return label
 func button(id: String, caption: String, callback: Callable, parent: Node=null, disabled_value: bool=false) -> Button:
 	if parent==null:parent=body
-	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;b.pressed.connect(callback);parent.add_child(b);actions[id]=b;return b
+	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;_bind_press(b,callback);parent.add_child(b);actions[id]=b;return b
+func _bind_press(control: BaseButton, callback: Callable) -> void:
+	# Godot Web also reports canceled ordinary taps as releases. Let BaseButton
+	# reset its held state, but never dispatch its action after DOM cancellation.
+	var press={"version":0}
+	control.button_down.connect(func():press.version=_web_drag_cancel_version())
+	control.pressed.connect(func():
+		if not OS.has_feature("web") or int(press.version)==_web_drag_cancel_version():callback.call()
+	)
 func dropdown(id: String, items: Array, current: String, callback: Callable, parent: Node) -> Button:
 	var labels={"all":"Alle","creature":"Wesen","event":"Impuls","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral","cost_asc":"Energie aufsteigend","cost_desc":"Energie absteigend","name_asc":"Name A–Z"}
 	labels.merge(LibraryFilter.species_labels())
@@ -258,7 +266,7 @@ func battle() -> void:
 		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card);view.selected=selected==index
 		view.custom_minimum_size=Vector2(44,66 if compact else 80);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		view.size_flags_stretch_ratio=1.4 if selected==index else 1.0
-		view.pressed.connect(func():_hand_click(index));hand.add_child(view);hand_views.append(view)
+		_bind_press(view,func():_hand_click(index));hand.add_child(view);hand_views.append(view)
 	var bar=row()
 	var overflow: bool=s.hero.phase=="draw" and s.hero.hand.size()+mini(int(s.hero.pendingDraw),s.hero.deck.size())>6
 	var picking=selected>=0 and s.hero.phase=="main"
@@ -292,11 +300,11 @@ func _battle_board(preparing: bool=false) -> void:
 				view.disabled=not view.target
 				view.tooltip_text="Ursprung auf Pfad %d wählen" % (lane+1) if view.target else "Dein Pfad %d" % (lane+1) if side=="hero" else "Gegnerischer Pfad %d" % (lane+1)
 				if side=="hero" and s.stage in ["origins","second"]:actions[("origin_" if s.stage=="origins" else "second_origin_")+str(lane)]=view
-				view.pressed.connect(func():_opening_lane_click(side,lane))
+				_bind_press(view,func():_opening_lane_click(side,lane))
 			else:
 				view.target=target_allowed(side,lane);view.invalid_target=selected>=0 and not view.target and s.hero.phase=="main"
 				if mode=="alpha" and s[side].convergence!=null and s[side].convergence.lanes.has(lane):view.convergence=not s[side].convergence.broken;view.broken_convergence=bool(s[side].convergence.broken)
-				view.pressed.connect(func():field_click(side,lane))
+				_bind_press(view,func():field_click(side,lane))
 			line.add_child(view);board_views[side+str(lane)]=view
 func _relic_slot(parent: Node) -> void:
 	var p: Dictionary=session.model.state.hero
@@ -380,7 +388,7 @@ func opening() -> void:
 		view.selected=mulligan_indices.has(index) if s.stage=="mulligan" else selected==index
 		view.custom_minimum_size=Vector2(44,80 if compact else 112);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		view.tooltip_text=view.card.name+"\n"+str(view.card.get("description",""))
-		view.pressed.connect(func():_opening_hand_click(index));hand.add_child(view);hand_views.append(view)
+		_bind_press(view,func():_opening_hand_click(index));hand.add_child(view);hand_views.append(view)
 		if s.stage=="mulligan":
 			actions["mulligan_"+str(index)]=view
 			if mulligan_indices.has(index):
@@ -587,7 +595,7 @@ func library_panel(parent: Node, desktop: bool) -> void:
 	for c: Dictionary in query.cards:
 		var tile=VBoxContainer.new();tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_child(tile)
 		var v=CardView.new();v.card=c;v.library=true;v.color=S.color(c);v.custom_minimum_size=Vector2(0,176);v.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.add_child(v);actions["card_"+c.id]=v
-		v.pressed.connect(func():inspect(c) if collection_only or not can_add(c) else add_card(c))
+		_bind_press(v,func():inspect(c) if collection_only or not can_add(c) else add_card(c))
 		var controls=row(tile)
 		button("detail_"+c.id,"Details",func():inspect(c),controls)
 		if not collection_only:button("add_"+c.id,"+  %d/%d" % [deck.count(c.id),1 if c.rarity=="legendary" else 3],func():add_card(c),controls,not can_add(c))
