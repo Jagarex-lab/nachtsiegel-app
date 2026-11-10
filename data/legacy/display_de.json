@@ -1,0 +1,461 @@
+{
+  "schema_version": 1,
+  "source": {
+    "repository": "https://github.com/Jagarex-lab/duel-deck",
+    "commit": "34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+    "path": "engine.js",
+    "git_blob": "d3f48929c334052b2e4062264fe5c9ac39b49c6a",
+    "sha256": "abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1"
+  },
+  "locale": "de",
+  "cards": {
+    "ash-0": {
+      "name": "Glutwächter",
+      "description": "Beschwörung: 3 Schaden an einer gewählten gegnerischen Kreatur (falls keine vorhanden ist: gegnerischer Held)."
+    },
+    "ash-1": {
+      "name": "Knochensänger",
+      "description": "Beschwörung: Heile 3 Heldenleben."
+    },
+    "ash-2": {
+      "name": "Rotbrand-Bestie",
+      "description": "Beschwörung: +1 Angriff für eine benachbarte Kreatur."
+    },
+    "ash-3": {
+      "name": "Schmiedegolem",
+      "description": "Beschwörung: Verschiebe eine benachbarte eigene Kreatur in ein freies Feld."
+    },
+    "ash-4": {
+      "name": "Schwurträger",
+      "description": "Beschwörung: Ziehe 1 Karte."
+    },
+    "ash-5": {
+      "name": "Aschenrichter",
+      "description": "Beschwörung: +3 Resonanz."
+    },
+    "ash-6": {
+      "name": "Sonnenfalke",
+      "description": "Beschwörung: +2 dauerhafter Schild."
+    },
+    "ash-7": {
+      "name": "Scherbenwolf",
+      "description": "Beschwörung: 2 Schaden und Heilung um denselben Wert."
+    },
+    "ash-8": {
+      "name": "Vulkanriese",
+      "description": "Beschwörung: 3 direkter Schaden, ignoriert Block und Schild."
+    },
+    "ash-9": {
+      "name": "Essegeist",
+      "description": "Wenn diese Kreatur angegriffen wird: 1 Gegenschaden."
+    },
+    "ash-10": {
+      "name": "Blutkomet",
+      "description": "Beschwörung: Gegnerischer Held verursacht im nächsten Zug 2 weniger Kreaturenschaden."
+    },
+    "ash-11": {
+      "name": "Funkenkobold",
+      "description": "Beschwörung: +4 Block (verfällt im nächsten eigenen Zug)."
+    },
+    "ash-12": {
+      "name": "Feuerkönig",
+      "description": "Beschwörung: +3 Resonanz."
+    },
+    "ash-13": {
+      "name": "Rotgold-Ritter",
+      "description": "Beschwörung: Betäube die gegenüberliegende Kreatur für 1 Angriff."
+    },
+    "ash-14": {
+      "name": "Schlackentänzer",
+      "description": "Beim Tod: +3 Resonanz."
+    },
+    "ash-15": {
+      "name": "Rissjäger",
+      "description": "Eile: Greift bereits im Beschwörungszug an."
+    },
+    "ash-16": {
+      "name": "Aschenhirsch",
+      "description": "Beschwörung: 3 Schaden an einer gewählten gegnerischen Kreatur (falls keine vorhanden ist: gegnerischer Held)."
+    },
+    "ash-17": {
+      "name": "Kohlenorakel",
+      "description": "Beschwörung: Heile 4 Heldenleben."
+    },
+    "ash-18": {
+      "name": "Zunderkrähe",
+      "description": "Beschwörung: +2 Angriff für eine benachbarte Kreatur."
+    },
+    "ash-19": {
+      "name": "Brandläufer",
+      "description": "Beschwörung: Verschiebe eine benachbarte eigene Kreatur in ein freies Feld."
+    },
+    "ash-20": {
+      "name": "Lavakriecher",
+      "description": "Beschwörung: Ziehe 1 Karte."
+    },
+    "ash-21": {
+      "name": "Feuerschlund",
+      "description": "Beschwörung: +4 Resonanz."
+    },
+    "ash-22": {
+      "name": "Glutfalter",
+      "description": "Beschwörung: +4 dauerhafter Schild."
+    },
+    "ash-23": {
+      "name": "Rußdrache",
+      "description": "Beschwörung: 4 Schaden und Heilung um denselben Wert."
+    },
+    "ash-24": {
+      "name": "Klingenphönix",
+      "description": "Legendär: +4 Resonanz und +4 Schild; benachbarte Verbündete erhalten +1 Angriff."
+    },
+    "tide-0": {
+      "name": "Gezeitenpilger",
+      "description": "Beschwörung: +3 Resonanz."
+    },
+    "tide-1": {
+      "name": "Spiegelkrabbe",
+      "description": "Beschwörung: Betäube die gegenüberliegende Kreatur für 1 Angriff."
+    },
+    "tide-2": {
+      "name": "Tiefenwächter",
+      "description": "Beim Tod: +2 Resonanz."
+    },
+    "tide-3": {
+      "name": "Flutrochen",
+      "description": "Eile: Greift bereits im Beschwörungszug an."
+    },
+    "tide-4": {
+      "name": "Salzpriesterin",
+      "description": "Beschwörung: 2 Schaden an einer gewählten gegnerischen Kreatur (falls keine vorhanden ist: gegnerischer Held)."
+    },
+    "tide-5": {
+      "name": "Perlentaucher",
+      "description": "Beschwörung: Heile 4 Heldenleben."
+    },
+    "tide-6": {
+      "name": "Sternenwal",
+      "description": "Beschwörung: +1 Angriff für eine benachbarte Kreatur."
+    },
+    "tide-7": {
+      "name": "Klangmuschel",
+      "description": "Beschwörung: Verschiebe eine benachbarte eigene Kreatur in ein freies Feld."
+    },
+    "tide-8": {
+      "name": "Saphirkrake",
+      "description": "Beschwörung: Ziehe 1 Karte."
+    },
+    "tide-9": {
+      "name": "Stromnymphe",
+      "description": "Beschwörung: +2 Resonanz."
+    },
+    "tide-10": {
+      "name": "Mondsalz-Geist",
+      "description": "Beschwörung: +3 dauerhafter Schild."
+    },
+    "tide-11": {
+      "name": "Namenloses Schiff",
+      "description": "Beschwörung: 3 Schaden und Heilung um denselben Wert."
+    },
+    "tide-12": {
+      "name": "Nebelqualle",
+      "description": "Beschwörung: 4 direkter Schaden, ignoriert Block und Schild."
+    },
+    "tide-13": {
+      "name": "Flutprophet",
+      "description": "Wenn diese Kreatur angegriffen wird: 2 Gegenschaden."
+    },
+    "tide-14": {
+      "name": "Riffschatten",
+      "description": "Beschwörung: Gegnerischer Held verursacht im nächsten Zug 2 weniger Kreaturenschaden."
+    },
+    "tide-15": {
+      "name": "Stillwasser-Ritter",
+      "description": "Beschwörung: +4 Block (verfällt im nächsten eigenen Zug)."
+    },
+    "tide-16": {
+      "name": "Meeressiegelträger",
+      "description": "Beschwörung: +3 Resonanz."
+    },
+    "tide-17": {
+      "name": "Tränenkompass",
+      "description": "Beschwörung: Betäube die gegenüberliegende Kreatur für 1 Angriff."
+    },
+    "tide-18": {
+      "name": "Wellenhexe",
+      "description": "Beim Tod: +3 Resonanz."
+    },
+    "tide-19": {
+      "name": "Eiskoralle",
+      "description": "Eile: Greift bereits im Beschwörungszug an."
+    },
+    "tide-20": {
+      "name": "Flusswyrm",
+      "description": "Beschwörung: 4 Schaden an einer gewählten gegnerischen Kreatur (falls keine vorhanden ist: gegnerischer Held)."
+    },
+    "tide-21": {
+      "name": "Kaltflossenjäger",
+      "description": "Beschwörung: Heile 5 Heldenleben."
+    },
+    "tide-22": {
+      "name": "Seelentaucher",
+      "description": "Beschwörung: +3 Angriff für eine benachbarte Kreatur."
+    },
+    "tide-23": {
+      "name": "Abgrundsänger",
+      "description": "Beschwörung: Verschiebe eine benachbarte eigene Kreatur in ein freies Feld."
+    },
+    "tide-24": {
+      "name": "Leviathan",
+      "description": "Legendär: +4 Resonanz und +4 Schild; benachbarte Verbündete erhalten +1 Angriff."
+    },
+    "thorn-0": {
+      "name": "Wurzelhüter",
+      "description": "Beschwörung: 4 direkter Schaden, ignoriert Block und Schild."
+    },
+    "thorn-1": {
+      "name": "Dornenfüchsin",
+      "description": "Wenn diese Kreatur angegriffen wird: 1 Gegenschaden."
+    },
+    "thorn-2": {
+      "name": "Hirschmond",
+      "description": "Beschwörung: Gegnerischer Held verursacht im nächsten Zug 1 weniger Kreaturenschaden."
+    },
+    "thorn-3": {
+      "name": "Waldgericht",
+      "description": "Beschwörung: +3 Block (verfällt im nächsten eigenen Zug)."
+    },
+    "thorn-4": {
+      "name": "Borkenriese",
+      "description": "Beschwörung: +2 Resonanz."
+    },
+    "thorn-5": {
+      "name": "Sporenläufer",
+      "description": "Beschwörung: Betäube die gegenüberliegende Kreatur für 1 Angriff."
+    },
+    "thorn-6": {
+      "name": "Eibenrufer",
+      "description": "Beim Tod: +2 Resonanz."
+    },
+    "thorn-7": {
+      "name": "Schwurhirsch",
+      "description": "Eile: Greift bereits im Beschwörungszug an."
+    },
+    "thorn-8": {
+      "name": "Lichtungsherz",
+      "description": "Beschwörung: 2 Schaden an einer gewählten gegnerischen Kreatur (falls keine vorhanden ist: gegnerischer Held)."
+    },
+    "thorn-9": {
+      "name": "Morgenranke",
+      "description": "Beschwörung: Heile 3 Heldenleben."
+    },
+    "thorn-10": {
+      "name": "Farnschatten",
+      "description": "Beschwörung: +2 Angriff für eine benachbarte Kreatur."
+    },
+    "thorn-11": {
+      "name": "Dornenspiegel",
+      "description": "Beschwörung: Verschiebe eine benachbarte eigene Kreatur in ein freies Feld."
+    },
+    "thorn-12": {
+      "name": "Urwaldkönig",
+      "description": "Beschwörung: Ziehe 1 Karte."
+    },
+    "thorn-13": {
+      "name": "Samenorakel",
+      "description": "Beschwörung: +3 Resonanz."
+    },
+    "thorn-14": {
+      "name": "Wilder Hauer",
+      "description": "Beschwörung: +3 dauerhafter Schild."
+    },
+    "thorn-15": {
+      "name": "Bernsteinwache",
+      "description": "Beschwörung: 3 Schaden und Heilung um denselben Wert."
+    },
+    "thorn-16": {
+      "name": "Blattflüsterin",
+      "description": "Beschwörung: 4 direkter Schaden, ignoriert Block und Schild."
+    },
+    "thorn-17": {
+      "name": "Moosrufer",
+      "description": "Wenn diese Kreatur angegriffen wird: 2 Gegenschaden."
+    },
+    "thorn-18": {
+      "name": "Wurzelmaul",
+      "description": "Beschwörung: Gegnerischer Held verursacht im nächsten Zug 2 weniger Kreaturenschaden."
+    },
+    "thorn-19": {
+      "name": "Blütenwespe",
+      "description": "Beschwörung: +5 Block (verfällt im nächsten eigenen Zug)."
+    },
+    "thorn-20": {
+      "name": "Rindenhüter",
+      "description": "Beschwörung: +4 Resonanz."
+    },
+    "thorn-21": {
+      "name": "Pilzhexer",
+      "description": "Beschwörung: Betäube die gegenüberliegende Kreatur für 1 Angriff."
+    },
+    "thorn-22": {
+      "name": "Waldschlange",
+      "description": "Beim Tod: +4 Resonanz."
+    },
+    "thorn-23": {
+      "name": "Dornenmutter",
+      "description": "Eile: Greift bereits im Beschwörungszug an."
+    },
+    "thorn-24": {
+      "name": "Uralter Titan",
+      "description": "Legendär: +4 Resonanz und +4 Schild; benachbarte Verbündete erhalten +1 Angriff."
+    },
+    "veil-0": {
+      "name": "Nachtweber",
+      "description": "Beschwörung: Ziehe 1 Karte."
+    },
+    "veil-1": {
+      "name": "Litanei-Geist",
+      "description": "Beschwörung: +2 Resonanz."
+    },
+    "veil-2": {
+      "name": "Maskendieb",
+      "description": "Beschwörung: +2 dauerhafter Schild."
+    },
+    "veil-3": {
+      "name": "Traumfresser",
+      "description": "Beschwörung: 2 Schaden und Heilung um denselben Wert."
+    },
+    "veil-4": {
+      "name": "Schattenwächter",
+      "description": "Beschwörung: 3 direkter Schaden, ignoriert Block und Schild."
+    },
+    "veil-5": {
+      "name": "Leerenmönch",
+      "description": "Wenn diese Kreatur angegriffen wird: 2 Gegenschaden."
+    },
+    "veil-6": {
+      "name": "Krähenrichter",
+      "description": "Beschwörung: Gegnerischer Held verursacht im nächsten Zug 1 weniger Kreaturenschaden."
+    },
+    "veil-7": {
+      "name": "Morgentrug",
+      "description": "Beschwörung: +3 Block (verfällt im nächsten eigenen Zug)."
+    },
+    "veil-8": {
+      "name": "Echoschreiter",
+      "description": "Beschwörung: +2 Resonanz."
+    },
+    "veil-9": {
+      "name": "Seelenfenster",
+      "description": "Beschwörung: Betäube die gegenüberliegende Kreatur für 1 Angriff."
+    },
+    "veil-10": {
+      "name": "Purpurgeist",
+      "description": "Beim Tod: +3 Resonanz."
+    },
+    "veil-11": {
+      "name": "Der Namenlose",
+      "description": "Eile: Greift bereits im Beschwörungszug an."
+    },
+    "veil-12": {
+      "name": "Dunkelspiegel",
+      "description": "Beschwörung: 3 Schaden an einer gewählten gegnerischen Kreatur (falls keine vorhanden ist: gegnerischer Held)."
+    },
+    "veil-13": {
+      "name": "Sternenlose",
+      "description": "Beschwörung: Heile 4 Heldenleben."
+    },
+    "veil-14": {
+      "name": "Mitternachtsrose",
+      "description": "Beschwörung: +2 Angriff für eine benachbarte Kreatur."
+    },
+    "veil-15": {
+      "name": "Vergessenswurm",
+      "description": "Beschwörung: Verschiebe eine benachbarte eigene Kreatur in ein freies Feld."
+    },
+    "veil-16": {
+      "name": "Wisperklinge",
+      "description": "Beschwörung: Ziehe 1 Karte."
+    },
+    "veil-17": {
+      "name": "Mondschleier",
+      "description": "Beschwörung: +3 Resonanz."
+    },
+    "veil-18": {
+      "name": "Schattenwolf",
+      "description": "Beschwörung: +3 dauerhafter Schild."
+    },
+    "veil-19": {
+      "name": "Leerenkrähe",
+      "description": "Beschwörung: 4 Schaden und Heilung um denselben Wert."
+    },
+    "veil-20": {
+      "name": "Finsterritter",
+      "description": "Beschwörung: 5 direkter Schaden, ignoriert Block und Schild."
+    },
+    "veil-21": {
+      "name": "Spiegelhexe",
+      "description": "Wenn diese Kreatur angegriffen wird: 3 Gegenschaden."
+    },
+    "veil-22": {
+      "name": "Nachtmahr",
+      "description": "Beschwörung: Gegnerischer Held verursacht im nächsten Zug 3 weniger Kreaturenschaden."
+    },
+    "veil-23": {
+      "name": "Seelenbinder",
+      "description": "Beschwörung: +5 Block (verfällt im nächsten eigenen Zug)."
+    },
+    "veil-24": {
+      "name": "Der letzte König",
+      "description": "Legendär: +4 Resonanz und +4 Schild; benachbarte Verbündete erhalten +1 Angriff."
+    }
+  },
+  "orders": [
+    {
+      "id": "ash",
+      "name": "Aschenpakt",
+      "symbol": "✶",
+      "color": "#e9a66e"
+    },
+    {
+      "id": "tide",
+      "name": "Gezeitenorden",
+      "symbol": "◈",
+      "color": "#70d6d4"
+    },
+    {
+      "id": "thorn",
+      "name": "Dornenzirkel",
+      "symbol": "❖",
+      "color": "#a5d58a"
+    },
+    {
+      "id": "veil",
+      "name": "Nachtkonklave",
+      "symbol": "☽",
+      "color": "#c5a3ee"
+    }
+  ],
+  "decks": {
+    "start": {
+      "name": "START",
+      "description": "Original START deck"
+    },
+    "ash": {
+      "name": "Aschensturm",
+      "description": "Direktschaden, Durchdringung und offensive Ordensketten."
+    },
+    "tide": {
+      "name": "Gezeitenwall",
+      "description": "Schild, Block, Heilung und lange Verteidigung."
+    },
+    "thorn": {
+      "name": "Dornenwacht",
+      "description": "Widerstand, Vergeltung und Kontrolle der fünf Pfade."
+    },
+    "veil": {
+      "name": "Nachtgewebe",
+      "description": "Resonanz, Betäubung, Bewegung und Kombinationen."
+    }
+  }
+}

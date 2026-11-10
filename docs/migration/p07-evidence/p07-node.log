@@ -1,0 +1,15 @@
+✔ P07 goldens reproduce pinned JS bytes without replacing inherited fixtures (8482.30748ms)
+✔ all100 cards execute real mixed-order two-summon chains on both sides (4125.279728ms)
+✔ all12 directed reactions, same-order no-reaction and resource caps are represented (3156.067895ms)
+✔ lethal reaction pays/places/attunes but prevents summon effect and followups (6216.284047ms)
+✔ pending choice permits burst but rejects move/fortify; no fabricated blanket lock (5893.017746ms)
+✔ positive burst reset, no tactic formation bonus, all rejected actions immutable (5363.157103ms)
+✔ P07 reactions and special actions consume no original LCG RNG draws (12922.13823ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47615.841929

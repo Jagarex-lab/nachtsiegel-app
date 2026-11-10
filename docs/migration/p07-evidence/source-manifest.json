@@ -1,0 +1,16 @@
+{
+  "source_commit": "6bc873457155a2dfb55965fa44773fb65607ddf0",
+  "reference": "34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+  "sha256": {
+    "scripts/legacy/battle_engine.gd": "60608d5f263bfdeff432d169badfb2c317f2a94f7f219fbcc0a5190a327db08e",
+    "tests/legacy_engine.gd": "ab87d8f6afeadb0d2784682abc57bade2f995a9ddfaed50138111fcc6f1223a3",
+    "tests/legacy_p05_p06.gd": "0815159610abedac5690a002e2440d772d9e022416024f87351c517beb383a4a",
+    "tests/legacy_p07.gd": "3c5dd1342532e52118e6f5644ac554bcdf1c7a32138431a65b844268b803df4b",
+    "tests/legacy_p07.test.cjs": "37645445516212a5d63576b04a728b256d91fbf9f73d8d4e11cebe367439e4e4",
+    "tools/legacy/generate_p07.cjs": "1b1d338623c36949f399f068cadebe8ba0ef849d0508fd9750532a4eb8debb41",
+    "tools/legacy/generate_p07_edges.cjs": "1a3e37b90220362a5fca2e035c043e07cc5c532094b565bba6b0cf2f13fdc3e4",
+    "tools/test_legacy.sh": "706ecf2b01b2682d673863a71d459229ad90a1c67806b09311b1fb9e6bcf8fb4",
+    "tests/fixtures/legacy/p07_v1.json": "fdb9779a9d48ccc4e948ae6010c38255d8c0b26fd99e21e0d0e8f03cf69b147a",
+    "tests/fixtures/legacy/p07_edges_v1.json": "3e3907aed15f0b76052f7e9f839d84e3f9555e4c2d2f4899a8e7f3e25366aba8"
+  }
+}

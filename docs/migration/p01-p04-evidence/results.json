@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-09",
+  "base_pr": 2,
+  "base_commit": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+  "js_commit": "34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+  "results": {
+    "targeted_exit": 0,
+    "node_test_groups": 15,
+    "foundation_assertions": 2171,
+    "kernel_assertions": 2099,
+    "differential_cases": 370,
+    "supported_old_cases": 52,
+    "unsupported_old_cases": 72,
+    "production_exit": 0,
+    "production_assertions": 9547,
+    "production_failures": 0,
+    "contrast_states": 89,
+    "contrast_regions": 3837,
+    "upstream_duels_and_replays": 250
+  },
+  "limitations": [
+    "Original automatic-AI convenience wrappers not implemented",
+    "P05 overflow/fatigue/recycle/recover blocked before mutation",
+    "Active P06/P07 work unsupported, no vanilla fallback",
+    "Defensive raw-helper queue/argument guards differ from permissive JS helpers",
+    "No full duel/replay/ABI parity, UI activation or deployment",
+    "No new local exports or physical-device checks"
+  ],
+  "file_sha256": {
+    ".github/workflows/legacy-foundations.yml": "61a103c561bbc3eba1924c746deb537dbfb69f4d9880dacf126db24e885d0b39",
+    "scripts/legacy/battle_engine.gd": "67a1da44583b8e1231eff7d8ab99589725e9065d15108dc89d1b3a9b14fed37b",
+    "scripts/legacy/rng.gd": "9a84ef4f835307ee04298e28da3b1c36aa89bb5013c35fe1bec09ce8ef6f4776",
+    "tests/fixtures/legacy/combat_p04_v1.json": "b10be219fbfc44b1433356b5a181f4a805ffed782b33452201826dc40ee45203",
+    "tests/fixtures/legacy/engine_p01_p04.json": "ddc9b286408c3db927cbf2ea85f6c657482d0be64a505bbffbd13a9141232420",
+    "tests/fixtures/legacy/queue_winner_p04_v1.json": "b80ce36c65a687a723018eeb8742dfbefa9ffea52cf7f85627429d12f051db90",
+    "tests/fixtures/legacy/rng_consumption_v1.json": "e11a9796698f8bc9586b288e2678fb9742b88a24f17b804aa536af9de414f2a6",
+    "tests/fixtures/legacy/turns_p03_v1.json": "14c305f9342c07c61cb594eba193f1acf4ddd72ad9aa32768598d9b1ce4ac531",
+    "tests/legacy_engine.gd": "45333b99a338494aa2aca78e850b664d17cc27146f57601330aed6d3f57eb71c",
+    "tests/legacy_engine.test.cjs": "9b45fbbca9700f1cce6da2bd3a3d916fcc05acc5357a746ed3b4d6c702787376",
+    "tools/legacy/generate_combat.cjs": "dffad9080b9e762d59cac44676af544781f77a672413e140bfa242989119f4f7",
+    "tools/legacy/generate_engine.cjs": "a14b8257bab668f2e81ecaf2f8519adc233d204616590937da7cda9fef7cb0ac",
+    "tools/legacy/generate_queue_winner.cjs": "07a1f5d12a08fdc52db9d37f753e085230199dd10823b3858597b81a9aec12ef",
+    "tools/legacy/generate_rng_consumption.cjs": "7de693a7b1e2625c0f2be7f3cfd0ee58b2202e65789a25eaf5a6c30197f651d9",
+    "tools/legacy/generate_turns.cjs": "dfe98cbe888c5f7003ef4e105724641c7e3b00b8fe6d361dac753b53db72b270",
+    "tools/legacy/reference.cjs": "e6fa234ac9f397ac5e17ab6642db7cff2c4335738498470eb060da98d2c66205",
+    "tools/test_legacy.sh": "3adb532e713c88563027b6583448f43130e50a4dc03a4f9213e3ba2d1c5f82a0"
+  }
+}

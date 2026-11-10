@@ -1,0 +1,199 @@
+{
+  "export": "exact CI C2 export downloaded from run42705454623, not a substituted mock",
+  "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+  "playwright": "1.65.0",
+  "chromium": "158.0.8127.18",
+  "webkit": "27.2",
+  "profiles": [
+    {
+      "engine": "webkit",
+      "profile": "iphone",
+      "viewport": {
+        "width": 844,
+        "height": 390
+      },
+      "dpr": 3,
+      "errors": [],
+      "checks": [
+        "actual touch",
+        "opening",
+        "44 CSS px / safe-area bounds",
+        "legal card turn",
+        "deck save and reload"
+      ],
+      "full_duel": null,
+      "replay_verified": false
+    },
+    {
+      "engine": "webkit",
+      "profile": "iphone-wide",
+      "viewport": {
+        "width": 915,
+        "height": 412
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": [
+        "actual touch",
+        "opening",
+        "44 CSS px / safe-area bounds",
+        "legal card turn",
+        "deck save and reload"
+      ],
+      "full_duel": null,
+      "replay_verified": false
+    },
+    {
+      "engine": "webkit",
+      "profile": "iphone-bars",
+      "viewport": {
+        "width": 844,
+        "height": 320
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": [
+        "actual touch",
+        "opening",
+        "44 CSS px / safe-area bounds",
+        "legal card turn",
+        "deck save and reload"
+      ],
+      "full_duel": null,
+      "replay_verified": false
+    },
+    {
+      "engine": "chromium",
+      "profile": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 720
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": [
+        "actual touch",
+        "opening",
+        "44 CSS px / safe-area bounds",
+        "legal card turn",
+        "deck save and reload"
+      ],
+      "full_duel": "alpha",
+      "replay_verified": true
+    },
+    {
+      "engine": "chromium",
+      "profile": "desktop-wide",
+      "viewport": {
+        "width": 1600,
+        "height": 900
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": [
+        "actual touch",
+        "opening",
+        "44 CSS px / safe-area bounds",
+        "legal card turn",
+        "deck save and reload"
+      ],
+      "full_duel": null,
+      "replay_verified": false
+    },
+    {
+      "engine": "chromium",
+      "profile": "android",
+      "viewport": {
+        "width": 915,
+        "height": 412
+      },
+      "dpr": 1,
+      "errors": [],
+      "checks": [
+        "actual touch",
+        "opening",
+        "44 CSS px / safe-area bounds",
+        "legal card turn",
+        "deck save and reload"
+      ],
+      "full_duel": "legacy",
+      "replay_verified": true
+    },
+    {
+      "engine": "chromium",
+      "profile": "android-bars",
+      "viewport": {
+        "width": 844,
+        "height": 320
+      },
+      "dpr": 2,
+      "errors": [],
+      "checks": [
+        "actual touch",
+        "opening",
+        "44 CSS px / safe-area bounds",
+        "legal card turn",
+        "deck save and reload"
+      ],
+      "full_duel": null,
+      "replay_verified": false
+    }
+  ],
+  "cold_boots": [
+    {
+      "iteration": 0,
+      "mode": "alpha",
+      "runtime": "27.2",
+      "playwright": "1.65.0",
+      "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+      "elapsed_ms": 8610,
+      "errors": []
+    },
+    {
+      "iteration": 1,
+      "mode": "archive",
+      "runtime": "27.2",
+      "playwright": "1.65.0",
+      "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+      "elapsed_ms": 6467,
+      "errors": []
+    },
+    {
+      "iteration": 2,
+      "mode": "alpha",
+      "runtime": "27.2",
+      "playwright": "1.65.0",
+      "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+      "elapsed_ms": 6972,
+      "errors": []
+    },
+    {
+      "iteration": 3,
+      "mode": "archive",
+      "runtime": "27.2",
+      "playwright": "1.65.0",
+      "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+      "elapsed_ms": 10124,
+      "errors": []
+    },
+    {
+      "iteration": 4,
+      "mode": "alpha",
+      "runtime": "27.2",
+      "playwright": "1.65.0",
+      "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+      "elapsed_ms": 6394,
+      "errors": []
+    },
+    {
+      "iteration": 5,
+      "mode": "archive",
+      "runtime": "27.2",
+      "playwright": "1.65.0",
+      "source_commit": "c2ad5b9c249ce0e52bc9f937fd38bcf443328824",
+      "elapsed_ms": 6490,
+      "errors": []
+    }
+  ],
+  "physical_devices": false
+}

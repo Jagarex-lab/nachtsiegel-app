@@ -1,0 +1,11 @@
+{
+  "command": "DISPLAY=:99 LP_NUM_THREADS=2 bash tools/test.sh",
+  "exit_code": 0,
+  "assertions": 9547,
+  "failures": 0,
+  "audio_cues": 11,
+  "rendered_contrast_states": 89,
+  "contrast_regions": 3837,
+  "physical_device_tests": false,
+  "source_commit": "363cce9c3bb2cd0b43efbad2d930649039c81657"
+}

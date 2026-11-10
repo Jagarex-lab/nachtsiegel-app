@@ -1,0 +1,11 @@
+{
+  "total": 250,
+  "replay": 250,
+  "wins": {
+    "hero": 45,
+    "enemy": 205,
+    "draw": 0
+  },
+  "maxActions": 82,
+  "errors": []
+}

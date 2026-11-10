@@ -1,0 +1,5 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
+const {products}=require('../tools/legacy/generate_matches.cjs');
+test('24 full-match goldens reproduce fixed original engine without rewriting',()=>{const a=products();assert.equal(fs.readFileSync('tests/fixtures/legacy/full_matches_v1.json','utf8'),JSON.stringify(a)+'\n');assert.deepEqual(a,products());});
+test('full duels finish, preserve 25-card bodies on both sides and return hero control',()=>{const all=products().cases;assert.equal(all.length,24);const coins=new Set();for(const c of all){assert(['hero','enemy','draw'].includes(c.winner));coins.add(c.initial.coin);for(const step of c.steps){assert.equal(step.value,true);assert(step.after.winner||step.after.active==='hero');for(const side of ['hero','enemy']){const p=step.after[side];assert.equal(p.deck.length+p.hand.length+p.discard.length+p.lanes.filter(Boolean).length,25);assert(p.energy>=0&&p.hand.length<=6);}}}assert.equal(coins.size,2);});

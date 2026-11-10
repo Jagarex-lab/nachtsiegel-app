@@ -1,0 +1,125 @@
+{
+  "checked_date": "2026-11-09",
+  "pull_requests": [
+    {
+      "baseRefName": "develop",
+      "headRefOid": "51ad544087dba200846b4420e493fcbe656c634f",
+      "mergedAt": null,
+      "number": 1,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T14:17:07Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42630115307/job/129203936185",
+          "name": "test-and-export",
+          "startedAt": "2026-11-09T13:58:03Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T14:17:07Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42630115307/job/129214386035",
+          "name": "deploy",
+          "startedAt": "2026-11-09T14:17:08Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        }
+      ],
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/1"
+    },
+    {
+      "baseRefName": "develop",
+      "headRefOid": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+      "mergedAt": null,
+      "number": 2,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T15:03:19Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42640652944/job/129240546574",
+          "name": "pinned-reference-and-catalog",
+          "startedAt": "2026-11-09T15:02:56Z",
+          "status": "COMPLETED",
+          "workflowName": "Legacy foundations (no deployment)"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T15:12:35Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42640652888/job/129240713152",
+          "name": "test-and-export",
+          "startedAt": "2026-11-09T15:03:14Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T15:13:19Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42640641872/job/129240688512",
+          "name": "test-and-export",
+          "startedAt": "2026-11-09T15:03:11Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T15:12:35Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42640652888/job/129246340055",
+          "name": "deploy",
+          "startedAt": "2026-11-09T15:12:35Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T15:13:19Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42640641872/job/129246789010",
+          "name": "deploy",
+          "startedAt": "2026-11-09T15:13:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        }
+      ],
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/2"
+    },
+    {
+      "baseRefName": "develop",
+      "headRefOid": "d3634b462444760665ba169dcd2be7df86baddfe",
+      "mergedAt": null,
+      "number": 3,
+      "state": "OPEN",
+      "statusCheckRollup": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T15:43:01Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42645766526/job/129258485376",
+          "name": "test-and-export",
+          "startedAt": "2026-11-09T15:33:00Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-09T15:43:03Z",
+          "conclusion": "SKIPPED",
+          "detailsUrl": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42645766526/job/129264445135",
+          "name": "deploy",
+          "startedAt": "2026-11-09T15:43:03Z",
+          "status": "COMPLETED",
+          "workflowName": "Godot Web Preview"
+        }
+      ],
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/3"
+    }
+  ]
+}

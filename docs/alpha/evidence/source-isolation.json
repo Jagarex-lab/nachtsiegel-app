@@ -1,0 +1,37 @@
+[
+  {
+    "path": "tests/reference/duel_deck/engine.js",
+    "unchanged_from_PR7": true,
+    "sha256": "abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1"
+  },
+  {
+    "path": "tests/reference/duel_deck/source.lock.json",
+    "unchanged_from_PR7": true,
+    "sha256": "f1ffa858b55bd53297f57d4c37d650c99d332a65ddb81eb7c1a6e9003ffd4a66"
+  },
+  {
+    "path": "data/legacy/cards.json",
+    "unchanged_from_PR7": true,
+    "sha256": "0e70a27c6c70e8bc5e8d527b4fbbb76201ae0d004c7b1cb29202b219cf229ffe"
+  },
+  {
+    "path": "tests/fixtures/legacy_card_pool.json",
+    "unchanged_from_PR7": true,
+    "sha256": "f7974e7634b6ccf28404c7e63d97b1c24fefa582356ea474f2cea0854dc3645e"
+  },
+  {
+    "path": "data/card_definitions.gd",
+    "unchanged_from_PR7": true,
+    "sha256": "6449cdf4d01e8e1042c4c38d3639d74910c543f9f378fa52f1d6f1a612c680c3"
+  },
+  {
+    "path": "scripts/battle_model.gd",
+    "unchanged_from_PR7": true,
+    "sha256": "c5abda32e8baeb9271becd8d855568dda4d14e98a56aea9859668421c6835145"
+  },
+  {
+    "path": "scripts/arena.gd",
+    "unchanged_from_PR7": true,
+    "sha256": "b703149f6bda913a6a1c9747b6d1a483f9e80682e58ba00af6c8950b53aabdd7"
+  }
+]

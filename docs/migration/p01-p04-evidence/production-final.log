@@ -1,0 +1,10 @@
+RULES: 684 assertions, 0 failures; 30 baseline differential duels
+CREATIVE DATA: 2253 assertions, 0 failures; 74 entities; 275 keys per locale; unchanged 7-card pool
+NARRATIVE: 97 assertions, 0 failures; localized draft, immutable identity and resource loading
+EXPERIENCE: 707 assertions, 0 failures; menu, tutorial, campaign, collection and persisted restart
+INPUT/LAYOUT: 380 assertions, 0 failures; seven landscape sizes; mouse + ScreenTouch
+PREMIUM: 1720 assertions, 0 failures; 4 landscape sizes; six cards, selection and actual ink visibility
+UX AUDIT: 2350 assertions, 0 failures; 62 paired rendered states
+COMBAT PRESENTATION: 725 assertions, 0 failures; complete duels, event order, rapid input, resize, bounded FX/audio and persisted mixer
+COMBAT SEQUENCE: 631 assertions, 0 failures; 4 family renders and 6 causal frames
+CONTRAST: 89 rendered states, 3837 regions, 0 failures

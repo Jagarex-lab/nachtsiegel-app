@@ -1,0 +1,43 @@
+LEGACY GENERATOR: 6 files verified byte-for-byte; 124 controlled cases, 152 steps, 6 openings; pinned 34b3062c3f22c0950d9323ad9b97b17c41d1d14f
+✔ reference pin rejects wrong commit, changed bytes and changed blob (17.548128ms)
+✔ all six generated outputs are deterministic and current, byte for byte (610.494893ms)
+✔ 100 rule records and separated original labels match every upstream field (4.225801ms)
+✔ five original decks preserve order, size, IDs and original validation outcomes (3.236915ms)
+✔ canonical comparison preserves JSON types, null/missing and array order (0.836182ms)
+✔ transition fixture covers all 11 commands, legal and rejected; all effects and reactions (48.111301ms)
+✔ reordered object fields pass, missing HP, changed target and shuffled deck fail on actual fixtures (69.99176ms)
+✔ new data namespace is not imported by production UI, battle model, scenes or autoloads (6.850162ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 972.187323
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LEGACY FOUNDATIONS: 2171 assertions, 0 failures; 100 cards, 5 decks, 24 validation vectors, 152 fixture steps inspected; no combat port
+ENGINE GOLDENS: { randoms: 54, openings: 36, begins: 28, advances: 10, damage: 56 }
+COMBAT GOLDENS: 122 mixed/draw cases, 8 FIFO/limit cases
+TURN GOLDENS: 2 stateful boundary sequences, 31 transitions
+RNG CONSUMPTION: 36 observed call-count/state/next-state vectors
+QUEUE WINNER: 2 original result-abort vectors
+✔ new engine/combat goldens reproduce pinned JS without touching old goldens (5769.629118ms)
+✔ reference corruption, changed RNG values, missing fields and changed card IDs are detected (622.919481ms)
+✔ RNG goldens are exact uint32 fractions, shuffles consume n-1 samples, both coin sides covered (122.975186ms)
+✔ new fixture writer refuses implicit golden replacement (1903.867436ms)
+✔ FIFO golden is bounded at100 and captures original death and harvest states (100.124787ms)
+✔ manual phase sequences retain both states through multiple original turn boundaries (111.000715ms)
+✔ observed LCG calls match exact setup count including double enemy shuffle (405.170101ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9598.839386
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LEGACY ENGINE: 2099 assertions, 0 failures; 370 differential cases; 52 existing scenarios supported, 72 explicitly unsupported

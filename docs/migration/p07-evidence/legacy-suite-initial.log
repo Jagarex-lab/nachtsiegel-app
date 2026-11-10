@@ -1,0 +1,82 @@
+LEGACY GENERATOR: 6 files verified byte-for-byte; 124 controlled cases, 152 steps, 6 openings; pinned 34b3062c3f22c0950d9323ad9b97b17c41d1d14f
+✔ reference pin rejects wrong commit, changed bytes and changed blob (46.174816ms)
+✔ all six generated outputs are deterministic and current, byte for byte (842.622239ms)
+✔ 100 rule records and separated original labels match every upstream field (4.31305ms)
+✔ five original decks preserve order, size, IDs and original validation outcomes (3.103876ms)
+✔ canonical comparison preserves JSON types, null/missing and array order (0.915356ms)
+✔ transition fixture covers all 11 commands, legal and rejected; all effects and reactions (36.043736ms)
+✔ reordered object fields pass, missing HP, changed target and shuffled deck fail on actual fixtures (43.108604ms)
+✔ new data namespace is not imported by production UI, battle model, scenes or autoloads (6.310536ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1391.705015
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LEGACY FOUNDATIONS: 2171 assertions, 0 failures; 100 cards, 5 decks, 24 validation vectors, 152 fixture steps inspected; no combat port
+ENGINE GOLDENS: { randoms: 54, openings: 36, begins: 28, advances: 10, damage: 56 }
+COMBAT GOLDENS: 122 mixed/draw cases, 8 FIFO/limit cases
+TURN GOLDENS: 2 stateful boundary sequences, 31 transitions
+RNG CONSUMPTION: 36 observed call-count/state/next-state vectors
+QUEUE WINNER: 2 original result-abort vectors
+✔ new engine/combat goldens reproduce pinned JS without touching old goldens (1726.802724ms)
+✔ reference corruption, changed RNG values, missing fields and changed card IDs are detected (266.338429ms)
+✔ RNG goldens are exact uint32 fractions, shuffles consume n-1 samples, both coin sides covered (53.30003ms)
+✔ new fixture writer refuses implicit golden replacement (1089.389079ms)
+✔ FIFO golden is bounded at100 and captures original death and harvest states (111.366024ms)
+✔ manual phase sequences retain both states through multiple original turn boundaries (118.205675ms)
+✔ observed LCG calls match exact setup count including double enemy shuffle (431.516617ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4022.201291
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LEGACY ENGINE: 2237 assertions, 0 failures; 440 differential cases; 122 existing scenarios supported, 2 explicitly unsupported
+P05/P06 GOLDENS: 346 cases, 461 transitions; 200 original card/side cases
+P05/P06 EDGES:14 targeted cases
+P05/P06 LIFECYCLE:6 repeated death/recover/recycle cases
+✔ P05/P06 fixtures reproduce original JS byte-for-byte, without rewriting old goldens (2556.484615ms)
+✔ all100 actual cards and16 effects are represented on both sides, as first summons (1418.166306ms)
+✔ ordered state-sequence comparison detects field tampering and event reordering (1257.134885ms)
+✔ known raw finishDraw rejection mutations are explicitly isolated, not misreported as immutable (910.287356ms)
+✔ effect-side tie breaking and off-lane user targets match actual reference (59.683692ms)
+✔ same card may die again after actual recovery/recycling without duplicate-death conflation (84.783051ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6479.752793
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LEGACY P05/P06: 2342 assertions, 0 failures; 366 differential cases, 521 transitions, 200 card-side pairs,16 effects
+P07: 432 cases / 1010 transitions
+P07 edges: 42 cases / 74 transitions
+✔ P07 goldens reproduce pinned JS bytes without replacing inherited fixtures (4533.682017ms)
+✔ all100 cards execute real mixed-order two-summon chains on both sides (1178.962579ms)
+✔ all12 directed reactions, same-order no-reaction and resource caps are represented (1260.848718ms)
+✔ lethal reaction pays/places/attunes but prevents summon effect and followups (1192.305624ms)
+✔ pending choice permits burst but rejects move/fortify; no fabricated blanket lock (1356.099414ms)
+✔ positive burst reset, no tactic formation bonus, all rejected actions immutable (1497.776324ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11267.079678
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LEGACY P07: 7562 assertions, 0 failures; 474 differential cases, 1084 transitions, 200 mixed card-side chains

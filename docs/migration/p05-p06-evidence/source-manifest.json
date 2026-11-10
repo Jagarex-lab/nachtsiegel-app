@@ -1,0 +1,26 @@
+{
+  "baseline_pr4": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+  "reference_commit": "34b3062c3f22c0950d9323ad9b97b17c41d1d14f",
+  "environment": {
+    "node": "24.22.1",
+    "godot": "4.6.3.stable",
+    "renderer": "Xvfb / Mesa llvmpipe / Dummy audio",
+    "cpu_quota": "200000 100000",
+    "physical_device_tests": false
+  },
+  "sha256": {
+    ".github/workflows/legacy-foundations.yml": "e72a54b40e36ed5d94645720ae0917a693c2dc74cd813e16d1459b58481ada0f",
+    "scripts/legacy/battle_engine.gd": "93d10e58d9c7c2ec0d3e03e1cdd722ff0f277a29cd1901c30e5a69e3aa921ea3",
+    "scripts/legacy/rng.gd": "7b3bf48f8e66d51ff24ec5fdfefffbaac8847efee171407be498b34f47847abf",
+    "tests/fixtures/legacy/p05_p06_edges_v1.json": "32afbf852bf3dc592fac037db659bdb085f15d755c14f7550d8be06b643fcf63",
+    "tests/fixtures/legacy/p05_p06_lifecycle_v1.json": "63dc69d31d2f0df55d1f830388e1a0c347ce93c6a795fcba9e3a66f332fc94a0",
+    "tests/fixtures/legacy/p05_p06_v1.json": "473fe4d5db5aee7fbaa1ad99aa52b96ed9ba3be0c328c9993ee36c6ddc7afb3d",
+    "tests/legacy_engine.gd": "5ddb6b3867d70344cfc499fb3df3e782ec03abe1ea1356b9b8f115a5cb61d51a",
+    "tests/legacy_p05_p06.gd": "d6c6c5032a5a05a3681431e2b616058acc8940440e1dc8687a4b4ad21fb4ec01",
+    "tests/legacy_p05_p06.test.cjs": "42c77f2e39d1e41025d4d02bf73d2039d74a24be51f5f18bc73801497f07b0b1",
+    "tools/legacy/generate_p05_p06.cjs": "128b557c0dc943de8023f92b423be84fee338019701b29342ec5afcd9daef328",
+    "tools/legacy/generate_p05_p06_edges.cjs": "e4e8cc5bd88c337015b52357f7a862a87166eaa9bab24c56f5a0e7c030020587",
+    "tools/legacy/generate_p05_p06_lifecycle.cjs": "a65002527bd07a76c56e1195f11a7c8f5398f94b151480b5ccf98e1c1ba2eda0",
+    "tools/test_legacy.sh": "905839f7976ee7ea557f4f1d95029be3fc857747c290ed3f3427730d9b998dc2"
+  }
+}

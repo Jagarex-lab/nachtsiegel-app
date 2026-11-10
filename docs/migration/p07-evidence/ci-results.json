@@ -1,0 +1,16 @@
+{
+  "source_commit": "6bc873457155a2dfb55965fa44773fb65607ddf0",
+  "legacy": {
+    "run": 42681393891,
+    "result": "success",
+    "differential_cases": 1280,
+    "node_groups": 28
+  },
+  "desktop_web": {
+    "run": 42681299906,
+    "result": "success",
+    "desktop_assertions": 9547,
+    "browser_profiles": 7,
+    "deployment": "skipped"
+  }
+}

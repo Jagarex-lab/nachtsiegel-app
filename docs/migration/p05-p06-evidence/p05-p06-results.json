@@ -1,0 +1,27 @@
+{
+  "assertions": 2348,
+  "card_side_pairs": 200,
+  "differential_cases": 366,
+  "effects": [
+    "strike",
+    "mend",
+    "rally",
+    "shift",
+    "draw",
+    "weave",
+    "ward",
+    "drain",
+    "pierce",
+    "retaliate",
+    "weaken",
+    "guard",
+    "silence",
+    "harvest",
+    "haste",
+    "pulse"
+  ],
+  "failures": 0,
+  "raw_rejection_mutation_cases": 2,
+  "transitions": 521,
+  "unsupported": []
+}

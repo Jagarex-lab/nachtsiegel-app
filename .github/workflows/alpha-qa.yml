@@ -1,0 +1,130 @@
+name: ORAFOLD isolated Alpha QA (no deployment)
+on:
+  push:
+    branches: ['alpha/**']
+  pull_request:
+    branches: [develop]
+permissions:
+  contents: read
+concurrency:
+  group: alpha-qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  alpha-playable:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - run: python3 -m pip install 'Pillow>=11,<14' 'PyYAML==6.0.3'
+      - run: godot --headless --editor --import --path . --quit
+      - name: All pinned Legacy differential and Alpha data tests
+        run: tools/test_legacy.sh
+      - name: New Alpha rules replay real touch and landscape render tests
+        run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
+      - name: Existing archive desktop regression
+        run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
+      - name: Release separation regression
+        run: python3 -m unittest discover -s tests/release -v
+      - name: Isolated Alpha export
+        run: |
+          tools/build_alpha.sh
+          tools/build_archive_qa.sh
+          tools/build_legacy_ui_qa.sh
+      - name: Package isolated candidate for browser verification
+        run: python3 tools/package_alpha.py > work/alpha/package-result.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: orafold-alpha-builds
+          path: |
+            work/alpha/web/
+            work/alpha/archive-web/
+            work/alpha/legacy-web/
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orafold-alpha-native-QA
+          path: |
+            work/alpha/*.log
+            work/alpha/*.json
+            work/alpha/*.png
+            work/alpha/*.zip
+            work/legacy/*.log
+            work/*final.log
+  browser:
+    needs: alpha-playable
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: orafold-alpha-builds
+          path: work/alpha
+      - name: Browser runtime on a fresh runner per engine
+        run: |
+          npm install --prefix work/qa-browser --no-save --package-lock=false playwright@1.65.0
+          work/qa-browser/node_modules/.bin/playwright install --with-deps ${{ matrix.engine }}
+      - name: Archive then Alpha actual touch tests
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          QA_ENGINES: ${{ matrix.engine }}
+        run: |
+          python3 -m http.server 8789 --bind 127.0.0.1 --directory work/alpha/archive-web > work/alpha/archive-http.log 2>&1 &
+          mkdir -p work/alpha/site
+          cp -a work/alpha/web work/alpha/site/nachtsiegel-app
+          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/site > work/alpha/http.log 2>&1 &
+          python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8789/build-info.json http://127.0.0.1:8788/nachtsiegel-app/build-info.json http://127.0.0.1:8787/build-info.json
+          GAME_URL=http://127.0.0.1:8789/ QA_PREFIX=alpha/archive node tools/browser_qa.cjs > work/alpha/archive-browser.log 2>&1
+          GAME_URL=http://127.0.0.1:8788/nachtsiegel-app/ node tools/alpha_browser_qa.cjs
+      - name: Preserved Legacy UI duel in private QA export
+        if: matrix.engine == 'chromium'
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          QA_ENGINES: chromium
+          QA_PROFILES: android
+          QA_LEGACY_ONLY: '1'
+          GAME_URL: http://127.0.0.1:8787/
+        run: node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1
+      - name: Repeated fresh WebKit cold boots on both ruleset entry points
+        if: matrix.engine == 'webkit'
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules
+          EXPECTED_COMMIT: ${{ github.sha }}
+          GAME_URL: http://127.0.0.1:8788/nachtsiegel-app/
+          ARCHIVE_URL: http://127.0.0.1:8789/
+        run: node tools/alpha_boot_qa.cjs > work/alpha/cold-boot.log 2>&1
+      - name: Package the browser-verified candidate
+        run: python3 tools/package_alpha.py > work/alpha/package-result.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orafold-alpha-QA-${{ matrix.engine }}
+          path: |
+            work/alpha/*.log
+            work/alpha/*.json
+            work/alpha/*.png
+            work/alpha/*.zip

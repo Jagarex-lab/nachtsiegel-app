@@ -22,12 +22,15 @@ const assert = require('assert/strict');
   ]
  };
  for(const engine of engines){
+  // A fresh browser process per profile prevents WPE/WebGL resources from
+  // previous full tutorial/reload runs accumulating across mobile contexts.
+  for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
   const browser=await (engine==='webkit'?webkit:chromium).launch({
    executablePath:engine==='chromium'?(process.env.CHROMIUM_BIN || undefined):undefined,
    headless:true,...(engine==='chromium'?{args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}:{})
   });
   try {
-   for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
+    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
     const {name,insets,...options}=profile;
     const context=await browser.newContext(options);
     const page=await context.newPage();
@@ -171,10 +174,13 @@ const assert = require('assert/strict');
      assert.equal(errors.length,0,JSON.stringify(errors));
      results.push({engine,profile:name,viewport:options.viewport,deviceScaleFactor:options.deviceScaleFactor||1,metadata,target:target.href,errors,checks:'touch, full tutorial victory, hero selection, saved reload, locked chapters, collection search/filter, concept inspection, safe areas and motion preference'});
      console.log(`BROWSER PASS: ${engine} ${name}`);
-    }catch(e){await page.screenshot({path:base+'-failure.png'}).catch(()=>{});throw e}
+    }catch(e){
+     const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,hub:window.nachtsiegelHub?.page,game:window.nachtsiegelQA?.round})).catch(()=>null);
+     fs.writeFileSync(base+'-failure.json',JSON.stringify({error:String(e),errors,diagnostic},null,2));
+     await page.screenshot({path:base+'-failure.png'}).catch(()=>{});throw e}
     finally{await context.close()}
-   }
   }finally{await browser.close()}
+  }
  }
  fs.writeFileSync(`work/${prefix}-results.json`,JSON.stringify(results,null,2));
  if(prefix==='web')fs.copyFileSync('work/web-results.json','work/browser-results.json');

@@ -1,0 +1,15 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+FAIL: lifecycle.hero.recover-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.hero.recover-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.hero.recycle-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.hero.recycle-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.hero.recycle-draw attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.hero.recycle-draw attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.enemy.recover-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.enemy.recover-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.enemy.recycle-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.enemy.recycle-harvest attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.enemy.recycle-draw attackPhase ordered full event states {"path":"$","reason":"array_length"}
+FAIL: lifecycle.enemy.recycle-draw attackPhase ordered full event states {"path":"$","reason":"array_length"}
+LEGACY P05/P06: 2348 assertions, 12 failures; 366 differential cases, 521 transitions, 200 card-side pairs,16 effects

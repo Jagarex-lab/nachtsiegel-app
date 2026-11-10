@@ -1,0 +1,368 @@
+{
+  "assertions": 2099,
+  "differential_cases": 370,
+  "failures": 0,
+  "supported_existing_scenarios": 52,
+  "unsupported_existing_scenarios": [
+    {
+      "command": "play",
+      "id": "play.valid.cost_and_hand",
+      "reason": "P06:summon_mend"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.strike",
+      "reason": "P06:summon_strike"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.guard",
+      "reason": "P06:summon_guard"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.ward",
+      "reason": "P06:summon_ward"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.mend",
+      "reason": "P06:summon_mend"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.weave",
+      "reason": "P06:summon_weave"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.drain",
+      "reason": "P06:summon_drain"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.rally",
+      "reason": "P06:summon_rally"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.silence",
+      "reason": "P06:summon_silence"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.pierce",
+      "reason": "P06:summon_pierce"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.shift",
+      "reason": "P06:summon_shift"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.draw",
+      "reason": "P06:summon_draw"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.weaken",
+      "reason": "P06:summon_weaken"
+    },
+    {
+      "command": "play",
+      "id": "effect.summon.pulse",
+      "reason": "P06:summon_pulse"
+    },
+    {
+      "command": "play",
+      "id": "strike.fallback.protected_hero",
+      "reason": "P06:summon_strike"
+    },
+    {
+      "command": "skipShift",
+      "id": "shift.skip",
+      "reason": "later_package:skipShift"
+    },
+    {
+      "command": "moveCreature",
+      "id": "shift.reject.destination",
+      "reason": "later_package:moveCreature"
+    },
+    {
+      "command": "chooseStrikeTarget",
+      "id": "target.reject.no_pending",
+      "reason": "later_package:chooseStrikeTarget"
+    },
+    {
+      "command": "finishDraw",
+      "id": "draw.overflow.burn_then_finish",
+      "reason": "P05:overflow"
+    },
+    {
+      "command": "burn",
+      "id": "burn.reject.main",
+      "reason": "later_package:burn"
+    },
+    {
+      "command": "burn",
+      "id": "burn.reject.not_required",
+      "reason": "later_package:burn"
+    },
+    {
+      "command": "finishDraw",
+      "id": "draw.fatigue.empty",
+      "reason": "P05:fatigue"
+    },
+    {
+      "command": "finishDraw",
+      "id": "draw.recycle",
+      "reason": "P05:recycle"
+    },
+    {
+      "command": "recover",
+      "id": "recover.valid_then_reject",
+      "reason": "later_package:recover"
+    },
+    {
+      "command": "recover",
+      "id": "recover.reject.resources",
+      "reason": "later_package:recover"
+    },
+    {
+      "command": "recover",
+      "id": "recover.reject.full_hand",
+      "reason": "later_package:recover"
+    },
+    {
+      "command": "tacticalMove",
+      "id": "tacticalMove.valid_then_reject",
+      "reason": "later_package:tacticalMove"
+    },
+    {
+      "command": "tacticalMove",
+      "id": "tacticalMove.reject.far",
+      "reason": "later_package:tacticalMove"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.valid_then_reject",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.reject.resources",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "burst",
+      "id": "burst.ash",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.tide",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.thorn",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.veil",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.reject.threshold",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "burst",
+      "id": "burst.reject.no_matching_unit",
+      "reason": "later_package:burst"
+    },
+    {
+      "command": "endTurn",
+      "id": "endTurn.valid.enemy_response",
+      "reason": "P10:automatic_enemy_turn"
+    },
+    {
+      "command": "play",
+      "id": "reaction.ash.tide",
+      "reason": "P06:summon_silence"
+    },
+    {
+      "command": "play",
+      "id": "reaction.ash.thorn",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.ash.veil",
+      "reason": "P06:summon_weave"
+    },
+    {
+      "command": "play",
+      "id": "reaction.tide.ash",
+      "reason": "P06:summon_mend"
+    },
+    {
+      "command": "play",
+      "id": "reaction.tide.thorn",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "reaction.tide.veil",
+      "reason": "P06:summon_weave"
+    },
+    {
+      "command": "play",
+      "id": "reaction.thorn.ash",
+      "reason": "P06:summon_mend"
+    },
+    {
+      "command": "play",
+      "id": "reaction.thorn.tide",
+      "reason": "P06:summon_silence"
+    },
+    {
+      "command": "play",
+      "id": "reaction.thorn.veil",
+      "reason": "P06:summon_weave"
+    },
+    {
+      "command": "play",
+      "id": "reaction.veil.ash",
+      "reason": "P06:summon_mend"
+    },
+    {
+      "command": "play",
+      "id": "reaction.veil.tide",
+      "reason": "P06:summon_silence"
+    },
+    {
+      "command": "play",
+      "id": "reaction.veil.thorn",
+      "reason": "P07:order_reaction"
+    },
+    {
+      "command": "play",
+      "id": "effect.ward.cap",
+      "reason": "P06:summon_ward"
+    },
+    {
+      "command": "play",
+      "id": "effect.weave.cap",
+      "reason": "P06:summon_weave"
+    },
+    {
+      "command": "play",
+      "id": "effect.mend.cap",
+      "reason": "P06:summon_mend"
+    },
+    {
+      "command": "play",
+      "id": "effect.drain.absorbed_no_heal",
+      "reason": "P06:summon_drain"
+    },
+    {
+      "command": "play",
+      "id": "effect.rally.left_priority",
+      "reason": "P06:summon_rally"
+    },
+    {
+      "command": "play",
+      "id": "effect.silence.no_target",
+      "reason": "P06:summon_silence"
+    },
+    {
+      "command": "play",
+      "id": "effect.shift.no_neighbour",
+      "reason": "P06:summon_shift"
+    },
+    {
+      "command": "play",
+      "id": "effect.pulse.caps_and_neighbours",
+      "reason": "P06:summon_pulse"
+    },
+    {
+      "command": "play",
+      "id": "effect.pierce.arrival_ignores_protection",
+      "reason": "P06:summon_pierce"
+    },
+    {
+      "command": "play",
+      "id": "effect.weaken.maximum",
+      "reason": "P06:summon_weaken"
+    },
+    {
+      "command": "begin",
+      "id": "block.retained_during_other_begin",
+      "reason": "guarded_begin_wrong_side"
+    },
+    {
+      "command": "finishDraw",
+      "id": "draw.fatigue.escalates",
+      "reason": "P05:fatigue"
+    },
+    {
+      "command": "finishDraw",
+      "id": "draw.recycle.cycles_1",
+      "reason": "P05:recycle"
+    },
+    {
+      "command": "finishDraw",
+      "id": "draw.recycle.cycles_2",
+      "reason": "P05:recycle"
+    },
+    {
+      "command": "finishDraw",
+      "id": "draw.recycle.cycles_3",
+      "reason": "P05:recycle"
+    },
+    {
+      "command": "recover",
+      "id": "recover.reject.empty_discard",
+      "reason": "later_package:recover"
+    },
+    {
+      "command": "recover",
+      "id": "recover.reject.phase",
+      "reason": "later_package:recover"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.full_hp_and_shield_cap",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "fortify",
+      "id": "fortify.reject.empty_lane",
+      "reason": "later_package:fortify"
+    },
+    {
+      "command": "tacticalMove",
+      "id": "tacticalMove.reject.occupied",
+      "reason": "later_package:tacticalMove"
+    },
+    {
+      "command": "burn",
+      "id": "legacy_edge.burn_has_no_winner_guard",
+      "reason": "later_package:burn"
+    },
+    {
+      "command": "skipShift",
+      "id": "legacy_edge.skip_has_no_winner_guard",
+      "reason": "later_package:skipShift"
+    },
+    {
+      "command": "recover",
+      "id": "legacy_edge.recover_while_target_pending",
+      "reason": "later_package:recover"
+    }
+  ]
+}

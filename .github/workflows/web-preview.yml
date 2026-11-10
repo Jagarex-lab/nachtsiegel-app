@@ -1,4 +1,4 @@
-name: NACHTSIEGEL Test and Publish
+name: NACHTSIEGEL CI (no deployment)
 
 on:
   push:
@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   test-and-export:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +26,9 @@ jobs:
           version: 4.6.3
           use-dotnet: false
           include-templates: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -33,11 +36,15 @@ jobs:
         run: python3 -m pip install 'Pillow>=11,<14'
       - name: Rules, real GUI input, landscape layout and render tests
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
+      - name: Complete pinned Legacy and new Alpha regressions
+        run: |
+          tools/test_legacy.sh
+          xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
       - name: Export tested browser build
         run: |
           mkdir -p work/build/web
           game_name="nachtsiegel-${GITHUB_SHA:0:12}"
-          godot --headless --path . --export-debug 'Web QA' "work/build/web/$game_name.html"
+          godot --headless --path . --export-debug 'Archive Web QA' "work/build/web/$game_name.html"
           mv "work/build/web/$game_name.html" work/build/web/index.html
           test -s "work/build/web/$game_name.wasm"
           mkdir -p work/build/web/media
@@ -77,14 +84,30 @@ jobs:
           PYCHECK
       - name: Install browser test runtime
         run: |
-          npm install --no-save --package-lock=false playwright
+          npm install --no-save --package-lock=false playwright@1.65.0
           npx playwright install --with-deps chromium webkit
       - name: Full browser tutorial, saved reload and collection tests
         env:
           EXPECTED_COMMIT: ${{ github.sha }}
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/web > work/http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8765/build-info.json
           node tools/browser_qa.cjs
+      - name: Export and test Alpha default entry after archive browser regression
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+          GAME_URL: http://127.0.0.1:8788/
+        run: |
+          tools/build_alpha.sh
+          tools/build_legacy_ui_qa.sh
+          python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8788/build-info.json
+          node tools/alpha_browser_qa.cjs
+          python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8787/build-info.json
+          QA_ENGINES=chromium QA_PROFILES=android QA_LEGACY_ONLY=1 GAME_URL=http://127.0.0.1:8787/ node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1
+          mv work/build/web work/build/archive-web
+          cp -a work/alpha/web work/build/web
       - name: Preserve QA evidence and browser build
         if: always()
         uses: actions/upload-artifact@v4
@@ -96,57 +119,13 @@ jobs:
             work/browser-results.json
             work/*.png
             work/build/web/
+            work/alpha/*.log
+            work/alpha/*.json
+            work/alpha/*.png
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png
             work/experience/*.log
             work/combat/*.json
             work/combat/*.log
-          if-no-files-found: warn
-      - name: Upload checked Pages build
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: work/build/web/
-
-  deploy:
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/develop'
-    needs: test-and-export
-    runs-on: ubuntu-latest
-    timeout-minutes: 45
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    concurrency:
-      group: nachtsiegel-pages
-      cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Publish the checked game
-        id: deployment
-        uses: actions/deploy-pages@v4
-      - uses: actions/checkout@v4
-      - name: Install live browser test runtime
-        run: |
-          npm install --no-save --package-lock=false playwright
-          npx playwright install --with-deps chromium webkit
-      - name: Verify public game and touch input
-        env:
-          GAME_URL: ${{ steps.deployment.outputs.page_url }}?v=${{ github.sha }}
-          EXPECTED_COMMIT: ${{ github.sha }}
-          QA_PREFIX: live
-        run: |
-          mkdir -p work
-          node tools/browser_qa.cjs
-      - name: Preserve public game verification
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: nachtsiegel-live-qa
-          path: |
-            work/live-*.png
-            work/live-results.json
           if-no-files-found: warn

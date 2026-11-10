@@ -1,0 +1,56 @@
+{
+  "command": "DISPLAY=:99 LP_NUM_THREADS=2 bash tools/test.sh",
+  "exit_code": 1,
+  "groups": [
+    {
+      "suite": "rules",
+      "assertions": 684,
+      "failures": 0
+    },
+    {
+      "suite": "creative",
+      "assertions": 2253,
+      "failures": 0
+    },
+    {
+      "suite": "narrative",
+      "assertions": 97,
+      "failures": 0
+    },
+    {
+      "suite": "experience",
+      "assertions": 707,
+      "failures": 0
+    },
+    {
+      "suite": "input-layout",
+      "assertions": 380,
+      "failures": 0
+    },
+    {
+      "suite": "premium",
+      "assertions": 1720,
+      "failures": 0
+    },
+    {
+      "suite": "ux",
+      "assertions": 2350,
+      "failures": 0
+    },
+    {
+      "suite": "combat",
+      "assertions": 725,
+      "failures": 0
+    },
+    {
+      "suite": "combat-sequence",
+      "assertions": 622,
+      "failures": 0
+    }
+  ],
+  "total_assertions": 9538,
+  "assertion_failures": 0,
+  "godot_error_suites": [
+    "input-layout"
+  ]
+}

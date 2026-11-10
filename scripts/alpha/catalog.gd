@@ -1,0 +1,25 @@
+extends RefCounted
+const RULESET_ID := "orafold-alpha-0.1"
+var source: Dictionary
+var cards: Dictionary={}
+func _init() -> void:
+	source=JSON.parse_string(FileAccess.get_file_as_string("res://data/alpha/cards.json"))
+	for c in source.cards:cards[c.id]=c
+func card(id: String) -> Dictionary:return cards.get(id,{}).duplicate(true)
+func all_cards() -> Array:
+	return source.cards.duplicate(true)
+func deck(id: String) -> Array:return source.starters.get(id,[]).duplicate()
+func deck_ids() -> Array:return ["houses","stillwatch","morph","ninth"]
+func validate(deck_value: Variant) -> Dictionary:
+	if not deck_value is Array or deck_value.size()!=30:return {"ok":false,"message":"Genau30 Karten erforderlich."}
+	var faction := "neutral"
+	var counts: Dictionary={}
+	for id in deck_value:
+		if not id is String or not cards.has(id):return {"ok":false,"message":"Unbekannte Karte."}
+		var c: Dictionary=cards[id]
+		if c.faction!="neutral":
+			if faction!="neutral" and faction!=c.faction:return {"ok":false,"message":"Nur eine Macht plus neutrale Karten."}
+			faction=c.faction
+		counts[id]=counts.get(id,0)+1
+		if counts[id]>(1 if c.rarity=="legendary" else 3):return {"ok":false,"message":"Kopienlimit überschritten: "+c.name}
+	return {"ok":true,"message":"","faction":faction}

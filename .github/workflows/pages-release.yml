@@ -1,0 +1,92 @@
+name: Manual production Pages release
+on:
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Full develop HEAD SHA with successful Web QA
+        required: true
+        type: string
+      qa_run_id:
+        description: Successful develop Web QA run containing tested artifact
+        required: true
+        type: string
+      confirmation:
+        description: Type PUBLISH followed by a space and the exact commit SHA
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: nachtsiegel-pages-release
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      pages: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Read-only approval and QA preflight
+        run: python3 tools/release/guard.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ inputs.commit }}
+          QA_RUN_ID: ${{ inputs.qa_run_id }}
+          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+  publish:
+    needs: preflight
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && needs.preflight.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Recheck exact commit and QA after any active environment gates
+        run: python3 tools/release/guard.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ inputs.commit }}
+          QA_RUN_ID: ${{ inputs.qa_run_id }}
+          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: nachtsiegel-arena-qa
+          run-id: ${{ inputs.qa_run_id }}
+          github-token: ${{ github.token }}
+          path: work/release
+      - name: Verify tested artifact identity and record hashes
+        env:
+          RELEASE_SHA: ${{ inputs.commit }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os
+          from pathlib import Path
+          root = Path('work/release/build/web')
+          assert (root / 'index.html').is_file()
+          info = json.loads((root / 'build-info.json').read_text())
+          assert info['commit'] == os.environ['RELEASE_SHA'] and info['channel'] == 'develop'
+          for p in sorted(root.rglob('*')):
+              assert not p.is_symlink(), 'No symlinks in release'
+              if p.is_file(): print(hashlib.sha256(p.read_bytes()).hexdigest(), p.relative_to(root))
+          PY
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: work/release/build/web
+      - name: Explicitly approved production publication
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

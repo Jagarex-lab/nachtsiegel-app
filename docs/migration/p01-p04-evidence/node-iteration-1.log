@@ -1,0 +1,298 @@
+✖ new engine/combat goldens reproduce pinned JS without touching old goldens (671.322634ms)
+✖ reference corruption, changed RNG values, missing fields and changed card IDs are detected (957.84485ms)
+✖ RNG goldens are exact uint32 fractions, shuffles consume n-1 samples, both coin sides covered (107.557045ms)
+✔ new fixture writer refuses implicit golden replacement (1543.359947ms)
+✔ FIFO golden is bounded at100 and captures original death and harvest states (219.564425ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 2
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4005.741384
+
+✖ failing tests:
+
+test at tests/legacy_engine.test.cjs:8:1
+✖ new engine/combat goldens reproduce pinned JS without touching old goldens (671.322634ms)
+  AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:
+
+  ... Skipped lines
+  {
+    advances: [
+      {
+        accepted: true,
+        after: {
+          active: 'enemy',
+          coin: 'hero',
+          enemy: {
+            attune: null,
+            block: 0,
+            burstUsed: false,
+            cycled: false,
+            cycles: 0,
+            deck: [
+              'ash-1',
+              'ash-2',
+              'ash-3',
+              'ash-4',
+              'tide-0',
+              'tide-1',
+              'tide-2',
+              'tide-3',
+              'tide-4',
+              'thorn-0',
+              'thorn-1',
+              'thorn-2',
+              'thorn-3',
+              'thorn-4',
+              'veil-0',
+              'veil-1',
+              'veil-2',
+              'veil-3',
+              'veil-4',
+              'ash-5',
+              'tide-5',
+              'thorn-5',
+              'veil-5',
+              'tide-6'
+            ],
+            deckCount: 24,
+            discard: [],
+            drawDone: true,
+            energy: 2,
+            fatigue: 0,
+            fortifyUsed: false,
+            hand: [
+              'ash-0'
+            ],
+            handCount: 1,
+            hp: 35,
+  ...}
+
+      at TestContext.<anonymous> (/workspace/nachtsiegel-app/tests/legacy_engine.test.cjs:10:36)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: {
+      schema_version: 1,
+      source: { repository: 'https://github.com/Jagarex-lab/duel-deck', commit: '34b3062c3f22c0950d9323ad9b97b17c41d1d14f', path: 'engine.js', git_blob: 'd3f48929c334052b2e4062264fe5c9ac39b49c6a', sha256: 'abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1' },
+      notice: 'New immutable P01-P04 boundaries, not full createBattle/AI or replay parity. Existing PR #2 goldens remain unchanged.',
+      randoms: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object]
+      ],
+      openings: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object]
+      ],
+      begins: [
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object]
+      ],
+      advances: [
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object]
+      ],
+      damage: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object]
+      ]
+    },
+    expected: {
+      schema_version: 1,
+      source: { repository: 'https://github.com/Jagarex-lab/duel-deck', commit: '34b3062c3f22c0950d9323ad9b97b17c41d1d14f', path: 'engine.js', git_blob: 'd3f48929c334052b2e4062264fe5c9ac39b49c6a', sha256: 'abf880e049080a7ec39a43fefa805ba9e8de18f7638633bef6d7096dc5a78dd1' },
+      notice: 'New immutable P01-P04 boundaries, not full createBattle/AI or replay parity. Existing PR #2 goldens remain unchanged.',
+      randoms: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object]
+      ],
+      openings: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object]
+      ],
+      begins: [
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object], [Object], [Object],
+        [Object]
+      ],
+      advances: [
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object],
+        [Object], [Object]
+      ],
+      damage: [
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object]
+      ]
+    },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests/legacy_engine.test.cjs:16:1
+✖ reference corruption, changed RNG values, missing fields and changed card IDs are detected (957.84485ms)
+  Error: Unsupported non-JSON value
+      at canonical (/workspace/nachtsiegel-app/tools/legacy/compare.cjs:13:9)
+      at /workspace/nachtsiegel-app/tools/legacy/compare.cjs:11:67
+      at Array.map (<anonymous>)
+      at canonical (/workspace/nachtsiegel-app/tools/legacy/compare.cjs:11:57)
+      at Array.map (<anonymous>)
+      at canonical (/workspace/nachtsiegel-app/tools/legacy/compare.cjs:9:40)
+      at /workspace/nachtsiegel-app/tools/legacy/compare.cjs:11:67
+      at Array.map (<anonymous>)
+      at canonical (/workspace/nachtsiegel-app/tools/legacy/compare.cjs:11:57)
+      at Array.map (<anonymous>)
+
+test at tests/legacy_engine.test.cjs:26:1
+✖ RNG goldens are exact uint32 fractions, shuffles consume n-1 samples, both coin sides covered (107.557045ms)
+  AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:
+
+  [
+    'veil-0',
+    'tide-5',
+    'ash-1',
+    'ash-4',
+    'veil-1',
+    'ash-3',
+    'veil-4',
+    'ash-2',
+    'thorn-5',
+    'tide-6',
+    'ash-0',
+    'thorn-3',
+    'tide-2',
+    'thorn-0',
+    'veil-2',
+    'tide-4',
+    'ash-5',
+    'thorn-1',
+    'veil-5',
+    'thorn-2',
+    'tide-3',
+    'thorn-4',
+    'veil-3',
+    'tide-1',
+    'tide-0'
+  ]
+
+      at TestContext.<anonymous> (/workspace/nachtsiegel-app/tests/legacy_engine.test.cjs:31:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [
+      'veil-0',  'tide-5',  'ash-1',
+      'ash-4',   'veil-1',  'ash-3',
+      'veil-4',  'ash-2',   'thorn-5',
+      'tide-6',  'ash-0',   'thorn-3',
+      'tide-2',  'thorn-0', 'veil-2',
+      'tide-4',  'ash-5',   'thorn-1',
+      'veil-5',  'thorn-2', 'tide-3',
+      'thorn-4', 'veil-3',  'tide-1',
+      'tide-0'
+    ],
+    expected: [
+      'veil-0',  'tide-5',  'ash-1',
+      'ash-4',   'veil-1',  'ash-3',
+      'veil-4',  'ash-2',   'thorn-5',
+      'tide-6',  'ash-0',   'thorn-3',
+      'tide-2',  'thorn-0', 'veil-2',
+      'tide-4',  'ash-5',   'thorn-1',
+      'veil-5',  'thorn-2', 'tide-3',
+      'thorn-4', 'veil-3',  'tide-1',
+      'tide-0'
+    ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

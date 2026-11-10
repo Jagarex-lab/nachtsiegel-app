@@ -1,0 +1,54 @@
+{
+  "observed_utc": "2026-11-09",
+  "tested_branch_commit": "8c1d3427d0208862e712dc88da5be9086c6a9194",
+  "runs": [
+    {
+      "id": 42713094196,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42713094196",
+      "jobs": [
+        {
+          "name": "alpha-playable",
+          "id": 129487494754,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "browser (chromium)",
+          "id": 129489610199,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "browser (webkit)",
+          "id": 129489610272,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "id": 42713103955,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42713103955",
+      "jobs": [
+        {
+          "name": "alpha-playable",
+          "id": 129487642090,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "browser (chromium)",
+          "id": 129490115519,
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "browser (webkit)",
+          "id": 129490115564,
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}
