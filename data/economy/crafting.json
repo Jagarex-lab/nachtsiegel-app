@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "costs": {
+    "common": 40,
+    "rare": 100,
+    "epic": 400,
+    "legendary": 1200
+  },
+  "salvage": {
+    "common": 5,
+    "rare": 20,
+    "epic": 80,
+    "legendary": 240
+  },
+  "manual_requires_confirmation": true,
+  "manual_preserve_deck_copies": true,
+  "bound_starters_salvageable": false,
+  "crafting_output_bound": true,
+  "automatic_excess_salvage": true
+}

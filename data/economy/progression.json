@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "xp_curve": {
+    "base": 100,
+    "per_level": 25,
+    "max_level": 100
+  },
+  "level_reward": {
+    "gold": 50
+  },
+  "match": {
+    "xp": 40,
+    "gold": 10,
+    "daily_gold_cap": 100
+  },
+  "onboarding_reward": "onboarding",
+  "milestones": [
+    {
+      "level": 5,
+      "reward": "deck_upgrade_milestone"
+    },
+    {
+      "level": 10,
+      "reward": "deck_upgrade_milestone"
+    },
+    {
+      "level": 25,
+      "reward": "challenge"
+    },
+    {
+      "level": 50,
+      "reward": "challenge"
+    },
+    {
+      "level": 100,
+      "reward": "challenge"
+    }
+  ],
+  "level_formula": "XP required to advance level L to L+1 = base + per_level*(L-1); lifetime XP, max level cap."
+}
