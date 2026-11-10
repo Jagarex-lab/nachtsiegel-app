@@ -56,6 +56,7 @@ def main():
 Alle Fälle laufen über die tatsächliche Produktionsengine. Es gibt keine verkürzte Schadensberechnung, erfundenen Sieger oder vom Sollbestand entfernten Unsupported-Fälle. Die 550 aktiven Daten wurden als tatsächlicher Katalog geladen. Eine Partie mit einem Deck belegt nur dessen tatsächlich aufgetretene Interaktionen.
 
 - Vollständig beendet: {s['completed']}; abgebrochen/unentschieden ohne Ergebnis (`censored`): {s['censored']}; Enginefehler: {s['errors']}; regelkonforme Unentschieden: {s['draws']}.
+- Negative Nachweiswächter: {r.get('negative_evidence_guard_tests',0)}. Absichtlich beschädigte Kopien echter Laufdaten müssen unter anderem bei fehlenden/zusätzlichen Fällen, gemischten Quellen, falschen Startseiten oder zensierten Partien abgelehnt werden. Diese Integritätsprüfungen zählen keine zusätzlichen Partien.
 - Startspieler-Siege: {s['first_wins']}/{first_n}, {wilson(s['first_wins'],first_n)}. Jede geordnete Paarung enthält gleich viele erste Züge für beide Sitzpositionen.
 - Durchschnitt: {s.get('mean_round',0):.2f} Halbzüge; Median {s.get('median_round',0)}. Dies ist keine gemessene menschliche Spielzeit.
 - Konvergenzsiege: {s['convergence_wins']}; übrige Helden-LP-Siege: {s['hero_damage_wins']}. Der historische JSON-Feldname `hero_damage_wins` umfasst alle Nicht-Konvergenz-LP-Siege einschließlich Impuls-, direktem Kampf- und Erschöpfungs-/Recyclingschaden; diese Messung trennt die letzte Schadensquelle nicht zuverlässig.
@@ -72,6 +73,8 @@ Die separate Policy-Grundprüfung `tools/test_production_ai.sh` bestand **187 Pr
 ## Deck-Ergebnisse
 
 Spiegelpartien zählen zwei Deckteilnahmen pro Partie. Die Intervalle sind deskriptive Wilson-Intervalle; gemeinsam genutzte Seeds, dieselbe Policy und korrelierte Decklisten erfüllen keine Annahme unabhängiger menschlicher Partien.
+
+Der erste vollständige Lauf bleibt in `BALANCE_BASELINE.json` erhalten. Der kontrollierte Vergleich von fünf legalen Deckzusammensetzungen mit 240 tatsächlichen Partien, vollständigen Vorherlisten und allen Ergebnissen steht in `DECK_COMPOSITION_EXPERIMENT.md` beziehungsweise `.json`. Das Zeitdeck, alle sichtbaren Starter, Kartenwerte und Regeln wurden für diese Deckübernahme unverändert gehalten. Der anschließende vollständige Lauf vor der separat geprüften Reliktbeobachter-Korrektur bleibt in `POST_DECK_BEFORE_KILL_WATCHER_FIX.json` erhalten. Diese historischen Läufe werden nicht zu den oben ausgewiesenen Partien addiert; jede Aussage gilt für ihre ausdrücklich gebundenen Quellen.
 
 '''+ '\n'.join(tables)+'''## Auffällige Referenzdecks
 

@@ -46,7 +46,7 @@ Kandidat getestet; kein nicht gezeigter Suchlauf wurde zum Erfolg addiert.
   Kartennachschub, verzögerter Schaden und aktivierbare Relikte bilden eine
   gemeinsame Kurve. Gegnerischer Energie-/Resonanzentzug wurde nicht hinzugefügt.
 
-Alle fünf Kandidaten wurden als echte30-Karten-Referenzlisten übernommen.
+Alle fünf Kandidaten wurden als echte 30-Karten-Referenzlisten übernommen.
 Die reproduzierbare Definition steht in
 `tools/production/build_test_decks.py` unter `MEASURED_COMPOSITIONS`.
 Genau diese fünf Listen unterscheiden sich; alle neun übrigen Referenzlisten
@@ -57,18 +57,18 @@ Grenzen von drei normalen beziehungsweise einer legendären Kopie bestehen.
 
 `DECK_COMPOSITION_EXPERIMENT.json` enthält sämtliche240 Ergebnisse mit Seed,
 Sitzposition, erster Seite, Sieger, Rundenzahl und Zustands-/Ereignis-SHA-256;
-außerdem die vollständigen14 Vorherlisten, alle fünf Kandidaten, die
+außerdem die vollständigen 14 Vorherlisten, alle fünf Kandidaten, die
 Übergangszählungen und Quellbindungen. Der SHA-256 des ursprünglichen
 Rohberichts und des ausgeführten Experimentskripts bleibt darin erhalten.
 
 Der vollständige Lauf nach der Übernahme wird separat in `BALANCE_REPORT.md`
-und `simulation-results.json` ausgewiesen. Die240 Kontrollpartien werden
-weder zur ersten noch zur abschließenden848er-Matrix addiert.
+und `simulation-results.json` ausgewiesen. Die 240 Kontrollpartien werden
+weder zur ersten noch zur abschließenden 848er-Matrix addiert.
 
 ## Vollständige Matrix nach der Deckübernahme
 
-Die anschließenden848 tatsächlichen Partien mit18 zusätzlichen
-Wiederholungskontrollen bestanden2688 Prüfungen und10 negative Nachweiswächter,
+Die anschließenden 848 tatsächlichen Partien mit 18 zusätzlichen
+Wiederholungskontrollen bestanden 2688 Prüfungen und 10 negative Nachweiswächter,
 ohne Enginefehler, zensierte Fälle oder Änderungen gebundener Quellen.
 Dieser Lauf ist als `POST_DECK_BEFORE_KILL_WATCHER_FIX.json` erhalten;
 sein Rohbericht hat SHA-256
@@ -88,8 +88,8 @@ Lauf erhalten und ersetzt nicht die Matrix der korrigierten Engine.
 
 Die wirksamen Verbesserungen gleichen das Feld nicht vollständig an: Relikt
 und Resonanz sind nun auffällig erfolgreich, während das unveränderte Blockdeck
-20/112 und Schild35/112 Teilnahmen gewinnt. Der erste Spieler gewinnt528/848
-Partien (62,3%). Die sichtbaren Starterlisten und ihre32 Teilnahmen pro Deck
-bleiben exakt wie im ersten Lauf. Es wurden176 unterschiedliche Karten
+20/112 und Schild 35/112 Teilnahmen gewinnt. Der erste Spieler gewinnt 528/848
+Partien (62,3%). Die sichtbaren Starterlisten und ihre 32 Teilnahmen pro Deck
+bleiben exakt wie im ersten Lauf. Es wurden 176 unterschiedliche Karten
 tatsächlich gespielt; weder die Referenzauswahl noch die erfasste längste
-generische Kette von sechs Queueeinträgen ist ein550-Karten-Vollbeweis.
+generische Kette von sechs Queueeinträgen ist ein 550-Karten-Vollbeweis.

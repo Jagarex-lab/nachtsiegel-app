@@ -2,7 +2,7 @@ extends SceneTree
 ## Actual touch input against the production Alpha shell; no model-state fixtures.
 const Shell=preload("res://scripts/alpha/shell.gd")
 const Session=preload("res://scripts/alpha/session.gd")
-const Catalog=preload("res://scripts/alpha/catalog.gd")
+const Catalog=preload("res://scripts/production/catalog.gd")
 const FullFace=preload("res://scripts/card_system/card_face.gd")
 var app
 var assertions := 0
@@ -146,7 +146,7 @@ func safe_area_checks() -> void:
 		check(title.get_line_count()<=2 and title.get_size().y<=32,"whole card name fits smallest safe-area hand tile: "+card.name)
 		for line in title.get_line_count():check(title.get_line_size(line).x<=smallest.x-16,"no clipped name ink at smallest hand width")
 		var stats=view.stat_layout(smallest.x-45)
-		check(stats.fits and stats.font_size in [13,12,11,10] and stats.ink_width<=stats.available_width,"all 55 actual stat/type captions fit their measured ink area")
+		check(stats.fits and stats.font_size in [13,12,11,10] and stats.ink_width<=stats.available_width,"all 550 actual stat/type captions fit their measured ink area")
 		if card.kind=="creature":check(stats.text=="%d ANG %d LP" % [card.atk,card.hp],"both original combat values and explicit ANG/LP labels are retained")
 		check(8+stats.ink_width<=smallest.x-29,"stat glyphs never intersect the energy circle")
 		check(smallest.y-10-app.S.font.get_ascent(stats.font_size)>=smallest.y-24,"stat glyphs remain inside their opaque information strip")

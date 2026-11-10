@@ -29,7 +29,7 @@ CONFIGS = [
 ]
 
 
-# Selected from240 actual same-seed/same-first deck-composition games.
+# Selected from 240 actual same-seed/same-first deck-composition games.
 # Evidence and unmodified before lists: docs/production/DECK_COMPOSITION_EXPERIMENT.json.
 # Existing cards only; strongest time reference and visible starters stay intact.
 MEASURED_COMPOSITIONS = {'prod-relic': {'of-houses-001': 3,
