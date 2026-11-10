@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ORG-001",
+    "name": "Erbenkammer",
+    "power": "Zwölf Häuser",
+    "status": "VORSCHLAG",
+    "tension": "Ressourcen gegen öffentlichen Auftrag"
+  },
+  {
+    "id": "ORG-002",
+    "name": "Haus der offenen Listen",
+    "power": "Zwölf Häuser",
+    "status": "VORSCHLAG",
+    "tension": "Autonomie gegen gemeinsame Regeln"
+  },
+  {
+    "id": "ORG-003",
+    "name": "Grenzkorps",
+    "power": "Stillwacht",
+    "status": "VORSCHLAG",
+    "tension": "Ressourcen gegen öffentlichen Auftrag"
+  },
+  {
+    "id": "ORG-004",
+    "name": "Ziviler Aufsichtsrat",
+    "power": "Stillwacht",
+    "status": "VORSCHLAG",
+    "tension": "Autonomie gegen gemeinsame Regeln"
+  },
+  {
+    "id": "ORG-005",
+    "name": "Wurzelzirkel",
+    "power": "Vielgestalt",
+    "status": "VORSCHLAG",
+    "tension": "Ressourcen gegen öffentlichen Auftrag"
+  },
+  {
+    "id": "ORG-006",
+    "name": "Freie Siedler",
+    "power": "Vielgestalt",
+    "status": "VORSCHLAG",
+    "tension": "Autonomie gegen gemeinsame Regeln"
+  },
+  {
+    "id": "ORG-007",
+    "name": "Prognosekolleg",
+    "power": "Neunte Stunde",
+    "status": "VORSCHLAG",
+    "tension": "Ressourcen gegen öffentlichen Auftrag"
+  },
+  {
+    "id": "ORG-008",
+    "name": "Stundenwache",
+    "power": "Neunte Stunde",
+    "status": "VORSCHLAG",
+    "tension": "Autonomie gegen gemeinsame Regeln"
+  },
+  {
+    "id": "ORG-009",
+    "name": "Gestern & Söhne",
+    "power": "Neutral",
+    "status": "VORSCHLAG",
+    "tension": "Ressourcen gegen öffentlichen Auftrag"
+  },
+  {
+    "id": "ORG-010",
+    "name": "Küstenhilfe",
+    "power": "Neutral",
+    "status": "VORSCHLAG",
+    "tension": "Autonomie gegen gemeinsame Regeln"
+  }
+]
