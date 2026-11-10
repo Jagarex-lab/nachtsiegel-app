@@ -1,0 +1,1762 @@
+[
+  {
+    "card_id": "NS-001",
+    "source_name": "Stunde-Beobachterin",
+    "proposed_name": "Stundenprüferin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Prüferin mit geschwärzten Fingerspitzen; visuelle Artzuordnung: Menschen.",
+    "action": "Vergleicht den Schatten zweier versetzter Messringe.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Nur der vordere Ring trägt eine amethystfarbene Glasscherbe.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-002",
+    "source_name": "Uhr Mechanikerin",
+    "proposed_name": "Uhrfalter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler Paradoxkörper mit offenem ringförmigem Brustraum; visuelle Artzuordnung: Paradoxe.",
+    "action": "Greift nach einem Tropfen, dessen Schatten noch am Rand liegt.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die begrenzte Abweichung bleibt auf eine kleine Schale beschränkt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-003",
+    "source_name": "Stern Zeuge",
+    "proposed_name": "Sternenspule",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit sichtbarer Wicklung und drei Gelenkbeinen; visuelle Artzuordnung: Mechanoide.",
+    "action": "Richtet eine kleine Linse auf ein Loch im Hafendach.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Ein einzelner Draht endet an einer sauberen Reparaturlötung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-004",
+    "source_name": "Prognose-Forscherin",
+    "proposed_name": "Prognoseträger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein stiller Konstrukt aus Schieferplatten und Messingbügeln; visuelle Artzuordnung: Konstrukte.",
+    "action": "Hält zwei unterschiedlich geneigte Wettertafeln gegen den Wind.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Zwischen den Tafeln bleibt eine handbreite dunkle Lücke.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-005",
+    "source_name": "Paradox Chronist",
+    "proposed_name": "Paradoxfunke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kompakter Elementarkörper aus violettem Licht und Staub; visuelle Artzuordnung: Elementare.",
+    "action": "Rollt über eine flache Steinrinne zwischen zwei Messstäben.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Ein dunkler Staubstreifen zeigt seine tatsächliche Bahn.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-006",
+    "source_name": "Sekunde Berechner",
+    "proposed_name": "Sekundengeist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine durchscheinende Gestalt mit ausgefransten Ärmeln; visuelle Artzuordnung: Geister.",
+    "action": "Hält eine abgerissene Pendelschnur im Streiflicht fest.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Die Schnur bleibt körperlich und wirft einen scharfen Schatten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-007",
+    "source_name": "Takt-Leser",
+    "proposed_name": "Taktleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Leser mit einem einfachen Hörrohr; visuelle Artzuordnung: Menschen.",
+    "action": "Lauscht auf einen stockenden Mechanismus hinter einer Mauer.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Das Hörrohr ist mit einem violetten Tuchstreifen gedämpft.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-008",
+    "source_name": "Zeiger Beobachterin",
+    "proposed_name": "Zeigerschatten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine Paradoxgestalt aus drei gegeneinander versetzten Ebenen; visuelle Artzuordnung: Paradoxe.",
+    "action": "Prüft ihren örtlich verschobenen Schatten an einem Wegstein.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Verschiebung endet klar an der Kante des Steins.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-009",
+    "source_name": "Kreis Mechanikerin",
+    "proposed_name": "Kreiswerkerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit runder Werkzeugtrommel und schmalen Armen; visuelle Artzuordnung: Mechanoide.",
+    "action": "Ersetzt ein Zahnsegment an einer salzverkrusteten Winde.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Ein altes Zahnsegment liegt sichtbar stumpf daneben.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-010",
+    "source_name": "Messung-Zeuge",
+    "proposed_name": "Messungszeuge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kantiger Konstrukt mit gläsernem Brustfach; visuelle Artzuordnung: Konstrukte.",
+    "action": "Bewahrt eine gebrochene Messlatte im offenen Fach auf.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die beiden Bruchenden berühren sich im Licht gerade nicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-011",
+    "source_name": "Linie Forscherin",
+    "proposed_name": "Linienfunke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein langgezogener Elementarkörper aus violettem Gas; visuelle Artzuordnung: Elementare.",
+    "action": "Streift entlang einer gespannten Vermessungsschnur.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Ein kleiner Wirbel bleibt unterhalb der geraden Hauptform.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-012",
+    "source_name": "Spiegel Chronist",
+    "proposed_name": "Spiegelchronist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit gläsern wirkenden Gesichtskonturen; visuelle Artzuordnung: Geister.",
+    "action": "Beugt sich über einen trüben Spiegel auf einem Hafentisch.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Sein Spiegelbild ist schwach, ohne neue Person zu zeigen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-013",
+    "source_name": "Zeiger-Berechner",
+    "proposed_name": "Zeigerrechner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Rechner mit abgenutztem Zirkel; visuelle Artzuordnung: Menschen.",
+    "action": "Überträgt den Abstand zweier Schatten auf eine blanke Tafel.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Der Zirkel besitzt einen mit Draht ersetzten Schenkel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-014",
+    "source_name": "Kreis Leser",
+    "proposed_name": "Kreisleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxkörper mit einem unterbrochenen kreisförmigen Rücken; visuelle Artzuordnung: Paradoxe.",
+    "action": "Führt einen Faden durch seine örtlich unstimmige Ringöffnung.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Der Faden verlässt die Öffnung nur eine Fingerbreite versetzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-015",
+    "source_name": "Messung Beobachterin",
+    "proposed_name": "Messläuferin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit kleinen Tasträdern an den Füßen; visuelle Artzuordnung: Mechanoide.",
+    "action": "Rollt über die Fuge zwischen zwei gegeneinander geneigten Stufen.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Ein Fuß bleibt angehoben und zeigt das Tastprofil.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-016",
+    "source_name": "Linie-Mechanikerin",
+    "proposed_name": "Linienmechanikerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus langen Steinsegmenten und Holzverbindungen; visuelle Artzuordnung: Konstrukte.",
+    "action": "Hält eine gerissene Lotleine zwischen zwei starren Fingern.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Das Lotgewicht ist mit einem hellen Stoffrest umwickelt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-017",
+    "source_name": "Spiegel Zeuge",
+    "proposed_name": "Spiegelflamme",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus niedrigen violetten Flammenflächen; visuelle Artzuordnung: Elementare.",
+    "action": "Teilt sich optisch an einer aufgestellten Glasscherbe.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Die reale Flamme bleibt eindeutig auf derselben Seite.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-018",
+    "source_name": "Stunde Forscherin",
+    "proposed_name": "Stundenforscherin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit schmalem Kopf und durchscheinenden Händen; visuelle Artzuordnung: Geister.",
+    "action": "Untersucht eine Wasseruhr unter einem schattigen Gewölbe.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Ein ungleichmäßiger Kalkrand markiert den alten Wasserstand.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-019",
+    "source_name": "Uhr-Chronist",
+    "proposed_name": "Uhrchronist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Chronist mit schwerem umgehängtem Zeitmesser; visuelle Artzuordnung: Menschen.",
+    "action": "Markiert zwei Messergebnisse mit verschiedenfarbigen Knoten.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Das knotige Band ersetzt jede lesbare Schrift im Bild.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-020",
+    "source_name": "Stern Berechner",
+    "proposed_name": "Sternrechner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxwesen mit sternförmig gefaltetem Oberkörper; visuelle Artzuordnung: Paradoxe.",
+    "action": "Balanciert einen Messstein über dessen leicht versetztem Abdruck.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Der Stein und sein Abdruck bleiben als kleines lokales Rätsel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-021",
+    "source_name": "Prognose Leser",
+    "proposed_name": "Prognoseautomat",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit klappbaren Windfahnen an den Schultern; visuelle Artzuordnung: Mechanoide.",
+    "action": "Dreht eine Fahne einzeln gegen einen anderen Luftzug.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Die zweite Fahne steckt unter einer sichtbaren Reparaturklammer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-022",
+    "source_name": "Paradox-Beobachterin",
+    "proposed_name": "Abweichungswächter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus gestapelten flachen Messkörpern; visuelle Artzuordnung: Konstrukte.",
+    "action": "Sichert einen schief stehenden Grenzpfosten mit dem Arm.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Eine amethystfarbene Glasplatte sitzt nur an seiner Hüfte.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-023",
+    "source_name": "Sekunde Mechanikerin",
+    "proposed_name": "Sekundenwind",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus spiralförmigem Küstennebel; visuelle Artzuordnung: Elementare.",
+    "action": "Umströmt einen stillstehenden Pendelstab ohne ihn zu berühren.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Ein trockener Spalt bleibt zwischen Nebel und Pendel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-024",
+    "source_name": "Takt Zeuge",
+    "proposed_name": "Taktzeuge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit einer scheinbar aus Papier gefalteten Silhouette; visuelle Artzuordnung: Geister.",
+    "action": "Zeigt auf eine abgebrochene Stufe neben einer laufenden Wasseruhr.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Die Finger enden in klar erkennbaren transparenten Spitzen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-025",
+    "source_name": "Stern-Forscherin",
+    "proposed_name": "Sternkundige",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Forscherin mit einer mehrfach geflickten Kapuze; visuelle Artzuordnung: Menschen.",
+    "action": "Richtet eine schlichte Sternscheibe durch einen Felsspalt.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Die Scheibe zeigt nur unbeschriftete kleine Öffnungen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-026",
+    "source_name": "Prognose Chronist",
+    "proposed_name": "Prognosefalter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxwesen mit gegeneinander verdrehten Flächenarmen; visuelle Artzuordnung: Paradoxe.",
+    "action": "Fängt eine fallende Münzform in zwei versetzten Schatten auf.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die reale Münzform ist nur einmal vorhanden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-027",
+    "source_name": "Paradox Berechner",
+    "proposed_name": "Abweichungsrechner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit seitlichem Rechenwerk und kurzem Hals; visuelle Artzuordnung: Mechanoide.",
+    "action": "Verschiebt ein einzelnes Gewicht auf einer offenen Balkenwaage.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Ein ungenutzter Gewichtshaken bleibt deutlich leer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-028",
+    "source_name": "Sekunde-Leser",
+    "proposed_name": "Sekundenleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus hellem Hafengestein und dunklen Gelenksteinen; visuelle Artzuordnung: Konstrukte.",
+    "action": "Neigt den Kopf an den Mund einer beschädigten Sanduhr.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein feiner Sandfaden liegt neben seinem unbewegten Fuß.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-029",
+    "source_name": "Takt Beobachterin",
+    "proposed_name": "Taktflimmern",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus gestapelten dünnen Lichtbändern; visuelle Artzuordnung: Elementare.",
+    "action": "Schwebt durch den Zwischenraum zweier gemauerter Stufen.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Eine dunkle Unterbrechung trennt die oberen beiden Bänder.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-030",
+    "source_name": "Zeiger Mechanikerin",
+    "proposed_name": "Zeigergeist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit langem Mantel aus schwach leuchtenden Linien; visuelle Artzuordnung: Geister.",
+    "action": "Richtet einen mechanischen Zeiger ohne Körperberührung aus.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Der Zeiger trägt eine kleine stumpfe Bruchkante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-031",
+    "source_name": "Kreis-Zeuge",
+    "proposed_name": "Kreiszeuge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Hafenarbeiter mit leerer Messhülse am Gurt; visuelle Artzuordnung: Menschen.",
+    "action": "Hält den Arm an eine ungewöhnlich schief liegende Schattenkante.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Die Hülse ist innen trocken und am Rand salzweiß.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-032",
+    "source_name": "Messung Forscherin",
+    "proposed_name": "Messfalter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxwesen mit gegeneinander versetzten Schulterringen; visuelle Artzuordnung: Paradoxe.",
+    "action": "Steht zwischen zwei Lotfäden, die seitlich an ihm vorbeifallen.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Lotgewichte liegen beide sichtbar auf dem Boden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-033",
+    "source_name": "Linie Chronist",
+    "proposed_name": "Linienchronist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit einer Rolle unbeschrifteten Bandes im Brustkorb; visuelle Artzuordnung: Mechanoide.",
+    "action": "Wickelt ein verschmutztes Messband auf eine zweite Trommel.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Eine geknickte Stelle läuft gerade über die obere Achse.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-034",
+    "source_name": "Spiegel-Berechner",
+    "proposed_name": "Spiegelrechner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt mit eingelassener halbblinder Spiegelfläche; visuelle Artzuordnung: Konstrukte.",
+    "action": "Spiegelt eine einzelne pendelnde Markierungsperle.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die blinde Hälfte des Spiegels zeigt nur matte Kratzer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-035",
+    "source_name": "Unerwartete stundeprobe",
+    "proposed_name": "Versetzte Stunde",
+    "lore_status": "VORSCHLAG",
+    "subject": "Zwei Schatten eines einzigen schmalen Messstabs; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Laufen auf einer kleinen Sandplatte kurz auseinander.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Die Abweichung endet an der hölzernen Umrandung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-036",
+    "source_name": "Verlorene uhrnacht",
+    "proposed_name": "Stockender Zeiger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein offenes Uhrwerk auf einem niedrigen Steinsockel; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Verliert einen Zahn, während der große Zeiger stehen bleibt.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Der gelöste Zahn liegt noch im schrägen Lichtstrahl.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-037",
+    "source_name": "Die messungwende",
+    "proposed_name": "Messwende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine gerade Lotleine über einem schwankenden Boot; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Kippt in der Hand einer nur teilweise sichtbaren Prüferin.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Die Bordkante bleibt die klare ruhige Horizontreferenz.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-038",
+    "source_name": "Letzte liniespur",
+    "proposed_name": "Linienrest",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine verlaufende Kreidespur auf nassem Stein; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Wird vom Wasser bis auf eine kleine Insel abgetragen.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Ein trockener Fingerabdruck hält das letzte Stück fest.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-039",
+    "source_name": "Unerwartete spiegelprobe",
+    "proposed_name": "Spiegelfehler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine zerbrochene Spiegelfläche vor einem fallenden Tropfen; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Zeigt eine kleine örtliche Versetzung des Tropfenbilds.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Der echte Tropfen bleibt genau einmal oberhalb der Schale.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-040",
+    "source_name": "Verlorene stundenacht",
+    "proposed_name": "Stunde ohne Glocke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein blanker Glockenhaken über einer leeren Halterung; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Schwingt noch, während die entfernte Glocke am Boden liegt.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein loser violetter Sicherungsfaden folgt der Bewegung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-041",
+    "source_name": "Die uhrwende",
+    "proposed_name": "Uhrwende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Zwei ineinandergreifende Zahnräder in einem offenen Gehäuse; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Kommen an einem falsch eingesetzten Zahn kurz zum Stillstand.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Der falsche Zahn besteht aus sichtbar hellerem Ersatzmetall.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-042",
+    "source_name": "Letzte sternspur",
+    "proposed_name": "Sternspur",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein enger Lichtkegel durch ein gelochtes Metalldach; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Wandert über eine kleine Schale mit dunklem Wasser.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Die helle Stelle berührt gerade den Schalenrand.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-043",
+    "source_name": "Unerwartete prognoseprobe",
+    "proposed_name": "Zweite Prognose",
+    "lore_status": "VORSCHLAG",
+    "subject": "Zwei unbeschriftete Windbänder an demselben Mast; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Wehen für einen kurzen Moment in verschiedene Richtungen.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Ein abgerissenes drittes Band hängt still am unteren Ring.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-044",
+    "source_name": "Verlorene paradoxnacht",
+    "proposed_name": "Paradox im Staub",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine fallende Steinperle und ihr versetzter Staubabdruck; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Erzeugen einen klar begrenzten Bruch in der erwarteten Bahn.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Nur der kleine Bereich innerhalb eines Messrahmens ist betroffen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-045",
+    "source_name": "Buch der Sekundelinie",
+    "proposed_name": "Sekundenbuch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein dickes Buch mit unbeschrifteten Faltseiten und Glaskeil; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt halb geöffnet neben einer stillstehenden Sanduhr.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Ein einzelnes Sandkorn glänzt auf dem dunklen Buchrücken.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-046",
+    "source_name": "Schlüssel der Taktwacht",
+    "proposed_name": "Taktschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler Schlüssel mit beweglicher Gelenkgabel; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Steckt halb in einer offenen Pendelhalterung.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Ein winziger Sicherungsstift ist mit violettem Faden befestigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-047",
+    "source_name": "Klinge der Zeigerlinie",
+    "proposed_name": "Zeigerklinge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kurze stumpfe Instrumentenklinge aus dunklem Stahl; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt in einer Einspannvorrichtung neben einem getrennten Draht.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Die Schneidkante ist nur im mittleren Abschnitt poliert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-048",
+    "source_name": "Amulett der Kreiswacht",
+    "proposed_name": "Kreisanhänger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein unvollständig geschlossener Metallring an einer Schnur; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hängt senkrecht vor einer ruhigen Wasserfläche.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Die offene Ringstelle ist mit mattviolettem Glas gefasst.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-049",
+    "source_name": "Siegel der Paradoxlinie",
+    "proposed_name": "Abweichungssiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schwerer Stempel mit gegeneinander versetzten Flächen; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Ruht über zwei leicht versetzten Abdrücken im weichen Wachs.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Ein einzelner Abdruckrand bleibt sauber unberührt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-050",
+    "source_name": "Instrument der Sekundewacht",
+    "proposed_name": "Sekundenmesser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleines Messinstrument mit zwei ungleichen Pendelarmen; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Steht geöffnet auf einer alten, rauen Werkbank.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die kürzere Pendelkugel besitzt eine abgeflachte Reparaturfläche.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-051",
+    "source_name": "Takt Mechanikerin",
+    "proposed_name": "Taktwerkerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit von außen zugänglichem Pendelkorb; visuelle Artzuordnung: Mechanoide.",
+    "action": "Stellt einen schwergängigen Mechanismus unter einer Hafenbrücke ein.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Ein Tropfen hängt an der unteren Pendelaufhängung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-052",
+    "source_name": "Zeiger-Zeuge",
+    "proposed_name": "Zeigerwache",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler Konstrukt aus gestapelten Schieferkeilen; visuelle Artzuordnung: Konstrukte.",
+    "action": "Hält einen überlangen Zeiger an einer sicheren Stütze.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Seine Füße sind mit zwei verschiedenartigen Steinen verkeilt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-053",
+    "source_name": "Kreis Forscherin",
+    "proposed_name": "Kreisstrom",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus einer niedrigen ringförmigen Wasserströmung; visuelle Artzuordnung: Elementare.",
+    "action": "Kreist um eine trockene Steininsel mit einer Messnadel.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Der Ring besitzt an der windzugewandten Seite einen sichtbaren Spalt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-054",
+    "source_name": "Messung Chronist",
+    "proposed_name": "Messgeist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein transparenter Geist mit breit gefächertem Mantelsaum; visuelle Artzuordnung: Geister.",
+    "action": "Beobachtet die Senkung eines Gewichts durch ein tiefes Brunnenloch.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Die Seilspule bleibt als körperlicher Gegenstand im Vordergrund.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-055",
+    "source_name": "Linie-Berechner",
+    "proposed_name": "Linienrechner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Vermesser mit gelochtem Richtscheit; visuelle Artzuordnung: Menschen.",
+    "action": "Richtet zwei entfernte Lichtpunkte durch dieselbe Öffnung aus.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Eine provisorische Kordel hält das gebrochene Richtscheit zusammen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-056",
+    "source_name": "Spiegel Leser",
+    "proposed_name": "Spiegelleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxkörper mit zu einer Seite versetztem Gesichtsfeld; visuelle Artzuordnung: Paradoxe.",
+    "action": "Betrachtet eine einzelne Kante in zwei benachbarten Spiegelstücken.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die übrige Szene folgt normaler Perspektive.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-057",
+    "source_name": "Stunde Beobachterin",
+    "proposed_name": "Stundenwache",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit rechteckiger Schauöffnung im Oberkörper; visuelle Artzuordnung: Mechanoide.",
+    "action": "Hebt einen durch einen Stein blockierten Uhrenhebel an.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Die Schauöffnung zeigt eine stillstehende einfache Spule.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-058",
+    "source_name": "Uhr-Mechanikerin",
+    "proposed_name": "Uhrflickerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus porösem Stein mit eingelassenem Glasauge; visuelle Artzuordnung: Konstrukte.",
+    "action": "Stützt eine gerissene Uhrenfassung zwischen beiden Händen.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Ein Ersatzstück liegt in hellerem Stein direkt daneben.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-059",
+    "source_name": "Stern Zeuge von Serev-Küste (NS-059)",
+    "proposed_name": "Sternnebel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus dichtem Küstennebel und einzelnen Lichtpunkten; visuelle Artzuordnung: Elementare.",
+    "action": "Zieht sich durch einen schmalen Lüftungsspalt zurück.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Die Lichtpunkte bleiben ohne Sternbild oder geschriebene Zeichen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-060",
+    "source_name": "Prognose Forscherin",
+    "proposed_name": "Prognosegeist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit transparenten aufgerollten Ärmeln; visuelle Artzuordnung: Geister.",
+    "action": "Legt eine unbeschriftete Glasplatte an die Mündung eines Luftrohrs.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Ein dunkler Riss endet vor der Mitte der Platte.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-061",
+    "source_name": "Spiegel-Chronist",
+    "proposed_name": "Spiegelchronistin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Chronistin mit silbermatter Schutzmaske; visuelle Artzuordnung: Menschen.",
+    "action": "Dreht eine beschlagene Scheibe in das kalte Morgenlicht.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Der freie Wischstreifen zeigt nur ein einziges Auge.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-062",
+    "source_name": "Stunde Berechner",
+    "proposed_name": "Stundenbruch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxwesen mit unterschiedlich langen, überlappenden Beinen; visuelle Artzuordnung: Paradoxe.",
+    "action": "Setzt einen Fuß auf eine Stufe und verfehlt deren Schattenkante.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die örtliche Abweichung bleibt auf diesen Fuß beschränkt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-063",
+    "source_name": "Uhr Leser",
+    "proposed_name": "Uhrleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit weit aufklappbarer Kopfhaube; visuelle Artzuordnung: Mechanoide.",
+    "action": "Neigt sich über ein ausgebautes, vom Salz zerfressenes Uhrwerk.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Eine völlig blanke Zahnfläche unterbricht die Korrosion.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-064",
+    "source_name": "Stern-Beobachterin",
+    "proposed_name": "Sternwächter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus dunklem Gestein mit sternförmiger Schulteröffnung; visuelle Artzuordnung: Konstrukte.",
+    "action": "Hält eine kleine abgedeckte Laterne vor die Öffnung.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Die Form entsteht durch Steinbau und nicht durch ein Emblem.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-065",
+    "source_name": "Prognose Mechanikerin",
+    "proposed_name": "Prognosebrand",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus violetter Flamme mit tiefblauem Kern; visuelle Artzuordnung: Elementare.",
+    "action": "Umfließt zwei unterschiedlich warme Metallplatten.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Nur eine Platte trägt helle Kondenswasserränder.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-066",
+    "source_name": "Paradox Zeuge",
+    "proposed_name": "Paradoxzeuge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit seitlich auslaufenden transparenten Mantelbahnen; visuelle Artzuordnung: Geister.",
+    "action": "Zeigt auf einen frisch versetzten Stein neben einem Messrahmen.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Die Mantelbahnen enden vor dem unveränderten Horizont.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-067",
+    "source_name": "Sekunde-Forscherin",
+    "proposed_name": "Sekundenkundige",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Forscherin mit zwei kleinen Handpendeln; visuelle Artzuordnung: Menschen.",
+    "action": "Hält die Pendel in einem windgeschützten Winkel nebeneinander.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Ein Pendelgewicht wurde aus einer gewöhnlichen Mutter gefertigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-068",
+    "source_name": "Takt Chronist",
+    "proposed_name": "Taktchronist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxkörper mit versetztem, geschichtetem Brustkasten; visuelle Artzuordnung: Paradoxe.",
+    "action": "Führt einen Stift über eine unbeschriftete, örtlich geknickte Platte.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Linie bleibt abstrakt und wird nicht zu lesbarer Schrift.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-069",
+    "source_name": "Zeiger Berechner",
+    "proposed_name": "Zeigerrechnerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit geschlitztem Kopf und langer Tastnadel; visuelle Artzuordnung: Mechanoide.",
+    "action": "Tastet die beschädigte Spitze eines riesigen Uhrzeigers ab.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Ein loser Metallspan hängt noch an der Spitze.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-070",
+    "source_name": "Kreis-Leser",
+    "proposed_name": "Kreisprüfer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus verbundenen Hafenkieseln und einem Glasring; visuelle Artzuordnung: Konstrukte.",
+    "action": "Hält eine kreisförmige Messschablone über ein schiefes Loch.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Das Loch ist sichtbar oval und bleibt frei einsehbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-071",
+    "source_name": "Unerwartete messungprobe",
+    "proposed_name": "Messsprung",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Lotgewicht über einer feuchten Metallplatte; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Springt seitlich beim Reißen einer dünnen Halteschnur.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Die gerissenen Schnurenden bleiben im selben Bild sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-072",
+    "source_name": "Verlorene linienacht",
+    "proposed_name": "Zerrissene Linie",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine gespannte Messleine zwischen zwei Steinpfosten; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Reißt genau an einem korrodierten Verbindungsstück.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Das metallische Verbindungsstück bleibt am linken Ende hängen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-073",
+    "source_name": "Die taktwende",
+    "proposed_name": "Taktausfall",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine Reihe kleiner Pendel in einer offenen Halterung; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Verliert ihren Gleichlauf an einem einzigen verklemmten Pendel.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Der blockierende Holzsplitter ist deutlich erkennbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-074",
+    "source_name": "Letzte zeigerspur",
+    "proposed_name": "Zeigerabdruck",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine staubige Tischfläche unter einem angehobenen Messzeiger; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Behält einen schmalen dunklen Abdruck der alten Stellung.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die neue Zeigerspitze zeigt in eine andere Richtung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-075",
+    "source_name": "Unerwartete kreisprobe",
+    "proposed_name": "Kreisprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Messring über einer glatten Steinplatte; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Rollt auf einer örtlich abgesenkten Stelle schräg an.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Die übrige Platte bleibt waagerecht und ruhig.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-076",
+    "source_name": "Verlorene messungnacht",
+    "proposed_name": "Messnacht",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine gefallene Messlatte im Licht einer einzigen Hafenlampe; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Lässt ihre unbeschrifteten Kerben im Regen kurz aufblitzen.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein abgelöster Lampenschirm liegt auf der oberen Latte.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-077",
+    "source_name": "Die liniewende",
+    "proposed_name": "Linienwende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Knotenpunkt dreier vermessener Seile; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Löst einen straffen Strang und spannt dafür einen anderen.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Der dritte Strang hängt sichtbar unberührt durch.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-078",
+    "source_name": "Letzte spiegelspur",
+    "proposed_name": "Spiegelrest",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleines Spiegelstück in einer offenen Stofftasche; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Fängt den letzten schmalen Lichtstreifen am Horizont ein.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Eine ausgefranste Taschennaht rahmt den blanken Splitter.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-079",
+    "source_name": "Siegel der Stundelinie",
+    "proposed_name": "Stundensiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein drehbarer Stempel aus Glas und dunklem Stahl; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Ruht über einer kreisförmigen, unbeschrifteten Tonmulde.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Ein sichtbarer Federbügel begrenzt seinen Drehweg.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-080",
+    "source_name": "Instrument der Uhrwacht",
+    "proposed_name": "Uhrgabel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein zweizinkiges Messinstrument mit verschieden langen Zinken; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt auf einer abgenommenen Glockenhalterung.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Nur die kürzere Zinke trägt einen violetten Glaspunkt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-081",
+    "source_name": "Buch der Sternlinie",
+    "proposed_name": "Sternbuch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleiner Faltatlas mit Lochmustern anstelle von Schrift; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt geöffnet unter einem schmalen Nachtlichtfenster.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Die Löcher projizieren einzelne Punkte auf eine leere Seite.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-082",
+    "source_name": "Schlüssel der Prognosewacht",
+    "proposed_name": "Prognoseschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein breiter Schlüssel mit austauschbarer seitlicher Zunge; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Steckt ungedreht in einem rauen Messkastenschloss.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die Ersatzlippe ist aus deutlich hellerem Metall gefertigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-083",
+    "source_name": "Paradox Berechner von Namar-Hochland (NS-083)",
+    "proposed_name": "Abweichungsfunke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kompakter Elementar aus windverwirbeltem Staub und Licht; visuelle Artzuordnung: Elementare.",
+    "action": "Wird zwischen zwei unterschiedlich geneigten Prismen sichtbar.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Der Lichtkörper bleibt vollständig innerhalb der Instrumente.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-084",
+    "source_name": "Sekunde Leser",
+    "proposed_name": "Sekundenleserin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit schmaler transparenter Kopfbedeckung; visuelle Artzuordnung: Geister.",
+    "action": "Lauscht über einem mit Wasser gefüllten Glasröhrchen.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Der Meniskus bleibt als feine helle Kurve deutlich sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-085",
+    "source_name": "Uhr-Beobachterin",
+    "proposed_name": "Uhrbeobachterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Beobachterin mit hochgeschlagener Reisekapuze; visuelle Artzuordnung: Menschen.",
+    "action": "Prüft den fernen Schatten einer kleinen Turmuhr durch eine Lupe.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Die Lupe ist an einer einfachen Lederschnur gesichert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-086",
+    "source_name": "Stern Mechanikerin",
+    "proposed_name": "Sternwerker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxwesen aus gegeneinander geklappten Plattenflächen; visuelle Artzuordnung: Paradoxe.",
+    "action": "Repariert eine kleine Messscheibe mit örtlich versetztem Rand.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Nur die Randkerbe hat die widersprüchliche Perspektive.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-087",
+    "source_name": "Prognose Zeuge",
+    "proposed_name": "Prognosezeuge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit breitem flachem Rücken und Werkzeugöse; visuelle Artzuordnung: Mechanoide.",
+    "action": "Hält zwei gebrauchte Messstäbe wie eine offene V-Form.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Ein Stab ist am unteren Ende sichtbar kürzer gebrochen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-088",
+    "source_name": "Paradox-Forscherin",
+    "proposed_name": "Abweichungsforscherin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus dunklen Glasplatten mit Steinverbindungen; visuelle Artzuordnung: Konstrukte.",
+    "action": "Stützt eine einzelne, aus der Flucht geratene Messschiene.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Eine freie mittlere Fuge zeigt den Hintergrund.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-089",
+    "source_name": "Sekunde Chronist",
+    "proposed_name": "Sekundenglut",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus schwebenden violetten Glutkörnchen; visuelle Artzuordnung: Elementare.",
+    "action": "Sammelt sich über einer erkalteten Metallmulde.",
+    "setting": "Vorschlag Namar-Hochland: eine einfache Werkbank unter rauem Fels, kein Thronsaal oder Machtzentrum.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Ein einzelnes schwarzes Korn liegt außerhalb des Lichtkörpers.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-090",
+    "source_name": "Takt Berechner",
+    "proposed_name": "Taktrechner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Geist mit schmalen aufgerissenen Mantelkanten; visuelle Artzuordnung: Geister.",
+    "action": "Verschiebt eine greifbare Rechenkugel auf einem Draht.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Der Draht bleibt gerade und wirft einen feinen Schatten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-091",
+    "source_name": "Zeiger-Leser",
+    "proposed_name": "Zeigerleserin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Prüferin mit einfachem verstellbarem Visier; visuelle Artzuordnung: Menschen.",
+    "action": "Liest den Abstand zweier Zeiger ohne sie zu berühren.",
+    "setting": "Vorschlag Veyr-Stufen: eine ruhige Messnische an steinernen Treppen mit einem schmalen Seitenlicht.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Ein weicher Stoffkeil hält das Visier in einer festen Stellung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-092",
+    "source_name": "Kreis Beobachterin",
+    "proposed_name": "Kreisbeobachter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxkörper mit durchbrochenen ringförmigen Knien; visuelle Artzuordnung: Paradoxe.",
+    "action": "Steht über einer Kreidespur, die örtlich hinter ihm weiterläuft.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Spur wird nur im kleinen Ringdurchblick verschoben.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-093",
+    "source_name": "Messung Mechanikerin",
+    "proposed_name": "Messwerkerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit ausfahrbarem Winkelmaß am Handgelenk; visuelle Artzuordnung: Mechanoide.",
+    "action": "Setzt einen lockeren Glaskeil in einen alten Treppensockel.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Das Winkelmaß bleibt halb ausgefahren im Seitenlicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-094",
+    "source_name": "Linie-Zeuge",
+    "proposed_name": "Linienzeuge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus langen schmalen Steinrippen; visuelle Artzuordnung: Konstrukte.",
+    "action": "Hält eine abgerissene Richtleine neben deren ursprünglicher Fuge.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Ein Knoten bleibt im gebrochenen Ende des Steins hängen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-095",
+    "source_name": "Unerwartete spiegelprobe von Serev-Küste (NS-095)",
+    "proposed_name": "Blinder Spiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kleine Spiegelscheibe am Ende eines langen Griffs; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Verliert unter einem Wasserfilm fast ihr ganzes Bild.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Ein schmaler trockener Keil zeigt noch den Hintergrund.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-096",
+    "source_name": "Verlorene stundenacht von Veyr-Stufen (NS-096)",
+    "proposed_name": "Offene Stunde",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine geöffnete kleine Uhrenklappe vor ruhigem Mauerwerk; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Gibt den Blick auf eine fehlende Achse frei.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Die beiden leeren Lager liegen sauber im Seitenlicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-097",
+    "source_name": "Die kreiswende",
+    "proposed_name": "Kreiswechsel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein rollender Messring an einer schmalen Felsrinne; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Kippt von der inneren auf die äußere Kante.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Eine kurze kreidige Spur markiert die alte Rollfläche.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-098",
+    "source_name": "Letzte messungspur",
+    "proposed_name": "Letzte Messspur",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleiner Lichtfleck auf einem sich senkenden Wasserspiegel; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Gleitet unter eine im Stein eingelassene Messmarke.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die Marke bleibt abstrakt ohne lesbare Zahlen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-099",
+    "source_name": "Unerwartete linieprobe",
+    "proposed_name": "Linienprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein dünner Draht vor einer rauen schrägen Steinwand; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Wird mit einem einzelnen Haken wieder in die Flucht gezogen.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Ein alter leerer Haken bleibt seitlich als Vergleich sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-100",
+    "source_name": "Schlüssel der Spiegelwacht",
+    "proposed_name": "Spiegelschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein flacher Schlüssel mit einem kleinen blinden Spiegelgriff; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt quer über einer halb geöffneten Werkzeuglade.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Eine helle Griffkante zeigt die Stärke des Glases.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-101",
+    "source_name": "Klinge der Stundelinie",
+    "proposed_name": "Stundenklinge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kleine Instrumentenklinge mit abgeflachtem Ringgriff; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Ruht neben einem sauber abgetrennten Pendeldraht.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Der Ring ist an einer Seite mit dunklem Harz ausgegossen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-102",
+    "source_name": "Amulett der Uhrwacht",
+    "proposed_name": "Uhranhänger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schwerer Anhänger mit stillstehender sichtbarer Hemmung; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hängt frei an einem abgenutzten Leinenband.",
+    "setting": "Vorschlag Veyr-Stufen: eine freie Felsstufe mit niedriger Gerätehalterung und weitem weichem Hintergrund.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Die Hemmung ist offen und trägt einen ersetzten hellen Zahn.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-103",
+    "source_name": "Stern-Chronist",
+    "proposed_name": "Sternchronistin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Chronistin mit amethystfarbenem Augenschirm; visuelle Artzuordnung: Menschen.",
+    "action": "Sortiert gelochte Sternscheiben nach ihrer Abnutzung.",
+    "setting": "Vorschlag Namar-Hochland: ein windgeschützter Felssims mit groben Steinen und einem schmalen Lichtspalt.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Eine stark verzogene Scheibe liegt gesondert auf Filz.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-104",
+    "source_name": "Prognose Berechner",
+    "proposed_name": "Prognosekörper",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Paradoxwesen mit offenem, mehrfach geknicktem Rumpf; visuelle Artzuordnung: Paradoxe.",
+    "action": "Hält eine kleine Waage über ihren seitlich versetzten Schatten.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Waagschalen sind eindeutig nur einmal vorhanden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-105",
+    "source_name": "Paradox Leser",
+    "proposed_name": "Abweichungsleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mechanoid mit zwei ungleich hohen Optiköffnungen; visuelle Artzuordnung: Mechanoide.",
+    "action": "Vergleicht ein originales und ein verbogenes Messgitter.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Das verbogene Gitter liegt in einer flachen gepolsterten Form.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-106",
+    "source_name": "Sekunde-Beobachterin",
+    "proposed_name": "Sekundenwache",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Konstrukt aus glatten Hafensteinen mit kleiner Glasöffnung; visuelle Artzuordnung: Konstrukte.",
+    "action": "Schirmt eine empfindliche Wasseruhr vor seitlichem Wind ab.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Ein Regentropfen steht auf der oberen glatten Steinkante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-107",
+    "source_name": "Unerwartete taktprobe",
+    "proposed_name": "Taktprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein aufgespannter Messdraht vor einer dunklen Treppennische; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Schwingt nach dem Anschlag an einen kleinen Stein wieder aus.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Der Anschlagstein bleibt vom Draht klar getrennt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-108",
+    "source_name": "Verlorene zeigernacht",
+    "proposed_name": "Zeigernacht",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein abmontierter großer Uhrzeiger über nassem Fels; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Wirft im tiefen Laternenlicht einen langen klaren Schatten.",
+    "setting": "Vorschlag Namar-Hochland: eine niedrige Steinmauer an einem kargen Pfad mit heller freier Himmelsfläche.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Ein altes Befestigungsloch bleibt als Lichtpunkt offen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-109",
+    "source_name": "Siegel der Prognoselinie",
+    "proposed_name": "Prognosesiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schweres Siegel mit austauschbaren unbeschrifteten Einsätzen; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt offen neben zwei verschieden abgenutzten Einsätzen.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Die drei leeren Haltestifte sind einzeln erkennbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "NS-110",
+    "source_name": "Instrument der Paradoxwacht",
+    "proposed_name": "Paradoxspanner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein offenes Messgerät mit zwei gegeneinander versetzten Glasringen; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hält einen geraden Faden zwischen den Ringmitten.",
+    "setting": "Vorschlag Veyr-Stufen: eine unbeschriftete Arbeitsplatte neben einem einfachen Wasserlauf aus Stein.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Nur durch den linken Ring erscheint der Faden örtlich geknickt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  }
+]

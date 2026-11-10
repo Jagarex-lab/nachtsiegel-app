@@ -259,4 +259,22 @@ kampagnenbezuege: []
 
 ---
 
+## 13. Bild- und Namensvorschläge aus der Produktionsvorbereitung
+
+**[VORSCHLAG · 10.11.2026 · Quelle: Master-Produktionsauftrag, konfliktfreies Illustrationspaket]** Die fünf Dateien unter [`data/production/art-briefs/`](../data/production/art-briefs/) enthalten 550 individuelle Bildaufträge und alternative Namen zu den unveränderten Konzept-IDs aus `data/lore/card-concepts.json`. Sie sind keine 550 implementierten Karten und keine freigegebenen Geschichten. `source_name` erhält den bisherigen Namen, `proposed_name` dokumentiert den Änderungsvorschlag. Die [Art Direction](production/ART_DIRECTION.md) und [Assetpipeline](production/ART_PIPELINE.md) beschreiben ihre Prüfung.
+
+Die örtlichen Tätigkeiten, kleineren Wesen und Gegenstände bleiben **VORSCHLAG**. Auch übernommene Regionsnamen aus `docs/lore/` bleiben Vorschläge; sie bestätigen weder den dort entworfenen Kontinent noch seine Geschichte. Es entstehen keine neuen Fraktionsführer, historischen Enthüllungen oder Antworten auf Eiras Geheimnis. Die zwölf Arten sind visuelle Kartenklassifikationen, keine neuen universellen Naturgesetze.
+
+| Konzept-ID | Neuer Namensvorschlag | Lokales Bildmotiv | Lorestatus |
+|---|---|---|---|
+| ZH-001 | Schleusenzeichnerin | Eine Werkmeisterin sichert eine Schleuse mit einem Kupferkeil. | VORSCHLAG |
+| SW-001 | Froststegwache | Eine Wachfrau schützt eine Reisende auf vereistem Steg. | VORSCHLAG |
+| VG-001 | Hüterin der Wurzelbrücke | Eine lebende Weide hebt eine gebrochene Brückenbohle. | VORSCHLAG |
+| NS-071 | Messsprung | Ein Lotgewicht springt bei gerissener Schnur seitlich. | VORSCHLAG |
+| NE-101 | Marktschnitt | Eine abgenutzte Arbeitsklinge zwischen Stoffballen. | VORSCHLAG |
+
+Das [Produktionsinventar](../data/production/art-assets.json) führt tatsächliche Bilder, Prompts, Brief-/Dateihashes und getrennte Bild-/Lore-/Rechteprüfungen. Ein Bild oder eine bestandene technische Prüfung kanonisiert keine dargestellte Szene. Bestehende aktive Karten, IDs, Kampagnen und ältere Storytexte werden durch diese Vorschläge nicht umgeschrieben. Eine spätere Kartenübernahme benötigt einen eigenen Daten-, Regel- und Migrationsnachweis.
+
+---
+
 **Redaktioneller Abschluss:** Diese Lore-Bibel dokumentiert den nachweisbaren Stand, nicht eine erfundene Komplettgeschichte. Ungeklärte Punkte sind bewusst sichtbar. Die Datei ist die zentrale Quelle für **künftige** Lore-Entscheidungen; bestehende ältere Implementierungen bleiben als solche nachvollziehbar.

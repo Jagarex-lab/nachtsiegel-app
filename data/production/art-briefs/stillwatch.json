@@ -1,0 +1,1872 @@
+[
+  {
+    "card_id": "SW-001",
+    "source_name": "Frost-Wächterin",
+    "proposed_name": "Froststegwache",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Wachfrau mit abgenutzter praktischer Schutzausrüstung.",
+    "action": "Hält eine schräg stehende Schutzplatte über eine kniende Reisende auf einem vereisten Steg.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Menschliche Wachfrau mit abgenutzter praktischer Schutzausrüstung bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die eisblaue Schutzplatte besitzt einen reparierten gebrochenen Griff.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-002",
+    "source_name": "Rettung Späher",
+    "proposed_name": "Trümmerheber",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Niedriger Rettungskörper aus Eisglas und gebogenen Holzrippen.",
+    "action": "Hebt mit breitem Rücken eine eingestürzte Tür über eine freie Fluchtlücke.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Niedriger Rettungskörper aus Eisglas und gebogenen Holzrippen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein kleiner Stoffstreifen markiert die gesicherte Lücke.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-003",
+    "source_name": "Schild Rufer",
+    "proposed_name": "Schildfalke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Fliegender Mechanoid mit überlappenden Flügelplatten.",
+    "action": "Klappt seine Platten über einer Gruppe wartender Menschen zu einem kurzen Schirm.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Fliegender Mechanoid mit überlappenden Flügelplatten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine äußere Flügelplatte wurde durch glattes Ersatzblech ersetzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-004",
+    "source_name": "Eis-Hauptmann",
+    "proposed_name": "Eisgratbär",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Schwerer Bär mit lichtblauen Hornschuppen am Rücken.",
+    "action": "Hält auf einer schmalen Schneekante inne, damit kleine Tiere hinter ihm passieren.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Schwerer Bär mit lichtblauen Hornschuppen am Rücken bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "An einer Rückenschuppe hängt ein abgerissenes Wegseil.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-005",
+    "source_name": "Wacht Schlichterin",
+    "proposed_name": "Schneefugenhüter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Wesen aus dichtem Schnee mit eisernen Gerüstresten im Inneren.",
+    "action": "Stopft seine eigene Schneemasse in eine windoffene Mauerfuge.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Wesen aus dichtem Schnee mit eisernen Gerüstresten im Inneren bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Durch den werdenden Arm scheint die kalte Landschaft hindurch.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-006",
+    "source_name": "Leuchtfeuer Sanitäter",
+    "proposed_name": "Brandwachenkehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Sanitäter mit geklammertem Unterarm.",
+    "action": "Trägt einen leeren Wasserzuber aus einem ausgebrannten Wachraum.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Zurückgekehrter Sanitäter mit geklammertem Unterarm bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein kleiner unversehrter Verband hängt über dem schwarzen Rand.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-007",
+    "source_name": "Stille-Ingenieurin",
+    "proposed_name": "Stillenäherin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Ingenieurin mit Ohrenschutz und Lederhandschuhen.",
+    "action": "Spannt Filz über eine klappernde Schutzvorrichtung neben schlafenden Reisenden.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Menschliche Ingenieurin mit Ohrenschutz und Lederhandschuhen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die groben Stiche sind im eisblauen Streiflicht deutlich lesbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-008",
+    "source_name": "Bastion Wächterin",
+    "proposed_name": "Bastionsschildkröte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Langsames Konstrukt aus gepressten Steinplatten und Holz.",
+    "action": "Senkt seinen flachen Rücken als Schutzdach über eine offene Grube.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Langsames Konstrukt aus gepressten Steinplatten und Holz bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein kleiner Zugang bleibt zwischen zwei Stützfüßen frei.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-009",
+    "source_name": "Pass Späher",
+    "proposed_name": "Passmesser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Langbeiniger Vermessungsmechanoid mit schwenkbarem Lot.",
+    "action": "Prüft jeden Tritt einer verschneiten Felstreppe vor den Wartenden.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Langbeiniger Vermessungsmechanoid mit schwenkbarem Lot bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Lot trägt eine dicke vereiste Messscheibe ohne Ziffern.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-010",
+    "source_name": "Grenze-Rufer",
+    "proposed_name": "Grenzhund",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Hochbeiniger Hund mit dichtem Winterfell und blauem Geschirr.",
+    "action": "Stellt sich quer vor einen gefährlichen Riss im zugewehten Weg.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Hochbeiniger Hund mit dichtem Winterfell und blauem Geschirr bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Aufgerichtete Ohren bilden die klarste Silhouette.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-011",
+    "source_name": "Eid Hauptmann",
+    "proposed_name": "Frostfackel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Aufrechtes Wesen aus kalter blauer Flamme und Reif.",
+    "action": "Leuchtet einen niedrigen Tunnel aus, ohne den schützenden Eisbogen zu schmelzen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Aufrechtes Wesen aus kalter blauer Flamme und Reif bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Flammenrand endet weich am dunklen Deckenstein.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-012",
+    "source_name": "Wall Schlichterin",
+    "proposed_name": "Wandkehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Arbeiter mit steinern geschienter Schulter.",
+    "action": "Streicht lose Splitter von einer Schutzmauer, bevor Menschen darunter hindurchgehen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zurückgekehrter Arbeiter mit steinern geschienter Schulter bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine breite Bürste ist mit einem alten Verband umwickelt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-013",
+    "source_name": "Bastion-Sanitäter",
+    "proposed_name": "Bastionsärztin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Heilerin mit wasserfestem Feldkoffer.",
+    "action": "Legt einem erschöpften Boten im Schatten eines großen Schilds eine Schiene an.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Menschliche Heilerin mit wasserfestem Feldkoffer bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Koffer trägt mehr Reparaturstellen als Schmuck.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-014",
+    "source_name": "Pass Ingenieurin",
+    "proposed_name": "Klammerwerker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Dünner Automat aus Holzstäben und leuchtenden Glasgelenken.",
+    "action": "Setzt eine große Sicherheitsklammer über zwei auseinanderweichende Treppenstufen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Dünner Automat aus Holzstäben und leuchtenden Glasgelenken bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Greifarm endet in einem weichen gepolsterten Druckstück.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-015",
+    "source_name": "Grenze Wächterin",
+    "proposed_name": "Torblocker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Breitbeiniger Mechanoid mit Schiebetür im Brustkorb.",
+    "action": "Hält ein zerdrücktes Tor im offenen Brustrahmen fest.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Breitbeiniger Mechanoid mit Schiebetür im Brustkorb bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die obere Torhälfte ist verbogen, der freie Durchgang bleibt erkennbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-016",
+    "source_name": "Eid-Späher",
+    "proposed_name": "Eidfuchs",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Kleiner weißer Fuchs mit einem blauen Stoffband am Hals.",
+    "action": "Führt ein verlorenes Kind zu einer beleuchteten Nische im Schneesturm.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Kleiner weißer Fuchs mit einem blauen Stoffband am Hals bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Pfotenspur bleibt als dunkle Linie im Schnee sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-017",
+    "source_name": "Wall Rufer",
+    "proposed_name": "Windwall",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Körper aus gestapelten Windringen mit fester Eiskante.",
+    "action": "Dreht sich vor einem offenen Krankenlager und fängt treibenden Schnee ab.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Körper aus gestapelten Windringen mit fester Eiskante bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein einzelnes trockenes Blatt hängt still im inneren Ring.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-018",
+    "source_name": "Frost Hauptmann",
+    "proposed_name": "Frostschreiter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Pfadwächter mit geschientem Hüftgelenk.",
+    "action": "Tastet mit einem langen Stab eine eingeschneite Brücke ab.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Zurückgekehrter Pfadwächter mit geschientem Hüftgelenk bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Am Stab hängt ein gefrorener schmaler Warnstreifen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-019",
+    "source_name": "Rettung-Schlichterin",
+    "proposed_name": "Rettungsschlichterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Vermittlerin mit einer tragbaren Sitzbank.",
+    "action": "Schafft zwischen zwei streitenden Trägern Platz für eine verletzte Reisende.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Menschliche Vermittlerin mit einer tragbaren Sitzbank bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ihre offene Hand steht heller als die geschlossenen Fäuste im Hintergrund.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-020",
+    "source_name": "Schild Sanitäter",
+    "proposed_name": "Verbandspinne",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Achtbeiniger Hilfsautomat aus Tonkapseln und Holzfedern.",
+    "action": "Rollt saubere Verbände über eine trockene Plane aus.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Achtbeiniger Hilfsautomat aus Tonkapseln und Holzfedern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zwei Beine halten das Ende der Plane gegen Wind fest.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-021",
+    "source_name": "Eis Ingenieurin",
+    "proposed_name": "Eisschneider",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Mechanoid mit geschütztem schmalem Sägeblatt und Raupenkufen.",
+    "action": "Schneidet eine sichere Trittstufe in die Kante eines gefrorenen Kanals.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Mechanoid mit geschütztem schmalem Sägeblatt und Raupenkufen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein hellblaues Gehäuse verdeckt alle gefährlichen Antriebsteile.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-022",
+    "source_name": "Wacht-Wächterin",
+    "proposed_name": "Schneetorwidder",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer Widder mit breitem Stirnschild aus Horn.",
+    "action": "Stützt einen verschneiten Torflügel von unten mit dem Kopf.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Großer Widder mit breitem Stirnschild aus Horn bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine einzelne abgebrochene Hornspitze wurde glatt geschliffen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-023",
+    "source_name": "Leuchtfeuer Späher",
+    "proposed_name": "Weißfeuerauge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Elementares Wesen aus Reif und einem ruhigen Lichtkern.",
+    "action": "Späht von einem Felsvorsprung in die Schneeverwehung und beleuchtet eine verlorene Seilleine.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Elementares Wesen aus Reif und einem ruhigen Lichtkern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Lichtkern ist deutlich kleiner als sein schwebender Frostkörper.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-024",
+    "source_name": "Stille Rufer",
+    "proposed_name": "Ruf am Wall",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Melder mit zerbrochenem Schalltrichter.",
+    "action": "Schickt eine Atemwolke durch den gesprungenen Trichter in einen stillen Hof.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Zurückgekehrter Melder mit zerbrochenem Schalltrichter bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Wolke bleibt am Riss als kleine gefrorene Perle hängen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-025",
+    "source_name": "Schild-Hauptmann",
+    "proposed_name": "Schildhauptfrau",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Wachführerin mit schlichter Feldrüstung.",
+    "action": "Kniet selbst hinter der vordersten Schutzplatte und hebt eine fallende Laterne auf.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Menschliche Wachführerin mit schlichter Feldrüstung bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ihr Helm liegt neben den gewöhnlichen Helmen der anderen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-026",
+    "source_name": "Eis Schlichterin",
+    "proposed_name": "Eisglaswäger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Konstrukt aus zwei großen durchsichtigen Glasschalen.",
+    "action": "Verteilt warme Steine gleichmäßig auf bereitliegende Decken.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Konstrukt aus zwei großen durchsichtigen Glasschalen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Schalen sind unterschiedlich geflickt, halten aber waagerecht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-027",
+    "source_name": "Wacht Sanitäter",
+    "proposed_name": "Feldtrage",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Vierbeiniger Sanitätsmechanoid mit gefedertem Tuchbett.",
+    "action": "Senkt seine vorderen Beine, um eine verletzte Person ohne Ruck aufnehmen zu lassen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Vierbeiniger Sanitätsmechanoid mit gefedertem Tuchbett bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein kleines Rad ist durch einen hölzernen Laufring ersetzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-028",
+    "source_name": "Leuchtfeuer-Ingenieurin",
+    "proposed_name": "Leuchtfeuerschwalbe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer Vogel mit dichtem Wintergefieder und blauem Beutel.",
+    "action": "Trägt einen glimmenden Wärmestein zu einem erloschenen Wegfeuer.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Großer Vogel mit dichtem Wintergefieder und blauem Beutel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Federkleid bleibt sichtbar tierisch und ohne technische Flügel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-029",
+    "source_name": "Stille Wächterin",
+    "proposed_name": "Stillbecken",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Ruhiges Elementarwesen aus schwebenden Wasserlinsen und Eis.",
+    "action": "Schließt eine Wasserlinse um einen fallenden Stein vor einem schlafenden Lager.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Ruhiges Elementarwesen aus schwebenden Wasserlinsen und Eis bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Stein liegt sichtbar im klaren Inneren der Linse.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-030",
+    "source_name": "Bastion Späher",
+    "proposed_name": "Bastionsspäher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Kundschafter mit glasgeschientem Auge.",
+    "action": "Blickt durch eine beschädigte Maueröffnung und hält eine Warnflagge unten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Zurückgekehrter Kundschafter mit glasgeschientem Auge bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein feiner Reifring umgibt das reparierte Auge.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-031",
+    "source_name": "Pass-Rufer",
+    "proposed_name": "Passrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschlicher Signalgeber mit großem Stofftrichter.",
+    "action": "Leitet Reisende durch ein Schneetor auf den einzigen geräumten Trittpfad.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Menschlicher Signalgeber mit großem Stofftrichter bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Am Trichterrand bilden Eiskristalle eine unregelmäßige Kante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-032",
+    "source_name": "Grenze Hauptmann",
+    "proposed_name": "Grenzrahmer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Großer Torautomat aus Holzrahmen und Glasstreben.",
+    "action": "Stellt sich als Ersatzrahmen um eine gebrochene Durchgangstür.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Großer Torautomat aus Holzrahmen und Glasstreben bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Tür hängt ungleich, während der neue Rahmen gerade steht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-033",
+    "source_name": "Eid Schlichterin",
+    "proposed_name": "Eidschiedsgerät",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Kompakter Mechanoid mit zwei gepolsterten Ablageflächen.",
+    "action": "Nimmt zwei gefährliche Werkzeuge sicher entgegen, während Menschen zurücktreten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Kompakter Mechanoid mit zwei gepolsterten Ablageflächen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Ablageflächen tragen deutlich verschiedene Gebrauchsspuren.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-034",
+    "source_name": "Wall-Sanitäter",
+    "proposed_name": "Wallrobbe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Große Robbenbestie mit dicker heller Haut.",
+    "action": "Schiebt mit ihrem Rücken eine Rettungsleine aus dem kalten Wasser ans Ufer.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Große Robbenbestie mit dicker heller Haut bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Wassertropfen perlen von einem hellen Narbenbogen ab.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-035",
+    "source_name": "Unerwartete frostprobe",
+    "proposed_name": "Frostschluss",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Wasserstrahl zwischen zwei gebrochenen Leitungsteilen.",
+    "action": "Eine blaue Eismembran friert den Strahl nur an der offenen Fuge ein.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Wasserstrahl zwischen zwei gebrochenen Leitungsteilen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das übrige Wasser bleibt sichtbar in Bewegung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-036",
+    "source_name": "Verlorene rettungnacht",
+    "proposed_name": "Nacht der stillen Tragen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Leere Tragen in einem windoffenen Durchgang.",
+    "action": "Blaue Falten im Raum dämpfen den Sturm über den wartenden Tragen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Leere Tragen in einem windoffenen Durchgang bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine lose Tuchkante am Bildrand flattert weiterhin frei.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-037",
+    "source_name": "Die grenzewende",
+    "proposed_name": "Grenzöffnung",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zwei dicht anliegende Schutzschilde vor einem Tor.",
+    "action": "Die Schilde rücken gerade weit genug auseinander, damit eine kleine Hand hindurchpasst.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zwei dicht anliegende Schutzschilde vor einem Tor bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine einzelne Eisblume bleibt zwischen den Schildkanten unzerdrückt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-038",
+    "source_name": "Letzte eidspur",
+    "proposed_name": "Letzter Eidpfosten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Geknickter Wegpfosten vor einer Schlucht.",
+    "action": "Eine eisblaue Falte hält die daran geknotete Rettungsleine in der Luft.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Geknickter Wegpfosten vor einer Schlucht bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die abgebrochene Pfostenhälfte liegt eindeutig am Boden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-039",
+    "source_name": "Unerwartete wallprobe",
+    "proposed_name": "Haltende Wand",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Fliegende Steinsplitter vor einem kleinen Schutzschirm.",
+    "action": "Die Splitter verlieren am Schirm ihre Vorwärtsbewegung und sinken senkrecht ab.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Fliegende Steinsplitter vor einem kleinen Schutzschirm bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der größte Splitter bleibt über einer zerbrochenen Schale stehen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-040",
+    "source_name": "Verlorene frostnacht",
+    "proposed_name": "Frostnachtpause",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Kalte Lagerfeuerstelle und im Sturm gekrümmte Zeltpfähle.",
+    "action": "Ein schmaler blauer Ring schafft um die Feuerstelle einen ruhigen Atemraum.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Kalte Lagerfeuerstelle und im Sturm gekrümmte Zeltpfähle bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Schnee sammelt sich außen höher als innen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-041",
+    "source_name": "Die rettungwende",
+    "proposed_name": "Rettungsfenster",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Ein zugestürztes Fenster über einer Menschenhand.",
+    "action": "Die Trümmer klappen für einen Augenblick wie feste Glaslamellen auseinander.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Ein zugestürztes Fenster über einer Menschenhand bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Stoffärmel bleibt sicher außerhalb der Scherbenkante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-042",
+    "source_name": "Letzte schildspur",
+    "proposed_name": "Letzter Schildsplitter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zerbrochene Schutzplatte zwischen zwei offenen Händen.",
+    "action": "Die Bruchstücke bilden kurz eine durchsichtige zusammenhängende Fläche.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zerbrochene Schutzplatte zwischen zwei offenen Händen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein fehlendes Stück bleibt als sichtbares dunkles Dreieck erhalten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-043",
+    "source_name": "Unerwartete eisprobe",
+    "proposed_name": "Eisschwelle",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Abwärts rollender Transportwagen vor einer vereisten Kante.",
+    "action": "Eine flache blaue Frostkante stoppt nur das vordere Wagenrad.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Abwärts rollender Transportwagen vor einer vereisten Kante bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das hintere Rad dreht sich im weichen Schnee weiter.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-044",
+    "source_name": "Verlorene wachtnacht",
+    "proposed_name": "Wachwechsel im Weiß",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zwei Wachlaternen in dichtem Schneefall.",
+    "action": "Eine warme Lichtkugel wechselt durch einen eisblauen Windschatten von Laterne zu Laterne.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Zwei Wachlaternen in dichtem Schneefall bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die zurückbleibende Laterne wird tatsächlich dunkel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-045",
+    "source_name": "Buch der Leuchtfeuerlinie",
+    "proposed_name": "Leuchtfeuerbuch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Robustes Klappbuch mit dicken wärmefesten Seiten.",
+    "action": "Liegt offen neben einer kleinen kalten Signalflamme.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Robustes Klappbuch mit dicken wärmefesten Seiten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Seiten tragen tastbare Wegkerben statt lesbarer Worte.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-046",
+    "source_name": "Schlüssel der Stillewacht",
+    "proposed_name": "Schlüssel der Stillkammer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Kurzer Schlüssel aus Eisglas mit lederummanteltem Griff.",
+    "action": "Ruht in einer flachen Sandschale vor einer schweren Stofftür.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Kurzer Schlüssel aus Eisglas mit lederummanteltem Griff bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Im Glas sitzt eine kleine unveränderliche Luftblase.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-047",
+    "source_name": "Klinge der Bastionlinie",
+    "proposed_name": "Bastionsklinge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Breites kurzes Werkzeug mit schützender eisblauer Handschale.",
+    "action": "Liegt zwischen losen Schutzplatten und abgestoßenen Nieten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Breites kurzes Werkzeug mit schützender eisblauer Handschale bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Schneidkante ist zum Hebeln abgeflacht statt kampfbereit geschärft.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-048",
+    "source_name": "Amulett der Passwacht",
+    "proposed_name": "Passamulett",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Flache Steinplatte an einem robusten geflochtenen Band.",
+    "action": "Hängt über einer gefrorenen Felsritze im sanften Morgenlicht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Flache Steinplatte an einem robusten geflochtenen Band bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zwei Kerben passen auf eine kleine natürliche Gesteinskante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-049",
+    "source_name": "Siegel der Wachtlinie",
+    "proposed_name": "Wachtsiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Dicker Stempel aus Eisglas und schlichtem Leder.",
+    "action": "Steht auf einem weichen Tonblock vor einer Laterne.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Dicker Stempel aus Eisglas und schlichtem Leder bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Glas bricht das Licht in eine einzige ruhige blaue Linie.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-050",
+    "source_name": "Instrument der Leuchtfeuerwacht",
+    "proposed_name": "Leuchtfeuerkasten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Tragbarer Laternenkasten mit doppeltem Windschutz.",
+    "action": "Steht geöffnet auf einem vereisten Sims über einem dunklen Weg.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Tragbarer Laternenkasten mit doppeltem Windschutz bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein innerer Schieber ist mit einem Holzsplitter arretiert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-051",
+    "source_name": "Stille Späher",
+    "proposed_name": "Stillspäher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Kleiner vierbeiniger Mechanoid mit Filz unter den Füßen.",
+    "action": "Folgt einem Schneeriss unter einer niedrigen Holzbrücke.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Kleiner vierbeiniger Mechanoid mit Filz unter den Füßen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Seine kreisrunde Suchlinse bleibt halb von einer Stoffklappe verdeckt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-052",
+    "source_name": "Bastion-Rufer",
+    "proposed_name": "Bastionsrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Große Bergziege mit breit gefaltetem Kehlsack.",
+    "action": "Ruft von einer Schutzmauer, während kleine Eisstücke von den Hörnern fallen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Große Bergziege mit breit gefaltetem Kehlsack bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die aufgeblähte Kehle bleibt tierisch statt zu einem Instrument zu werden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-053",
+    "source_name": "Pass Hauptmann",
+    "proposed_name": "Passlichtträger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Elementar aus langgezogenen Eisprismen mit dunklem Kern.",
+    "action": "Stellt sich quer in einen Sturm und lenkt sein Licht auf einen sicheren Felsabsatz.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Elementar aus langgezogenen Eisprismen mit dunklem Kern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Prisma endet in einer absichtlich stumpfen Bruchfläche.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-054",
+    "source_name": "Grenze Schlichterin",
+    "proposed_name": "Grenzrückkehrerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrte Schlichterin mit keramisch verstärkter Stirn.",
+    "action": "Legt zwei zerbrochene Wegmarken auf eine gemeinsame Decke.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Zurückgekehrte Schlichterin mit keramisch verstärkter Stirn bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein schmaler Haarriss läuft bis an den Rand ihres Kragens.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-055",
+    "source_name": "Eid-Sanitäter",
+    "proposed_name": "Eidsanitäter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschlicher Feldheiler mit einfachem Schienenbündel.",
+    "action": "Zieht seine eigenen Handschuhe aus, um eine fremde kalte Hand zu wärmen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Menschlicher Feldheiler mit einfachem Schienenbündel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Schienenbündel ist mit einem alten Gürtel statt einer Schnalle gebunden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-056",
+    "source_name": "Wall Ingenieurin",
+    "proposed_name": "Wallheber",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Großes Konstrukt aus ineinandergreifenden Steinarmen.",
+    "action": "Setzt eine lose Schutzplatte mit breiten Greifflächen behutsam wieder ein.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Großes Konstrukt aus ineinandergreifenden Steinarmen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein kleiner Moosstreifen bleibt beim Einsetzen unversehrt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-057",
+    "source_name": "Frost Wächterin",
+    "proposed_name": "Frostwächter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Mechanoid mit geschlossenem Brustschild und kurzen Raupen.",
+    "action": "Schiebt eine klare Schutzscheibe zwischen ein Zelt und fliegende Eisnadeln.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Mechanoid mit geschlossenem Brustschild und kurzen Raupen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Scheibe besitzt ein sichtbares rundes Lüftungsloch.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-058",
+    "source_name": "Rettung-Späher",
+    "proposed_name": "Rettungsluchs",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Dicht behaarter Luchs mit gepolstertem Tragegeschirr.",
+    "action": "Zieht eine kleine Rettungsschale aus einer Schneemulde.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Dicht behaarter Luchs mit gepolstertem Tragegeschirr bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Schale liegt auf zwei hölzernen, unterschiedlich breiten Kufen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-059",
+    "source_name": "Schild Rufer von Veyr-Stufen (SW-059)",
+    "proposed_name": "Schildelementar",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Breit aufgefächertes Wesen aus dünnen Eisplatten.",
+    "action": "Überlappt seine Platten über einem gefährdeten Brunnenrand.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Breit aufgefächertes Wesen aus dünnen Eisplatten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zwischen den Platten bleibt der Wasserspiegel sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-060",
+    "source_name": "Eis Hauptmann",
+    "proposed_name": "Eishauptmann",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Truppführer mit schlicht geflickter Brustrüstung.",
+    "action": "Zählt keine Soldaten, sondern ausgelegte trockene Decken vor dem Aufbruch.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Zurückgekehrter Truppführer mit schlicht geflickter Brustrüstung bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Sein Rangabzeichen ist entfernt und hinterlässt zwei freie Nietlöcher.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-061",
+    "source_name": "Wall-Schlichterin",
+    "proposed_name": "Wandschlichterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Baumeisterin mit zwei unterschiedlich großen Loten.",
+    "action": "Zeigt zwei Gruppen, wo eine provisorische Schutzwand eine Tür freilassen muss.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Menschliche Baumeisterin mit zwei unterschiedlich großen Loten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der freie Türgrundriss ist allein durch helle Steine markiert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-062",
+    "source_name": "Frost Sanitäter",
+    "proposed_name": "Frosthelfer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Konstrukt aus ineinandergeschobenen Tonbechern und Holz.",
+    "action": "Schiebt einen kleinen Wärmestein unter eine nasse Decke.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Konstrukt aus ineinandergeschobenen Tonbechern und Holz bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Tonbecher sind durch weiche Stoffringe voneinander getrennt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-063",
+    "source_name": "Rettung Ingenieurin",
+    "proposed_name": "Rettungswerker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Spinnenartiger Mechanoid mit Werkzeugmagazin im Rücken.",
+    "action": "Befestigt eine abgerutschte Seilrolle über einer engen Schlucht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Spinnenartiger Mechanoid mit Werkzeugmagazin im Rücken bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine leere Werkzeugmulde zeigt, welches Teil gerade eingesetzt wird.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-064",
+    "source_name": "Schild-Wächterin",
+    "proposed_name": "Schildmammut",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Junge mammutartige Bestie mit breiter Stirn und kurzem Rüssel.",
+    "action": "Klappt mit dem Rüssel einen schweren Schutzschild über eine Vorratskiste.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Junge mammutartige Bestie mit breiter Stirn und kurzem Rüssel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine abgescheuerte Stelle am Fell belegt häufiges Tragen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-065",
+    "source_name": "Eis Späher",
+    "proposed_name": "Eisspäher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Elementares Wesen aus windgetragenen Frostkristallen.",
+    "action": "Formt in einer Maueröffnung eine kurz sichtbare Suchgestalt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Elementares Wesen aus windgetragenen Frostkristallen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der zentrale Kristall schaut als einzelner dunkler Punkt in die Ferne.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-066",
+    "source_name": "Wacht Rufer",
+    "proposed_name": "Wachrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Torwächter mit geflicktem Kieferband.",
+    "action": "Hebt eine kleine Handglocke, während sein anderer Arm die Torleine hält.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Zurückgekehrter Torwächter mit geflicktem Kieferband bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Glockenklöppel ist ein glatt geschliffener Kiesel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-067",
+    "source_name": "Leuchtfeuer-Hauptmann",
+    "proposed_name": "Leuchtfeuerhauptfrau",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Leiterin eines kleinen Rettungstrupps.",
+    "action": "Trägt die letzte freie Laterne selbst an das Ende einer dunklen Treppe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Menschliche Leiterin eines kleinen Rettungstrupps bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein leerer Laternenhaken schwingt an ihrem Gürtel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-068",
+    "source_name": "Stille Schlichterin",
+    "proposed_name": "Stillenwägerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Konstrukt aus schmalen Glasbögen und gespannten Tuchflächen.",
+    "action": "Misst den Winddruck an einem geöffneten Zelteingang.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Konstrukt aus schmalen Glasbögen und gespannten Tuchflächen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine Tuchfläche ist im Vergleich zu den anderen sichtbar nass und schwer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-069",
+    "source_name": "Bastion Sanitäter",
+    "proposed_name": "Bastionspfleger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Sanitätsmechanoid mit ovalem Wassertank und weichen Greifern.",
+    "action": "Spült Staub von den Händen einer erschöpften Mauerarbeiterin.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Sanitätsmechanoid mit ovalem Wassertank und weichen Greifern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein eigener Greifer hält den Abflussbecher sicher am Boden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-070",
+    "source_name": "Pass-Ingenieurin",
+    "proposed_name": "Passbiber",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer Biber mit blauem Lastengeschirr und breiten Schneidezähnen.",
+    "action": "Nagt einen klemmenden Stützkeil passend für einen rutschigen Rettungssteg.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Großer Biber mit blauem Lastengeschirr und breiten Schneidezähnen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die frischen Holzspäne leuchten warm gegen den kalten Hintergrund.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-071",
+    "source_name": "Unerwartete grenzeprobe",
+    "proposed_name": "Grenzhalt",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Abreißende Rettungsleine über einem dunklen Spalt.",
+    "action": "Ein blaues Gewebe verbindet die beiden Leinenenden für einen Atemzug.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Abreißende Rettungsleine über einem dunklen Spalt bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die ausgefransten Fasern bleiben klar getrennt erkennbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-072",
+    "source_name": "Verlorene eidnacht",
+    "proposed_name": "Eid ohne Worte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zwei abgelegte Waffen vor einer Schutzplatte.",
+    "action": "Eine dünne Eisschicht schließt sich über den Griffen und lässt Hände frei.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zwei abgelegte Waffen vor einer Schutzplatte bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Auf der Schutzplatte spiegelt sich nur die offene Handfläche.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-073",
+    "source_name": "Die stillewende",
+    "proposed_name": "Stillewende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Rollende Lawinenfront über einem schmalen Felsdach.",
+    "action": "Eine gefaltete blaue Fläche lenkt den Rand der Schneemasse seitlich ab.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Rollende Lawinenfront über einem schmalen Felsdach bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Unter dem Dach bleibt eine einzelne Kerzenflamme senkrecht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-074",
+    "source_name": "Letzte bastionspur",
+    "proposed_name": "Letzte Bastionstufe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Die oberste Stufe einer einstürzenden Treppe.",
+    "action": "Eisblaues Licht friert nur die lose Trittplatte in ihrer waagerechten Lage fest.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Die oberste Stufe einer einstürzenden Treppe bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Kleine Kiesel fallen seitlich ungehindert weiter.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-075",
+    "source_name": "Unerwartete passprobe",
+    "proposed_name": "Passfenster",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Dichter Schneesturm vor einem schmalen Wegzeichen.",
+    "action": "Ein kurzer Windkanal legt den sicheren nächsten Tritt frei.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Dichter Schneesturm vor einem schmalen Wegzeichen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die frisch sichtbare Stufe trägt eine einzelne nasse Stiefelspur.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-076",
+    "source_name": "Verlorene grenzenacht",
+    "proposed_name": "Nacht ohne Grenze",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Vereiste Torflügel vor wartenden Schatten.",
+    "action": "Eine helle Raumfalte zeichnet einen provisorischen sicheren Durchlass um das Tor.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Vereiste Torflügel vor wartenden Schatten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die wirklichen Torflügel bleiben geschlossen und schneebedeckt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-077",
+    "source_name": "Die eidwende",
+    "proposed_name": "Eidwacht",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Unbewachte Feldtrage im Regen.",
+    "action": "Vier blaue Lichtpunkte ziehen einen niedrigen Schutzschirm über das Tuch.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Unbewachte Feldtrage im Regen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "An einer Ecke tropft Wasser bewusst außerhalb des Schirms ab.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-078",
+    "source_name": "Letzte wallspur",
+    "proposed_name": "Wallruhe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Gefallene Mauersteine über einer offenen Gasse.",
+    "action": "Die Steine verharren knapp über einem Rettungswagen und sinken dann seitlich.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Gefallene Mauersteine über einer offenen Gasse bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein frei fallender Kiesel zeigt den begrenzten Wirkbereich.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-079",
+    "source_name": "Siegel der Frostlinie",
+    "proposed_name": "Frostsiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Eine runde Eisglasplatte mit tiefer Fingersenke.",
+    "action": "Ruht in einem gefütterten Holzkästchen zwischen einfachen Werkzeugen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Eine runde Eisglasplatte mit tiefer Fingersenke bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Fingersenke ist trotz Kälte vollkommen klar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-080",
+    "source_name": "Instrument der Rettungwacht",
+    "proposed_name": "Rettungsorgel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Kompakter Kasten mit drei breiten Atemröhren.",
+    "action": "Steht am Eingang eines provisorischen Schutzlagers.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Kompakter Kasten mit drei breiten Atemröhren bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Jede Röhre besitzt einen anders reparierten Windschirm.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-081",
+    "source_name": "Buch der Schildlinie",
+    "proposed_name": "Schildbuch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Aufklappbarer Metallband mit gepolsterten Innenseiten.",
+    "action": "Liegt als kleine tragbare Schutzwand auf einem Feldtisch.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Aufklappbarer Metallband mit gepolsterten Innenseiten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Am Buchrücken sitzt eine wiederholt genähte Stofflasche.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-082",
+    "source_name": "Schlüssel der Eiswacht",
+    "proposed_name": "Eisschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Langer glatter Glasstab mit verschiebbarer Griffhülse.",
+    "action": "Liegt quer über einer eingefrorenen mechanischen Verriegelung.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Langer glatter Glasstab mit verschiebbarer Griffhülse bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die matte Griffhülse hebt sich gegen den durchsichtigen Schaft ab.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-083",
+    "source_name": "Wacht Sanitäter von Keldor-Becken (SW-083)",
+    "proposed_name": "Schneetröster",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Elementares Wesen aus weichen Reifwolken und gefrorenen Tropfen.",
+    "action": "Legt seine kühle Silhouette schützend neben ein erschöpftes Lasttier.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Elementares Wesen aus weichen Reifwolken und gefrorenen Tropfen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Am Boden berührt es nur die Pfütze und nicht das Fell.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-084",
+    "source_name": "Leuchtfeuer Ingenieurin",
+    "proposed_name": "Leuchtfeuerrückkehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Techniker mit geklammerten Fingern.",
+    "action": "Tauscht den Windschutz einer erloschenen Weglaterne aus.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Zurückgekehrter Techniker mit geklammerten Fingern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "An der Innenseite des neuen Schutzes klebt ein warmer Wachstropfen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-085",
+    "source_name": "Rettung-Wächterin",
+    "proposed_name": "Rettungstorwache",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Wachfrau mit breitem wetterfestem Umhang.",
+    "action": "Hält den Torflügel offen, während ein überladener Karren langsam passiert.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Menschliche Wachfrau mit breitem wetterfestem Umhang bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein bloßes Holzstück schützt ihre Hand vor der scharfen Kante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-086",
+    "source_name": "Schild Späher",
+    "proposed_name": "Schildkundiger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Konstrukt aus dünnen Holzrippen unter einer Glasplatte.",
+    "action": "Prüft mit kleinen Klopfarmen die versteckten Risse in einer Schutzscheibe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Konstrukt aus dünnen Holzrippen unter einer Glasplatte bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine einzige Risslinie ist mit einem blauen Stoffband markiert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-087",
+    "source_name": "Eis Rufer",
+    "proposed_name": "Eisrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Mechanoid mit ausklappbaren Schalllamellen und schmalen Beinen.",
+    "action": "Richtet seine Lamellen auf eine verschüttete Höhlenöffnung.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Mechanoid mit ausklappbaren Schalllamellen und schmalen Beinen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein kleiner Resonanzkörper im Brustkorb ist durch eine Klappe sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-088",
+    "source_name": "Wacht-Hauptmann",
+    "proposed_name": "Wachochse",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer Ochse mit breitem gepolstertem Joch.",
+    "action": "Zieht einen Wagen so langsam über Eis, dass die Decken im Wagen ruhig liegen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Großer Ochse mit breitem gepolstertem Joch bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Horn ist kürzer und stumpf verheilt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-089",
+    "source_name": "Leuchtfeuer Schlichterin",
+    "proposed_name": "Leuchtfeuerschlichter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Elementares Wesen aus zusammenhängendem Eis, Wind oder Licht statt Fleisch. Elementar aus zwei ruhigen Lichtkernen in einem Frostmantel.",
+    "action": "Stellt sich zwischen zwei aufeinander gerichtete Laternen, um deren Blendung zu mildern.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Elementar aus zwei ruhigen Lichtkernen in einem Frostmantel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein dunkler Streifen im Frostmantel trennt die Lichtkerne.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-090",
+    "source_name": "Stille Sanitäter",
+    "proposed_name": "Stillenpfleger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Heiler mit leinenverstärktem Unterkiefer.",
+    "action": "Wechselt vorsichtig die feuchte Kopfstütze einer leeren Feldtrage.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Zurückgekehrter Heiler mit leinenverstärktem Unterkiefer bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein kleiner sauberer Tuchwinkel ist ordentlich untergeschlagen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-091",
+    "source_name": "Bastion-Ingenieurin",
+    "proposed_name": "Bastionsingenieurin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Zimmerin mit kurzer Leiter und Keilbeutel.",
+    "action": "Stützt eine beschädigte Schutzgalerie von unten, bevor sie selbst hinaufsteigt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Menschliche Zimmerin mit kurzer Leiter und Keilbeutel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Keilbeutel ist aus einem ausgedienten Handschuh gefertigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-092",
+    "source_name": "Pass Wächterin",
+    "proposed_name": "Passhüter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Konstrukt aus gestapelten Steinbögen und Holzverbindungen.",
+    "action": "Formt mit seinen Stützen eine kleine Überdachung über einer freien Treppenkehre.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Konstrukt aus gestapelten Steinbögen und Holzverbindungen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Steinbogen trägt einen längst verwitterten Seilabdruck.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-093",
+    "source_name": "Grenze Späher",
+    "proposed_name": "Grenzspäher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Kleiner Mechanoid mit schwenkbarem periskopartigem Hals.",
+    "action": "Blickt über einen zusammengebrochenen Zaun, ohne ihn weiter zu belasten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Kleiner Mechanoid mit schwenkbarem periskopartigem Hals bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Seine Standfüße verteilen Gewicht auf breite gelochte Platten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-094",
+    "source_name": "Eid-Rufer",
+    "proposed_name": "Eidrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer schneeweißer Vogel mit kräftigem Schnabel und dunklen Füßen.",
+    "action": "Ruft neben einer ausgelegten Rettungsleine und hält die Leine mit einer Kralle.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Großer schneeweißer Vogel mit kräftigem Schnabel und dunklen Füßen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine einzelne dunkle Feder unterscheidet den linken Flügel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-095",
+    "source_name": "Unerwartete wallprobe von Veyr-Stufen (SW-095)",
+    "proposed_name": "Wallgriff",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Herabfallende Schildplatte vor einer ausgestreckten Hand.",
+    "action": "Eine blaue Raumfalte bildet unter dem Griff eine zweite kurz tragende Fläche.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Herabfallende Schildplatte vor einer ausgestreckten Hand bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Finger schließen sich erst nach dem sichtbaren Halt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-096",
+    "source_name": "Verlorene frostnacht von Namar-Hochland (SW-096)",
+    "proposed_name": "Frostlager",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Offene Schlafstellen vor einem hereindrückenden Sturm.",
+    "action": "Eine niedrige Eisglaswand wächst im Bodenfrost entlang der Deckenreihe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Offene Schlafstellen vor einem hereindrückenden Sturm bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die oberste Wandkante bleibt unregelmäßig und niedrig.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-097",
+    "source_name": "Die passwende",
+    "proposed_name": "Passwende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Abwärts strömende Schneefahne an einer scharfen Felskante.",
+    "action": "Die Fahne biegt plötzlich um und zeigt die windstille Seite des Passes.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Abwärts strömende Schneefahne an einer scharfen Felskante bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein einzelner loser Gurt folgt der neuen Windrichtung verzögert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-098",
+    "source_name": "Letzte grenzespur",
+    "proposed_name": "Grenzlichtspur",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Wegzeichen am Rand eines zugeschneiten Abhangs.",
+    "action": "Blaue Lichtpunkte erscheinen nacheinander auf den sicheren Steinen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Wegzeichen am Rand eines zugeschneiten Abhangs bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Keine Lichtpunkte schweben über dem gefährlichen Hohlraum.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-099",
+    "source_name": "Unerwartete eidprobe",
+    "proposed_name": "Eidprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Gesprungener Schild zwischen zwei verwundbaren Händen.",
+    "action": "Die Hände lassen den Griff los, während ein kurzer blauer Bogen das Schild trägt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Gesprungener Schild zwischen zwei verwundbaren Händen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der alte Riss bleibt trotz der schützenden Kraft unverändert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-100",
+    "source_name": "Schlüssel der Wallwacht",
+    "proposed_name": "Wallschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Schwerer Riegelheber mit weichem eisblauem Griff.",
+    "action": "Lehnt an einer halboffenen Schutzmauertür im Schnee.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Schwerer Riegelheber mit weichem eisblauem Griff bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Werkzeug besitzt eine aufgelegte Holzbacke gegen Funkenbildung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-101",
+    "source_name": "Klinge der Frostlinie",
+    "proposed_name": "Frostklinge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Stumpfer Eisbrecher mit kurzer gesicherter Schneide.",
+    "action": "Liegt auf einem nassen Brett neben frisch gelösten Eisstücken.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Stumpfer Eisbrecher mit kurzer gesicherter Schneide bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Fingerbügel verhindert sichtbar das Abrutschen zum Blatt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-102",
+    "source_name": "Amulett der Rettungwacht",
+    "proposed_name": "Rettungskapsel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Kleine doppelwandige Dose an einer groben Trageschnur.",
+    "action": "Liegt geöffnet zwischen trockenen Verbänden auf einer Tuchfläche.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Kleine doppelwandige Dose an einer groben Trageschnur bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "In der Innenwand bleibt ein einzelner warmer Tropfen stehen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-103",
+    "source_name": "Schild-Schlichterin",
+    "proposed_name": "Schildschlichterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Menschliche Handwerkerin mit einem leeren Schildrahmen.",
+    "action": "Zeigt den Rahmen einem wartenden Trupp und markiert eine sichere Griffhöhe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Menschliche Handwerkerin mit einem leeren Schildrahmen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Markierung besteht nur aus einer kurzen hellen Stoffschlinge.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-104",
+    "source_name": "Eis Sanitäter",
+    "proposed_name": "Eispfleger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Hilfskonstrukt aus Tonringen und frostsicheren Glasarmen.",
+    "action": "Trägt zwei gefüllte Wasserschalen vollkommen waagerecht über Geröll.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Hilfskonstrukt aus Tonringen und frostsicheren Glasarmen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Tonring ist mit grobem Bast eng zusammengebunden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-105",
+    "source_name": "Wacht Ingenieurin",
+    "proposed_name": "Wachtwerker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Mechanoid mit sichtbaren Gelenken und technischen Antrieben. Mechanoid mit schwenkbarem Seilmagazin und standfesten Füßen.",
+    "action": "Führt eine frische Rettungsleine durch eine gerissene Mauerschlaufe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Mechanoid mit schwenkbarem Seilmagazin und standfesten Füßen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die alte Leine bleibt sichtbar neben der neuen hängen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-106",
+    "source_name": "Leuchtfeuer-Wächterin",
+    "proposed_name": "Leuchtfeuerhirsch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer Hirsch mit tragbarer blauer Weglaterne im Geschirr.",
+    "action": "Steht ruhig an einer verschneiten Abzweigung, während Reisende sich sammeln.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Großer Hirsch mit tragbarer blauer Weglaterne im Geschirr bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Laterne hängt unterhalb des Geweihs und blendet das Tier nicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-107",
+    "source_name": "Unerwartete stilleprobe",
+    "proposed_name": "Stilleprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Klappernde Schutzplatten über einem Krankenlager.",
+    "action": "Ein dünner blauer Schleier fängt ihre Schwingung ab, während Wind weiterzieht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Klappernde Schutzplatten über einem Krankenlager bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein freier Riemen außerhalb des Schleiers flattert weiterhin.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-108",
+    "source_name": "Verlorene bastionnacht",
+    "proposed_name": "Bastionsnacht",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Dunkler Schutzgang mit mehreren erloschenen Laternen.",
+    "action": "Ein kaltes blaues Licht wandert am Boden entlang bis zum freien Ausgang.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Dunkler Schutzgang mit mehreren erloschenen Laternen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Lampen selbst bleiben sichtbar dunkel und unverändert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-109",
+    "source_name": "Siegel der Eislinie",
+    "proposed_name": "Siegel des Eises",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Flacher Glaszylinder mit austauschbarer Frostplatte.",
+    "action": "Ruht auf weichem Filz neben einem zerbrochenen Vorgängerteil.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Veyr-Stufen; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Flacher Glaszylinder mit austauschbarer Frostplatte bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine eingeschlossene kleine Schneekristallform sitzt seitlich statt zentral.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  },
+  {
+    "card_id": "SW-110",
+    "source_name": "Instrument der Wachtwacht",
+    "proposed_name": "Wachtpendel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Schlichtes tragbares Gerät mit schwerem Eisglaspendel.",
+    "action": "Steht waagerecht auf einem provisorisch gestützten Mauerstück.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Schlichtes tragbares Gerät mit schwerem Eisglaspendel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Pendel läuft knapp an einer absichtlich offenen Messkerbe vorbei.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Eisblau bleibt Hauptakzent; keine bedrohliche Herrscherikonografie oder neue Weltgesetze."
+    ]
+  }
+]

@@ -1,0 +1,31 @@
+name: Production content checks
+
+on:
+  pull_request:
+    paths:
+      - 'data/lore/**'
+      - 'data/production/**'
+      - 'assets/production/**'
+      - 'tools/production/**'
+      - 'tests/production/**'
+      - 'tools/test_production_content.sh'
+      - '.github/workflows/production-content.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authoring:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m pip install Pillow==13.0.0
+      - run: bash tools/test_production_content.sh
