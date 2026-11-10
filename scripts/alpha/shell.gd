@@ -48,6 +48,7 @@ var viewport_version := -1
 var first_frame := true
 var render_pending := false
 var last_primary_ms := -1000
+var primary_ref: WeakRef
 var rotation_block_until := 0
 var render_version := 0
 var modal_version := 0
@@ -75,6 +76,7 @@ func _ready() -> void:
 	feedback=preload("res://scripts/alpha/feedback.gd").new();feedback.z_index=100;add_child(feedback)
 	render()
 func _process(delta: float) -> void:
+	_update_primary_readiness()
 	if first_frame:
 		first_frame=false
 		# Godot applies the project window title after the initial main scene's ready.
@@ -202,6 +204,13 @@ func start_battle() -> void:
 	if not session.start_match(mode,AlphaCatalog.new().deck(faction) if mode=="alpha" and match_use_starter else current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
 	last_primary_ms=-1000
 	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];message="Wähle deine Starthand. Danach legst du den Ursprung fest.";render()
+func _update_primary_readiness() -> void:
+	if primary_ref==null:return
+	var primary=primary_ref.get_ref()
+	if primary==null:return
+	# SceneTreeTimer can consume the previous slow frame's delta immediately.
+	# Readiness and command rejection must use the same monotonic clock.
+	primary.disabled=bool(primary.get_meta("rule_blocked",true)) or Time.get_ticks_msec()-last_primary_ms<180
 func act(command: String, args: Array) -> void:
 	var primary_command=command in ["endTurn","finishDraw","burn","converge"]
 	if primary_command and Time.get_ticks_msec()-last_primary_ms<180:return
@@ -255,13 +264,9 @@ func battle() -> void:
 	var caption="KONVERGENZ ERKLÄREN %d/3" % convergence_lanes.size() if action_mode=="converge" else "ZIEL FÜR ANKUNFT WÄHLEN" if s.hero.pendingTarget!=null else "POSITION WÄHLEN" if s.hero.pendingShift!=null else "GÜLTIGES ZIEL ANTIPPEN" if picking else "KARTE VERBRENNEN" if overflow else "KARTEN NACHZIEHEN" if s.hero.phase=="draw" else "ZUG BEENDEN  →"
 	var blocked=s.winner!=null or s.active!="hero" or overflow and selected<0 or s.hero.pendingTarget!=null or s.hero.pendingShift!=null or picking or action_mode=="converge" and convergence_lanes.size()!=3
 	var primary=button("end",caption,func():convergence_action() if action_mode=="converge" else act("burn",["hero",selected]) if overflow else act("finishDraw",["hero"]) if s.hero.phase=="draw" else act("endTurn",["hero"]),bar,blocked)
-	var remaining=180-(Time.get_ticks_msec()-last_primary_ms)
-	if remaining>0:
-		primary.disabled=true
-		var primary_ref=weakref(primary)
-		get_tree().create_timer(float(remaining)/1000.0).timeout.connect(func():
-			var current=primary_ref.get_ref()
-			if current!=null:current.disabled=blocked)
+	primary.set_meta("rule_blocked",blocked)
+	primary_ref=weakref(primary)
+	_update_primary_readiness()
 	primary.size_flags_stretch_ratio=3;primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
 	button("actions","Mehr / Ressourcen",show_actions,bar,s.winner!=null).size_flags_horizontal=Control.SIZE_SHRINK_END
 	button("inspect","Details",func():if selected>=0:inspect(session.card(s.hero.hand[selected])),bar,selected<0).size_flags_horizontal=Control.SIZE_SHRINK_END
