@@ -18,9 +18,11 @@ class ProductionArtManifest(unittest.TestCase):
         manifest, briefs = ART.build()
         self.assertEqual(manifest["inventory_card_count"], 550)
         self.assertEqual(len(briefs["entries"]), 550)
-        self.assertEqual(manifest["individual_original_count"], 5)
-        self.assertEqual(manifest["missing_individual_count"], 545)
-        self.assertEqual(manifest["final_individual_count"], 5)
+        self.assertEqual(manifest["individual_original_count"], 15)
+        self.assertEqual(manifest["missing_individual_count"], 535)
+        self.assertEqual(manifest["final_individual_count"], 15)
+        self.assertEqual(manifest["compact_preview_count"], 15)
+        self.assertEqual(manifest["orphan_preview_files"], [])
         self.assertEqual(manifest["commercially_cleared_count"], 0)
         self.assertEqual(manifest["orphan_files"], [])
         for entry in manifest["entries"].values():
@@ -39,8 +41,17 @@ class ProductionArtManifest(unittest.TestCase):
             self.assertEqual((width, height), (1448, 1086))
             self.assertEqual(digest, entry["sha256"])
             self.assertNotIn(digest, digests)
-            self.assertEqual(entry["edits"], [])
-            self.assertEqual(entry["reference_sources"], [])
+            for edit in entry["edits"]:
+                self.assertEqual(edit["method"], "OpenAI Image Generation")
+                self.assertGreater(len(edit["instruction"]), 100)
+            for reference in entry["reference_sources"]:
+                self.assertEqual(reference["kind"], "project_generated_illustration")
+                self.assertEqual(len(reference["sha256"]), 64)
+                self.assertTrue(entry["edits"])
+                archive = ROOT / reference["repository_path"]
+                self.assertTrue(archive.resolve().is_relative_to((ROOT / "docs/production/art-evidence/source-references").resolve()))
+                self.assertFalse(archive.is_symlink())
+                self.assertEqual(ART.png_info(archive)[2], reference["sha256"])
             self.assertIn("illustration", entry["source_prompt"].lower())
             digests.add(digest)
 
@@ -69,6 +80,7 @@ class ProductionArtManifest(unittest.TestCase):
             root = Path(temp)
             shutil.copytree(ROOT / "data/production", root / "data/production")
             shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals")
+            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews")
             path = root / "data/production/art_sources.json"
             original = ART.load(path)
             first = next(iter(original["entries"]))
@@ -79,6 +91,36 @@ class ProductionArtManifest(unittest.TestCase):
             changed = copy.deepcopy(original); changed["entries"]["unknown-card"] = changed["entries"].pop(first)
             path.write_text(json.dumps(changed), encoding="utf-8")
             with self.assertRaises(ValueError): ART.build(root)
+
+    def test_compact_preview_source_binding(self):
+        previews = ART.load(ROOT / "data/production/art_previews.json")["entries"]
+        sources = ART.load(ROOT / "data/production/art_sources.json")["entries"]
+        self.assertEqual(set(previews), set(sources))
+        hashes = set()
+        for card_id, preview in previews.items():
+            path = ART.checked_asset(ROOT, preview["asset_path"], "previews")
+            width, height, digest = ART.png_info(path)
+            self.assertEqual((width, height), (512, 384))
+            self.assertEqual(preview["source_sha256"], sources[card_id]["sha256"])
+            self.assertEqual(preview["sha256"], digest)
+            self.assertNotIn(digest, hashes)
+            self.assertEqual(preview["source_asset_path"], sources[card_id]["asset_path"])
+            self.assertEqual(preview["profile"], "compact-512-v1")
+            hashes.add(digest)
+
+    def test_stale_preview_metadata_rejected(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            shutil.copytree(ROOT / "data/production", root / "data/production")
+            shutil.copytree(ROOT / "assets/cards/originals", root / "assets/cards/originals")
+            shutil.copytree(ROOT / "assets/cards/previews", root / "assets/cards/previews")
+            path = root / "data/production/art_previews.json"
+            original = ART.load(path)
+            first = next(iter(original["entries"]))
+            for key, value in [("source_sha256", "0" * 64), ("width", 513), ("sha256", "0" * 64), ("asset_path", "res://assets/cards/previews/wrong-card.png")]:
+                changed = copy.deepcopy(original); changed["entries"][first][key] = value
+                path.write_text(json.dumps(changed), encoding="utf-8")
+                with self.assertRaises(ValueError): ART.build(root)
 
 
 if __name__ == "__main__": unittest.main()

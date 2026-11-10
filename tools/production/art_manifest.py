@@ -77,8 +77,10 @@ def png_info(path: Path) -> tuple[int, int, str]:
     return width, height, hashlib.sha256(data).hexdigest()
 
 
-def checked_asset(root: Path, asset: str) -> Path:
-    if not asset.startswith("res://assets/cards/originals/") or not asset.endswith(".png"):
+def checked_asset(root: Path, asset: str, directory: str = "originals") -> Path:
+    if directory not in ["originals", "previews"]:
+        raise ValueError("Unknown illustration directory")
+    if not asset.startswith(f"res://assets/cards/{directory}/") or not asset.endswith(".png"):
         raise ValueError(f"Original path outside illustration directory: {asset}")
     relative = asset.removeprefix("res://")
     if any(token in relative for token in ["..", "\\", "%", ":", "//"]):
@@ -86,7 +88,7 @@ def checked_asset(root: Path, asset: str) -> Path:
     path = root / relative
     if any(part.is_symlink() for part in [path, *path.parents] if part != root.parent):
         raise ValueError(f"Symlink artwork rejected: {asset}")
-    if not path.resolve().is_relative_to((root / "assets/cards/originals").resolve()):
+    if not path.resolve().is_relative_to((root / f"assets/cards/{directory}").resolve()):
         raise ValueError(f"Asset escapes original directory: {asset}")
     return path
 
@@ -96,6 +98,10 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
     catalog = load(catalog_path)
     cards = catalog["cards"] if isinstance(catalog, dict) else catalog
     sources = load(root / "data/production/art_sources.json")["entries"]
+    preview_manifest_path = root / "data/production/art_previews.json"
+    previews = load(preview_manifest_path)["entries"] if preview_manifest_path.exists() else {}
+    if previews and set(previews) != set(sources):
+        raise ValueError("Every actual original must have its own current compact preview")
     cards_by_id = {c["id"]: c for c in cards}
     if len(cards_by_id) != len(cards): raise ValueError("Duplicate catalog card IDs")
     if set(sources) - set(cards_by_id): raise ValueError("Orphan art source IDs")
@@ -126,6 +132,17 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
             for key in ["source_prompt", "creator_or_generator", "creation_date", "alternative_text", "reference_sources", "commercial_review"]:
                 if key not in source: raise ValueError(f"Missing provenance {key}: {card_id}")
             entry.update({key: source[key] for key in ["asset_path", "status", "individual_original", "production_review", "commercially_cleared", "commercial_review", "alternative_text", "original_width", "original_height", "sha256"]})
+            if card_id in previews:
+                preview = previews[card_id]
+                expected_preview = f"res://assets/cards/previews/{card_id}.png"
+                if preview.get("asset_path") != expected_preview or preview.get("source_asset_path") != expected_path or preview.get("source_sha256") != digest:
+                    raise ValueError(f"Preview/source binding mismatch: {card_id}")
+                pw, ph, pdigest = png_info(checked_asset(root, expected_preview, "previews"))
+                ratio = min(1.0, 512 / max(width, height))
+                expected_dimensions = (int(width * ratio + 0.5), int(height * ratio + 0.5))
+                if (pw, ph) != expected_dimensions or (pw, ph) != (preview.get("width"), preview.get("height")) or pdigest != preview.get("sha256") or preview.get("profile") != "compact-512-v1":
+                    raise ValueError(f"Preview dimensions/hash/profile mismatch: {card_id}")
+                entry.update({"preview_asset_path": expected_preview, "preview_width": pw, "preview_height": ph, "preview_sha256": pdigest})
         entries[card_id] = entry
         briefs.append({
             "card_id": card_id, "name": name, "power": power, "kind": card["kind"],
@@ -139,7 +156,9 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
         })
     disk_art = {"res://" + str(p.relative_to(root)) for p in (root / "assets/cards/originals").glob("*.png")}
     represented = {e["asset_path"] for e in entries.values() if e["asset_path"]}
-    manifest = {"schema_version": 1, "source_catalog": "data/production/cards.json", "source_catalog_sha256": hashlib.sha256(catalog_path.read_bytes()).hexdigest(), "provenance": "data/production/art_sources.json", "inventory_card_count": len(cards), "individual_original_count": len(sources), "final_individual_count": sum(e["status"] == "final" for e in entries.values()), "missing_individual_count": len(cards) - len(sources), "commercially_cleared_count": sum(e["commercially_cleared"] for e in entries.values()), "orphan_files": sorted(disk_art - represented), "entries": entries}
+    preview_disk = {"res://" + str(p.relative_to(root)) for p in (root / "assets/cards/previews").glob("*.png")}
+    represented_previews = {e["preview_asset_path"] for e in entries.values() if e.get("preview_asset_path")}
+    manifest = {"schema_version": 1, "source_catalog": "data/production/cards.json", "source_catalog_sha256": hashlib.sha256(catalog_path.read_bytes()).hexdigest(), "provenance": "data/production/art_sources.json", "inventory_card_count": len(cards), "individual_original_count": len(sources), "final_individual_count": sum(e["status"] == "final" for e in entries.values()), "missing_individual_count": len(cards) - len(sources), "commercially_cleared_count": sum(e["commercially_cleared"] for e in entries.values()), "orphan_files": sorted(disk_art - represented), "compact_preview_count": len(previews), "orphan_preview_files": sorted(preview_disk - represented_previews), "entries": entries}
     return manifest, {"schema_version": 1, "lore_source": "docs/LORE-BIBLE.md", "scope_de": "Art-Briefs sind vorläufige Produktionsanweisungen, keine erzeugten Illustrationen und kein zusätzlicher Kanon.", "count": len(briefs), "entries": briefs}
 
 

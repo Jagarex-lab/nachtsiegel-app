@@ -72,6 +72,7 @@ Kausaljäger studies three causal positions of a pebble. This limited visual che
 does not replace later commercial rights review. The root agent approved these
 five for the current visual production direction; legal clearance remains false.
 
-For the remaining 545 images, expand the catalog briefs into distinctive
+After the additional ten approved originals in [art batch 2](ART_BATCH2.md),
+535 images remain. For those images, expand the catalog briefs into distinctive
 compositions and locations before generation. A repeated prompt with only a name
 changed is not sufficient art direction or evidence of commercial quality.

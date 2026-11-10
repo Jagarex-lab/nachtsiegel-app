@@ -1,15 +1,15 @@
 # Illustration pipeline and actual delivery
 
 Status: production work in progress, 10 November 2026. The 550-record candidate
-catalog has **five newly generated, visually approved individual illustrations**,
-not 550 finished illustrations. **545 individual illustrations are missing.**
+catalog has **15 newly generated, visually approved individual illustrations**,
+not 550 finished illustrations. **535 individual illustrations are missing.**
 The implementing and root agents inspected the actual original images and card
 renders under the user's delegated production order. Commercial rights review
 remains incomplete for every image.
 
 `data/production/art_briefs.json` contains one brief for each actual catalog ID.
 These instructions are proposals, not generated assets or new world canon.
-`data/production/art_sources.json` records the five actual images, complete
+`data/production/art_sources.json` records the 15 actual images, complete
 generation prompts, date, original dimensions, byte hashes, absence of reference
 images, absence of edits and current review status. The native PNG originals
 remain in `assets/cards/originals/` and are not AI-upscaled versions of the atlas.
@@ -61,28 +61,30 @@ share it. The resolver returns the texture, actual display state, label, path,
 individual-original flag and commercial-clearance flag. An explicit card field
 cannot promote an unapproved original or the shared atlas to a final illustration.
 
-The least-recently-used cache retains at most eight textures and an estimated
+The least-recently-used cache retains at most 48 textures and an estimated
 32 MiB of RGBA pixels including a mip pyramid. `stats()` exposes the estimate and
 load/hit counters; `clear_cache()` releases retained references. These are cache
 estimates, **not measured total GPU/browser memory**; visible nodes and Godot can
 hold additional references. A future 550-image release must also measure export
 size, decode stalls, actual device memory and individual asset streaming.
 
-The five originals use lossless import at their native dimensions and generated
-mipmaps. No size-limit downsampling is applied. Linear mip filtering applies to
+The first five originals use lossless import at their native dimensions and
+generated mipmaps. The next ten use quality-0.90 lossy import at native dimensions
+with mipmaps. Compact controls use separately generated 512-pixel previews; the
+full inspector retains the original native dimensions. No original is upscaled. Linear mip filtering applies to
 illustrations, while text remains deterministic font rendering. PNG source image,
 frame, statistics, titles, symbols and rules are separate. All cards retain the
 same renderer-controlled 756 × 1056 outer silhouette and common card back.
 
 ## Rights and release limits
 
-OpenAI Image Generation produced these five assets without supplied reference
+OpenAI Image Generation produced these assets without supplied reference
 images. Their prompts request original local scenes and exclude known characters,
 logos and game interfaces. This records provenance and a visual screening; it is
 **not a legal opinion, trademark search, guarantee of exclusivity or completed
-commercial clearance**. `commercially_cleared` remains false for all five.
+commercial clearance**. `commercially_cleared` remains false for all 15.
 
-The five images moved to `final` / `approved` only after the root agent reviewed
+The first five images moved to `final` / `approved` only after the root agent reviewed
 the actual rendered masters for palette, species, motif, crop and obvious visual
 errors. This is delegated visual production approval, not a human legal review.
 The two dimensions remain separate: `status=final` says the image is visually
@@ -91,6 +93,11 @@ that legal review is still open. The project owner must retain applicable
 generation terms and complete that review before claiming commercial clearance.
 Do not set either flag merely to remove a label.
 
-The 545 missing originals remain production blockers for the user's full final
+The 535 missing originals remain production blockers for the user's full final
 acceptance. The usable candidate catalog and missing-art pipeline do not satisfy
 the complete commercial illustration requirement.
+
+The first-five table above records the initial delivery. See [individual art
+batch 2](ART_BATCH2.md) for the ten additional illustrations, actual conditioning
+measurements, preview pipeline and cache evidence. The preview derivatives do
+not increase the original count.

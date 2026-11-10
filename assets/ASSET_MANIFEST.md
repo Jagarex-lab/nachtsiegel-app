@@ -45,5 +45,25 @@ Motiv, Arten, Palette, Beschneidung und sichtbare Fehler geprüft und für die
 aktuelle visuelle Produktionsrichtung freigegeben (`final` / `approved`). Das
 ist keine juristische Freigabe. Prüfung der maßgeblichen Nutzungsbedingungen
 und abschließende kommerzielle Rechteprüfung stehen aus; keine Exklusivität oder
-juristische Unbedenklichkeit wird behauptet. Die übrigen 545 Einzelillustrationen
+juristische Unbedenklichkeit wird behauptet. Nach dem ersten Paket fehlten 545 Einzelillustrationen
 des Produktionskandidaten fehlen weiterhin.
+
+## ORAFOLD-Produktionsillustrationen – Paket 2 (10.11.2026)
+
+Zehn weitere individuelle Originale mit nativen 1448 × 1086 Pixeln liegen unter
+`assets/cards/originals/`: Kupferspinne, Restaurationslampe, Gepanzerter Keim, Wand
+aus Erinnerung, Zweithautechse, Reißende Blüte, Taktfalter, Verzögerungsspule,
+Wanderfeuer und Gemeinsame Deckung. Sie gehören zu bestehenden Starterdeckkarten.
+Neun Bilder wurden ohne Referenzen erzeugt; Zweithautechse erhielt eine dokumentierte
+Image-Generation-Korrektur auf Grundlage des eigenen ersten Projektbilds.
+Provenienz, Original-/Referenzhashes und Bearbeitungsauftrag stehen vollständig in
+`data/production/art_sources.json`. Native Originale und tatsächliche Godot-Karten-
+ansichten wurden visuell geprüft; die kommerzielle Rechteprüfung bleibt offen.
+
+15 technische 512 × 384 Vorschaubilder unter `assets/cards/previews/` entstehen
+ausschließlich durch deterministische Godot-Verkleinerung derselben 15 Originale.
+Sie sind keine weiteren individuellen Illustrationen. Quell- und Vorschauhashes
+sind in `data/production/art_previews.json` gebunden. Es wurde kein fehlendes
+Bild durch Hochskalieren erfunden. Aktueller Bestand: 15 individuelle visuell
+freigegebene Originale, 535 fehlende Originale, keine behauptete juristische
+Unbedenklichkeit oder Exklusivität. Einzelheiten: `docs/production/ART_BATCH2.md`.

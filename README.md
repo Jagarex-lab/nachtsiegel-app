@@ -10,7 +10,7 @@ Digitales Sammelkartenspiel in Godot 4.6.3: fünf Kampfpfade, lokale KI, 30-Kart
 
 Der neue Kandidat verwendet genau 550 aktive Kartendefinitionen: je 110 für Zwölf Häuser, Stillwacht, Vielgestalt, Neunte Stunde und Neutral. Drei Haupttypen: Wesen, Impuls und Relikt. Die 100 Legacy-Kreaturen und der ursprüngliche 55er-Alpha-Katalog bleiben getrennte historische Regel-/Testprofile und erscheinen nicht zusätzlich in der regulären Sammlung.
 
-**Diese Zahl ist keine Behauptung einer fertigen kommerziellen Version.** Individuelle Illustrationen, die Aussagekraft der Balance und Plattformprüfungen werden getrennt ausgewiesen. Aktuell liegen fünf individuelle Illustrationsentwürfe vor, keine 550 final freigegebenen Bilder. Der [Produktionsaudit](docs/production/AUDIT.md) beschreibt die Ausgangslage; [Umsetzungsplan](docs/production/PLAN.md), [Bereinigungsbericht](docs/production/CLEANUP.md) und die Paketberichte halten den jeweiligen Nachweis fest.
+**Diese Zahl ist keine Behauptung einer fertigen kommerziellen Version.** Individuelle Illustrationen, die Aussagekraft der Balance und Plattformprüfungen werden getrennt ausgewiesen. Aktuell liegen 15 individuell erzeugte und visuell freigegebene Illustrationen vor; 535 Einzelbilder fehlen. Die kommerzielle Rechteprüfung bleibt getrennt offen. Der [Produktionsaudit](docs/production/AUDIT.md) beschreibt die Ausgangslage; [Umsetzungsplan](docs/production/PLAN.md), [Bereinigungsbericht](docs/production/CLEANUP.md) und die Paketberichte halten den jeweiligen Nachweis fest.
 
 ## Spielen und Decks
 
@@ -41,4 +41,4 @@ Der [manuelle Releaseprozess](docs/release/PAGES_RELEASE_SAFETY.md) veröffentli
 
 [Asset-Herkunft](assets/ASSET_MANIFEST.md) · [Kartenstil](docs/master550/CARD_STYLE_GUIDE.md) · [Legacy-Migration](docs/migration/LEGACY_PARITY_AUDIT.md)
 
-Godot: MIT. Projektcode/-inhalte: bestehender Rechtevorbehalt laut `LICENSE-NOTICE.md`; Schriftlizenzen liegen bei. Generierte Einzelbilder sind Illustrationsentwürfe mit dokumentierter Herkunft und ausstehender Produktions-/Rechteprüfung. Eine spätere kommerzielle Freigabe wird nicht durch eine technische Datenprüfung ersetzt.
+Godot: MIT. Projektcode/-inhalte: bestehender Rechtevorbehalt laut `LICENSE-NOTICE.md`; Schriftlizenzen liegen bei. Generierte Einzelbilder besitzen dokumentierte Herkunft und eine getrennt ausgewiesene visuelle Produktionsprüfung; die kommerzielle Rechteprüfung ist noch offen. Eine spätere kommerzielle Freigabe wird nicht durch eine technische Datenprüfung ersetzt.
