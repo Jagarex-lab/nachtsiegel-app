@@ -163,7 +163,7 @@ func shell_checks(entries: Array) -> void:
 	app.session.profile.decks = fixture_saved.duplicate(true)
 	app.session.profile.reduced_motion = true
 	app.mode = "alpha";app.faction = "houses"
-	for dimensions in [Vector2i(390, 844), Vector2i(844, 390)]:
+	for dimensions in [Vector2i(390, 844), Vector2i(844, 390), Vector2i(320, 568), Vector2i(756, 320)]:
 		root.size = dimensions
 		app.close_modal();app.open_cards(false);await settle()
 		check(app.actions.has("strategy_templates") and bounded(app.actions.strategy_templates), "visible44px template button " + str(dimensions))
@@ -209,5 +209,5 @@ func run() -> void:
 	check(file != null, "write reproducible test deck artifact")
 	if file != null:
 		file.store_string(JSON.stringify({"godot_version":Engine.get_version_info().string, "source_sha256":FileAccess.get_sha256(SOURCE), "assertions":assertions, "failures":failures, "games":games}, "\t", true));file.close()
-	print("MASTER550 TEST DECKS: %d assertions, %d failures; %d complete games; 10 strategies, 2 first positions, 2 actual shell sizes" % [assertions, failures, games.size()])
+	print("MASTER550 TEST DECKS: %d assertions, %d failures; %d complete games; 10 strategies, 2 first positions, 4 actual shell sizes" % [assertions, failures, games.size()])
 	root.get_node("GameAudio").request_quit(0 if failures == 0 else 1)
