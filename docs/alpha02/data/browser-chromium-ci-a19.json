@@ -1,0 +1,175 @@
+{
+  "source_head": "a19cbfce00b07e1eb97ae469595aaf69f831c744",
+  "workflow_run": 42803472609,
+  "measurements": [
+    {
+      "engine": "chromium",
+      "boot_ms": 2863,
+      "metrics": {
+        "cssWidth": 390,
+        "cssHeight": 844,
+        "pixelsWidth": 1170,
+        "pixelsHeight": 2532,
+        "dpr": 3,
+        "zoom": 1,
+        "visibleHeight": 844,
+        "lockAvailable": true,
+        "transform": "none"
+      },
+      "rotationMetrics": [
+        {
+          "cssWidth": 390,
+          "cssHeight": 844,
+          "pixelsWidth": 1170,
+          "pixelsHeight": 2532,
+          "dpr": 3,
+          "zoom": 1,
+          "visibleHeight": 844,
+          "lockAvailable": true
+        },
+        {
+          "cssWidth": 390,
+          "cssHeight": 844,
+          "pixelsWidth": 1170,
+          "pixelsHeight": 2532,
+          "dpr": 3,
+          "zoom": 1,
+          "visibleHeight": 500,
+          "lockAvailable": true
+        }
+      ],
+      "captures": [
+        "cdp-explicit-native-viewport",
+        "cdp-explicit-native-viewport",
+        "cdp-explicit-native-viewport"
+      ],
+      "timings": [
+        {
+          "action": "start",
+          "qa_state_ms": 1157
+        },
+        {
+          "action": "choose_houses",
+          "qa_state_ms": 339
+        },
+        {
+          "action": "deck_play",
+          "qa_state_ms": 380
+        },
+        {
+          "action": "mulligan_done",
+          "qa_state_ms": 1296
+        },
+        {
+          "action": "origin_2",
+          "qa_state_ms": 1110
+        },
+        {
+          "action": "opening_done",
+          "qa_state_ms": 1451
+        },
+        {
+          "action": "inspect",
+          "qa_state_ms": 1500
+        },
+        {
+          "action": "modal_close",
+          "qa_state_ms": 228
+        },
+        {
+          "action": "cancel_selection",
+          "qa_state_ms": 331
+        },
+        {
+          "action": "menu",
+          "qa_state_ms": 237
+        },
+        {
+          "action": "confirm_menu",
+          "qa_state_ms": 323
+        },
+        {
+          "action": "builder",
+          "qa_state_ms": 962
+        },
+        {
+          "action": "filters",
+          "qa_state_ms": 1408
+        },
+        {
+          "action": "filter_type",
+          "qa_state_ms": 1983
+        },
+        {
+          "action": "option_filter_type_creature",
+          "qa_state_ms": 1703
+        },
+        {
+          "action": "filters",
+          "qa_state_ms": 1401
+        },
+        {
+          "action": "reset_filters",
+          "qa_state_ms": 1935
+        },
+        {
+          "action": "filters",
+          "qa_state_ms": 911
+        },
+        {
+          "action": "reset_filters",
+          "qa_state_ms": 1169
+        },
+        {
+          "action": "deck_tab",
+          "qa_state_ms": 1481
+        },
+        {
+          "action": "remove_oa-neutral-c01",
+          "qa_state_ms": 1045
+        },
+        {
+          "action": "library_tab",
+          "qa_state_ms": 1243
+        },
+        {
+          "action": "add_oa-neutral-c02",
+          "qa_state_ms": 1360
+        },
+        {
+          "action": "save_deck",
+          "qa_state_ms": 1532
+        },
+        {
+          "action": "builder",
+          "qa_state_ms": 1170
+        },
+        {
+          "action": "builder_back",
+          "qa_state_ms": 1436
+        },
+        {
+          "action": "start",
+          "qa_state_ms": 922
+        },
+        {
+          "action": "custom_houses",
+          "qa_state_ms": 1218
+        },
+        {
+          "action": "deck_play",
+          "qa_state_ms": 1170
+        }
+      ],
+      "errors": [],
+      "checks": [
+        "portrait menu and four starters",
+        "real edited deck saved/reloaded/selected",
+        "native DPR3 and MSDF",
+        "safe areas",
+        "rotation preserves complete state and selected card",
+        "landscape paths and card inspector"
+      ]
+    }
+  ]
+}

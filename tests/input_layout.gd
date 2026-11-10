@@ -40,6 +40,14 @@ func touch(control: Control) -> void:
 	event.pressed = false
 	Input.parse_input_event(event)
 	await settle()
+func duplicate_touch(control: Control) -> void:
+	# No renderer waits between taps: under software rendering, a frame wait
+	# could exceed the production lock and accidentally test two separate turns.
+	var point=control.get_global_rect().get_center()
+	for i in 2:
+		for pressed in [true,false]:
+			var event=InputEventScreenTouch.new();event.position=point;event.index=0;event.pressed=pressed;Input.parse_input_event(event)
+	await settle()
 func capture(path: String) -> void:
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png(path)
@@ -47,7 +55,7 @@ func run() -> void:
 	var source = load("res://scripts/arena.gd")
 	if source == null or not source.can_instantiate():
 		printerr("FAIL: Arena cannot instantiate")
-		finish_test(1)
+		await finish_test(1)
 		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
@@ -95,8 +103,7 @@ func run() -> void:
 		await touch(arena.foe_faces[2])
 		check(arena.foes[2] == null and arena.energy == 4,"ScreenTouch casts spell on opponent %s" % dimensions)
 		var round_before = arena.round_number
-		await touch(arena.end_button)
-		await touch(arena.end_button)
+		await duplicate_touch(arena.end_button)
 		var deadline=Time.get_ticks_msec()+5000
 		while arena.busy and Time.get_ticks_msec()<deadline:await process_frame
 		check(arena.round_number == round_before+1 and not arena.busy,"Touch end turn locked against duplicate tap %s" % dimensions)
@@ -142,7 +149,13 @@ func run() -> void:
 	await settle()
 	check(not arena.landscape_panel.visible,"Rotation restores play")
 	print("INPUT/LAYOUT: %d assertions, %d failures; seven landscape sizes; mouse + ScreenTouch" % [assertions,failures])
-	finish_test(1 if failures else 0)
+	await finish_test(1 if failures else 0)
 
 func finish_test(code: int=0) -> void:
+	# Release the fixture and let its presenter cancel pending resize/hover tweens
+	# before the engine tears down cached resources (same lifecycle as Alpha UI).
+	if is_instance_valid(arena):arena.queue_free()
+	arena=null
+	await settle()
+	await create_timer(.5).timeout
 	root.get_node("GameAudio").request_quit(code)

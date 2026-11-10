@@ -1,0 +1,141 @@
+{
+  "official": {
+    "games": 256,
+    "first_wins": 114,
+    "first_wilson95_percent": [
+      38.57,
+      50.66
+    ],
+    "convergence_wins": 55,
+    "median_half_turns": 26.0,
+    "max_half_turns": 222,
+    "max_chain": 10,
+    "non_mirror_power_results": {
+      "houses": {
+        "wins": 24,
+        "games": 96,
+        "wilson95_percent": [
+          17.41,
+          34.51
+        ]
+      },
+      "stillwatch": {
+        "wins": 47,
+        "games": 96,
+        "wilson95_percent": [
+          39.19,
+          58.8
+        ]
+      },
+      "morph": {
+        "wins": 31,
+        "games": 96,
+        "wilson95_percent": [
+          23.78,
+          42.17
+        ]
+      },
+      "ninth": {
+        "wins": 90,
+        "games": 96,
+        "wilson95_percent": [
+          87.03,
+          97.1
+        ]
+      }
+    }
+  },
+  "convergence_off": {
+    "games": 256,
+    "first_wins": 114,
+    "first_wilson95_percent": [
+      38.57,
+      50.66
+    ],
+    "convergence_wins": 0,
+    "median_half_turns": 27.0,
+    "max_half_turns": 222,
+    "max_chain": 10,
+    "non_mirror_power_results": {
+      "houses": {
+        "wins": 25,
+        "games": 96,
+        "wilson95_percent": [
+          18.31,
+          35.62
+        ]
+      },
+      "stillwatch": {
+        "wins": 47,
+        "games": 96,
+        "wilson95_percent": [
+          39.19,
+          58.8
+        ]
+      },
+      "morph": {
+        "wins": 30,
+        "games": 96,
+        "wilson95_percent": [
+          22.85,
+          41.09
+        ]
+      },
+      "ninth": {
+        "wins": 90,
+        "games": 96,
+        "wilson95_percent": [
+          87.03,
+          97.1
+        ]
+      }
+    }
+  },
+  "origin_shield_off": {
+    "games": 256,
+    "first_wins": 117,
+    "first_wilson95_percent": [
+      39.71,
+      51.82
+    ],
+    "convergence_wins": 59,
+    "median_half_turns": 25.5,
+    "max_half_turns": 157,
+    "max_chain": 10,
+    "non_mirror_power_results": {
+      "houses": {
+        "wins": 29,
+        "games": 96,
+        "wilson95_percent": [
+          21.93,
+          40.01
+        ]
+      },
+      "stillwatch": {
+        "wins": 43,
+        "games": 96,
+        "wilson95_percent": [
+          35.24,
+          54.75
+        ]
+      },
+      "morph": {
+        "wins": 31,
+        "games": 96,
+        "wilson95_percent": [
+          23.78,
+          42.17
+        ]
+      },
+      "ninth": {
+        "wins": 89,
+        "games": 96,
+        "wilson95_percent": [
+          85.71,
+          96.42
+        ]
+      }
+    }
+  },
+  "paired_winner_changes": 6
+}

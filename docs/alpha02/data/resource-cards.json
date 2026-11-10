@@ -1,0 +1,271 @@
+{
+  "alpha": [
+    {
+      "id": "oa-neutral-c09",
+      "name": "Resonanzträger",
+      "effect": "weave",
+      "power": 1,
+      "cost": 2,
+      "description": "Ankunft: +2 Resonanz (max.15)."
+    },
+    {
+      "id": "oa-houses-c01",
+      "name": "Namenhüter",
+      "effect": "harvest",
+      "power": 1,
+      "cost": 1,
+      "description": "Beim Tod: +2 Resonanz."
+    },
+    {
+      "id": "oa-houses-c06",
+      "name": "Ahnenrufer",
+      "effect": "weave",
+      "power": 2,
+      "cost": 3,
+      "description": "Ankunft: +3 Resonanz (max.15)."
+    },
+    {
+      "id": "oa-houses-c07",
+      "name": "Die letzte Erbin",
+      "effect": "pulse",
+      "power": 3,
+      "cost": 6,
+      "description": "Ankunft: +3 Resonanz und Schild; beide Nachbarn +1 Angriff."
+    },
+    {
+      "id": "oa-stillwatch-c07",
+      "name": "Die unbewegte Königin",
+      "effect": "pulse",
+      "power": 3,
+      "cost": 6,
+      "description": "Ankunft: +3 Resonanz und Schild; beide Nachbarn +1 Angriff."
+    },
+    {
+      "id": "oa-morph-c04",
+      "name": "Sporenträger",
+      "effect": "harvest",
+      "power": 1,
+      "cost": 2,
+      "description": "Beim Tod: +2 Resonanz."
+    },
+    {
+      "id": "oa-morph-c07",
+      "name": "Die Vielstimmige",
+      "effect": "pulse",
+      "power": 3,
+      "cost": 6,
+      "description": "Ankunft: +3 Resonanz und Schild; beide Nachbarn +1 Angriff."
+    },
+    {
+      "id": "oa-ninth-c06",
+      "name": "Möglichkeitsweber",
+      "effect": "weave",
+      "power": 2,
+      "cost": 3,
+      "description": "Ankunft: +3 Resonanz (max.15)."
+    },
+    {
+      "id": "oa-ninth-c07",
+      "name": "Der neunte Zeuge",
+      "effect": "pulse",
+      "power": 3,
+      "cost": 6,
+      "description": "Ankunft: +3 Resonanz und Schild; beide Nachbarn +1 Angriff."
+    },
+    {
+      "id": "oa-neutral-r01",
+      "name": "Wanderkompass",
+      "effect": "relic_res",
+      "power": 1,
+      "cost": 2,
+      "description": "Aktiviere einmal je eigenem Zug für1 Energie: +1 Resonanz. Ein neues Relikt ersetzt das alte und legt es ab."
+    },
+    {
+      "id": "oa-morph-r01",
+      "name": "Schwarmknoten",
+      "effect": "relic_res",
+      "power": 1,
+      "cost": 2,
+      "description": "Aktiviere einmal je eigenem Zug für1 Energie: +1 Resonanz. Ein neues Relikt ersetzt das alte und legt es ab."
+    }
+  ],
+  "legacy": [
+    {
+      "id": "ash-5",
+      "effect": "weave",
+      "power": 2,
+      "cost": 2,
+      "order": "ash",
+      "name": "Aschenrichter"
+    },
+    {
+      "id": "ash-12",
+      "effect": "weave",
+      "power": 2,
+      "cost": 2,
+      "order": "ash",
+      "name": "Feuerkönig"
+    },
+    {
+      "id": "ash-14",
+      "effect": "harvest",
+      "power": 2,
+      "cost": 2,
+      "order": "ash",
+      "name": "Schlackentänzer"
+    },
+    {
+      "id": "ash-21",
+      "effect": "weave",
+      "power": 3,
+      "cost": 3,
+      "order": "ash",
+      "name": "Feuerschlund"
+    },
+    {
+      "id": "ash-24",
+      "effect": "pulse",
+      "power": 4,
+      "cost": 5,
+      "order": "ash",
+      "name": "Klingenphönix"
+    },
+    {
+      "id": "tide-0",
+      "effect": "weave",
+      "power": 2,
+      "cost": 2,
+      "order": "tide",
+      "name": "Gezeitenpilger"
+    },
+    {
+      "id": "tide-2",
+      "effect": "harvest",
+      "power": 1,
+      "cost": 1,
+      "order": "tide",
+      "name": "Tiefenwächter"
+    },
+    {
+      "id": "tide-9",
+      "effect": "weave",
+      "power": 1,
+      "cost": 1,
+      "order": "tide",
+      "name": "Stromnymphe"
+    },
+    {
+      "id": "tide-16",
+      "effect": "weave",
+      "power": 2,
+      "cost": 2,
+      "order": "tide",
+      "name": "Meeressiegelträger"
+    },
+    {
+      "id": "tide-18",
+      "effect": "harvest",
+      "power": 2,
+      "cost": 2,
+      "order": "tide",
+      "name": "Wellenhexe"
+    },
+    {
+      "id": "tide-24",
+      "effect": "pulse",
+      "power": 4,
+      "cost": 5,
+      "order": "tide",
+      "name": "Leviathan"
+    },
+    {
+      "id": "thorn-4",
+      "effect": "weave",
+      "power": 1,
+      "cost": 1,
+      "order": "thorn",
+      "name": "Borkenriese"
+    },
+    {
+      "id": "thorn-6",
+      "effect": "harvest",
+      "power": 1,
+      "cost": 1,
+      "order": "thorn",
+      "name": "Eibenrufer"
+    },
+    {
+      "id": "thorn-13",
+      "effect": "weave",
+      "power": 2,
+      "cost": 2,
+      "order": "thorn",
+      "name": "Samenorakel"
+    },
+    {
+      "id": "thorn-20",
+      "effect": "weave",
+      "power": 3,
+      "cost": 3,
+      "order": "thorn",
+      "name": "Rindenhüter"
+    },
+    {
+      "id": "thorn-22",
+      "effect": "harvest",
+      "power": 3,
+      "cost": 3,
+      "order": "thorn",
+      "name": "Waldschlange"
+    },
+    {
+      "id": "thorn-24",
+      "effect": "pulse",
+      "power": 4,
+      "cost": 5,
+      "order": "thorn",
+      "name": "Uralter Titan"
+    },
+    {
+      "id": "veil-1",
+      "effect": "weave",
+      "power": 1,
+      "cost": 1,
+      "order": "veil",
+      "name": "Litanei-Geist"
+    },
+    {
+      "id": "veil-8",
+      "effect": "weave",
+      "power": 1,
+      "cost": 1,
+      "order": "veil",
+      "name": "Echoschreiter"
+    },
+    {
+      "id": "veil-10",
+      "effect": "harvest",
+      "power": 2,
+      "cost": 2,
+      "order": "veil",
+      "name": "Purpurgeist"
+    },
+    {
+      "id": "veil-17",
+      "effect": "weave",
+      "power": 2,
+      "cost": 2,
+      "order": "veil",
+      "name": "Mondschleier"
+    },
+    {
+      "id": "veil-24",
+      "effect": "pulse",
+      "power": 4,
+      "cost": 5,
+      "order": "veil",
+      "name": "Der letzte König"
+    }
+  ],
+  "printed_resonance_prices": "No card has a separate printed resonance price; energy prices remain unchanged."
+}

@@ -85,6 +85,8 @@ jobs:
       - name: Install browser test runtime
         run: |
           npm install --no-save --package-lock=false playwright@1.65.0
+          # Browser tooling is not a Godot asset directory.
+          touch node_modules/.gdignore
           npx playwright install --with-deps chromium webkit
       - name: Full browser tutorial, saved reload and collection tests
         env:
@@ -103,6 +105,7 @@ jobs:
           python3 -m http.server 8788 --bind 127.0.0.1 --directory work/alpha/web > work/alpha/http.log 2>&1 &
           python3 tools/wait_http.py http://127.0.0.1:8788/build-info.json
           node tools/alpha_browser_qa.cjs
+          node tools/alpha02_browser_qa.cjs
           python3 -m http.server 8787 --bind 127.0.0.1 --directory work/alpha/legacy-web > work/alpha/legacy-http.log 2>&1 &
           python3 tools/wait_http.py http://127.0.0.1:8787/build-info.json
           QA_ENGINES=chromium QA_PROFILES=android QA_LEGACY_ONLY=1 GAME_URL=http://127.0.0.1:8787/ node tools/alpha_browser_qa.cjs > work/alpha/legacy-browser.log 2>&1
@@ -122,6 +125,9 @@ jobs:
             work/alpha/*.log
             work/alpha/*.json
             work/alpha/*.png
+            work/alpha02/*.log
+            work/alpha02/*.json
+            work/alpha02/*.png
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png

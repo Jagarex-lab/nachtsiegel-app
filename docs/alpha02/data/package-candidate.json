@@ -1,0 +1,736 @@
+{
+  "files": [
+    {
+      "bytes": 3267138,
+      "path": "res://.godot/imported/atlas.png-b719d2929abdee7eee451c9dc06672a7.ctex",
+      "sha256": "5fea77d23f6f0e0508d252f64bd6d2cb729121d7ccd55e16c9530584318b399d"
+    },
+    {
+      "bytes": 1901740,
+      "path": "res://.godot/imported/arena_painted.png-eebec8eb2caac752fa4fbb092939bf12.ctex",
+      "sha256": "cca75be44cd0099796b0d5a920c2785ba7114ae0e18365ad7b07073dbfd7be63"
+    },
+    {
+      "bytes": 1672784,
+      "path": "res://.godot/imported/premium_slate.png-67aabe92d4c496ba6a5a53e14feb6869.ctex",
+      "sha256": "22a3a34428e16874a286b5a77df63a3f767a98cd1ddfa7a875ae418e8d35e0f3"
+    },
+    {
+      "bytes": 1296844,
+      "path": "res://.godot/imported/reliquary_frame.png-f906fe75182e490bd0197cda8404d8bd.ctex",
+      "sha256": "e2b610dea6f10190a9ec97230c3f057f14d127d9611a5ed850d72f9840dbf695"
+    },
+    {
+      "bytes": 1225062,
+      "path": "res://.godot/imported/hero_medallion.png-68a2fc63368622f246813c17f49af959.ctex",
+      "sha256": "1bced6ce79603552cad3aaf967715c2b749c567961c1e8192e01da5342ffb37e"
+    },
+    {
+      "bytes": 428797,
+      "path": "res://.godot/imported/Body.ttf-04fdf37838cd8c7a95fc76f131929b6e.fontdata",
+      "sha256": "de05784149a387f9d885fbcabfe696fd066c521816f0bd17cdf1fdeddeb7e560"
+    },
+    {
+      "bytes": 233820,
+      "path": "res://.godot/imported/Display.ttf-3eccd71c9abdf38358c9167ba8c78b48.fontdata",
+      "sha256": "2be9e3e9c26b0e72f492cf4571628f337de7a192075668c827a30ee7402b00a7"
+    },
+    {
+      "bytes": 151896,
+      "path": "res://.godot/imported/arena.svg-14bc6933306728eaa7a1c116fa61cac4.ctex",
+      "sha256": "6b279f2f9686a602dc7c566f5e215a42f59ba944101a9ab0da1f6f22038f7fe1"
+    },
+    {
+      "bytes": 68281,
+      "path": "res://.godot/imported/Cinzel.ttf-1e003c02bd9f5caf99829299b24c9916.fontdata",
+      "sha256": "7991e05955665c6221b4f0ec3a10925bfb465c8f8b84d840d0873480be73ec01"
+    },
+    {
+      "bytes": 45962,
+      "path": "res://data/narrative/locales/de.json",
+      "sha256": "242c4018c890a08063934db4ebfcdcaaf2ab10f99e128e8488d78ae93c8f7b8b"
+    },
+    {
+      "bytes": 41767,
+      "path": "res://data/narrative/locales/en.json",
+      "sha256": "0ecb7fd700b98bce7e004ba60cb44a0cc5bde09b79f2331a5a79768c5b6d40e9"
+    },
+    {
+      "bytes": 39200,
+      "path": "res://scripts/alpha/shell.gdc",
+      "sha256": "5bc443c0c209e23997a756a8f14906eb8ce184cb8f3e475864136c97adceebed"
+    },
+    {
+      "bytes": 38892,
+      "path": "res://scripts/arena.gdc",
+      "sha256": "49531f0580a277f51653fd633c0ea6a37c26ea06de4c2d1668aaafef1b29e2e9"
+    },
+    {
+      "bytes": 38771,
+      "path": "res://.godot/imported/atmosphere.ogg-2f378ac540ab0b35fc2e8144c9467ae9.oggvorbisstr",
+      "sha256": "d281fd13668c9cbb70e3d3c1c062d5c9e95e0ce9d04501ab99eba3632c194efe"
+    },
+    {
+      "bytes": 31110,
+      "path": "res://data/alpha/cards.json",
+      "sha256": "02e279e4812af440aa3bb65466b7ccd75f8f4f7c370dae8227fdebbe35e0a6f4"
+    },
+    {
+      "bytes": 27065,
+      "path": "res://data/narrative/content.json",
+      "sha256": "9e41aca3d221170703b4d1f230335a720612e306f82cbee0cbc3051a6f6729ea"
+    },
+    {
+      "bytes": 21818,
+      "path": "res://.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex",
+      "sha256": "8a5845eb7bd32dad3168780a719ec09e0d31493178d04127c240ca6c6363f9bd"
+    },
+    {
+      "bytes": 21028,
+      "path": "res://scripts/legacy/battle_engine.gdc",
+      "sha256": "d47f7498f7f9e4b3a00c8b6be912135cdbfbd0fbcc84b842d407f073b20af7d6"
+    },
+    {
+      "bytes": 20598,
+      "path": "res://scripts/front_end.gdc",
+      "sha256": "b62c21d73083ffa02dd7735542194be0242835ac1d8fc3af9b0935450b319881"
+    },
+    {
+      "bytes": 20433,
+      "path": "res://data/legacy/cards.json",
+      "sha256": "0e70a27c6c70e8bc5e8d527b4fbbb76201ae0d004c7b1cb29202b219cf229ffe"
+    },
+    {
+      "bytes": 16736,
+      "path": "res://scripts/alpha/model.gdc",
+      "sha256": "4969e88e6b11c3b11af8275c3b63592bab6741a0d9a003e8f333363f9fbbfcfa"
+    },
+    {
+      "bytes": 14601,
+      "path": "res://data/legacy/display_de.json",
+      "sha256": "a6f4ab40f8e3641395772996059007f5439d3f1ba1478fee98e9cbd569684231"
+    },
+    {
+      "bytes": 9631,
+      "path": "res://.godot/imported/win.wav-ed9b591a574a24bf30e29686ed78ad6a.sample",
+      "sha256": "307d1186b1ccd6ddb1aa1e8440d204ac2240a4bd6aae9b479d7550fe620d1d8a"
+    },
+    {
+      "bytes": 8167,
+      "path": "res://.godot/imported/lose.wav-f2031eeaf36f7f1c79209a028e6ed60e.sample",
+      "sha256": "fd488877599d89628d8f67e1e125a26cf720d9fcca0bd2afb950379f8bb38b93"
+    },
+    {
+      "bytes": 7815,
+      "path": "res://scripts/card_face.gdc",
+      "sha256": "02661b408c0b04efa25d1417a57e14ffd75a763880ecc77b7943789326c31f9b"
+    },
+    {
+      "bytes": 6223,
+      "path": "res://.godot/imported/VEIL.wav-ce26e0675e8f7b6418d0b3867e62ca79.sample",
+      "sha256": "29faa17e425538e6027c71de9a5616d586bb531da6775140895c1b0ea16427e7"
+    },
+    {
+      "bytes": 5523,
+      "path": "res://scripts/alpha/session.gdc",
+      "sha256": "837d0f5d8a06ed4919422f552c18aeeac09ee6d8be5d2f40f255704b27e2764a"
+    },
+    {
+      "bytes": 5398,
+      "path": "res://scripts/alpha/card_view.gdc",
+      "sha256": "d958e36a8d3c16d7d1339ca564ac338cc1771a24fb827c0207012b9c9d208590"
+    },
+    {
+      "bytes": 5389,
+      "path": "res://scripts/battle_model.gdc",
+      "sha256": "e60a6359a8bf029da82845a156ca9f2d38d4cfbcb84cdbb4679064f31c3f497a"
+    },
+    {
+      "bytes": 5263,
+      "path": "res://.godot/imported/TIDE.wav-a853bc703431270c2154e0b71836db8b.sample",
+      "sha256": "9cf8b1fee0c640470d98bfa00ad7995e282bdcfd3c48bf5bddff877fdcd69a94"
+    },
+    {
+      "bytes": 5071,
+      "path": "res://.godot/imported/ASH.wav-4314fae7f0d43d87b60d5cccb42cb397.sample",
+      "sha256": "aaf2f106f28db75332c5cd5be7f3f8e0537677c34629d8aa50c36e0ce3cb5728"
+    },
+    {
+      "bytes": 4414,
+      "path": "res://scripts/progress_store.gdc",
+      "sha256": "ba3f3a91b8834975a6b3de357dc692a7fdde63d68cf2e50ea68686fb1b42f4ad"
+    },
+    {
+      "bytes": 4279,
+      "path": "res://.godot/imported/THORN.wav-316a0e0b53986e7b227f8b3aed96deff.sample",
+      "sha256": "b757d85bc20879e6c505a6f4d53da750e8814594203cee30e6cebd4c9919dbe6"
+    },
+    {
+      "bytes": 4279,
+      "path": "res://.godot/imported/turn.wav-e42ca8e229d279f19979a42626872605.sample",
+      "sha256": "0adcfa3296b1e7a2032b811bc9bcf11c146ab527e9b094632670ba145fd27179"
+    },
+    {
+      "bytes": 3828,
+      "path": "res://.godot/uid_cache.bin",
+      "sha256": "79593cf43bac3ce2386546f477effe82fb5bece067839b9189dd34a83f24e3d0"
+    },
+    {
+      "bytes": 3422,
+      "path": "res://scripts/alpha/style.gdc",
+      "sha256": "7096d76aa275ac69ba3282bd91580b1331cabce7789e4ebc6f321cadb6317d12"
+    },
+    {
+      "bytes": 3104,
+      "path": "res://scripts/arena_stage.gdc",
+      "sha256": "cdb5ca99b2e5b30d6c6f573c4d7651ea90c48cb8f4755f6862e0d6934f4ec58f"
+    },
+    {
+      "bytes": 3072,
+      "path": "res://scripts/card_vignette.gdc",
+      "sha256": "80c37f5d66409a3bb827be9ed21858694eb25e93bba681a92dd38e8825190917"
+    },
+    {
+      "bytes": 3003,
+      "path": "res://scripts/ritual_table.gdc",
+      "sha256": "417c2e7967a91eb6250cb8eb8a8fe29fedbfa30e77126f6b642fc7b9d41df2bf"
+    },
+    {
+      "bytes": 2965,
+      "path": "res://data/legacy/decks.json",
+      "sha256": "fdb59708856314644bd434de8f286826aa50cb08bd46e60203aa7107a9606be5"
+    },
+    {
+      "bytes": 2935,
+      "path": "res://.godot/imported/attack.wav-825b62c1f9509f7d19a957a51a526957.sample",
+      "sha256": "e8957f83332c54f12b3426ce2ce2b7f8a491701a3536dd4d13d493c5ddbdcba1"
+    },
+    {
+      "bytes": 2836,
+      "path": "res://scripts/game_audio.gdc",
+      "sha256": "a8d7ce8aa55df31b9852fa8aee68b91ea533e4d01674b2520c185583aac22e30"
+    },
+    {
+      "bytes": 2778,
+      "path": "res://scripts/legacy/opponent.gdc",
+      "sha256": "ed7d747fcd8df6eec1d5579381b2ea0ea07055011c7155f6716513261fae782d"
+    },
+    {
+      "bytes": 2748,
+      "path": "res://scripts/ritual_fx.gdc",
+      "sha256": "0f06b2a1841252951c3a3787b97e3e24353e3310a6262a96339903976014cc46"
+    },
+    {
+      "bytes": 2743,
+      "path": "res://.godot/imported/draw.wav-153ccb1c2cb2a7a8e514f8bc196fead7.sample",
+      "sha256": "3c5ddddc5e227e46b3d0eab37458df3d96a918becf306d870477a512a73165d9"
+    },
+    {
+      "bytes": 2726,
+      "path": "res://scripts/ui_tokens.gdc",
+      "sha256": "cdc0359fcda5a9d49f2ebbfa65d88c24ac1232147670c23af592a2f7320573aa"
+    },
+    {
+      "bytes": 2671,
+      "path": "res://scripts/combat_presenter.gdc",
+      "sha256": "2a149701a220a6d888724e7a9c08f169302e05887f0a3d0b2640582a1e275af0"
+    },
+    {
+      "bytes": 2577,
+      "path": "res://scripts/arena_composition.gdc",
+      "sha256": "2e0e1bf5d8c7f37b5b06a9290dd8bc914f9cbc91a91d7bd6da5411db893b694e"
+    },
+    {
+      "bytes": 2551,
+      "path": "res://.godot/imported/hit.wav-96dc477cdf4a42f381370dba6e3f75ce.sample",
+      "sha256": "916f2c546bf18ad89f7eb95245d8c2a6bd86b80425f15d4f092a1a76c4cd016d"
+    },
+    {
+      "bytes": 2534,
+      "path": "res://scripts/creature_portrait.gdc",
+      "sha256": "1e2c4dc6927b3169f5d43e95cb2f20d8492fbab7d911811aea9c4fcca9634c5b"
+    },
+    {
+      "bytes": 2426,
+      "path": "res://scripts/ritual_button.gdc",
+      "sha256": "ce9ac96badcc59020dad0b0ef2903e3e3346acbe3090102dafbc2708bda2c355"
+    },
+    {
+      "bytes": 2423,
+      "path": "res://data/campaign/chapters.json",
+      "sha256": "43412603de7f2d7de3deed0af430ad54c328daa83abc0c9da9a2d2095683f691"
+    },
+    {
+      "bytes": 2371,
+      "path": "res://scripts/sigil_slot.gdc",
+      "sha256": "63e0049823d8def437975534026ddf8f436774430f6cdba0cdb01562d2cd673d"
+    },
+    {
+      "bytes": 2200,
+      "path": "res://scripts/ritual_board.gdc",
+      "sha256": "646e9318479c3275d7e52e7f41b24bc4b2c84da91b8358af136b1341a38015b8"
+    },
+    {
+      "bytes": 1960,
+      "path": "res://scripts/alpha/feedback.gdc",
+      "sha256": "17aa6ae97ed92da68572f985a22a90e44f8e2e31851ae824d4a66b17421e1a6d"
+    },
+    {
+      "bytes": 1641,
+      "path": "res://scripts/atmosphere.gdc",
+      "sha256": "b984283d5acd72b61f1271b953ecf434cd500a2e45a3d5c9a878bc30aee86ad6"
+    },
+    {
+      "bytes": 1598,
+      "path": "res://scripts/mixer_slider.gdc",
+      "sha256": "5676066cdc6a90134cb084576c9aea02811c446a99f856933a716388f06e6810"
+    },
+    {
+      "bytes": 1432,
+      "path": "res://scripts/legacy/deck_validator.gdc",
+      "sha256": "2a96c7cd3a3dc69e009b3ede5fcdf6089711fe52cb74cbd1d10d49743be22e50"
+    },
+    {
+      "bytes": 1404,
+      "path": "res://scripts/smoke_test.gdc",
+      "sha256": "36a5a00e161503c7cf333cae5a5715b3c52d98d369435f6ac51c6fe8204ef1fb"
+    },
+    {
+      "bytes": 1375,
+      "path": "res://scripts/alpha/catalog.gdc",
+      "sha256": "fb6fc5f25999862a53054e5ecd184deabbaddc3482d03a1b7158802fd1d356b5"
+    },
+    {
+      "bytes": 1375,
+      "path": "res://.godot/imported/ui.wav-d54e8bc37b8ccee18240932350cecc18.sample",
+      "sha256": "ab6532e90dd930e6f04952146283b269310fcda39f4c6e5b9beee9d1f8f58be8"
+    },
+    {
+      "bytes": 1315,
+      "path": "res://scripts/legacy/catalog.gdc",
+      "sha256": "ff8d75f56f2064fa4cc97fcc976ee40845fb6d79b500898274a6b05255961e88"
+    },
+    {
+      "bytes": 1248,
+      "path": "res://project.binary",
+      "sha256": "b00d228ffce09bdd68ee2142b52b59bb49ef4d8f1b1a89f0f7134832de45dff3"
+    },
+    {
+      "bytes": 1087,
+      "path": "res://scripts/brand_identity.gdc",
+      "sha256": "a7e76297ea6c744fda4393d7fd69283122dcd06a3eda23d6ebd453174989c765"
+    },
+    {
+      "bytes": 1085,
+      "path": "res://scripts/card_bezel.gdc",
+      "sha256": "4e285a494a6c8a518949e5c0318340dbf764f86b8849bc989f50a55fdfaa5533"
+    },
+    {
+      "bytes": 1073,
+      "path": "res://scripts/campaign_catalog.gdc",
+      "sha256": "8fc38ba59e34b334c73b2fe2a7eed10bc0ed16f41759fad1dd1ceee4cf8765e0"
+    },
+    {
+      "bytes": 1014,
+      "path": "res://scripts/card_back.gdc",
+      "sha256": "5d14be84956eb596aa989f69977f16bc111b49a765597c10b81ae201002d7b99"
+    },
+    {
+      "bytes": 982,
+      "path": "res://scripts/narrative_catalog.gdc",
+      "sha256": "d59d5fca1bb9b3cbd59dd10cf9228fd281c7514e0695fd233911ebd938564e2d"
+    },
+    {
+      "bytes": 929,
+      "path": "res://scripts/legacy/rng.gdc",
+      "sha256": "b04ae46933283bf891b8837c445dc24488724dd72815d2d829966c14f8c431af"
+    },
+    {
+      "bytes": 879,
+      "path": "res://.godot/exported/133200997/export-97cbb1c1c84eb72c2f2dc29a46403318-smoke_test.scn",
+      "sha256": "fe2ca55efff20cb1dcf7c834b0e514dfd89ee116bd93aa3f305d2cd6a9cdaee1"
+    },
+    {
+      "bytes": 876,
+      "path": "res://.godot/exported/133200997/export-ee9d13a1302a68e03f160e2508741c31-alpha_shell.scn",
+      "sha256": "2a74a398f758ee70ebead4256ab1fa35f61986436954acfde5c00693798f4c40"
+    },
+    {
+      "bytes": 842,
+      "path": "res://scripts/ritual_hud.gdc",
+      "sha256": "656a8f704264d9beb1b0496f2c53c62e6b6737d86594c005a7b3ccf8a0ee6c19"
+    },
+    {
+      "bytes": 694,
+      "path": "res://data/card_definitions.gdc",
+      "sha256": "74097ee0f1dcbc40cfcf1f5d86e4ca0a1d1a6ac9696d2bd9fdd62fdc48ca88a5"
+    },
+    {
+      "bytes": 687,
+      "path": "res://.godot/exported/133200997/export-300a5f55369c478d61c07c2fda47fcb3-front_end.scn",
+      "sha256": "6835d26e534d0109e626af01a9cc499bbd95f12a5b51b14613a68f94622a8e6b"
+    },
+    {
+      "bytes": 679,
+      "path": "res://.godot/exported/133200997/export-a4de5e1f3ea5bccc0e835cc4a2e40ae5-arena.scn",
+      "sha256": "99214418d5a0d49f21f09f0d05846c6519442090e2628f20d70d3865f920f48a"
+    },
+    {
+      "bytes": 637,
+      "path": "res://assets/icon.svg",
+      "sha256": "e671939496ed17dc536471284c0f5394dd0a3380ecf04c2625db0092ec6d33c0"
+    },
+    {
+      "bytes": 616,
+      "path": "res://assets/shaders/arena_light.gdshader",
+      "sha256": "6c18c296d798adf4b08ae073e9c56fc26586e217d3119e56b9fabe4907d9b8c8"
+    },
+    {
+      "bytes": 530,
+      "path": "res://scripts/legacy/display_catalog.gdc",
+      "sha256": "a2fac3379f7634ffa48b27cd5c77a3133676d403d906dac9b67713474827725c"
+    },
+    {
+      "bytes": 457,
+      "path": "res://data/brand/identity.json",
+      "sha256": "d206e81e76a2f0b4c35b2a8bfd64d133e9f8be1a449c0ed9c4f6c9c846fcdc4e"
+    },
+    {
+      "bytes": 204,
+      "path": "res://assets/art/reliquary_frame.png.import",
+      "sha256": "33789c8dff333ab38d5d8e7a2f6b0ef181cc3e0fa0e3b942345cf444ddb683ee"
+    },
+    {
+      "bytes": 203,
+      "path": "res://assets/art/hero_medallion.png.import",
+      "sha256": "a3321f8f1978dfcf3cc02a6e9bc926c18d4a458430b588035b7d4ef6dc4c8f63"
+    },
+    {
+      "bytes": 202,
+      "path": "res://assets/art/premium_slate.png.import",
+      "sha256": "f8d1ec1a6d82aca0a21cfa6f1f0488f85a8eeeb4809ee04b042ae48674b02879"
+    },
+    {
+      "bytes": 201,
+      "path": "res://assets/art/arena_painted.png.import",
+      "sha256": "86c99fb59f57cf7bc7a596ecc1c426456d4c0065fd479406caecb18babad64ae"
+    },
+    {
+      "bytes": 194,
+      "path": "res://assets/art/atlas.png.import",
+      "sha256": "b22b7833f9704c41bb7c6e7c0bf40433f2161964f19f10e4c7291ccbe4a16b7d"
+    },
+    {
+      "bytes": 193,
+      "path": "res://assets/art/arena.svg.import",
+      "sha256": "a6385c45a05c649b155b804a3a653db67535f498fe12fd366527ec93180bfb3b"
+    },
+    {
+      "bytes": 193,
+      "path": "res://assets/icon.svg.import",
+      "sha256": "bb410b547f1aa63a6b9616801eec596aaef346f9f60af8c6d200895fe49b7945"
+    },
+    {
+      "bytes": 178,
+      "path": "res://assets/audio/atmosphere.ogg.import",
+      "sha256": "e3a3f328320c04aa3a2232d3191d8a5a1a101c80dfc28ad3893c5a33afda0e2d"
+    },
+    {
+      "bytes": 163,
+      "path": "res://assets/fonts/Cinzel.ttf.import",
+      "sha256": "38c2a592c8f83329e1cd82be725f34986eea35d960539afa7b37e86bd88aa521"
+    },
+    {
+      "bytes": 163,
+      "path": "res://assets/fonts/Display.ttf.import",
+      "sha256": "abc2cfb8bdae5c53976757ff653dd8f329f9d387b1f0c52d90ceec0ab1f0b85c"
+    },
+    {
+      "bytes": 161,
+      "path": "res://assets/fonts/Body.ttf.import",
+      "sha256": "f6341a4dd67eac4a2abdc4ccf6bbe8edd36a6938c2c7b359dfb17d82859de632"
+    },
+    {
+      "bytes": 153,
+      "path": "res://assets/audio/attack.wav.import",
+      "sha256": "6afb3eddc44b2b68d38b90e3b2061391099c8a873fc80e5b121cedc779e405b5"
+    },
+    {
+      "bytes": 152,
+      "path": "res://assets/audio/THORN.wav.import",
+      "sha256": "c0bcc458d95b7e9650d9ba32e52b24dc3611a7015a480cbd5dd994a2c5c674f2"
+    },
+    {
+      "bytes": 151,
+      "path": "res://assets/audio/turn.wav.import",
+      "sha256": "0140f0022f32887dbc1f04da4118e7160c72674601dae7cccee53ed97933c32b"
+    },
+    {
+      "bytes": 151,
+      "path": "res://assets/audio/TIDE.wav.import",
+      "sha256": "7e95e0dedc868b2ad0bc580b493354d5702e0d810bfc5ca8b16cd26e02458494"
+    },
+    {
+      "bytes": 151,
+      "path": "res://assets/audio/VEIL.wav.import",
+      "sha256": "d0fc125077add1b09e19e7d23f90459513e81b9a2c2f7ad4a046c71fca675d83"
+    },
+    {
+      "bytes": 150,
+      "path": "res://assets/audio/lose.wav.import",
+      "sha256": "301c71085211d971ea714d4a6abfd40c16e42f7f08f805303356e2d2423cbb7e"
+    },
+    {
+      "bytes": 150,
+      "path": "res://assets/audio/hit.wav.import",
+      "sha256": "5533ff4f514fc23bff3093e78360bd02b5129391875b4edba93bce95fe594aa4"
+    },
+    {
+      "bytes": 150,
+      "path": "res://assets/audio/draw.wav.import",
+      "sha256": "cb94c6db7d9e156fc1dbd71f031dca81c5783cfaacd8a41e45a175d2b18f3c8b"
+    },
+    {
+      "bytes": 150,
+      "path": "res://assets/audio/win.wav.import",
+      "sha256": "bbd09bb736942e884da7e8a3635839a2469ac161e66fafcc2d485ab97030f65c"
+    },
+    {
+      "bytes": 150,
+      "path": "res://assets/audio/ASH.wav.import",
+      "sha256": "8016c5c394310706979cc7200a93933886791a6ca9eb61dd6bd52ae5079cb0b3"
+    },
+    {
+      "bytes": 149,
+      "path": "res://assets/audio/ui.wav.import",
+      "sha256": "c786973eb5c2d48eb335a792fcb4ce9197aa50dab4e93d940525a1ee83093c9f"
+    },
+    {
+      "bytes": 104,
+      "path": "res://scenes/alpha_shell.tscn.remap",
+      "sha256": "097ccbf4e64906c5ff9d432e61804d7d130d3be69cf493d7ed648f1524fba629"
+    },
+    {
+      "bytes": 103,
+      "path": "res://scenes/smoke_test.tscn.remap",
+      "sha256": "ef3bafb9e743095d0e53ea01392909f2496d9c4ec4a7cb025331378f718c45cb"
+    },
+    {
+      "bytes": 102,
+      "path": "res://scenes/front_end.tscn.remap",
+      "sha256": "6a0f486ff097b0a8f0f71f33acc4d1a5ef76759168b0b62a5495405a21931287"
+    },
+    {
+      "bytes": 98,
+      "path": "res://scenes/arena.tscn.remap",
+      "sha256": "02698197a8d21f2ef7b0c2a272887435458a8bdf25cd3f7e12d83d147bdc32ba"
+    },
+    {
+      "bytes": 57,
+      "path": "res://scripts/legacy/display_catalog.gd.remap",
+      "sha256": "2e58d138bf94d02010c7f0aba410dbcc155fc2ebaf88028cf9df7bcf16e22414"
+    },
+    {
+      "bytes": 56,
+      "path": "res://scripts/legacy/deck_validator.gd.remap",
+      "sha256": "482df27216683db9ef893e788b413776b45711716b27d3ba5bd82540fe59a609"
+    },
+    {
+      "bytes": 55,
+      "path": "res://scripts/legacy/battle_engine.gd.remap",
+      "sha256": "4859feee65434f7cb92a6e61cd12531b75a57a0b3f6abe8c58d61c6564c2d14a"
+    },
+    {
+      "bytes": 52,
+      "path": "res://scripts/creature_portrait.gd.remap",
+      "sha256": "be873ea3886278cf4f27f0c5142ac433f3dae226d76c33454fcb719d67e808b7"
+    },
+    {
+      "bytes": 52,
+      "path": "res://scripts/arena_composition.gd.remap",
+      "sha256": "7111460421ce35eec9be8a9099d1d0f10a7de2e2ac20d2220b837f121f2364e6"
+    },
+    {
+      "bytes": 52,
+      "path": "res://scripts/narrative_catalog.gd.remap",
+      "sha256": "770641385a475b9ce0b06fbda2004b5f73c874d01fbb404a34fda2f800bf518b"
+    },
+    {
+      "bytes": 51,
+      "path": "res://scripts/campaign_catalog.gd.remap",
+      "sha256": "47c862fa83bb6b9664fab7cf5de175705491408ed31ad79cba2177ff185e5ea7"
+    },
+    {
+      "bytes": 51,
+      "path": "res://scripts/combat_presenter.gd.remap",
+      "sha256": "18dc1ad0e315a4ae893920744dbe2b3e4727ace3d0e8c7bd79c2f249f26966b0"
+    },
+    {
+      "bytes": 50,
+      "path": "res://scripts/alpha/card_view.gd.remap",
+      "sha256": "afa679c38a6ef15dea031cba831f612100b97cef424494b06c2c7fd6403c92fc"
+    },
+    {
+      "bytes": 50,
+      "path": "res://scripts/legacy/opponent.gd.remap",
+      "sha256": "323336ad83797f86f7177617d8196325ea9c35304c66b2abeaa01d6d56ee69ad"
+    },
+    {
+      "bytes": 49,
+      "path": "res://scripts/brand_identity.gd.remap",
+      "sha256": "3baafee141b6a5b2e381dcbdb67d8e6287ab61a360bb00a54471889d3f0e5174"
+    },
+    {
+      "bytes": 49,
+      "path": "res://scripts/alpha/feedback.gd.remap",
+      "sha256": "65f3301897a471be0f35c70a928529489463fca938c000c8e700fcd93cf18138"
+    },
+    {
+      "bytes": 49,
+      "path": "res://scripts/legacy/catalog.gd.remap",
+      "sha256": "bcd453e27e38752c852162aa75156e535c26744ef55c0b20ed56e1524040d558"
+    },
+    {
+      "bytes": 49,
+      "path": "res://scripts/progress_store.gd.remap",
+      "sha256": "e72066dd095b1d1bff577b1b6f9490168a5d4dd4710e7f027dca86b2e4337c75"
+    },
+    {
+      "bytes": 48,
+      "path": "res://scripts/card_vignette.gd.remap",
+      "sha256": "9ae05051272ecb68ef223c6009faed821dc5ad235a0c445384207e094b5da116"
+    },
+    {
+      "bytes": 48,
+      "path": "res://scripts/alpha/session.gd.remap",
+      "sha256": "c4df292cfbb51ff856768eebb88f3a2b643bc6b982c7b11de70cfd0b944c8876"
+    },
+    {
+      "bytes": 48,
+      "path": "res://scripts/ritual_button.gd.remap",
+      "sha256": "6cfb68e9ca056e4a576a9f18f0648883444676fea8bbb430dbb4d4ec8260f66a"
+    },
+    {
+      "bytes": 48,
+      "path": "res://scripts/alpha/catalog.gd.remap",
+      "sha256": "9896f1d17d956e7c22922f42f7cfbc2bd65aefc91b5aed4dff771dff96577222"
+    },
+    {
+      "bytes": 48,
+      "path": "res://data/card_definitions.gd.remap",
+      "sha256": "97adb02b89f04ead11d4f1143f9b6d0e4633fc3bfdaa571c38f044c767ca79fa"
+    },
+    {
+      "bytes": 47,
+      "path": "res://scripts/ritual_board.gd.remap",
+      "sha256": "6ff7303e489d82910de101ef68c90dd767eb2c9a8ddf0dbc8332a942a01495a7"
+    },
+    {
+      "bytes": 47,
+      "path": "res://scripts/battle_model.gd.remap",
+      "sha256": "59e07c4e9d21f998d967d2f841608ca2a79eefb41004a16822b28d0463351d8e"
+    },
+    {
+      "bytes": 47,
+      "path": "res://scripts/mixer_slider.gd.remap",
+      "sha256": "9767fd0348ae1b5ffb36e5447911161a844b308d7a130ecb063cef1785e2e156"
+    },
+    {
+      "bytes": 47,
+      "path": "res://scripts/ritual_table.gd.remap",
+      "sha256": "ad203540d6f1dc1522cd6eb640168356bdef9221b8a2ecd33946e8fa692ca79a"
+    },
+    {
+      "bytes": 46,
+      "path": "res://scripts/alpha/model.gd.remap",
+      "sha256": "bb668408df9aec4f870fa402680d3e657e30e2416398de12c1576afc51905785"
+    },
+    {
+      "bytes": 46,
+      "path": "res://scripts/alpha/shell.gd.remap",
+      "sha256": "ce339937c0227dfc448fcdbdfa215c55d23c923f20d5b11561997866b492e422"
+    },
+    {
+      "bytes": 46,
+      "path": "res://scripts/alpha/style.gd.remap",
+      "sha256": "b43c99cfa29df89e1d9e61e611fb87842a9720b5ef360a5e73dae5a629e97f22"
+    },
+    {
+      "bytes": 46,
+      "path": "res://scripts/arena_stage.gd.remap",
+      "sha256": "adb975e2e8b3770b72b362993f1e0b3ebb058ed141eab2a397eb8b1f24214429"
+    },
+    {
+      "bytes": 45,
+      "path": "res://scripts/smoke_test.gd.remap",
+      "sha256": "8adc670cc99ea0d61e2c219d08022dfb7aca9f3e89ab3727c4eecfd89db8e6ff"
+    },
+    {
+      "bytes": 45,
+      "path": "res://scripts/sigil_slot.gd.remap",
+      "sha256": "4694d1923c9169b550e0b30872752735609059e88d191bc941d3000cf540331a"
+    },
+    {
+      "bytes": 45,
+      "path": "res://scripts/legacy/rng.gd.remap",
+      "sha256": "46366046f797b86ac74d05610c1774cc8d8fa62519bb69197245d0904d2ad081"
+    },
+    {
+      "bytes": 45,
+      "path": "res://scripts/ritual_hud.gd.remap",
+      "sha256": "524b4cb2b59d2ddc9ea288255391dd6aeebe754008c512c1e4ce67b9c0b163b8"
+    },
+    {
+      "bytes": 45,
+      "path": "res://scripts/atmosphere.gd.remap",
+      "sha256": "910a1480596b69c660cf18b722a51e2d3abf4f86875ff7ba731831823fbf066d"
+    },
+    {
+      "bytes": 45,
+      "path": "res://scripts/card_bezel.gd.remap",
+      "sha256": "d8c869f5471bb2ba86bd07a66e1899b37f3a00be87095fae9e2aa35a100196a4"
+    },
+    {
+      "bytes": 45,
+      "path": "res://scripts/game_audio.gd.remap",
+      "sha256": "dcd7c9ec19b7d05f9d93fe4252a4f90d27f4c8005681add32bab89062bd2f586"
+    },
+    {
+      "bytes": 44,
+      "path": "res://scripts/ritual_fx.gd.remap",
+      "sha256": "8461505a9d13018500ef0756bbef2147945f83144640a8a000aa91c7918371a4"
+    },
+    {
+      "bytes": 44,
+      "path": "res://scripts/card_back.gd.remap",
+      "sha256": "6f0f3aa96434b4d01f034a7ead71c9ce23df3ad499067eec90be51cc3204fc1c"
+    },
+    {
+      "bytes": 44,
+      "path": "res://scripts/card_face.gd.remap",
+      "sha256": "0ddcc3924818acc6a0195b8bb705070c0003144a69438cc0c14b724e626eeb97"
+    },
+    {
+      "bytes": 44,
+      "path": "res://scripts/ui_tokens.gd.remap",
+      "sha256": "f3ff36d0dd08a6d3092214c5cd67354134c0d9de342e88d8260abca74df419e4"
+    },
+    {
+      "bytes": 44,
+      "path": "res://scripts/front_end.gd.remap",
+      "sha256": "9778665bb2b747a7a82c659b823a2a2b331e8b0b7fd61768c561ba31e9a015bd"
+    },
+    {
+      "bytes": 40,
+      "path": "res://scripts/arena.gd.remap",
+      "sha256": "25110bc99008f9f66b3224ced5c7a031a90790b09d006fbe043e87c612cfda15"
+    },
+    {
+      "bytes": 8,
+      "path": "res://.godot/global_script_class_cache.cfg",
+      "sha256": "f61aa7ad3097022d6a9d110ca3f73fa7bb348ec2cf9a6e7c9523574dc75f5a16"
+    }
+  ],
+  "forbidden": [],
+  "resource_bytes": 10784159
+}

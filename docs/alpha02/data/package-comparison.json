@@ -1,0 +1,16 @@
+{
+  "tested_game_head": "a19cbfce00b07e1eb97ae469595aaf69f831c744",
+  "packaging_commit": "eaeb7c68cc849afa5dd69c3dca5aaa28d1a4f567",
+  "changed_resource_paths": [
+    "res://.godot/uid_cache.bin"
+  ],
+  "identical_resources": 145,
+  "resource_count": 146,
+  "old_pck_bytes": 31020996,
+  "new_pck_bytes": 10796424,
+  "old_pck_sha256": "5808d2a94699c80691009e35f169c2561fec3ad0aff0e3ad315742e9efe5fcf8",
+  "new_pck_sha256": "6569a9075862d8c5b791aae7f5cbc6a206a365dcf703d5ed289451ce19707458",
+  "old_rejected_tool_paths": 16,
+  "new_tool_paths": 0,
+  "removed_firefox_logo_bytes": 20789517
+}
