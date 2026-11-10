@@ -18,8 +18,8 @@ const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Objec
    const shot=async suffix=>{
     let buffer;
     if(cdp){
-     const viewport=page.viewportSize();let expiry;const response=await Promise.race([cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:1}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
-     buffer=Buffer.from(response.data,'base64');captures.push('cdp-explicit-viewport');
+     const viewport=page.viewportSize();let expiry;const response=await Promise.race([cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:3}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
+     buffer=Buffer.from(response.data,'base64');captures.push('cdp-explicit-native-viewport');
     }else{buffer=await page.screenshot();captures.push('playwright');}
     assert.equal(buffer.readUInt32BE(16),page.viewportSize().width*3,'native screenshot width');assert.equal(buffer.readUInt32BE(20),page.viewportSize().height*3,'native screenshot height');assert(buffer.length>20000,'nonempty rendered screenshot');
     fs.writeFileSync(`work/alpha02/${name}-${suffix}.png`,buffer);
