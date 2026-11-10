@@ -41,7 +41,7 @@ func _draw() -> void:
 	else:
 		draw_style_box(T.panel(edge,Color(.025,.04,.065,.88)),rect)
 		draw_line(Vector2(8,4),Vector2(size.x-10,4),Color(edge,.7),1,true)
-		if not unit.is_empty() and size.y<66:
+		if not unit.is_empty() and size.y<72:
 			# Browser-height view: full-width stats and a separate name area.
 			# Two-line names must never intersect the values below them.
 			illustration(Rect2(size.x-40,5,35,maxf(18,size.y-25)))
@@ -49,7 +49,7 @@ func _draw() -> void:
 			draw_rect(Rect2(5,size.y-19,size.x-10,15),T.SURFACE)
 			var marks=("✓" if combat_ready else "Z" if int(unit.get("stun",0))>0 else "…")+(" U" if origin else "")+(" K" if convergence else " K×" if broken_convergence else "")
 			if int(unit.get("ward",0))>0:marks+=" S%d" % int(unit.ward)
-			_ink("%s %d ANG %d LP %s" % [owner_label,unit.atk,unit.hp,marks],Vector2(7,size.y-7),10,T.TEXT,size.x-14)
+			_ink("%s %d ANG %d LP %s" % [owner_label,unit.atk,unit.hp,marks],Vector2(7,size.y-7),11,T.TEXT,size.x-14)
 		elif not unit.is_empty():
 			# Board units are portraits + a readable nameplate, not compressed full cards.
 			var art_width=minf(66,size.x*.35)

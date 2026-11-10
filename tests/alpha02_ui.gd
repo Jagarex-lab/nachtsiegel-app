@@ -123,13 +123,14 @@ func run():
    u.summoned=false;u.ward=2 if lane==2 else 0;u.stun=1 if lane==4 else 0;m.state[side].lanes[lane]=u
  while m.state.hero.hand.size()<6:m.state.hero.hand.append(m.state.hero.deck.pop_front())
  app.render();await settle();await shot("battle")
- root.size=Vector2i(844,320);await settle()
- for view in app.board_views.values():
-  if view.unit.is_empty():continue
-  var paragraph=view.title_paragraph(view.size.x-54,11)
-  check(paragraph.get_size().y+4<=view.size.y-19,"compact name does not overlap stats strip")
-  check(paragraph.get_line_count()<=2,"compact creature full name fits two lines")
- await shot("battle-compact")
+ for dimensions in [Vector2i(844,320),Vector2i(844,299)]:
+  root.size=dimensions;await settle()
+  for view in app.board_views.values():
+   if view.unit.is_empty():continue
+   var paragraph=view.title_paragraph(view.size.x-54,11)
+   check(paragraph.get_size().y+4<=view.size.y-19,"compact name does not overlap stats strip")
+   check(paragraph.get_line_count()<=2,"compact creature full name fits two lines")
+  await shot("battle-compact" if dimensions.y==320 else "battle-browser-height")
  app.page="builder";app.open_cards(false);root.size=Vector2i(1280,720);await settle();await shot("deckbuilder-desktop")
  app.queue_free();await settle()
  print("ALPHA02 UI: %d assertions, %d failures; portrait, rotation, full names, four starters, real touch, persisted edited deck" % [assertions,failures])
