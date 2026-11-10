@@ -1,0 +1,51 @@
+[
+  {
+    "id": "HIST-1",
+    "event": "Vor der Korrektur",
+    "order": 1,
+    "status": "VORSCHLAG",
+    "date": "offen"
+  },
+  {
+    "id": "HIST-2",
+    "event": "Die Vorwarnung",
+    "order": 2,
+    "status": "VORSCHLAG",
+    "date": "offen"
+  },
+  {
+    "id": "HIST-3",
+    "event": "Der Eingriff",
+    "order": 3,
+    "status": "VORSCHLAG",
+    "date": "offen"
+  },
+  {
+    "id": "HIST-4",
+    "event": "Die doppelte Folge",
+    "order": 4,
+    "status": "VORSCHLAG",
+    "date": "offen"
+  },
+  {
+    "id": "HIST-5",
+    "event": "Die erste Aufnahme",
+    "order": 5,
+    "status": "VORSCHLAG",
+    "date": "offen"
+  },
+  {
+    "id": "HIST-6",
+    "event": "Institutionalisierung",
+    "order": 6,
+    "status": "VORSCHLAG",
+    "date": "offen"
+  },
+  {
+    "id": "HIST-7",
+    "event": "Gegenwart",
+    "order": 7,
+    "status": "VORSCHLAG",
+    "date": "offen"
+  }
+]
