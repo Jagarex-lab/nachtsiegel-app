@@ -95,4 +95,21 @@ Pfadtraversal, absolute Pfade, Symlinks, unbekannte IDs, doppelte Karten, identi
 
 ## Grenzen und Integration
 
-Dieses Werkzeug installiert keine Bilder, verändert keine Karten-IDs und kennt keine Engine-Trigger. Die Dateiablage unter `assets/production/illustrations/` ist ein Produktionsbestand, keine automatische Laufzeitaktivierung. Ein zukünftiger Integrations-PR muss nach Engine-Integration die endgültigen IDs, Kartenfähigkeit, Bildzuordnung, Ladestrategie, Beschnitte, Speicherverbrauch und Mobilqualität prüfen. Vor der ersten öffentlichen Veröffentlichung sind sämtliche Abnahmekriterien des Masterauftrags separat nachzuweisen.
+Dieses Werkzeug installiert keine Bilder, verändert keine Karten-IDs und kennt keine Engine-Trigger. Die Dateiablage unter `assets/production/illustrations/` ist ein Produktionsbestand, keine automatische Laufzeitaktivierung. `assets/production/.gdignore` und `data/production/.gdignore` halten die Autorenbestände aus Godots `all_resources`-Exporten heraus. Diese Marker bei Erweiterungen erhalten; eine spätere aktive Bildübernahme benötigt bewusst gewählte Laufzeitdateien und Importoptionen. Ein zukünftiger Integrations-PR muss nach Engine-Integration die endgültigen IDs, Kartenfähigkeit, Bildzuordnung, Ladestrategie, Beschnitte, Speicherverbrauch und Mobilqualität prüfen. Vor der ersten öffentlichen Veröffentlichung sind sämtliche Abnahmekriterien des Masterauftrags separat nachzuweisen.
+
+## Native Autorenansicht
+
+```sh
+mkdir -p work/xdg/data work/xdg/config work/xdg/cache
+export XDG_DATA_HOME="$PWD/work/xdg/data"
+export XDG_CONFIG_HOME="$PWD/work/xdg/config"
+export XDG_CACHE_HOME="$PWD/work/xdg/cache"
+export LP_NUM_THREADS=2
+python3 tools/production/art_pipeline.py validate
+# Grafische Sitzung oder Xvfb erforderlich; kein Dummy-/Headless-Renderer.
+godot --path . --audio-driver Dummy --rendering-method gl_compatibility --script tools/production/preview_art.gd
+```
+
+Das Werkzeug liest die ignorierten Original-PNGs direkt über `Image.load_from_file` und verwendet eine isolierte Unterklasse des vorhandenen Kartenrenderers. Die normale Kartenbibliothek bleibt unverändert. Es erzeugt Einzelansichten, Rückseite, Kontaktbogen und `report.json` unter `work/production/previews/`. Jede Vorderseite zeigt deutlich **„BILDVORSCHLAG – keine Spieldefinition. Werte sind Platzhalter.“** Die angezeigten Nullkosten und Kampfwerte sind ausschließlich temporäre Renderer-Eingaben. Sie dürfen nicht in Spielkarten übersetzt oder als Balancewerte verstanden werden.
+
+Geprüft werden tatsächliche Pixel statt Atlasfallback, Namens-/Textpassung, 756×1056-Abmessungen, gemeinsame Außenkontur und identische Rückseite. Diese Ansicht ist kein Kampftest und keine mobile Geräteabnahme. Die Produktions-CI prüft Daten und Pixeldateien; der grafische Autorenlauf wird gesondert ausgeführt und protokolliert.

@@ -1,0 +1,11 @@
+{
+  "scope": "actual_export_pack_inventory_not_browser_build",
+  "pack_sha256": "36c75693a1c9ec6acc017545090411dd019c6bb53d557677cfa68949adb5cf96",
+  "pack_bytes": 11894720,
+  "resource_bytes": 11880666,
+  "files": 168,
+  "production_resources": [],
+  "test_tool_resources": [],
+  "all_resources_profile": "Alpha Web QA",
+  "active_catalog_changes": 0
+}

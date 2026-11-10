@@ -1,0 +1,106 @@
+{
+  "observed_on": "2026-11-10",
+  "repository": "Jagarex-lab/nachtsiegel-app",
+  "base_branch": "develop",
+  "branches": [
+    {
+      "branch": "alpha/playable-0.1",
+      "head_sha": "53fb98b18119d5145e1c545f104e5dc6ab345500"
+    },
+    {
+      "branch": "architecture/f2p-economy-design",
+      "head_sha": "d3634b462444760665ba169dcd2be7df86baddfe"
+    },
+    {
+      "branch": "audit/legacy-functional-parity",
+      "head_sha": "51ad544087dba200846b4420e493fcbe656c634f"
+    },
+    {
+      "branch": "develop",
+      "head_sha": "17121e40a49838f479d1655d88d354ed836ad20e"
+    },
+    {
+      "branch": "feature/alpha-0.2-mobile-ux",
+      "head_sha": "d8053e9fe6c47633e6573866138ee58974e8f83a"
+    },
+    {
+      "branch": "feature/arena-quality",
+      "head_sha": "f6f182f5e820728082b25c446b1e7d08b320a701"
+    },
+    {
+      "branch": "feature/brand-world-bible",
+      "head_sha": "2bce5c33fa511286e39a0a08157f2a4bbf587bbd"
+    },
+    {
+      "branch": "feature/card-system-550",
+      "head_sha": "0835f7c0b0588a146165e9b5e2cebce0164f5263"
+    },
+    {
+      "branch": "feature/combat-presentation",
+      "head_sha": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8"
+    },
+    {
+      "branch": "feature/generic-trigger-hooks",
+      "head_sha": "70cc08e482e17ac1bcec53a02ba95c78583df8bf"
+    },
+    {
+      "branch": "feature/legacy-engine-p01-p04",
+      "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde"
+    },
+    {
+      "branch": "feature/legacy-engine-p05-p06",
+      "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548"
+    },
+    {
+      "branch": "feature/legacy-engine-p07",
+      "head_sha": "023a0e061504acee3f1f3009369065e87a10e968"
+    },
+    {
+      "branch": "feature/legacy-foundations",
+      "head_sha": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d"
+    },
+    {
+      "branch": "feature/orafold-audio",
+      "head_sha": "4a975e0ec76d9185399a934b1d90fa4fe57785af"
+    },
+    {
+      "branch": "feature/orafold-campaign",
+      "head_sha": "701b41b0d4269b45d89acf2b17ecd6f0d17d29e6"
+    },
+    {
+      "branch": "feature/orafold-economy",
+      "head_sha": "8af379487fa3681ef8450bedd5c716de2f12fd60"
+    },
+    {
+      "branch": "feature/premium-experience",
+      "head_sha": "f3d3c7b0c082554a51661d98a2e89a0756815cb4"
+    },
+    {
+      "branch": "feature/ux-contrast",
+      "head_sha": "927ae10cdfcfa6089eb8c6359ab9efd814220393"
+    },
+    {
+      "branch": "lore/orafold-worldbuilding-550-draft",
+      "head_sha": "2a8d3390d4f7d263a2e9e52e0404101f197971d6"
+    },
+    {
+      "branch": "main",
+      "head_sha": "caaa00169a7c43eb6eabe919746a0f33131a0664"
+    },
+    {
+      "branch": "production/audit-cleanup",
+      "head_sha": "70e6c23480e2a08d18bc275bf2182c39715e89c7"
+    },
+    {
+      "branch": "security/pages-release-gate",
+      "head_sha": "dadb8471eaea8decc182792f26e5083e2100a4b6"
+    }
+  ],
+  "concurrency": {
+    "trigger_pr": 11,
+    "trigger_head": "70cc08e482e17ac1bcec53a02ba95c78583df8bf",
+    "audio_pr": 14,
+    "audio_head": "4a975e0ec76d9185399a934b1d90fa4fe57785af",
+    "note": "Read-only snapshot; no merge authorization. Active engine and audio files remain reserved."
+  }
+}
