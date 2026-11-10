@@ -2,7 +2,8 @@
 
 Digitales Sammelkartenspiel in Godot 4.6.3: fünf Kampfpfade, lokale KI, 30-Karten-Decks, 30 Helden-Leben und die alternative Siegbedingung Konvergenz. Energie spielt Karten aus; Resonanz bezahlt besondere Eingriffe. Kämpfe sind für Querformat, Sammlung und Deckbuilder für mobile Hochformate ausgelegt.
 
-**Spielen:** https://jagarex-lab.github.io/nachtsiegel-app/  
+**Spielen:** https://jagarex-lab.github.io/nachtsiegel-app/
+
 **Tatsächlich veröffentlichter Commit:** [build-info.json](https://jagarex-lab.github.io/nachtsiegel-app/build-info.json). Ein Featurebranch oder grüner PR veröffentlicht nichts automatisch.
 
 ## Produktionskandidat
