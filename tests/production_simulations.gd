@@ -8,6 +8,10 @@ var records: Array = []
 var max_calls := 500
 var per_first := 2
 var quick := false
+var shard_index := 0
+var shard_count := 1
+var planned_cases: Array=[]
+var expected_verification_games := 0
 var model_script: Script
 var decks: Array = []
 var source_hashes: Dictionary = {}
@@ -163,10 +167,12 @@ func summarize() -> Dictionary:
 	summary["first_win_rate"]=float(summary.first_wins)/float(maxi(1,int(summary.completed)-int(summary.draws)))
 	return summary
 func run_pair(a: Dictionary,b: Dictionary,group: String,verify: bool) -> void:
+	if verify:expected_verification_games+=1
 	var paired_seeds := seeds_for(a,b)
 	for seed_value in paired_seeds:
 		var model=make_game(a,b,seed_value)
 		if model==null:continue
+		planned_cases.append({"group":group,"hero":a.id,"enemy":b.id,"seed":seed_value,"first":model.state.coin})
 		var calls:=finish(model)
 		var result:=record(model,a,b,seed_value,calls)
 		result["group"]=group
@@ -186,7 +192,16 @@ func run_pair(a: Dictionary,b: Dictionary,group: String,verify: bool) -> void:
 func run() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument=="--quick":quick=true;per_first=1
-		elif argument.begins_with("--per-first="):per_first=clampi(int(argument.trim_prefix("--per-first=")),1,32)
+		elif argument.begins_with("--per-first="):
+			var value:=argument.trim_prefix("--per-first=")
+			if not value.is_valid_int() or int(value)<1 or int(value)>32:check(false,"per-first must be an integer1..32; no silent sampling reduction");quit(1);return
+			per_first=int(value)
+		elif argument.begins_with("--shard="):
+			var spec:=argument.trim_prefix("--shard=").split("/")
+			if spec.size()!=2 or not spec[0].is_valid_int() or not spec[1].is_valid_int():check(false,"invalid shard syntax, expected zero-based I/N");quit(1);return
+			shard_index=int(spec[0]);shard_count=int(spec[1])
+	if shard_count<1 or shard_count>32 or shard_index<0 or shard_index>=shard_count:check(false,"shard index in0..N-1 and N1..32");quit(1);return
+	if quick and shard_count!=1:check(false,"quick and sharding cannot be combined");quit(1);return
 	var bound_paths := ["tests/production_simulations.gd","data/production/cards.json","data/production/test_decks.json","data/production/starters.json","scripts/production/catalog.gd","scripts/alpha/catalog.gd","scripts/production/ai_policy.gd","scripts/card_system/production_model.gd","scripts/card_system/production_effects.gd","scripts/card_system/trigger_model.gd","scripts/card_system/runtime.gd","scripts/card_system/registry.gd","data/card_system/registry.json","data/card_system/alpha_species.json","data/alpha/cards.json","scripts/alpha/model.gd","scripts/legacy/battle_engine.gd","scripts/legacy/rng.gd"]
 	for path in bound_paths:
 		if FileAccess.file_exists("res://"+path):source_hashes[path]=FileAccess.get_sha256("res://"+path)
@@ -201,9 +216,12 @@ func run() -> void:
 	var catalog=configuration_template.catalog
 	check(catalog.all_cards().size()==550,"exact550 active data, not test stubs")
 	for deck in decks:check(catalog.validate(deck.cards).ok,"reference deck legal "+deck.id)
+	var selected_strategy_pairs:=0
 	for a_index in decks.size():
 		for b_index in decks.size():
 			if quick and b_index!=(a_index+1)%decks.size():continue
+			if (a_index*decks.size()+b_index)%shard_count!=shard_index:continue
+			selected_strategy_pairs+=1
 			var a: Dictionary=decks[a_index];var b: Dictionary=decks[b_index]
 			run_pair(a,b,"strategy",b_index==(a_index+1)%decks.size())
 	var strategy_count:=records.size()
@@ -213,22 +231,27 @@ func run() -> void:
 		check(catalog.validate(deck.cards).ok,"visible starter legal "+power)
 		starters.append(deck)
 	check(starters.size()==4,"four visible production starters")
+	var selected_starter_pairs:=0
 	for a_index in starters.size():
 		for b_index in starters.size():
+			if (decks.size()*decks.size()+a_index*starters.size()+b_index)%shard_count!=shard_index:continue
+			selected_starter_pairs+=1
 			run_pair(starters[a_index],starters[b_index],"starter",b_index==(a_index+1)%starters.size())
 	var starter_count:=records.size()-strategy_count
-	var theoretical_strategy:=decks.size()*(1 if quick else decks.size())*per_first*2
-	var theoretical_starter:=starters.size()*starters.size()*per_first*2
+	var theoretical_strategy:=selected_strategy_pairs*per_first*2
+	var theoretical_starter:=selected_starter_pairs*per_first*2
 	var theoretical:=theoretical_strategy+theoretical_starter
 	check(strategy_count==theoretical_strategy,"complete planned strategy matrix, no dropped unsupported cases")
-	check(starter_count==theoretical_starter,"complete four-starter matrix, no dropped unsupported cases")
+	check(starter_count==theoretical_starter,"complete selected starter matrix, no dropped unsupported cases")
+	check(verification_games==expected_verification_games,"all selected full-state/event replay controls completed")
 	var source_changes: Array=[]
 	for path in source_hashes:
 		if source_hashes[path]!=FileAccess.get_sha256("res://"+path):source_changes.append(path)
 	check(source_changes.is_empty(),"executed sources remained frozen throughout simulation "+str(source_changes))
-	var report: Dictionary={"schema_version":1,"profile":"production-550-v1","godot":Engine.get_version_info().string,"quick":quick,"seeds_per_first_side":per_first,"expected_matrix_games":theoretical,"strategy_matrix_games":strategy_count,"starter_matrix_games":starter_count,"matrix_games":records.size(),"additional_verification_games":verification_games,"fresh_constructor_verification_games":fresh_constructor_verification_games,"assertions":assertions,"failures":failures,"measurement_notes":["Full real model matches, standard30-card/30HP rules; no altered resource rules.","Each ordered pair has equal counts for hero/enemy first, seeds selected deterministically.","AI reads only public opponent board/hero values and its own cards; no bonus resources.","Immutable validated configuration is shared between fresh match instances; first two deterministic repeats use wholly fresh constructors and compare complete final state/event order.","action_net_resonance totals are measured net changes per AI action; automatic effects between actions and cancelling simultaneous gains/spends are not a gross resource-flow accounting.","known_card_energy_paid counts printed successfully played card costs; it excludes relic/tactic costs and automatic gains.","These heuristic AI games do not prove human metagame balance or exhaustive550-card interactions.","Quick strategy mode covers only a ring of fourteen strategy pairs; full mode covers196 ordered strategy pairs. Both include16 ordered starter pairs."],"summary":summarize(),"games":records,"source_sha256":source_hashes,"source_changes_during_run":source_changes}
+	var report: Dictionary={"schema_version":1,"profile":"production-550-v1","godot":Engine.get_version_info().string,"quick":quick,"shard_index":shard_index,"shard_count":shard_count,"planned_cases":planned_cases,"expected_global_matrix_games":(decks.size()*(1 if quick else decks.size())+starters.size()*starters.size())*per_first*2,"expected_verification_games":expected_verification_games,"seeds_per_first_side":per_first,"expected_matrix_games":theoretical,"strategy_matrix_games":strategy_count,"starter_matrix_games":starter_count,"matrix_games":records.size(),"additional_verification_games":verification_games,"fresh_constructor_verification_games":fresh_constructor_verification_games,"assertions":assertions,"failures":failures,"measurement_notes":["Full real model matches, standard30-card/30HP rules; no altered resource rules.","Each ordered pair has equal counts for hero/enemy first, seeds selected deterministically.","AI reads only public opponent board/hero values and its own cards; no bonus resources.","Immutable validated configuration is shared between fresh match instances; first two deterministic repeats use wholly fresh constructors and compare complete final state/event order.","action_net_resonance totals are measured net changes per AI action; automatic effects between actions and cancelling simultaneous gains/spends are not a gross resource-flow accounting.","known_card_energy_paid counts printed successfully played card costs; it excludes relic/tactic costs and automatic gains.","These heuristic AI games do not prove human metagame balance or exhaustive550-card interactions.","Quick strategy mode covers only a ring of fourteen strategy pairs; full mode covers196 ordered strategy pairs. Both include16 ordered starter pairs."],"summary":summarize(),"games":records,"source_sha256":source_hashes,"source_changes_during_run":source_changes}
 	DirAccess.make_dir_recursive_absolute("res://work/production")
-	var output=FileAccess.open(OUTPUT,FileAccess.WRITE)
+	var output_path:=OUTPUT if shard_count==1 else "res://work/production/simulations-shard-%d-of-%d.json"%[shard_index,shard_count]
+	var output=FileAccess.open(output_path,FileAccess.WRITE)
 	check(output!=null,"write simulation evidence")
 	report.assertions=assertions;report.failures=failures
 	if output!=null:output.store_string(JSON.stringify(report,"\t",true));output.close()
