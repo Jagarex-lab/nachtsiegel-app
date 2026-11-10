@@ -37,6 +37,7 @@ var board_views: Dictionary={}
 var status: Label
 var pulse := 0.0
 var qa_elapsed := 0.0
+var first_frame := true
 var render_pending := false
 var render_version := 0
 var modal_version := 0
@@ -62,6 +63,11 @@ func _ready() -> void:
 	feedback=preload("res://scripts/alpha/feedback.gd").new();feedback.z_index=100;add_child(feedback)
 	render()
 func _process(delta: float) -> void:
+	if first_frame:
+		first_frame=false
+		# Godot applies the project window title after the initial main scene's ready.
+		DisplayServer.window_set_title("ORAFOLD · Alpha 0.1")
+		if OS.has_feature("web"):JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.1';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.1')")
 	pulse=maxf(0,pulse-delta)
 	# Keep a canvas frame available to browser compositors and capture tools.
 	queue_redraw()
