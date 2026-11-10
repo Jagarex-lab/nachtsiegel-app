@@ -496,6 +496,13 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
 func _publish_source(trigger: String, side: String, context: Dictionary) -> void:
  var id:=str(context.get("source_card_id",""))
  if _bindings.has(id):_emit_trigger(trigger,side,id,context,{"cause":"generic_damage"})
+ # A creature's printed damage is still damage/defeat caused by that creature.
+ # Relics watching own creatures must observe it just like a native attack.
+ # Impulse/relic damage does not satisfy the printed own-creature condition.
+ if trigger in ["on_deal_damage","on_kill"] and catalog.cards.get(id,{}).get("kind")=="creature":
+  var relic: Variant=state[side].relic
+  if relic!=null and _bindings.has(relic.id):
+   _emit_trigger(trigger,side,relic.id,{"source_relic":true,"source_relic_uid":int(relic.get("uid",0)),"target_lane":int(context.get("source_lane",0))},{"cause":"generic_creature_damage"})
 
 func _evaluate_conditions() -> void:
  if _checking_conditions or state.get("stage")!="battle" or state.winner!=null:return

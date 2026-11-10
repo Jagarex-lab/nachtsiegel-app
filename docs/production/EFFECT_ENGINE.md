@@ -206,3 +206,20 @@ controlled path bound, while attack 1 → 0 breaks it. The earlier unconditional
 break in `weaken_unit` was removed. Regression fixtures use the real damage-triggered
 `of-stillwatch-005` for both sides and verify attack, control, binding and identity;
 these arranged boundaries are not reported as complete matches.
+
+## Relic watchers and creature-effect kills
+
+`of-neutral-093`, `of-neutral-094` and `of-neutral-095` award resonance when an own
+creature defeats a creature. A native attack already notified them; a creature's
+printed generic damage incorrectly notified only the creature itself. The latter
+now also publishes to the currently installed relic instance. Damage caused by
+an impulse or relic does not satisfy the printed own-creature condition. No card
+text, cost, resource limit or ordinary attack rule changed.
+
+`tests/production_creature_kill_watchers.gd` compares native attacks, generic
+creature damage and actual impulse commands for all three relics and both sides.
+Two creature kills in one attack phase still grant only one resonance. Its 18
+arranged boundaries produced 90 assertions/12 failures before the fix and 90/0
+afterward. The full engine suite still passes 4,425 assertions, 940 ability
+fixtures and all 1,100 card/side play commands. These fixtures are separate from
+complete-match simulations, which must be rerun on the corrected source hash.
