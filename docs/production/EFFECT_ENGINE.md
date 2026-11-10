@@ -178,3 +178,21 @@ Generic `summon_card` now always uses the leftmost free own lane, matching its
 printed text. Own-neighbor selectors follow the source's current UID/lane when
 alive, or its last lane for death triggers; defeated neighbors are not buff targets.
 A later printed ability published after movement captures that current position.
+
+## Lethal-damage priority
+
+Hero HP reaching zero is terminal **before post-damage triggered healing or
+reactions**. This applies equally to a direct native attack and a generic impulse;
+the same two damage cannot save/defeat a one-HP hero differently according to the
+caller. The pre-hit defense/shield window still resolves before damage and can
+prevent lethal damage. Nonlethal post-damage healing continues to work.
+
+A creature with zero HP is not a valid `self` heal/buff target. However, an actual
+fatal-damage event still publishes that creature's other legitimate damage triggers
+(such as giving its hero Block). A captured source capability records the real
+side/card/UID while those publications are pending. Its strictly typed context
+marker is accepted only against that trusted capture; an arbitrary stale UID cannot
+forge it. Captures are cloned/snapshotted while needed and retired after their last
+queued publication. Thus a dying creature's hero-Block trigger resolves once both
+for native attacks and generic damage, without resurrecting the defeated creature.
+These changes are confined to Production; archived Alpha/Legacy behavior is retained.

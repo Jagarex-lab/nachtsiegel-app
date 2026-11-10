@@ -156,7 +156,7 @@ func _ready(side: String) -> bool:
 
 func _validate_context(context: Dictionary) -> String:
 	var allowed := ["event_id", "source_lane", "source_uid", "target_lane", "target_uid", "target_species"]
-	if model != null and model.has_method("production_preflight"): allowed.append_array(["source_card_id", "ability_index", "source_relic", "event_lane", "event_side", "event_uid", "source_armed", "source_relic_uid", "source_instance", "selected_enemy_lane", "selected_enemy_uid", "opposite_enemy_lane", "opposite_enemy_uid"])
+	if model != null and model.has_method("production_preflight"): allowed.append_array(["source_card_id", "ability_index", "source_relic", "event_lane", "event_side", "event_uid", "source_armed", "source_relic_uid", "source_instance", "selected_enemy_lane", "selected_enemy_uid", "opposite_enemy_lane", "opposite_enemy_uid", "fatal_damage_source"])
 	for key in context:
 		if not key in allowed: return "unknown_context_field:" + str(key)
 	if not context.get("event_id") is String or context.event_id.is_empty() or context.event_id.length() > 100: return "invalid_event_id"
@@ -172,6 +172,7 @@ func _validate_context(context: Dictionary) -> String:
 			if context.has(key) and not Registry.integer(context[key],0,9007199254740991):return "invalid_uid"
 		for key in ["source_armed","source_instance"]:
 			if context.has(key) and not Registry.integer(context[key],1,9007199254740991):return "invalid_uid"
+		if context.has("fatal_damage_source") and not context.fatal_damage_source is bool:return "invalid_fatal_damage_context"
 		if context.has("ability_index") and not Registry.integer(context.ability_index,0,3):return "invalid_ability_index"
 		if context.has("source_card_id") and (not context.source_card_id is String or context.source_card_id.is_empty() or context.source_card_id.length()>100):return "invalid_source_card_id"
 	return ""

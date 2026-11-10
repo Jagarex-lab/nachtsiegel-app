@@ -23,6 +23,7 @@ var _pending_arrivals: Array=[]
 var _native_choice_uids: Dictionary={}
 var _draining_arrivals := false
 var _resolving_native_choice := false
+var _fatal_damage_sources: Dictionary={}
 
 func _init(probe_from: RefCounted=null) -> void:
  if probe_from!=null:
@@ -72,12 +73,12 @@ func configure_v2(cards: Array) -> Dictionary:
 
 func start_alpha(deck: Array, opponent_deck: Array, seed_value: int, difficulty: int=2) -> bool:
  if not _configuration_error.is_empty():return false
- _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0;longest_chain=0;_last_history_state={};_pending_arrivals=[];_native_choice_uids={};_draining_arrivals=false;_resolving_native_choice=false
+ _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0;longest_chain=0;_last_history_state={};_pending_arrivals=[];_native_choice_uids={};_draining_arrivals=false;_resolving_native_choice=false;_fatal_damage_sources={}
  return super.start_alpha(deck,opponent_deck,seed_value,difficulty)
 
 func snapshot() -> Dictionary:
  var result:=super.snapshot()
- if not result.is_empty():result["production"]={"profile":PROFILE_ID,"ability_uses":_ability_uses.duplicate(true),"condition_latches":_condition_latches.duplicate(true),"armed":_armed.duplicate(true),"armed_serial":_armed_serial,"relic_serial":_relic_serial,"play_serial":_play_serial,"pending_arrivals":_pending_arrivals.duplicate(true),"native_choice_uids":_native_choice_uids.duplicate(true)}
+ if not result.is_empty():result["production"]={"profile":PROFILE_ID,"ability_uses":_ability_uses.duplicate(true),"condition_latches":_condition_latches.duplicate(true),"armed":_armed.duplicate(true),"armed_serial":_armed_serial,"relic_serial":_relic_serial,"play_serial":_play_serial,"pending_arrivals":_pending_arrivals.duplicate(true),"native_choice_uids":_native_choice_uids.duplicate(true),"fatal_damage_sources":_fatal_damage_sources.duplicate(true)}
  return result
 
 func _validation_probe():
@@ -101,6 +102,7 @@ func _validation_probe():
  probe._armed=_armed.duplicate(true);probe._armed_serial=_armed_serial;probe._relic_serial=_relic_serial;probe._play_serial=_play_serial
  probe.effect_runtime._publication_digest=effect_runtime._publication_digest
  probe._pending_arrivals=_pending_arrivals.duplicate(true);probe._native_choice_uids=_native_choice_uids.duplicate(true)
+ probe._fatal_damage_sources=_fatal_damage_sources.duplicate(true)
  return probe
 
 func supports_creature_effect(card: Dictionary) -> bool:
@@ -224,8 +226,11 @@ func _emit_trigger(trigger: String, side: String, card_id: String, context: Dict
    _trace("v2_trigger_fizzled",side,{"event_id":record.event_id,"reason":reason})
    continue
   _journal_ids[record.event_id]=trigger_journal.size()-1
+  var fatal_uid:=int(c.get("source_uid",-1))
+  if c.get("fatal_damage_source",false) and _fatal_damage_sources.has(fatal_uid):_fatal_damage_sources[fatal_uid].pending+=1
   var result: Dictionary=effect_runtime.publish(trigger,side,[a],c)
   _sync_runtime_log()
+  if int(result.get("queued",0))==0 and c.get("fatal_damage_source",false):_retire_fatal_publication(fatal_uid)
   if not result.ok:
    record.status="error";record.reason=result.reason
    state.error="Generische Effektkette angehalten: "+str(result.reason)
@@ -262,7 +267,10 @@ func _phase_hook(trigger: String, side: String) -> void:
  _evaluate_conditions()
 
 func _combat_hook(trigger: String, side: String, lane: int, unit: Dictionary, detail: Dictionary={}) -> void:
- if not unit.is_empty() and _bindings.has(unit.id):_emit_trigger(trigger,side,unit.id,_context_for(side,lane,unit),detail)
+ if not unit.is_empty() and _bindings.has(unit.id):
+  var context:=_context_for(side,lane,unit)
+  if detail.get("fatal_damage_source",false):context.fatal_damage_source=true
+  _emit_trigger(trigger,side,unit.id,context,detail)
  var relic: Variant=state[side].relic
  if relic!=null and _bindings.has(relic.id):_emit_trigger(trigger,side,relic.id,{"source_relic":true,"source_relic_uid":int(state[side].relic.get("uid",0)),"target_lane":lane},detail)
  _publish_armed(trigger,side,lane)
@@ -277,12 +285,18 @@ func hit_unit(unit: Dictionary, amount: int) -> void:
  var absorbed:=mini(maxi(0,amount),int(unit.get("block",0)))
  unit["block"]=int(unit.get("block",0))-absorbed
  super.hit_unit(unit,maxi(0,amount)-absorbed)
- if int(unit.hp)>=old_hp or _damage_depth>=32:return
+ if old_hp<=0 or int(unit.hp)>=old_hp or _damage_depth>=32:return
  _damage_depth+=1
  for side in ["hero","enemy"]:
   for lane in 5:
    var live: Variant=state[side].lanes[lane]
-   if live!=null and int(live.uid)==int(unit.uid):_combat_hook("on_take_damage",side,lane,unit,{"amount":old_hp-int(unit.hp)})
+   if live==null or int(live.uid)!=int(unit.uid):continue
+   var fatal:=int(unit.hp)<=0
+   if fatal:_fatal_damage_sources[int(unit.uid)]={"side":side,"id":unit.id,"lane":lane,"publishing":true,"pending":0}
+   _combat_hook("on_take_damage",side,lane,unit,{"amount":old_hp-int(unit.hp),"fatal_damage_source":fatal})
+   if fatal and _fatal_damage_sources.has(int(unit.uid)):
+    _fatal_damage_sources[int(unit.uid)].publishing=false
+    _cleanup_fatal_source(int(unit.uid))
  _damage_depth-=1
 
 func _publish_relic(trigger: String, side: String, lane: int) -> void:
@@ -322,8 +336,11 @@ func _source_valid(side: String, context: Dictionary, trigger: String) -> bool:
   return false
  if context.get("source_relic",false):return state[side].relic!=null and state[side].relic.id==context.get("source_card_id") and int(state[side].relic.get("uid",0))==int(context.get("source_relic_uid",-1))
  if context.has("source_uid"):
+  if trigger=="on_take_damage" and context.get("fatal_damage_source",false):
+   var captured: Dictionary=_fatal_damage_sources.get(int(context.source_uid),{})
+   if captured.get("side")==side and captured.get("id")==context.get("source_card_id"):return true
   for unit in state[side].lanes:
-   if unit!=null and int(unit.uid)==int(context.source_uid):return int(unit.hp)>0 or trigger in ["on_take_damage","on_death"]
+   if unit!=null and int(unit.uid)==int(context.source_uid):return int(unit.hp)>0 or trigger=="on_death"
   return trigger=="on_death"
  return true
 
@@ -378,7 +395,7 @@ func _targets(side: String, a: Dictionary, context: Dictionary) -> Array:
   "enemy_lane":result.append({"side":other,"lane":lane if op.lanes[lane]!=null else -1})
   "self":
    for i in 5:
-    if own.lanes[i]!=null and int(own.lanes[i].uid)==int(context.get("source_uid",-1)):result.append({"side":side,"lane":i})
+    if own.lanes[i]!=null and int(own.lanes[i].hp)>0 and int(own.lanes[i].uid)==int(context.get("source_uid",-1)):result.append({"side":side,"lane":i})
   "opposite_enemy_unit":
    var bound_lane:=int(context.get("opposite_enemy_lane",source_lane))
    if op.lanes[bound_lane]!=null:result.append({"side":other,"lane":bound_lane})
@@ -473,7 +490,7 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
     var id: String=a.params.card_id;p.lanes[lane]=make_unit(side,catalog.card(id),lane)
     _trace("effect_summon",side,{"card_id":id,"lane":lane});actual.summon_resolved=enqueue({"type":"summon","side":side,"card_id":id,"lane":lane})
   "delay_damage":state.delayed.append({"side":side,"lane":int(context.get("target_lane",0)),"due":int(state.round)+int(a.params.turn_changes),"power":amount})
- _refresh_bindings();check_winner();_evaluate_conditions()
+ _refresh_bindings();check_winner();_evaluate_conditions();_drain_pending_arrivals()
  return actual
 
 func _publish_source(trigger: String, side: String, context: Dictionary) -> void:
@@ -589,6 +606,8 @@ func _lane_damage(side: String, lane: int, power: int) -> void:
 func _hero_damage(player: Dictionary, amount: float, pierce: bool=false) -> int:
  var lost:=super._hero_damage(player,amount,pierce)
  if lost>0:
+  check_winner()
+  if state.winner!=null:return lost
   for side in ["hero","enemy"]:
    if is_same(state.get(side),player):_publish_relic("on_take_damage",side,0);break
  return lost
@@ -776,3 +795,18 @@ func _strike_target(side: String,lane: Variant,power: int,source_lane: int) -> b
   _remove_attack_casualty(other,int(lane),target)
  check_winner()
  return true
+
+func _sync_runtime_log() -> void:
+ var previous:=_runtime_log_cursor
+ super._sync_runtime_log()
+ for i in range(previous,_runtime_log_cursor):
+  var entry: Dictionary=effect_runtime.log[i]
+  if entry.context.get("fatal_damage_source",false):_retire_fatal_publication(int(entry.context.get("source_uid",-1)))
+
+func _retire_fatal_publication(uid: int) -> void:
+ if not _fatal_damage_sources.has(uid):return
+ _fatal_damage_sources[uid].pending=maxi(0,int(_fatal_damage_sources[uid].pending)-1)
+ _cleanup_fatal_source(uid)
+
+func _cleanup_fatal_source(uid: int) -> void:
+ if _fatal_damage_sources.has(uid) and not _fatal_damage_sources[uid].publishing and int(_fatal_damage_sources[uid].pending)==0:_fatal_damage_sources.erase(uid)

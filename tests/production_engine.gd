@@ -35,6 +35,8 @@ func source_context(card: Dictionary,index: int,side: String="hero") -> Dictiona
 func run() -> void:
  model=Model.new()
  check(model._configuration_error.is_empty() and model._bindings.size()>=495,"all generic identities configure against actual catalog")
+ if OS.get_environment("PRODUCTION_LETHAL_ONLY")=="1":
+  test_lethal_damage_order();print("LETHAL ORDER: ",assertions," assertions, ",failures," failures");quit(1 if failures else 0);return
  if OS.get_environment("PRODUCTION_CHOICES_ONLY")=="1":
   test_pending_arrival_choices();print("PENDING ARRIVALS: ",assertions," assertions, ",failures," failures");quit(1 if failures else 0);return
  if OS.get_environment("PRODUCTION_PERF_ONLY")=="1":
@@ -78,6 +80,7 @@ func run() -> void:
  test_queue_target_identity()
  test_performance_bookkeeping()
  test_pending_arrival_choices()
+ test_lethal_damage_order()
  var categories: Dictionary={}
  for id in exercised:categories[Generic.OPS[id].category]=true
  check(categories.size()==12,"all twelve executable effect categories covered")
@@ -389,3 +392,40 @@ func test_pending_arrival_choices() -> void:
  check(model._targets("hero",{"target":"own_neighbors","params":{}},context).is_empty(),"neighbor selectors exclude defeated units")
  var bound: Dictionary=model.production_bind_context("hero",{},context)
  check(bound.source_lane==1 and bound.opposite_enemy_lane==1,"later printed ability captures current source lane after prior movement")
+
+func test_lethal_damage_order() -> void:
+ for cause in ["attack","generic"]:
+  for initial_hp in [1,4]:
+   battle();model.state.hero.hp=initial_hp;model.state.hero.hand=["of-houses-075"]
+   check(model.play("hero",0,2),"arm real postdamage healing before "+cause)
+   model.state.active="enemy"
+   if cause=="attack":
+    var attacker:=put("enemy",2);attacker.atk=2
+    check(model.attack_phase("enemy"),"real native hero attack")
+   else:
+    model.state.enemy.hand=["of-stillwatch-072"]
+    check(model.play("enemy",0,2),"real generic two-damage impulse")
+   if initial_hp==1:check(model.state.hero.hp==0 and model.state.winner=="enemy" and model.armed_impulses("hero").size()==1,"hero HP0 is terminal before postdamage healing for "+cause)
+   else:check(model.state.hero.hp==5 and model.state.winner==null and model.armed_impulses("hero").is_empty(),"nonlethal postdamage healing works for "+cause)
+  battle();var dying:=put("hero",2,"of-houses-007");dying.hp=1;model.state.active="enemy"
+  if cause=="attack":
+   var attacker:=put("enemy",2);attacker.atk=2;model.attack_phase("enemy")
+  else:model.state.enemy.hand=["of-stillwatch-072"];model.play("enemy",0,2)
+  check(model.state.hero.lanes[2]==null and model.state.hero.block==2,"fatal creature damage still resolves its captured hero-block trigger for "+cause)
+  check(model._fatal_damage_sources.is_empty(),"completed fatal-source capability is retired for "+cause)
+  battle();dying=put("hero",2,"of-morph-013");dying.hp=1;var before_atk:=int(dying.atk);model.state.active="enemy"
+  if cause=="attack":
+   var attacker:=put("enemy",2);attacker.atk=2;model.attack_phase("enemy")
+  else:model.state.enemy.hand=["of-stillwatch-072"];model.play("enemy",0,2)
+  check(model.state.hero.lanes[2]==null and int(dying.atk)==before_atk,"already defeated self cannot receive its own postdamage buff for "+cause)
+  check(model._targets("hero",{"effect":"heal_target","target":"self","params":{"amount":3}},{"source_uid":dying.uid,"source_lane":2}).is_empty(),"self-heal target selector excludes a defeated instance for "+cause)
+ battle()
+ var a: Dictionary={"mode":"triggered","trigger":"on_take_damage","effect":"grant_block","target":"own_hero","params":{"amount":2},"limit":"once_per_turn"}
+ var before:=JSON.stringify([model.snapshot(),model.events],"",true)
+ var reply: Dictionary=model.effect_runtime.publish("on_take_damage","hero",[a],{"event_id":"forged-fatal","source_card_id":"of-houses-007","source_uid":99999,"source_lane":2,"fatal_damage_source":true})
+ check(not reply.ok and JSON.stringify([model.snapshot(),model.events],"",true)==before,"a caller cannot forge trusted fatal source capability for an arbitrary stale UID")
+ battle();model.state.hero.hp=1;model.state.hero.hand=["of-stillwatch-070"]
+ check(model.play("hero",0,2),"arm real before-hit shield")
+ var attacker:=put("enemy",2);attacker.atk=2
+ model.attack_phase("enemy")
+ check(model.state.hero.hp==1 and model.state.hero.ward==1 and model.state.winner==null,"before-hit shield can still prevent lethal attack")
