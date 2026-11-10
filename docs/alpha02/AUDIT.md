@@ -102,3 +102,23 @@ Chromium reproduzierte nach 915×412 → 390×844 einen CSS-Canvas von 915×1981
 ### Tastatur: sichtbarer Viewport ist nicht immer die Zeichnungsgröße
 
 Wenn eine mobile Tastatur nur `visualViewport.height` verkleinert, verwendet Godots Policy2 weiterhin `innerHeight × DPR` für den Zeichenpuffer. Eine CSS-Höhe allein aus visualViewport hätte dann ungleiche X-/Y-Skalierung und zu kleine Touchflächen erzeugt. Der Canvas bleibt deshalb isotrop bei innerHeight; `scripts/alpha/shell.gd` begrenzt die nutzbare UI-Fläche separat auf den sichtbaren Viewport und berücksichtigt dessen oberen Versatz. Ein kleiner Versionspoll erkennt reine visualViewport-Änderungen ohne Godot-Window-Resize. Der Browsertest verkleinert sowohl das Fenster als auch ausdrücklich nur visualViewport (500 statt844), prüft gleichmäßige Pixel-/CSS-Verhältnisse, sichtbares Speichern und unveränderte Deckdaten. Das ist ein simulierter Keyboard-Viewport, keine echte Safari-Tastaturprüfung.
+
+## Nachgewiesener Export- und Ladefehler
+
+Die Inventur des tatsächlich veröffentlichten Alpha0.1-Pakets (Dateigröße per öffentlichem HTTP-HEAD bestätigt) fand16 `node_modules`-Ressourcen. Drei ungenutzte Playwright-Firefox-Logos belegen allein20.789.517 Bytes importierte Texturdaten. Das ist Testruntime-Inhalt, kein Spielasset. Der Export nach einer Root-NPM-Installation importierte diese Dateien unbeabsichtigt; ein zusätzlicher CI-Lauf brach beim Import einer Codicon-Schrift ab.
+
+Korrektur: `node_modules/*` ist in allen Export-Presets ausgeschlossen. Der Alpha-Build legt `.gdignore` für generierte work- und vorhandene Node-Verzeichnisse an. `tools/alpha02_pack_inventory.gd` prüft das montierte tatsächliche PCK und lässt den Build bei eingeschlossenen Tool-, Test-, Dokumentations- oder work-Dateien fehlschlagen. Gegenprobe: altes Paket mit16 unerlaubten Pfaden wird gezielt abgewiesen; neues Paket mit0 akzeptiert. Spielassets wurden nicht gelöscht.
+
+PCK:31.020.996 →10.796.424 Bytes (rund65,2% kleiner). [Inventuren und Ressourcenvergleich](data/package-comparison.json) dokumentieren Dateien und SHA256. Gegenüber dem vollständig geprüften App-Stand a19cbfc sind145 von146 Paketressourcen bytegleich; allein die UID-Metadatentabelle enthält den zusätzlichen Prüfskript-Verweis. Die Engine-WASM bleibt unverändert rund35,75MB unkomprimiert und ist noch pro Commit adressiert. Eine separate inhaltsadressierte Engine-Datei ist ein künftiges Cache-Optimierungsprojekt, kein hier vorgetäuschter Cache-Hit.
+
+## Kartenbezogene Ressourcenquellen
+
+[resource-cards.json](data/resource-cards.json) enthält die tatsächlichen Alpha- und Legacy-Karten-IDs, Anzeigenamen, Energiekosten und Effektparameter für Weben, Puls, Ernte und Alpha-Resonanzrelikte. Keine Karte hat einen eigenen gedruckten Resonanzpreis. Alpha enthält keine direkte energieerzeugende Karte; alle Karten bezahlen ihre Kosten aus Energie. Die Resonanzrelikte Wanderkompass und Schwarmknoten erzeugen je1 für1 Energie. Der Ordenskettenzustand `attune` beginnt je eigenem Zug neu; die bereits erworbene Resonanz bleibt erhalten. Legacy-Reaktionsenergie kann den aus Resonanzschwellen berechneten Zugwert ergänzen; diese gemischte Reaktion ist in regulären Alpha-Decks nicht erreichbar.
+
+## Messgrenzen
+
+Die vollständigen Browser-CI-Rohdaten liegen unter `data/browser-*-ci-a19.json`: nach Rückrotation390×844 CSS und1170×2532 Pixel; bei simuliertem sichtbaren500-Pixel-Viewport bleibt dieses Zeichenverhältnis erhalten und nur die UI-Fläche schrumpft. Der350-Pixel-Gegenversuch ändert die Geräteorientierung nicht. Linux-Chromium-Prozessspeicher und lokale unkomprimierte HTTP-Übertragung stehen im Upgrade-Nachweis; weder diese Werte noch die CI-Kaltstartzeiten sind iPhone-Benchmarks. Reale Tastatur, App-Unterbrechung, Speicherabbruch, thermische Leistung und Finger-zu-Bild-Latenz bleiben Gerätetest-Aufgaben.
+
+### Sicherer Kontext beim Gerätetest
+
+Die tatsächlich exportierte Godot4.6.3-Engine prüft in `Engine.getMissingFeatures()` auch bei deaktivierten Threads `window.isSecureContext`. Deshalb ist `http://localhost` am Rechner zulässig, aber unverschlüsseltes HTTP über eine LAN-IP kein belastbarer iPhone-Testweg. Der Test-ZIP enthält einen separat geprüften HTTPS-Vorschauserver; Zertifikatsvertrauen muss auf dem Testgerät korrekt eingerichtet sein. Keine Engine-Sicherheitsprüfung wurde umgangen.

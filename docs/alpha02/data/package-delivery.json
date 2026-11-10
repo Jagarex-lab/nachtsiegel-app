@@ -1,0 +1,9 @@
+{
+  "source_commit": "024887775e4bc95b304c489966f02163bcc5c595",
+  "compared_to": "a19cbfce00b07e1eb97ae469595aaf69f831c744",
+  "changed_resource_paths": [
+    "res://.godot/uid_cache.bin"
+  ],
+  "resource_count": 146,
+  "forbidden": []
+}

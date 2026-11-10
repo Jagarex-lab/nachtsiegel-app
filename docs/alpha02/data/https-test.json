@@ -1,0 +1,10 @@
+{
+  "scope": "local TLS transport, not a physical phone test",
+  "validated_certificate": true,
+  "untrusted_certificate_rejected_exit": 60,
+  "wasm_mime": "application/wasm",
+  "commit": "eaeb7c68cc849afa5dd69c3dca5aaa28d1a4f567",
+  "private_key_inside_webroot_rejected": true,
+  "delivery_commit": "024887775e4bc95b304c489966f02163bcc5c595",
+  "preview_cache_control": "no-store"
+}

@@ -1,0 +1,175 @@
+{
+  "old": {
+    "commit": "f1d24ba9a15ae7bc74a21cfb674f61899ac4ac7a",
+    "version": "ORAFOLD Alpha 0.1",
+    "channel": "develop",
+    "rulesets": [
+      "legacy-34b3062",
+      "orafold-alpha-0.1"
+    ]
+  },
+  "new": {
+    "commit": "024887775e4bc95b304c489966f02163bcc5c595",
+    "version": "ORAFOLD Alpha 0.2",
+    "channel": "isolated-test",
+    "rulesets": [
+      "legacy-34b3062",
+      "orafold-alpha-0.1"
+    ]
+  },
+  "errors": [],
+  "expected": [
+    "oa-houses-c01",
+    "oa-houses-c01",
+    "oa-houses-c02",
+    "oa-houses-c02",
+    "oa-houses-c02",
+    "oa-houses-c03",
+    "oa-houses-c03",
+    "oa-houses-c03",
+    "oa-houses-c04",
+    "oa-houses-c04",
+    "oa-houses-c04",
+    "oa-houses-c05",
+    "oa-houses-c05",
+    "oa-houses-c05",
+    "oa-houses-c06",
+    "oa-houses-c06",
+    "oa-houses-c06",
+    "oa-houses-c07",
+    "oa-houses-e01",
+    "oa-houses-e01",
+    "oa-houses-e01",
+    "oa-houses-e02",
+    "oa-houses-e02",
+    "oa-houses-e02",
+    "oa-houses-r01",
+    "oa-houses-r01",
+    "oa-neutral-c01",
+    "oa-neutral-c01",
+    "oa-neutral-c01",
+    "oa-neutral-c02"
+  ],
+  "samples": [
+    {
+      "phase": "old_build_edited_match",
+      "scope": "Linux Chromium software-rendered test processes, not device or peak RAM",
+      "processes": [
+        {
+          "type": "browser",
+          "pss_kib": 47203
+        },
+        {
+          "type": "renderer",
+          "pss_kib": 341497
+        },
+        {
+          "type": "GPU",
+          "pss_kib": 202363
+        },
+        {
+          "type": "network.mojom.NetworkService",
+          "pss_kib": 24473
+        },
+        {
+          "type": "audio.mojom.AudioService",
+          "pss_kib": 19964
+        }
+      ],
+      "pss_kib": 635500,
+      "heap": {
+        "used_js_heap_bytes": 86475352,
+        "total_js_heap_bytes": 88347672
+      },
+      "resources": [
+        {
+          "name": "orafold-f1d24ba9a15a.png",
+          "transfer_bytes": 21743,
+          "encoded_bytes": 21443,
+          "duration_ms": 20.100000008940697
+        },
+        {
+          "name": "orafold-f1d24ba9a15a.js",
+          "transfer_bytes": 280225,
+          "encoded_bytes": 279925,
+          "duration_ms": 32
+        },
+        {
+          "name": "orafold-f1d24ba9a15a.wasm",
+          "transfer_bytes": 35754892,
+          "encoded_bytes": 35754592,
+          "duration_ms": 907.5999999940395
+        },
+        {
+          "name": "orafold-f1d24ba9a15a.pck",
+          "transfer_bytes": 31021296,
+          "encoded_bytes": 31020996,
+          "duration_ms": 1431.7999999970198
+        }
+      ]
+    },
+    {
+      "phase": "new_build_preserved_match",
+      "scope": "Linux Chromium software-rendered test processes, not device or peak RAM",
+      "processes": [
+        {
+          "type": "browser",
+          "pss_kib": 48520
+        },
+        {
+          "type": "renderer",
+          "pss_kib": 302890
+        },
+        {
+          "type": "GPU",
+          "pss_kib": 226622
+        },
+        {
+          "type": "network.mojom.NetworkService",
+          "pss_kib": 24836
+        },
+        {
+          "type": "audio.mojom.AudioService",
+          "pss_kib": 20109
+        }
+      ],
+      "pss_kib": 622977,
+      "heap": {
+        "used_js_heap_bytes": 37513018,
+        "total_js_heap_bytes": 40229938
+      },
+      "resources": [
+        {
+          "name": "orafold-024887775e4b.png",
+          "transfer_bytes": 21743,
+          "encoded_bytes": 21443,
+          "duration_ms": 14.599999994039536
+        },
+        {
+          "name": "orafold-024887775e4b.js",
+          "transfer_bytes": 280225,
+          "encoded_bytes": 279925,
+          "duration_ms": 65.59999999403954
+        },
+        {
+          "name": "orafold-024887775e4b.wasm",
+          "transfer_bytes": 35754892,
+          "encoded_bytes": 35754592,
+          "duration_ms": 1893.7000000029802
+        },
+        {
+          "name": "orafold-024887775e4b.pck",
+          "transfer_bytes": 10796724,
+          "encoded_bytes": 10796424,
+          "duration_ms": 341.59999999403954
+        }
+      ]
+    }
+  ],
+  "checks": [
+    "same origin, normal HTTP cache with immutable hash assets",
+    "genuinely edited old deck played",
+    "new menu after reload",
+    "exact old deck preserved and played in new build"
+  ]
+}
