@@ -27,7 +27,7 @@ const GLOSSARY={
 	"eile":"Eile: Dieses Wesen kann bereits im Beschwörungszug angreifen, sofern keine Stasis oder andere Kampfregel den Angriff verhindert.",
 	"stasis":"Stasis: Das Wesen setzt die angegebene Zahl eigener Angriffsphasen aus. Die längere bestehende Dauer bleibt erhalten; Dauern werden nicht addiert.",
 	"schild":"Schild: Absorbiert Schaden vor Lebensverlust. Heldenschild bleibt bis höchstens 25 bestehen und wirkt nach Block; Wesenschild schützt nur das jeweilige Wesen.",
-	"block":"Block: Schützt den Helden vor Schild und Leben. Verfällt zu Beginn des nächsten eigenen Zuges.",
+	"block":"Block: Absorbiert Schaden vor Schild und Leben beim geschützten Helden oder Wesen. Verfällt zu Beginn des nächsten eigenen Zuges.",
 	"resonanz":"Resonanz: Gespeicherte Reserve für Sonderaktionen und Entfesselungen, maximal 15. Bleibt zwischen Zügen erhalten.",
 	"heile":"Heilung: Stellt Leben bis zum ursprünglichen Höchstwert wieder her und erhöht diesen Höchstwert nicht.",
 	"schwächung":"Schwächung: Verringert den Angriff betroffener Wesen in ihrer nächsten Angriffsphase, mindestens auf 0. Es gilt nur der stärkste Wert; danach endet die Schwächung.",

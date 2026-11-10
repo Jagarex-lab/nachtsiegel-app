@@ -80,16 +80,25 @@ func run() -> void:
 		await tap(app.actions.result_restart);check(app.session.model.state.winner==null,"restart actual button")
 		app.close_modal();app.page="lobby";app.render();await settle()
 		await tap(app.actions.builder);check(app.page=="builder","deckbuilder actual touch")
+		var expected_saved: Array=app.deck.duplicate()
 		if dimensions==Vector2i(844,390):
+			var removed: String=expected_saved[0]
 			await tap(app.actions.deck_tab)
-			await tap(app.actions["remove_oa-neutral-c01"]);check(app.deck.size()==29,"actual builder removal")
+			await tap(app.actions["remove_"+removed]);expected_saved.erase(removed)
+			check(app.deck==expected_saved and app.deck.size()==29,"actual builder removes the first copy and preserves exact remaining order")
 			check(app.actions.save_deck.disabled,"UI prevents invalid 29-card save")
 			await tap(app.actions.library_tab)
-			await locate_card("oa-neutral-c02");await tap(app.actions["add_oa-neutral-c02"]);check(app.deck.size()==30 and app.deck.has("oa-neutral-c02"),"actual builder adds replacement")
+			var replacement: String=""
+			for card in app.alpha_catalog.all_cards():
+				if card.kind=="creature" and card.faction=="neutral" and card.rarity=="common" and card.id!=removed and expected_saved.count(card.id)<3:
+					replacement=card.id;break
+			check(not replacement.is_empty(),"actual active pool supplies a legal distinct replacement")
+			await locate_card(replacement);await tap(app.actions["add_"+replacement]);expected_saved.append(replacement)
+			check(app.deck==expected_saved and app.deck.size()==30,"actual builder appends the selected replacement in exact order")
 		await tap(app.actions.save_deck);check(app.message.contains("gespeichert"),"valid deck saved UI")
 		if dimensions==Vector2i(844,390):
 			var reloaded=preload("res://scripts/alpha/session.gd").new()
-			check(reloaded.profile.decks["alpha:houses"].cards.has("oa-neutral-c02"),"edited deck persisted across new session")
+			check(reloaded.profile.decks["alpha:houses"].cards==expected_saved,"exact edited deck persisted across new session")
 			await tap(app.actions.reset_deck);await tap(app.actions.save_deck)
 		await snapshot("builder-%dx%d" % [dimensions.x,dimensions.y])
 		await tap(app.actions.builder_back)
