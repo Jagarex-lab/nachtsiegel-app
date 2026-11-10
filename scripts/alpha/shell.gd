@@ -488,7 +488,8 @@ func inspect(c: Dictionary, current: Dictionary={}) -> void:
 		if not current.is_empty():text("Schild %d · Stasis %d" % [current.get("ward",0),current.get("stun",0)],box,16)
 		text(str(c.get("description","")),box,18)
 		text("SCHLÜSSELWÖRTER",box,14);text(S.card_keywords(c),box,14)
-		text("Vollständig implementiert · Illustration: Atlas-Platzhalter",box,12)
+		text("Illustration: geteiltes Konzeptbild",box,12)
+		if c.kind=="event" and c.effect=="redirect":text("Benötigt einen eigenen verzögerten Treffer. Mit dem aktuellen Kartenpool in einem legalen Neunte-Stunde-Deck nicht vorbereitbar.",box,14).add_theme_color_override("font_color",T.WARNING)
 		button("inspect_target","ZUR ZIELWAHL" if page=="battle" else "SCHLIESSEN",close_modal,box)
 	)
 func show_log() -> void:
@@ -548,7 +549,23 @@ func builder() -> void:
 		button("load_deck","Laden",func():deck=current_deck();message="Gespeichertes Deck geladen.";render(),footer)
 		var starter_catalog=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
 		button("reset_deck","Starter kopieren",func():deck=starter_catalog.deck(faction);message="Starter als bearbeitbare Vorlage kopiert.";render(),footer)
+		if collection_mode=="alpha":button("strategy_templates","Testdecks",show_test_decks,body if layout.size.x<700 else footer)
 		if not small_builder:text(message,body,12)
+func show_test_decks() -> void:
+	var templates: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/card_system/test_decks.json"))
+	var cat=AlphaCatalog.new()
+	show_modal("STRATEGIEVORLAGEN",func(box):
+		text("Zehn spielbare Testdecks aus dem aktuellen Kartenpool. Lade eine Vorlage und speichere sie, um sie für eine Partie auszuwählen. Die vier Starter bleiben erhalten.",box,16)
+		for entry in templates.decks:
+			text(str(entry.name_de)+" · "+str(cat.source.powers[entry.power])+" · 30 Karten",box,19)
+			text(str(entry.description_de),box,14)
+			if not str(entry.get("limitations_de","")).is_empty():text(str(entry.limitations_de),box,12)
+			var valid: Dictionary=cat.validate(entry.cards)
+			button("template_"+str(entry.id),"ALS VORLAGE LADEN",func():
+				faction=entry.power;deck=entry.cards.duplicate();save_preferences();deck_tab="deck";filter_power="all";filter_species="all"
+				message=str(entry.name_de)+" geladen. Speichern, um dieses Deck zu spielen.";close_modal();render()
+			,box,not valid.ok)
+	)
 func library_cards() -> Array:
 	var cards: Array=[]
 	var cat=AlphaCatalog.new() if collection_mode=="alpha" else LegacyCatalog.new()
