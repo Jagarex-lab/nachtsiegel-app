@@ -70,9 +70,9 @@ func run() -> void:
 	check(hash(concept_render.get_data())!=shared_hash,"resolved V2 texture is actually rendered instead of shared fallback")
 	# Synthetic status tests exercise the loader, not art-production approval.
 	resource_sample=resource_sample.duplicate(true);resource_sample.art.status="final";face.card=resource_sample
-	check(face.normalized().illustration is Texture2D and face.normalized().art_label.is_empty(),"only loaded synthetic final resource suppresses concept caption")
+	check(face.normalized().illustration is Texture2D and face.normalized().art_label=="KONZEPTILLUSTRATION","unregistered synthetic final resource cannot suppress concept caption without approved individual provenance")
 	var final_render=await capture()
-	check(hash(final_render.get_data())!=hash(concept_render.get_data()),"actual render reflects final/concept caption state")
+	check(hash(final_render.get_data())==hash(concept_render.get_data()),"self-declared final texture remains byte-identical to honestly labelled concept")
 	var missing_sample=resource_sample.duplicate(true);missing_sample.art.asset_id="res://assets/art/this-final-image-does-not-exist.png";face.card=missing_sample
 	check(face.normalized().illustration==null and face.normalized().art_status=="shared_concept" and face.normalized().art_label=="GETEILTES KONZEPTBILD","missing final resource is never presented as available final art")
 	var missing_render=await capture()
@@ -113,7 +113,7 @@ func run() -> void:
 		var image=await capture();image.save_png(output+"type-"+kind+".png")
 		check(face.layout_report().has_combat_values==(kind=="creature"),"type rendering has appropriate combat values: "+kind)
 		check(face.layout_report().rules_fit,"type rules fit including optional resonance: "+kind)
-		if kind!="creature":check(face.layout_report().rules.position.y>=760,"resonance cost never overlaps rules")
+		if kind!="creature":check(face.layout_report().rules.position.y>=760-Face.INFORMATION_LIFT,"resonance cost never overlaps rules after universal information lift")
 	face.face_down=true
 	var back_image=await capture();back_image.save_png(output+"back-master.png")
 	var back_hash=hash(back_image.get_data())

@@ -25,3 +25,25 @@ Die bestehende Projektlizenz und `LICENSE-NOTICE.md` bleiben maßgeblich für Sp
 ## Original audio (Task D)
 
 `assets/audio/`: project-generated mathematical synthesis, no sampled external source. See [audio provenance](audio/README.md) and `tools/generate_audio.py`. Eleven PCM cues plus a short Vorbis atmosphere bed; commercial project use follows existing project rights.
+
+## ORAFOLD-Produktionsillustrationen (10.11.2026)
+
+Fünf individuelle, ausschließlich für dieses Projekt mit OpenAI Image Generation
+erzeugte individuelle Illustrationen liegen in `assets/cards/originals/`: Torwache
+(`oa-neutral-c02`), Namenhüter (`oa-houses-c01`), Glaskonservator
+(`oa-stillwatch-c01`), Sprunglarve (`oa-morph-c01`) und Kausaljäger (`oa-ninth-c01`).
+Jedes PNG besitzt native 1448 × 1086 Pixel; es wurde kein Atlas hochskaliert und
+kein Referenzbild verwendet. Die Dateien enthalten ausschließlich das Bildmotiv;
+Kartenrahmen und sämtliche Informationen zeichnet Godot separat.
+
+Vollständige Prompts, Erzeugungsdatum, ursprüngliche Quelldateinamen,
+SHA-256-Prüfsummen, unveränderte Originalabmessungen, alternative Bildtexte und
+Reviewstatus stehen in `data/production/art_sources.json`. Technische Pipeline
+und Grenzen: `docs/production/ART_PIPELINE.md`. Die tatsächlichen Originalbilder
+und Godot-Kartenansichten wurden von implementierendem Agent und Hauptagent auf
+Motiv, Arten, Palette, Beschneidung und sichtbare Fehler geprüft und für die
+aktuelle visuelle Produktionsrichtung freigegeben (`final` / `approved`). Das
+ist keine juristische Freigabe. Prüfung der maßgeblichen Nutzungsbedingungen
+und abschließende kommerzielle Rechteprüfung stehen aus; keine Exklusivität oder
+juristische Unbedenklichkeit wird behauptet. Die übrigen 545 Einzelillustrationen
+des Produktionskandidaten fehlen weiterhin.

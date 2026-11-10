@@ -4,9 +4,11 @@ extends Control
 const S = preload("res://scripts/alpha/style.gd")
 const T = preload("res://scripts/ui_tokens.gd")
 const ATLAS = preload("res://assets/art/atlas.png")
+const ART = preload("res://scripts/production/art_resolver.gd")
 const MASTER_SIZE = Vector2(756,1056)
 const OUTER = Rect2(8,8,740,1040)
 const ART_RECT = Rect2(42,152,672,500)
+const INFORMATION_LIFT = 60
 const POWERS = {
 	"houses": {"name":"Zwölf Häuser","color":Color("c58c64"),"symbol":"Ⅻ"},
 	"stillwatch": {"name":"Stillwacht","color":Color("9bd2e8"),"symbol":"◇"},
@@ -46,19 +48,10 @@ func normalized() -> Dictionary:
 	var species_names: Array[String]=[]
 	for species_id in card.get("species",[]):
 		if SPECIES.has(str(species_id)):species_names.append(SPECIES[str(species_id)])
-	var artwork=card.get("art",{})
-	var art_status=str(artwork.get("status","shared_concept")) if artwork is Dictionary else "shared_concept"
-	# V2 uses the validated asset_id contract. The optional path adapter is v1 only.
-	var asset_path=str(artwork.get("asset_id","")) if artwork is Dictionary else ""
-	if not asset_path.begins_with("res://") and int(card.get("schema_version",1))<2 and artwork is Dictionary:
-		asset_path=str(artwork.get("path",""))
-	var illustration: Texture2D=null
-	if art_status in ["concept","final"] and asset_path.begins_with("res://") and ResourceLoader.exists(asset_path):
-		var resource=load(asset_path)
-		if resource is Texture2D:illustration=resource
-	# A final declaration cannot turn a missing/unloadable resource into final art.
-	if illustration==null:art_status="shared_concept"
-	var art_label="GETEILTES KONZEPTBILD" if illustration==null else "KONZEPTILLUSTRATION" if art_status!="final" else ""
+	var resolved=ART.resolve(card)
+	var illustration: Texture2D=resolved.texture
+	var art_status: String=resolved.status
+	var art_label: String=resolved.label
 	return {"id":str(card.get("id","")),"name":str(card.get("name","")),"power":power_id,"kind":str(card.get("kind","creature")),"rarity":str(card.get("rarity","common")),"cost":int(card.get("energy_cost",card.get("cost",0))),"resonance":int(card.get("resonance_cost",0)),"attack":int(card.get("attack",card.get("atk",0))),"health":int(card.get("health",card.get("hp",0))),"species":" · ".join(species_names),"text":str(card.get("text_de",card.get("description",""))),"art_status":art_status,"art_label":art_label,"illustration":illustration}
 
 func paragraph(value: String, width: float, height: float, maximum: int, minimum: int) -> TextParagraph:
@@ -74,7 +67,7 @@ func paragraph(value: String, width: float, height: float, maximum: int, minimum
 func layout_report() -> Dictionary:
 	var data=normalized()
 	var title_box=Rect2(126,49,478,87)
-	var rules_top=747 if data.kind=="creature" else 760 if data.resonance>0 else 722
+	var rules_top=(747 if data.kind=="creature" else 760 if data.resonance>0 else 722)-INFORMATION_LIFT
 	var rules_box=Rect2(61,rules_top,634,932-rules_top)
 	var title=paragraph(data.name,title_box.size.x,title_box.size.y,34,25)
 	var rules=paragraph(data.text,rules_box.size.x,rules_box.size.y,30,24)
@@ -142,11 +135,11 @@ func draw_front() -> void:
 	draw_line(Vector2(57,1031),Vector2(697,1031),color.darkened(.65),3,true)
 	draw_illustration(data)
 	# Asymmetric space-fold split: a raised diagonal, never a rectangular text sticker.
-	var information=PackedVector2Array([Vector2(42,656),Vector2(714,570),Vector2(714,966),Vector2(42,966)])
+	var information=PackedVector2Array([Vector2(42,656-INFORMATION_LIFT),Vector2(714,570-INFORMATION_LIFT),Vector2(714,966),Vector2(42,966)])
 	draw_colored_polygon(information,RULES)
-	draw_colored_polygon(PackedVector2Array([Vector2(42,647),Vector2(714,561),Vector2(714,578),Vector2(42,664)]),color.darkened(.4))
-	draw_line(Vector2(42,647),Vector2(714,561),color.lightened(.25),3,true)
-	draw_line(Vector2(53,668),Vector2(701,585),Color(color,.26),1,true)
+	draw_colored_polygon(PackedVector2Array([Vector2(42,647-INFORMATION_LIFT),Vector2(714,561-INFORMATION_LIFT),Vector2(714,578-INFORMATION_LIFT),Vector2(42,664-INFORMATION_LIFT)]),color.darkened(.4))
+	draw_line(Vector2(42,647-INFORMATION_LIFT),Vector2(714,561-INFORMATION_LIFT),color.lightened(.25),3,true)
+	draw_line(Vector2(53,668-INFORMATION_LIFT),Vector2(701,585-INFORMATION_LIFT),Color(color,.26),1,true)
 	# Rarity affects depth and folded facets, while faction pigment remains dominant.
 	for layer in rarity_level:
 		var offset=float(layer)*8
@@ -157,8 +150,8 @@ func draw_front() -> void:
 			diamond(point,Vector2(8,22),color.darkened(.24))
 			draw_line(point+Vector2(0,-22),point+Vector2(0,22),color.lightened(.4),1,true)
 	if rarity_level==3:
-		draw_colored_polygon(PackedVector2Array([Vector2(626,611),Vector2(704,601),Vector2(704,650),Vector2(682,625)]),Color(color,.25))
-		draw_line(Vector2(626,611),Vector2(682,625),color.lightened(.28),2,true)
+		draw_colored_polygon(PackedVector2Array([Vector2(626,611-INFORMATION_LIFT),Vector2(704,601-INFORMATION_LIFT),Vector2(704,650-INFORMATION_LIFT),Vector2(682,625-INFORMATION_LIFT)]),Color(color,.25))
+		draw_line(Vector2(626,611-INFORMATION_LIFT),Vector2(682,625-INFORMATION_LIFT),color.lightened(.28),2,true)
 	# Identical, opaque header positions for all types and rarities.
 	rounded_box(Rect2(42,42,672,110),INK,color.darkened(.45),1,12)
 	draw_circle(Vector2(82,87),36,color.darkened(.62))
@@ -169,12 +162,12 @@ func draw_front() -> void:
 	diamond(Vector2(663,87),Vector2(32,41),color.darkened(.65))
 	diamond(Vector2(663,87),Vector2(32,41),color,false)
 	label(identity.symbol,Vector2(635,99),31,color.lightened(.32),56,HORIZONTAL_ALIGNMENT_CENTER)
-	label(KINDS.get(data.kind,data.kind),Vector2(61,692),28,TEXT,193)
-	label(identity.name,Vector2(263,692),23,color.lightened(.3),430,HORIZONTAL_ALIGNMENT_RIGHT)
+	label(KINDS.get(data.kind,data.kind),Vector2(61,692-INFORMATION_LIFT),28,TEXT,193)
+	label(identity.name,Vector2(263,692-INFORMATION_LIFT),23,color.lightened(.3),430,HORIZONTAL_ALIGNMENT_RIGHT)
 	if data.kind=="creature":
-		if not data.species.is_empty():label(data.species,Vector2(61,730),23,SECONDARY,634)
+		if not data.species.is_empty():label(data.species,Vector2(61,730-INFORMATION_LIFT),23,SECONDARY,634)
 	elif data.resonance>0:
-		label("Zusätzlich %d Resonanz" % data.resonance,Vector2(61,730),22,SECONDARY,634)
+		label("Zusätzlich %d Resonanz" % data.resonance,Vector2(61,730-INFORMATION_LIFT),22,SECONDARY,634)
 	var report=layout_report()
 	paragraph(data.text,report.rules.size.x,report.rules.size.y,30,24).draw(get_canvas_item(),report.rules.position,TEXT)
 	if data.kind=="creature":
