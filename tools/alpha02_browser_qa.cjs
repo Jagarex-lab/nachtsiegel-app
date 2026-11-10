@@ -79,6 +79,8 @@ const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Objec
    assert(Math.abs(keyboardMetrics.pixelsHeight/keyboardMetrics.cssHeight-keyboardMetrics.pixelsWidth/keyboardMetrics.cssWidth)<.01,'keyboard preserves isotropic canvas scale');
    assert.equal(keyboardMetrics.visibleHeight,500);assert.deepEqual((await q()).deck_ids,beforeKeyboard);
    assert((await q()).actions.save_deck.rect[1]+(await q()).actions.save_deck.rect[3]<=500,'save stays above simulated keyboard');
+   await page.evaluate(()=>{Object.defineProperty(window.visualViewport,'height',{configurable:true,get:()=>350});window.visualViewport.dispatchEvent(new Event('resize'));});
+   await wait(()=>window.orafoldQA.layout_size[1]<350);assert((await q()).portrait,'keyboard does not turn portrait into landscape');
    await page.evaluate(()=>{delete window.visualViewport.height;window.visualViewport.dispatchEvent(new Event('resize'));});
    await wait(()=>window.orafoldQA.layout_size[1]>700);
    await action('deck_tab');

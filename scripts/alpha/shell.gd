@@ -593,7 +593,8 @@ func _layout() -> void:
 	var left=float(insets.get("left",0));var right=float(insets.get("right",0));var top=float(insets.get("top",0));var bottom=float(insets.get("bottom",0))
 	layout.position=Vector2(left,top+visible_top)*density;layout.scale=Vector2.ONE*density
 	layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(160,minf(size.y/density-visible_top,visible_height)-top-bottom))
-	var next_portrait=layout.size.y>layout.size.x
+	# A keyboard reduces usable height, not device orientation.
+	var next_portrait=size.y>size.x
 	if OS.has_feature("web") and page=="battle" and next_portrait!=portrait:rotation_block_until=Time.get_ticks_msec()+180
 	portrait=next_portrait
 	compact=layout.size.y<380
