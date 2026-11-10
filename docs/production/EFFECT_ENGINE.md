@@ -196,3 +196,13 @@ forge it. Captures are cloned/snapshotted while needed and retired after their l
 queued publication. Thus a dying creature's hero-Block trigger resolves once both
 for native attacks and generic damage, without resurrecting the defeated creature.
 These changes are confined to Production; archived Alpha/Legacy behavior is retained.
+
+## Attack reduction and convergence
+
+Reducing attack does not itself cancel an existing convergence binding. The normal
+binding refresh checks the actual remaining attack against the player's weakness,
+as well as source UID, stasis and summon readiness. Thus attack 4 → 3 leaves a
+controlled path bound, while attack 1 → 0 breaks it. The earlier unconditional
+break in `weaken_unit` was removed. Regression fixtures use the real damage-triggered
+`of-stillwatch-005` for both sides and verify attack, control, binding and identity;
+these arranged boundaries are not reported as complete matches.
