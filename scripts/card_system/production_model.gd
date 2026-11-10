@@ -459,7 +459,7 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
    "modify_attack":
     if unit!=null:unit.atk=mini(40,int(unit.atk)+amount)
    "weaken_unit":
-    if unit!=null:unit.atk=maxi(0,int(unit.atk)-amount);_break_uid(int(unit.uid))
+    if unit!=null:unit.atk=maxi(0,int(unit.atk)-amount)
    "stun_unit":
     if unit!=null:unit.stun=maxi(int(unit.stun),int(a.params.count));_break_uid(int(unit.uid))
    "move_unit":

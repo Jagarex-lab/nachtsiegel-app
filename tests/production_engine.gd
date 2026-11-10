@@ -81,6 +81,7 @@ func run() -> void:
  test_performance_bookkeeping()
  test_pending_arrival_choices()
  test_lethal_damage_order()
+ test_weaken_convergence_control()
  var categories: Dictionary={}
  for id in exercised:categories[Generic.OPS[id].category]=true
  check(categories.size()==12,"all twelve executable effect categories covered")
@@ -429,3 +430,23 @@ func test_lethal_damage_order() -> void:
  var attacker:=put("enemy",2);attacker.atk=2
  model.attack_phase("enemy")
  check(model.state.hero.hp==1 and model.state.hero.ward==1 and model.state.winner==null,"before-hit shield can still prevent lethal attack")
+
+func test_weaken_convergence_control() -> void:
+ # Arrange an already declared binding; trigger the real printed weakening card.
+ # Attack loss cancels a binding only if it actually removes attack readiness.
+ for side in ["hero","enemy"]:
+  for attack_before in [4,1]:
+   battle()
+   var other: String=model._other(side)
+   var uids: Array=[]
+   for lane in [0,1,2]:
+    var unit:=put(side,lane);unit.hp=10;unit.atk=4;uids.append(unit.uid)
+   var target: Dictionary=model.state[side].lanes[0]
+   target.hp=1;target.atk=attack_before
+   model.state[side].convergence={"lanes":[0,1,2],"uids":uids.duplicate(),"broken":false}
+   var source:=put(other,4,"of-stillwatch-005");source.hp=10
+   model._lane_damage(other,4,1)
+   check(target.atk==attack_before-1,"real damage trigger weakens the lowest-health opposing creature for "+side)
+   check(bool(model.state[side].convergence.broken)==(attack_before==1),"weakening preserves controlled convergence paths and breaks zero-attack paths for "+side)
+   check(model.controlled(side,0)==(attack_before>1),"binding follows actual path control after weakening for "+side)
+   check(model.state[side].convergence.uids==uids and model.state.error.is_empty(),"weakening neither replaces the bound instances nor errors for "+side)
