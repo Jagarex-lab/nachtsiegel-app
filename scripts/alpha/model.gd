@@ -6,7 +6,7 @@ var longest_chain := 0
 var ai_policy: RefCounted = null
 func _phase_hook(_trigger: String, _side: String) -> void: pass
 func _combat_hook(_trigger: String, _side: String, _lane: int, _unit: Dictionary, _detail: Dictionary = {}) -> void: pass
-func _attack_damage_hero(_source_side: String, _source_lane: int, target: Dictionary, amount: int) -> int: return damage(target, amount)
+func _attack_damage_hero(_source_side: String, _source_lane: int, target: Dictionary, amount: int) -> int: return _hero_damage(target, amount)
 func _has_haste(card: Dictionary) -> bool: return card.effect == "haste"
 func _init() -> void:catalog=AlphaCatalog.new()
 func summon_limit() -> int:return 0
@@ -212,7 +212,7 @@ func _resolve_event_effect(side: String, card: Dictionary, lane: int) -> void:
 		"cascade":enqueue({"type":"echo","side":side,"remaining":int(card.power)})
 func _lane_damage(side: String, lane: int, power: int) -> void:
 	var p: Dictionary=state[side]
-	if p.lanes[lane]==null:damage(p,power);return
+	if p.lanes[lane]==null:_hero_damage(p,power);return
 	var unit: Dictionary=p.lanes[lane];hit_unit(unit,power)
 	if int(unit.hp)<=0:
 		p.lanes[lane]=null;enqueue({"type":"death","side":side,"lane":lane,"unit":unit})
@@ -261,7 +261,7 @@ func _dispatch_effect(e: Dictionary) -> void:
 		"summon":_resolve_summon(e);_refresh_bindings()
 		"formation":_resolve_formation(e)
 		"echo":
-			damage(state[_other(e.side)],1);_trace("echo",e.side);check_winner()
+			_hero_damage(state[_other(e.side)],1);_trace("echo",e.side);check_winner()
 			if int(e.remaining)>1:enqueue({"type":"echo","side":e.side,"remaining":int(e.remaining)-1})
 func attack_phase(side: String) -> bool:
 	if not _valid_side(side) or state.winner!=null or not state.error.is_empty():return false
@@ -279,9 +279,11 @@ func attack_phase(side: String) -> bool:
 			if state.winner!=null or p.lanes[lane]==null:break
 			_combat_hook("on_attack",side,lane,u)
 			if p.lanes[lane]==null or int(p.lanes[lane].uid)!=int(u.uid) or state.winner!=null:break
+			if int(u.stun)>0:u.stun=int(u.stun)-1;_trace("reaction_stun_skip",side,{"lane":lane});break
 			var target: Variant=op.lanes[lane]
 			_combat_hook("on_defend",_other(side),lane,target if target!=null else {},{"attacker_side":side,"attacker_lane":lane,"attacker_uid":u.uid})
-			if p.lanes[lane]==null or int(p.lanes[lane].uid)!=int(u.uid) or int(u.hp)<=0 or int(u.stun)>0 or state.winner!=null:break
+			if p.lanes[lane]==null or int(p.lanes[lane].uid)!=int(u.uid) or int(u.hp)<=0 or state.winner!=null:break
+			if int(u.stun)>0:u.stun=int(u.stun)-1;_trace("reaction_stun_skip",side,{"lane":lane});break
 			target=op.lanes[lane]
 			var amount: int=maxi(0,int(u.atk)-int(p.weak))
 			if target==null:_attack_damage_hero(side,lane,op,amount)
@@ -291,7 +293,7 @@ func attack_phase(side: String) -> bool:
 				if int(target.hp)<target_hp:_combat_hook("on_deal_damage",side,lane,u,{"amount":target_hp-int(target.hp)})
 				if amount>0 and target.hp>0 and catalog.card(target.id).effect=="retaliate":hit_unit(u,int(catalog.card(target.id).power))
 				if target.hp<=0:
-					if c.effect=="pierce":damage(op,maxi(0,-int(target.hp)))
+					if c.effect=="pierce":_hero_damage(op,maxi(0,-int(target.hp)))
 					if _remove_attack_casualty(_other(side),lane,target):_combat_hook("on_kill",side,lane,u,{"defeated_uid":target.uid})
 				if u.hp<=0:_remove_attack_casualty(side,lane,u)
 			_trace("attack",side,{"lane":lane,"amount":amount,"hero_target":target==null});check_winner()

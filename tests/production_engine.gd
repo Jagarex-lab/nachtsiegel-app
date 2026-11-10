@@ -25,12 +25,12 @@ func put(side: String,lane: int,id: String="oa-neutral-c02") -> Dictionary:
  var u: Dictionary=model.make_unit(side,model.catalog.card(id),lane);u.summoned=false
  model.state[side].lanes[lane]=u
  return u
-func source_context(card: Dictionary,index: int) -> Dictionary:
+func source_context(card: Dictionary,index: int,side: String="hero") -> Dictionary:
  var context: Dictionary={"event_id":"fixture:"+card.id+":"+str(index),"source_card_id":card.id,"ability_index":index,"target_lane":2}
  if card.kind=="creature":
-  var u:=put("hero",2,card.id);context.source_lane=2;context.source_uid=u.uid
+  var u:=put(side,2,card.id);context.source_lane=2;context.source_uid=u.uid
  elif card.kind=="relic":
-  model._relic_serial+=1;model.state.hero.relic={"id":card.id,"uid":model._relic_serial};context.source_relic=true;context.source_relic_uid=model._relic_serial
+  model._relic_serial+=1;model.state[side].relic={"id":card.id,"uid":model._relic_serial};context.source_relic=true;context.source_relic_uid=model._relic_serial
  return context
 func run() -> void:
  model=Model.new()
@@ -66,8 +66,11 @@ func run() -> void:
     if entry.status=="applied" and entry.context.get("source_card_id")==card.id and entry.context.get("ability_index")==i and entry.ability==a:applied=true
    check(reply.ok and applied and model.state.error.is_empty(),"actual ability resolved "+card.id+":"+str(i)+" "+str(reply))
    if applied:exercised[a.effect]=true
- test_automatic_triggers()
+ test_automatic_triggers("hero")
+ test_automatic_triggers("enemy")
  test_rules_and_identity()
+ test_reactions_and_boundaries()
+ test_all_cards_play()
  print(JSON.stringify({"suite":"production_engine","assertions":assertions,"failures":failures,"generic_cards":model._bindings.size(),"ability_fixtures":ability_count,"effects_executed":exercised.keys(),"automatic_triggers_executed":covered_triggers.keys(),"fixture_limit":"ability fixtures explicitly arrange battle boundaries; separate cases use real actions for all sixteen automatic hooks"}))
  quit(1 if failures else 0)
 func find_trigger(trigger: String) -> Dictionary:
@@ -76,43 +79,49 @@ func find_trigger(trigger: String) -> Dictionary:
   for a in card.abilities:
    if a.get("trigger")==trigger:return card
  return {}
-func test_automatic_triggers() -> void:
+func test_automatic_triggers(side: String="hero") -> void:
+ var other: String=model._other(side)
  for trigger in Generic.TRIGGERS:
   battle()
   var card:=find_trigger(trigger)
   check(not card.is_empty(),"actual card for automatic "+trigger)
   if card.is_empty():continue
-  var context:=source_context(card,0);var unit: Dictionary=model.state.hero.lanes[2]
-  put("hero",1)
+  model.state.active=side
+  var context:=source_context(card,0,side);var unit: Dictionary=model.state[side].lanes[2]
+  put(side,1)
+  for ability in card.abilities:
+   if ability.target=="own_species":
+    for candidate in model.catalog.all_cards():
+     if candidate.kind=="creature" and candidate.get("species",[]).has(ability.params.species):put(side,4,candidate.id);break
   if trigger=="on_play" or trigger=="on_summon":
-   model.state.hero.lanes[2]=null;model.state.hero.hand=[card.id]
-   check(model.play("hero",0,2),"real play invokes "+trigger)
-  elif trigger=="on_attack":put("enemy",2);model.attack_phase("hero")
-  elif trigger=="on_defend":put("enemy",2);model.state.enemy.lanes[2].atk=1;model.attack_phase("enemy")
-  elif trigger=="on_deal_damage":unit.atk=3;put("enemy",2).hp=20;model.attack_phase("hero")
-  elif trigger=="on_take_damage":model._lane_damage("hero",2,1)
-  elif trigger=="on_kill":unit.atk=20;put("enemy",2).hp=1;model.attack_phase("hero")
-  elif trigger=="on_death":model._lane_damage("hero",2,100)
-  elif trigger=="on_turn_start":model.state.hero.energy=0;model.begin_turn("hero")
-  elif trigger=="on_turn_end":model.advance_turn("hero")
-  elif trigger=="on_lane_change":check(model.tactical_move("hero",2,3),"real tactical shift")
-  elif trigger=="on_draw":model.draw_cards("hero",1)
+   model.state[side].lanes[2]=null;model.state[side].hand=[card.id]
+   check(model.play(side,0,2),"real play invokes "+trigger)
+  elif trigger=="on_attack":put(other,2);model.attack_phase(side)
+  elif trigger=="on_defend":put(other,2);model.state[other].lanes[2].atk=1;model.attack_phase(other)
+  elif trigger=="on_deal_damage":unit.atk=3;put(other,2).hp=20;model.attack_phase(side)
+  elif trigger=="on_take_damage":model._lane_damage(side,2,1)
+  elif trigger=="on_kill":unit.atk=20;put(other,2).hp=1;model.attack_phase(side)
+  elif trigger=="on_death":model._lane_damage(side,2,100)
+  elif trigger=="on_turn_start":model.state[side].energy=0;model.begin_turn(side)
+  elif trigger=="on_turn_end":model.advance_turn(side)
+  elif trigger=="on_lane_change":check(model.tactical_move(side,2,3),"real tactical shift")
+  elif trigger=="on_draw":model.draw_cards(side,1)
   elif trigger=="on_discard":
-   model.state.hero.hand=["oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01"]
-   model.state.hero.phase="draw";model.state.hero.pendingDraw=1
-   check(model.burn("hero",0),"real mandatory burn")
-  elif trigger=="on_spend_resonance":check(model.fortify("hero",2),"real fortification spends resonance")
+   model.state[side].hand=["oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01"]
+   model.state[side].phase="draw";model.state[side].pendingDraw=1
+   check(model.burn(side,0),"real mandatory burn")
+  elif trigger=="on_spend_resonance":check(model.fortify(side,2),"real fortification spends resonance")
   elif trigger=="on_relic_activate":
-   model.state.hero.relic={"id":"oa-houses-r01","uid":10}
-   check(model.activate_relic("hero"),"actual native relic activation")
-  elif trigger=="on_condition":model.state.hero.resonance=15;model.execute("finishDraw",["hero"]);model._evaluate_conditions()
+   model.state[side].relic={"id":"oa-houses-r01","uid":10}
+   check(model.activate_relic(side),"actual native relic activation")
+  elif trigger=="on_condition":model.state[side].resonance=15;model.execute("finishDraw",[side]);model._evaluate_conditions()
   var applied:=false
   for entry in model.effect_runtime.log:
    if entry.status=="applied" and entry.trigger==trigger and entry.context.get("source_card_id")==card.id:applied=true
   if not applied:print("AUTOMATIC DETAIL ",trigger," ",card.id," ",card.abilities," ",model.trigger_journal," ",model.state.error)
   check(applied and model.state.error.is_empty(),"actual action executes automatic "+trigger)
-  if applied:covered_triggers[trigger]=true
- check(covered_triggers.size()==16,"all sixteen automatic triggers executed")
+  if applied:covered_triggers[side+":"+trigger]=true
+ check(covered_triggers.keys().filter(func(key):return str(key).begins_with(side+":")).size()==16,"all sixteen automatic triggers executed for "+side)
 func test_rules_and_identity() -> void:
  battle()
  var attacker:=put("hero",2);attacker.atk=7
@@ -142,3 +151,88 @@ func test_rules_and_identity() -> void:
   var offset: int=model.effect_runtime.log.size();var result: Dictionary=model.effect_runtime.publish("on_summon","hero",abilities,context)
   check(result.ok and model.effect_runtime.log.size()-offset==10,"ten effects execute in one actual FIFO")
   check(model.state.hero.resonance<=15,"ten resource effects respect resonance cap")
+
+func test_reactions_and_boundaries() -> void:
+ battle()
+ var attacker:=put("hero",2);attacker.hp=1;attacker.atk=9
+ var defender:=put("enemy",2,"of-ninth-009");var hp_before:=int(defender.hp)
+ var discard_before: int=model.state.hero.discard.size()
+ model.attack_phase("hero")
+ check(model.state.hero.lanes[2]==null and defender.hp==hp_before,"defender damage trigger kills attacker before any attack damage")
+ check(model.state.hero.discard.size()==discard_before+1,"defeated attacking instance discarded once")
+ battle()
+ attacker=put("hero",2);attacker.atk=20
+ defender=put("enemy",2,"oa-stillwatch-c07");hp_before=int(defender.hp)
+ model.attack_phase("hero")
+ check(defender.hp==hp_before and attacker.stun==0,"on_defend stasis cancels current attack and consumes one skip")
+ # The second battle phase must not inherit another unintended skipped turn.
+ var attacker_hp:=int(attacker.hp)
+ model.state.round+=2;model.attack_phase("hero")
+ check(int(attacker.hp)==attacker_hp,"same rule has no free defender counterattack")
+ battle()
+ var reactive: Dictionary=model.catalog.card("of-stillwatch-070")
+ model.state.hero.hand=[reactive.id]
+ var res_before:=int(model.state.hero.resonance)
+ check(model.play("hero",0,2),"real reactive impulse play arms it")
+ check(model.armed_impulses("hero").size()==1 and not model.state.hero.discard.has(reactive.id),"armed impulse is a separate pending zone")
+ var enemy_attacker:=put("enemy",2);enemy_attacker.atk=5
+ model.attack_phase("enemy")
+ check(model.state.hero.hp==18 and model.state.hero.ward==0,"reactive shield appears before a direct hero attack")
+ check(model.armed_impulses("hero").is_empty() and model.state.hero.discard.has(reactive.id),"reactive impulse consumed exactly once")
+ check(model.state.hero.resonance==res_before-1,"reactive printed resonance cost paid once")
+ battle();model.state.hero.hand=[reactive.id];check(model.play("hero",0,2),"arm expiry case")
+ model.begin_turn("hero")
+ check(model.armed_impulses("hero").is_empty() and model.state.hero.discard.has(reactive.id),"untriggered impulse expires at next own turn")
+ # A full hand can legally play a draw impulse because payment removes that card first.
+ battle()
+ var draw_impulse: Dictionary={}
+ for c in model.catalog.all_cards():
+  if c.get("effect")=="v2" and c.kind=="event" and c.abilities.size()==1 and c.abilities[0].effect=="draw_cards":draw_impulse=c;break
+ check(not draw_impulse.is_empty(),"actual draw impulse exists")
+ if not draw_impulse.is_empty():
+  model.state.hero.hand=[draw_impulse.id,"oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01","oa-neutral-c01"]
+  check(model.play("hero",0,0) and model.state.hero.hand.size()==6,"draw impulse playable from six-card hand")
+ # Replacing an active relic does not refresh the slot's once-per-turn activation.
+ battle()
+ var relic: Dictionary={}
+ for c in model.catalog.all_cards():
+  if c.get("effect")=="v2" and c.kind=="relic":
+   for a in c.abilities:
+    if a.mode=="activated" and a.effect=="grant_shield":relic=c;break
+  if not relic.is_empty():break
+ if not relic.is_empty():
+  model.state.hero.hand=[relic.id];check(model.play("hero",0,0),"install generic relic")
+  check(model.can_activate_relic("hero") and model.activate_relic("hero"),"generic relic uses actual activation API")
+  model.state.hero.energy=8;model.state.hero.hand=[relic.id]
+  check(model.play("hero",0,0) and not model.can_activate_relic("hero"),"replacement preserves spent slot activation")
+func test_all_cards_play() -> void:
+ var plays:=0
+ for side in ["hero","enemy"]:
+  for card in model.catalog.all_cards():
+   battle();model.state.active=side
+   model.state[side].hand=[card.id,"oa-neutral-c01"]
+   # Explicit legal-target fixtures: existing paths/hand/discard/delay prerequisites.
+   put(side,1);put(model._other(side),2)
+   model.state[side].lanes[1].hp=1
+   var species_slot:=1
+   for a in card.get("abilities",[]):
+    if a.target=="own_species":
+     for candidate in model.catalog.all_cards():
+      if candidate.kind=="creature" and candidate.get("species",[]).has(a.params.species):
+       put(side,species_slot,candidate.id);model.state[side].lanes[species_slot].hp=1;species_slot=3;break
+   model.state[side].relic=null
+   model.state.delayed=[{"side":side,"lane":0,"due":14,"power":2}]
+   # Creature plays need an empty destination. Impulses can require a free movement neighbor.
+   var targets: Array=model.legal_targets(side,0)
+   var reply: Dictionary={"ok":false,"reason":"no_target"}
+   if not targets.is_empty():reply=model.execute("play",[side,0,targets[0]])
+   check(reply.ok and model.state.error.is_empty(),"actual card play "+side+":"+card.id+" "+str(reply))
+   if reply.ok:plays+=1
+   if model.state[side].pendingTarget!=null:
+    var chosen: int=-1
+    for lane in 5:
+     if model.state[model._other(side)].lanes[lane]!=null:chosen=lane;break
+    if chosen>=0:check(model.choose_strike_target(side,chosen),"resolve native chosen target "+card.id)
+   if model.state[side].pendingShift!=null:check(model.skip_shift(side),"resolve optional native shift "+card.id)
+ check(plays==1100,"all550actualcards legally played for both sides")
+ print("PRODUCTION CARD COMMAND MATRIX: ",plays," accepted plays; explicitly arranged prerequisites, not1100completegames")

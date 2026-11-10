@@ -83,6 +83,8 @@ static func damage(player: Dictionary, amount: float, pierce: bool = false) -> i
 		player.ward=int(player.ward)-k;n-=k
 	player.hp=maxi(0,int(player.hp)-n)
 	return before-int(player.hp)
+func _hero_damage(player: Dictionary, amount: float, pierce: bool=false) -> int:
+	return damage(player,amount,pierce)
 func begin_support(side: String) -> String:
 	return "" if _valid_side(side) else "invalid_side"
 func begin_turn(side: String) -> bool:
@@ -285,7 +287,7 @@ func attack_phase(side: String) -> bool:
 			if int(target.hp)<=0:
 				var excess := maxi(0,-int(target.hp))
 				if card.effect=="pierce" and excess>0:
-					damage(opponent,excess);_trace("pierce_overflow",side,{"lane":lane})
+					_hero_damage(opponent,excess);_trace("pierce_overflow",side,{"lane":lane})
 				opponent.lanes[lane]=null
 				_trace("removed",other,{"lane":lane})
 				enqueue({"type":"death","side":other,"unit":target,"lane":lane})
@@ -294,7 +296,7 @@ func attack_phase(side: String) -> bool:
 				_trace("removed",side,{"lane":lane})
 				enqueue({"type":"death","side":side,"unit":unit,"lane":lane})
 		else:
-			damage(opponent,attack)
+			_hero_damage(opponent,attack)
 			_trace("hero_hit",side,{"lane":lane,"amount":attack})
 		check_winner()
 	p.weak=0
@@ -366,7 +368,7 @@ func _resolve_summon(event: Dictionary) -> void:
 			for i in LANES:
 				if op.lanes[i]!=null:targets.append(i)
 			if targets.is_empty():
-				damage(op,power+1);_trace("strike_hero",side)
+				_hero_damage(op,power+1);_trace("strike_hero",side)
 			elif side=="hero":
 				p.pendingTarget={"power":power+1,"sourceLane":lane};_trace("strike_pending",side)
 			else:
@@ -380,7 +382,7 @@ func _resolve_summon(event: Dictionary) -> void:
 		"mend":p.hp=mini(int(p.maxHp),int(p.hp)+power+2)
 		"weave":add_res(p,power+1)
 		"drain":
-			var lost := damage(op,power+1)
+			var lost := _hero_damage(op,power+1)
 			p.hp=mini(int(p.maxHp),int(p.hp)+lost);_trace("drain",side)
 		"rally":
 			var friend: Variant=p.lanes[lane-1] if lane>0 else null
@@ -388,7 +390,7 @@ func _resolve_summon(event: Dictionary) -> void:
 			if friend!=null:friend.atk=int(friend.atk)+power
 		"silence":
 			if op.lanes[lane]!=null:op.lanes[lane].stun=maxi(int(op.lanes[lane].stun),1)
-		"pierce":damage(op,power+2,true);_trace("pierce_arrival",side)
+		"pierce":_hero_damage(op,power+2,true);_trace("pierce_arrival",side)
 		"shift":
 			var choices := shift_choices(side,lane)
 			if choices.is_empty():_trace("shift_no_target",side)
@@ -464,7 +466,7 @@ func _reaction(side: String, from: String, to: String) -> void:
 	var enemy: Dictionary=state[_other(side)]
 	var key := reaction_order(from)+">"+reaction_order(to)
 	match key:
-		"ash>tide","ash>veil":damage(enemy,2)
+		"ash>tide","ash>veil":_hero_damage(enemy,2)
 		"tide>thorn":p.ward=mini(25,int(p.ward)+3)
 		"thorn>veil":p.hp=mini(int(p.maxHp),int(p.hp)+2)
 		"veil>ash":enemy.weak=maxi(int(enemy.weak),1)
@@ -487,7 +489,7 @@ func burst(side: String, order: Variant) -> bool:
 	p.resonance=int(p.resonance)-8;p.burstUsed=true
 	var enemy: Dictionary=state[_other(side)]
 	match reaction_order(str(order)):
-		"ash":damage(enemy,4+units.size()*3)
+		"ash":_hero_damage(enemy,4+units.size()*3)
 		"tide":p.ward=mini(25,int(p.ward)+6+units.size()*2)
 		"thorn":
 			for unit: Variant in p.lanes:

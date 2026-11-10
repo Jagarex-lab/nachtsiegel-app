@@ -4,6 +4,9 @@ extends "res://scripts/card_system/trigger_model.gd"
 const Generic = preload("res://scripts/card_system/production_effects.gd")
 const ProductionCatalog = preload("res://scripts/production/catalog.gd")
 const PROFILE_ID := "production-550-v1"
+static var _cached_bindings: Dictionary={}
+static var _cached_binding_hash := ""
+static var _cached_catalog_fingerprint := ""
 var _configuration_error := ""
 var _ability_uses: Dictionary = {}
 var _condition_latches: Dictionary = {}
@@ -21,11 +24,16 @@ func _init(probe_from: RefCounted=null) -> void:
   effect_runtime=ObservedRuntime.new(self);ai_policy=probe_from.ai_policy;return
  catalog = ProductionCatalog.new()
  ai_policy = preload("res://scripts/production/ai_policy.gd").new()
+ var fingerprint: String=catalog.fingerprint()
+ if not _cached_bindings.is_empty() and _cached_catalog_fingerprint==fingerprint:
+  _bindings=_cached_bindings;_binding_hash=_cached_binding_hash;return
  var definitions: Array=[]
  for card in catalog.all_cards():
   if card.get("effect")=="v2":definitions.append(card)
  var result:=configure_v2(definitions)
  if not result.ok:_configuration_error=result.reason
+ else:
+  _cached_bindings=_bindings;_cached_binding_hash=_binding_hash;_cached_catalog_fingerprint=fingerprint
 
 func configure_v2(cards: Array) -> Dictionary:
  if not state.is_empty():return {"ok":false,"reason":"configure_before_match"}
@@ -55,7 +63,7 @@ func configure_v2(cards: Array) -> Dictionary:
 
 func start_alpha(deck: Array, opponent_deck: Array, seed_value: int, difficulty: int=2) -> bool:
  if not _configuration_error.is_empty():return false
- _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0
+ _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0;longest_chain=0
  return super.start_alpha(deck,opponent_deck,seed_value,difficulty)
 
 func snapshot() -> Dictionary:
@@ -247,9 +255,8 @@ func _combat_hook(trigger: String, side: String, lane: int, unit: Dictionary, de
  _publish_armed(trigger,side,lane)
 
 func _attack_damage_hero(side: String, lane: int, target: Dictionary, amount: int) -> int:
- var lost:=damage(target,amount)
+ var lost:=_hero_damage(target,amount)
  if lost>0 and state[side].lanes[lane]!=null:_combat_hook("on_deal_damage",side,lane,state[side].lanes[lane],{"hero":true,"amount":lost})
- if lost>0:_publish_relic("on_take_damage",_other(side),lane)
  return lost
 
 func hit_unit(unit: Dictionary, amount: int) -> void:
@@ -268,6 +275,7 @@ func hit_unit(unit: Dictionary, amount: int) -> void:
 func _publish_relic(trigger: String, side: String, lane: int) -> void:
  var relic: Variant=state[side].relic
  if relic!=null and _bindings.has(relic.id):_emit_trigger(trigger,side,relic.id,{"source_relic":true,"source_relic_uid":int(state[side].relic.get("uid",0)),"target_lane":lane},{})
+ _publish_armed(trigger,side,lane)
 
 func draw_cards(side: String, count: int) -> int:
  var before: int=state[side].hand.size() if _valid_side(side) else 0
@@ -389,10 +397,8 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
   match str(a.effect):
    "deal_damage":
     if unit==null:
-     var lost:=damage(tp,amount);actual["hero_hp_lost"]=lost
-     if lost>0:
-      _publish_relic("on_take_damage",target.side,int(context.get("target_lane",0)))
-      _publish_source("on_deal_damage",side,context)
+     var lost:=_hero_damage(tp,amount);actual["hero_hp_lost"]=lost
+     if lost>0:_publish_source("on_deal_damage",side,context)
     else:
      var hp_before:=int(unit.hp);hit_unit(unit,amount)
      if unit.hp<=0 and _remove_attack_casualty(target.side,int(target.lane),unit):
@@ -549,9 +555,15 @@ func armed_impulses(side: String) -> Array:
 func _lane_damage(side: String, lane: int, power: int) -> void:
  var p: Dictionary=state[side]
  if p.lanes[lane]==null:
-  var lost:=damage(p,power)
-  if lost>0:_publish_relic("on_take_damage",side,lane)
+  var lost:=_hero_damage(p,power)
   return
  var unit: Dictionary=p.lanes[lane]
  hit_unit(unit,power)
  if int(unit.hp)<=0:_remove_attack_casualty(side,lane,unit)
+
+func _hero_damage(player: Dictionary, amount: float, pierce: bool=false) -> int:
+ var lost:=super._hero_damage(player,amount,pierce)
+ if lost>0:
+  for side in ["hero","enemy"]:
+   if is_same(state.get(side),player):_publish_relic("on_take_damage",side,0);break
+ return lost

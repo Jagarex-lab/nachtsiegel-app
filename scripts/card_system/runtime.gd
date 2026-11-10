@@ -253,12 +253,12 @@ func _apply(item: Dictionary) -> Dictionary:
 		"weave", "harvest": model.add_res(p, amount)
 		"draw": result["drawn"] = model.draw_cards(side, int(ability.params.count))
 		"drain":
-			var lost: int = model.damage(op, amount)
+			var lost: int = model._hero_damage(op, amount)
 			p.hp = mini(int(p.maxHp), int(p.hp) + lost)
 			result["hp_lost"] = lost
 		"strike":
 			if context.has("target_uid"): model._strike_target(side, int(context.target_lane), amount, int(context.get("source_lane", 0)))
-			else: result["hp_lost"] = model.damage(op, amount)
+			else: result["hp_lost"] = model._hero_damage(op, amount)
 		"bolt": model._lane_damage(other, int(context.target_lane), amount)
 		"rally":
 			var lane := int(context.source_lane)
