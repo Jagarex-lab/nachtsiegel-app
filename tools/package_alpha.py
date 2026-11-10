@@ -10,11 +10,11 @@ files=[root/'index.html',root/'build-info.json',*sorted(root.glob(prefix+'.*'))]
 assert any(p.suffix=='.wasm' for p in files) and any(p.suffix=='.pck' for p in files)
 manifest={'source_commit':commit,'version':meta['version'],'status':'prepared-not-published','files':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in files}}
 manifest_path=Path('work/alpha/artifact-manifest.json');manifest_path.write_text(json.dumps(manifest,indent=2)+'\n')
-archive=Path('work/alpha/orafold-alpha-0.2-'+commit[:12]+'.zip')
+archive=Path('work/alpha/orafold-alpha-0.3-'+commit[:12]+'.zip')
 entries={p.name:p.read_bytes() for p in files}
 entries['artifact-manifest.json']=manifest_path.read_bytes()
 entries['serve_https.py']=Path('tools/serve_alpha_https.py').read_bytes()
-entries['START.txt']=b'''ORAFOLD Alpha0.2 - prepared, not published
+entries['START.txt']=b'''ORAFOLD Alpha0.3 - prepared, not published
 Desktop: extract; run python3 -m http.server 8788 --bind 127.0.0.1
 Open http://127.0.0.1:8788/ (not file://).
 Phone: HTTPS with a certificate trusted by the device is REQUIRED.
@@ -26,7 +26,7 @@ Keep certificate/private key files OUTSIDE this served/export directory.
 Run: python3 serve_https.py --bind 0.0.0.0 --cert /path/cert.pem --key /path/key.pem
 Open https://<certificate-hostname-or-IP>:9443/ on the same network.
 Remove a temporary test CA trust profile after testing.
-Full procedure: docs/alpha02/QA_REPORT.md in the repository / Draft PR 9.
+Full procedure: docs/production/PLAN.md and docs/release/PAGES_RELEASE_SAFETY.md.
 No production site, account, shop or online service is changed.
 Data is local to the browser origin; changing HTTP/HTTPS host changes storage.
 '''

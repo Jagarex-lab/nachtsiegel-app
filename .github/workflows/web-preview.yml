@@ -18,7 +18,7 @@ jobs:
   test-and-export:
     runs-on: ubuntu-24.04
     # Native regression suites and three exports; browser engines run separately.
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Install Godot and matching templates
@@ -43,6 +43,7 @@ jobs:
           xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
           xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
           tools/test_master550_resources.sh
+          xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_production.sh
       - name: Export archive regression build
         run: |
           mkdir -p work/build/archive-web
@@ -120,6 +121,8 @@ jobs:
             work/alpha02/*.json
             work/alpha02/*.png
             work/master550/
+            work/production/
+            work/production-storage/native.log
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png
@@ -216,3 +219,30 @@ jobs:
             work/alpha02/browser-results.json
             work/master550/browser/
           if-no-files-found: warn
+
+  production-balance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import production data scripts
+        run: godot --headless --editor --import --path . --quit
+      - name: Complete paired production strategy and starter matches
+        run: tools/test_production_simulations.sh
+      - name: Preserve complete simulation metrics and limits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-production-balance
+          path: |
+            work/production/simulations.log
+            work/production/simulations.json
+          if-no-files-found: error

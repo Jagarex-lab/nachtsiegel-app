@@ -260,3 +260,14 @@ kampagnenbezuege: []
 ---
 
 **Redaktioneller Abschluss:** Diese Lore-Bibel dokumentiert den nachweisbaren Stand, nicht eine erfundene Komplettgeschichte. Ungeklärte Punkte sind bewusst sichtbar. Die Datei ist die zentrale Quelle für **künftige** Lore-Entscheidungen; bestehende ältere Implementierungen bleiben als solche nachvollziehbar.
+
+## 13. Produktionskarten – redaktionelle Ergänzung vom 10. November 2026
+
+- **[KANON – ausdrücklicher Produktionsauftrag]** Der Produktname ist **ORAFOLD**. Eine markenrechtliche Prüfung ist damit nicht nachgewiesen.
+- **[VORSCHLAG – Kartenentwürfe]** Der ausführbare Produktionskandidat in `data/production/cards.json` verwendet 550 Kartenidentitäten. Neue kleine Wesen, Berufe, Gegenstände und Motive sind in jedem Datensatz als `lore_status: VORSCHLAG` gekennzeichnet. Ihre Spielbarkeit kanonisiert keine Biografie, keinen Ort und kein historisches Ereignis.
+- **[VORSCHLAG – visuelle Entwürfe]** Die fünf individuellen Illustrationsentwürfe zu Torwache, Namenhüter, Glaskonservator, Sprunglarve und Kausaljäger sind konkrete Kartenmotive. Ihre dargestellte Kleidung, Anatomie und Umgebung gelten noch nicht als allgemeine Weltgesetze. Herkunft und Prüfung werden im Produktions-Artmanifest separat geführt.
+- **[ARBEITSSTAND – mechanische Profile]** Die neuen Karteffekte und Machtarchetypen konkretisieren Spielentscheidungen. Sie liefern keine Erklärung für Ursprung oder Urheber der Zeitkorrektur und lösen Eiras Geheimnis nicht auf. „Königin“ oder „Erbin“ in übernommenen Alphakartennamen begründen keine beschlossene Fraktionsführung oder Genealogie.
+- **[ALTENTWURF – unverändert erhalten]** Die 550 Konzepte aus `data/lore/card-concepts.json` bleiben nachvollziehbare Vorschläge aus PR #12. Mechanische Neubearbeitung und ID-Migration werden gesondert dokumentiert; Konzeptnamen und erzählerische Details sind keine verbindlichen Vorgaben für den Produktionskatalog.
+- **[OFFEN]** Freigabe individueller Kartenbiografien, aller neuen Motive, finaler Illustrationen und einer ORAFOLD-Kampagnengeschichte. Es wird keine neue Kampagne, Eira-Enthüllung oder Gründungsmythologie durch diesen Produktionsschritt kanonisiert.
+
+Quelle: aktueller Nutzerauftrag „ORAFOLD – MASTER PRODUCTION ORDER“, insbesondere Abschnitte 2, 3, 9 und 16. Diese Ergänzung verändert die offenen Fragen in Abschnitten 1–12 nicht.

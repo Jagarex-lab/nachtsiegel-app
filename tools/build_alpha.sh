@@ -37,7 +37,7 @@ for alpha_extension in pck wasm js; do test -s "$alpha_stage_dir/$alpha_build_na
 python3 - "$alpha_build_commit" "$alpha_stage_dir" <<'PY'
 import json,sys,os
 from pathlib import Path
-Path(sys.argv[2], 'build-info.json').write_text(json.dumps({'commit':sys.argv[1],'version':'ORAFOLD Alpha 0.2','channel':os.environ.get('GITHUB_REF_NAME','isolated-test'),'rulesets':['legacy-34b3062','orafold-alpha-0.1']},indent=2))
+Path(sys.argv[2], 'build-info.json').write_text(json.dumps({'commit':sys.argv[1],'version':'ORAFOLD Alpha 0.3 – Katalogvorschau','channel':os.environ.get('GITHUB_REF_NAME','isolated-test'),'rulesets':['legacy-34b3062','orafold-alpha-0.1','production-550-v1']},indent=2))
 PY
 # Publish only the verified local candidate. Repeated exports cannot accumulate
 # old commit-addressed .pck/.wasm files or accidentally serve a partial rebuild.
