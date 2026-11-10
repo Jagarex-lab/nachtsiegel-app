@@ -43,6 +43,8 @@ var board_views: Dictionary={}
 var status: Label
 var pulse := 0.0
 var qa_elapsed := 0.0
+var viewport_poll := 0.0
+var viewport_version := -1
 var first_frame := true
 var render_pending := false
 var last_primary_ms := -1000
@@ -78,6 +80,13 @@ func _process(delta: float) -> void:
 		# Godot applies the project window title after the initial main scene's ready.
 		DisplayServer.window_set_title("ORAFOLD · Alpha 0.2")
 		if OS.has_feature("web"):JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.2';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.2')")
+	if OS.has_feature("web"):
+		viewport_poll+=delta
+		if viewport_poll>=.2:
+			viewport_poll=0
+			var version=int(JavaScriptBridge.eval("window.orafoldViewportVersion||0"))
+			if version!=viewport_version:
+				viewport_version=version;render()
 	pulse=maxf(0,pulse-delta)
 	# Keep a canvas frame available to browser compositors and capture tools.
 	queue_redraw()
@@ -571,15 +580,19 @@ func replay_step(data: Dictionary, step: int) -> void:
 
 func _layout() -> void:
 	var insets: Dictionary={}
+	var visible_height=INF
+	var visible_top=0.0
 	if OS.has_feature("web"):
 		var value=JSON.parse_string(str(JavaScriptBridge.eval("JSON.stringify(window.nachtsiegelInsets?window.nachtsiegelInsets():{})")))
 		if value is Dictionary:insets=value
 	if OS.has_feature("web"):
 		var ratio=JavaScriptBridge.eval("(()=>{const c=document.querySelector('canvas');return c.width/Math.max(1,c.getBoundingClientRect().width)})()")
 		if ratio!=null:density=maxf(.5,float(ratio))
+		visible_height=float(JavaScriptBridge.eval("window.visualViewport?window.visualViewport.height:window.innerHeight"))
+		visible_top=maxf(0,float(JavaScriptBridge.eval("window.visualViewport?window.visualViewport.offsetTop:0")))
 	var left=float(insets.get("left",0));var right=float(insets.get("right",0));var top=float(insets.get("top",0));var bottom=float(insets.get("bottom",0))
-	layout.position=Vector2(left,top)*density;layout.scale=Vector2.ONE*density
-	layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(160,size.y/density-top-bottom))
+	layout.position=Vector2(left,top+visible_top)*density;layout.scale=Vector2.ONE*density
+	layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(160,minf(size.y/density-visible_top,visible_height)-top-bottom))
 	var next_portrait=layout.size.y>layout.size.x
 	if OS.has_feature("web") and page=="battle" and next_portrait!=portrait:rotation_block_until=Time.get_ticks_msec()+180
 	portrait=next_portrait

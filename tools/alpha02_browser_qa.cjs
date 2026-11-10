@@ -70,6 +70,17 @@ const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Objec
    assert.equal((await q()).search_text,'Pfad');assert.deepEqual((await q()).deck_ids,beforeQuery);
    const saveRect=(await q()).actions.save_deck.rect;assert(saveRect[1]+saveRect[3]<=500,'save visible with simulated keyboard viewport');
    await action('filters');await action('reset_filters');await page.setViewportSize({width:390,height:844});await wait(()=>window.orafoldQA.layout_size[1]>700);
+   // Simulated keyboard: shrink visualViewport only, keeping innerHeight/buffer.
+   // This is deliberately separate from a real iOS keyboard/device test.
+   const beforeKeyboard=(await q()).deck_ids;
+   await page.evaluate(()=>{Object.defineProperty(window.visualViewport,'height',{configurable:true,get:()=>500});window.visualViewport.dispatchEvent(new Event('resize'));});
+   await wait(()=>window.orafoldQA.layout_size[1]<500);
+   const keyboardMetrics=await page.evaluate(()=>window.orafoldDisplayMetrics());rotationMetrics.push(keyboardMetrics);
+   assert(Math.abs(keyboardMetrics.pixelsHeight/keyboardMetrics.cssHeight-keyboardMetrics.pixelsWidth/keyboardMetrics.cssWidth)<.01,'keyboard preserves isotropic canvas scale');
+   assert.equal(keyboardMetrics.visibleHeight,500);assert.deepEqual((await q()).deck_ids,beforeKeyboard);
+   assert((await q()).actions.save_deck.rect[1]+(await q()).actions.save_deck.rect[3]<=500,'save stays above simulated keyboard');
+   await page.evaluate(()=>{delete window.visualViewport.height;window.visualViewport.dispatchEvent(new Event('resize'));});
+   await wait(()=>window.orafoldQA.layout_size[1]>700);
    await action('deck_tab');
    const original=(await q()).deck_ids;
    await action('remove_oa-neutral-c01');assert.equal((await q()).deck_size,29);assert((await q()).actions.save_deck.disabled);

@@ -140,7 +140,10 @@ window.nachtsiegelInsets = function() {
  return result;
 };
 function syncGameHeight() {
- const height = window.visualViewport ? window.visualViewport.height : window.innerHeight;
+ // Godot policy 2 sizes its buffer from innerHeight. Keep CSS isotropic;
+ // the Alpha layout separately fits visualViewport (keyboard/browser chrome).
+ const height = window.innerHeight;
+ window.orafoldViewportVersion=(window.orafoldViewportVersion||0)+1;
  document.documentElement.style.setProperty('--game-height',height+'px');
 }
 syncGameHeight();
@@ -150,7 +153,7 @@ window.addEventListener('orientationchange',()=>requestAnimationFrame(syncGameHe
 window.addEventListener('pageshow',syncGameHeight);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncGameHeight();});
 // Diagnostic measurements, not an orientation lock or rotated canvas.
-window.orafoldDisplayMetrics=()=>{const c=document.querySelector('canvas'),r=c.getBoundingClientRect();return {cssWidth:r.width,cssHeight:r.height,pixelsWidth:c.width,pixelsHeight:c.height,dpr:window.devicePixelRatio||1,zoom:window.visualViewport?.scale||1,lockAvailable:typeof screen.orientation?.lock==='function'};};
+window.orafoldDisplayMetrics=()=>{const c=document.querySelector('canvas'),r=c.getBoundingClientRect();return {cssWidth:r.width,cssHeight:r.height,pixelsWidth:c.width,pixelsHeight:c.height,dpr:window.devicePixelRatio||1,zoom:window.visualViewport?.scale||1,visibleHeight:window.visualViewport?.height||innerHeight,lockAvailable:typeof screen.orientation?.lock==='function'};};
 </script>
 <script src="$GODOT_URL"></script>
 		<script>
