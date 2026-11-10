@@ -230,6 +230,78 @@ jobs:
             work/production-browser-migration/
           if-no-files-found: warn
 
+  production-art-native-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      LP_NUM_THREADS: '2'
+      XDG_DATA_HOME: ${{ github.workspace }}/work/xdg/data
+      XDG_CONFIG_HOME: ${{ github.workspace }}/work/xdg/config
+      XDG_CACHE_HOME: ${{ github.workspace }}/work/xdg/cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Import the actual native illustration sources
+        run: |
+          mkdir -p work/production-art work/xdg/{data,config,cache}
+          touch work/.gdignore
+          godot --headless --editor --import --path . --quit
+      - name: Export and inspect all actual native illustration pixels
+        run: |
+          godot --headless --path . --export-pack 'Linux Runtime QA' work/production-art/native-art.pck
+          bash tools/test_production_art_package.sh work/production-art/native-art.pck native
+      - name: Preserve native package inventory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-art-native-package
+          path: work/production-art/exported-art-package-native.log
+          if-no-files-found: error
+
+  production-art-browser:
+    needs: test-and-export
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    env:
+      QA_ENGINES: ${{ matrix.engine }}
+      ART_WEB_BUILD: work/build/web
+      ART_BROWSER_OUTPUT: work/production-art/browser-${{ matrix.engine }}
+      LP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Download the exact native-tested image candidate
+        uses: actions/download-artifact@v4
+        with:
+          name: nachtsiegel-arena-qa
+          path: work
+      - name: Install isolated image-delivery browser runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.65.0
+          npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Actual compact/full HTTP, failed bodies and cancellation
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' node tools/production/browser_art_delivery_qa.cjs
+      - name: Preserve actual image-delivery browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-art-browser-${{ matrix.engine }}
+          path: work/production-art/browser-${{ matrix.engine }}/
+          if-no-files-found: error
+
   production-balance:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
