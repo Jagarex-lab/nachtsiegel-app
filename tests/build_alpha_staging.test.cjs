@@ -13,9 +13,14 @@ const PREFIX = `orafold-${SHA.slice(0, 12)}`;
 
 function fixture(mode) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'orafold-staging-test-'));
-  for (const dir of ['tools', 'bin', 'work/alpha/web']) fs.mkdirSync(path.join(root, dir), {recursive: true});
+  for (const dir of ['tools/production', 'data/production', 'bin', 'work/alpha/web', 'work/art-delivery-cache']) fs.mkdirSync(path.join(root, dir), {recursive: true});
   fs.copyFileSync(path.join(REPO, 'tools/build_alpha.sh'), path.join(root, 'tools/build_alpha.sh'));
   fs.copyFileSync(path.join(REPO, 'tools/alpha02_pack_inventory.gd'), path.join(root, 'tools/alpha02_pack_inventory.gd'));
+  fs.copyFileSync(path.join(REPO, 'tools/production/stage_art_delivery.py'), path.join(root, 'tools/production/stage_art_delivery.py'));
+  const artBody = Buffer.from('explicitly simulated encoded art for filesystem staging unit test');
+  const artSha = require('node:crypto').createHash('sha256').update(artBody).digest('hex');
+  fs.writeFileSync(path.join(root, 'work/art-delivery-cache', artSha + '.webp'), artBody);
+  fs.writeFileSync(path.join(root, 'data/production/art_delivery.json'), JSON.stringify({schema_version: 1, profile: 'orafold-web-art-v1', entries: {'unit-fixture': {web_sha256: artSha, relative_url: 'art/full/' + artSha + '.webp', bytes: artBody.length}}}));
   const original = {'index.html': 'previous verified page', 'old-prefix.wasm': 'previous verified bytes'};
   for (const [name, bytes] of Object.entries(original)) fs.writeFileSync(path.join(root, 'work/alpha/web', name), bytes);
   fs.writeFileSync(path.join(root, 'bin/git'), `#!/bin/sh\nprintf '%s\\n' '${SHA}'\n`, {mode: 0o700});
@@ -42,6 +47,10 @@ if(args.includes('--main-pack')) {
  if(process.env.STAGING_TEST_MODE==='pack-failure')process.exit(8);
  console.log(JSON.stringify({test_double:true,forbidden:[]}));process.exit(0);
 }
+if(args.includes('tools/production/prepare_art_delivery.gd')) {
+ if(process.env.STAGING_TEST_MODE==='art-preparation-failure')process.exit(10);
+ process.exit(0);
+}
 process.exit(9);
 `, {mode: 0o700});
   const result = spawnSync('bash', ['tools/build_alpha.sh'], {cwd: root, encoding: 'utf8', env: {...process.env,
@@ -51,7 +60,7 @@ process.exit(9);
   return {root, result, original};
 }
 
-for (const mode of ['export-failure', 'pack-failure', 'missing-file', 'rename-failure']) test(`failed staging preserves complete previous directory: ${mode}`, () => {
+for (const mode of ['export-failure', 'pack-failure', 'missing-file', 'art-preparation-failure', 'rename-failure']) test(`failed staging preserves complete previous directory: ${mode}`, () => {
   const {root, result, original} = fixture(mode);
   try {
     assert.notEqual(result.status, 0, result.stdout + result.stderr);
@@ -67,7 +76,11 @@ test('successful staging replaces history with only the verified candidate', () 
   try {
     assert.equal(result.status, 0, result.stdout + result.stderr);
     const web = path.join(root, 'work/alpha/web');
-    assert.deepEqual(fs.readdirSync(web).sort(), ['build-info.json', 'index.html', ...['js', 'pck', 'wasm'].map(ext => `${PREFIX}.${ext}`)].sort());
+    assert.deepEqual(fs.readdirSync(web).sort(), ['art', 'art-delivery.json', 'build-info.json', 'index.html', ...['js', 'pck', 'wasm'].map(ext => `${PREFIX}.${ext}`)].sort());
+    const delivery = JSON.parse(fs.readFileSync(path.join(web, 'art-delivery.json'), 'utf8'));
+    const art = delivery.entries['unit-fixture'];
+    assert.equal(fs.statSync(path.join(web, art.relative_url)).size, art.bytes);
+    assert.equal(fs.statSync(path.join(web, art.relative_url)).ino, fs.statSync(path.join(root, 'work/art-delivery-cache', art.web_sha256 + '.webp')).ino);
     const info = JSON.parse(fs.readFileSync(path.join(web, 'build-info.json'), 'utf8'));
     assert.equal(info.commit, SHA);
     assert.equal(info.channel, 'isolated-unit-test');

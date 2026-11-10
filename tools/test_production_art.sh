@@ -8,6 +8,17 @@ export XDG_DATA_HOME="$PWD/work/xdg/data" XDG_CONFIG_HOME="$PWD/work/xdg/config"
 export LP_NUM_THREADS="${LP_NUM_THREADS:-2}"
 python3 tools/production/art_manifest.py --check
 python3 -m unittest discover -s tests -p production_art_manifest_test.py -v
+python3 -m unittest discover -s tests -p production_art_delivery_package_test.py -v
+node --test tests/production_art_transport.test.cjs
+timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tools/production/prepare_art_delivery.gd -- --check > work/production-art/prepare_art_delivery.log 2>&1
+python3 - <<'PY'
+from pathlib import Path
+import re
+text=Path('work/production-art/prepare_art_delivery.log').read_text();print(text)
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:|instances leaked|resources still in use',text,re.M)
+assert re.search(r'PRODUCTION ART DELIVERY DATA: \d+ assertions, 0 failures',text)
+PY
+bash tools/test_production_art_delivery.sh
 timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tools/production/prepare_art_previews.gd -- --check > work/production-art/prepare_art_previews.log 2>&1
 python3 - <<'PY'
 from pathlib import Path

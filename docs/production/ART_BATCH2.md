@@ -111,12 +111,12 @@ touch-latency guarantees or a statistically controlled device benchmark.
 
 ## Remaining large-library work
 
-The current package contains only 15 full individual assets plus 15 compact
-previews. Packing 550 full native illustrations into the initial web PCK would
-create a large download even after compression. The next packaging stage needs
-separate full-art packs or same-origin per-card loading, content hashes, cache
-versioning, loading/error states and actual Safari memory/network tests. That
-external streaming path is **not implemented or claimed by this batch**.
+The initial batch package below contains 15 full individual assets plus 15
+compact previews. Its successor uses [on-demand full-art delivery](ART_DELIVERY.md):
+the Web PCK contains prepared previews and the inspector fetches a verified
+same-origin full WebP as needed. Native packs retain full textures. That separate
+delivery stage adds no originals. A complete 550-image rollout and physical
+Safari memory/network testing remain outstanding.
 
 The first fresh worktree import timed out before a complete scan. Adding an
 ignored `work/.gdignore` prevented development caches from becoming project

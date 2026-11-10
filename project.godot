@@ -16,6 +16,7 @@ config/description="ORAFOLD - Strategisches Kartenspiel in fünf Kampfpfaden"
 
 [autoload]
 GameAudio="*res://scripts/game_audio.gd"
+ArtDelivery="*res://scripts/production/art_delivery.gd"
 
 [display]
 window/size/viewport_width=1280

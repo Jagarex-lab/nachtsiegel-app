@@ -39,6 +39,9 @@ func _ready() -> void:
 	texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	resized.connect(queue_redraw)
 
+func _process(_delta: float) -> void:
+	if not face_down and not card.is_empty() and ART.binding_key(card) != _illustration_binding: queue_redraw()
+
 func face_rect() -> Rect2:
 	var scale_value=minf(size.x/MASTER_SIZE.x,size.y/MASTER_SIZE.y)
 	return Rect2((size-MASTER_SIZE*scale_value)/2,MASTER_SIZE*scale_value)

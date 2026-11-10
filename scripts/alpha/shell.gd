@@ -6,6 +6,7 @@ const AlphaCatalog=preload("res://scripts/production/catalog.gd")
 const LegacyCatalog=preload("res://scripts/legacy/catalog.gd")
 const CardView=preload("res://scripts/alpha/card_view.gd")
 const FullCardFace=preload("res://scripts/card_system/card_face.gd")
+const ArtQualityLabel=preload("res://scripts/production/art_quality_label.gd")
 const LibraryFilter=preload("res://scripts/card_system/library_filter.gd")
 var session=Session.new()
 var alpha_catalog=AlphaCatalog.new()
@@ -580,7 +581,7 @@ func inspect(c: Dictionary, current: Dictionary={}) -> void:
 			center.resized.connect(resize_face);resize_face.call()
 		else:
 			var center=CenterContainer.new();box.add_child(center)
-			var portrait_card=CardView.new();portrait_card.card=c;portrait_card.color=S.color(c);portrait_card.library=true;portrait_card.custom_minimum_size=Vector2(240,140);center.add_child(portrait_card)
+			var portrait_card=CardView.new();portrait_card.card=c;portrait_card.art_profile="full";portrait_card.color=S.color(c);portrait_card.library=true;portrait_card.custom_minimum_size=Vector2(240,140);center.add_child(portrait_card)
 		inspector_card_id=str(c.id);inspector_title=text(str(c.name),box,24)
 		text("%s · %s · %s · %s" % [alpha_catalog.source.powers.get(c.get("faction","neutral"),c.get("order","")),S.KINDS.get(c.kind,c.kind),S.RARITIES.get(c.rarity,c.rarity),"Energie %d" % c.cost],box,16)
 		if c.kind=="creature":
@@ -593,8 +594,7 @@ func inspect(c: Dictionary, current: Dictionary={}) -> void:
 		if int(current.get("attack_penalty",0))>0:text("Aktuelle Schwächung: −%d Angriff in der nächsten eigenen Angriffsphase." % int(current.attack_penalty),box,14)
 		inspector_rules=text(str(c.get("description","")),box,18)
 		text("SCHLÜSSELWÖRTER",box,14);text(S.card_keywords(c),box,14)
-		var art=CardView.ART.resolve(c)
-		text("Illustration: "+("individuelles Konzeptmotiv · Produktionsprüfung offen" if art.individual and art.status!="final" else "individuelles Motiv" if art.individual else "geteiltes Konzeptbild"),box,12)
+		var art_note=ArtQualityLabel.new();art_note.card=c;box.add_child(art_note)
 		if c.kind=="event" and c.effect=="redirect":text("Voraussetzung: Ein eigener verzögerter Treffer wartet bereits. Neunte-Stunde-Karten wie Vorgemerkter Einschlag bereiten ihn vor.",box,14)
 		if page=="battle" and mode=="alpha" and c.kind=="relic" and session.model.state.hero.relic!=null and session.model.state.hero.relic.id==c.id:
 			button("inspect_relic_activate","RELIKT AKTIVIEREN · "+relic_cost_caption(),func():close_modal();act("activateRelic",["hero"]),box,not relic_can_activate())
@@ -788,6 +788,8 @@ func publish_qa() -> void:
 	if is_instance_valid(inspector_rules) and is_instance_valid(modal):
 		var r=inspector_rules.get_global_rect()
 		state.inspection={"id":inspector_card_id,"title":inspector_title.text,"rules":inspector_rules.text,"rules_font_size":inspector_rules.get_theme_font_size("font_size"),"rules_rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]}
+		var art=CardView.ART.resolve({"id":inspector_card_id})
+		state.inspection.art={"preview_only":art.preview_only,"state":art.delivery_state,"pixels":[art.texture.get_width(),art.texture.get_height()] if art.texture!=null else [],"asset":art.asset_path}
 	state.opening_marks=mulligan_indices.duplicate();state.drag={"active":bool(hand_drag.get("active",false)),"targets":hand_drag.get("targets",{}).keys()}
 	for key in actions:
 		var b=actions[key]

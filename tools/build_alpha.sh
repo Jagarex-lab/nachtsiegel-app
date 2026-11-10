@@ -33,6 +33,8 @@ if ! "${GODOT_BIN:-godot}" --headless --path . --export-debug 'Alpha Web QA' "$a
 fi
 mv "$alpha_stage_dir/$alpha_build_name.html" "$alpha_stage_dir/index.html"
 for alpha_extension in pck wasm js; do test -s "$alpha_stage_dir/$alpha_build_name.$alpha_extension"; done
+"${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tools/production/prepare_art_delivery.gd -- --ensure-cache > work/alpha/art-delivery.log 2>&1
+python3 tools/production/stage_art_delivery.py "$alpha_stage_dir" >> work/alpha/art-delivery.log
 # A source checkout must never satisfy a missing packaged resource. Both the
 # working directory and project path are an empty directory during inspection.
 alpha_inventory_script="$PWD/tools/alpha02_pack_inventory.gd"

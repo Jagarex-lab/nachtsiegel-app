@@ -15,6 +15,7 @@ static var _loads := 0
 static var _hits := 0
 static var _generation := 0
 static var _thumbnail_builds := 0
+static var _delivery_versions: Dictionary = {}
 
 static func safe_asset_path(value: String) -> bool:
 	if not value.begins_with("res://assets/"): return false
@@ -36,7 +37,41 @@ static func manifest_entry(card_id: String) -> Dictionary:
 
 static func binding_key(card: Dictionary, profile := "full") -> String:
 	var art: Dictionary = card.get("art", {}) if card.get("art", {}) is Dictionary else {}
-	return JSON.stringify([card.get("id", ""), card.get("schema_version", 1), art.get("status", "shared_concept"), art.get("asset_id", ""), art.get("path", ""), profile, _generation])
+	return JSON.stringify([card.get("id", ""), card.get("schema_version", 1), art.get("status", "shared_concept"), art.get("asset_id", ""), art.get("path", ""), profile, _generation, _delivery_versions.get(str(card.get("id", "")), 0) if profile == "full" else 0])
+
+static func delivery_changed(card_id: String) -> void:
+	_delivery_versions[card_id] = int(_delivery_versions.get(card_id, 0)) + 1
+
+static func _delivery_node():
+	var tree = Engine.get_main_loop()
+	return tree.root.get_node_or_null("ArtDelivery") if tree is SceneTree else null
+
+static func has_full_texture(card_id: String) -> bool:
+	var path := str(manifest_entry(card_id).get("asset_path", ""))
+	return not path.is_empty() and _cache.has(path + "|full")
+
+static func _cached_texture(cache_key: String) -> Texture2D:
+	if not _cache.has(cache_key): return null
+	_hits += 1
+	_lru.erase(cache_key); _lru.append(cache_key)
+	return _cache[cache_key].texture
+
+static func store_delivered_full(card_id: String, texture: Texture2D) -> bool:
+	var entry := manifest_entry(card_id)
+	var path := str(entry.get("asset_path", ""))
+	if not safe_asset_path(path) or texture == null or texture.get_width() != int(entry.get("original_width", 0)) or texture.get_height() != int(entry.get("original_height", 0)): return false
+	return _retain(path + "|full", texture, "full")
+
+static func _retain(cache_key: String, texture: Texture2D, profile: String) -> bool:
+	var estimate := int(ceil(float(texture.get_width() * texture.get_height() * 4) * 4.0 / 3.0))
+	if estimate > MAX_CACHE_BYTES: return false
+	if _cache.has(cache_key):
+		_cache_bytes -= int(_cache[cache_key].bytes); _cache.erase(cache_key); _lru.erase(cache_key)
+	while not _lru.is_empty() and (_cache.size() >= MAX_CACHE_ENTRIES or _cache_bytes + estimate > MAX_CACHE_BYTES):
+		var oldest: String = _lru.pop_front(); _cache_bytes -= int(_cache[oldest].bytes); _cache.erase(oldest)
+	_cache[cache_key] = {"texture": texture, "bytes": estimate, "profile": profile}
+	_lru.append(cache_key); _cache_bytes += estimate; _loads += 1
+	return true
 
 static func _texture(path: String, profile: String) -> Texture2D:
 	if not safe_asset_path(path): return null
@@ -98,11 +133,26 @@ static func resolve(card: Dictionary, profile := "full") -> Dictionary:
 	var texture_path := path
 	if profile == "compact" and path == str(entry.get("asset_path", "")) and not str(entry.get("preview_asset_path", "")).is_empty():
 		texture_path = str(entry.preview_asset_path)
-	var texture: Texture2D = _texture(texture_path, profile) if status in ["concept", "final"] else null
+	var service = _delivery_node() if profile == "full" else null
+	var external: bool = service != null and service.external_enabled() and path == str(entry.get("asset_path", "")) and bool(entry.get("individual_original", false))
+	var texture: Texture2D = null
+	if status in ["concept", "final"]:
+		if external: texture = _cached_texture(path + "|full")
+		else: texture = _texture(texture_path, profile)
+	var preview_only := false
+	var delivery_state := "ready" if texture != null else "preview"
+	if texture == null and profile == "full" and path == str(entry.get("asset_path", "")) and not str(entry.get("preview_asset_path", "")).is_empty():
+		texture_path = str(entry.preview_asset_path); texture = _texture(texture_path, "compact")
+		preview_only = texture != null
+		if service != null and preview_only:
+			service.request_full(str(card.get("id", ""))); delivery_state = service.state_for(str(card.get("id", "")))
 	if texture == null: status = "shared_concept"
+	var caption := "GETEILTES KONZEPTBILD" if texture == null else "KONZEPTILLUSTRATION" if status != "final" else ""
+	if preview_only:
+		caption = "VORSCHAU · BILD LÄDT" if delivery_state == "loading" else "VORSCHAU · OFFLINE" if delivery_state == "failed" else "VORSCHAU"
 	return {
 		"texture": texture, "status": status,
-		"label": "GETEILTES KONZEPTBILD" if texture == null else "KONZEPTILLUSTRATION" if status != "final" else "",
+		"label": caption, "preview_only": preview_only, "delivery_state": delivery_state,
 		"asset_path": path if texture != null else "",
 		"texture_asset_path": texture_path if texture != null else "", "profile": profile,
 		"individual": texture != null and bool(entry.get("individual_original", false)) and path == str(entry.get("asset_path", "")),
@@ -117,4 +167,5 @@ static func stats() -> Dictionary:
 static func clear_cache(reload_manifest := false) -> void:
 	_cache.clear(); _lru.clear(); _cache_bytes = 0; _loads = 0; _hits = 0
 	_generation += 1; _thumbnail_builds = 0
+	_delivery_versions.clear()
 	if reload_manifest: _manifest.clear(); _manifest_loaded = false

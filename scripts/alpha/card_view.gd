@@ -6,6 +6,7 @@ const ART=preload("res://scripts/production/art_resolver.gd")
 var card: Dictionary={}
 var _illustration_binding := ""
 var _illustration_data: Dictionary = {}
+var art_profile := "compact"
 var unit: Dictionary={}
 var selected := false
 var target := false
@@ -28,10 +29,12 @@ func _ready() -> void:
 	texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 func _ink(value: String, at: Vector2, fs: int, tint: Color, width: float) -> void:
 	draw_string(S.font,at,value,HORIZONTAL_ALIGNMENT_LEFT,width,fs,tint)
+func _process(_delta: float) -> void:
+	if art_profile == "full" and not card.is_empty() and ART.binding_key(card, art_profile) != _illustration_binding: queue_redraw()
 func illustration(aperture: Rect2, tint: Color=Color.WHITE) -> void:
-	var binding := ART.binding_key(card, "compact")
+	var binding := ART.binding_key(card, art_profile)
 	if binding != _illustration_binding:
-		_illustration_data = ART.resolve(card, "compact"); _illustration_binding = binding
+		_illustration_data = ART.resolve(card, art_profile); _illustration_binding = binding
 	var resolved = _illustration_data
 	if resolved.texture!=null:
 		var texture: Texture2D=resolved.texture
