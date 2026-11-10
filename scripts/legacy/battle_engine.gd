@@ -57,12 +57,14 @@ func snapshot() -> Dictionary:
 		for unit: Variant in p.lanes:
 			if unit==null:lanes.append(null);continue
 			var copy: Dictionary=unit.duplicate(true)
-			var definition: Dictionary=catalog.card(unit.id)
+			var definition: Dictionary=_snapshot_definition(unit.id)
 			copy["baseHp"]=definition.hp;copy["baseAtk"]=definition.atk
 			lanes.append(copy)
 		part["lanes"]=lanes;result[side]=part
 	for key: String in ["active","coin","round","winner","seed","level"]:result[key]=state[key]
 	return result
+func _snapshot_definition(id: String) -> Dictionary:
+	return catalog.card(id)
 func _trace(kind: String, side: String, detail: Dictionary = {}) -> void:
 	var event: Dictionary=detail.duplicate(true)
 	event["kind"]=kind;event["side"]=side;event["seq"]=events.size();event["state"]=snapshot();event["pendingDeath"]=pending_death.duplicate(true) if pending_death is Dictionary else null

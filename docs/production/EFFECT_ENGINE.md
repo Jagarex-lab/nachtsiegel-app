@@ -135,3 +135,25 @@ Ability boundary fixtures are not substitutes for full-game simulations, real
 mobile-device tests, sufficient balancing data or individual illustration QA.
 The source-bound PR #11 lab retains its own tests/status; the production profile
 supersedes its three-trigger limitation only when explicitly instantiated.
+
+## Long-match bookkeeping and replay ABI
+
+Production bridge snapshots use version 2 with
+`history_algorithm: sha256-event-chain-v1`: start with SHA-256 of the empty string;
+for each accepted publication, hash the previous hexadecimal digest, `:`, the UTF-8
+byte length of the deduplication key, `:`, and that key. Illegal, duplicate and
+preflight-rejected submissions never advance it. The complete deduplication map
+still enforces the 10,000-publication limit. Probe copies preserve the digest.
+The archived source-bound bridge retains its exact version-1 canonical-map hash.
+
+Only unreachable past-round ability-use keys and departed-source condition latches
+are pruned at a real turn boundary. Current-round uses and living-source condition
+crossings remain intact. This removes obsolete bookkeeping from new production
+snapshots; it changes no card, resource, phase or victory rule.
+
+Published historical event snapshots are immutable. Unchanged hands, decks,
+creature records and side dictionaries are shared between records. Every event
+still exposes its complete normal Dictionary state and its original sequence.
+Validation probes shallow-copy closed history containers while appending their
+own rows; a resolving queue uses a deep-copy fallback. Consumers needing mutable
+history must explicitly duplicate it. See `ENGINE_PERFORMANCE.md` for measurements.

@@ -35,6 +35,8 @@ func source_context(card: Dictionary,index: int,side: String="hero") -> Dictiona
 func run() -> void:
  model=Model.new()
  check(model._configuration_error.is_empty() and model._bindings.size()>=495,"all generic identities configure against actual catalog")
+ if OS.get_environment("PRODUCTION_PERF_ONLY")=="1":
+  test_performance_bookkeeping();print("PERF BOOKKEEPING: ",assertions," assertions, ",failures," failures");quit(1 if failures else 0);return
  var ability_count:=0
  if OS.get_environment("PRODUCTION_HOOKS_ONLY")=="1":
   test_automatic_triggers();print("HOOKS ",failures);quit(1 if failures else 0);return
@@ -72,6 +74,7 @@ func run() -> void:
  test_reactions_and_boundaries()
  test_all_cards_play()
  test_queue_target_identity()
+ test_performance_bookkeeping()
  var categories: Dictionary={}
  for id in exercised:categories[Generic.OPS[id].category]=true
  check(categories.size()==12,"all twelve executable effect categories covered")
@@ -293,3 +296,42 @@ func test_queue_target_identity() -> void:
   model.effect_runtime.effect_processed.disconnect(callback)
   var rows: Array=model.effect_runtime.log.slice(offset)
   check(reply.ok and rows.size()==2 and rows[0].status=="applied" and rows[1].status=="fizzled" and rows[1].actual.reason=="stale_source","same-ID relic replacement cannot inherit queued source ability")
+
+func test_performance_bookkeeping() -> void:
+ battle()
+ var card: Dictionary={};var a: Dictionary={}
+ for c in model.catalog.all_cards():
+  if c.get("effect")!="v2" or c.kind!="creature":continue
+  for candidate in c.abilities:
+   if candidate.mode=="triggered" and candidate.limit=="once_per_event" and candidate.effect=="gain_resonance":card=c;a=candidate;break
+  if not card.is_empty():break
+ check(not card.is_empty(),"real resource card for publication hash proof")
+ if card.is_empty():return
+ var context:=source_context(card,0);context.event_id="perf-publication"
+ var initial: String=model.snapshot().v2_bridge.runtime_history_sha256
+ var rejected: Dictionary=model.effect_runtime.publish("not_a_trigger","hero",[a],context)
+ check(not rejected.ok and model.snapshot().v2_bridge.runtime_history_sha256==initial,"illegal publication does not advance rolling hash")
+ var reply: Dictionary=model.effect_runtime.publish(a.trigger,"hero",[a],context)
+ var accepted: String=model.snapshot().v2_bridge.runtime_history_sha256
+ check(reply.ok and accepted!=initial,"accepted publication advances rolling hash")
+ var duplicate: Dictionary=model.effect_runtime.publish(a.trigger,"hero",[a],context)
+ check(not duplicate.ok and model.snapshot().v2_bridge.runtime_history_sha256==accepted,"duplicate publication does not advance rolling hash")
+ check(model.snapshot().v2_bridge.version==2 and model.snapshot().v2_bridge.history_algorithm=="sha256-event-chain-v1","production-only digest format explicitly versioned")
+ var probe=model._validation_probe()
+ check(probe.snapshot()==model.snapshot(),"compact validation probe begins with full identical state and digest")
+ var stamp:=JSON.stringify([model.snapshot(),model.events,model.trigger_journal],"",true)
+ context.event_id="probe-only-publication"
+ check(probe.effect_runtime.publish(a.trigger,"hero",[a],context).ok,"probe can resolve a new actual ability")
+ check(JSON.stringify([model.snapshot(),model.events,model.trigger_journal],"",true)==stamp,"shallow closed histories remain immutable while probe appends its own outcomes")
+ model._ability_uses={"hero:old:0:10":true,"enemy:current:0:11":true}
+ model._condition_latches={"hero:departed:0":true}
+ model._prune_rule_caches()
+ check(model._ability_uses=={"enemy:current:0:11":true},"only unreachable past-round cooldowns are pruned")
+ check(model._condition_latches.is_empty(),"departed condition sources cannot retain latches")
+ model._trace("perf_before","hero")
+ var before_state: Dictionary=model.events[-1].state
+ var before_json:=JSON.stringify(before_state,"",true)
+ model.state.hero.energy=maxi(0,int(model.state.hero.energy)-1)
+ model._trace("perf_after","hero")
+ check(JSON.stringify(before_state,"",true)==before_json,"published historical snapshot is not mutated by later real state changes")
+ check(is_same(before_state.enemy,model.events[-1].state.enemy),"unchanged immutable history branch is shared, not copied repeatedly")

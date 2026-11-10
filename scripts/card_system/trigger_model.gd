@@ -94,14 +94,16 @@ func start_alpha(deck: Array, opponent_deck: Array, seed_value: int, difficulty:
 	return super.start_alpha(deck, opponent_deck, seed_value, difficulty)
 
 func snapshot() -> Dictionary:
-	var result := super.snapshot()
-	if not _bindings.is_empty() and not result.is_empty():
-		var summoned: Array = _summoned_uids.keys();summoned.sort()
-		var dead: Array = _dead_uids.keys();dead.sort()
-		result["v2_bridge"] = {"version": 1, "binding_sha256": _binding_hash, "trigger_serial": _trigger_serial,
-			"summoned_uids": summoned, "dead_uids": dead, "runtime_event_count": effect_runtime._seen.size(),
-			"runtime_history_sha256": JSON.stringify(effect_runtime._seen, "", true).sha256_text(), "runtime_chain": effect_runtime._chain}
+	var result:=super.snapshot()
+	if not _bindings.is_empty() and not result.is_empty():result["v2_bridge"]=_bridge_snapshot_metadata()
 	return result
+
+func _bridge_snapshot_metadata() -> Dictionary:
+	var summoned: Array=_summoned_uids.keys();summoned.sort()
+	var dead: Array=_dead_uids.keys();dead.sort()
+	return {"version":1,"binding_sha256":_binding_hash,"trigger_serial":_trigger_serial,
+		"summoned_uids":summoned,"dead_uids":dead,"runtime_event_count":effect_runtime._seen.size(),
+		"runtime_history_sha256":JSON.stringify(effect_runtime._seen,"",true).sha256_text(),"runtime_chain":effect_runtime._chain}
 
 func capabilities() -> Dictionary:
 	var matrix: Dictionary = {}

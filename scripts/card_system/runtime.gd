@@ -18,6 +18,7 @@ var _resolving := false
 var _processed := 0
 var _chain := 0
 var _seen: Dictionary = {}
+var _publication_digest := "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 var _species: Dictionary = {}
 
 func _init(battle_model: RefCounted = null, weak_model := false) -> void:
@@ -110,6 +111,9 @@ func _queue_batch(trigger: String, side: String, batch: Array, context: Dictiona
 	if chain_used + _queue.size() + batch.size() > Registry.MAX_CHAIN: return _rejected("chain_limit")
 	# Reserve only after the whole batch validates: an invalid action does not mutate the battle.
 	_seen[key] = true
+	# Ordered accepted-publication chain. The legacy bridge retains its own
+	# canonical-map snapshot digest; only Production explicitly selects this ABI.
+	_publication_digest=(_publication_digest+":"+str(key.to_utf8_buffer().size())+":"+key).sha256_text()
 	_queue.append_array(batch)
 	if _resolving: return {"ok": true, "queued": batch.size(), "processed": 0, "reason": ""}
 	_chain += 1

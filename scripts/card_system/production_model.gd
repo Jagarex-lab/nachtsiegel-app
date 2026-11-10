@@ -17,6 +17,8 @@ var _armed: Array=[]
 var _armed_serial := 0
 var _relic_serial := 0
 var _play_serial := 0
+var _share_event_snapshots := true
+var _last_history_state: Dictionary={}
 
 func _init(probe_from: RefCounted=null) -> void:
  if probe_from!=null:
@@ -66,7 +68,7 @@ func configure_v2(cards: Array) -> Dictionary:
 
 func start_alpha(deck: Array, opponent_deck: Array, seed_value: int, difficulty: int=2) -> bool:
  if not _configuration_error.is_empty():return false
- _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0;longest_chain=0
+ _ability_uses={};_condition_latches={};_checking_conditions=false;_publishing=0;_armed=[];_armed_serial=0;_relic_serial=0;_play_serial=0;longest_chain=0;_last_history_state={}
  return super.start_alpha(deck,opponent_deck,seed_value,difficulty)
 
 func snapshot() -> Dictionary:
@@ -81,17 +83,19 @@ func _validation_probe():
  probe.state=state.duplicate(true)
  probe._probe_instance=true
  probe._trigger_serial=_trigger_serial
- probe.trigger_journal=trigger_journal.duplicate(true)
- probe._journal_ids=_journal_ids.duplicate(true)
+ var deep_history: bool=effect_runtime._resolving or _resolving
+ probe.trigger_journal=trigger_journal.duplicate(deep_history)
+ probe._journal_ids=_journal_ids.duplicate()
  probe._runtime_log_cursor=_runtime_log_cursor
  probe._summoned_uids=_summoned_uids.duplicate(true)
  probe._dead_uids=_dead_uids.duplicate(true)
- probe.effect_runtime.log=effect_runtime.log.duplicate(true)
- probe.effect_runtime._seen=effect_runtime._seen.duplicate(true)
+ probe.effect_runtime.log=effect_runtime.log.duplicate(deep_history)
+ probe.effect_runtime._seen=effect_runtime._seen.duplicate()
  probe.effect_runtime._chain=effect_runtime._chain
  probe._ability_uses=_ability_uses.duplicate(true)
  probe._condition_latches=_condition_latches.duplicate(true)
  probe._armed=_armed.duplicate(true);probe._armed_serial=_armed_serial;probe._relic_serial=_relic_serial;probe._play_serial=_play_serial
+ probe.effect_runtime._publication_digest=effect_runtime._publication_digest
  return probe
 
 func supports_creature_effect(card: Dictionary) -> bool:
@@ -240,6 +244,7 @@ func _publish_watchers(trigger: String, side: String, detail: Dictionary) -> voi
 
 func _phase_hook(trigger: String, side: String) -> void:
  if trigger=="on_turn_start":
+  _prune_rule_caches()
   # Keys include round; discard old counters only at a real boundary, not during a probe.
   for unit in state[side].lanes:
    if unit!=null:unit["block"]=0
@@ -295,6 +300,10 @@ func _burn_reference(side: String, index: Variant) -> bool:
 
 func _trace(kind: String, side: String, detail: Dictionary={}) -> void:
  super._trace(kind,side,detail)
+ if _share_event_snapshots and not events.is_empty():
+  var event: Dictionary=events[-1]
+  _share_closed_snapshot(event.state,_last_history_state)
+  _last_history_state=event.state
  if kind in ["shift","tactical_move"] and detail.has("to") and _valid_side(side):
   var unit: Variant=state[side].lanes[int(detail.to)]
   if unit!=null:_combat_hook("on_lane_change",side,int(detail.to),unit,{"from":detail.get("from"),"to":detail.to})
@@ -384,7 +393,7 @@ func _targets(side: String, a: Dictionary, context: Dictionary) -> Array:
    for i in 5:
     var unit: Variant=state[chosen_side].lanes[i]
     if unit!=null and int(unit.hp)>0:
-     if a.target=="own_species" and not catalog.card(unit.id).get("species",[]).has(a.params.species):continue
+     if a.target=="own_species" and not catalog.cards.get(unit.id,{}).get("species",[]).has(a.params.species):continue
      result.append({"side":chosen_side,"lane":i})
  for target in result:
   if int(target.lane)>=0 and state[target.side].lanes[int(target.lane)]!=null:target["uid"]=int(state[target.side].lanes[int(target.lane)].uid)
@@ -424,7 +433,7 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
     if unit!=null:unit["block"]=mini(25,int(unit.get("block",0))+amount)
     else:tp.block=mini(25,int(tp.block)+amount)
    "heal_target":
-    if unit!=null:unit.hp=mini(int(catalog.card(unit.id).hp),int(unit.hp)+amount)
+    if unit!=null:unit.hp=mini(int(catalog.cards[unit.id].hp),int(unit.hp)+amount)
     else:tp.hp=mini(int(tp.maxHp),int(tp.hp)+amount)
    "modify_attack":
     if unit!=null:unit.atk=mini(40,int(unit.atk)+amount)
@@ -593,3 +602,60 @@ func production_bind_context(side: String, _ability: Dictionary, context: Dictio
   var unit: Variant=state[_other(side)].lanes[int(pair[1])]
   result[str(pair[0])+"_enemy_lane"]=int(pair[1]);result[str(pair[0])+"_enemy_uid"]=0 if unit==null else int(unit.uid)
  return result
+
+func _bridge_snapshot_metadata() -> Dictionary:
+ var summoned: Array=_summoned_uids.keys();summoned.sort()
+ var dead: Array=_dead_uids.keys();dead.sort()
+ return {"version":2,"history_algorithm":"sha256-event-chain-v1","binding_sha256":_binding_hash,"trigger_serial":_trigger_serial,
+  "summoned_uids":summoned,"dead_uids":dead,"runtime_event_count":effect_runtime._seen.size(),
+  "runtime_history_sha256":effect_runtime._publication_digest,"runtime_chain":effect_runtime._chain}
+
+func _prune_rule_caches() -> void:
+ # Old-round usage can never block an ability in this or any future round.
+ # Keep all current-round usage, including the opponent's reactions.
+ var suffix:=":"+str(state.round)
+ var current: Dictionary={}
+ for key in _ability_uses:
+  if str(key).ends_with(suffix):current[key]=true
+ _ability_uses=current
+ # Latches only belong to living condition sources. Re-entered creatures receive
+ # a new UID; no future source may consult a departed instance's condition key.
+ var valid: Dictionary={}
+ for side in ["hero","enemy"]:
+  var sources: Array=[]
+  for unit in state[side].lanes:
+   if unit!=null and int(unit.hp)>0 and _bindings.has(unit.id):sources.append([unit.id,str(unit.uid)])
+  if state[side].relic!=null and _bindings.has(state[side].relic.id):sources.append([state[side].relic.id,str(state[side].relic.id)])
+  for source in sources:
+   var card: Dictionary=_bindings[source[0]]
+   for i in card.abilities.size():
+    if card.abilities[i].get("trigger")=="on_condition":valid[side+":"+str(source[1])+":"+str(i)]=true
+ var live: Dictionary={}
+ for key in _condition_latches:
+  if valid.has(key):live[key]=_condition_latches[key]
+ _condition_latches=live
+
+func _snapshot_definition(id: String) -> Dictionary:
+ # Read-only hot path: snapshots need only base HP/attack, never mutate card data.
+ return catalog.cards.get(id,{})
+
+func _share_closed_snapshot(current: Dictionary, previous: Dictionary) -> void:
+ # Historical event snapshots are immutable after publication. Reuse unchanged
+ # branches rather than storing hundreds of copies of the same hand/lanes/card.
+ # Every event still exposes its complete ordinary Dictionary snapshot and order.
+ if previous.is_empty():return
+ for side in ["hero","enemy"]:
+  var now: Dictionary=current[side];var old: Dictionary=previous[side]
+  for key in ["deck","hand","discard","lanes","declaring","relic","convergence"]:
+   if not now.has(key) or not old.has(key):continue
+   if now[key]==old[key]:now[key]=old[key]
+   elif key=="lanes":
+    for lane in 5:
+     if now.lanes[lane]==old.lanes[lane]:now.lanes[lane]=old.lanes[lane]
+  if now==old:current[side]=old
+ for key in ["origins","origin_used","delayed","production","v2_bridge"]:
+  if not current.has(key) or not previous.has(key):continue
+  if current[key]==previous[key]:current[key]=previous[key]
+  elif key in ["production","v2_bridge"]:
+   for field in current[key]:
+    if previous[key].has(field) and current[key][field]==previous[key][field]:current[key][field]=previous[key][field]
