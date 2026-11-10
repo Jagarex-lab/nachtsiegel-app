@@ -55,7 +55,7 @@ func run() -> void:
 	var source = load("res://scripts/arena.gd")
 	if source == null or not source.can_instantiate():
 		printerr("FAIL: Arena cannot instantiate")
-		finish_test(1)
+		await finish_test(1)
 		return
 	arena = load("res://scenes/arena.tscn").instantiate()
 	root.add_child(arena)
@@ -149,7 +149,13 @@ func run() -> void:
 	await settle()
 	check(not arena.landscape_panel.visible,"Rotation restores play")
 	print("INPUT/LAYOUT: %d assertions, %d failures; seven landscape sizes; mouse + ScreenTouch" % [assertions,failures])
-	finish_test(1 if failures else 0)
+	await finish_test(1 if failures else 0)
 
 func finish_test(code: int=0) -> void:
+	# Release the fixture and let its presenter cancel pending resize/hover tweens
+	# before the engine tears down cached resources (same lifecycle as Alpha UI).
+	if is_instance_valid(arena):arena.queue_free()
+	arena=null
+	await settle()
+	await create_timer(.5).timeout
 	root.get_node("GameAudio").request_quit(code)
