@@ -18,3 +18,6 @@ Das ist der bevorzugte **Storyvorschlag**, nicht die bereits beschlossene Urspru
 `data/lore/card-concepts.json` enthält **550 strukturierte, vorläufige Konzeptplätze**, keine 550 einzeln veröffentlichungsreif lektorierten Karten. `characters.json` enthält 80 Profile, davon sechs deutlich vertieft; `locations.json` 20 Orte; `organizations.json` 10 Untergruppen; `card-families.json` 140 technische Familiengruppen; `expansion-roadmap.json` fünf Richtungen. `docs/LORE-BIBLE.md` bleibt die bestehende Kanonreferenz.
 
 **Keine Engineänderung, kein Merge, keine Kanonisierung.**
+
+## Kommerzielle Entwicklungsgrundlage
+[Commercial Readiness, Positionierung und Qualitätsgates](22-commercial-readiness.md). **Dieser Merge ist nur die Annahme einer provisorischen Arbeitsgrundlage, keine Freigabe von Storykanon, 550 finalen Karten oder kommerziellem Launch.**
