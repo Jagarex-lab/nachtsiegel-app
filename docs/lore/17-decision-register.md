@@ -13,3 +13,6 @@
 | Neue 550 Kartenkonzepte | VORSCHLAG | Keine produktiven Karten |
 
 **Freigabeprotokoll:** Nutzer muss konkrete Kanonentscheidungen ausdrücklich bestätigen. Ein GitHub-PR oder ein fertiger Datensatz ist keine Kanonisierung.
+
+| Lore-Gerüst auf `develop` als Entwicklungsgrundlage übernehmen | Nutzerentscheidung | **Freigabe zum Merge als vorläufiger Entwurf, ausdrücklich keine endgültige Kanonisierung** |
+| Kommerzielle Positionierung und Qualitätsgates | VORSCHLAG | Siehe `22-commercial-readiness.md`; keine Launch-Freigabe |
