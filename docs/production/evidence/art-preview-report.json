@@ -1,0 +1,54 @@
+{
+  "active_catalog_changes": 0,
+  "assertions": 114,
+  "entries": [
+    {
+      "art_status": "concept",
+      "asset_path": "res://assets/production/illustrations/ZH-001.png",
+      "card_id": "ZH-001",
+      "file": "ZH-001-design-mock.png",
+      "lore_status": "VORSCHLAG",
+      "proposed_name": "Schleusenzeichnerin"
+    },
+    {
+      "art_status": "concept",
+      "asset_path": "res://assets/production/illustrations/SW-001.png",
+      "card_id": "SW-001",
+      "file": "SW-001-design-mock.png",
+      "lore_status": "VORSCHLAG",
+      "proposed_name": "Froststegwache"
+    },
+    {
+      "art_status": "concept",
+      "asset_path": "res://assets/production/illustrations/VG-001.png",
+      "card_id": "VG-001",
+      "file": "VG-001-design-mock.png",
+      "lore_status": "VORSCHLAG",
+      "proposed_name": "Hüterin der Wurzelbrücke"
+    },
+    {
+      "art_status": "concept",
+      "asset_path": "res://assets/production/illustrations/NS-071.png",
+      "card_id": "NS-071",
+      "file": "NS-071-design-mock.png",
+      "lore_status": "VORSCHLAG",
+      "proposed_name": "Messsprung"
+    },
+    {
+      "art_status": "concept",
+      "asset_path": "res://assets/production/illustrations/NE-101.png",
+      "card_id": "NE-101",
+      "file": "NE-101-design-mock.png",
+      "lore_status": "VORSCHLAG",
+      "proposed_name": "Marktschnitt"
+    }
+  ],
+  "failures": 0,
+  "native_size": [
+    756,
+    1056
+  ],
+  "playable_definitions_created": 0,
+  "scope": "authoring_design_mockups_only",
+  "warning_de": "BILDVORSCHLAG – keine Spieldefinition. Werte sind Platzhalter."
+}

@@ -1,0 +1,1872 @@
+[
+  {
+    "card_id": "ZH-001",
+    "source_name": "Kupfer-Hüter",
+    "proposed_name": "Schleusenzeichnerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Werkmeisterin mit kupfernen Armschienen.",
+    "action": "Keilt eine berstende Schleusentür mit einem abgenutzten Kupferkeil auf.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Werkmeisterin mit kupfernen Armschienen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Keil trägt abgegriffene Familienkerben.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-002",
+    "source_name": "Stamm Richterin",
+    "proposed_name": "Salzrichterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrte Hafenbeamtin mit repariertem Brustpanzer.",
+    "action": "Vergleicht zwei vom Meer ausgebleichte Herkunftssiegel am leeren Kai.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zurückgekehrte Hafenbeamtin mit repariertem Brustpanzer bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Salzkristalle wachsen in einer alten Brustnaht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-003",
+    "source_name": "Siegel Sammler",
+    "proposed_name": "Siegelmotte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Durchsichtige Motte aus schwebenden Wachssplittern.",
+    "action": "Landet auf einem gebrochenen Haussiegel und zeichnet dessen fehlende Hälfte nach.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Durchsichtige Motte aus schwebenden Wachssplittern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Jeder Flügelschlag hinterlässt kurze kupferne Lichtspuren.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-004",
+    "source_name": "Erinnerung-Erbin",
+    "proposed_name": "Fadenarchivarin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Gegliederte Webpuppe aus Nussholz und Messing.",
+    "action": "Verbindet zerrissene Stoffstreifen zu einer tragbaren Erinnerungstafel.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Gegliederte Webpuppe aus Nussholz und Messing bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Werkzeugfinger endet in einer offenen Spule.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-005",
+    "source_name": "Chronik Sprecherin",
+    "proposed_name": "Glockenhirsch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer Hirsch mit Glocken im verzweigten Geweih.",
+    "action": "Senkt den Kopf zu einer verschütteten Glocke im Uferlehm.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Großer Hirsch mit Glocken im verzweigten Geweih bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die älteste Glocke ist stumm und mit Garn umwickelt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-006",
+    "source_name": "Wappen Schreiberin",
+    "proposed_name": "Doppelzeugin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Zwei seitlich versetzte Erscheinungen derselben Frau.",
+    "action": "Hält eine einzelne Lampe zwischen zwei widersprüchlichen Schatten hoch.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Zwei seitlich versetzte Erscheinungen derselben Frau bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Nur einer der Schatten berührt den Boden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-007",
+    "source_name": "Schwur-Kundschafter",
+    "proposed_name": "Grenzbriefträger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Junger Bote mit abgetragenem kupfernen Schulterschutz.",
+    "action": "Reicht einen nassen Brief durch eine fast geschlossene Grenztür.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Junger Bote mit abgetragenem kupfernen Schulterschutz bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Brief wurde mehrfach mit verschiedenem Garn geflickt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-008",
+    "source_name": "Ahnen Hüter",
+    "proposed_name": "Heimkehrer am Pfahl",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Verwitterter Fährmann mit stumpfer Kupfermaske.",
+    "action": "Vertäut ein leeres Boot am letzten noch stehenden Anlegerpfahl.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Verwitterter Fährmann mit stumpfer Kupfermaske bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Aus dem Mantelsaum rieselt trockener Flusssand.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-009",
+    "source_name": "Zeuge Richterin",
+    "proposed_name": "Schwellengeist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Kleine durchscheinende Gestalt in einer Türfüllung.",
+    "action": "Hält die Erinnerung an eine verschwundene Haustür im Mauerloch aufrecht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Kleine durchscheinende Gestalt in einer Türfüllung bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Türgriff ist der einzige völlig feste Gegenstand.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-010",
+    "source_name": "Erbe-Sammler",
+    "proposed_name": "Erbenschlepper",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Breiter Lastenkörper aus ineinandergreifenden Truhen.",
+    "action": "Trägt ein zerlegtes Familienbett über eine überschwemmte Gasse.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Breiter Lastenkörper aus ineinandergreifenden Truhen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine offene Schublade enthält sorgfältig geschützte Kinderschuhe.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-011",
+    "source_name": "Archiv Erbin",
+    "proposed_name": "Spurenfuchs",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Schmaler Fuchs mit dunklem Rücken und Kupfergeschirr.",
+    "action": "Folgt einer unterbrochenen Schuhspur unter den Wurzeln eines Wegbaums.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Schmaler Fuchs mit dunklem Rücken und Kupfergeschirr bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Im feuchten Fell steckt ein einzelnes blaues Garnstück.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-012",
+    "source_name": "Rückkehr Sprecherin",
+    "proposed_name": "Fehltrittwanderin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Hagere Gestalt mit zwei verschieden langen Schrittabdrücken.",
+    "action": "Überquert einen Steg, dessen mittlere Planken nur in ihrer Spiegelung bestehen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Hagere Gestalt mit zwei verschieden langen Schrittabdrücken bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der hintere Fuß wirft seinen Schatten vorwärts.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-013",
+    "source_name": "Ahnen-Schreiberin",
+    "proposed_name": "Hausbuchbinderin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Ältere Handwerkerin mit kupferner Fingerkappe.",
+    "action": "Bindet verstreute Seiten vor einer wandernden Staubfront neu ein.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Ältere Handwerkerin mit kupferner Fingerkappe bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Rückenleder stammt sichtbar aus mehreren Reparaturen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-014",
+    "source_name": "Zeuge Kundschafter",
+    "proposed_name": "Ascheträger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Rußbedeckter Rückkehrer mit bronzenen Rippenklammern.",
+    "action": "Schüttet kalte Herdasche in einen sorgfältig ummauerten Transportkorb.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Rußbedeckter Rückkehrer mit bronzenen Rippenklammern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zwischen grauer Asche liegt ein unverkohlter Holzknopf.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-015",
+    "source_name": "Erbe Hüter",
+    "proposed_name": "Wiegenhauch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Leuchtender Geist aus dünnen Vorhangbahnen.",
+    "action": "Wiegt eine leere Kinderwiege in einem dachlosen Haus.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Leuchtender Geist aus dünnen Vorhangbahnen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Bahnen enden oberhalb des Bodens ohne Füße.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-016",
+    "source_name": "Archiv-Richterin",
+    "proposed_name": "Registerkrabbe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Sechsbeiniger Sortierautomat aus beschlagenem Holz.",
+    "action": "Zieht durchnässte Akten aus dem Schlamm einer gekippten Karre.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Sechsbeiniger Sortierautomat aus beschlagenem Holz bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zwei unterschiedlich große Scheren schonen das zerfallende Papier.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-017",
+    "source_name": "Rückkehr Sammler",
+    "proposed_name": "Rückwegdachs",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Gedrungener Dachs mit eingewebten Wegmarken im Geschirr.",
+    "action": "Gräbt einen zugeschütteten Durchgang unter einer alten Hauswand frei.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Gedrungener Dachs mit eingewebten Wegmarken im Geschirr bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "An seiner Stirn klebt ein halb erkennbarer Wandabdruck.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-018",
+    "source_name": "Kupfer Erbin",
+    "proposed_name": "Scherbenerbin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Frau mit einem Gesicht aus gegeneinander verschobenen Keramikflächen.",
+    "action": "Setzt eine zerbrochene Schale zusammen, obwohl deren Schatten vollständig bleibt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Frau mit einem Gesicht aus gegeneinander verschobenen Keramikflächen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine kleine Scherbe schwebt außerhalb der geschlossenen Schale.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-019",
+    "source_name": "Stamm-Sprecherin",
+    "proposed_name": "Kupferruferin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Wache Sprecherin mit tragbarem Schalltrichter.",
+    "action": "Ruft die Namen vermisster Reisender in eine verlassene Bahnhofshalle.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Wache Sprecherin mit tragbarem Schalltrichter bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Am Trichter hängen beschriftungsfreie Wachsstreifen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-020",
+    "source_name": "Siegel Schreiberin",
+    "proposed_name": "Siegelnarbiger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Wachposten mit geklammertem Wangenriss.",
+    "action": "Drückt ein altes Siegel in frischen Ton vor einer verbarrikadierten Tür.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Zurückgekehrter Wachposten mit geklammertem Wangenriss bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Abdruck zeigt absichtlich kein lesbares Wappen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-021",
+    "source_name": "Erinnerung Kundschafter",
+    "proposed_name": "Laternenlauscher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Durchsichtige Gestalt mit einer leuchtenden Ohrmuschel.",
+    "action": "Neigt sich zu einer erloschenen Straßenlaterne, in der ein Restklang hängt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Durchsichtige Gestalt mit einer leuchtenden Ohrmuschel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Restklang erscheint als kleiner verbogener Kupferring.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-022",
+    "source_name": "Chronik-Hüter",
+    "proposed_name": "Chronikläufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Vierbeiniger Archivautomat mit Rollen statt Hinterfüßen.",
+    "action": "Rettet eine zerfallende Schriftrolle von einer einstürzenden Treppe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Vierbeiniger Archivautomat mit Rollen statt Hinterfüßen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein einzelner Rollenreifen wurde durch Lederriemen ersetzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-023",
+    "source_name": "Wappen Richterin",
+    "proposed_name": "Wappenkeiler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Massiger Keiler mit asymmetrischen Hornplatten.",
+    "action": "Stemmt sich vor eine umgekippte Wegtafel und hält sie für Flüchtende auf.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Massiger Keiler mit asymmetrischen Hornplatten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine Hornplatte trägt alte, unlesbare Ritzungen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-024",
+    "source_name": "Schwur Sammler",
+    "proposed_name": "Geliehener Morgen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Junger Wanderer mit einem gleichzeitig alten Spiegelbild.",
+    "action": "Trinkt an einer Quelle, während sein Spiegelbild eine Schale weiterreicht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Junger Wanderer mit einem gleichzeitig alten Spiegelbild bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Wasser zwischen beiden Händen bleibt unberührt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-025",
+    "source_name": "Siegel-Erbin",
+    "proposed_name": "Siegelhüterin der Fähre",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Pragmatische Fährwächterin mit Tonstempeln am Gürtel.",
+    "action": "Prüft die Hände eines Reisenden statt dessen zerfledderter Dokumente.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Pragmatische Fährwächterin mit Tonstempeln am Gürtel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zerbrochene Tonstempel stecken getrennt in Stofftaschen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-026",
+    "source_name": "Erinnerung Sprecherin",
+    "proposed_name": "Gespaltene Stimme",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrte Sängerin mit sichtbarer Halsklammer.",
+    "action": "Singt vor einer offenen Kupferröhre, während zwei Atemfahnen auseinanderlaufen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Zurückgekehrte Sängerin mit sichtbarer Halsklammer bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein geflickter Schal folgt nur einer Atemfahne.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-027",
+    "source_name": "Chronik Schreiberin",
+    "proposed_name": "Tintenflimmer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Geist eines kleinen Schreiberwesens aus schwebenden Tintentropfen.",
+    "action": "Zieht eine verlorene Zeile als bloße Lichtspur über ein blankes Blatt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Geist eines kleinen Schreiberwesens aus schwebenden Tintentropfen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Spur bleibt unlesbar und löst sich am Rand auf.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-028",
+    "source_name": "Wappen-Kundschafter",
+    "proposed_name": "Wappenkurier",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Vogelartiger Blechautomat mit Lederflügeln.",
+    "action": "Befreit seinen versiegelten Frachtzylinder aus einem Drahtzaun.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Vogelartiger Blechautomat mit Lederflügeln bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Flügel besitzt grobe Nähte statt Nieten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-029",
+    "source_name": "Schwur Hüter",
+    "proposed_name": "Schwurhündin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Große windhündische Bestie mit bernsteinfarbenen Augen.",
+    "action": "Bewacht einen leeren Mantel auf der Schwelle eines verlassenen Hauses.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Große windhündische Bestie mit bernsteinfarbenen Augen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ihr Geschirr ist genau an der Brust vielfach nachgebessert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-030",
+    "source_name": "Ahnen Richterin",
+    "proposed_name": "Umkehrschlichterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Gestalt mit einem Körper und gegensinnig blickenden Profilen.",
+    "action": "Stellt eine umgestürzte Sanduhr aufrecht, ohne deren Sandfluss zu drehen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Gestalt mit einem Körper und gegensinnig blickenden Profilen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Obere und untere Sandkammer erscheinen gleich voll.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-031",
+    "source_name": "Zeuge-Sammler",
+    "proposed_name": "Zeugensammler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Reisender mit einem aufklappbaren Beweiskoffer.",
+    "action": "Sammelt verkohlte Dachnägel aus dem Grundriss eines zerstörten Hauses.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Reisender mit einem aufklappbaren Beweiskoffer bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Im Koffer liegen die Nägel in unterschiedlich abgenutzten Fächern.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-032",
+    "source_name": "Erbe Erbin",
+    "proposed_name": "Flickenerbin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrte Näherin mit eingesetzten Lederpartien im Mantel.",
+    "action": "Legt die Reste zweier Mäntel zu einem dritten Kleidungsstück zusammen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zurückgekehrte Näherin mit eingesetzten Lederpartien im Mantel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine Naht läuft sichtbar über einen alten Riss im Handgelenk.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-033",
+    "source_name": "Archiv Sprecherin",
+    "proposed_name": "Dachbodengeist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Kleine leuchtende Gestalt zwischen hängen gebliebenen Staubfäden.",
+    "action": "Zieht einen Familienkoffer an die Kante einer geöffneten Dachluke.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Kleine leuchtende Gestalt zwischen hängen gebliebenen Staubfäden bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein fester Kupferschlüssel hängt frei in ihrem durchsichtigen Leib.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-034",
+    "source_name": "Rückkehr-Schreiberin",
+    "proposed_name": "Wachstafelhüter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Kompakter Schreibautomat mit schwenkbaren Tonarmen.",
+    "action": "Schützt eine weiche Wachstafel mit seinem eigenen Klappdeckel vor Regen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Kompakter Schreibautomat mit schwenkbaren Tonarmen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Regentropfen sammeln sich in den Dellen des Deckels.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-035",
+    "source_name": "Unerwartete kupferprobe",
+    "proposed_name": "Der fehlende Bolzen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Nahsicht einer berstenden Schleusenverbindung.",
+    "action": "Eine kupferne Faltspur hält zwei auseinanderdriftende Metallaugen kurz zusammen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Nahsicht einer berstenden Schleusenverbindung bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das runde Bolzenloch bleibt deutlich leer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-036",
+    "source_name": "Verlorene stammnacht",
+    "proposed_name": "Nacht der offenen Truhen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Viele geöffnete Truhen in einer dunklen Gasse.",
+    "action": "Erinnerungsfetzen steigen aus den Truhen und finden jeweils einen anderen Schatten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Viele geöffnete Truhen in einer dunklen Gasse bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine kleine leere Truhe wirft den größten Schatten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-037",
+    "source_name": "Die erbewende",
+    "proposed_name": "Geteiltes Erbe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zwei Hände vor einer zerbrochenen Hausschwelle.",
+    "action": "Ein einziger kupferner Ring teilt sein Spiegelbild auf zwei Wasserflächen auf.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zwei Hände vor einer zerbrochenen Hausschwelle bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der wirkliche Ring bleibt als geschlossener Kreis erkennbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-038",
+    "source_name": "Letzte archivspur",
+    "proposed_name": "Spur im Staub",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Fußabdrücke über einem verschütteten Treppenlauf.",
+    "action": "Eine kupferne Falte legt die Umrisse der verschwundenen Stufen frei.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Fußabdrücke über einem verschütteten Treppenlauf bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Staub fällt gleichzeitig in den neu sichtbaren Hohlraum.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-039",
+    "source_name": "Unerwartete rückkehrprobe",
+    "proposed_name": "Ruf über die Furt",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Leere Ufer und eine schmale Lichtlinie über Wasser.",
+    "action": "Ein Ruf formt sich zu flüchtigen Trittspuren bis zum anderen Ufer.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Leere Ufer und eine schmale Lichtlinie über Wasser bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die erste Spur beginnt neben einem ausgezogenen Schuhpaar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-040",
+    "source_name": "Verlorene kupfernacht",
+    "proposed_name": "Verloschene Herde",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Mehrere kalte Feuerstellen in einer Dachruine.",
+    "action": "Ein einzelner Funke wandert von Herd zu Herd, ohne sie wieder zu entzünden.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Mehrere kalte Feuerstellen in einer Dachruine bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Herdsteine tragen unterschiedlich alte Reparaturklammern.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-041",
+    "source_name": "Die stammwende",
+    "proposed_name": "Wieder gefundener Stamm",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zwei getrennte Hälften eines Holzreliefs.",
+    "action": "Kupferne Fasern überbrücken die Lücke, während das Relief selbst zerbrochen bleibt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Zwei getrennte Hälften eines Holzreliefs bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine kleine Astnarbe passt nur in einer möglichen Stellung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-042",
+    "source_name": "Letzte siegelspur",
+    "proposed_name": "Das zweite Siegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Frischer Ton mit zwei überlagerten Siegelmulden.",
+    "action": "Die jüngere Mulde hebt sich als leuchtende Kupfermembran von der älteren ab.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Frischer Ton mit zwei überlagerten Siegelmulden bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Beide Mulden besitzen sichtbar verschiedene Risskanten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-043",
+    "source_name": "Unerwartete erinnerungprobe",
+    "proposed_name": "Lesezeichen im Regen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Offenes Buch unter heftigem Regen.",
+    "action": "Die Tropfen halten über einer einzigen Seite in einer gefalteten Membran inne.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Offenes Buch unter heftigem Regen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Blattzipfel steckt außerhalb des trockenen Bereichs.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-044",
+    "source_name": "Verlorene chroniknacht",
+    "proposed_name": "Nachklang der Chronik",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Leerer Lesetisch mit aufspringenden Staubkreisen.",
+    "action": "Eine erloschene Leselampe projiziert kurz die Kontur einer früheren Handbewegung.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Leerer Lesetisch mit aufspringenden Staubkreisen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Lichtkontur endet vor der tatsächlichen Tischkante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-045",
+    "source_name": "Buch der Wappenlinie",
+    "proposed_name": "Wappenband",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Schmales Buch mit austauschbaren Kupferplättchen.",
+    "action": "Liegt offen auf einem schlichten Handwerkertisch zwischen Lederresten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Schmales Buch mit austauschbaren Kupferplättchen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Jedes Plättchen wurde mit andersfarbigem Faden befestigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-046",
+    "source_name": "Schlüssel der Schwurwacht",
+    "proposed_name": "Schwurschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Großer hohler Schlüssel mit beweglichem Griff.",
+    "action": "Ruht schräg in einer geöffneten Stoffrolle vor einer verriegelten Pforte.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Großer hohler Schlüssel mit beweglichem Griff bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Im hohlen Schaft steckt ein eingerollter Wachsstreifen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-047",
+    "source_name": "Klinge der Ahnenlinie",
+    "proposed_name": "Ahnenmesser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Kurzes zeremonielles Messer mit stumpfer Kupferschneide.",
+    "action": "Steckt als Stütze in einer gespaltenen hölzernen Erinnerungstafel.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Kurzes zeremonielles Messer mit stumpfer Kupferschneide bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Schneide besitzt mehr Reparaturnieten als Ziergravuren.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-048",
+    "source_name": "Amulett der Zeugewacht",
+    "proposed_name": "Zeugenkapsel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Kleines Amulett aus zwei ungleichen Metallhälften.",
+    "action": "Hängt geöffnet über einem mit Tonstaub bedeckten Tisch.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Kleines Amulett aus zwei ungleichen Metallhälften bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "In jeder Hälfte haftet eine andere Fingerabdruckspur.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-049",
+    "source_name": "Siegel der Chroniklinie",
+    "proposed_name": "Chronikstempel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Breiter flacher Stempel mit ersetzbarer Tonplatte.",
+    "action": "Steht neben mehreren misslungenen Abdrücken auf unbeschriftetem Leinen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Breiter flacher Stempel mit ersetzbarer Tonplatte bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Griffmulde ist von vielen Händen blank poliert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-050",
+    "source_name": "Instrument der Wappenwacht",
+    "proposed_name": "Wappenstimme",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Tragbares Resonanzinstrument aus Kupferröhren und Holz.",
+    "action": "Liegt aufgeklappt zwischen einem Hocker und einer geschlossenen Kiste.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Tragbares Resonanzinstrument aus Kupferröhren und Holz bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Nur eine der unterschiedlich langen Röhren ist sorgfältig verstopft.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-051",
+    "source_name": "Schwur Richterin",
+    "proposed_name": "Eidschatten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Durchscheinende Wächtergestalt in einer stehenden Stoffbahn.",
+    "action": "Hebt die Stoffbahn von einem alten Schwurstein und bleibt selbst daran hängen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Durchscheinende Wächtergestalt in einer stehenden Stoffbahn bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein einzelner Mantelknopf bleibt materiell im Licht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-052",
+    "source_name": "Ahnen-Sammler",
+    "proposed_name": "Schlüsselsucher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Mehrgliedriger Automat mit Korkschwimmern und Messinghänden.",
+    "action": "Sortiert versunkene Schlüssel im flachen Wasser eines eingestürzten Kellers.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Mehrgliedriger Automat mit Korkschwimmern und Messinghänden bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Schlüssel wird behutsam in einer weichen Lederschlaufe gehalten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-053",
+    "source_name": "Zeuge Erbin",
+    "proposed_name": "Hallenmarder",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Langgestreckter Marder mit kupfernen Haarspitzen.",
+    "action": "Schiebt ein verloren gegangenes Siegel aus einer Mauerritze ins Licht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Langgestreckter Marder mit kupfernen Haarspitzen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Seine Pfote ist kleiner als der schwere Siegelgriff.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-054",
+    "source_name": "Erbe Sprecherin",
+    "proposed_name": "Ungeborener Zeuge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Gestalt mit einem leeren Umriss dort, wo ihr Spiegelbild stehen müsste.",
+    "action": "Zeigt auf eine unberührte Stuhlmulde in einem Kreis gebrauchter Sitze.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Gestalt mit einem leeren Umriss dort, wo ihr Spiegelbild stehen müsste bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der leere Umriss hält denselben Zeigegestus zeitlich versetzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-055",
+    "source_name": "Archiv-Schreiberin",
+    "proposed_name": "Archivgärtner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Ruhiger Mann mit geflickter Lederschürze und Pflanzkellen.",
+    "action": "Bettet spröde Bucheinbände zwischen schützende Moospolster.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Ruhiger Mann mit geflickter Lederschürze und Pflanzkellen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Wachssiegel dient als Gewicht für ein aufrollendes Blatt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-056",
+    "source_name": "Rückkehr Kundschafter",
+    "proposed_name": "Treppenrückkehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Bergträger mit Holzschiene am Knie.",
+    "action": "Trägt einen zerbrochenen Treppenpfosten auf einem steilen Rückweg heim.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Zurückgekehrter Bergträger mit Holzschiene am Knie bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Pfosten besitzt dieselbe gekerbte Stütze wie sein Knie.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-057",
+    "source_name": "Kupfer Hüter",
+    "proposed_name": "Nischenwächter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Fester Lichtumriss einer gebeugten Wächterfigur.",
+    "action": "Hält eine leere Wandnische frei, während Putz um ihn herum abbricht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Fester Lichtumriss einer gebeugten Wächterfigur bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Kupferstaub haftet nur an der ausgesparten Handfläche.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-058",
+    "source_name": "Stamm-Richterin",
+    "proposed_name": "Pfahlrichter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Großer Prüfautomat aus drei verbundenen Holzpfählen.",
+    "action": "Senkt sein mechanisches Lot über die schiefe Schwelle eines Hauses.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Großer Prüfautomat aus drei verbundenen Holzpfählen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Lot besteht aus einer abgegriffenen Hausschlüsselhälfte.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-059",
+    "source_name": "Siegel Sammler von Namar-Hochland (ZH-059)",
+    "proposed_name": "Siegelotter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Schlanke Otterbestie mit dunkel glänzenden Schuppen.",
+    "action": "Hebt ein rundes Tonsiegel aus den Wurzeln eines überfluteten Ufers.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Schlanke Otterbestie mit dunkel glänzenden Schuppen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Riss im Siegel setzt sich als helle Linie im Wasser fort.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-060",
+    "source_name": "Erinnerung Erbin",
+    "proposed_name": "Faltenerbin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Frau mit einem Mantel, der einen unmöglichen Innenraum zeigt.",
+    "action": "Holt einen vollständig erhaltenen Türknauf aus dem flachen Mantelsaum.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Frau mit einem Mantel, der einen unmöglichen Innenraum zeigt bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Knauf ist breiter als die sichtbare Öffnung des Saums.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-061",
+    "source_name": "Rückkehr-Sprecherin",
+    "proposed_name": "Heimwegsprecher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Alter Mann mit tragbarer Bank und kleinem Kupfergong.",
+    "action": "Stellt die Bank vor einen zugewachsenen Hauseingang und wartet.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Alter Mann mit tragbarer Bank und kleinem Kupfergong bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Platz auf der Bank ist sichtbar weniger verwittert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-062",
+    "source_name": "Kupfer Schreiberin",
+    "proposed_name": "Schriftträgerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrte Kurierin mit keramisch geschienter Hand.",
+    "action": "Trägt einen Brief in einer offenen Schale durch einen staubigen Wind.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zurückgekehrte Kurierin mit keramisch geschienter Hand bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ihr geöffneter Mund bleibt ohne Atemfahne.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-063",
+    "source_name": "Stamm Kundschafter",
+    "proposed_name": "Grabenhorcher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Durchsichtige Gestalt mit ohrförmig gefaltetem Mantel.",
+    "action": "Lauscht in einem zugeschütteten Graben auf den Klang einer alten Wasserleitung.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Durchsichtige Gestalt mit ohrförmig gefaltetem Mantel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein dünner Lichtfaden verbindet Ohr und verrostetes Rohr.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-064",
+    "source_name": "Siegel-Hüter",
+    "proposed_name": "Siegelbär",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Hölzerner bärenförmiger Wächter mit Kupfergelenken.",
+    "action": "Schiebt seine breite Stirn unter ein abgesacktes Hoftor.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Hölzerner bärenförmiger Wächter mit Kupfergelenken bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein sichtbarer Reparaturflicken ist mit Bast statt Schrauben befestigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-065",
+    "source_name": "Erinnerung Richterin",
+    "proposed_name": "Namenrabe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Großer Rabe mit bandförmigem kupfernem Brustschmuck.",
+    "action": "Legt einen gefundenen Knopf in eine Schale voller ungleicher Knöpfe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Großer Rabe mit bandförmigem kupfernem Brustschmuck bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein heller Schnabelspalt bildet den ruhigen Blickfang.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-066",
+    "source_name": "Chronik Sammler",
+    "proposed_name": "Leerstellenleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Lesender mit einem gefalteten Schatten auf der Buchseite.",
+    "action": "Blättert durch ein Buch, dessen Aussparung stets vor dem nächsten Finger liegt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Lesender mit einem gefalteten Schatten auf der Buchseite bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das ausgeschnittene Fenster zeigt keine dahinterliegende Seite.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-067",
+    "source_name": "Wappen-Erbin",
+    "proposed_name": "Wappenrestauratorin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Handwerkerin mit farbig geflickten Ärmelmanschetten.",
+    "action": "Hebt Farbreste eines verwitterten Hauszeichens mit einem feinen Spatel ab.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Handwerkerin mit farbig geflickten Ärmelmanschetten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die geretteten Farbschuppen liegen in einer Muschelschale.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-068",
+    "source_name": "Schwur Sprecherin",
+    "proposed_name": "Letzte Rufende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrte Marktfrau mit gesprungener Kupferglocke.",
+    "action": "Ruft an einem verlassenen Marktstand, während leere Waagschalen ausschwingen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Zurückgekehrte Marktfrau mit gesprungener Kupferglocke bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ihre Stoffhaube trägt einen sorgfältig gestopften Brandfleck.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-069",
+    "source_name": "Ahnen Schreiberin",
+    "proposed_name": "Rauchschreiber",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Schmaler Geist aus zusammenrollenden Rauchbändern.",
+    "action": "Zeichnet die Haltung einer verlorenen Statue auf einen rußigen Mauersockel.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Schmaler Geist aus zusammenrollenden Rauchbändern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Rauch löst sich genau an der abgeschlagenen Schulter auf.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-070",
+    "source_name": "Zeuge-Kundschafter",
+    "proposed_name": "Erbenträger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Zweibeiniger Transportautomat mit breitem Kupferkasten.",
+    "action": "Senkt sich auf die Knie, damit ein Kind eine kleine Truhe abstellen kann.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Zweibeiniger Transportautomat mit breitem Kupferkasten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Seine Greifarme halten absichtlich Abstand zum Kind.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-071",
+    "source_name": "Unerwartete erbeprobe",
+    "proposed_name": "Der leere Erbplatz",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Tisch mit einem freien Platz zwischen benutzten Gedecken.",
+    "action": "Die freie Mulde im Staub füllt sich kurz mit kupfernem Licht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Tisch mit einem freien Platz zwischen benutzten Gedecken bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein zerbrochener Löffel liegt quer über der leuchtenden Mulde.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-072",
+    "source_name": "Verlorene archivnacht",
+    "proposed_name": "Aufbruch des Archivs",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Kippende Regalbretter vor einer herannahenden Staubwand.",
+    "action": "Bücher und Tafeln falten sich in einen schmalen tragbaren Stapel.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Kippende Regalbretter vor einer herannahenden Staubwand bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein schwerer Steinhalter bleibt unverändert zurück.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-073",
+    "source_name": "Die schwurwende",
+    "proposed_name": "Eid im Gegenwind",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zwei Hände halten ein gemeinsames Stück Stoff.",
+    "action": "Kupferne Fäden versteifen das flatternde Tuch zu einem kurzen Schutzbogen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Zwei Hände halten ein gemeinsames Stück Stoff bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Finger bleiben durch die grobe Webung sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-074",
+    "source_name": "Letzte ahnenspur",
+    "proposed_name": "Ahnenpfad im Lehm",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Nasse Spur neben einer verlassenen Werkstatt.",
+    "action": "Alte Schuhabdrücke tauchen als kupferne Vertiefungen unter frischem Regen auf.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Nasse Spur neben einer verlassenen Werkstatt bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die jüngste kleine Spur läuft quer zu den alten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-075",
+    "source_name": "Unerwartete zeugeprobe",
+    "proposed_name": "Zeugenwechsel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Zwei verschieden geformte Schatten vor einer Wand.",
+    "action": "Eine kleine Lichtkugel wandert aus dem ersten Schatten in den zweiten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Zwei verschieden geformte Schatten vor einer Wand bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Personen selbst stehen außerhalb des Bildausschnitts.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-076",
+    "source_name": "Verlorene erbenacht",
+    "proposed_name": "Erbe ohne Truhe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Offene Hände zwischen zerbrochenen Transportkästen.",
+    "action": "Kleine Gebrauchsgegenstände bleiben in der Luft, während ihre Kiste zerfällt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Offene Hände zwischen zerbrochenen Transportkästen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein hölzerner Löffel ist heller beleuchtet als ein Schmuckstück.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-077",
+    "source_name": "Die archivwende",
+    "proposed_name": "Archiv ohne Dach",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Offener Lesesaal unter einem Loch im Himmelsschatten.",
+    "action": "Kupferne Raumfalten lenken Wind um die lesenden Hände am Tisch.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Offener Lesesaal unter einem Loch im Himmelsschatten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Regen fällt am hinteren Bildrand ungehindert weiter.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-078",
+    "source_name": "Letzte rückkehrspur",
+    "proposed_name": "Der offene Rückweg",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Verriegelte Pforte mit einer schmalen Lichtfuge.",
+    "action": "Eine kupferne Falte macht die alte Öffnungsrichtung für einen Augenblick sichtbar.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Verriegelte Pforte mit einer schmalen Lichtfuge bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein gegenwärtiger Riegel bleibt eindeutig geschlossen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-079",
+    "source_name": "Siegel der Kupferlinie",
+    "proposed_name": "Kupferspurensiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Runde Matrize mit eingelassenem Glasfaden.",
+    "action": "Ruht auf einem zerlegten Holzkasten neben einem weichen Abdruck.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Runde Matrize mit eingelassenem Glasfaden bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Glasfaden folgt einem unregelmäßigen Haarriss.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-080",
+    "source_name": "Instrument der Stammwacht",
+    "proposed_name": "Stammharfe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Kleine Harfe aus verwachsenen Hölzern und Draht.",
+    "action": "Steht seitlich auf einem leeren Bankplatz im Hof.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Kleine Harfe aus verwachsenen Hölzern und Draht bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine Saite wurde durch gewöhnlichen Zwirn ersetzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-081",
+    "source_name": "Buch der Siegellinie",
+    "proposed_name": "Siegelbuch der Hände",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Schmales Klappbuch mit vielen taktilen Griffmulden.",
+    "action": "Liegt halboffen vor einer rußigen Handwaschschale.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Schmales Klappbuch mit vielen taktilen Griffmulden bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Keine Seite enthält Schrift; nur verschiedene geprägte Handflächen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-082",
+    "source_name": "Schlüssel der Erinnerungwacht",
+    "proposed_name": "Erinnerungsschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Schlüsselbund aus ineinander passenden Bruchstücken.",
+    "action": "Hängt an einem blank geriebenen Nagel über einem geflickten Türblatt.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Schlüsselbund aus ineinander passenden Bruchstücken bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zwei Schlüssel teilen sich denselben ausgewechselten Griff.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-083",
+    "source_name": "Chronik Schreiberin von Serev-Küste (ZH-083)",
+    "proposed_name": "Tafelmarder",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Breitschultrige Marderbestie mit tragbarer Holztafel.",
+    "action": "Zieht einen Riemen fest, der eine gerissene Tafel auf ihrem Rücken hält.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Breitschultrige Marderbestie mit tragbarer Holztafel bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Riemen ist mit einer einfachen Fischgräte gesichert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-084",
+    "source_name": "Wappen Kundschafter",
+    "proposed_name": "Doppelfährtenläufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Schlanker Reisender mit zwei nicht deckungsgleichen Bewegungsphasen.",
+    "action": "Folgt einer einzigen Spur, die unter seinem Schritt kurz seitlich auseinandergeht.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Schlanker Reisender mit zwei nicht deckungsgleichen Bewegungsphasen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Nur eine der beiden Fährten drückt das feuchte Gras nieder.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-085",
+    "source_name": "Stamm-Hüter",
+    "proposed_name": "Brückenhüter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Mann mit groben Handschuhen und kupfernem Seilbeschlag.",
+    "action": "Hält die Enden einer abgerissenen Hängebrückenleine für die nächste Reisende bereit.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Mann mit groben Handschuhen und kupfernem Seilbeschlag bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Knoten ist sichtbar mit einer geschnitzten Perle markiert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-086",
+    "source_name": "Siegel Richterin",
+    "proposed_name": "Kaimauerkehrerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrte Arbeiterin mit ausgeschlagenem Schulterbeschlag.",
+    "action": "Fegt Sand aus der Fuge zwischen zwei alten Anlegeplatten.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Zurückgekehrte Arbeiterin mit ausgeschlagenem Schulterbeschlag bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Unter dem Sand erscheint ein einzelner kleiner Handabdruck.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-087",
+    "source_name": "Erinnerung Sammler",
+    "proposed_name": "Schubladengeist",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Neugierige Lichtgestalt aus offenen Schubladenumrissen.",
+    "action": "Sucht in einer Schublade nach dem Abdruck eines fehlenden Gegenstands.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Neugierige Lichtgestalt aus offenen Schubladenumrissen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Abdruck bleibt dunkel, obwohl die Gestalt selbst leuchtet.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-088",
+    "source_name": "Chronik-Erbin",
+    "proposed_name": "Chronikschlitten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Niedriger Transportautomat mit hölzernen Kufen.",
+    "action": "Trägt zerbrechliche Tontafeln über gerissene Steinfliesen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Niedriger Transportautomat mit hölzernen Kufen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die vorderste Kufe wurde durch einen Löffelstiel verstärkt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-089",
+    "source_name": "Wappen Sprecherin",
+    "proposed_name": "Wappenwidder",
+    "lore_status": "VORSCHLAG",
+    "subject": "Nichtmenschliche tierische Bestie mit eindeutiger Tieranatomie. Widder mit kupfernen Schutzringen um die Hörner.",
+    "action": "Schiebt eine schwere Bronzeschale aus einem brennenden Strohbett.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Widder mit kupfernen Schutzringen um die Hörner bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Schale enthält nur noch einen feuchten Stoffrest.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-090",
+    "source_name": "Schwur Schreiberin",
+    "proposed_name": "Schwur in zwei Händen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Paradoxes Wesen mit einer räumlich begrenzten widersprüchlichen Erscheinung. Gestalt mit einer linken Hand, die zwei Schatten wirft.",
+    "action": "Faltet einen Eidstreifen, dessen zweite Schattenhand ihn offen hält.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Gestalt mit einer linken Hand, die zwei Schatten wirft bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein matter Faden verbindet beide Schatten, ohne den Stoff zu berühren.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-091",
+    "source_name": "Ahnen-Kundschafter",
+    "proposed_name": "Ahnenkartografin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Reisende mit faltbarem Messtisch und kupfernen Gewichten.",
+    "action": "Vergleicht eine ausgebleichte Wegekarte mit einem frisch abgesackten Hang.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Reisende mit faltbarem Messtisch und kupfernen Gewichten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Gewicht besteht aus einem alten Kinderkreisel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-092",
+    "source_name": "Zeuge Hüter",
+    "proposed_name": "Der wartende Träger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Lastenträger mit repariertem Nackenjoch.",
+    "action": "Wartet auf einer leeren Laderampe und hält eine Sacköffnung bereit.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Zurückgekehrter Lastenträger mit repariertem Nackenjoch bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein feiner Staubfaden steigt aus dem zugenähten Hemdkragen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-093",
+    "source_name": "Erbe Richterin",
+    "proposed_name": "Schwellenrichterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Transparente Frau mit einer Waage aus Lichtlinien.",
+    "action": "Misst die Lücke zwischen einem alten Türrahmen und einer neuen Wand.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Transparente Frau mit einer Waage aus Lichtlinien bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Waagschalen tragen verschieden große Stücke desselben Steins.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-094",
+    "source_name": "Archiv-Sammler",
+    "proposed_name": "Archivschneider",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Dünner Schneideautomat mit sicher verdecktem Klingenarm.",
+    "action": "Schneidet aus einer zerstörten Kiste einen passgenauen Buchdeckel.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Dünner Schneideautomat mit sicher verdecktem Klingenarm bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Schnitt erhält eine alte Kerbe bewusst unbeschädigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-095",
+    "source_name": "Unerwartete rückkehrprobe von Namar-Hochland (ZH-095)",
+    "proposed_name": "Die wieder offene Hand",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Geschlossene Lederhandschuhe auf einem leeren Stuhl.",
+    "action": "Ein Handschuh entfaltet sich und zeigt einen kupfernen Abdruck im Staub.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Geschlossene Lederhandschuhe auf einem leeren Stuhl bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Licht folgt den alten Fingerknicken statt einer Zauberformel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-096",
+    "source_name": "Verlorene kupfernacht von Keldor-Becken (ZH-096)",
+    "proposed_name": "Nacht der heimkehrenden Schatten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Leere Gasse vor einem abgesperrten Wohnhof.",
+    "action": "Schatten lösen sich von verlorenen Gegenständen und sammeln sich am Tor.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Leere Gasse vor einem abgesperrten Wohnhof bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Kinderreifen wirft einen überraschend aufrechten Schatten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-097",
+    "source_name": "Die zeugewende",
+    "proposed_name": "Zeugenwende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Rundes Fenster mit zwei widersprüchlichen Spiegelungen.",
+    "action": "Die Spiegelung dreht sich zur Seite und gibt einen freien Blick auf eine Hand frei.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Rundes Fenster mit zwei widersprüchlichen Spiegelungen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der wirkliche Fensterladen bleibt unbewegt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-098",
+    "source_name": "Letzte erbespur",
+    "proposed_name": "Die erloschene Erbspur",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Kupferne Linie über abgetragenen Stufen.",
+    "action": "Das Licht zieht sich von Stufe zu Stufe zurück und legt Kerben offen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Kupferne Linie über abgetragenen Stufen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Auf der letzten Stufe bleibt ein gewöhnlicher Holzsplitter liegen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-099",
+    "source_name": "Unerwartete archivprobe",
+    "proposed_name": "Geretteter Lesetisch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Kippender Tisch zwischen auseinanderbrechenden Bodenplatten.",
+    "action": "Eine kupferne Falte trägt die Tischplatte kurz über den Abgrund.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Kippender Tisch zwischen auseinanderbrechenden Bodenplatten bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein einfacher Becher rutscht weiter und bleibt körperlich gefährdet.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-100",
+    "source_name": "Schlüssel der Rückkehrwacht",
+    "proposed_name": "Rückkehrschloss",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Schlosskasten mit zwei gegeneinander verschobenen Riegeln.",
+    "action": "Liegt ausgebaut auf einer groben Werkbank neben der leeren Türöffnung.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Schlosskasten mit zwei gegeneinander verschobenen Riegeln bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Riegel besteht aus altem Holz statt Metall.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-101",
+    "source_name": "Klinge der Kupferlinie",
+    "proposed_name": "Kupferklinge der Näherin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Flaches Schneidewerkzeug mit stumpfer Spitze.",
+    "action": "Ruht auf einem Mantelsaum neben Garn und Reparaturstücken.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Flaches Schneidewerkzeug mit stumpfer Spitze bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Klinge trägt eine eingesetzte Schneide aus dunklerem Material.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-102",
+    "source_name": "Amulett der Stammwacht",
+    "proposed_name": "Stammkapsel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Rundes Medaillon mit einem winzigen Holzquerschnitt.",
+    "action": "Hängt offen vor einem sonnenbeschienenen Fensterkreuz.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Rundes Medaillon mit einem winzigen Holzquerschnitt bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Ein Sprung im Holz wurde mit Kupferdraht überbrückt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-103",
+    "source_name": "Siegel-Sprecherin",
+    "proposed_name": "Siegelsprecherin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Menschliche Person mit klar menschlicher Anatomie. Junge Vermittlerin mit Tonplättchen am Schultergurt.",
+    "action": "Legt ihr eigenes Siegel neben das einer fremden Familie auf den Boden.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Junge Vermittlerin mit Tonplättchen am Schultergurt bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Zwischen beiden Siegeln liegt absichtlich freier Raum.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-104",
+    "source_name": "Erinnerung Schreiberin",
+    "proposed_name": "Nachtbuchhalter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Körperlicher Wiedergänger mit reparierten alten Verletzungen, kein Geist. Zurückgekehrter Schreiber mit rußiger Stirn und Fingerhülsen.",
+    "action": "Ordnet lose Tontafeln im Licht einer fast verbrauchten Lampe.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Zurückgekehrter Schreiber mit rußiger Stirn und Fingerhülsen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine Fingerhülse reflektiert die Flamme wie eine zweite kleine Lampe.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-105",
+    "source_name": "Chronik Kundschafter",
+    "proposed_name": "Chronikhauch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Geist mit durchscheinendem, körperlich ungeschlossenem Umriss. Großer halbtransparenter Vogel aus zusammenwehenden Seitenrändern.",
+    "action": "Streicht über einen leeren Lesetisch und hebt Staub aus den Ritzen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Großer halbtransparenter Vogel aus zusammenwehenden Seitenrändern bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Die Flügel tragen keine Schrift, nur abgenutzte Papierkanten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-106",
+    "source_name": "Wappen-Hüter",
+    "proposed_name": "Wappenanker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Konstrukt aus sichtbar gefügten Holz-, Ton- oder Kupferbauteilen. Schwerer Automat mit vier aufklappbaren Stützbeinen.",
+    "action": "Verankert ein gerettetes Türblatt in einem provisorischen Lager.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Dreiviertelansicht mit tiefem Vordergrund; Schwerer Automat mit vier aufklappbaren Stützbeinen bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Jedes Stützbein ist aus einer anderen Holzart repariert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-107",
+    "source_name": "Unerwartete schwurprobe",
+    "proposed_name": "Schwur unter Scherben",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Viele zerbrochene Tonsiegel auf einer schwarzen Tuchbahn.",
+    "action": "Ein durchgehender Kupferfaden verbindet die Bruchstücke zu einem lockeren Kreis.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Seitliche Nahansicht mit klarer Silhouette; Viele zerbrochene Tonsiegel auf einer schwarzen Tuchbahn bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der Kreis besitzt eine sichtbare Öffnung statt eines Vollschlusses.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-108",
+    "source_name": "Verlorene ahnennacht",
+    "proposed_name": "Ahnenlicht am Ufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein klar begrenztes Ereignis als Hauptmotiv: Leere Fährstelle mit einem einzigen zurückgelassenen Gepäckstück.",
+    "action": "Kleine Lichtspuren sammeln sich am Griff und zeigen kurz in verschiedene Richtungen.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Serev-Küste; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Leicht erhöhte Ansicht mit ruhiger Ferne; Leere Fährstelle mit einem einzigen zurückgelassenen Gepäckstück bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Eine echte Wasserwelle durchbricht die flüchtigen Spuren.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-109",
+    "source_name": "Siegel der Erinnerunglinie",
+    "proposed_name": "Siegel der offenen Erinnerung",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Flacher Kupferring mit einem beweglichen Steinsegment.",
+    "action": "Liegt in einer offenen Hand über einem geflickten Tisch.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Namar-Hochland; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Augenhöhe mit seitlichem Gegenlicht; Flacher Kupferring mit einem beweglichen Steinsegment bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Das Segment sitzt bewusst neben seiner passenden Lücke.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  },
+  {
+    "card_id": "ZH-110",
+    "source_name": "Instrument der Chronikwacht",
+    "proposed_name": "Chronikpendel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelnes dauerhaftes Relikt als Hauptmotiv: Kleine Rahmenwiege mit pendelnder Kupferscheibe.",
+    "action": "Steht am Rand einer staubigen Werkbank, umgeben von losen Schrauben.",
+    "setting": "[VORSCHLAG] Lokale Alltagsszene in Keldor-Becken; Hintergrund nur als räumlicher Hinweis, keine historische Enthüllung.",
+    "composition": "Tiefe Perspektive mit freiem Mittelgrund; Kleine Rahmenwiege mit pendelnder Kupferscheibe bleibt zentral im 672×500-Bildfenster; entscheidende Geste oberhalb der unteren Diagonale.",
+    "distinctive_detail": "Der abgenutzte Scheibenrand besitzt eine frische, helle Reparaturstelle.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Zahlen und keine lesbare Schrift.",
+      "Keine Auflösung von Eiras Geheimnis und keine neuen Fraktionsführer.",
+      "Keine Atlaswiederverwendung; keine fremden Marken oder Figuren.",
+      "Kupfer bleibt Hauptakzent; keine Gleichsetzung von Echo und Wesensart Geist."
+    ]
+  }
+]

@@ -1,0 +1,1762 @@
+[
+  {
+    "card_id": "VG-001",
+    "source_name": "Wurzel-Hüterin",
+    "proposed_name": "Hüterin der Wurzelbrücke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine aufrechte Weide mit geflochtenen Wurzelfüßen; visuelle Artzuordnung: Pflanzen.",
+    "action": "Hebt eine gebrochene Bohle mit Seitenwurzeln an.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Ein roter Stoffrest hängt am neu verbundenen Geländer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-002",
+    "source_name": "Schwarm Pfadläuferin",
+    "proposed_name": "Brandungswechslerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schlanker Morphid mit flossenförmigen Unterarmen; visuelle Artzuordnung: Morphiden.",
+    "action": "Verengt seinen Körper zwischen zwei Hafenpfählen.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die linke Flosse trägt eine eingerollte Muschel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-003",
+    "source_name": "Moos Kundschafterin",
+    "proposed_name": "Moosrücken-Späher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein sechsbeiniges Ufertier mit dichtem Rückenmoos; visuelle Artzuordnung: Bestien.",
+    "action": "Prüft mit gesenktem Kopf einen überfluteten Steg.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Auf seinem Rücken bleiben trockene Blätter liegen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-004",
+    "source_name": "Pilz-Heilerin",
+    "proposed_name": "Myzelärztin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus weichem Pilzgewebe und menschlicher Handform; visuelle Artzuordnung: Amalgame.",
+    "action": "Fixiert mit weißen Myzelfäden eine lose Beinspange.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Eine einzelne bernsteinfarbene Pilzkappe dient als Licht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-005",
+    "source_name": "Blüte Forscherin",
+    "proposed_name": "Salzblütenzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler Zehrer mit kelchförmigem Brustkorb; visuelle Artzuordnung: Zehrer.",
+    "action": "Beugt sich über eine erlöschende Hafenlaterne.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Salzkristalle zeichnen eine helle Spirale auf den Rippen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-006",
+    "source_name": "Dornen Sammler",
+    "proposed_name": "Dornenschneider",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Arbeiter mit dicken Lederhandschuhen; visuelle Artzuordnung: Menschen.",
+    "action": "Schneidet einen Hakenbusch aus einer Schleusenkette.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Sein Messer hat eine sichtbar ausgebesserte Griffschale.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-007",
+    "source_name": "Wandel-Gärtner",
+    "proposed_name": "Gärtner des Windfalls",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine knorrige Pflanzengestalt mit belaubten Schultern; visuelle Artzuordnung: Pflanzen.",
+    "action": "Stützt einen entwurzelten Baum mit lebenden Streben.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Aus dem hohlen Stamm schaut ein unbehelligter Vogel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-008",
+    "source_name": "Sporen Hüterin",
+    "proposed_name": "Sporenläuferin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit ausfaltbarer Membran zwischen den Armen; visuelle Artzuordnung: Morphiden.",
+    "action": "Fängt Sporen in einer gespannten Hauttasche auf.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Ein winziger Segelflicken vernäht eine alte Hautnarbe.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-009",
+    "source_name": "Farn Pfadläuferin",
+    "proposed_name": "Farnkamm-Läufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine gedrungene Bestie mit farnähnlichem Rückenkamm; visuelle Artzuordnung: Bestien.",
+    "action": "Springt vom Ufer auf einen schmalen Vermessungsstein.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Die nassen Vorderpfoten hinterlassen fächerförmige Spuren.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-010",
+    "source_name": "Jade-Kundschafterin",
+    "proposed_name": "Jadefugen-Trägerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus Geweihästen und flexiblen Gliedmaßen; visuelle Artzuordnung: Amalgame.",
+    "action": "Stemmt einen eingeklemmten Transportkorb aus Schlamm.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Eine jadegrüne Naht verbindet ungleiche Schulterplatten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-011",
+    "source_name": "Samen Heilerin",
+    "proposed_name": "Samenlicht-Sauger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit durchscheinender bauchiger Kehltasche; visuelle Artzuordnung: Zehrer.",
+    "action": "Sammelt den letzten Lichtschein an leeren Saatgläsern.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "In seiner Kehle sind getrennte kleine Lichtpunkte sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-012",
+    "source_name": "Rinde Forscherin",
+    "proposed_name": "Rindenkundlerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Forscherin im gekürzten Regenmantel; visuelle Artzuordnung: Menschen.",
+    "action": "Vergleicht zwei Rindenstücke an einer freigelegten Wurzel.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Eine eingeritzte Kerbe verbindet beide Fundstücke optisch.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-013",
+    "source_name": "Sporen-Sammler",
+    "proposed_name": "Sporenwächter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine riesige Pilzpflanze auf dicken Wurzelbeinen; visuelle Artzuordnung: Pflanzen.",
+    "action": "Schirmt eine empfindliche Sporenmulde gegen Regen ab.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Unter der Kappe hängt ein einzelner klarer Wassertropfen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-014",
+    "source_name": "Farn Gärtner",
+    "proposed_name": "Farnfalter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit eingerollten blattartigen Beinen; visuelle Artzuordnung: Morphiden.",
+    "action": "Entfaltet sich unter einem angehobenen Schleusengitter.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Ein Bein bleibt als sichtbare Spirale halb eingerollt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-015",
+    "source_name": "Jade Hüterin",
+    "proposed_name": "Jadehörner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine bergziegenähnliche Bestie mit flachen grünen Hörnern; visuelle Artzuordnung: Bestien.",
+    "action": "Schabt Algen von einem umgestürzten Steinpfosten.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Die Hornspitzen sind stumpf und ungleich abgenutzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-016",
+    "source_name": "Samen-Pfadläuferin",
+    "proposed_name": "Saatträgerin der Düne",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus langen Stelzbeinen und Samenkapseln; visuelle Artzuordnung: Amalgame.",
+    "action": "Balanciert über einen vom Wind ausgeblasenen Graben.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Eine geöffnete Rückenkapsel enthält trockenes Seegras.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-017",
+    "source_name": "Rinde Kundschafterin",
+    "proposed_name": "Rindenschatten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein flacher Zehrer mit geschichteten Rindenplatten; visuelle Artzuordnung: Zehrer.",
+    "action": "Löst sich langsam aus dem dunklen Spalt einer Kaimauer.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Ein heller Muschelkalkstreifen unterbricht die Tarnung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-018",
+    "source_name": "Wurzel Heilerin",
+    "proposed_name": "Wurzelflickerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Heilerin mit geflochtenem Werkzeuggurt; visuelle Artzuordnung: Menschen.",
+    "action": "Verbindet aufgespaltene Baumwurzeln mit breiten Bändern.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Zwischen ihren Knien liegt ein gereinigter Holzkeil.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-019",
+    "source_name": "Schwarm-Forscherin",
+    "proposed_name": "Schwarmblüte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine fleischige Pflanze mit vielen kleinen Blütenköpfen; visuelle Artzuordnung: Pflanzen.",
+    "action": "Biegt sich über eine Wolke einzeln erkennbarer Insekten.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Eine geschlossene Knospe bleibt außerhalb des Schwarms.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-020",
+    "source_name": "Moos Sammler",
+    "proposed_name": "Mooswechsler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit samtiger grüner Haut und breiten Händen; visuelle Artzuordnung: Morphiden.",
+    "action": "Passt seine Hand an die Rillen eines nassen Steins an.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Fingerform ist nur an der Kontaktstelle verändert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-021",
+    "source_name": "Pilz Gärtner",
+    "proposed_name": "Pilzdachs",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kurzbeinige Bestie mit schildförmigen Rückenpilzen; visuelle Artzuordnung: Bestien.",
+    "action": "Gräbt einen verschütteten Luftschacht vorsichtig frei.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Ein verbogenes Schachtgitter ruht unberührt auf der Erde.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-022",
+    "source_name": "Blüte-Hüterin",
+    "proposed_name": "Blütenbastlerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit einem menschlichen Arm und rankendem Gegenarm; visuelle Artzuordnung: Amalgame.",
+    "action": "Bindet ein zerrissenes Segel mit zähen Blütenfasern.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die Naht läuft in einer markanten Zickzacklinie.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-023",
+    "source_name": "Dornen Pfadläuferin",
+    "proposed_name": "Dornmund",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleiner Zehrer mit sternförmig geöffnetem Kiefer; visuelle Artzuordnung: Zehrer.",
+    "action": "Leckt das kalte Glimmen von einem abgestellten Erzkorb.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Ein einziger stumpfer Dorn fehlt in seiner Mundkrone.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-024",
+    "source_name": "Wandel Kundschafterin",
+    "proposed_name": "Wandelspäherin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Kundschafterin mit beweglichen Beinschienen; visuelle Artzuordnung: Menschen.",
+    "action": "Beobachtet die Strömung vor dem Überqueren einer Furt.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Ihr Wanderstab trägt eine einzelne jadefarbene Binde.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-025",
+    "source_name": "Moos-Heilerin",
+    "proposed_name": "Moosärztin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine wurzelnde Pflanze mit löffelförmigen Blattarmen; visuelle Artzuordnung: Pflanzen.",
+    "action": "Legt feuchtes Moos um einen geborstenen Wasserkrug.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Der Krug spiegelt grün gefiltertes Seitenlicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-026",
+    "source_name": "Pilz Forscherin",
+    "proposed_name": "Myzelprüferin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit röhrenartigen Fingerspitzen; visuelle Artzuordnung: Morphiden.",
+    "action": "Hält verschiedene Pilzfäden gegen eine Lichtöffnung.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Zwei Finger bleiben glatt und unverändert sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-027",
+    "source_name": "Blüte Sammler",
+    "proposed_name": "Blütenschnüffler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine fuchsgroße Bestie mit federartigen Nasenborsten; visuelle Artzuordnung: Bestien.",
+    "action": "Folgt einer Blütenspur zwischen salzigen Hafensteinen.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Die Borsten berühren nur eine einzige violette Blüte.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-028",
+    "source_name": "Dornen-Gärtner",
+    "proposed_name": "Dornenflechter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus weichem Tierkörper und verholzten Armen; visuelle Artzuordnung: Amalgame.",
+    "action": "Verwebt abgeschnittene Dornen zu einem sicheren Schutzkorb.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Die Dornen zeigen nach außen und lassen den Griff frei.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-029",
+    "source_name": "Wandel Hüterin",
+    "proposed_name": "Hautschatten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit lose gefaltetem, lichtschluckendem Rücken; visuelle Artzuordnung: Zehrer.",
+    "action": "Trinkt aus einer flachen Schale neben einer Häutungshülle.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Die zurückgelassene Hülle liegt leer und unversehrt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-030",
+    "source_name": "Sporen Pfadläuferin",
+    "proposed_name": "Sporenbotin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Botin mit dicht verschlossenen Probenröhren; visuelle Artzuordnung: Menschen.",
+    "action": "Hebt eine Röhre aus dem Nieselregen unter ihren Mantel.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Eine zerbrochene Röhre ist sichtbar separat verschnürt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-031",
+    "source_name": "Farn-Kundschafterin",
+    "proposed_name": "Farnwinde",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kletternde Pflanzengestalt mit gegabeltem Wurzelkopf; visuelle Artzuordnung: Pflanzen.",
+    "action": "Zieht eine verloren gegangene Messleine aus dem Wasser.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Ein Farnwedel hält die Leine in einem trockenen Bogen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-032",
+    "source_name": "Jade Heilerin",
+    "proposed_name": "Jadehäuterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit kantigen, sich lösenden Hautschuppen; visuelle Artzuordnung: Morphiden.",
+    "action": "Streift nur den verengten Ärmelbereich seiner Haut ab.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die alte Schuppe bleibt wie ein offenes Armband hängen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-033",
+    "source_name": "Samen Forscherin",
+    "proposed_name": "Saatpicker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kleine langschwänzige Bestie mit breitem Schnabel; visuelle Artzuordnung: Bestien.",
+    "action": "Sortiert angeschwemmte Samen auf einem trockenen Brett.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Eine runde Muschel liegt zwischen länglichen Samenkörnern.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-034",
+    "source_name": "Rinde-Sammler",
+    "proposed_name": "Rindenlast",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus schildkrötenähnlichem Rumpf und Astbeinen; visuelle Artzuordnung: Amalgame.",
+    "action": "Schiebt einen gefüllten Erntekorb über eine flache Rampe.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Ein frischer Ast verkeilt sich als provisorischer Griff.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-035",
+    "source_name": "Unerwartete wurzelprobe",
+    "proposed_name": "Wurzeldruck",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelner Wurzelstrang unter einer Steinplatte; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hebt die Platte so weit an, dass Wasser entweichen kann.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Der erste Wasserfaden bricht an einer grünen Knospe.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-036",
+    "source_name": "Verlorene schwarmnacht",
+    "proposed_name": "Schwarm im Nebel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein dichter Schwarm winziger Fluginsekten über dunklem Wasser; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Teilt sich an einer ausgestreckten Laterne in zwei Ströme.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Im Zentrum bleibt ein ruhiger, menschenbreiter Durchgang.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-037",
+    "source_name": "Die jadewende",
+    "proposed_name": "Jadewuchs",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine frische Blattklinge zwischen gebrochenen Mauersteinen; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Drängt eine lockere Fuge sichtbar auseinander.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Helle Steinspäne fallen auf ein dunkles altes Blatt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-038",
+    "source_name": "Letzte samenspur",
+    "proposed_name": "Verwehte Saat",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine geöffnete Samenkapsel vor einem Windstoß; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Entlässt nur einen Teil ihrer Körner in einen schmalen Spalt.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Ein schweres Samenkorn bleibt am seidigen Faden hängen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-039",
+    "source_name": "Unerwartete rindeprobe",
+    "proposed_name": "Rindensprung",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein alter Holzpfahl mit von innen aufplatzender Außenhaut; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Gibt eine schmale frische Schicht unter der Borke frei.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Zwei rostige Nägel bleiben in der alten Schicht stecken.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-040",
+    "source_name": "Verlorene wurzelnacht",
+    "proposed_name": "Wurzel im Dunkeln",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein unterirdisches Wurzelnetz im aufgerissenen Erdhang; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Umschließt die Füße einer nachrutschenden Leiter.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein Hohlraum bleibt als sicherer Luftkanal offen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-041",
+    "source_name": "Die schwarmwende",
+    "proposed_name": "Geteilter Flug",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Insektenschwarm an einem umgestürzten Segelmast; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Wechselt im selben Moment die Seite des nassen Tuchs.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Ein einzelner Nachzügler zeichnet die alte Flugrichtung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-042",
+    "source_name": "Letzte moosspur",
+    "proposed_name": "Moospfad",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine blanke Steinrinne mit plötzlich sichtbaren Moosinseln; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Leitet einen dünnen Wasserlauf um eine beschädigte Stufe.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Der trockene Mittelstreifen bleibt klar erkennbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-043",
+    "source_name": "Unerwartete pilzprobe",
+    "proposed_name": "Sporenstoß",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine gespannte Pilzkappe unmittelbar vor dem Aufplatzen; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Schleudert eine begrenzte Wolke gegen den Seitenwind.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Die Sporen bilden einen schrägen jadefarbenen Lichtkegel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-044",
+    "source_name": "Verlorene blütenacht",
+    "proposed_name": "Abgefallene Blüte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine schwere Blüte über einer geöffneten Handfläche; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Löst sich vom Stiel, während unten eine Knospe bleibt.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Ein abgerissener Faden verbindet die beiden Formen kurz.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-045",
+    "source_name": "Buch der Dornenlinie",
+    "proposed_name": "Dornenbuch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein aufklappbares Herbarium mit widerstandsfähigen Blattseiten; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hält einen einzelnen Dorn zwischen zwei gepolsterten Seiten.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Der Einband besitzt eine tiefe halbkreisförmige Kerbe.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-046",
+    "source_name": "Schlüssel der Wandelwacht",
+    "proposed_name": "Häutungsschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein gedrehter Holzschlüssel in einer elastischen Hülse; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Ragt halb aus einem organisch gefassten Schlossteil.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Seine drei Zähne bestehen aus unterschiedlich altem Holz.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-047",
+    "source_name": "Klinge der Sporenlinie",
+    "proposed_name": "Sporensichel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kurze Sichel mit geschlossenem Probenbehälter am Griff; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt über frisch abgetrennten Pilzlamellen.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Eine klare jadefarbene Kapsel schließt die Proben ein.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-048",
+    "source_name": "Amulett der Farnwacht",
+    "proposed_name": "Farnanhänger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Anhänger aus eingerolltem Farn und mattem Metall; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hängt frei über einer rauen Transportkiste.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Der Farn ist nur an einem einzigen Punkt metallgefasst.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-049",
+    "source_name": "Siegel der Blütelinie",
+    "proposed_name": "Blütenverschluss",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein rundes Siegelwerkzeug mit beweglichen Blütenblättern; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Drückt sich in unbeschriftetes weiches Harz.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Ein Blatt ist aus dunklem Ersatzmaterial repariert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-050",
+    "source_name": "Instrument der Dornenwacht",
+    "proposed_name": "Dornenspanner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleines mechanisches Instrument mit lebendem Dornbügel; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hält zwei auseinanderlaufende Pflanzenfasern unter Spannung.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Eine Wassertropfenreihe macht die Faserdicke sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-051",
+    "source_name": "Wandel Pfadläuferin",
+    "proposed_name": "Furtwechsler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine langbeinige Bestie mit seitlich versetzten Zehen; visuelle Artzuordnung: Bestien.",
+    "action": "Wechselt mitten in der Strömung auf einen flachen Stein.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Die Hinterpfote hält noch das alte trockene Ufer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-052",
+    "source_name": "Sporen-Kundschafterin",
+    "proposed_name": "Sporenauge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit pilzartigem Sehkranz und gepanzerten Beinen; visuelle Artzuordnung: Amalgame.",
+    "action": "Späht durch einen schmalen Spalt im Brombeerzaun.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein Auge ist geschlossen und mit Staub gepudert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-053",
+    "source_name": "Farn Heilerin",
+    "proposed_name": "Farnzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein leichter Zehrer mit blattdünnem, gekrümmtem Leib; visuelle Artzuordnung: Zehrer.",
+    "action": "Saugt das Glimmen aus einem verlassenen Wegeverstärker.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Die Blattadern erscheinen nur im Gegenlicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-054",
+    "source_name": "Jade Forscherin",
+    "proposed_name": "Jadeprüferin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Forscherin mit zerkratzter Schutzbrille; visuelle Artzuordnung: Menschen.",
+    "action": "Schabt eine dünne Mineralprobe von einem Pflanzenfossil.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Die Schutzbrille trägt einen ungleichen grünen Ersatzbügel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-055",
+    "source_name": "Samen-Sammler",
+    "proposed_name": "Samenschlepper",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine mannshohe Pflanze mit tragendem Fruchtkorb im Stamm; visuelle Artzuordnung: Pflanzen.",
+    "action": "Neigt sich, damit ein loses Samensäckchen nicht fällt.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Eine einzige Wurzel hält die Balance am Rand der Stufe.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-056",
+    "source_name": "Rinde Gärtner",
+    "proposed_name": "Rindenwechsler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit breiter faltbarer Brustplatte; visuelle Artzuordnung: Morphiden.",
+    "action": "Presst sich seitlich durch ein verlassenes Lastengatter.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Eine helle neue Hautkante bleibt neben dunkler Borke sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-057",
+    "source_name": "Wurzel Hüterin",
+    "proposed_name": "Wurzelhorn",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine massive Bestie mit geschwungenen, wurzelähnlichen Hörnern; visuelle Artzuordnung: Bestien.",
+    "action": "Hebt ein umgestürztes Wurzelstück vom Nestzugang.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Ein altes gebrochenes Horn ist glatt überwachsen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-058",
+    "source_name": "Schwarm-Pfadläuferin",
+    "proposed_name": "Schwarmträgerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit hohlem Brustgehäuse und sechs Greifarmen; visuelle Artzuordnung: Amalgame.",
+    "action": "Öffnet eine kleine Luke für schwärmende Bestäuber.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die Insekten verlassen nur die obere der drei Kammern.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-059",
+    "source_name": "Moos Kundschafterin von Keldor-Becken (VG-059)",
+    "proposed_name": "Moosschlürfer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit langem tastendem Hals und moosigen Gelenken; visuelle Artzuordnung: Zehrer.",
+    "action": "Beugt sich unter ein Gitter zum schwachen Restlicht.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Am Halsansatz sitzt eine trockene helle Moosinsel.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-060",
+    "source_name": "Pilz Heilerin",
+    "proposed_name": "Pilzpflegerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Heilerin in knielanger Arbeitsschürze; visuelle Artzuordnung: Menschen.",
+    "action": "Entfernt mit einer Pinzette verdorbene Pilzteile.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Ein gesunder Pilz bleibt geschützt unter einer Glasschale.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-061",
+    "source_name": "Rinde-Forscherin",
+    "proposed_name": "Rindenhüter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein baumartiges Pflanzenwesen mit offenen Seitenfächern; visuelle Artzuordnung: Pflanzen.",
+    "action": "Schließt seine Rindenklappen um einen empfindlichen Setzling.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Nur ein frisches Blatt schaut aus der oberen Fuge.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-062",
+    "source_name": "Wurzel Sammler",
+    "proposed_name": "Wurzelhaken",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit verlängerbarem, wurzelartigem Fuß; visuelle Artzuordnung: Morphiden.",
+    "action": "Zieht eine schwimmende Werkzeugtasche an den Rand.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die Hände bleiben an einer festen Haltesehne.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-063",
+    "source_name": "Schwarm Gärtner",
+    "proposed_name": "Schwarmhirsch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine dünnbeinige Bestie mit verzweigtem porösem Geweih; visuelle Artzuordnung: Bestien.",
+    "action": "Schüttelt vorsichtig Nistmaterial aus einem Geweihast.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Der restliche Ast bleibt mit Insekten besetzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-064",
+    "source_name": "Moos-Hüterin",
+    "proposed_name": "Moosmantel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus breiten Blattflächen und tierischem Gesicht; visuelle Artzuordnung: Amalgame.",
+    "action": "Faltet den Rücken über einen durchnässten Gerätekorb.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein rundes Loch im Blattmantel zeigt das Sonnenlicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-065",
+    "source_name": "Pilz Pfadläuferin",
+    "proposed_name": "Pilzschatten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein gedrungener Zehrer mit pilzkappenförmigem Rücken; visuelle Artzuordnung: Zehrer.",
+    "action": "Kriecht an einer Kellerstufe entlang zum letzten Lichtrest.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Die flache Kappe wirft einen unverhältnismäßig dunklen Schatten.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-066",
+    "source_name": "Blüte Kundschafterin",
+    "proposed_name": "Blütenkundlerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Kundschafterin mit zusammenlegbarer Lupe; visuelle Artzuordnung: Menschen.",
+    "action": "Untersucht das unversehrte Innere einer gestrandeten Blüte.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Ein Tropfen im Kelch spiegelt ihr vergrößertes Auge.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-067",
+    "source_name": "Dornen-Heilerin",
+    "proposed_name": "Dornenspalier",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine hohe Pflanze mit hakenförmig gekrümmten Blattarmen; visuelle Artzuordnung: Pflanzen.",
+    "action": "Hält einen morschen Obstspalier aus dem Schlamm.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Eine einzelne reife Frucht bleibt im oberen Winkel hängen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-068",
+    "source_name": "Wandel Forscherin",
+    "proposed_name": "Faltenläufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit teleskopartig gefaltetem Hals; visuelle Artzuordnung: Morphiden.",
+    "action": "Verkürzt sich unter einer sehr niedrigen Felsplatte.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Halsfalten tragen feine helle Abriebspuren.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-069",
+    "source_name": "Sporen Sammler",
+    "proposed_name": "Sporenmaul",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine otterähnliche Bestie mit breiten Wangenbeuteln; visuelle Artzuordnung: Bestien.",
+    "action": "Setzt unbeschädigte Pilzstücke auf einem trockenen Stein ab.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Ein Beutel ist noch rund und der andere sichtbar leer.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-070",
+    "source_name": "Farn-Gärtner",
+    "proposed_name": "Farntreter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus fleischigen Knoten und langen Farnbeinen; visuelle Artzuordnung: Amalgame.",
+    "action": "Tritt zwischen dicht stehende Saatröhren ohne sie zu berühren.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die Füße enden in auseinandergefächerten flachen Lappen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-071",
+    "source_name": "Unerwartete jadeprobe",
+    "proposed_name": "Jadebruch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleiner grüner Mineraleinschluss in einer Baumrinde; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Zerbricht unter dem Druck einer neu wachsenden Knospe.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Die Bruchflächen spiegeln eine kreuzförmige Lichtspur.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-072",
+    "source_name": "Verlorene samennacht",
+    "proposed_name": "Saat im Kielwasser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Bündel Samenkörner in einer ruhigen Wasserfurche; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Löst sich aus dem Sog eines entfernten Boots.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Am Rand der Furche sammelt sich ein trockener Samenring.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-073",
+    "source_name": "Die wandelwende",
+    "proposed_name": "Seitentrieb",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein junger Zweig unter einem verschnürten Holzrahmen; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Biegt sich durch eine freie Seitenöffnung ins Licht.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Die alte gerissene Schnur bleibt am ursprünglichen Trieb.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-074",
+    "source_name": "Letzte sporenspur",
+    "proposed_name": "Sporenfährte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine unterbrochene Wolke feiner Sporen über dunklem Boden; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Macht die Bewegung eines eben vorbeigelaufenen Körpers sichtbar.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Im Windschatten einer Scherbe bleibt die Wolke stehen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-075",
+    "source_name": "Unerwartete farnprobe",
+    "proposed_name": "Farnsprung",
+    "lore_status": "VORSCHLAG",
+    "subject": "Zwei große Farnwedel über einem eingesunkenen Steg; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Klappen als kurze grüne Brücke gegeneinander.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Die letzten fallenden Holzsplitter bleiben darunter erkennbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-076",
+    "source_name": "Verlorene jadenacht",
+    "proposed_name": "Jade im Regen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein locker geschichteter jadegrüner Dachbelag; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Rutscht unter einem harten Regenschauer seitlich zusammen.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein einzelner blanker Ziegel lenkt die Tropfen um.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-077",
+    "source_name": "Die samenwende",
+    "proposed_name": "Keimwende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein geknickter Keimling in einer offenen Pflanzschale; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Richtet sich am Rand eines neu gesetzten Stützstabs auf.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Die dunkle Knickstelle bleibt vollständig sichtbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-078",
+    "source_name": "Letzte rindespur",
+    "proposed_name": "Rindenspur",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein frischer Abrieb an einer glatten Hafenbohle; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Zeigt den seitlichen Verlauf einer eben entfernten Wurzel.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Ein langes helles Rindenband hängt noch über der Kante.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-079",
+    "source_name": "Siegel der Wurzellinie",
+    "proposed_name": "Wurzelstempel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schweres Holzsiegel mit sichtbarem Wurzelquerschnitt; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Ruht über einem noch feuchten unbeschrifteten Tonplättchen.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Die Jahresringe sind von einer reparierten Spalte getrennt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-080",
+    "source_name": "Instrument der Schwarmwacht",
+    "proposed_name": "Schwarmgabel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein gegabeltes Instrument aus Holz und mattem Kupfer; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Schwingt zwischen zwei Gruppen ruhender Insekten.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Am unteren Ende hängt ein kleines austauschbares Gewicht.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-081",
+    "source_name": "Buch der Mooslinie",
+    "proposed_name": "Moosregister",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein flaches Buch mit unterschiedlich dicken Moospolstern; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt offen unter einer nur halb geschlossenen Haube.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Eine trockene Leerseite trennt zwei grüne Probenfelder.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-082",
+    "source_name": "Schlüssel der Pilzwacht",
+    "proposed_name": "Pilzriegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein asymmetrischer Schlüssel mit pilzkappenförmigem Griff; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Steckt in einer gedämpft grünen Probenkastentür.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die Kappe ist mit einer sichtbaren Fasernaht repariert.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-083",
+    "source_name": "Blüte Sammler von Serev-Küste (VG-083)",
+    "proposed_name": "Blütenzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit sternförmiger Gesichtsblende und dünnem Leib; visuelle Artzuordnung: Zehrer.",
+    "action": "Nimmt den matten Schein eines verbrauchten Blütenkolbens auf.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Eine helle Stelle bleibt auf dem sonst dunklen Kolben.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-084",
+    "source_name": "Dornen Gärtner",
+    "proposed_name": "Dornengärtner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Gärtner mit hohen Stiefeln und offenem Korb; visuelle Artzuordnung: Menschen.",
+    "action": "Führt einen jungen Dorntrieb um ein weiches Geländer.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Die Handschuhe sind an den Fingerkuppen grün verfärbt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-085",
+    "source_name": "Schwarm-Hüterin",
+    "proposed_name": "Schwarmbaum",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein mehrstämmiges Pflanzenwesen mit vielen hohlen Zweigen; visuelle Artzuordnung: Pflanzen.",
+    "action": "Senkt einen bewohnten Ast in einen windgeschützten Winkel.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Jeder Zweig trägt eine andere eindeutig sichtbare Öffnung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-086",
+    "source_name": "Moos Pfadläuferin",
+    "proposed_name": "Moosgängerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit breiten moosähnlichen Fußpolstern; visuelle Artzuordnung: Morphiden.",
+    "action": "Löst den Fuß langsam von einer glatten nassen Hafenwand.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Die Finger tragen keine Polster und bleiben schmal.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-087",
+    "source_name": "Pilz Kundschafterin",
+    "proposed_name": "Pilzspürer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine mäuseartige Bestie mit hochgestellten Ohrscheiben; visuelle Artzuordnung: Bestien.",
+    "action": "Hält vor einem verborgenen Pilzring reglos inne.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Die Ohren fangen das Seitenlicht wie zwei helle Halbmonde.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-088",
+    "source_name": "Blüte-Heilerin",
+    "proposed_name": "Blütenflickerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus biegsamen Blütenrippen und gepanzertem Torso; visuelle Artzuordnung: Amalgame.",
+    "action": "Heftet eine abgerissene Blütenhaut wieder an den Rücken.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Ein dunkles Blatt dient als schmaler sichtbarer Ersatzflicken.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-089",
+    "source_name": "Dornen Forscherin",
+    "proposed_name": "Dornenzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein staksiger Zehrer mit eingesunkenen Flanken und Dornenkamm; visuelle Artzuordnung: Zehrer.",
+    "action": "Streicht an einem abkühlenden Hafenrohr entlang.",
+    "setting": "Vorschlag Serev-Küste: eine windgeschützte Mauernische nahe ruhigem Wasser und verwittertem Tauwerk.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Ein einzelner Dorn trägt einen steckengebliebenen Tauknopf.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-090",
+    "source_name": "Wandel Sammler",
+    "proposed_name": "Wandelsammlerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine menschliche Sammlerin mit flachen Sortiertellern am Gurt; visuelle Artzuordnung: Menschen.",
+    "action": "Legt drei sehr verschiedene Häutungsreste getrennt ab.",
+    "setting": "Vorschlag Keldor-Becken: ein niedriger Steg über dunklem Wasser, hinter dem nur unscharfe Felder liegen.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Der mittlere Teller ist leer und sorgfältig gereinigt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-091",
+    "source_name": "Sporen-Gärtner",
+    "proposed_name": "Sporenstaude",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine verzweigte Pflanzengestalt mit schirmförmigen Fruchtständen; visuelle Artzuordnung: Pflanzen.",
+    "action": "Dreht nur eine ihrer Kappen aus dem starken Wind.",
+    "setting": "Vorschlag Ilyr-Wildmark: ein nasser Waldpfad mit flachen Wurzelstufen und wenig Hintergrunddetail.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Ein bereits leerer Fruchtstand bleibt gegen den Himmel offen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-092",
+    "source_name": "Farn Hüterin",
+    "proposed_name": "Farnhüterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit gefalteten Schultersegeln und kurzem Gesicht; visuelle Artzuordnung: Morphiden.",
+    "action": "Stellt sich als Windfang vor eine flache Pflanzschale.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Die Schultersegel zeigen durchscheinende ungleiche Rippen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-093",
+    "source_name": "Jade Pfadläuferin",
+    "proposed_name": "Jadeklaue",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine katzengroße Bestie mit grün getönten Hornkrallen; visuelle Artzuordnung: Bestien.",
+    "action": "Klettert seitlich um einen umgestürzten Baumpfahl.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Eine Kralle bleibt am abgesplitterten Rand eingehakt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-094",
+    "source_name": "Samen-Kundschafterin",
+    "proposed_name": "Samenauge",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit runder Samenhülle und beweglichen Tastbeinen; visuelle Artzuordnung: Amalgame.",
+    "action": "Öffnet einen schmalen Sichtspalt über angeschwemmtem Saatgut.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die zweiteilige Hülle ist an einer Seite deutlich abgenutzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-095",
+    "source_name": "Unerwartete rindeprobe von Keldor-Becken (VG-095)",
+    "proposed_name": "Aufgebrochene Rinde",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler Schleusenpfosten mit tief eingewachsener Wurzel; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Spaltet sich unter der Last eines übervollen Seils.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Die Faserbündel bleiben am unteren Ende verbunden.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-096",
+    "source_name": "Verlorene wurzelnacht von Ilyr-Wildmark (VG-096)",
+    "proposed_name": "Wurzelruf",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine freigespülte Wurzel unter einem Steg; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Spannt sich über einem fallenden leeren Lastenkorb.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Der Korbrand berührt gerade die erste Wurzelfaser.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-097",
+    "source_name": "Die farnwende",
+    "proposed_name": "Farnwende",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Farnfeld neben einer heranrollenden Gischtwelle; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Legt sich in einer klar abgegrenzten Zone flach.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Ein einzelner hoher Wedel markiert die Wellengrenze.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-098",
+    "source_name": "Letzte jadespur",
+    "proposed_name": "Jadestaub",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Splitter Jade über einem gezogenen Schleifstein; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Zerfällt in einen schmalen Strahl heller Teilchen.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Der unversehrte Kern bleibt im Halter eingespannt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-099",
+    "source_name": "Unerwartete samenprobe",
+    "proposed_name": "Saat unter Glas",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine trockene Saatmulde hinter gesprungenem Glas; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Fängt den ersten Tropfen durch den Glasriss auf.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Leichte Aufsicht mit engem Ausschnitt; Motiv und Kontaktpunkt bleiben innerhalb der zentralen zwei Bilddrittel.",
+    "distinctive_detail": "Nur ein Samenkorn ist bereits gequollen und aufgesprungen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-100",
+    "source_name": "Schlüssel der Rindewacht",
+    "proposed_name": "Rindenschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein flacher Schlüssel aus geglätteter Borke; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt neben einer halb geöffneten Kiste für Pflanzenproben.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Tiefe Blickhöhe; die Hauptform hebt sich gegen eine helle ruhige Fläche ab, ohne den Bildrand zu berühren.",
+    "distinctive_detail": "Eine dunkle Reparaturklammer fasst den zerbrechlichen Schaft.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-101",
+    "source_name": "Klinge der Wurzellinie",
+    "proposed_name": "Wurzelmesser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kurze Klinge aus geschichtetem Horn und Wurzelholz; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Ruht in einer offenen Scheide auf feuchtem Stein.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Nahansicht mit schrägem Seitenlicht; der Vorgang bleibt vollständig sichtbar, Vordergrunddetails werden sparsam gesetzt.",
+    "distinctive_detail": "Der stumpfe Klingenrücken trägt eine naturbelassene Wurzelbiegung.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-102",
+    "source_name": "Amulett der Schwarmwacht",
+    "proposed_name": "Schwarmanhänger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein perforierter Anhänger aus matter grüner Keramik; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Hängt zwischen zwei ruhenden Motten an einem Faden.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine helle Lücke zwischen groben Baumstämmen und niedrigem Felsgestein.",
+    "composition": "Ruhige frontale Komposition; Hauptmotiv leicht links der Mitte und ein klar lesbarer Handlungsbogen nach rechts.",
+    "distinctive_detail": "Ein Loch ist mit einem winzigen dunklen Stopfen verschlossen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-103",
+    "source_name": "Moos-Forscherin",
+    "proposed_name": "Moosprüferin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine baumartige Pflanze mit flachen handförmigen Blättern; visuelle Artzuordnung: Pflanzen.",
+    "action": "Hebt eine Moosprobe an einer einzigen Blattkante hoch.",
+    "setting": "Vorschlag Serev-Küste: ein vom Salz rauer Hafensteg mit nur angedeuteten Booten im Hintergrund.",
+    "composition": "Seitliche Nahansicht mit geringer Tiefe; Hauptmotiv scharf, Umfeld weich und untere Diagonale ohne wichtige Details.",
+    "distinctive_detail": "Darunter bleibt ein Abdruck auf dem feuchten Stein zurück.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-104",
+    "source_name": "Pilz Sammler",
+    "proposed_name": "Pilzträger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Morphid mit taschenförmigen Hautfalten an den Hüften; visuelle Artzuordnung: Morphiden.",
+    "action": "Nimmt eine lose Pilzkolonie ohne Berührung des Huts auf.",
+    "setting": "Vorschlag Keldor-Becken: eine kleine Arbeitsfläche neben einem Bewässerungsgraben und abgelegten Werkzeugen.",
+    "composition": "Dreiviertelaufsicht; beide Seiten der Interaktion bleiben sichtbar, der stärkste Kontrast liegt im Bildzentrum.",
+    "distinctive_detail": "Der Rand einer Hauttasche ist glatt nach außen gerollt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-105",
+    "source_name": "Blüte Gärtner",
+    "proposed_name": "Blütengräber",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine dachsgroße Bestie mit spatenförmigen Vorderklauen; visuelle Artzuordnung: Bestien.",
+    "action": "Gräbt einen schmalen Kanal um einen durchnässten Blütenstock.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Breite Halbnahe mit einem einzigen Motiv; ruhige Randflächen schützen den späteren Kartenbeschnitt.",
+    "distinctive_detail": "Die Erde häuft sich in zwei unterschiedlich hohen Wällen.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-106",
+    "source_name": "Dornen-Hüterin",
+    "proposed_name": "Dornenschild",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam aus ovalem Chitinrumpf und rankenden Unterarmen; visuelle Artzuordnung: Amalgame.",
+    "action": "Stützt eine umgeknickte Zaunstrebe mit dem ganzen Körper.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Untersicht mit zurückhaltender Perspektive; ein heller Hintergrund trennt die vollständige zentrale Silhouette.",
+    "distinctive_detail": "Die Dornen am Rücken bleiben vom Arbeitsgriff abgewandt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-107",
+    "source_name": "Unerwartete wandelprobe",
+    "proposed_name": "Wechselprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einzelner weicher Pflanzenstängel in einer Messzange; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Nimmt unter Druck eine abgeflachte Form an.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Zentraler Blick durch ein unscharfes Vordergrunddetail; wichtigste Form und Berührungspunkt bleiben unbeschnitten.",
+    "distinctive_detail": "Eine unbewegte ältere Probe liegt rund daneben.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-108",
+    "source_name": "Verlorene sporennacht",
+    "proposed_name": "Sporenschleier",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine niedrige Sporenwolke vor einer sich öffnenden Hafentür; als Impuls-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Wird vom Luftzug in einen schmalen Bogen gezogen.",
+    "setting": "Vorschlag Serev-Küste: ein flacher, nasser Uferbereich zwischen Holzbohlen und groben Steinblöcken.",
+    "composition": "Ansicht schräg von oben; klare dunkle Hauptform gegen helleren Boden, Bildränder ohne entscheidende Informationen.",
+    "distinctive_detail": "Eine freie Bodenlinie hält den Weg unter der Wolke lesbar.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-109",
+    "source_name": "Siegel der Pilzlinie",
+    "proposed_name": "Samensiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein flaches Siegel aus klarer Pflanzenharzschicht; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Umschließt ein einziges unbeschädigtes Samenkorn.",
+    "setting": "Vorschlag Keldor-Becken: ein schlichter Schleusenrand mit feuchten Steinplatten und flachem Wasser.",
+    "composition": "Halbnahe Seitenansicht; die Handlung sitzt in der sicheren Bildmitte, unterer rechter Rand bleibt ruhig.",
+    "distinctive_detail": "Eine eingeschlossene Luftblase sitzt genau am Rand.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  },
+  {
+    "card_id": "VG-110",
+    "source_name": "Instrument der Blütewacht",
+    "proposed_name": "Wurzelkompass",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein handgroßes Instrument mit beweglichen Holzstreben; als Relikt-Motiv ohne eigenständige Wesenwerte.",
+    "action": "Liegt geöffnet auf einer freigelegten Wurzelgabel.",
+    "setting": "Vorschlag Ilyr-Wildmark: eine offene Werkmulde am Rand eines feuchten Gartens, kein neuer benannter Ort.",
+    "composition": "Dreiviertelansicht auf Augenhöhe; klare Hauptsilhouette vor einem weichen Hintergrund und freier Diagonalkante.",
+    "distinctive_detail": "Eine helle Strebe ist durch ein dunkles Ersatzstück ergänzt.",
+    "avoid": [
+      "Kein Kartenrahmen, keine Schrift, keine Zahlen und keine Logos im Bild.",
+      "Keine Antwort auf Eiras Geheimnis, keine Fraktionsführung und keine neue Weltgeschichte festlegen.",
+      "Keine unbeabsichtigt duplizierten Glieder oder zusätzlichen Gesichter; bewusst beschriebene Anatomie und vorgegebene Arten respektieren."
+    ]
+  }
+]

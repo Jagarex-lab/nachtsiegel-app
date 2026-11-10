@@ -1,0 +1,1872 @@
+[
+  {
+    "card_id": "NE-001",
+    "source_name": "Markt-Händlerin",
+    "proposed_name": "Waagmeisterin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine ältere Marktfrau mit kurz geschorenem Haar und lederner Waagschürze",
+    "action": "gleicht einen verbogenen Waagbalken mit einem Kiesel aus",
+    "setting": "Keldor-Becken (Ortsentwurf): auf einem überdachten Marktsteg zwischen Getreidekähnen.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Ein leerer Gewichtsplatz macht den fehlenden Messstein sichtbar.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-002",
+    "source_name": "Wind Schmugglerin",
+    "proposed_name": "Segelpfoten",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein langleibiges Küstentier mit breiten Hautsäumen an den Vorderbeinen",
+    "action": "gleitet mit einem verschnürten Paket zwischen zwei Takelagen",
+    "setting": "Serev-Küste (Ortsentwurf): über einem engen Hafenkanal bei seitlichem Seewind.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Nur die Hinterpfoten berühren noch das ablegende Boot.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-003",
+    "source_name": "Fluss Sänger",
+    "proposed_name": "Quellensänger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine im Stein verwurzelte Uferpflanze mit hohlen Schilfkelchen",
+    "action": "lässt Wasser durch abgestufte Kelche in einen Trinknapf fließen",
+    "setting": "Namar-Hochland (Ortsentwurf): an einem niedrigen Quellbecken unter einer Passmauer.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Die Kelchränder tragen deutlich verschiedene natürliche Kerben.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-004",
+    "source_name": "Wald-Koch",
+    "proposed_name": "Glutmulde",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleines Elementar aus dunkler Holzkohle und rot glimmenden Fugen",
+    "action": "wärmt einen eisernen Suppenkessel mit seinem schalenförmigen Rücken",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): unter einem regennassen Waldunterstand.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Ein nasser Holzlöffel ruht rauchlos am kalten Kesselrand.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-005",
+    "source_name": "Nebel Sammler",
+    "proposed_name": "Nebeltrinker",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schlankes Zehrerwesen mit porösen Kiemenplatten und eingefallenem Brustkorb",
+    "action": "zieht nur einen schmalen Nebelstrom aus einer versperrten Treppe",
+    "setting": "Veyr-Stufen (Ortsentwurf): zwischen stillgelegten Messbecken am Hang.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Hinter dem Wesen bleibt eine einzelne trockene Stufenkante frei.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-006",
+    "source_name": "Morgen Reisender",
+    "proposed_name": "Fährtenmosaik",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein niedriges Amalgam mit vier ungleichen natürlichen Laufbeinen",
+    "action": "prüft den weichen Boden vor einem beladenen Handkarren",
+    "setting": "Keldor-Becken (Ortsentwurf): auf einem ausgefahrenen Dammweg nach dem Hochwasser.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Jede Pfote hinterlässt einen anderen Abdruck im selben Schlamm.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-007",
+    "source_name": "Brücke-Wirt",
+    "proposed_name": "Brückenwirt",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kräftiger Mensch mit wettergegerbtem Gesicht und geflickter Weste",
+    "action": "reicht einer durchnässten Reisenden eine warme Tonflasche",
+    "setting": "Serev-Küste (Ortsentwurf): am Schanktisch einer kleinen Drehbrückenstube.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Die Tassen hängen an frei zugänglichen Haken verschiedener Höhe.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-008",
+    "source_name": "Weg Händlerin",
+    "proposed_name": "Packhorn",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein gedrungenes Bergtier mit zwei seitwärts gebogenen Stirnhörnern",
+    "action": "hebt einen verrutschten Tragkorb mit dem Horn zurück auf seinen Rücken",
+    "setting": "Namar-Hochland (Ortsentwurf): an einer steilen Geröllrast oberhalb des Passweges.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Die breite Brustplatte des Geschirrs wurde mehrfach weich unterfüttert.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-009",
+    "source_name": "Regen Schmugglerin",
+    "proposed_name": "Regenhülse",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein beweglicher Wurzelstock mit schirmförmigen Blättern und langen Ranken",
+    "action": "verbirgt einen Saatbeutel vor einem plötzlichen Platzregen",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): am Rand eines aufgeweichten Waldmarktes.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Auf einem hochgestellten Blatt sammelt sich eine einzige große Wasserperle.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-010",
+    "source_name": "Karren-Sänger",
+    "proposed_name": "Klanglast",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus vibrierendem Kies und schwebendem grauem Staub",
+    "action": "hält einen gebrochenen Karrenholm in einer hörbar schwingenden Schwebe",
+    "setting": "Veyr-Stufen (Ortsentwurf): auf einer Treppenrampe zwischen Wasserleitungen.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Drei lose Radnägel kreisen dicht über der Reparaturstelle.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-011",
+    "source_name": "Staub Koch",
+    "proposed_name": "Ascheleser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit breiter flacher Schnauze und filzartigen Halsfalten",
+    "action": "filtert die kalte Rußfahne aus einem verstopften Ofen",
+    "setting": "Keldor-Becken (Ortsentwurf): in einer offenen Backstube neben einem Kornspeicher.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Seine helle Zunge bleibt hinter einem schmalen Metallgitter sichtbar.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-012",
+    "source_name": "Hafen Sammler",
+    "proposed_name": "Treibgutsucher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein amphibisches Amalgam mit kurzen Greifarmen und gefächertem Schwanz",
+    "action": "sortiert eine gefangene Fischleine aus verknotetem Treibholz",
+    "setting": "Serev-Küste (Ortsentwurf): unter einem bei Ebbe freigelegten Anlegesteg.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die Leine bleibt unzerschnitten zwischen den weichen Krallen gespannt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-013",
+    "source_name": "Weg-Reisender",
+    "proposed_name": "Serpentinenbote",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein junger Mensch mit tiefer Kapuze und einer einzelnen Krücke",
+    "action": "setzt einen abgerutschten Wegstein wieder auf einen festen Felsvorsprung",
+    "setting": "Namar-Hochland (Ortsentwurf): an einer engen Kehre mit Blick auf den Pass.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Eine Schlaufe sichert die Krücke während der zweihändigen Arbeit.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-014",
+    "source_name": "Regen Wirt",
+    "proposed_name": "Dachfell",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein massiges Tier mit wasserabweisendem zottigem Rücken und kleinen Ohren",
+    "action": "schützt einen zusammengerollten Jungvogel unter seiner Bauchseite",
+    "setting": "Veyr-Stufen (Ortsentwurf): im Regen unter einer ausgedienten Wasserwaage.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Der nasse Rücken bildet eine klare Schutzkuppel über trockenem Boden.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-015",
+    "source_name": "Karren Händlerin",
+    "proposed_name": "Sackwurzlerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Pflanzenwesen aus geflochtenen Wurzeln und ledrigen Samenblättern",
+    "action": "trägt zwei unterschiedlich große Kornsäcke über eine schmale Bohle",
+    "setting": "Keldor-Becken (Ortsentwurf): an einer überfluteten Speicherzufahrt.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Die Wurzeln umfassen die Bohle von beiden Seiten statt Füße zu imitieren.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-016",
+    "source_name": "Staub-Schmugglerin",
+    "proposed_name": "Staubschleier",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein dünnes Windelementar mit scharf umrissenen Wirbeln aus Salzstaub",
+    "action": "führt einen leeren Lastkahn unter einer niedrigen Kette hindurch",
+    "setting": "Serev-Küste (Ortsentwurf): an einer windstillen Hafenbucht zwischen Pfählen.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Der Wirbel teilt sich exakt vor der Kette und schließt dahinter wieder.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-017",
+    "source_name": "Hafen Sänger",
+    "proposed_name": "Glockenzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein langhalsiger Zehrer mit offenporigem Schnabel und stumpfen Knochensäumen",
+    "action": "dämpft die Schwingung einer gesprungenen Signalglocke",
+    "setting": "Namar-Hochland (Ortsentwurf): in einer zugigen Passglockenstube.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Der Klöppel steht noch schräg, während der Glockenrand bereits ruht.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-018",
+    "source_name": "Markt Koch",
+    "proposed_name": "Kesselgefährte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein rundes Amalgam mit Panzerbauch und kurzen warmen Tastarmen",
+    "action": "dreht einen schweren Pfannengriff von einer offenen Flamme weg",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): in einer provisorischen Gemeinschaftsküche.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Auf dem Panzer liegt ein alter kreisförmiger Hitzefleck.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-019",
+    "source_name": "Wind-Sammler",
+    "proposed_name": "Drachenfänger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit silbergrauen Zöpfen und einem geflickten Fangnetz",
+    "action": "löst einen Papierdrachen vorsichtig aus einer Stromfahne",
+    "setting": "Veyr-Stufen (Ortsentwurf): auf dem flachen Dach einer Wasserstation.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Ein langes Netzauge wurde mit einem andersfarbigen Faden repariert.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-020",
+    "source_name": "Fluss Reisender",
+    "proposed_name": "Flussstelzer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine schlanke Bestie mit langen Sprungbeinen und dichtem Brustpelz",
+    "action": "setzt mit einem kleinen Bündel trocken über eine Furt",
+    "setting": "Keldor-Becken (Ortsentwurf): zwischen niedrigen Schleusenmauern im Abendlicht.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die gestreckten Hinterbeine zeichnen eine klare offene Silhouette.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-021",
+    "source_name": "Wald Wirt",
+    "proposed_name": "Wurzeltisch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein stämmiges Pflanzenwesen mit waagerechten breiten Brettwurzeln",
+    "action": "bietet erschöpften Wandernden eine trockene Ablage für ihre Lasten",
+    "setting": "Serev-Küste (Ortsentwurf): an einem windgeschützten Küstenrastplatz.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Ein junges Blatt wächst mitten durch die verwitterte Tischfläche.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-022",
+    "source_name": "Nebel-Händlerin",
+    "proposed_name": "Schneelaterne",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Frost-Elementar mit halbtransparentem kantigem Kern",
+    "action": "leitet eine schwache Lichtspiegelung an eine verschneite Weggabelung",
+    "setting": "Namar-Hochland (Ortsentwurf): vor einem tief verschneiten Berghang.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Im Kern steckt kein Feuer, sondern ein umgelenkter heller Lichtstreifen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-023",
+    "source_name": "Morgen Schmugglerin",
+    "proposed_name": "Dämmerschlinger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit gepolsterten Fühlern und einem breiten dunklen Stirnschild",
+    "action": "räumt einen schmalen Tunnel von reizendem Pilzstaub frei",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): unter einem umgestürzten Waldsteg.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Der Staub endet in einer scharfen Linie vor dem geöffneten Luftschlitz.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-024",
+    "source_name": "Brücke Sänger",
+    "proposed_name": "Bogenrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit langem Kehlsack und vier standfesten Hufbeinen",
+    "action": "schickt einen sichtbaren Atemstoß durch einen gemauerten Brückenbogen",
+    "setting": "Veyr-Stufen (Ortsentwurf): neben einer vielstufigen Wartungsbrücke.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Ein am Mauerwerk hängendes Windband hebt sich nur am anderen Bogenende.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-025",
+    "source_name": "Fluss-Koch",
+    "proposed_name": "Fährkoch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit hochgebundenen Ärmeln und einer kupferfreien Eisenschöpfkelle",
+    "action": "verteilt eine letzte Kelle Eintopf auf drei ungleiche Schalen",
+    "setting": "Keldor-Becken (Ortsentwurf): in einer schmalen Kochbucht auf einer Binnenfähre.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Der leere Kesselboden spiegelt einen kleinen hellen Halbmond.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-026",
+    "source_name": "Wald Sammler",
+    "proposed_name": "Harzsammler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kleine sechsfüßige Waldbeutlerin mit borstigem Schwanz",
+    "action": "nimmt einen klebrigen Harzklumpen mit zwei Vorderpfoten auf",
+    "setting": "Serev-Küste (Ortsentwurf): an einem natürlich aufgerissenen Baum im Hochlandwald.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Die übrigen vier Füße halten sicher Abstand vom klebrigen Harz.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-027",
+    "source_name": "Nebel Reisender",
+    "proposed_name": "Nebelranke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein rankendes Pflanzenwesen mit langen silbrig behaarten Blattfingern",
+    "action": "tastet von Ast zu Ast über einen frisch abgebrochenen Steg",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): in einem feuchten Waldtal unter tiefem Nebel.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Die Blattspitzen bleiben vor der leeren Bruchkante sichtbar in der Luft.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-028",
+    "source_name": "Morgen-Wirt",
+    "proposed_name": "Morgenwärmer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein niedriges Elementar aus warmem Dunst und bernsteinfarbenen Luftschichten",
+    "action": "taut den Reif von einer kleinen Wasserpumpe",
+    "setting": "Veyr-Stufen (Ortsentwurf): auf einem kalten Wartungsplateau vor Sonnenaufgang.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Nur der Pumpengriff ist bereits trocken, der Sockel bleibt weiß bereift.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-029",
+    "source_name": "Brücke Händlerin",
+    "proposed_name": "Fugenfresser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein abgeflachter Zehrer mit seitlichem Saugmund und widerstandsfähigen Sohlen",
+    "action": "entfernt dunkle Ablagerungen aus der Fuge eines Brückenlagers",
+    "setting": "Keldor-Becken (Ortsentwurf): in einem trockengelegten Schleusenschacht.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Die gereinigte Fuge zeichnet eine helle Linie unter dem Bauch.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-030",
+    "source_name": "Weg Schmugglerin",
+    "proposed_name": "Lastwechsler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein zweiköpfiges Amalgam mit gemeinsamer Schulter und verschieden langen Greifarmen",
+    "action": "führt einen schweren Ballen durch eine schmale Schiffsluke",
+    "setting": "Serev-Küste (Ortsentwurf): im Laderaum eines einfachen Küstenfrachters.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Die beiden Köpfe schauen zugleich auf entgegengesetzte Kanten der Luke.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-031",
+    "source_name": "Regen-Sänger",
+    "proposed_name": "Regenrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein menschlicher Musiker mit ausgebessertem Mantel und schmaler Rohrflöte",
+    "action": "gibt wartenden Trägern mit erhobener Hand das Zeichen zum Aufbruch",
+    "setting": "Namar-Hochland (Ortsentwurf): an einer regennassen Passrast mit niedriger Steinmauer.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Die Flöte hängt stumm an einem abgewetzten Lederband.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-032",
+    "source_name": "Karren Koch",
+    "proposed_name": "Radfell",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein breitrückiges Tier mit stumpfen Schaufelkrallen und langen Schnurrhaaren",
+    "action": "schiebt einen im Morast versunkenen Karrenreifen frei",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): auf einem holprigen Waldweg neben Farnbüschen.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Eine einzelne Kralle stützt den Reifen von unten statt ihn zu zerreißen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-033",
+    "source_name": "Staub Sammler",
+    "proposed_name": "Staubbinder",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleiner Strauch mit klebrigen Fächerblättern und kriechenden Wurzeln",
+    "action": "sammelt feinen Schleifstaub von einem verlassenen Werkstein",
+    "setting": "Veyr-Stufen (Ortsentwurf): auf einer stillen Terrasse zwischen Steinwerkstätten.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Die ältere Blatthälfte ist grau, die junge Spitze noch grün.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-034",
+    "source_name": "Hafen-Reisender",
+    "proposed_name": "Salzreisender",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus feuchten Salzkrusten und langsam wandernden Kristallschichten",
+    "action": "zieht eine dünne Spur über ein ausgetrocknetes Hafenbecken",
+    "setting": "Keldor-Becken (Ortsentwurf): zwischen verlassenen Ankerpfählen eines Binnenhafens.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Die Spur endet an einer kleinen Pfütze unter einem umgedrehten Boot.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-035",
+    "source_name": "Unerwartete marktprobe",
+    "proposed_name": "Gewichtsprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schiefer Waagbalken und eine Handvoll verschieden dichter Saatkörner",
+    "action": "kippen unerwartet einen gesicherten kleinen Handelstisch um",
+    "setting": "Serev-Küste (Ortsentwurf): in einer schmalen Marktgasse während einer Lieferung.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Der schwerste Sack bleibt hängen, während der leere Korb aufsteigt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-036",
+    "source_name": "Verlorene windnacht",
+    "proposed_name": "Blinder Wind",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine umgeschlagene Windfahne und eine plötzlich verloschene Weglaterne",
+    "action": "lassen einen Reisenden vor dem nächsten offenen Schritt innehalten",
+    "setting": "Namar-Hochland (Ortsentwurf): an einer ungeschützten Passkehre in mondloser Nacht.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die laternenlose Hand ertastet bereits das gespannte Führungsseil.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-037",
+    "source_name": "Die karrenwende",
+    "proposed_name": "Festgefahren",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein beladener Karren mit querstehendem Rad und losem Deichselband",
+    "action": "rutscht nach einem brechenden Ast seitlich in eine flache Mulde",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): auf einem engen Waldweg nach langem Regen.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Ein rollender Apfel zeigt die Richtung des langsamen Abrutschens.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-038",
+    "source_name": "Letzte staubspur",
+    "proposed_name": "Staubfährte",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler Fußabdruck zwischen vollständig verwehten Treppenstufen",
+    "action": "wird durch das Streiflicht einer Handlampe wieder sichtbar",
+    "setting": "Veyr-Stufen (Ortsentwurf): an einem verlassenen Zugang zu den Messhöfen.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Der Schuhabdruck liegt unter einer späteren gezackten Schleifspur.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-039",
+    "source_name": "Unerwartete hafenprobe",
+    "proposed_name": "Losgerissener Poller",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein gesprungener Festmacherstein und ein reißendes Faserseil",
+    "action": "geben einen kleinen Lastkahn aus seiner sicheren Halterung frei",
+    "setting": "Keldor-Becken (Ortsentwurf): an einer steinernen Binnenhafenmauer.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Ein einzelner intakter Faden hält noch einen Herzschlag lang das Seil.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-040",
+    "source_name": "Verlorene marktnacht",
+    "proposed_name": "Markt ohne Lampen",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine dunkle Reihe geschlossener Stände und eine umgekippte Ölschale",
+    "action": "zwingt zwei Händler, die wenigen Vorräte nach Gefühl zu teilen",
+    "setting": "Namar-Hochland (Ortsentwurf): an einem überdachten Nachtmarkt unter dem Pass.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Die Hände treffen sich über derselben kleinen Tonschale.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-041",
+    "source_name": "Die windwende",
+    "proposed_name": "Windumschlag",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein ausgebreiteter Trockenumhang und eine plötzlich drehende Böe",
+    "action": "ziehen eine wartende Trägergruppe zur sicheren Seite des Weges",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): auf einem Waldgrat zwischen nackten Ästen.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Die Saumfalten schlagen entgegen der noch stehenden alten Staubfahne.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-042",
+    "source_name": "Letzte flussspur",
+    "proposed_name": "Getilgte Furt",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine Reihe alter Trittsteine unter frisch gestiegenem Wasser",
+    "action": "verschwindet gerade hinter dem Schwall eines geöffneten Überlaufs",
+    "setting": "Veyr-Stufen (Ortsentwurf): an einem flachen Bach zwischen Messgärten.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Der letzte sichtbare Stein trägt einen einzeln abgestellten Stiefel.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-043",
+    "source_name": "Unerwartete waldprobe",
+    "proposed_name": "Waldschwelle",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine plötzlich unter Last absinkende Wurzelbrücke und gespannte Tragseile",
+    "action": "halten einen vollen Transportkorb einen Atemzug über dem Wasser",
+    "setting": "Keldor-Becken (Ortsentwurf): am Rand eines bewaldeten Überschwemmungskanals.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Die Fasern des oberen Seils lösen sich an genau einer Umlenkrolle.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-044",
+    "source_name": "Verlorene nebelnacht",
+    "proposed_name": "Nebelwache",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein verlöschendes Wachfeuer neben einem halb verdeckten Hafensignal",
+    "action": "lässt zwei entgegengesetzte Bootsschatten gleich nah erscheinen",
+    "setting": "Serev-Küste (Ortsentwurf): zwischen dichtem Küstennebel und einer niedrigen Kaimauer.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Nur das Wasser unter dem näheren Boot zeigt eine frische Bugwelle.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-045",
+    "source_name": "Buch der Morgenlinie",
+    "proposed_name": "Morgenblattbuch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein flaches Reisebuch mit gefalteten Wachspapierseiten und schlichtem Stahlrücken",
+    "action": "liegt geöffnet unter einem Fenster und sammelt kondensierte Tropfen",
+    "setting": "Namar-Hochland (Ortsentwurf): auf der Steinbank einer verlassenen Passstube.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Eine Seite ist durch frühere Nässe als bleibende kleine Welle verformt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-046",
+    "source_name": "Schlüssel der Brückewacht",
+    "proposed_name": "Stegschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein breiter mechanischer Eisenschlüssel mit asymmetrischen flachen Zähnen",
+    "action": "ruht halb gedreht im freigelegten Schloss einer kleinen Holzbrücke",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): unter dem Geländer eines überwucherten Waldsteges.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Ein fehlender Zahn wurde durch einen vernieteteten Stahlstift ersetzt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-047",
+    "source_name": "Klinge der Weglinie",
+    "proposed_name": "Klingenmaß",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kurze stumpfrückige Arbeitsklinge mit verschiebbarem Stahlanschlag",
+    "action": "hält einen Faserstrang zur sauberen Längenprüfung auf Spannung",
+    "setting": "Veyr-Stufen (Ortsentwurf): auf einer Reparaturbank neben gestuften Wasserbecken.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Eine Kerbe im Anschlag passt genau zu einem glatten Seilknoten.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-048",
+    "source_name": "Amulett der Regenwacht",
+    "proposed_name": "Tropfenkapsel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein walnussgroßes Stahlgehäuse mit gewölbter Glasmembran",
+    "action": "hängt über einer Schüssel und sammelt einzelne Regentropfen",
+    "setting": "Keldor-Becken (Ortsentwurf): in einer überdachten Schleusenwärternische.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Unter dem Glas bleibt ein winziger Luftkanal bis zum Rand offen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-049",
+    "source_name": "Siegel der Nebellinie",
+    "proposed_name": "Nebelsiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein runder Prägestempel aus dunklem Stahl mit offenem Mittelloch",
+    "action": "liegt neben einem noch weichen kreisförmigen Tonabdruck",
+    "setting": "Serev-Küste (Ortsentwurf): auf einem einfachen Hafenprüftisch.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Im Mittelloch des Stempels steckt ein heller Sandfaden.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-050",
+    "source_name": "Instrument der Morgenwacht",
+    "proposed_name": "Dämmermesser",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein mechanisches Messgerät mit breitem Schattenflügel und matter Stahlachse",
+    "action": "zeichnet mit seiner freien Nadel eine schmale Spur in feuchten Sand",
+    "setting": "Namar-Hochland (Ortsentwurf): am offenen Fenster einer hochgelegenen Wartungsstube.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Die Spitze hat einen kleinen Kiesel sauber zur Seite geschoben.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-051",
+    "source_name": "Brücke Schmugglerin",
+    "proposed_name": "Stegranke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein langes Pflanzenwesen mit biegsamen hohlen Stängeln und Hakenblättern",
+    "action": "zieht einen verlorenen Stoffbeutel durch einen morschen Geländerspalt",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): an einem dicht bewachsenen Waldsteg.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Ein Blatt hält den Beutel, ein zweites schirmt ihn vor scharfen Splittern ab.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-052",
+    "source_name": "Weg-Sänger",
+    "proposed_name": "Stufenwind",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmales Windelementar mit wirbelnden Staubkanten und klarem ruhigem Kern",
+    "action": "trägt einen einzelnen fallenden Zettel über eine große Treppenlücke",
+    "setting": "Veyr-Stufen (Ortsentwurf): zwischen zwei Wartungsgalerien im Tageslicht.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Der Zettel bleibt flach im windstillen Kern statt sich zu zerknittern.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-053",
+    "source_name": "Regen Koch",
+    "proposed_name": "Gischtzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit breiter Saugkehle und weich gefächerten Rückenplatten",
+    "action": "nimmt bei einem Sturmstoß überschüssigen salzigen Schaum vom Steg",
+    "setting": "Serev-Küste (Ortsentwurf): an einer niedrigen Küstenanlegestelle.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Der Steg hinter der Schwanzspitze ist bereits sichtbar begehbar.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-054",
+    "source_name": "Karren Sammler",
+    "proposed_name": "Schaufelrücken",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit muskulösem Schuppenrücken und zwei kleinen Greifarmen",
+    "action": "sortiert krumme Speichen aus einem zerbrochenen Lastenrad",
+    "setting": "Namar-Hochland (Ortsentwurf): auf einem windgeschützten Werkplatz an der Passstraße.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Die langen Speichen liegen geordnet zwischen den Rückenplatten.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-055",
+    "source_name": "Staub-Reisender",
+    "proposed_name": "Staubgängerin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit breitem Gesichtstuch und abgenutzten Reisestiefeln",
+    "action": "klopft den Staub einer langen Strecke vorsichtig aus einem Beutel",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): am Rand einer Waldquelle vor einem steilen Aufstieg.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Der Wasserbecher bleibt weit außerhalb der fallenden Staubwolke.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-056",
+    "source_name": "Hafen Wirt",
+    "proposed_name": "Kaiwürger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein plumpes Küstentier mit aufrollbarem Greifschwanz und kurzen Beinen",
+    "action": "zieht eine lose Rettungsleine aus dem Wasser auf einen Holzsteg",
+    "setting": "Veyr-Stufen (Ortsentwurf): unter einer gestuften Pumpenanlage.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Der Schwanz wickelt die Leine geordnet auf, ohne einen Knoten zu bilden.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-057",
+    "source_name": "Markt Händlerin",
+    "proposed_name": "Kornknospe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein niedriges Pflanzenwesen mit großen Samenschoten und krallenartigen Wurzeln",
+    "action": "schiebt eine reife Schote in den Sammelkorb einer Bäuerin",
+    "setting": "Keldor-Becken (Ortsentwurf): zwischen Getreidesäcken auf einem Marktdamm.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Nur eine Schote ist offen, die übrigen bleiben fest verschlossen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-058",
+    "source_name": "Wind-Schmugglerin",
+    "proposed_name": "Segelzug",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Windelementar mit langem schmalem Wirbelkörper und salzigen Lichtkanten",
+    "action": "bläht ein kleines Reparatursegel gegen den windstillen Hafen",
+    "setting": "Serev-Küste (Ortsentwurf): zwischen einem aufgebockten Boot und einer Netzwand.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Die beiden freien Segelecken stehen in unterschiedlicher Spannung.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-059",
+    "source_name": "Fluss Sänger von Namar-Hochland (NE-059)",
+    "proposed_name": "Rauschbrecher",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit gerippten Hornplatten über den Ohren und schmalem Brustkorb",
+    "action": "dämpft das starke Dröhnen einer eisernen Wasserleitung",
+    "setting": "Namar-Hochland (Ortsentwurf): an einem Rohrbogen unter einer Hochlandbrücke.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Ein lose aufliegender Werkzeuggriff hört zuerst auf zu vibrieren.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-060",
+    "source_name": "Wald Koch",
+    "proposed_name": "Feldpfanne",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit sechs kurzen Beinen und einer natürlich glatten Panzerkuhle",
+    "action": "trägt einen gefüllten Topf langsam über einen unebenen Wurzelboden",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): durch ein provisorisches Lager im Wald.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die dampfende Flüssigkeit bleibt trotz der schrägen Beine waagerecht.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-061",
+    "source_name": "Hafen-Sammler",
+    "proposed_name": "Taubergner",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit eingerollter Leinenkappe und wachem müdem Blick",
+    "action": "hebt ein altes Tau mit beiden Händen aus einer verstopften Laufrinne",
+    "setting": "Veyr-Stufen (Ortsentwurf): an einer terrassierten Wasserstation.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Unter dem nassen Seil erscheint die klare alte Auslaufrichtung.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-062",
+    "source_name": "Markt Reisender",
+    "proposed_name": "Kornläufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schlankes Herdentier mit schmalem Kopf und kräftigem Tragbrustkorb",
+    "action": "trägt einen kleinen Sack durch die Lücke zweier wartender Karren",
+    "setting": "Keldor-Becken (Ortsentwurf): auf einem belebten Marktweg zwischen Speichern.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Ein Riemen lässt den Brustkorb frei und ist am Rücken doppelt gesichert.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-063",
+    "source_name": "Wind Wirt",
+    "proposed_name": "Windweide",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein niedriges Küstengewächs mit gefiederten Blättern und knorriger Mittelsäule",
+    "action": "schirmt einen Ofeneingang mit seinen beweglichen Ästen vor einer Böe",
+    "setting": "Serev-Küste (Ortsentwurf): vor einer einfachen Hafenküche.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Die äußeren Blattreihen biegen sich, der innere Ofenraum bleibt windstill.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-064",
+    "source_name": "Fluss-Händlerin",
+    "proposed_name": "Quellhändler",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Wasserelementar mit ruhigem innerem Spiegel und unregelmäßiger Außenhaut",
+    "action": "teilt einen aufgefangenen Wasserstrom auf zwei Tonkrüge auf",
+    "setting": "Namar-Hochland (Ortsentwurf): an einer niedrigen Quelltreppe oberhalb eines Passortes.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Ein dritter kleiner Krug bleibt bewusst neben dem Strom trocken.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-065",
+    "source_name": "Wald Schmugglerin",
+    "proposed_name": "Sporenräumer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit dunklen Lamellen am Kiefer und kleinen lichtscheuen Augen",
+    "action": "saugt einen reizenden Sporenschwall aus einer Erntekammer",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): am Rand eines feuchten Waldgartens.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Ein heller Schimmelkreis am Türrahmen bleibt als ursprüngliche Quelle sichtbar.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-066",
+    "source_name": "Nebel Sänger",
+    "proposed_name": "Nebelhorn",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit breitem Rinderkörper und weichem gefälteltem Halskamm",
+    "action": "ruft ein verloren gegangenes Jungtier durch eine Nebelbank zurück",
+    "setting": "Keldor-Becken (Ortsentwurf): an einem Schleusensteg über langsamem Wasser.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Die kleinen Ohren des Jungtiers treten zuerst aus dem Nebel hervor.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-067",
+    "source_name": "Morgen-Koch",
+    "proposed_name": "Frühschichtkoch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit kahlem Kopf und ausgewaschener dicker Stoffschürze",
+    "action": "hebt heiße Fladen mit einer langen Gabel von einer Steinplatte",
+    "setting": "Serev-Küste (Ortsentwurf): in einer niedrigen Hafenküche beim ersten Tageslicht.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Ein Fladen ist absichtlich kleiner für eine abgenutzte Kinderschale.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-068",
+    "source_name": "Brücke Sammler",
+    "proposed_name": "Kieselgreifer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Bergtier mit kräftigen Vorderpfoten und dickem abgeflachtem Schwanz",
+    "action": "nimmt einen runden Stein aus dem blockierten Zahnrad einer Brückenwinde",
+    "setting": "Namar-Hochland (Ortsentwurf): unter einer hölzernen Passbrücke.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die Winde ist mit einem gut sichtbaren Keil gegen Weiterdrehen gesichert.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-069",
+    "source_name": "Weg Reisender",
+    "proposed_name": "Wanderspross",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Pflanzenwesen mit eingerolltem Wurzelballen und zwei niedrigen Blattarmen",
+    "action": "rollt eine kleine Stufe hinab und richtet sich vor einer Quelle auf",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): an einem moosbewachsenen Seitenpfad.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Am Wurzelballen hängen frische Pflanzenfasern statt menschlicher Fußspuren.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-070",
+    "source_name": "Regen-Wirt",
+    "proposed_name": "Dampfhüter",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Nebelelementar mit warmer heller Mitte und kühler dichter Außenhülle",
+    "action": "hält die Luft um einen trocknenden Wollmantel in sanfter Bewegung",
+    "setting": "Veyr-Stufen (Ortsentwurf): unter dem Dach einer Wartungsnische.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Der Mantelsaum hebt sich nur eine Fingerbreite vom Haken.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-071",
+    "source_name": "Unerwartete karrenprobe",
+    "proposed_name": "Radprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine neu eingesetzte Holzspeiche und eine schwer beladene Achse",
+    "action": "geben unter der ersten Belastung ein unerwartet falsches Knacken ab",
+    "setting": "Keldor-Becken (Ortsentwurf): auf einem offenen Reparaturplatz neben Getreidespeichern.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Ein dünner Kreidestrich läuft genau über den neu entstehenden Riss.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-072",
+    "source_name": "Verlorene staubnacht",
+    "proposed_name": "Staubnacht",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine dichte Staubwand und ein abgedeckter Brunnen ohne sichtbaren Rand",
+    "action": "drängen eine Gruppe Reisender dicht an ihre gespannten Leitseile",
+    "setting": "Serev-Küste (Ortsentwurf): auf einer nächtlichen Küstenstraße nach einem trockenen Sturm.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Eine Hand hält den Seilknoten, die andere den letzten nassen Lappen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-073",
+    "source_name": "Die brückewende",
+    "proposed_name": "Brückenhub",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schweres Brückengewicht und eine rasch sinkende Holzplattform",
+    "action": "bringen einen festgeklemmten Packkorb wieder auf die sichere Seite",
+    "setting": "Namar-Hochland (Ortsentwurf): an einer kleinen Zugbrücke unter einem Pass.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Der Korb schwingt noch, während der tragende Haken bereits schließt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-074",
+    "source_name": "Letzte wegspur",
+    "proposed_name": "Verblasster Weg",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine abgewaschene Wegmarke und zwei gleich aussehende Abzweigungen",
+    "action": "zwingen eine Trägerin, nach den frischen Spuren im Boden zu suchen",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): an einem Waldpfad neben einer gesprungenen Steintafel.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Ein einziger tiefer Radabdruck führt in die weniger begangene Richtung.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-075",
+    "source_name": "Unerwartete regenprobe",
+    "proposed_name": "Regenprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein unter Druck geöffnetes Wasserventil und ein dicht bespannter Stoffschirm",
+    "action": "lassen eine bis dahin unsichtbare Naht plötzlich durchsickern",
+    "setting": "Veyr-Stufen (Ortsentwurf): auf der oberen Terrasse eines Prüfbeckens.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Die erste dunkle Wasserspur läuft genau entlang einer gefalteten Kante.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-076",
+    "source_name": "Verlorene karrennacht",
+    "proposed_name": "Verlorene Ladung",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein umgeworfener Karren und zwei im Mondlicht treibende Kornsäcke",
+    "action": "gleiten langsam auseinander, bevor eine Rettungsleine sie erreicht",
+    "setting": "Keldor-Becken (Ortsentwurf): an einem überschwemmten Weg zwischen Speicherwänden.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Ein Sack zieht eine breite Spur aus einzelnen schwimmenden Körnern.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-077",
+    "source_name": "Die staubwende",
+    "proposed_name": "Staubkehr",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kräftiger Seitenwind und ein im Sand versunkener Wegweiser",
+    "action": "legen eine überdeckte alte sichere Stufe wieder frei",
+    "setting": "Serev-Küste (Ortsentwurf): am Fuß einer Küstentreppenanlage.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Die neue helle Stufenkante endet sichtbar vor einem späteren Mauerschaden.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-078",
+    "source_name": "Letzte hafenspur",
+    "proposed_name": "Letzte Bugwelle",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kaum sichtbare Wasserfurche neben einem verlassenen Steg",
+    "action": "verrät den soeben ablegenden kleinen Lastkahn hinter der Mauer",
+    "setting": "Namar-Hochland (Ortsentwurf): im stillen Wasser einer hochgelegenen Hafenstation.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Eine vertäute Boje kippt erst nach dem Verschwinden des Bootes zur Seite.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-079",
+    "source_name": "Siegel der Marktlinie",
+    "proposed_name": "Tauschstempel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schwerer rechteckiger Stahlstempel mit drehbarer offener Matrize",
+    "action": "ruht auf einem leeren Tuch zwischen zwei getrennten Warenproben",
+    "setting": "Veyr-Stufen (Ortsentwurf): an einem schlichten Prüftisch im Messhof.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Ein eingetrockneter Samen steckt in der ausgebauten Matrizenführung.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-080",
+    "source_name": "Instrument der Windwacht",
+    "proposed_name": "Windharfe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleines tragbares Stahlgestell mit fünf verschieden straff gespannten Saiten",
+    "action": "steht an einer offenen Lüftungsklappe und fängt die erste Böe ein",
+    "setting": "Keldor-Becken (Ortsentwurf): in einer stillen Kammer über einem Schleusentor.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Eine einzelne Saite trägt ein kleines verschiebbares Bleigewicht.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-081",
+    "source_name": "Buch der Flusslinie",
+    "proposed_name": "Fährtenbuch",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein robustes Reisebuch mit abwaschbaren grauen Blättern und Stoffschließe",
+    "action": "liegt geschützt zwischen einer Messschnur und einem nassen Kiesel",
+    "setting": "Serev-Küste (Ortsentwurf): in einer Hafennische neben dem Treppengeländer.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Ein leerer Abdruck eines Sohlenrandes bleibt als Vertiefung fühlbar.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-082",
+    "source_name": "Schlüssel der Waldwacht",
+    "proposed_name": "Wurzelspreizer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler gebogener Eisenschlüssel mit klappbarem kurzem Griff",
+    "action": "steckt in einem niedrigen Schloss zwischen freigelegten Wurzeln",
+    "setting": "Namar-Hochland (Ortsentwurf): unter der Schwelle einer alten Waldhütte.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Der Griff lässt sich um die angrenzende Wurzel herum einklappen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-083",
+    "source_name": "Nebel Reisender von Ilyr-Wildmark (NE-083)",
+    "proposed_name": "Dunstzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Zehrer mit weit geöffneten Halsfächern und dünnem geflecktem Pelz",
+    "action": "nimmt warme abgestandene Luft aus einem zugestellten Pflanzenhaus auf",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): an einer feuchten Waldlichtung.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Die innere Glasfläche vor der Schnauze wird in einem klaren Oval frei.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-084",
+    "source_name": "Morgen Wirt",
+    "proposed_name": "Morgenlast",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein hochbeiniges Amalgam mit dichtem Brustgefieder und schweren Schuppenfüßen",
+    "action": "hält einen kleinen Mantelballen über dem feuchten Boden bereit",
+    "setting": "Veyr-Stufen (Ortsentwurf): an einem stillen Rastplatz über den Wartungsbecken.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die unterschiedlichen Füße stehen auf zwei verschieden hohen Steinplatten.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-085",
+    "source_name": "Wind-Händlerin",
+    "proposed_name": "Windwaagin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit grobem Haarband und sorgfältig geflickten Handschuhen",
+    "action": "balanciert zwei leichte Netze an einem langen tragbaren Waagbalken",
+    "setting": "Keldor-Becken (Ortsentwurf): auf einem offenen Marktsteg inmitten gefüllter Körbe.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Eines der Netze enthält nur die zurückbehaltenen leeren Hüllen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-086",
+    "source_name": "Fluss Schmugglerin",
+    "proposed_name": "Furtenkatze",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein langbeiniges Raubtier mit breiten Schwimmhäuten und kurzer Schnauze",
+    "action": "zieht einen kleinen Leinensack aus einem fast gefluteten Boot",
+    "setting": "Serev-Küste (Ortsentwurf): neben einer niedrigen Küstenfurt bei auflaufender Flut.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Die nassen Schwimmhäute leuchten im Gegenlicht zwischen den Zehen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-087",
+    "source_name": "Wald Sänger",
+    "proposed_name": "Hohlstammrufer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Pflanzenwesen mit hohlem gebogenem Stamm und dichten kurzen Wurzeln",
+    "action": "lässt den Wind an mehreren ovalen Stammöffnungen verschieden klingen",
+    "setting": "Namar-Hochland (Ortsentwurf): an einem kargen Waldsaum über einer Passmulde.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Eine Öffnung ist frisch mit einem natürlichen Harztropfen abgedichtet.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-088",
+    "source_name": "Nebel-Koch",
+    "proposed_name": "Nebelpfanne",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleines Wasserdampfelementar mit dichtem grauem Rücken und klarem Saum",
+    "action": "hält einen abkühlenden Kessel in gleichmäßiger sanfter Wärme",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): in einer offenen Waldküche unter einer Plane.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Ein Wassertropfen bleibt direkt über dem Kesselrand in ruhiger Schwebe.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-089",
+    "source_name": "Morgen Sammler",
+    "proposed_name": "Tauzehrer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleiner Zehrer mit langem rauem Rüssel und stachelarmen Vorderbeinen",
+    "action": "entfernt einen bitteren Belag von einem stillstehenden Kondensator",
+    "setting": "Veyr-Stufen (Ortsentwurf): auf einer steilen Wartungsterrasse im Morgengrau.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Die gesäuberte Metallspur ist matt statt unnatürlich glänzend.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Zehrer bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-090",
+    "source_name": "Brücke Reisender",
+    "proposed_name": "Brückenschritt",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Amalgam mit elastischem Rücken und vier verschieden langen Armen",
+    "action": "greift mit zwei Armen nach dem nächsten sicheren Pfosten",
+    "setting": "Keldor-Becken (Ortsentwurf): über einer schmalen Flutrinne zwischen Dammwegen.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Die beiden freien Arme halten einen trockenen gefalteten Mantel hoch.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Amalgame bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-091",
+    "source_name": "Weg-Wirt",
+    "proposed_name": "Herbergswartin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit gebräunter Haut und schwerer wollener Schulterdecke",
+    "action": "hängt eine saubere Schale neben die Tür eines einfachen Nachtlagers",
+    "setting": "Serev-Küste (Ortsentwurf): an einem windgeschützten Küstenpfad.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Ein kleiner alter Reparaturhaken trägt sichtbar die neue Schale.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-092",
+    "source_name": "Regen Händlerin",
+    "proposed_name": "Regenhorn",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein langbeiniges Waldtier mit breitem flachem Stirnhorn und dichtem Halsfell",
+    "action": "lenkt einen Wasserstrahl von einem schutzlosen Nest seitlich ab",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): unter dem beschädigten Dach eines Waldunterstands.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Das Horn bildet eine klare Rinne für den ablaufenden Regen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-093",
+    "source_name": "Karren Schmugglerin",
+    "proposed_name": "Speichenranke",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine kletternde Pflanze mit dünnen Hakenwurzeln und breiten Blattpolstern",
+    "action": "hebt einen verlorenen Beutel aus dem Speichenkranz einer Transportwinde",
+    "setting": "Veyr-Stufen (Ortsentwurf): in einer von Farnen gesäumten Wartungsgalerie.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Die Blattpolster berühren das Metall, während die Wurzeln frei bleiben.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-094",
+    "source_name": "Staub-Sänger",
+    "proposed_name": "Staubchor",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein mehrkerniges Luftelementar aus drei eng schwingenden Staubwirbeln",
+    "action": "gibt einen trockenen gesperrten Durchgang wieder in voller Breite frei",
+    "setting": "Keldor-Becken (Ortsentwurf): zwischen zwei hohen Getreidespeichern.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Die drei Kerne halten unterschiedliche Höhen statt menschliche Köpfe zu bilden.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-095",
+    "source_name": "Unerwartete hafenprobe von Serev-Küste (NE-095)",
+    "proposed_name": "Kippender Steg",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein loser Stegbalken und ein plötzlich absinkender leerer Handkarren",
+    "action": "lösen die Halteleine eines aufgebockten Bootes aus ihrer Klemme",
+    "setting": "Serev-Küste (Ortsentwurf): an einer Küstenwerft bei niedrigem Wasser.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Eine noch trockene Balkenseite wird gerade zum Wasser hin gedreht.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-096",
+    "source_name": "Verlorene marktnacht von Namar-Hochland (NE-096)",
+    "proposed_name": "Marktstille",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine Reihe leerer Marktstände und ein einzelnes halb geschlossenes Tor",
+    "action": "bleiben trotz aufgestellter Warenkörbe ungewöhnlich menschenleer",
+    "setting": "Namar-Hochland (Ortsentwurf): auf einem Passmarkt vor dem ersten Glockensignal.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Frische Radspuren enden gleichzeitig vor mehreren geschlossenen Ständen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-097",
+    "source_name": "Die regenwende",
+    "proposed_name": "Regenwendung",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein breiter Regenschwall und eine rasch hochgezogene Schutzplane",
+    "action": "leiten das Wasser von offenen Saatkörben in eine leere Rinne um",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): am Rand eines Waldgartens kurz vor dem Unwetter.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Das Wasser trägt nur alte Blätter, keine frischen Samen mit sich.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-098",
+    "source_name": "Letzte karrenspur",
+    "proposed_name": "Radspur im Kalk",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein schmaler Karrenabdruck auf einem hellen frisch bestäubten Steinboden",
+    "action": "endet unmittelbar vor einem verdeckten seitlichen Wartungstor",
+    "setting": "Veyr-Stufen (Ortsentwurf): in einem stillen Messgang zwischen Terrassen.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "An der letzten Speichenkerbe haftet ein einzelner dunkler Faserrest.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-099",
+    "source_name": "Unerwartete staubprobe",
+    "proposed_name": "Staubgewicht",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein trockener Kornhaufen und ein plötzlich aufbrechender falscher Boden",
+    "action": "zeigen eine unterschlagene kleine zweite Ladefläche",
+    "setting": "Keldor-Becken (Ortsentwurf): in einem niedrigen Speicherraum hinter dem Markt.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Der Staub zeichnet eine scharfe rechteckige Kante um die versteckte Klappe.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-100",
+    "source_name": "Schlüssel der Hafenwacht",
+    "proposed_name": "Pollerschlüssel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein langer Stahlschlüssel mit kurzem Kreuzgriff und breiter Nut",
+    "action": "liegt im geöffneten Sockel eines drehbaren Anlegepollers",
+    "setting": "Serev-Küste (Ortsentwurf): auf einem schlichten Wartungstuch neben einer Hafenmauer.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die Nut enthält eine Spur hellen trockenen Muschelkalks.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-101",
+    "source_name": "Klinge der Marktlinie",
+    "proposed_name": "Marktschnitt",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine gerade schwere Arbeitsklinge mit abgerundeter stumpfer Spitze",
+    "action": "ruht auf einer Holzplatte zwischen gleichmäßig geteilten Stoffballen",
+    "setting": "Namar-Hochland (Ortsentwurf): in einer offenen Marktwerkstatt am Passweg.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Die Schneide hat eine klar sichtbare kleine Scharte am hinteren Ende.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-102",
+    "source_name": "Amulett der Windwacht",
+    "proposed_name": "Windanhänger",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein flacher durchbrochener Stahlanhänger mit frei beweglicher Mittelscheibe",
+    "action": "hängt an einer gespannten Schnur über einer groben Reisejacke",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): in einem windoffenen Waldunterstand.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Die Mittelscheibe dreht sich, während der äußere Ring unbewegt bleibt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-103",
+    "source_name": "Fluss-Sammler",
+    "proposed_name": "Wasserleserin",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Mensch mit wetterfestem Tuchmantel und einem Ring aus Probeflaschen",
+    "action": "vergleicht zwei kleine Wasserproben gegen den hellen Himmel",
+    "setting": "Veyr-Stufen (Ortsentwurf): an einem offenen Auslauf unter den Messhöfen.",
+    "composition": "Asymmetrische Nahansicht; ein großes Vordergrundmotiv und ein kleiner Kontextgegenstand erklären die Szene auch als Handkarte.",
+    "distinctive_detail": "Eine Flasche enthält klar getrenntes Sediment am schräg gehaltenen Boden.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine überzeichnete Heldenrüstung; alltagstaugliche Kleidung und natürliche menschliche Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-104",
+    "source_name": "Wald Reisender",
+    "proposed_name": "Dammwanderer",
+    "lore_status": "VORSCHLAG",
+    "subject": "Eine große Bestie mit niedrigem Kopf und breiten abgeflachten Hinterpfoten",
+    "action": "tritt vorsichtig über einen unterspülten Randstreifen",
+    "setting": "Keldor-Becken (Ortsentwurf): auf einem schmalen Damm zwischen zwei Speicherbecken.",
+    "composition": "Seitliches Streiflicht; die Silhouette steht frei vor einer einfachen dunklen Fläche, die untere Diagonalkante bleibt entlastet.",
+    "distinctive_detail": "Der feste Damm trägt tiefe Pfotenabdrücke, der lose Rand bleibt unberührt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Bestien bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-105",
+    "source_name": "Nebel Wirt",
+    "proposed_name": "Nebelbaum",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein kleines Pflanzenwesen mit schalenförmigen Blättern und knotigem Laufwurzelstock",
+    "action": "sammelt Kondenswasser und reicht es einer jungen Nachbarpflanze weiter",
+    "setting": "Namar-Hochland (Ortsentwurf): an einem kalten Waldsaum oberhalb eines Passes.",
+    "composition": "Halbnahe Dreiviertelansicht; der Bildschwerpunkt liegt links der Mitte, die Handlung bleibt rechts vollständig sichtbar.",
+    "distinctive_detail": "Ein Blatt steht als Rinne zwischen den beiden deutlich getrennten Pflanzen.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Pflanzen bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-106",
+    "source_name": "Morgen-Händlerin",
+    "proposed_name": "Morgenstrom",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein Elementar aus flachem Wasser und darin gefangenen hellen Luftblasen",
+    "action": "teilt sich vor einem Stein und vereinigt sich hinter einer Saatmulde wieder",
+    "setting": "Ilyr-Wildmark (Ortsentwurf): an einer bewässerten Waldlichtung im flachen Morgenlicht.",
+    "composition": "Niedrige seitliche Perspektive; klare Silhouette vor einem ruhigeren Hintergrund und freier Raum an der unteren Diagonalkante.",
+    "distinctive_detail": "Die frisch gesetzten Wurzeln bleiben vom schnellen Wasserstrom ausgespart.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Keine menschliche Ersatzfigur; die vorhandene Art Elementare bestimmt die sichtbare Anatomie."
+    ]
+  },
+  {
+    "card_id": "NE-107",
+    "source_name": "Unerwartete brückeprobe",
+    "proposed_name": "Brückenprobe",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein frisch eingehängter Stegbalken und drei nacheinander aufgelegte Sandsäcke",
+    "action": "senken sich bis zu einer sichtbaren alten Belastungsmarke ab",
+    "setting": "Veyr-Stufen (Ortsentwurf): in einem Wartungshof zwischen zwei steilen Terrassen.",
+    "composition": "Leichte Aufsicht; das Hauptmotiv liegt zentral, die sichtbare Bewegungsrichtung führt in die freie rechte Bildhälfte.",
+    "distinctive_detail": "Der dritte Sack berührt den Balken noch nicht ganz.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-108",
+    "source_name": "Verlorene wegnacht",
+    "proposed_name": "Nachtumweg",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein geschlossener Dammweg und eine weit entfernte wandernde Handlampe",
+    "action": "lenken einen einzelnen Heimkehrer auf einen längeren sicheren Pfad",
+    "setting": "Keldor-Becken (Ortsentwurf): zwischen zwei dunklen Speicherbecken in windstiller Nacht.",
+    "composition": "Enger seitlicher Ausschnitt; zwei klar getrennte Tiefenebenen rahmen den Vorgang, alle wichtigen Details bleiben im mittleren Drittel.",
+    "distinctive_detail": "Die alte kurze Route bleibt an einer klar erkennbaren Bruchkante gesperrt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein bloßes Charakterporträt; ein klarer Wendepunkt der Handlung muss sichtbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-109",
+    "source_name": "Siegel der Waldlinie",
+    "proposed_name": "Rindensiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein einfacher runder Prägestempel mit grobem austauschbarem Holzeinsatz",
+    "action": "ruht neben frisch gebündeltem Reparaturholz auf einem Tuch",
+    "setting": "Serev-Küste (Ortsentwurf): unter dem Dach eines Küstenholzlagers.",
+    "composition": "Ruhige mittlere Entfernung; das Motiv bildet einen offenen Bogen, während Licht und Schatten die konkrete Tätigkeit trennen.",
+    "distinctive_detail": "Der Holzeinsatz zeigt natürliche Jahrringe unter der sachlichen Markierung.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  },
+  {
+    "card_id": "NE-110",
+    "source_name": "Instrument der Nebelwacht",
+    "proposed_name": "Dunstspiegel",
+    "lore_status": "VORSCHLAG",
+    "subject": "Ein ovaler matter Stahlspiegel an einem breiten beweglichen Holzfuß",
+    "action": "sammelt schwaches Licht und lenkt es in einen dunklen Wartungsschacht",
+    "setting": "Namar-Hochland (Ortsentwurf): in einer niedrigen Passstation an einem nebligen Morgen.",
+    "composition": "Dreiviertelansicht aus Augenhöhe; die vordere Kontur bleibt scharf, der Ort ist im weicheren Hintergrund noch erkennbar.",
+    "distinctive_detail": "Die eine Spiegelhälfte ist beschlagen, die andere wurde frisch frei gewischt.",
+    "avoid": [
+      "Keine Schrift, Zahlen, Rahmen oder UI im Bild.",
+      "Keine Aussage zu Eira, Ursprung der Zeitkorrektur oder Führung der Mächte.",
+      "Keine Logos, bekannten Franchisefiguren oder dokumentierten Altentwurf-Figuren.",
+      "Kein Porträt als Hauptmotiv; das eigenständige Objekt muss vollständig lesbar sein."
+    ]
+  }
+]

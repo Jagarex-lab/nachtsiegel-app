@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "source_sha256": "b7e6bfd396bf899df8ca00d46c138fefd18f23923313c68e86ff8caf9dc5668b",
+  "entries": [
+    {
+      "card_id": "ZH-001",
+      "status": "reviewed",
+      "asset_path": "assets/production/illustrations/ZH-001.png",
+      "sha256": "bc31ef66ec4798eb8bc2ffa132bc63dc3157e76610431ecd8d3ec3011d445bcd",
+      "width": 1448,
+      "height": 1086,
+      "provenance": {
+        "creator_or_generator": "OpenAI image_gen.imagegen, session 10.11.2026; model version not exposed by tool",
+        "created_on": "2026-11-10",
+        "source_or_prompt": "Create one finished-quality illustration only for ORAFOLD, a painterly science-fantasy trading-card game. NOT a card, no borders or text, no UI, no letters, no numbers, no watermark. Horizontal 4:3 illustration to fit a 672x500 art window, key subject within central 70 percent for cropping. Subject: Schleusenzeichnerin (concept ZH-001), a competent adult human female sluice engineer in worn leather work clothes with copper forearm guards, visibly realistic human anatomy, a distinct recognizable strong silhouette. She is bracing an ancient warped wooden sluice gate with a solid old copper wedge scored with small nonlinguistic family notches, stopping it from collapsing as water sprays through a narrow seam. Three-quarter view, one clear hand holds the wedge in place and other grips a mallet, exactly two hands, plausible action. Deep foreground old wet stone, background only a misty working canal and copper mechanisms, no crowd. Dominant warm copper with deep blue-grey water shadows and restrained amber rim light, tangible repaired materials, subtle folded-space reflections in water. Dynamic diagonal gate, determined expressive face above central diagonal, legible even at thumbnail scale, cinematic realistic hand-painted brushwork, rich yet subdued palette, high detail focal point, atmospheric depth, polished commercial fantasy illustration. Original local scene only: no royalty, no world-history revelation, no Eira, no external franchise cues.",
+        "reference_sources": [],
+        "commercial_usage_basis": "Im Nutzerauftrag für ORAFOLD mit OpenAI Image Generation erzeugt. Keine externen Bildreferenzen. Konkrete Vertrags-/Kontobedingungen und kommerzielle Schlussprüfung noch offen; keine Exklusivität behauptet."
+      },
+      "review": {
+        "visual": "passed",
+        "lore": "passed",
+        "rights": "pending",
+        "reviewer": "Codex – visuelle Sichtprüfung im Erzeugungsdialog 2026-11-10",
+        "note": "Original visuell und als ausdrücklich markierter Design-Mock im unveränderten Godot-Diagonalrenderer geprüft; tatsächliche Pixel, Textpassung, 756×1056, identische Kontur/Rückseite. Keine Spieldefinition oder Kanonisierung. Finale aktive Kartenintegration und kommerzielle Schlussprüfung offen. Die menschlichen Pilotgesichter ähneln sich; breitere Figurenvarianz bleibt redaktioneller Prüfpunkt."
+      },
+      "brief_sha256": "cc27b586c150f70d9ddb1078ec51bf2edd1f92eeb9cb8dd536c20e516e23b1e6",
+      "asset_id": "orafold-zh-001",
+      "alternative_text": "Werkmeisterin sichert eine berstende Schleuse mit Kupferkeil und Hammer.",
+      "edits": []
+    },
+    {
+      "card_id": "SW-001",
+      "status": "reviewed",
+      "asset_path": "assets/production/illustrations/SW-001.png",
+      "sha256": "f7902356035516e7bd1d06f0d10d95b559515697070bd02d4a260c62dc194d3d",
+      "width": 1448,
+      "height": 1086,
+      "provenance": {
+        "creator_or_generator": "OpenAI image_gen.imagegen, session 10.11.2026; model version not exposed by tool",
+        "created_on": "2026-11-10",
+        "source_or_prompt": "One beautiful standalone illustration for ORAFOLD, original painterly science-fantasy trading-card game, horizontal 4:3 to fit a 672x500 art window, key subject central 70 percent, no card frame, no text, no letters, no numbers, no watermarks, no UI. Concept SW-001 Froststegwache: an adult human female watchguard in worn practical cold-weather armor holding a broad slanted translucent ice-blue protective shield above a kneeling adult traveler on a narrow iced-over wooden footbridge, shielding her from falling ice chips and bitter wind. Protective caring posture, alert clear face, anatomically plausible two arms, shield held in one hand by visibly repaired grip and leather strap, other hand steadies traveler. Keep the shield distinct from her silhouette. Worn wool, frosted leather, layered steel, one repaired broken handle clearly evident with a brass splint. Local mountain settlement of Namar in mist behind, a single rope handrail and steep rock, no palace or royal symbols. Dominant ice-blue and desaturated steel, focused soft luminous cyan shield edge, subdued warm fabric accents, crisp foreground, atmospheric distant highland. Three-quarter composition with deep foreground, dramatic diagonal from shield to bridge, faces and protective gesture above lower art-window diagonal. Commercially polished hand-painted realistic fantasy illustration, precise material depth, subtle traces of folded-space in frozen reflections only, unique recognizable silhouette, readable at thumbnail size, rich detail at focal point. A small local rescue, not a grand world event, no Eira or lore revelations, no external franchise references.",
+        "reference_sources": [],
+        "commercial_usage_basis": "Im Nutzerauftrag für ORAFOLD mit OpenAI Image Generation erzeugt. Keine externen Bildreferenzen. Konkrete Vertrags-/Kontobedingungen und kommerzielle Schlussprüfung noch offen; keine Exklusivität behauptet."
+      },
+      "review": {
+        "visual": "passed",
+        "lore": "passed",
+        "rights": "pending",
+        "reviewer": "Codex – visuelle Sichtprüfung im Erzeugungsdialog 2026-11-10",
+        "note": "Original visuell und als ausdrücklich markierter Design-Mock im unveränderten Godot-Diagonalrenderer geprüft; tatsächliche Pixel, Textpassung, 756×1056, identische Kontur/Rückseite. Keine Spieldefinition oder Kanonisierung. Finale aktive Kartenintegration und kommerzielle Schlussprüfung offen. Die menschlichen Pilotgesichter ähneln sich; breitere Figurenvarianz bleibt redaktioneller Prüfpunkt."
+      },
+      "brief_sha256": "5823ed909c7f11da62f210cfd2bd5498937db2956111d81b7bacc455bfea274e",
+      "asset_id": "orafold-sw-001",
+      "alternative_text": "Wachfrau schützt eine kniende Reisende mit eisblauer Schutzplatte auf vereistem Steg.",
+      "edits": []
+    },
+    {
+      "card_id": "VG-001",
+      "status": "reviewed",
+      "asset_path": "assets/production/illustrations/VG-001.png",
+      "sha256": "77abc18d5f90aef1f8b0a442340181f47fd629c15b89d26ad25d9cc3437962d6",
+      "width": 1448,
+      "height": 1086,
+      "provenance": {
+        "creator_or_generator": "OpenAI image_gen.imagegen, session 10.11.2026; model version not exposed by tool",
+        "created_on": "2026-11-10",
+        "source_or_prompt": "ORAFOLD original standalone science-fantasy illustration, no card frame, no text, numbers or UI. Landscape 4:3, central 70% safe crop for 672x500 art window. A living upright willow tree, clearly a PLANT creature not a humanoid, with braided mobile root-feet and a coherent organic structure, lifts one broken wooden plank of a tiny forest footbridge using two lateral roots. The trunk remains elegant and tree-shaped, no human face or eyes; intent conveyed through leaning branches and roots. Wet wild forest path with shallow root steps, rain, moss and shallow stream, jade-green dominant palette with soft silver canopy light, original root anatomy logically connected to the trunk. A red cloth scrap hangs from newly joined rope railing, a clear contrasting small focal detail. Near side view, dramatic graceful arch of willow and bridge across central image, deep atmospheric background kept simple, lower right quiet for card diagonal cropping. High-end painterly realistic fantasy artwork, exact bark fibers, mist, tangible damp wood, strong silhouette readable at thumbnail, beautiful restrained saturation. Only a small local bridge repair, no world-history claims, no Eira, no known franchises.",
+        "reference_sources": [],
+        "commercial_usage_basis": "Im Nutzerauftrag für ORAFOLD mit OpenAI Image Generation erzeugt. Keine externen Bildreferenzen. Konkrete Vertrags-/Kontobedingungen und kommerzielle Schlussprüfung noch offen; keine Exklusivität behauptet."
+      },
+      "review": {
+        "visual": "passed",
+        "lore": "passed",
+        "rights": "pending",
+        "reviewer": "Codex – visuelle Sichtprüfung im Erzeugungsdialog 2026-11-10",
+        "note": "Original visuell und als ausdrücklich markierter Design-Mock im unveränderten Godot-Diagonalrenderer geprüft; tatsächliche Pixel, Textpassung, 756×1056, identische Kontur/Rückseite. Keine Spieldefinition oder Kanonisierung. Finale aktive Kartenintegration und kommerzielle Schlussprüfung offen."
+      },
+      "brief_sha256": "b3b0759beb94a92e4c8e572f9f2e99c28571b9532c310ba5a84e52a69a827dd6",
+      "asset_id": "orafold-vg-001",
+      "alternative_text": "Lebende Weide hebt mit Seitenwurzeln eine gebrochene Bohle einer Waldbrücke.",
+      "edits": []
+    },
+    {
+      "card_id": "NS-071",
+      "status": "reviewed",
+      "asset_path": "assets/production/illustrations/NS-071.png",
+      "sha256": "a6729b13018dbca8df610fe56586f6a5e6a55bb763b7156b92f632a89436c265",
+      "width": 1448,
+      "height": 1086,
+      "provenance": {
+        "creator_or_generator": "OpenAI image_gen.imagegen, session 10.11.2026; model version not exposed by tool",
+        "created_on": "2026-11-10",
+        "source_or_prompt": "ORAFOLD original standalone science-fantasy trading-card art illustration ONLY. No card border, text, numbers, lettering, logo or UI. Horizontal 4:3 art, fits a 672x500 window with focus within central 70%. IMPULSE event called Messsprung: a dark-steel plumb weight above a damp metal measuring plate at the exact moment its thin suspension cord breaks; the weight leaps sideways while concentric amethyst causal ripples visibly bend a tiny local patch of space beneath it. Both broken cord ends are visible in same image, hanging from a simple old measuring rig with brass joints. Low side viewpoint, dramatic suspended weight with powerful diagonal tension as central focus, simple instrument workshop in shadow, one narrow dusty light beam. Deep amethyst dominant accent, dark steel and worn purple cloth, precise material texture, purposeful asymmetry, no faces or characters. The event and its consequence are clearly readable, not an ordinary static object portrait; restrained short motion arc, not a magical explosion. Commercially polished hand-painted realistic fantasy, strong legible shape, atmospheric depth, high detail focal point, lower right quiet and expendable for diagonal mask. A bounded local anomaly only, no origin of time correction revealed, no Eira or external franchise.",
+        "reference_sources": [],
+        "commercial_usage_basis": "Im Nutzerauftrag für ORAFOLD mit OpenAI Image Generation erzeugt. Keine externen Bildreferenzen. Konkrete Vertrags-/Kontobedingungen und kommerzielle Schlussprüfung noch offen; keine Exklusivität behauptet."
+      },
+      "review": {
+        "visual": "passed",
+        "lore": "passed",
+        "rights": "pending",
+        "reviewer": "Codex – visuelle Sichtprüfung im Erzeugungsdialog 2026-11-10",
+        "note": "Original visuell und als ausdrücklich markierter Design-Mock im unveränderten Godot-Diagonalrenderer geprüft; tatsächliche Pixel, Textpassung, 756×1056, identische Kontur/Rückseite. Keine Spieldefinition oder Kanonisierung. Finale aktive Kartenintegration und kommerzielle Schlussprüfung offen."
+      },
+      "brief_sha256": "1862d8f6266fcb5ceb19e10d6663a0d8755956322eef5653d6fa81c835970621",
+      "asset_id": "orafold-ns-071",
+      "alternative_text": "Ein Lotgewicht springt nach dem Reißen seiner Schnur über violetten örtlichen Kausalwellen.",
+      "edits": []
+    },
+    {
+      "card_id": "NE-101",
+      "status": "reviewed",
+      "asset_path": "assets/production/illustrations/NE-101.png",
+      "sha256": "93b333acbae9cbbb3f4ce8b11b5935b83e2cc6e6cdcdf22b8099bcbbc1ecc5ea",
+      "width": 1448,
+      "height": 1086,
+      "provenance": {
+        "creator_or_generator": "OpenAI image_gen.imagegen, session 10.11.2026; model version not exposed by tool",
+        "created_on": "2026-11-10",
+        "source_or_prompt": "ORAFOLD original standalone painterly science-fantasy trading-card illustration ONLY, no frame or UI, no text, no letters, no numbers or logos. Landscape 4:3 image for a 672x500 art window, key relic fully visible in middle 70%. RELIC 'Marktschnitt': one distinctive straight heavy textile-working blade with a safely rounded blunt tip, short riveted steel handle worn smooth, the sharp rear edge has a small clearly visible nick. It rests diagonally across an old wooden workboard between neatly divided tightly rolled bolts of rough natural fabric at a mountain market workshop. Entire original object, functional and convincing, not a sword and not a human portrait. Graphite and steel dominant material palette, subtle warm fabric ochre and cool highland daylight, open stall with soft hints of a pass road in back, no letters or signs. Quiet three-quarter still-life with strong tactile materials, composition uses an open curve of fabric rolls around the diagonal blade, lateral raking light distinguishes blade edge and nick. High-end realistic hand-painted fantasy art, cinematic restrained lighting, atmospheric depth and thumbnail clarity, no decoration extending outside art, no magical glow needed. Local object proposal only, no world-history claims, no Eira, no existing franchise references.",
+        "reference_sources": [],
+        "commercial_usage_basis": "Im Nutzerauftrag für ORAFOLD mit OpenAI Image Generation erzeugt. Keine externen Bildreferenzen. Konkrete Vertrags-/Kontobedingungen und kommerzielle Schlussprüfung noch offen; keine Exklusivität behauptet."
+      },
+      "review": {
+        "visual": "passed",
+        "lore": "passed",
+        "rights": "pending",
+        "reviewer": "Codex – visuelle Sichtprüfung im Erzeugungsdialog 2026-11-10",
+        "note": "Original visuell und als ausdrücklich markierter Design-Mock im unveränderten Godot-Diagonalrenderer geprüft; tatsächliche Pixel, Textpassung, 756×1056, identische Kontur/Rückseite. Keine Spieldefinition oder Kanonisierung. Finale aktive Kartenintegration und kommerzielle Schlussprüfung offen."
+      },
+      "brief_sha256": "7284fd278c1d83d74f35e67e4011b336d8ebaa5b3b6728607c6738a3c38790f5",
+      "asset_id": "orafold-ne-101",
+      "alternative_text": "Abgenutzte Arbeitsklinge mit abgerundeter Spitze und Scharte zwischen Stoffballen.",
+      "edits": []
+    }
+  ]
+}
