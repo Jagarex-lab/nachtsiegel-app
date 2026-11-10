@@ -32,6 +32,8 @@ jobs:
         run: tools/test_legacy.sh
       - name: New Alpha rules replay real touch and landscape render tests
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
+      - name: New card contract, effect adapter, card faces and battlefield opening
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
       - name: Existing archive desktop regression
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
       - name: Release separation regression
@@ -62,6 +64,7 @@ jobs:
             work/alpha02/*.log
             work/alpha02/*.json
             work/alpha02/*.png
+            work/master550/
             work/legacy/*.log
             work/*final.log
   browser:
@@ -141,6 +144,7 @@ jobs:
             work/alpha02/*.log
             work/alpha02/*.json
             work/alpha02/*.png
+            work/master550/
 
   balance-audit:
     runs-on: ubuntu-24.04
@@ -161,8 +165,24 @@ jobs:
           mkdir -p work/alpha02
           godot --headless --path . --script tests/alpha02_balance.gd > work/alpha02/balance.log 2>&1
           python3 tools/alpha02_balance_report.py
+      - name: Paired resource experiments with unchanged production defaults
+        run: |
+          mkdir -p work/master550
+          godot --headless --path . --script tests/master550_resources.gd > work/master550/resources.log 2>&1
+          python3 - <<'PYCHECK'
+          import json,re
+          from pathlib import Path
+          log=Path('work/master550/resources.log').read_text()
+          assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:',log,re.M),log
+          assert re.search(r'\d+ assertions; 0 failures',log),log
+          report=json.loads(Path('work/master550/resource_experiments.json').read_text())
+          assert report, 'Missing resource experiment evidence'
+          print(log)
+          PYCHECK
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: alpha02-balance-audit
-          path: work/alpha02/
+          path: |
+            work/alpha02/
+            work/master550/

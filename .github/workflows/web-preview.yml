@@ -40,6 +40,7 @@ jobs:
         run: |
           tools/test_legacy.sh
           xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
+          xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
       - name: Export tested browser build
         run: |
           mkdir -p work/build/web
@@ -128,6 +129,7 @@ jobs:
             work/alpha02/*.log
             work/alpha02/*.json
             work/alpha02/*.png
+            work/master550/
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png
