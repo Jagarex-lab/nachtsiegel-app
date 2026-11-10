@@ -1,0 +1,148 @@
+[
+  {
+    "engine": "chromium",
+    "boot_ms": 20330,
+    "metrics": {
+      "cssWidth": 390,
+      "cssHeight": 844,
+      "pixelsWidth": 1170,
+      "pixelsHeight": 2532,
+      "dpr": 3,
+      "zoom": 1,
+      "lockAvailable": true,
+      "transform": "none"
+    },
+    "captures": [
+      "cdp-explicit-native-viewport",
+      "cdp-explicit-native-viewport",
+      "cdp-explicit-native-viewport"
+    ],
+    "timings": [
+      {
+        "action": "start",
+        "qa_state_ms": 13454
+      },
+      {
+        "action": "choose_houses",
+        "qa_state_ms": 9083
+      },
+      {
+        "action": "deck_play",
+        "qa_state_ms": 4963
+      },
+      {
+        "action": "mulligan_done",
+        "qa_state_ms": 11175
+      },
+      {
+        "action": "origin_2",
+        "qa_state_ms": 14300
+      },
+      {
+        "action": "opening_done",
+        "qa_state_ms": 29719
+      },
+      {
+        "action": "inspect",
+        "qa_state_ms": 9791
+      },
+      {
+        "action": "modal_close",
+        "qa_state_ms": 8988
+      },
+      {
+        "action": "cancel_selection",
+        "qa_state_ms": 3071
+      },
+      {
+        "action": "menu",
+        "qa_state_ms": 2631
+      },
+      {
+        "action": "confirm_menu",
+        "qa_state_ms": 2983
+      },
+      {
+        "action": "builder",
+        "qa_state_ms": 11501
+      },
+      {
+        "action": "filters",
+        "qa_state_ms": 30782
+      },
+      {
+        "action": "filter_type",
+        "qa_state_ms": 63986
+      },
+      {
+        "action": "option_filter_type_creature",
+        "qa_state_ms": 15500
+      },
+      {
+        "action": "filters",
+        "qa_state_ms": 11816
+      },
+      {
+        "action": "reset_filters",
+        "qa_state_ms": 15878
+      },
+      {
+        "action": "filters",
+        "qa_state_ms": 4818
+      },
+      {
+        "action": "reset_filters",
+        "qa_state_ms": 5835
+      },
+      {
+        "action": "deck_tab",
+        "qa_state_ms": 11562
+      },
+      {
+        "action": "remove_oa-neutral-c01",
+        "qa_state_ms": 9701
+      },
+      {
+        "action": "library_tab",
+        "qa_state_ms": 6441
+      },
+      {
+        "action": "add_oa-neutral-c02",
+        "qa_state_ms": 6063
+      },
+      {
+        "action": "save_deck",
+        "qa_state_ms": 7294
+      },
+      {
+        "action": "builder",
+        "qa_state_ms": 11040
+      },
+      {
+        "action": "builder_back",
+        "qa_state_ms": 9091
+      },
+      {
+        "action": "start",
+        "qa_state_ms": 4577
+      },
+      {
+        "action": "custom_houses",
+        "qa_state_ms": 6262
+      },
+      {
+        "action": "deck_play",
+        "qa_state_ms": 7405
+      }
+    ],
+    "errors": [],
+    "checks": [
+      "portrait menu and four starters",
+      "real edited deck saved/reloaded/selected",
+      "native DPR3 and MSDF",
+      "safe areas",
+      "rotation preserves complete state and selected card",
+      "landscape paths and card inspector"
+    ]
+  }
+]

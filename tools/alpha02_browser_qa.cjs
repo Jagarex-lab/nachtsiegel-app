@@ -25,7 +25,7 @@ const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Objec
     fs.writeFileSync(`work/alpha02/${name}-${suffix}.png`,buffer);
    };
 
-   const timings=[];
+   const timings=[],rotationMetrics=[];
    const action=async id=>{const beganAction=Date.now();
     await page.waitForFunction(id=>window.orafoldQA?.actions[id]&&!window.orafoldQA.actions[id].disabled,id,{timeout:90000});
     const a=(await q()).actions[id],r=a.rect;assert(r[2]>=43.9&&r[3]>=43.9,id+' touch');
@@ -58,6 +58,7 @@ const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Objec
    console.log('ALPHA02',name,'rotation passed');await action('inspect');assert((await q()).actions.modal_close);fs.writeFileSync('work/alpha02/'+name+'-pre-inspection.json',JSON.stringify({state:await q(),metrics:await page.evaluate(()=>({...window.orafoldDisplayMetrics(),screenWidth:screen.width,screenHeight:screen.height}))}));await shot('inspection');await action('modal_close');
    await action('cancel_selection');await action('menu');await action('confirm_menu');
    await page.setViewportSize({width:390,height:844});await wait(()=>window.orafoldQA.portrait);
+   const returned=await page.evaluate(()=>window.orafoldDisplayMetrics());rotationMetrics.push(returned);assert.equal(returned.cssWidth,390,'canvas returns to portrait CSS width');assert.equal(returned.cssHeight,844,'canvas returns to portrait CSS height');assert.equal(returned.pixelsWidth,1170,'portrait native buffer restored');assert.equal(returned.pixelsHeight,2532,'portrait native buffer height restored');
    await action('builder');console.log('ALPHA02',name,'builder');
    await action('filters');await action('filter_type');await action('option_filter_type_creature');
    const shown=Object.keys((await q()).actions).filter(k=>k.startsWith('card_')).map(k=>by[k.slice(5)]);assert(shown.length&&shown.every(c=>c.kind==='creature'));
@@ -84,7 +85,7 @@ const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json')).cards, by=Objec
    await action('builder_back');await action('start');await action('custom_houses');await action('deck_play');
    const played=(await q()).battle.hero;assert.deepEqual([...played.hand,...played.deck].sort(),[...edited].sort());
    assert.equal(errors.length,0,errors.join('\n'));
-   records.push({engine:name,boot_ms:boot,metrics,captures,timings,errors,checks:['portrait menu and four starters','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
+   records.push({engine:name,boot_ms:boot,metrics,rotationMetrics,captures,timings,errors,checks:['portrait menu and four starters','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
    console.log('ALPHA02 BROWSER PASS',name);await context.close();
   }catch(error){const diagnostic=lastPage?await Promise.race([lastPage.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(r=>setTimeout(()=>r(null),5000))]):null;fs.writeFileSync('work/alpha02/'+name+'-error.json',JSON.stringify({error:String(error),console:lastErrors,diagnostic},null,2));throw error;}finally{await browser.close();}
  }
