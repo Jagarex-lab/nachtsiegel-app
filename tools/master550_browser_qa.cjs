@@ -135,9 +135,21 @@ async function runEngine(name){
    const at=center(before.hand[index].rect);await pointer.start(method,at);const lifted={x:at.x,y:at.y-34};await pointer.move(method,lifted);
    await wait(()=>window.orafoldQA.drag?.active);const state=await q();check(state.drag.active,'actual browser input lifts card');return {before,at:lifted,targets:state.drag.targets};
   }
+  async function rebuiltHand(previousVersion,label){
+   // Invalid/canceled hand drags explicitly schedule render(). Wait for that
+   // reconstruction, not a fixed pause while the old Controls still exist.
+   await wait(version=>{const state=window.orafoldQA;return !state.drag.active&&state.render_version>version;},previousVersion);
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   await wait(()=>{
+    const state=window.orafoldQA,hand=state.hand,ids=state.battle.hero.hand;
+    return Object.keys(state.board).length===10&&hand.length===ids.length&&hand.every((card,index)=>card.id===ids[index]&&card.rect[2]>=43.9&&card.rect[3]>=43.9);
+   });
+   const state=await q();check(state.render_version>previousVersion&&!state.drag.active,label+': real UI reconstruction completed');
+   for(const hand of state.hand)rectCheck(hand.rect,label+': rebuilt hand card');
+  }
   async function releaseInvalid(gesture,method,label){
    const state=await q(),invalid=Object.keys(state.board).find(key=>!gesture.targets.includes(key));
-   const at=invalid?center(state.board[invalid]):{x:3,y:page.viewportSize().height-3};await pointer.move(method,at);await pointer.end(method,at);await wait(()=>!window.orafoldQA.drag.active);await exactState(gesture.before,label);equal((await q()).selected,gesture.before.selected,'invalid drop restores previous selection');
+   const at=invalid?center(state.board[invalid]):{x:3,y:page.viewportSize().height-3};await pointer.move(method,at);const releasing=await q();check(releasing.drag.active,'invalid-drop case releases an active gesture');await pointer.end(method,at);await rebuiltHand(releasing.render_version,label);await exactState(gesture.before,label);equal((await q()).selected,gesture.before.selected,'invalid drop restores previous selection');
   }
   async function dragPlay(index,method,{safety=false,capture=true}={}){
    lastStep='drag '+method+' index '+index;
@@ -146,7 +158,7 @@ async function runEngine(name){
     let gesture=await lift(index,method);const tapTarget=gesture.targets[0];check(tapTarget,'tap-cancel test has a real legal target');await releaseInvalid(gesture,method,'invalid '+method+' drop');
     if(method==='touch'){
      gesture=await lift(index,method);const current=await q(),key=gesture.targets[0];check(key,'touch-cancel case has a legal target');const at=center(key==='relic_slot'?current.actions.relic_slot.rect:current.board[key]);
-     await pointer.move(method,at);await pointer.end(method,at,true);await wait(()=>!window.orafoldQA.drag.active);await exactState(gesture.before,'touchcancel on a legal target');equal((await q()).selected,gesture.before.selected,'touchcancel restores previous selection');
+     await pointer.move(method,at);const canceling=await q();check(canceling.drag.active,'touch-cancel case cancels an active gesture');await pointer.end(method,at,true);await rebuiltHand(canceling.render_version,'touchcancel');await exactState(gesture.before,'touchcancel on a legal target');equal((await q()).selected,gesture.before.selected,'touchcancel restores previous selection');
     }
     gesture=await lift(index,method);await resize(390,844);await wait(()=>window.orafoldQA.actions.rotate_menu&&!window.orafoldQA.drag.active);await pointer.end(method,{x:180,y:350});await exactState(gesture.before,'rotation cancels '+method+' drag');equal((await q()).selected,gesture.before.selected,'rotation restores previous selection');await resize(844,390);await wait(()=>window.orafoldQA.actions.end);
     const state=await q(),handPoint=center(state.hand[index].rect);await page.touchscreen.tap(handPoint.x,handPoint.y);await wait(i=>window.orafoldQA.selected===i,index);
