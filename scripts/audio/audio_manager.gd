@@ -16,6 +16,8 @@ var events_path := "res://data/audio/audio_events.json"
 var settings_path := "user://orafold_audio_v1.cfg"
 var settings: Dictionary = DEFAULT_SETTINGS.duplicate()
 var last_save_error: Error = OK
+var _web_storage_status := "native"
+var _mirror_write_blocked := false
 var music_controller: Node
 var unlocked := not OS.has_feature("web")
 var _catalog: Dictionary = {}
@@ -42,6 +44,8 @@ func _ready() -> void:
 	_ensure_buses()
 	for index in range(POOL_SIZE):
 		var player := AudioStreamPlayer.new()
+		# Godot Web SAMPLE bypasses the engine mixer/bus effects; use the mixer path.
+		player.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
 		player.name = "Voice%d" % index
 		add_child(player)
 		_voices.append({"player": player, "event": "", "priority": 0, "started": 0, "layer": false})
@@ -50,6 +54,7 @@ func _ready() -> void:
 	add_child(music_controller)
 	music_controller.set_unlocked(unlocked)
 	_ambience = AudioStreamPlayer.new()
+	_ambience.playback_type = AudioServer.PLAYBACK_TYPE_STREAM
 	_ambience.name = "Ambience"
 	_ambience.bus = BUS_NAMES.ambience
 	add_child(_ambience)
@@ -323,12 +328,86 @@ func _apply_settings(smooth: bool) -> void:
 			_set_bus_gain(target, bus)
 			AudioServer.set_bus_mute(index, explicit_mute or target <= 0.0)
 
+func _browser_settings_key() -> String:
+	# Independent of the gameplay save and isolated for custom settings_path tests.
+	return "orafold.audio.v1:" + settings_path.sha256_text()
+
+func _validate_mirror_settings(value: Variant) -> Dictionary:
+	if not value is Dictionary:
+		return {}
+	var validated: Dictionary = {}
+	for key in DEFAULT_SETTINGS:
+		if not value.has(key):
+			return {}
+		var item: Variant = value[key]
+		if DEFAULT_SETTINGS[key] is bool:
+			if not item is bool:
+				return {}
+			validated[key] = item
+		else:
+			if not (item is float or item is int) or not is_finite(float(item)) or float(item) < 0.0 or float(item) > 1.0:
+				return {}
+			validated[key] = float(item)
+	return validated
+
+func _read_browser_mirror() -> Dictionary:
+	# Both interpolated values are JSON string literals, never executable input.
+	var script := "(function(){try{return JSON.stringify({ok:true,value:localStorage.getItem(%s)});}catch(error){return JSON.stringify({ok:false});}})()" % JSON.stringify(_browser_settings_key())
+	var reply: Variant = JavaScriptBridge.eval(script, true)
+	if not reply is String:
+		return {"status": "unavailable"}
+	var envelope: Variant = JSON.parse_string(reply)
+	if not envelope is Dictionary or envelope.get("ok", false) != true:
+		return {"status": "unavailable"}
+	return _decode_mirror(envelope.get("value", null))
+
+func _decode_mirror(raw: Variant) -> Dictionary:
+	if raw == null:
+		return {"status": "missing"}
+	if not raw is String:
+		return {"status": "invalid"}
+	var parser := JSON.new()
+	if parser.parse(raw) != OK or not parser.data is Dictionary:
+		return {"status": "invalid"}
+	var document: Dictionary = parser.data
+	var version: Variant = document.get("version", null)
+	if not (version is int or version is float) or float(version) != 1.0:
+		return {"status": "invalid"}
+	var validated := _validate_mirror_settings(document.get("settings", null))
+	if validated.is_empty():
+		return {"status": "invalid"}
+	return {"status": "valid", "settings": validated}
+
+func _write_browser_mirror() -> Error:
+	var existing := _read_browser_mirror()
+	if existing.status == "invalid":
+		_mirror_write_blocked = true
+		_web_storage_status = "invalid"
+		return ERR_INVALID_DATA
+	if _mirror_write_blocked:
+		# Do not silently downgrade future schemas or replace corrupt evidence.
+		_web_storage_status = "invalid"
+		return ERR_INVALID_DATA
+	var document := {"version": 1, "settings": settings.duplicate()}
+	var script := "(function(){try{localStorage.setItem(%s,%s);return 'ok';}catch(error){return 'failed';}})()" % [JSON.stringify(_browser_settings_key()), JSON.stringify(JSON.stringify(document))]
+	var outcome: Variant = JavaScriptBridge.eval(script, true)
+	if not outcome is String or outcome != "ok":
+		_web_storage_status = "unavailable"
+		return ERR_UNAVAILABLE
+	_web_storage_status = "saved"
+	return OK
+
 func save_settings() -> Error:
 	var config := ConfigFile.new()
 	config.set_value("audio", "version", 1)
 	for key in DEFAULT_SETTINGS:
 		config.set_value("audio", key, settings[key])
 	last_save_error = config.save(settings_path)
+	if OS.has_feature("web"):
+		# IDBFS flush is asynchronous; this same-origin mirror survives immediate reload.
+		var mirror_error := _write_browser_mirror()
+		if last_save_error == OK:
+			last_save_error = mirror_error
 	if last_save_error != OK:
 		settings_save_failed.emit(last_save_error)
 	return last_save_error
@@ -339,15 +418,23 @@ func load_settings() -> Error:
 	settings = DEFAULT_SETTINGS.duplicate()
 	if result == OK:
 		if config.get_value("audio", "version", 0) != 1:
-			_apply_settings(false)
-			settings_changed.emit(settings.duplicate())
-			return ERR_INVALID_DATA
-		for key in DEFAULT_SETTINGS:
-			var value: Variant = config.get_value("audio", key, DEFAULT_SETTINGS[key])
-			if DEFAULT_SETTINGS[key] is bool:
-				settings[key] = value if value is bool else DEFAULT_SETTINGS[key]
-			else:
-				settings[key] = _number(value, DEFAULT_SETTINGS[key], 0.0, 1.0)
+			result = ERR_INVALID_DATA
+		else:
+			for key in DEFAULT_SETTINGS:
+				var value: Variant = config.get_value("audio", key, DEFAULT_SETTINGS[key])
+				if DEFAULT_SETTINGS[key] is bool:
+					settings[key] = value if value is bool else DEFAULT_SETTINGS[key]
+				else:
+					settings[key] = _number(value, DEFAULT_SETTINGS[key], 0.0, 1.0)
+	if OS.has_feature("web"):
+		var mirror := _read_browser_mirror()
+		_web_storage_status = mirror.status
+		_mirror_write_blocked = mirror.status == "invalid"
+		if mirror.status == "valid":
+			settings = mirror.settings
+			result = OK
+		elif mirror.status == "invalid":
+			result = ERR_INVALID_DATA
 	_apply_settings(false)
 	settings_changed.emit(settings.duplicate())
 	return result
@@ -442,6 +529,7 @@ func snapshot() -> Dictionary:
 	result.unlocked = unlocked
 	result.events = _events.size()
 	result.last_save_error = last_save_error
+	result.web_storage_status = _web_storage_status
 	return result
 
 func _exit_tree() -> void:

@@ -8,6 +8,6 @@ test_solo_alpha_and_existing_environment_rules (test_safety.Safety.test_solo_alp
 test_workflow_privilege_boundaries (test_safety.Safety.test_workflow_privilege_boundaries) ... ok
 
 ----------------------------------------------------------------------
-Ran 8 tests in 0.014s
+Ran 8 tests in 0.016s
 
 OK
