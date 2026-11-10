@@ -1,0 +1,664 @@
+{
+  "schema_version": 1,
+  "content_version": 1,
+  "default_campaign": "prototype",
+  "status": "VORSCHLAG",
+  "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+  "campaigns": {
+    "prototype": {
+      "id": "prototype",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "title_id": "campaign.prototype.title",
+      "summary_id": "campaign.prototype.summary",
+      "chapters": [
+        "cp01",
+        "cp02"
+      ]
+    }
+  },
+  "chapters": {
+    "cp01": {
+      "id": "cp01",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "title_id": "chapter.cp01.title",
+      "summary_id": "chapter.cp01.summary",
+      "scenes": [
+        "threshold",
+        "first_question",
+        "preserve",
+        "compare",
+        "practice",
+        "victory",
+        "defeat"
+      ],
+      "entry_scene": "threshold",
+      "requires": [],
+      "replayable": true
+    },
+    "cp02": {
+      "id": "cp02",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "title_id": "chapter.cp02.title",
+      "summary_id": "chapter.cp02.summary",
+      "scenes": [
+        "return",
+        "margin",
+        "blank",
+        "last_question",
+        "ending_record",
+        "ending_open"
+      ],
+      "entry_scene": "return",
+      "requires": [
+        "cp01"
+      ],
+      "replayable": true
+    }
+  },
+  "scenes": {
+    "threshold": {
+      "id": "threshold",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp01",
+      "title_id": "scene.threshold.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.threshold.01",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.threshold.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.threshold.03",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "next_scene": "first_question"
+    },
+    "first_question": {
+      "id": "first_question",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp01",
+      "title_id": "scene.first_question.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.first_question.01",
+          "emotion": "concerned",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.first_question.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "decision_id": "approach"
+    },
+    "preserve": {
+      "id": "preserve",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp01",
+      "title_id": "scene.preserve.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.preserve.01",
+          "emotion": "relieved",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.preserve.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.preserve.03",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "next_scene": "practice"
+    },
+    "compare": {
+      "id": "compare",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp01",
+      "title_id": "scene.compare.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.compare.01",
+          "emotion": "focused",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.compare.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.compare.03",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "next_scene": "practice"
+    },
+    "practice": {
+      "id": "practice",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp01",
+      "title_id": "scene.practice.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.practice.01",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.practice.02",
+          "emotion": "thoughtful",
+          "status": "KANON",
+          "source": "docs/LORE-BIBLE.md §8.1, §8.5"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.practice.03",
+          "emotion": "thoughtful",
+          "status": "KANON",
+          "source": "docs/LORE-BIBLE.md §8.3: bestätigtes Spielziel, offene Lore"
+        }
+      ],
+      "encounter_id": "first_practice"
+    },
+    "victory": {
+      "id": "victory",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp01",
+      "title_id": "scene.victory.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.victory.01",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.victory.02",
+          "emotion": "hopeful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "complete_chapter": true,
+      "on_complete": [
+        {
+          "type": "reward",
+          "id": "sena_note"
+        },
+        {
+          "type": "unlock_chapter",
+          "id": "cp02"
+        }
+      ]
+    },
+    "defeat": {
+      "id": "defeat",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp01",
+      "title_id": "scene.defeat.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.defeat.01",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.defeat.02",
+          "emotion": "steady",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "next_scene": "practice"
+    },
+    "return": {
+      "id": "return",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp02",
+      "title_id": "scene.return.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.return.01",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+          "conditions": [
+            {
+              "flag": "approach",
+              "equals": "preserve"
+            }
+          ]
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.return.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+          "conditions": [
+            {
+              "flag": "approach",
+              "equals": "compare"
+            }
+          ]
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.return.03",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "next_scene": "margin"
+    },
+    "margin": {
+      "id": "margin",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp02",
+      "title_id": "scene.margin.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.margin.01",
+          "emotion": "thoughtful",
+          "status": "KANON",
+          "source": "docs/LORE-BIBLE.md §5"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.margin.02",
+          "emotion": "thoughtful",
+          "status": "KANON",
+          "source": "docs/LORE-BIBLE.md §5: Spielidentitäten"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.margin.03",
+          "emotion": "thoughtful",
+          "status": "OFFEN",
+          "source": "docs/LORE-BIBLE.md §1, §5"
+        }
+      ],
+      "next_scene": "blank"
+    },
+    "blank": {
+      "id": "blank",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp02",
+      "title_id": "scene.blank.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.blank.01",
+          "emotion": "thoughtful",
+          "status": "OFFEN",
+          "source": "docs/LORE-BIBLE.md §2"
+        },
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.blank.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.blank.03",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "next_scene": "last_question",
+      "on_complete": [
+        {
+          "type": "reward",
+          "id": "eira_questions"
+        }
+      ]
+    },
+    "last_question": {
+      "id": "last_question",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp02",
+      "title_id": "scene.last_question.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.last_question.01",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "decision_id": "closing_note"
+    },
+    "ending_record": {
+      "id": "ending_record",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp02",
+      "title_id": "scene.ending_record.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.ending_record.01",
+          "emotion": "hopeful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.ending_record.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "complete_chapter": true,
+      "on_complete": [
+        {
+          "type": "set_flag",
+          "key": "ending",
+          "value": "documented"
+        }
+      ]
+    },
+    "ending_open": {
+      "id": "ending_open",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "chapter_id": "cp02",
+      "title_id": "scene.ending_open.title",
+      "background": "res://assets/campaign_orafold/fold_background.svg",
+      "dialogue": [
+        {
+          "speaker_id": "sena",
+          "text_id": "dialogue.ending_open.01",
+          "emotion": "hopeful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        },
+        {
+          "speaker_id": "narrator",
+          "text_id": "dialogue.ending_open.02",
+          "emotion": "thoughtful",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon"
+        }
+      ],
+      "complete_chapter": true,
+      "on_complete": [
+        {
+          "type": "set_flag",
+          "key": "ending",
+          "value": "unwritten"
+        }
+      ]
+    }
+  },
+  "decisions": {
+    "approach": {
+      "id": "approach",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "choices": [
+        {
+          "id": "preserve",
+          "text_id": "choice.approach.preserve",
+          "next_scene": "preserve",
+          "effects": [
+            {
+              "type": "set_flag",
+              "key": "approach",
+              "value": "preserve"
+            },
+            {
+              "type": "relationship",
+              "character_id": "sena",
+              "delta": 1
+            }
+          ]
+        },
+        {
+          "id": "compare",
+          "text_id": "choice.approach.compare",
+          "next_scene": "compare",
+          "effects": [
+            {
+              "type": "set_flag",
+              "key": "approach",
+              "value": "compare"
+            },
+            {
+              "type": "relationship",
+              "character_id": "sena",
+              "delta": 1
+            }
+          ]
+        }
+      ]
+    },
+    "closing_note": {
+      "id": "closing_note",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "choices": [
+        {
+          "id": "record",
+          "text_id": "choice.closing.record",
+          "next_scene": "ending_record",
+          "effects": []
+        },
+        {
+          "id": "open",
+          "text_id": "choice.closing.open",
+          "next_scene": "ending_open",
+          "effects": []
+        }
+      ]
+    }
+  },
+  "characters": {
+    "narrator": {
+      "id": "narrator",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "name_id": "character.narrator.name",
+      "description_id": "character.narrator.description",
+      "portrait": "",
+      "faction": "neutral",
+      "role": "technical_narrator",
+      "relationships": [],
+      "known_events": [],
+      "dialogue_voice": "concise_observational",
+      "knowledge": []
+    },
+    "sena": {
+      "id": "sena",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "name_id": "character.sena.name",
+      "description_id": "character.sena.description",
+      "portrait": "res://assets/campaign_orafold/sena_portrait.svg",
+      "faction": "neutral",
+      "role": "prototype_companion",
+      "relationships": [],
+      "known_events": [],
+      "dialogue_voice": "short_careful_warm",
+      "knowledge": [
+        {
+          "id": "sena_example",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+          "text_id": "knowledge.sena.example",
+          "category": "fact",
+          "visibility": "public"
+        },
+        {
+          "id": "sena_belief",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+          "text_id": "knowledge.sena.belief",
+          "category": "belief",
+          "visibility": "public"
+        },
+        {
+          "id": "sena_player_note",
+          "status": "VORSCHLAG",
+          "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+          "text_id": "knowledge.sena.player_note",
+          "category": "player"
+        }
+      ]
+    },
+    "eira": {
+      "id": "eira",
+      "status": "OFFEN",
+      "source": "docs/LORE-BIBLE.md §2",
+      "name_id": "character.eira.name",
+      "description_id": "character.eira.description",
+      "portrait": "",
+      "protected": true,
+      "faction": "unknown",
+      "role": "unknown",
+      "relationships": [],
+      "known_events": [],
+      "dialogue_voice": "undefined",
+      "knowledge": [
+        {
+          "id": "eira_open_questions",
+          "status": "OFFEN",
+          "source": "docs/LORE-BIBLE.md §2",
+          "category": "player",
+          "text_id": "knowledge.eira.open_questions"
+        }
+      ]
+    }
+  },
+  "encounters": {
+    "first_practice": {
+      "id": "first_practice",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "deck_profile": "houses",
+      "enemy_profile": "stillwatch",
+      "ai_profile": "practice",
+      "seed": 8710281,
+      "repeatable": true,
+      "on_victory": "victory",
+      "on_defeat": "defeat",
+      "tutorial": true,
+      "starting_situation": "engine_default",
+      "rules_profile": "alpha_default"
+    }
+  },
+  "rewards": {
+    "sena_note": {
+      "id": "sena_note",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "type": "character_info",
+      "target": "sena_player_note"
+    },
+    "eira_questions": {
+      "id": "eira_questions",
+      "status": "OFFEN",
+      "source": "docs/LORE-BIBLE.md §2; technischer Freischaltungsplatzhalter, keine Enthüllung",
+      "type": "character_info",
+      "target": "eira_open_questions"
+    },
+    "external_template": {
+      "id": "external_template",
+      "status": "VORSCHLAG",
+      "source": "ORAFOLD Produktionsauftrag 2026-11-10, technische Beispielvignette; kein freigegebener Weltkanon",
+      "type": "external",
+      "target": "unconfigured",
+      "payload": {
+        "configured": false,
+        "note": "Integration template only; no card IDs, currency amounts or delivery provider."
+      }
+    }
+  },
+  "editorial": {
+    "prototype": true,
+    "canon_reference": "docs/LORE-BIBLE.md",
+    "reference_version": "1.0 / 2026-11-10",
+    "new_lore_approved": false,
+    "translated_faction_names": "EN display translations are provisional; canonical German names remain in the lore bible.",
+    "assets_status": "Original vector placeholders; not approved world imagery.",
+    "eira_revelations_authored": false
+  }
+}
