@@ -70,6 +70,8 @@ Ein zusätzlicher adversarialer Test fand anschließend denselben Web-Adapterfeh
 
 Eine weitere CI fand eine veraltete Testannahme in der Sammlung: Der feste Pfadkundiger war nach der neuen Energie-/Namenssortierung die fünfte Karte. Bei 844×390 lag sein Mittelpunkt bei y=426 außerhalb des sichtbaren Bereichs. Der unveränderte Sammlungsscroll war funktionsfähig. Der Harness wählt nun eine tatsächlich vollständig sichtbare Karte und prüft weiterhin echten Touch, Modal-/Schließenaktionen und unveränderte Deckdaten. Zwei gezielte WebKit-Profile (844×390/DPR3 sowie 844×320 mit Safe Areas) bestanden; sie ersetzen nicht die vollständige abschließende CI.
 
+Im umfassenderen Deckspeicher-Test lag außerdem die als Ersatz gewählte Torwache durch die Sortierung an Position 16 der Häuser-/Neutralbibliothek. Der alte Testkommentar behauptete noch die erste Reihe. Der aktualisierte Test sucht die beabsichtigte Karte über das tatsächliche Suchfeld, prüft gültige Kopienzahl, unverändertes Deck während der Suche und die exakt angehängte Ersatz-ID. Sämtliche bisherigen Touch-/Bounds-, Speicher-, Reload- und Partiezusammenstellungsprüfungen bleiben erhalten. Auch diese Harnesskorrektur muss die vollständige CI bestehen.
+
 Die Release-CI trennt nun Native-/Exportprüfungen von einer Chromium-/WebKit-Matrix. Keine Suite entfällt. Beide Browser prüfen denselben vorher exportierten Kandidaten; der manuelle Release-Guard verlangt unverändert den erfolgreichen **Gesamtrun**. Ein bereits hochgeladenes Kandidat-Artefakt allein erlaubt keine Veröffentlichung.
 
 ```bash
