@@ -1,24 +1,40 @@
-# Weltfundament — drei konkurrierende Ursprungsszenarien
-**Alle drei: VORSCHLAG.** Sie sind Alternativen, nicht drei gleichzeitig geschehene Ereignisse.
+# ORAFOLD — Der erste Bruch (überarbeiteter Storyentwurf)
+> **VORSCHLAG, nicht Kanon.** Dieses Dokument ersetzt die schwächere abstrakte Ursprungsskizze durch eine konkrete, überprüfbare Ereigniskette. Zwei Alternativen bleiben dokumentiert.
 
-## A — Der zweite Erntewinter (bevorzugter Arbeitsentwurf)
-Im Binnenland von Keldor fallen nach drei feuchten Sommern die Getreidevorräte aus. Die Handelsstädte halten Korn zurück, die Küstenregionen verhängen Ausfuhrverbote. Eine Koalition aus Landvermessern, Medizinern und Chronisten findet eine Möglichkeit, eine entscheidende Schleusenöffnung aus dem Vorjahr anders zu entscheiden. Das rettet die Aussaatflächen. Die alte Folge – Hunger, Migration, Aufstände – bleibt jedoch als kausal eigenständige Geschichte erhalten. Die Korrektur verband beide Fortsetzungen über ein Netz von Messpunkten; später wurden diese zu Übergängen und Stabilisierungsstätten. Die verantwortlichen Menschen handelten nicht aus Bosheit, sondern unter Zeitdruck und mit fehlerhaften Hochrechnungen. **Zu prüfen:** Warum gab es das Verfahren bereits? Warum überdauerte die Kopplung? Warum war der Testmaßstab nicht repräsentativ?
+## Der Satz, den ein Spieler verstehen soll
+**Eine Welt wurde vor einer Hungersnot gerettet. Aber die Menschen aus der Welt, in der sie geschah, waren noch da.**
 
-## B — Der Friedensschluss
-Zwei Staaten stehen vor einem Vernichtungskrieg. Eine Delegation ändert rückwirkend den Wortlaut eines vor Jahrzehnten geschlossenen Vertrages, sodass der Kriegsgrund entfällt. Der Krieg findet in einer Geschichte nicht statt, in der anderen schon. Heimkehrer und Nie-Eingezogene treffen aufeinander. **Stärke:** Politik und Schuld; **Schwäche:** Die Erfindung eines rückwirkenden Vertragsverfahrens braucht besonders starke technische Vorarbeit.
+## Die Entscheidung an der Dreifachschleuse
+Im Keldor-Becken kontrollieren drei Schleusentore den Wasserstand der Auen. Nach ungewöhnlich nassen Wintern war das südliche Rückhaltebecken beschädigt. Ein Gutachten empfahl die Sperrung des dritten Tors; die Handelskammer verweigerte sie, weil dadurch der einzige schiffbare Getreideweg für Wochen ausfallen würde. Die Ingenieurin **Alda Mer** warnte, dass die offene Schleuse bei der nächsten Flut die Saatfelder mit Schlamm und Salz aus den tieferen Becken überziehen könnte. Der Rat entschied sich dennoch für den Handel. Die Ernte fiel aus, Hilfslieferungen kamen zu spät, und die Versorgungskrise eskalierte über mehrere Regionen.
 
-## C — Die Rettung der Kinder
-Eine überregionale Seuche trifft zuerst Neugeborene. Eine Gruppe von Ärzten korrigiert den Zeitpunkt der Einführung einer lebensrettenden Behandlung. In einer Geschichte überleben die Kinder, in der anderen sind ihre Eltern zu anderen Menschen geworden. **Stärke:** unmittelbare emotionale Stakes; **Schwäche:** Gefahr manipulativer Tragik und unplausibel punktgenauer Korrektur.
+Jahre später hatten Chronisten der Neunten Stunde (damals noch keine fertige Organisation) eine **begrenzte Rückkopplungsmethode** entwickelt: Sie konnten keine Vergangenheit betreten, sondern an einem besonders gut dokumentierten Entscheidungspunkt eine zweite, kausal konsistente Folge anregen. Die Methode war bei kleinen, reversiblen Messanordnungen getestet worden. Eine ganze Gesellschaft war nie Gegenstand eines Tests.
 
-## Vergleich (redaktionell, keine empirischen Messwerte)
-| Kriterium | A | B | C |
-|---|---:|---:|---:|
-| Kausale Ausarbeitung | 4/5 | 3/5 | 3/5 |
-| Eigenständige Gesellschaftskonflikte | 5/5 | 4/5 | 4/5 |
-| Emotionale Zugänglichkeit | 4/5 | 4/5 | 5/5 |
-| Erweiterbarkeit | 5/5 | 4/5 | 3/5 |
+Die Forscherin **Ilan Voss' Vorgängerin** (Name offen) schlug vor, nicht die Flut zu verhindern, sondern nur die Entscheidung des Rats über das dritte Tor zu verändern. In der neu angeregten Fortsetzung blieb der Getreideweg kürzer gesperrt, doch die Felder wurden nicht versalzen. Die Krise wurde verhindert. Die ursprüngliche Folge mit Hunger, Wanderungen und Toten wurde **nicht gelöscht**.
 
-**Vorschlag:** A als vorläufigen roten Faden, B und C als verworfene Alternativen archivieren, falls A später freigegeben wird. Kein Ursprung ist bislang beschlossen.
+### Warum der Eingriff die Welt veränderte
+Die Versuchsanordnung brauchte einen Referenzpunkt, der vor und nach der Korrektur dieselbe physische Identität behielt: das Fundament der Dreifachschleuse. Die Messung wurde über mehrere voneinander entfernte Chronikstationen gleichzeitig bestätigt. **Arbeits-Hypothese:** Diese Synchronisation koppelte beide Fortsetzungen über das Ende des Eingriffs hinaus. Die Verbindung wanderte entlang jener Wege, auf denen Menschen, Wasser und Waren zwischen den betroffenen Regionen ausgetauscht wurden. So entstanden die ersten Kontaktzonen.
 
-## Leitprinzip
-Widersprüchliche Vergangenheiten besitzen jeweils ihre eigene Kausalität. Überlagerung ist Kontakt, nicht willkürliche Rückspulung. Rettung ist möglich, aber kein Anspruch auf rückwirkende Wiederherstellung einer Person. Die Bevölkerung muss die Welt nicht verstehen, um in ihr glaubwürdig zu leben.
+**Offene physikalische Lücke:** Warum blieb die Synchronisation bestehen, statt nach Abschalten der Apparatur zu enden? Solange die Antwort nicht testbar definiert ist, darf sie nicht als Naturgesetz behauptet werden.
+
+### Die menschliche Schuld
+Alda hatte vor dem Unglück gewarnt und später die Korrektur befürwortet. In der geretteten Fortsetzung wird sie als Heldin verehrt; in der alten gilt sie als Mitverantwortliche, weil sie den Rat nicht öffentlich herausforderte. Beide Urteile können begründet sein. Sie selbst muss mit beiden leben.
+
+### Warum nicht alle gerettet werden können
+Nicht alle Menschen befinden sich in Kontaktzonen. Ein Übergang braucht einen realen, zeitlich begrenzten Kontakt; Stabilisierung benötigt Zeit, Material und sichere Kapazität. Das Recht auf Rettung ist politisch umstritten, die technische Möglichkeit begrenzt. Keine Institution kann Verstorbene einfach wiederbeleben.
+
+## Zwei echte Alternativen
+**B – Der gebrochene Friedensschluss:** Ein fehlerhafter Grenzvertrag löst einen Krieg aus. Eine spätere Korrektur verhindert den Krieg, lässt aber Veteranen beider Fortsetzungen zurück. Stärker politisch, schwächer als Erklärung für weiträumige Handels- und Ökologieeffekte.
+
+**C – Die zweite Behandlung:** Eine Seuche wird durch rückwirkende Korrektur einer Versorgungsentscheidung eingedämmt. Familienkonflikt besonders emotional; Gefahr einer zu bequemen medizinischen Lösung und melodramatischer Überfrachtung.
+
+**Empfehlung:** A als Arbeitsmodell. B und C sind Alternativen, keine weiteren Ereignisse.
+
+## Fair-Play-Hinweise für die Kampagne
+1. Früh ein verrostetes drittes Schleusentor und ein unterschriebenes Gutachten zeigen.
+2. Zwei Rechnungsbücher mit verschiedenen Transportwegen zeigen; beide sind echt.
+3. Ein überlebender alter Flüchtling kann die Hungerroute präzise beschreiben, die in der heutigen Chronik nie stattfand.
+4. Später entdeckt die Gruppe, dass die Messstationen noch immer dieselbe Frequenz aufzeichnen.
+5. Eiras Name taucht als unzugeordnete Prüfzeile auf, nicht als sofortige Antwort.
+
+## Dramaturgische Grenze
+Die Rettung war erfolgreich. Die alte Welt ist kein 'Fehler', der moralisch beseitigt werden darf. Die Gegenwart wird durch konkrete Interessen und Versäumnisse bedroht, nicht durch einen generischen bösen Gott.
