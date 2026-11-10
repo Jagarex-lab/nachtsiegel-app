@@ -105,6 +105,8 @@ Die Logs liegen reproduzierbar unter `work/trigger-bridge/`, `work/legacy/` und 
 
 ## Noch nicht freigegeben / nächste Pakete
 
+Die regulären Master550-CI-Gates führen zusätzlich `card_system_trigger_bridge` aus; damit bleibt die neue opt-in Funktion nach ihrer Integration nicht auf einen manuell gestarteten Test beschränkt. Die produktive Session bleibt unverändert beim bisherigen Alpha-Modell. Dieses Paket ist auf dem getesteten Karten-/Mobile-Meilenstein aus PR #10 aufgebaut und darf nicht als allgemeine 16-Trigger- oder 550-Karten-Freigabe verwendet werden.
+
 1. Die mechanische Opt-in-Prüfung ersetzt nicht `tools/card_system/validate.cjs` für vollständigen Daten-/Text-/Artworkvertrag. Das Profil akzeptiert ausschließlich eine einzelne, parametergleiche ursprüngliche Fähigkeit je `source_binding`. Es ist keine allgemeine Freigabe beliebiger V2-Karten oder neuer Kombinationen.
 2. Quellen mit erforderlicher neuer Zielwahl wie der bisherige `strike` werden bei Konfiguration ausdrücklich abgewiesen. Der ungebundene ursprüngliche Strike bleibt spielbar und ist als Todesqueue-Ursache getestet. Neue Ziele benötigen einen eigenen Command-/Pending-Vertrag und stabile UID-Prüfung.
 3. Die 13 übrigen ausführbaren Triggerfamilien bleiben offen, einschließlich der nur beobachteten Reliktaktivierung. Für Schaden/Angriff/Tötung fehlt die Quellenprovenienz; für Bedingungen fehlen Prädikate und Kanten-/Wiederholsemantik; für Draw/Discard/Bewegung fehlen abgestimmte Ereignisursachen.
