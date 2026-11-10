@@ -129,24 +129,32 @@ async function runEngine(name){
    await wait(()=>window.orafoldQA.drag?.active);const state=await q();check(state.drag.active,'actual browser input lifts card');return {before,at:lifted,targets:state.drag.targets};
   }
   async function releaseInvalid(gesture,method,label){
-   const at={x:3,y:page.viewportSize().height-3};await pointer.move(method,at);await pointer.end(method,at);await wait(()=>!window.orafoldQA.drag.active);await exactState(gesture.before,label);
+   const state=await q(),invalid=Object.keys(state.board).find(key=>!gesture.targets.includes(key));
+   const at=invalid?center(state.board[invalid]):{x:3,y:page.viewportSize().height-3};await pointer.move(method,at);await pointer.end(method,at);await wait(()=>!window.orafoldQA.drag.active);await exactState(gesture.before,label);equal((await q()).selected,gesture.before.selected,'invalid drop restores previous selection');
   }
   async function dragPlay(index,method,{safety=false,capture=true}={}){
    lastStep='drag '+method+' index '+index;
    if((await q()).selected>=0)await action('cancel_selection');
    if(safety){
     let gesture=await lift(index,method);await releaseInvalid(gesture,method,'invalid '+method+' drop');
-    gesture=await lift(index,method);await resize(390,844);await wait(()=>window.orafoldQA.actions.rotate_menu&&!window.orafoldQA.drag.active);await pointer.end(method,{x:180,y:350});await exactState(gesture.before,'rotation cancels '+method+' drag');await resize(844,390);await wait(()=>window.orafoldQA.actions.end);
+    if(method==='touch'){
+     gesture=await lift(index,method);const current=await q(),key=gesture.targets[0];check(key,'touch-cancel case has a legal target');const at=center(key==='relic_slot'?current.actions.relic_slot.rect:current.board[key]);
+     await pointer.move(method,at);await pointer.end(method,at,true);await wait(()=>!window.orafoldQA.drag.active);await exactState(gesture.before,'touchcancel on a legal target');equal((await q()).selected,gesture.before.selected,'touchcancel restores previous selection');
+    }
+    gesture=await lift(index,method);await resize(390,844);await wait(()=>window.orafoldQA.actions.rotate_menu&&!window.orafoldQA.drag.active);await pointer.end(method,{x:180,y:350});await exactState(gesture.before,'rotation cancels '+method+' drag');equal((await q()).selected,gesture.before.selected,'rotation restores previous selection');await resize(844,390);await wait(()=>window.orafoldQA.actions.end);
    }
    const gesture=await lift(index,method),state=await q(),card=by[state.hand[index].id];
    check(gesture.targets.length>0,'playable card has a kernel-approved drag target');
    if(card.kind==='relic')equal(gesture.targets,['relic_slot'],'relic targets separate slot only');
    const key=gesture.targets[0],rect=key==='relic_slot'?state.actions.relic_slot.rect:state.board[key];rectCheck(rect,'actual '+card.kind+' drop target');
    const at=center(rect);await pointer.move(method,at);
-   if(capture)await shot('drag-'+method+'-'+card.kind);await pointer.end(method,at);await wait(count=>window.orafoldQA.command_count>count,gesture.before.command_count);await page.waitForTimeout(240);
+   // Release before any potentially slow software-renderer screenshot. The
+   // game's eight-second idle cancellation must never become a capture race.
+   await pointer.end(method,at);await wait(count=>window.orafoldQA.command_count>count,gesture.before.command_count);await page.waitForTimeout(240);
    const after=await q();equal(after.command_count,gesture.before.command_count+1,'valid '+method+' drop issues exactly one command');check(!after.drag.active,'drag presentation is cleared after play');
    check(JSON.stringify(after.battle)!==JSON.stringify(gesture.before.battle),'valid drop changes authoritative state even if an identical copy is drawn');
    if(card.kind==='relic')equal(after.battle.hero.relic.id,card.id,'relic installs outside five paths');
+   if(capture)await shot('after-drag-'+method+'-'+card.kind);
    console.log('MASTER550 DRAG',name,method,card.id,'commands',after.command_count);return card;
   }
   function choices(state){
@@ -193,18 +201,20 @@ async function runEngine(name){
    const coin=await opening({detailed:game===0});seen.add(coin);console.log('MASTER550 OPENING',name,game,coin);if(seen.size===2)break;await restartGame();
   }
   equal([...seen].sort(),['enemy','hero'],'both real seeded start-player openings tested');checks.push('integrated mulligan and both origin/second flows');
-  const goals={creature:'touch',event:'mouse',relic:'touch'},completed={};let restarts=0;
+  const beforeBars=await q();await resize(844,320);await paths('browser bars and safe areas');const bars=await q();equal(bars.layout_size,[756,299],'usable landscape area accounts for side and bottom safe areas');for(const hand of bars.hand)rectCheck(hand.rect,'browser-bars hand card');await exactState(beforeBars,'browser-bars resize');await shot('battle-browser-bars-844x320');await resize(844,390);
+  const goals={creature:'touch',event:'mouse',relic:'touch'},completed={},safetyDone=new Set();let restarts=0;
   for(let step=0;step<90&&Object.keys(completed).length<3;step++){
    await resolvePending();let state=await q();
    if(state.battle.winner){check(restarts++<3,'drag cases found within four regular games');await action('result_restart');await opening();continue;}
    if(state.selected>=0){await action('cancel_selection');state=await q();}
    const legal=choices(state),wanted=legal.find(choice=>!completed[choice.card.kind]);
-   if(wanted){const method=goals[wanted.card.kind];const card=await dragPlay(wanted.index,method,{safety:!Object.keys(completed).length});completed[card.kind]={id:card.id,method,touchDriver:method==='touch'?touchDriver:undefined};}
+   if(wanted){const method=goals[wanted.card.kind];const card=await dragPlay(wanted.index,method,{safety:!safetyDone.has(method)});safetyDone.add(method);completed[card.kind]={id:card.id,method,touchDriver:method==='touch'?touchDriver:undefined};}
    else if(legal.length){await dragPlay(legal[0].index,'mouse',{capture:false});}
    else{await action('end');}
   }
   equal(Object.keys(completed).sort(),['creature','event','relic'],'all three card types played using actual browser drag');checks.push('touch creature/relic and mouse impulse drag; invalid and rotation drops');
-  await action('log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');checks.push('actual interaction commands replay identically');
+  // A legal third play may win immediately; use the visible result-dialog path.
+  await action((await q()).battle.winner?'result_log':'log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');checks.push('actual interaction commands replay identically');
   await action('menu');await action('confirm_menu');await resize(390,844);await action('collection');
   const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));check(first,'actual collection card available');await action(first);
   for(const [width,height] of [[390,844],[844,390],[756,390],[390,844]]){

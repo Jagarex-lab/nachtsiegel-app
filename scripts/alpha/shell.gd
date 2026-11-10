@@ -801,6 +801,9 @@ func show_power_picker() -> void:
 		for power in AlphaCatalog.new().deck_ids():button("builder_power_"+power,AlphaCatalog.new().source.powers[power],func():faction=power;save_preferences();deck=current_deck();filter_power="all";close_modal();render(),box)
 	)
 
+func _web_drag_cancel_version() -> int:
+	if not OS.has_feature("web"):return 0
+	return int(JavaScriptBridge.eval("window.orafoldTouchCancelVersion||0"))
 func _drag_press(at: Vector2, pointer: int) -> void:
 	if not hand_drag.is_empty():
 		if pointer!=int(hand_drag.pointer):get_viewport().set_input_as_handled()
@@ -810,7 +813,7 @@ func _drag_press(at: Vector2, pointer: int) -> void:
 	if s.stage!="battle" or s.winner!=null or s.active!="hero" or p.phase!="main" or p.pendingTarget!=null or p.pendingShift!=null or not action_mode.is_empty():return
 	for index in hand_views.size():
 		if hand_views[index].get_global_rect().has_point(at):
-			hand_drag={"index":index,"id":str(p.hand[index]),"pointer":pointer,"start":at,"viewport":get_viewport_rect().size,"active":false,"previous":selected,"updated":Time.get_ticks_msec(),"targets":{}}
+			hand_drag={"index":index,"id":str(p.hand[index]),"pointer":pointer,"start":at,"viewport":get_viewport_rect().size,"web_cancel":_web_drag_cancel_version(),"active":false,"previous":selected,"updated":Time.get_ticks_msec(),"targets":{}}
 			return
 func _drag_move(at: Vector2, pointer: int) -> void:
 	if hand_drag.is_empty() or pointer!=int(hand_drag.pointer):return
@@ -836,6 +839,10 @@ func _drag_move(at: Vector2, pointer: int) -> void:
 	get_viewport().set_input_as_handled()
 func _drag_release(at: Vector2, pointer: int, canceled: bool=false) -> void:
 	if hand_drag.is_empty() or pointer!=int(hand_drag.pointer):return
+	# DOM touchcancel becomes an ordinary release in Godot's Web adapter. The
+	# capture-phase version is read here synchronously, before any play command.
+	if canceled or _web_drag_cancel_version()!=int(hand_drag.web_cancel):
+		get_viewport().set_input_as_handled();_cancel_hand_drag(true);return
 	if not hand_drag.active:hand_drag.clear();return # Original tap-to-select still receives the release.
 	get_viewport().set_input_as_handled()
 	var index=int(hand_drag.index);var p: Dictionary=session.model.state.hero;var lane := -1
