@@ -29,6 +29,77 @@ CONFIGS = [
 ]
 
 
+# Selected from240 actual same-seed/same-first deck-composition games.
+# Evidence and unmodified before lists: docs/production/DECK_COMPOSITION_EXPERIMENT.json.
+# Existing cards only; strongest time reference and visible starters stay intact.
+MEASURED_COMPOSITIONS = {'prod-relic': {'of-houses-001': 3,
+                'oa-neutral-c01': 2,
+                'of-neutral-049': 3,
+                'of-houses-062': 3,
+                'of-houses-057': 3,
+                'of-houses-058': 3,
+                'of-houses-061': 2,
+                'oa-houses-c07': 1,
+                'of-neutral-086': 1,
+                'of-houses-086': 1,
+                'oa-houses-e01': 2,
+                'of-houses-082': 3,
+                'of-houses-094': 2,
+                'of-houses-099': 1},
+ 'prod-recurrence': {'of-houses-001': 3,
+                     'oa-neutral-c01': 3,
+                     'of-houses-062': 3,
+                     'of-houses-029': 2,
+                     'of-houses-052': 3,
+                     'of-houses-045': 2,
+                     'oa-houses-c07': 1,
+                     'of-houses-057': 3,
+                     'oa-houses-e01': 3,
+                     'of-houses-087': 2,
+                     'of-neutral-086': 1,
+                     'of-houses-072': 1,
+                     'of-houses-094': 2,
+                     'of-houses-099': 1},
+ 'prod-movement': {'oa-morph-c01': 3,
+                   'of-morph-002': 3,
+                   'of-morph-032': 3,
+                   'of-morph-044': 3,
+                   'of-neutral-049': 3,
+                   'of-morph-039': 2,
+                   'oa-morph-c07': 1,
+                   'of-morph-030': 1,
+                   'of-morph-036': 1,
+                   'of-morph-085': 3,
+                   'oa-morph-e01': 2,
+                   'oa-morph-e02': 2,
+                   'of-morph-093': 3},
+ 'prod-resonance': {'oa-neutral-c09': 3,
+                    'oa-ninth-c06': 3,
+                    'oa-ninth-c07': 1,
+                    'oa-ninth-c01': 3,
+                    'of-ninth-044': 3,
+                    'of-ninth-043': 3,
+                    'of-neutral-049': 3,
+                    'of-ninth-016': 2,
+                    'of-ninth-058': 2,
+                    'of-ninth-081': 2,
+                    'of-ninth-084': 2,
+                    'of-ninth-096': 3},
+ 'prod-resource': {'oa-ninth-c01': 3,
+                   'of-ninth-043': 3,
+                   'of-ninth-050': 3,
+                   'of-ninth-044': 3,
+                   'oa-neutral-c09': 3,
+                   'oa-ninth-c06': 3,
+                   'of-ninth-047': 1,
+                   'oa-ninth-c07': 1,
+                   'of-ninth-078': 1,
+                   'of-ninth-082': 2,
+                   'of-ninth-068': 2,
+                   'of-ninth-084': 2,
+                   'of-ninth-091': 2,
+                   'of-ninth-096': 1}}
+
 def card_effects(card: dict) -> list[str]:
     return [str(a["effect"]) for a in card.get("abilities", [])] or [str(card.get("effect", ""))]
 
@@ -77,6 +148,10 @@ def build(cards: list[dict], cfg: dict) -> dict:
             chosen.append(card["id"])
             counts[card["id"]] += 1
             curve[int(card["cost"])] += 1
+    if cfg['id'] in MEASURED_COMPOSITIONS:
+        chosen = [id for id, copies in MEASURED_COMPOSITIONS[cfg['id']].items() for _ in range(copies)]
+        counts = collections.Counter(chosen)
+        curve = collections.Counter(int(by_id[id]['cost']) for id in chosen)
     # Actual shield/control seed2 reached the500-call horizon: pure repeated
     # protection had no credible way through a full weakened board. An existing
     # recurring attack-growth relic supplies a legal win plan without changing
