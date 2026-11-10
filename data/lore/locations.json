@@ -1,0 +1,142 @@
+[
+  {
+    "id": "LOC-001",
+    "name": "Torven",
+    "region": "Keldor-Becken",
+    "status": "VORSCHLAG",
+    "role": "Verwaltung und Alltag"
+  },
+  {
+    "id": "LOC-002",
+    "name": "Die Dreifachschleuse",
+    "region": "Keldor-Becken",
+    "status": "VORSCHLAG",
+    "role": "Historischer Streitpunkt"
+  },
+  {
+    "id": "LOC-003",
+    "name": "Kornkammer",
+    "region": "Keldor-Becken",
+    "status": "VORSCHLAG",
+    "role": "Wirtschaftlicher Engpass"
+  },
+  {
+    "id": "LOC-004",
+    "name": "Ostkai",
+    "region": "Keldor-Becken",
+    "status": "VORSCHLAG",
+    "role": "Reise und Begegnung"
+  },
+  {
+    "id": "LOC-005",
+    "name": "Serev",
+    "region": "Serev-Küste",
+    "status": "VORSCHLAG",
+    "role": "Verwaltung und Alltag"
+  },
+  {
+    "id": "LOC-006",
+    "name": "Grauhafen",
+    "region": "Serev-Küste",
+    "status": "VORSCHLAG",
+    "role": "Historischer Streitpunkt"
+  },
+  {
+    "id": "LOC-007",
+    "name": "Salzterrassen",
+    "region": "Serev-Küste",
+    "status": "VORSCHLAG",
+    "role": "Wirtschaftlicher Engpass"
+  },
+  {
+    "id": "LOC-008",
+    "name": "Leuchtturm Venn",
+    "region": "Serev-Küste",
+    "status": "VORSCHLAG",
+    "role": "Reise und Begegnung"
+  },
+  {
+    "id": "LOC-009",
+    "name": "Namar",
+    "region": "Namar-Hochland",
+    "status": "VORSCHLAG",
+    "role": "Verwaltung und Alltag"
+  },
+  {
+    "id": "LOC-010",
+    "name": "Kammwacht",
+    "region": "Namar-Hochland",
+    "status": "VORSCHLAG",
+    "role": "Historischer Streitpunkt"
+  },
+  {
+    "id": "LOC-011",
+    "name": "Silberpass",
+    "region": "Namar-Hochland",
+    "status": "VORSCHLAG",
+    "role": "Wirtschaftlicher Engpass"
+  },
+  {
+    "id": "LOC-012",
+    "name": "Glockenstein",
+    "region": "Namar-Hochland",
+    "status": "VORSCHLAG",
+    "role": "Reise und Begegnung"
+  },
+  {
+    "id": "LOC-013",
+    "name": "Ilyr",
+    "region": "Ilyr-Wildmark",
+    "status": "VORSCHLAG",
+    "role": "Verwaltung und Alltag"
+  },
+  {
+    "id": "LOC-014",
+    "name": "Wurzelhof",
+    "region": "Ilyr-Wildmark",
+    "status": "VORSCHLAG",
+    "role": "Historischer Streitpunkt"
+  },
+  {
+    "id": "LOC-015",
+    "name": "Grünbruch",
+    "region": "Ilyr-Wildmark",
+    "status": "VORSCHLAG",
+    "role": "Wirtschaftlicher Engpass"
+  },
+  {
+    "id": "LOC-016",
+    "name": "Tümpel der Namen",
+    "region": "Ilyr-Wildmark",
+    "status": "VORSCHLAG",
+    "role": "Reise und Begegnung"
+  },
+  {
+    "id": "LOC-017",
+    "name": "Veyr",
+    "region": "Veyr-Stufen",
+    "status": "VORSCHLAG",
+    "role": "Verwaltung und Alltag"
+  },
+  {
+    "id": "LOC-018",
+    "name": "Neunte Terrasse",
+    "region": "Veyr-Stufen",
+    "status": "VORSCHLAG",
+    "role": "Historischer Streitpunkt"
+  },
+  {
+    "id": "LOC-019",
+    "name": "Staubarchiv",
+    "region": "Veyr-Stufen",
+    "status": "VORSCHLAG",
+    "role": "Wirtschaftlicher Engpass"
+  },
+  {
+    "id": "LOC-020",
+    "name": "Windbrunnen",
+    "region": "Veyr-Stufen",
+    "status": "VORSCHLAG",
+    "role": "Reise und Begegnung"
+  }
+]
