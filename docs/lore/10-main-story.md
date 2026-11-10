@@ -1,12 +1,23 @@
-# Haupthandlung — Die offenen Listen (VORSCHLAG)
-**Weltweiter Konflikt:** Mehrere Stabilisierungsstationen melden identische Messabweichungen. Unabhängige Gemeinden entdecken, dass ihre Rettungslisten nachträglich gekürzt wurden. Nicht nur Menschen sind gefährdet: Die Legitimation der Mächte, die Rettungen verwalten, gerät ins Wanken.
+# Hauptgeschichte — Die offenen Listen (überarbeiteter Handlungsentwurf)
+> **VORSCHLAG**. Eine regionale Geschichte mit weltweiten Folgen, nicht ein willkürliches Weltuntergangsszenario.
 
-**Akt I:** Eine Küstenrettung scheitert trotz formal gültiger Freigabe. Eine Registerprüferin sucht nach einer banalen Erklärung. Parallel verliert ein Hochlandkommandant einen sicheren Pass; eine Vielgestalt-Heilerin findet einen körperlichen Befund, der den Messdaten widerspricht.
+## Der verständliche Konflikt
+In fünf Regionen zeigen Rettungslisten weniger Überlebende, als die Krankenhäuser tatsächlich behandelt haben. Zunächst wirkt es wie Korruption. Dann meldet eine Anlage Menschen als 'nicht verankert', die seit Jahren in ihrer neuen Heimat leben. Wenn die Messungen stimmen, sind Tausende gefährdet. Wenn sie falsch sind, kann eine panische Schließung der Übergänge sie erst gefährden.
 
-**Akt II:** Die Spuren führen nicht zu einem einzigen geheimen Bösewicht, sondern zu einem System von Anreizen: Regionen melden zu hohe Kapazitäten, Geldgeber verlangen Erfolg, Prognosen werden beschönigt. Jemand nutzt diese Schwächen möglicherweise gezielt aus. Die vier Mächte geraten in politische Konflikte, müssen aber gemeinsam eine Evakuierung organisieren.
+## Drei gleichzeitige Ursachen, die die Figuren auseinanderhalten müssen
+**Menschlicher Betrug:** Betreiber melden überhöhte Behandlungskapazität, um Gelder zu erhalten. **Technischer Defekt:** Wiederverwendete Referenzbauteile verfälschen Messungen über mehrere Regionen. **Unbekannte Signatur:** Alte Protokolle tragen denselben nicht zugeordneten Prüfvermerk 'Eira'. Die dritte Spur beweist keine allmächtige Verschwörung; sie ist zunächst ein Datenproblem.
 
-**Akt III:** Ein überregionaler Kontaktwechsel bedroht mehrere Handels- und Rettungsrouten. Die Figuren müssen wählen, welche Anlagen abgeschaltet, welche geöffnet und welche Risiken öffentlich gemacht werden. Der regionale Konflikt endet mit einer überprüfbaren Rettung und Verantwortungsübernahme; das Rätsel um eine Messsignatur 'Eira' bleibt offen.
+## Akt I — Ein einzelner fehlender Mensch
+Nera entdeckt eine behandelte Person, die im Abschlussregister fehlt. Ihre Vorgesetzte verlangt eine stille Korrektur. Nera findet zwei voneinander unabhängige Zeugen. Ein Beamter versucht, den Fall als Flüchtigkeitsfehler zu schließen. Die persönliche Frage lautet: Schützt man die Betroffene durch Schweigen oder durch Öffentlichkeit?
 
-**Antagonismus:** Ein Netzwerk verantwortlicher und opportunistischer Menschen statt eines allmächtigen Weltenzerstörers. Einzelne Gegner haben konkrete Ziele, begrenzte Informationen und widersprüchliche Loyalitäten. Eine spätere Gegenspielerin kann die Katastrophe als unvermeidbar ansehen, muss ihre Prognose aber belegen.
+## Akt II — Der Preis einer richtigen Entscheidung
+Daren muss einen Pass schließen, weil ein Messwert auf Gefahr hindeutet. Tavian kennt eine alternative Route, die illegal, aber real ist. Siva weist nach, dass ein vermeintlicher biologischer Anpassungsfehler auf falsche Referenzmessungen zurückgeht. Ilan erkennt, dass sein Modell die Daten verschiedener Stationen als unabhängig behandelt, obwohl sie dieselbe Hardware verwenden. Eine Veröffentlichung würde Evakuierungen auslösen und die vier Mächte politisch erschüttern.
 
-**Persönlicher Kern:** Wer darf entscheiden, dass ein anderer 'zu teuer' zu retten ist? Was schuldet eine Institution den Menschen, die ihr vertraut haben? Wie leben Familien nach einer Rettung weiter, wenn ihr früherer Besitz oder ihre Geschichte nicht anerkannt wird?
+## Akt III — Die offene Schleuse
+Ein Kontaktfenster schließt sich. Die Gruppe kann nicht alle gleichzeitig transportieren. Sie entscheidet anhand überprüfbarer Zeitfenster, nicht aufgrund metaphysischer Menschenwerte. Seren widersetzt sich einer Sperranordnung, Nera veröffentlicht die manipulierten Kapazitätsberichte, Ilan veröffentlicht die Unsicherheiten, Siva stoppt einen gefährlichen Eingriff, Tavian öffnet seine geheime Route. Die regionale Rettung gelingt mit Verlusten und konkreten Folgen. Verantwortliche werden benannt; keine Welt wird durch einen Knopfdruck geheilt.
+
+## Der größere Bogen
+Die wiederkehrende Signatur führt zur Geschichte der ersten Korrektur. Das Archiv besitzt Zeugnisse, die nicht mit den öffentlichen Chroniken übereinstimmen. Eiras Name ist ein Rätsel, kein 'Auserwählten'-Etikett. Die vier Mächte müssen nach dem Skandal ihre Regeln ändern, was zukünftige Konflikte statt eines ewigen Endkampfs ermöglicht.
+
+## Ton und Humor
+Humor kommt von Tavian, Behördenritualen und menschlichen Eitelkeiten. Ein witziger Satz darf eine ernste Entscheidung nicht ungeschehen machen. Nach einer Rettung wird über erschöpfte Helfer, Verletzte und Hinterbliebene erzählt, nicht sofort über die nächste Apokalypse.
