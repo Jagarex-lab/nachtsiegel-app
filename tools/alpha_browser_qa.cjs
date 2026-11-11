@@ -122,13 +122,14 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     const file=path.join(sequenceDir,tag+'.png');fs.writeFileSync(file,buffer);
     gameplay.frames.push({stage,file:path.basename(file),sha256:sha256(buffer),bytes:buffer.length,seed:after.battle.seed,command_count:after.command_count,round:after.battle.round,winner:after.battle.winner,page:after.page,modal:after.modal,message:after.message,render_version:after.render_version,input_count:gameplay.inputs.length,evidence,live_session_battle:after.battle});saveSequence();
    }
-   async function checkBattleArt(stage){
+   async function checkBattleArt(stage,requiredIds=null,zone=null){
     const before=await state();assert(Array.isArray(before.battle_art),'production bound hand/board art diagnostics are required');
     assert(before.battle.hero.hand.some(id=>externalCompact[id])||before.battle_art.some(row=>row.zone==='board'&&externalCompact[row.card_id]),'actual opening includes at least one nonpacked illustration');
-    await page.waitForFunction(expected=>window.orafoldQA.battle_art?.some(row=>row.visible&&['hand','board'].includes(row.zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&expected[row.card_id]&&row.pixels[0]===expected[row.card_id][0]&&row.pixels[1]===expected[row.card_id][1]&&Math.max(...row.pixels)===512),externalCompact,{timeout:90000});
+    const expected=requiredIds?Object.fromEntries(Object.entries(externalCompact).filter(([id])=>requiredIds.includes(id))):externalCompact;
+    await page.waitForFunction(({expected,zone})=>window.orafoldQA.battle_art?.some(row=>row.visible&&['hand','board'].includes(row.zone)&&(!zone||row.zone===zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&expected[row.card_id]&&row.pixels[0]===expected[row.card_id][0]&&row.pixels[1]===expected[row.card_id][1]&&Math.max(...row.pixels)===512),{expected,zone},{timeout:90000});
     const current=await state();assert.equal(current.battle.stage,stage,'waiting for actual image delivery does not advance the opening');assert.equal(current.command_count,before.command_count,'image delivery issues no gameplay command');
-    const delivered=current.battle_art.filter(row=>row.visible&&['hand','board'].includes(row.zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&externalCompact[row.card_id]&&row.pixels[0]===externalCompact[row.card_id][0]&&row.pixels[1]===externalCompact[row.card_id][1]);
-    assert(delivered.length>0,'a visible nonpacked card owns its actual decoded compact texture');battleArtChecks.push({stage,seed:current.battle.seed,command_count:current.command_count,delivered,delivery:current.art_delivery});
+    const delivered=current.battle_art.filter(row=>row.visible&&['hand','board'].includes(row.zone)&&(!zone||row.zone===zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&expected[row.card_id]&&row.pixels[0]===expected[row.card_id][0]&&row.pixels[1]===expected[row.card_id][1]);
+    assert(delivered.length>0,'a visible nonpacked card owns its actual decoded compact texture');battleArtChecks.push({stage,required_ids:requiredIds,zone,seed:current.battle.seed,command_count:current.command_count,delivered,delivery:current.art_delivery});
    }
    async function opening(customPower=null,expectedCards=null,recordOpening=false){
     await action('start');
@@ -166,6 +167,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       for(const c of resized.hand){assert(safe(c.rect),'six-card hand safe area '+c.id);assert(c.rect[2]>=43.9&&c.rect[3]>=43.9,'six-card touch44CSS '+c.id);}
       for(const id of ['menu','end']){const r=resized.actions[id]?.rect;assert(safe(r),id+' toolbar primary action remains visible');assert(r[2]>=43.9&&r[3]>=43.9,id+' remains44CSS with toolbars');}
       await action('menu');assert((await state()).modal,'safe menu really opens through touch at toolbar height');await action('modal_close');assert.deepEqual((await state()).battle,expected,'menu inspection is read-only during toolbar test');
+      await checkBattleArt('battle');
       await shot('toolbar-'+height+'-six-cards');toolbarTests.push({viewport:{width:844,height},simulated_safe_insets:{left:44,right:44,top:0,bottom:21},available_height:height-21,hand_size:6,real_device_test:false});
      }
     }finally{
@@ -179,7 +181,11 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
      let q=await state(),b=q.battle,p=b.hero;if(b.winner)return;
      if(p.phase==='draw'){
       if(p.hand.length+Math.min(p.pendingDraw,p.deck.length)>6){await page.waitForFunction(()=>window.orafoldQA.hand.length===window.orafoldQA.battle.hero.hand.length);await tap(q.hand[0].rect);}
-      const before=q.command_count;await action('end');await page.waitForFunction(n=>window.orafoldQA.command_count>n||window.orafoldQA.battle.winner,before);continue;
+      const before=q.command_count;await action('end');await page.waitForFunction(n=>window.orafoldQA.command_count>n||window.orafoldQA.battle.winner,before);
+      if(!legacyOnly){const drawn=await state();if(!drawn.battle.winner&&drawn.battle.hero.phase==='main'){
+       const remaining=[...p.hand],newExternal=drawn.battle.hero.hand.filter(id=>{const index=remaining.indexOf(id);if(index>=0){remaining.splice(index,1);return false;}return !!externalCompact[id];});
+       if(newExternal.length)await checkBattleArt('battle',newExternal,'hand');
+      }}continue;
      }
      if(p.pendingTarget){const lane=b.enemy.lanes.findIndex(Boolean),before=q.command_count;await tap(q.board['enemy'+lane]);await page.waitForFunction(n=>window.orafoldQA.command_count>n,before);continue;}
      if(p.pendingShift){await action('skip');continue;}
@@ -215,6 +221,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
      await page.waitForFunction(i=>window.orafoldQA.selected===i,choice.i);const before=(await state()).command_count;
      await tap(choice.relic?(await state()).actions.relic_slot.rect:(await state()).board[choice.side+choice.lane]);
      await page.waitForFunction(n=>window.orafoldQA.command_count>n||window.orafoldQA.battle.winner,before,{timeout:90000});
+     if(!legacyOnly){const played=q.hand[choice.i].id,after=await state();if(!after.battle.winner&&externalCompact[played]&&after.battle[choice.side].lanes[choice.lane]?.id===played)await checkBattleArt('battle',[played],'board');}
      if(gameplay?.recording&&!gameplay.frames.some(frame=>frame.stage==='first-play'))await sequenceFrame('first-play',{card:q.hand[choice.i].id,command_before:before,lane:choice.lane,side:choice.side,relic:choice.relic});
     }
     throw Error('UI action loop made no turn progress');

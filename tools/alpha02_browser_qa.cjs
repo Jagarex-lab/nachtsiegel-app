@@ -1,6 +1,7 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict');
 const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=Object.fromEntries(cards.map(c=>[c.id,c]));
+const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries).filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
 (async()=>{
  fs.mkdirSync('work/alpha02',{recursive:true});fs.rmSync('work/alpha02/browser-results.json',{force:true});const records=[];
  for(const name of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
@@ -25,7 +26,13 @@ const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=
     fs.writeFileSync(`work/alpha02/${name}-${suffix}.png`,buffer);
    };
 
-   const timings=[],rotationMetrics=[];
+   const timings=[],rotationMetrics=[],boundArtChecks=[];
+   const boundArt=async label=>{
+    const before=await q();assert(Array.isArray(before.battle_art),'bound hand/board art diagnostics required');
+    await page.waitForFunction(expected=>window.orafoldQA.battle_art?.some(row=>row.visible&&['hand','board'].includes(row.zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&expected[row.card_id]&&row.pixels[0]===expected[row.card_id][0]&&row.pixels[1]===expected[row.card_id][1]&&Math.max(...row.pixels)===512),externalCompact,{timeout:90000});
+    const current=await q();assert.deepEqual(current.battle,before.battle,'external texture delivery after rotation preserves complete gameplay state');assert.equal(current.command_count,before.command_count);
+    boundArtChecks.push({label,seed:current.battle.seed,command_count:current.command_count,delivered:current.battle_art.filter(row=>row.visible&&row.profile==='compact'&&row.status==='final'&&!row.pending&&externalCompact[row.card_id]&&row.pixels[0]===externalCompact[row.card_id][0]&&row.pixels[1]===externalCompact[row.card_id][1])});
+   };
    const action=async id=>{const beganAction=Date.now();
     await page.waitForFunction(id=>window.orafoldQA?.actions[id]&&!window.orafoldQA.actions[id].disabled,id,{timeout:90000});
     const a=(await q()).actions[id],r=a.rect;assert(r[2]>=43.9&&r[3]>=43.9,id+' touch');
@@ -47,6 +54,7 @@ const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=
    const initial=(await q()).battle;assert.equal(initial.stage,'mulligan');assert.equal(Object.keys((await q()).board).length,0);
    await page.setViewportSize({width:844,height:390});await wait(()=>window.orafoldQA.actions.mulligan_done);await page.waitForTimeout(220);
    assert.deepEqual((await q()).battle,initial);
+   await boundArt('mulligan after portrait-to-landscape rotation');
    await action('mulligan_done');await action('origin_2');
    if((await q()).battle.stage==='second')await action('opening_done');
    await wait(()=>window.orafoldQA.battle.stage==='battle');
@@ -55,6 +63,7 @@ const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=
    await page.setViewportSize({width:390,height:844});await wait(()=>window.orafoldQA.actions.rotate_menu);
    await page.setViewportSize({width:915,height:412});await wait(()=>window.orafoldQA.board.hero0);await page.waitForTimeout(220);
    assert.deepEqual((await q()).battle,selected.battle);assert.equal((await q()).selected,0);
+   await boundArt('normal battle after return from portrait guard');
    for(const r of Object.values((await q()).board))assert(r[2]>=43.9&&r[3]>=43.9);
    console.log('ALPHA02',name,'rotation passed');await action('inspect');assert((await q()).actions.modal_close);fs.writeFileSync('work/alpha02/'+name+'-pre-inspection.json',JSON.stringify({state:await q(),metrics:await page.evaluate(()=>({...window.orafoldDisplayMetrics(),screenWidth:screen.width,screenHeight:screen.height}))}));await shot('inspection');await action('modal_close');
    await action('cancel_selection');await action('menu');await action('confirm_menu');
@@ -111,7 +120,7 @@ const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=
    await action('builder_back');await action('start');await action('custom_houses');await action('deck_play');
    const played=(await q()).battle.hero;assert.deepEqual([...played.hand,...played.deck].sort(),[...edited].sort());
    assert.equal(errors.length,0,errors.join('\n'));
-   records.push({engine:name,build:buildInfo,boot_ms:boot,metrics,rotationMetrics,captures,timings,errors,deck_edit:{removed_id:removed,added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
+   records.push({engine:name,build:buildInfo,boot_ms:boot,metrics,rotationMetrics,captures,timings,bound_art_checks:boundArtChecks,errors,deck_edit:{removed_id:removed,added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
    console.log('ALPHA02 BROWSER PASS',name);await context.close();
   }catch(error){const diagnostic=lastPage?await Promise.race([lastPage.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(r=>setTimeout(()=>r(null),5000))]):null;fs.writeFileSync('work/alpha02/'+name+'-error.json',JSON.stringify({error:String(error),console:lastErrors,diagnostic},null,2));throw error;}finally{await browser.close();}
  }
