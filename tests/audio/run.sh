@@ -7,6 +7,7 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-/tmp/orafold-audio-test-config}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-/tmp/orafold-audio-test-cache}"
 mkdir -p "$XDG_DATA_HOME" "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME" work/audio
 GODOT_BIN="${GODOT_BIN:-godot}"
+node --test tests/audio/pcm_readiness.test.cjs tests/audio/product_geometry.test.cjs
 "$GODOT_BIN" --headless --editor --path . --import > work/audio/import.log 2>&1
 "$GODOT_BIN" --headless --audio-driver Dummy --path . --script tests/audio/runtime_suite.gd 2>&1 | tee work/audio/runtime.log
 "$GODOT_BIN" --headless --audio-driver Dummy --path . --script tests/audio/preview.gd 2>&1 | tee work/audio/preview.log

@@ -1,6 +1,7 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
 const {scrollGesture,assertPanContext,settleHeldPan}=require('./premium/browser_contract.cjs');
+const {nativeCapture}=require('./premium/native_capture_contract.cjs');
 const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards,...JSON.parse(fs.readFileSync('data/legacy/cards.json','utf8')).cards],by=Object.fromEntries(cards.map(c=>[c.id,c]));
 function allVisibleCompactReady({expected,count}){
  const rows=(window.orafoldQA?.battle_art||[]).filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
@@ -42,7 +43,7 @@ function allVisibleCompactReady({expected,count}){
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
-   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot',gameplay=null;const relicActivations=[],toolbarTests=[],actionTrace=[],battleArtChecks=[];
+   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot',gameplay=null;const relicActivations=[],toolbarTests=[],actionTrace=[],battleArtChecks=[],captureMetrics=[];
    const sequenceEnabled=recordGameplay&&engine==='chromium'&&name==='desktop',sequenceDir=path.resolve(process.env.QA_GAMEPLAY_OUTPUT||'work/alpha/gameplay-sequence');
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
@@ -135,12 +136,7 @@ function allVisibleCompactReady({expected,count}){
     // native-viewport harnesses and wait for paint before requesting readback.
     await deadline(page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))),'Screenshot paint timed out after15s',15000);
     await page.waitForTimeout(180);
-    let buffer;
-    if(capture){
-     const viewport=page.viewportSize();let expiry;
-     const response=await Promise.race([capture.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:opts.deviceScaleFactor||1}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
-     buffer=Buffer.from(response.data,'base64');
-    }else buffer=await page.screenshot({timeout:30000});
+    const buffer=await nativeCapture(page,{factor:opts.deviceScaleFactor||1,timeout:30000,receipts:captureMetrics,tag});
     assert.equal(buffer.readUInt32BE(16),page.viewportSize().width*(opts.deviceScaleFactor||1),'native screenshot width');
     assert.equal(buffer.readUInt32BE(20),page.viewportSize().height*(opts.deviceScaleFactor||1),'native screenshot height');
     assert(buffer.length>20000,'nonempty rendered screenshot');
@@ -373,10 +369,10 @@ function allVisibleCompactReady({expected,count}){
       gameplay.recording=false;gameplay.status='passed';gameplay.action_trace=actionTrace;saveSequence();
      }
     }
-    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,bound_battle_art_checks:battleArtChecks,gameplay_sequence:gameplay?{status:gameplay.status,manifest:path.join(sequenceDir,"sequence.json"),seed:gameplay.seed,restart_seed:gameplay.restart_seed,frames:gameplay.frames.length,replay_sha256:gameplay.replay.sha256}:null,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
+    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,bound_battle_art_checks:battleArtChecks,native_captures:captureMetrics,gameplay_sequence:gameplay?{status:gameplay.status,manifest:path.join(sequenceDir,"sequence.json"),seed:gameplay.seed,restart_seed:gameplay.restart_seed,frames:gameplay.frames.length,replay_sha256:gameplay.replay.sha256}:null,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
     fs.writeFileSync(`work/alpha/browser-result-${engine}-${name}.json`,JSON.stringify(result,null,2));
     console.log('ALPHA BROWSER PASS:',engine,name);
-   }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);if(gameplay){gameplay.status='failed';gameplay.error=String(error);gameplay.action_trace=actionTrace;saveSequence();}await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,diagnostic},null,2));throw error;}
+   }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);if(gameplay){gameplay.status='failed';gameplay.error=String(error);gameplay.action_trace=actionTrace;saveSequence();}await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,native_captures:captureMetrics,diagnostic},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}
   }finally{await browser.close();}
   }

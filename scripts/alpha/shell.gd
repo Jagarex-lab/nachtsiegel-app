@@ -826,7 +826,7 @@ func opening() -> void:
 	var s: Dictionary=session.model.state
 	_battle_board(true)
 	_build_hand(true)
-	var instructions={"mulligan":"Tippe Karten zum Tauschen an. Details zeigt die ganze Karte.","origins":("Du beginnst · " if s.coin=="hero" else "KI beginnt · ")+"Ursprung: erstes Wesen erhält 1 Schild.","second":"Optional: Ursprung ändern + eine Handkarte tauschen."}
+	var instructions={"mulligan":"Antippen: tauschen.\nDetails: Karte lesen.","origins":("Du beginnst · " if s.coin=="hero" else "KI beginnt · ")+"Ursprung: erstes Wesen erhält 1 Schild.","second":"Optional: Ursprung ändern + eine Handkarte tauschen."}
 	_dock_context(instructions.get(s.stage,"Vorbereitung"))
 	_dock_tools(true)
 	if s.stage=="mulligan":

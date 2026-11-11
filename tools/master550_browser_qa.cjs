@@ -1,10 +1,15 @@
 'use strict';
 // Browser input only. orafoldQA is read-only; no model/test-setup mutation.
-// WebKit touch uses explicitly synthetic DOM events, not iPhone hardware.
+// Existing WebKit drag cases use synthetic TouchEvents; ordinary taps use
+// touchscreen.tap, scrolling uses trusted pointer input. No physical devices.
 const {chromium, webkit}=require('playwright');
 const fs=require('node:fs');
 const path=require('node:path');
 const assert=require('node:assert/strict');
+const {performance}=require('node:perf_hooks');
+const {scrollGesture,assertPanContext,settleHeldPan}=require('./premium/browser_contract.cjs');
+const {masterActionGeometry}=require('./premium/master_input_contract.cjs');
+const {nativeCapture}=require('./premium/native_capture_contract.cjs');
 const OUTPUT='work/master550/browser';
 const TIMEOUT=120000;
 const cards=JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards;
@@ -17,7 +22,7 @@ async function runEngine(name){
  for(const suffix of ['results.json','error.json','failure.png','interrupted.json'])fs.rmSync(path.join(OUTPUT,name+'-'+suffix),{force:true});
  const browser=await (name==='webkit'?webkit:chromium).launch({headless:true,...(name==='chromium'?{channel:'chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
  let page,context,cdp,assertions=0,lastStep='launch';
- const errors=[],checks=[],shots=[],actions=[],seeds=[],touchDriver=name==='chromium'?'CDP browser-protocol touch':'synthetic DOM TouchEvent (untrusted, not device input)';
+ const errors=[],checks=[],shots=[],actions=[],seeds=[],scrolls=[],actionTargets=[],dragAttempts=[],liftTraces=[],captureMetrics=[],touchDriver=name==='chromium'?'CDP browser-protocol touch':'synthetic DOM TouchEvent (untrusted, not device input)';
  const check=(condition,label)=>{assertions++;assert(condition,label);};
  const equal=(actual,expected,label)=>{assertions++;assert.deepEqual(actual,expected,label);};
  const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
@@ -29,6 +34,15 @@ async function runEngine(name){
   page.on('console',message=>{if(message.type()==='error')errors.push(message.text());});
   // Explicitly simulated safe areas. This changes browser geometry, never game state.
   await page.addInitScript(()=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>innerWidth>innerHeight&&innerWidth>=800?{left:44,right:44,top:0,bottom:21}:{left:0,right:0,top:innerWidth<innerHeight?20:0,bottom:innerWidth<innerHeight?20:0},set:()=>{}}));
+  // Diagnostic observations only: never invoke a UI or model callback.
+  await page.addInitScript(()=>{
+   window.__masterInputTrace={events:[],changes:[]};
+   const push=(kind,value)=>{const list=window.__masterInputTrace[kind];list.push(value);if(list.length>4096)list.shift();};
+   const snapshot=()=>{const q=window.orafoldQA,c=document.querySelector('canvas');return {t:performance.now(),dpr:devicePixelRatio,inner:[innerWidth,innerHeight],canvas:c?[c.width,c.height]:null,web_cancel:window.orafoldTouchCancelVersion,page:q?.page,render:q?.render_version,modal:q?.modal,commands:q?.command_count,selected:q?.selected,density:q?.density,drag:q?.drag,phase:q?.battle?.hero?.phase,active:q?.battle?.active,model_error:q?.battle?.error};};
+   for(const type of ['pointerdown','pointermove','pointerup','pointercancel','touchstart','touchmove','touchend','touchcancel','mousedown','mousemove','mouseup','blur','resize','visibilitychange'])window.addEventListener(type,event=>{const touch=event.changedTouches?.[0];push('events',{...snapshot(),type,target:event.target?.id||event.target?.nodeName,x:touch?.clientX??event.clientX,y:touch?.clientY??event.clientY,buttons:event.buttons,trusted:event.isTrusted,hidden:document.hidden});},{capture:true,passive:true});
+   if(window.visualViewport)for(const type of ['resize','scroll'])visualViewport.addEventListener(type,()=>push('events',{...snapshot(),type:'visualViewport.'+type,width:visualViewport.width,height:visualViewport.height,scale:visualViewport.scale,offsetTop:visualViewport.offsetTop,offsetLeft:visualViewport.offsetLeft}),{passive:true});
+   let previous='';setInterval(()=>{const value=snapshot(),signature=JSON.stringify({...value,t:0});if(signature!==previous){previous=signature;push('changes',value);}},50);
+  });
   const q=()=>page.evaluate(()=>window.orafoldQA);
   const wait=(predicate,arg)=>page.waitForFunction(predicate,arg,{timeout:TIMEOUT});
   const rectCheck=(rect,label)=>{
@@ -37,20 +51,56 @@ async function runEngine(name){
   };
   async function shot(tag){
    await page.waitForTimeout(180);
-   const viewport=page.viewportSize();let buffer;
-   if(cdp){
-    let timer;const response=await Promise.race([cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:2}}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Native screenshot timed out after 45s')),45000);})]).finally(()=>clearTimeout(timer));
-    buffer=Buffer.from(response.data,'base64');
-   }else buffer=await page.screenshot({timeout:45000});
+   const viewport=page.viewportSize(),buffer=await nativeCapture(page,{factor:2,timeout:45000,receipts:captureMetrics,tag});
    check(buffer.readUInt32BE(16)===viewport.width*2&&buffer.readUInt32BE(20)===viewport.height*2,'screenshot uses DPR2 native dimensions');
    check(buffer.length>20000,'screenshot contains rendered content');
    const filename=name+'-'+tag+'.png';fs.writeFileSync(path.join(OUTPUT,filename),buffer);shots.push(filename);
   }
+  const viewportRect=()=>[0,0,page.viewportSize().width,page.viewportSize().height];
+  async function stableAction(id,expected){
+   const handle=await wait(sample=>{
+    const current=window.orafoldQA;if(!current||current===sample.previous)return false;sample.previous=current;
+    const c=sample.context;
+    if(current.page!==c.page||Boolean(current.modal)!==Boolean(c.modal)||current.modal_version!==c.modal_version||current.inspection?.id!==c.inspection_id)throw new Error('Master action changed page/dialog while positioning '+sample.id);
+    const a=current.actions[sample.id],r=a?.rect;if(!r||a.disabled)return false;
+    sample.count=sample.last&&r.every((value,index)=>Math.abs(value-sample.last[index])<=.25)?sample.count+1:1;sample.last=[...r];
+    return sample.count>=3?{rect:[...r],fresh_samples:sample.count}:false;
+   },{id,context:{page:expected.page,modal:expected.modal,modal_version:expected.modal_version,inspection_id:expected.inspection?.id},previous:null,last:null,count:0});
+   try{return await handle.jsonValue();}finally{await handle.dispose();}
+  }
+  async function panAction(id,before){
+   const gesture=scrollGesture(before,id);let quiet;
+   if(cdp){
+    await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...gesture.from,id:0,radiusX:2,radiusY:2,force:1}]});
+    try{
+     for(let step=1;step<=6;step++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:gesture.from.x,y:gesture.from.y+(gesture.to.y-gesture.from.y)*step/6,id:0,radiusX:2,radiusY:2,force:1}]});await page.waitForTimeout(35);}
+     quiet=await settleHeldPan(page,id,before);
+    }finally{await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
+   }else{
+    await page.mouse.move(gesture.from.x,gesture.from.y);await page.mouse.down();
+    try{
+     for(let step=1;step<=6;step++){await page.mouse.move(gesture.from.x,gesture.from.y+(gesture.to.y-gesture.from.y)*step/6);await page.waitForTimeout(35);}
+     quiet=await settleHeldPan(page,id,before);
+    }finally{await page.mouse.up();}
+   }
+   await page.waitForTimeout(180);const after=await q();
+   const context=s=>({page:s.page,modal:s.modal,modal_version:s.modal_version,inspection_id:s.inspection?.id});
+   scrolls.push({id,driver:cdp?'CDP browser-protocol touch':'trusted browser pointer with Godot touch emulation',...gesture,quiet_before_release:quiet,before:context(before),after:context(after),target_before:before.actions[id]?.rect,target_after:after.actions[id]?.rect});
+   assertPanContext(before,after,id);await stableAction(id,before);
+  }
   async function action(id,{render=true}={}){
    if(['log','restart'].includes(id)&&!(await q()).actions[id])await action('actions');
-   lastStep='action '+id;fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({step:lastStep,completed_actions:actions.length,assertions},null,2));
-   await wait(key=>{const value=window.orafoldQA?.actions?.[key];return value&&!value.disabled;},id);
-   const before=await q(),target=before.actions[id];rectCheck(target.rect,id);
+   lastStep='action '+id;fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({step:lastStep,completed_actions:actions.length,assertions,scrolls:scrolls.length},null,2));
+   await wait(key=>{const value=window.orafoldQA?.actions?.[key];return value&&!value.disabled&&value.rect[2]>=43.9&&value.rect[3]>=43.9;},id);
+   const expected=await q();await stableAction(id,expected);
+   for(let attempt=0;attempt<24;attempt++){
+    const current=await q();assertPanContext(expected,current,id);
+    if(masterActionGeometry(current,id,viewportRect()).reachable)break;
+    lastStep='scroll '+id+' '+(attempt+1);await panAction(id,current);
+   }
+   const settled=await stableAction(id,expected),before=await q();assertPanContext(expected,before,id);
+   const target=masterActionGeometry(before,id,viewportRect());check(target.reachable,id+' is fully inside the actual ancestor clip');rectCheck(target.rect,id);
+   actionTargets.push({id,rect:target.rect,clip:target.clip,visible_rect:target.visible_rect,fresh_samples:settled.fresh_samples});
    const at=center(target.rect);await page.touchscreen.tap(at.x,at.y);
    if(render)await wait(previous=>{const state=window.orafoldQA;return state.render_version>previous.render_version||state.modal_version!==previous.modal_version;},before);
    actions.push(id);
@@ -139,9 +189,10 @@ async function runEngine(name){
    await exactState(before,label);const after=await q();equal(after.selected,before.selected,label+': selection retained');equal(after.page,before.page,label+': page retained');equal(after.modal,before.modal,label+': no modal action');equal(after.opening_marks,before.opening_marks,label+': mulligan marks retained');
   }
   async function lift(index,method){
-   const before=await q();equal(before.hand[index].id,before.battle.hero.hand[index],'drag source identity matches actual hand');
-   const at=center(before.hand[index].rect);await pointer.start(method,at);const lifted={x:at.x,y:at.y-34};await pointer.move(method,lifted);
-   await wait(()=>window.orafoldQA.drag?.active);const state=await q();check(state.drag.active,'actual browser input lifts card');return {before,at:lifted,targets:state.drag.targets};
+   const timing={index,method,requested_ms:performance.now()};liftTraces.push(timing);
+   const before=await q();timing.before_read_ms=performance.now();timing.before={commands:before.command_count,render:before.render_version,density:before.density,selected:before.selected,hand:before.hand.map(card=>({id:card.id,rect:card.rect}))};equal(before.hand[index].id,before.battle.hero.hand[index],'drag source identity matches actual hand');
+   const at=center(before.hand[index].rect);timing.down=at;await pointer.start(method,at);timing.down_finished_ms=performance.now();const lifted={x:at.x,y:at.y-34};await pointer.move(method,lifted);timing.lift_motion_finished_ms=performance.now();
+   await wait(()=>window.orafoldQA.drag?.active);timing.active_wait_finished_ms=performance.now();const state=await q();timing.lift_snapshot_finished_ms=performance.now();timing.lift_snapshot={commands:state.command_count,render:state.render_version,density:state.density,selected:state.selected,drag:state.drag};check(state.drag.active,'actual browser input lifts card');return {before,at:lifted,targets:state.drag.targets,timing};
   }
   async function rebuiltHand(previousVersion,label){
    // Invalid/canceled hand drags explicitly schedule render(). Wait for that
@@ -160,7 +211,7 @@ async function runEngine(name){
    const at=invalid?center(state.board[invalid]):{x:3,y:page.viewportSize().height-3};await pointer.move(method,at);const releasing=await q();check(releasing.drag.active,'invalid-drop case releases an active gesture');await pointer.end(method,at);await rebuiltHand(releasing.render_version,label);await exactState(gesture.before,label);equal((await q()).selected,gesture.before.selected,'invalid drop restores previous selection');
   }
   async function dragPlay(index,method,{safety=false,capture=true}={}){
-   lastStep='drag '+method+' index '+index;
+   lastStep='drag '+method+' index '+index;fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({step:lastStep,completed_actions:actions.length,assertions,drag_phase:'start'},null,2));
    if((await q()).selected>=0)await action('cancel_selection');
    if(safety){
     let gesture=await lift(index,method);const tapTarget=gesture.targets[0];check(tapTarget,'tap-cancel test has a real legal target');await releaseInvalid(gesture,method,'invalid '+method+' drop');
@@ -173,14 +224,16 @@ async function runEngine(name){
     const selected=await q(),targetRect=tapTarget==='relic_slot'?selected.actions.relic_slot.rect:selected.board[tapTarget];
     await canceledTap(targetRect,'canceled selected-card target tap');await canceledTap(targetRect,'same-turn canceled selected-card target tap',0);await action('cancel_selection');
    }
-   const gesture=await lift(index,method),state=await q(),card=by[state.hand[index].id];
+   const attempt={index,method,begin_ms:performance.now()};dragAttempts.push(attempt);
+   const gesture=await lift(index,method);attempt.lift=gesture.timing;attempt.before_battle=gesture.before.battle;attempt.before_commands=gesture.before.command_count;
+   attempt.second_read_requested_ms=performance.now();const state=await q(),card=by[state.hand[index].id];attempt.second_read_finished_ms=performance.now();attempt.card=card.id;attempt.observed_drag=state.drag;attempt.observed_density=state.density;
    check(gesture.targets.length>0,'playable card has a kernel-approved drag target');
    if(card.kind==='relic')equal(gesture.targets,['relic_slot'],'relic targets separate slot only');
    const key=gesture.targets[0],rect=key==='relic_slot'?state.actions.relic_slot.rect:state.board[key];rectCheck(rect,'actual '+card.kind+' drop target');
-   const at=center(rect);await pointer.move(method,at);
+   const at=center(rect);attempt.target_key=key;attempt.target_rect=rect;attempt.target_point=at;attempt.target_move_requested_ms=performance.now();await pointer.move(method,at);attempt.target_move_finished_ms=performance.now();
    // Release before any potentially slow software-renderer screenshot. The
    // game's eight-second idle cancellation must never become a capture race.
-   await pointer.end(method,at);await wait(count=>window.orafoldQA.command_count>count,gesture.before.command_count);await page.waitForTimeout(240);
+   attempt.release_requested_ms=performance.now();await pointer.end(method,at);attempt.release_finished_ms=performance.now();fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({step:lastStep,completed_actions:actions.length,assertions,drag_phase:'released-awaiting-command',attempt},null,2));await wait(count=>window.orafoldQA.command_count>count,gesture.before.command_count);await page.waitForTimeout(240);
    const after=await q();equal(after.command_count,gesture.before.command_count+1,'valid '+method+' drop issues exactly one command');check(!after.drag.active,'drag presentation is cleared after play');
    check(JSON.stringify(after.battle)!==JSON.stringify(gesture.before.battle),'valid drop changes authoritative state even if an identical copy is drawn');
    if(card.kind==='relic')equal(after.battle.hero.relic.id,card.id,'relic installs outside five paths');
@@ -271,12 +324,12 @@ async function runEngine(name){
   }
   checks.push('open card inspector at portrait390 and landscape844/756 widths');
   await action('modal_close');equal(errors,[],'no browser/script/WebGL console errors');
-  const result={engine:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,url:url.href,build_info:buildInfo,boot_ms:bootMs,assertions,failures:0,simulated:true,real_device:false,touch_driver:touchDriver,metrics,checks,seeds,completed_drag_types:completed,screenshots:shots,actions,errors};
+  const result={engine:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,url:url.href,build_info:buildInfo,boot_ms:bootMs,assertions,failures:0,simulated:true,real_device:false,touch_driver:touchDriver,metrics,checks,seeds,completed_drag_types:completed,screenshots:shots,actions,action_targets:actionTargets,scrolls,drag_attempts:dragAttempts,lift_traces:liftTraces,native_captures:captureMetrics,errors};
   fs.writeFileSync(path.join(OUTPUT,name+'-results.json'),JSON.stringify(result,null,2));fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({status:'passed',assertions},null,2));console.log('MASTER550 BROWSER PASS',name,assertions,'assertions');return result;
  }catch(error){
   let diagnostic=null;
-  if(page){let timer;diagnostic=await Promise.race([page.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(resolve=>{timer=setTimeout(()=>resolve(null),5000);})]).finally(()=>clearTimeout(timer));await page.screenshot({path:path.join(OUTPUT,name+'-failure.png'),timeout:15000}).catch(()=>{});}
-  fs.writeFileSync(path.join(OUTPUT,name+'-error.json'),JSON.stringify({error:String(error),lastStep,assertions,errors,diagnostic},null,2));fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({status:'failed',lastStep,assertions},null,2));throw error;
+  if(page){let timer;diagnostic=await Promise.race([page.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.(),input_trace:window.__masterInputTrace})).catch(()=>null),new Promise(resolve=>{timer=setTimeout(()=>resolve(null),5000);})]).finally(()=>clearTimeout(timer));await page.screenshot({path:path.join(OUTPUT,name+'-failure.png'),timeout:15000}).catch(()=>{});}
+  fs.writeFileSync(path.join(OUTPUT,name+'-error.json'),JSON.stringify({error:String(error),lastStep,assertions,errors,actions,action_targets:actionTargets,scrolls,drag_attempts:dragAttempts,lift_traces:liftTraces,native_captures:captureMetrics,diagnostic},null,2));fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({status:'failed',lastStep,assertions},null,2));throw error;
  }finally{if(context)await context.close();await browser.close();}
 }
 (async()=>{

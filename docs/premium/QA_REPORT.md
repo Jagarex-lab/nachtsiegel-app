@@ -463,3 +463,177 @@ scheiterte noch an dem nachgewiesenen 64×64-Fenster und bleibt ausdrücklich al
 fehlgeschlagener Zwischenlauf erhalten. Eine Diagnose las nach erfolgreicher
 Navigation einen inzwischen freigegebenen alten Control und brach deshalb ab;
 dies war ein Fehler dieser Diagnose, kein nachgewiesener Produktabsturz.
+
+## Audio-Browser: frische PCM-Blöcke statt momentaner Analysatorprobe
+
+Die unveränderte Audio-Laufzeit meldete in den neuen CI-Läufen zwei fehlgeschlagene
+positive Bereitschaftsprüfungen. Im PR-Audiojob `130758059381` wartete die Prüfung
+nach dem Schließen des Pausenmenüs zehn Sekunden lang auf einen einzelnen
+`AnalyserNode`-RMS-Wert. Dessen abgefragter Wert blieb null. Das unabhängig auf dem
+Audiothread beobachtete Signal desselben Fehlerdokuments enthielt nach dem zuvor
+protokollierten Pausen-Endpunkt dagegen **244 frische PCM-Blöcke**, davon **122
+positive**, über **10,87 Sekunden**. Generation, tatsächlicher AudioContext und
+Routing blieben gültig; die Musik war entpaust und ihr Abspielstand schritt voran.
+Der Push-Audiojob `130758182755` scheiterte an derselben momentanen Prüfung bereits
+nach der Kampferöffnung: In den letzten drei Sekunden seines Fehlerdokuments
+liegen 61 tatsächliche PCM-Blöcke mit 29 positiven über 2,65 Sekunden, obwohl die
+abgefragte Analysatorprobe null war. Diese Diagnose macht beide fehlgeschlagenen
+CI-Läufe ausdrücklich **nicht** nachträglich erfolgreich.
+
+Der reine Browser-Test verwendet für alle sieben positiven Musik-Bereitschafts-
+stellen jetzt `tests/audio/pcm_readiness.cjs`. Vor der tatsächlichen Aktion wird
+der Audiozeit-Endpunkt festgehalten; die Prüfung verlangt zusätzlich Daten nach
+dem Abschluss der Aktion. Nur neue Audiothread-Blöcke der aktuellen Generation,
+nach deren tatsächlicher Routing-Epoche und innerhalb der aktuellen Audiozeit
+zählen. Mindestens sechs positive Blöcke müssen eine volle Sekunde überdecken.
+Die Laufzeit muss zugleich aktive, freigegebene, ungemutete Musik ohne pausierten
+Mixer oder laufende kurze Effektstimmen melden. Die erste tatsächlich beobachtete
+Phase ohne hörbare Effektstimmen setzt einen weiteren frischen Zeit-Endpunkt. Nur PCM
+nach diesem Endpunkt zählt; neue hörbare Effektstimmen oder eine Pause setzen ihn zurück.
+Dadurch genügt auch ein auf einem überlasteten Testhost zeitlich gestreckter
+UI-Klick nicht als Musiknachweis. Ein alter Peak, ein früheres
+Öffnungsgeräusch oder bereits vor der Aktion beobachtete PCM-Blöcke genügen nicht.
+Die bisherigen Zeitgrenzen von zehn beziehungsweise fünfzehn Sekunden bleiben
+erhalten. Die nachfolgenden vollständigen PCM-Aufnahmen mit mindestens einer
+Sekunde positiver Wiedergabe und sämtliche Stille-/Mute-/Pause-Gegenprüfungen
+bleiben unverändert bestehen. Produkt-Audiocode und Audiodateien werden dadurch
+nicht verändert.
+
+Vierzehn Node-Verträge prüfen die tatsächliche archivierte PR-Fehlerprobe sowie
+stille Ausgabe, alte Generationen, alte Epochen, zukünftige/nicht endliche Werte,
+einen einzelnen UI-Klick, vor Aktionsabschluss liegende Signale, Muting/Pausen,
+fehlende Musik, Effektstimmen, fehlendes Routing und Fehler des unabhängigen
+Beobachters. Das kleine Referenzdokument nennt Originaljob, Artefakt und SHA256
+des unveränderten Rohberichts. Es ist eine statische Testeingabe und keine neue
+Audio-Abnahme. Die Verträge laufen verpflichtend im bestehenden Audio-Testskript.
+Der neue vollständige reale Browserlauf wird separat protokolliert; die
+abschließende CI des neuen Quellstands bleibt zusätzlich erforderlich.
+
+Der erste zusätzliche lokale Gesamtlauf brach vor dem vollständigen Abschluss
+an einer weiteren ursprünglichen Testannahme ab: Der Audio-Eingabehelfer verlangte
+einen pauschalen Abstand von zehn Pixeln zur Fensterunterkante. Die neue Arena
+verwendet tatsächlich acht Pixel; dadurch behandelte der Helfer einen vollständig
+sichtbaren primären Button als scrollbedürftig. Sein paralleles unverändertes
+30-Sekunden-Fenster für eine echte Mausfreigabe konnte während solcher unnötigen
+Scrollversuche verfallen. Die zunächst noch unbeobachtete Promise-Ablehnung
+beendete Node vor der strukturierten Fehlerausgabe. Dieser Lauf ist als Fehler
+unter `work/premium-mobile/audio-pcm/chromium-first-capture-failure.log` erhalten.
+
+Der Test entscheidet jetzt über die tatsächlichen beobachteten Vorfahren-Clips,
+das vollständige Buttonrechteck und das Browserfenster. Beide Achsen müssen
+wirklich mindestens 44 Pixel groß sein; teilweise verdeckte Buttons werden nicht
+angetippt. Es gibt keine erfundenen 55-/10-Pixel-Grenzen. Ein echtes Mausrad wird
+nur für vertikal geclippte Flächen verwendet; jede endgültige Touchfläche wird mit
+Phase und Disabled-Status protokolliert. Drei zusätzliche Node-Verträge prüfen
+792 Pixel Unterkante bei 800 Pixel Fensterhöhe als gültigen Fall, echte
+Vorfahren-/Fenster-Clips sowie fehlende, nicht endliche oder zu kleine Flächen.
+Zusammen mit den vierzehn PCM-Verträgen bestehen **17/17** Tests. Beide parallel
+laufenden Mess-/Eingabe-Promises erhalten unmittelbar ihre Fehlerhandler; die
+ursprünglichen Fehler und sämtliche Zeitgrenzen bleiben erhalten. Ein neuer
+reeller Gesamtlauf und anschließend neue CI sind weiterhin erforderlich.
+
+Der stille Messbeginn bleibt bei mindestens sechs frischen, aufeinanderfolgenden
+Nullblöcken über mindestens 0,2 Sekunden und derselben Zehn-Sekunden-Frist. Die
+frühere feste Grenze von acht Meldungen war bei 96 kHz/Stereo mathematisch zu
+kurz: Sie enthält höchstens 0,149 Sekunden. Statt dieser festen Zeilenanzahl wird
+nun der begrenzte aufeinanderfolgende stille Endabschnitt der vorhandenen
+512-Meldungen-Historie geprüft; ein positiver oder ungültiger Block unterbricht
+ihn. Die Gegenproben für 48/96 kHz, einen positiven Endimpuls und alte/futuristische
+Meldungen bestehen. Dies erklärt ausdrücklich nicht den lokalen Fehler mit
+44,1 kHz. Der zweite lokale Gesamtlauf scheiterte an diesem bisherigen stillen
+Messbeginn; sein vollständiger strukturierter Fehlerbericht bleibt erhalten.
+Der folgende unveränderte Gesamtablauf ergänzt deshalb passive Zustands- und
+PCM-Zwischenbeobachtungen innerhalb derselben Frist, einschließlich Spielerseite,
+Phase, tatsächlichem Enabled-Status und Effektstimmen. Es wird kein Audio direkt
+gestoppt, kein Pegel als Fehlerumgehung verändert und kein Gegnerzug übersprungen.
+
+Der dritte lokale Gesamtlauf bestätigte erstmals die Zwischenbeobachtungen:
+Nach der Eröffnung war tatsächlich der Held am Zug, die Phase war Nachziehen und
+der echte primäre Button war freigegeben. Vier noch aktive endliche
+Eröffnungs-Effektstimmen lagen neben einer tatsächlich gemessenen stillen Lücke.
+Sechs aufeinanderfolgende Nullblöcke über 0,232 Sekunden erfüllten den bestehenden
+statischen Mindestvertrag; der echte bestätigte Nachzieh-Sound bestand danach.
+Dies beweist nicht die Ursache des vorherigen Zehn-Sekunden-Timeouts, dessen
+Zwischenzustand nicht erfasst wurde. Der neue stille Endabschnitt entfernt eine
+zufällige zusätzliche Zeilenanforderung, ohne sechs Blöcke oder 0,2 Sekunden zu
+unterschreiten.
+
+Später brach dieser dritte Lauf an der strengeren Musikisolation nach dem Reload
+ab: Nach zehn Sekunden waren noch zwei endliche Eröffnungsstimmen aktiv; die
+Musik spielte und hatte im Software-Renderer erst rund 1,34 Sekunden
+Abspielzeit erreicht. Die frische PCM-Prüfung lehnte diese gemischte Ausgabe
+korrekt als noch nicht isolierten Musiknachweis ab. Der vollständige Fehlerbericht
+liegt unter `work/premium-mobile/audio-pcm/chromium-third-readiness-failure.json`.
+
+Deshalb richtet der reine Browser-Test nach dieser Eröffnung seine isolierte
+Musik-Messvoraussetzung durch normale, echte Menüeingaben ein. Er wartet zuerst
+innerhalb der bestehenden Aktionsfrist auf den tatsächlichen eigenen Zug und
+einen freigegebenen primären Button. Dann öffnet er das reguläre Pausenmenü,
+prüft echte PCM-Stille und schließt es wieder. Die bestehenden normalen
+Produktregeln verwerfen dabei vorübergehende Effektstimmen. Der Test ruft keinen
+Mixer-Stopp auf und ändert keine Lautstärke. Er vergleicht vor und nach diesen
+Eingaben das vollständige beobachtete Kampf-Snapshot, die Befehlsanzahl und alle
+Audioeinstellungen. Ein eigener RNG-Zustandskanal ist in diesem Browserbeobachter
+nicht verfügbar und wird hier nicht behauptet. Erst anschließend beginnt die
+unveränderte Zehn-Sekunden-Prüfung neuer isolierter Musikblöcke. Alle späteren
+ursprünglichen Pause-/Resume-, Gain-, Mute-, Reload- und Speicherfehlerprüfungen
+bleiben bestehen. Die zusätzlichen Menüeingaben sind eine ausdrücklich
+protokollierte Messvorbereitung, kein zusätzlicher bestandener Kampf und kein
+Eingriff in den Produktcode.
+
+## Audio: lokale Messgrenzen und nächster CI-Nachweis
+
+Auch der vierte vollständige lokale Lauf bleibt fehlgeschlagen. Die zusätzliche
+reale Menüvorbereitung bestand: Befehlsanzahl 3 vor/nach, identische vollständige
+beobachtete Kampf-Snapshots, unveränderte Audioeinstellungen und tatsächlich
+stille Pausenausgabe. Alle neuen frischen Musik-Bereitschaftsprüfungen bestanden;
+nach dem späteren regulären Resume wurden acht neue positive Blöcke über
+1,858 Sekunden beobachtet. Die anschließend unverändert verlangte zusätzliche
+2,5-Sekunden-Aufnahme enthielt auf diesem Software-Host jedoch nur vier
+JavaScript-Abfragen, 21 frische PCM-Meldungen und drei positive Meldungen über
+0,372 Sekunden. Die ursprüngliche Mindestanforderung von einer Sekunde wurde
+damit ausdrücklich **nicht** erfüllt. Der Bericht bleibt unter
+`work/premium-mobile/audio-pcm/chromium-fourth-span-failure.json` erhalten.
+
+Zwei weitere ausdrücklich als `focus: resume` bezeichnete lokale Diagnosen
+ändern daran nichts; sie sind keine vollständigen Audio-Abnahmen. Die erste
+zeigte zudem, dass noch laufende Effektspieler bei angeforderten Nullpegeln
+und tatsächlich gemuteten UI-, SFX- und Ambience-Bussen nicht hörbar beitragen.
+Der Quellcode des echten Mixers routet seinen Stimmenpool ausschließlich auf UI
+oder SFX; Musik und Ambience besitzen getrennte Spieler. Der Test akzeptiert
+diesen eng begrenzten Isolationsfall nur, wenn beide tatsächlichen Bus-Mutes
+**und** die Nullpegel übereinstimmen und Ambience ebenfalls aus ist. Teilweise
+oder widersprüchliche Mute-Zustände bleiben ausgeschlossen. Eine weitere
+Node-Gruppe prüft sechs entsprechende Gegenfälle. Der vollständige Test mit
+nichtnull UI-/SFX-Pegeln verlangt weiterhin, dass die Effektstimmen beendet sind.
+
+Die passiven zusätzlichen Messfelder dokumentieren nun Wandzeit, Start-/Endzeit
+des realen AudioContexts, Routing-Generation, Frischegrenzen und erste/letzte
+übermittelte PCM-Zeitstempel. Sie verändern weder das Ende der vorhandenen
+2,5-Sekunden-Aufnahme noch Pegelgrenzen, Fristen oder die Signalprüfung. Tatsächliche
+Ergebnisse aus der letzten fokussierten Diagnose:
+
+| Aufnahme | Wandzeit | Fortschritt AudioContext | Letzte übermittelte PCM-Zeit relativ zum End-Context | Ergebnis |
+| --- | ---: | ---: | ---: | --- |
+| Menü | 2,783 s | 2,380 s | 0,372 s zurück | Positive PCM über 1,811 s |
+| Kampf vor Pause | 5,952 s | 3,741 s | 2,278 s zurück | Letzte übermittelte Daten decken noch nicht das nominelle 2,5-s-Audiofenster ab |
+| Erstes Resume | 2,586 s | 2,119 s | 0,781 s zurück | Positive PCM nur über 0,697 s; ursprüngliche Prüfung fehlgeschlagen |
+
+Damit sind sowohl verspätete Datenübermittlung auf dem ausgelasteten
+Browser-Mainthread als auch langsamerer Fortschritt des tatsächlichen
+AudioContexts beobachtet. Das ist ausdrücklich **kein** Beleg, sämtliche
+fehlenden Sekunden seien bereits erzeugte, lediglich verspätete Musikdaten.
+Es wurde kein zukünftiges Signal nachträglich gesammelt und kein Fenster zum
+Erzwingen eines Erfolgs verlängert. Die lokale Diagnose verwendet Playwright
+1.65.0 / Chromium 158.0.8127.18; die vorhandene Audio-CI verwendet unverändert
+Playwright 1.62.1 / Chromium 151.0.7922.34. Diese Umgebungen werden nicht
+gleichgesetzt. Vollständige Audio-CI des nächsten tatsächlichen Commits bleibt
+erforderlich; kein vollständiger lokaler Audio-Erfolg oder physischer
+iPhone-/Android-Audiotest wird behauptet.
+
+Die neuen logischen Testverträge bestehen **17/17**, ohne übersprungene Tests.
+Die unveränderte App-Laufzeit dieser lokalen Messungen ist der ausdrücklich
+mit `build-info.json` dokumentierte Export `b3d4441`; die Audio-Testdateien gehören
+zum neueren Feature-Arbeitsstand. `source-bindings.json` im lokalen Evidence-
+Verzeichnis enthält die jeweiligen Prüfsummen und diese Prüfgrenze. Das ist kein
+Release-Nachweis für einen anderen Commit.

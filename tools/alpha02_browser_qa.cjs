@@ -1,12 +1,13 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict');
+const {nativeCapture}=require('./premium/native_capture_contract.cjs');
 const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=Object.fromEntries(cards.map(c=>[c.id,c]));
 const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries).filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
 (async()=>{
  fs.mkdirSync('work/alpha02',{recursive:true});fs.rmSync('work/alpha02/browser-results.json',{force:true});const records=[];
  for(const name of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
   const engine=name==='webkit'?webkit:chromium;
-  let lastPage,lastErrors=[];
+  let lastPage,lastErrors=[],captureMetrics=[];
   const browser=await engine.launch({headless:true,...(name==='chromium'?{channel:'chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
   try{
    const {screen:fixedScreen,...mobile}=devices['iPhone 13'];
@@ -15,13 +16,9 @@ const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSy
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
    await page.addInitScript(()=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>innerWidth>innerHeight?{left:44,right:44,top:0,bottom:21}:{left:0,right:0,top:20,bottom:20},set:()=>{}}));
    const q=()=>page.evaluate(()=>window.orafoldQA),wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
-   const captures=[],cdp=name==='chromium'?await context.newCDPSession(page):null;
+   const captures=[];
    const shot=async suffix=>{
-    let buffer;
-    if(cdp){
-     const viewport=page.viewportSize();let expiry;const response=await Promise.race([cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:3}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
-     buffer=Buffer.from(response.data,'base64');captures.push('cdp-explicit-native-viewport');
-    }else{buffer=await page.screenshot();captures.push('playwright');}
+    const buffer=await nativeCapture(page,{factor:3,timeout:30000,receipts:captureMetrics,tag:suffix});captures.push('playwright-native-dpr-verified');
     assert.equal(buffer.readUInt32BE(16),page.viewportSize().width*3,'native screenshot width');assert.equal(buffer.readUInt32BE(20),page.viewportSize().height*3,'native screenshot height');assert(buffer.length>20000,'nonempty rendered screenshot');
     fs.writeFileSync(`work/alpha02/${name}-${suffix}.png`,buffer);
    };
@@ -120,9 +117,9 @@ const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSy
    await action('builder_back');await action('start');await action('custom_houses');await action('deck_play');
    const played=(await q()).battle.hero;assert.deepEqual([...played.hand,...played.deck].sort(),[...edited].sort());
    assert.equal(errors.length,0,errors.join('\n'));
-   records.push({engine:name,build:buildInfo,boot_ms:boot,metrics,rotationMetrics,captures,timings,bound_art_checks:boundArtChecks,errors,deck_edit:{removed_id:removed,added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
+   records.push({engine:name,build:buildInfo,boot_ms:boot,metrics,rotationMetrics,captures,native_captures:captureMetrics,timings,bound_art_checks:boundArtChecks,errors,deck_edit:{removed_id:removed,added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
    console.log('ALPHA02 BROWSER PASS',name);await context.close();
-  }catch(error){const diagnostic=lastPage?await Promise.race([lastPage.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(r=>setTimeout(()=>r(null),5000))]):null;fs.writeFileSync('work/alpha02/'+name+'-error.json',JSON.stringify({error:String(error),console:lastErrors,diagnostic},null,2));throw error;}finally{await browser.close();}
+  }catch(error){const diagnostic=lastPage?await Promise.race([lastPage.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(r=>setTimeout(()=>r(null),5000))]):null;fs.writeFileSync('work/alpha02/'+name+'-error.json',JSON.stringify({error:String(error),console:lastErrors,native_captures:captureMetrics,diagnostic},null,2));throw error;}finally{await browser.close();}
  }
  fs.writeFileSync('work/alpha02/browser-results.json',JSON.stringify(records,null,2));console.log('ALPHA02 BROWSER:',records.length,'profiles,0 failures');
 })().catch(e=>{console.error(e);process.exit(1)});

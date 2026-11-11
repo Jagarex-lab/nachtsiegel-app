@@ -1,5 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
+const {masterActionGeometry}=require('../../tools/premium/master_input_contract.cjs');
+const {nativeGeometry,assertNativeCapture,nativeCapture}=require('../../tools/premium/native_capture_contract.cjs');
 const {clearTouchPoint,scrollGesture,assertPanContext,heldPanQuiet,settleHeldPan,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('../../tools/premium/browser_contract.cjs');
 const vm=require('node:vm');
 function fixture(){
@@ -78,4 +80,53 @@ test('availability cues must match actual legal-play probes and explain unavaila
  q.hand.forEach((card,index)=>Object.assign(card,{availability_shown:true,playable:index%2===1,unavailable_reason:index%2?'':'Energie fehlt'}));
  assert.deepEqual(playability(q),{available:3,unavailable:3});
  for(const mutate of [value=>value.hand[0].playable=true,value=>value.hand[0].unavailable_reason='',value=>value.hand[0].availability_shown=false]){const bad=structuredClone(q);mutate(bad);assert.throws(()=>playability(bad));}
+});
+
+test('Master550 CI difficulty below the real settings clip requires a pan before any tap',()=>{
+ const state={actions:{difficulty:{rect:[48,399,367,44],disabled:false}},action_visibility:{difficulty:{clip_rect:[48,50,748,315],visible_rect:[0,0,0,0]}}};
+ const unchanged=structuredClone(state);assert.equal(masterActionGeometry(state,'difficulty',[0,0,844,390]).reachable,false);
+ const gesture=scrollGesture(state,'difficulty');assert(gesture.to.y<gesture.from.y,'the actual visible scroll surface moves toward the real target');
+ const dy=gesture.to.y-gesture.from.y,r=state.actions.difficulty.rect;r[1]+=dy;state.action_visibility.difficulty.visible_rect=[...r];
+ assert(masterActionGeometry(state,'difficulty',[0,0,844,390]).reachable,'a deliberate controlled pan can expose the complete44px button');assert.equal(unchanged.actions.difficulty.rect[1],399);
+});
+test('Master550 requires ancestor visibility even when a button AABB fits inside the screen',()=>{
+ const state={actions:{difficulty:{rect:[48,340,367,44],disabled:false}},action_visibility:{difficulty:{clip_rect:[48,50,748,315],visible_rect:[48,340,367,25]}}};
+ assert.equal(masterActionGeometry(state,'difficulty',[0,0,844,390]).reachable,false);
+});
+test('Master550 geometry preserves full-card and44CSS assertions and never mutates observations',()=>{
+ const state={actions:{card_real:{rect:[8,104,179,250],disabled:false}},action_visibility:{card_real:{clip_rect:[8,104,374,684],visible_rect:[8,104,179,250]}}},before=structuredClone(state);
+ assert(masterActionGeometry(state,'card_real',[0,0,390,844]).reachable);assert.deepEqual(state,before);
+ for(const change of [s=>s.actions.card_real.disabled=true,s=>s.actions.card_real.rect[2]=43,s=>s.action_visibility.card_real.visible_rect[3]=44]){const bad=structuredClone(state);change(bad);assert.equal(masterActionGeometry(bad,'card_real',[0,0,390,844]).reachable,false);}
+});
+test('Master550 refuses missing real clip diagnostics instead of trusting a stale viewport fallback',()=>{
+ assert.throws(()=>masterActionGeometry({actions:{difficulty:{rect:[48,60,367,44],disabled:false}}},'difficulty',[0,0,844,390]),/ancestor clipping/);
+});
+function captureFixture(factor=2){
+ const viewport={width:844,height:390},metrics={dpr:factor,inner:[844,390],body_width:844,canvas:{css:[0,0,844,390],backing:[844*factor,390*factor]}};
+ const png=Buffer.alloc(24);Buffer.from([137,80,78,71,13,10,26,10]).copy(png);png.writeUInt32BE(844*factor,16);png.writeUInt32BE(390*factor,20);
+ return {viewport,metrics,png};
+}
+test('native capture accepts actual DPR1/2/3 backing and matching PNG without changing observations',()=>{
+ for(const factor of [1,2,3]){const {viewport,metrics,png}=captureFixture(factor),original=structuredClone(metrics);assert(assertNativeCapture(metrics,structuredClone(metrics),png,viewport,factor));assert.deepEqual(metrics,original);}
+});
+test('an upscaled DPR2-sized PNG never masks actual DPR1 or low-resolution canvas rendering',()=>{
+ const {viewport,metrics,png}=captureFixture();
+ const lowDpr=structuredClone(metrics);lowDpr.dpr=1;lowDpr.canvas.backing=[844,390];assert.throws(()=>assertNativeCapture(lowDpr,lowDpr,png,viewport,2),/browser DPR/);
+ for(const axis of [0,1]){const low=structuredClone(metrics);low.canvas.backing[axis]/=2;assert.throws(()=>nativeGeometry(low,viewport,2),/backing renders both axes/);}
+});
+test('screenshot cannot alter DPR, canvas CSS/backing, window or body geometry or fake native dimensions',()=>{
+ const {viewport,metrics,png}=captureFixture();
+ for(const mutate of [m=>m.dpr=1,m=>m.canvas.css[2]=800,m=>m.canvas.backing[1]=390,m=>m.body_width=900,m=>m.inner[0]=900,m=>m.canvas=null]){const bad=structuredClone(metrics);mutate(bad);assert.throws(()=>assertNativeCapture(metrics,bad,png,viewport,2));}
+ const small=Buffer.from(png);small.writeUInt32BE(844,16);assert.throws(()=>assertNativeCapture(metrics,metrics,small,viewport,2),/native context pixel width/);assert.throws(()=>assertNativeCapture(metrics,metrics,Buffer.alloc(24),viewport,2),/actual PNG/);
+});
+test('native capture uses device-scale Playwright with the exact existing deadline and preserves before/after receipts',async()=>{
+ const {viewport,metrics,png}=captureFixture(),calls=[],receipts=[];
+ const page={viewportSize:()=>viewport,evaluate:async fn=>{assert.equal(typeof fn,'function');calls.push('read');return structuredClone(metrics);},screenshot:async options=>{calls.push(options);return png;}};
+ assert.equal(await nativeCapture(page,{factor:2,timeout:45000,receipts,tag:'actual'}),png);assert.deepEqual(calls,['read',{scale:'device',timeout:45000},'read']);assert.equal(receipts[0].validated,true);assert.deepEqual(receipts[0].before,receipts[0].after);
+});
+test('native capture rejects pre-existing low DPR before capture and retains failed post-capture geometry',async()=>{
+ const {viewport,metrics,png}=captureFixture(),receipts=[];let reads=0,shots=0;
+ const page={viewportSize:()=>viewport,evaluate:async()=>{const m=structuredClone(metrics);if(++reads===2)m.dpr=1;return m;},screenshot:async()=>{shots++;return png;}};
+ await assert.rejects(nativeCapture(page,{factor:2,timeout:30000,receipts,tag:'regression'}),/browser DPR/);assert.equal(shots,1);assert.equal(receipts[0].after.dpr,1);assert(!receipts[0].validated);
+ reads=1;await assert.rejects(nativeCapture(page,{factor:2,timeout:30000,receipts,tag:'preexisting'}),/browser DPR/);assert.equal(shots,1);
 });
