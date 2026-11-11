@@ -45,8 +45,7 @@ Motiv, Arten, Palette, Beschneidung und sichtbare Fehler geprüft und für die
 aktuelle visuelle Produktionsrichtung freigegeben (`final` / `approved`). Das
 ist keine juristische Freigabe. Prüfung der maßgeblichen Nutzungsbedingungen
 und abschließende kommerzielle Rechteprüfung stehen aus; keine Exklusivität oder
-juristische Unbedenklichkeit wird behauptet. Nach dem ersten Paket fehlten 545 Einzelillustrationen
-des Produktionskandidaten fehlen weiterhin.
+juristische Unbedenklichkeit wird behauptet. Nach diesem historischen ersten Paket fehlten noch 545 Einzelillustrationen.
 
 ## ORAFOLD-Produktionsillustrationen – Paket 2 (10.11.2026)
 
@@ -64,6 +63,15 @@ ansichten wurden visuell geprüft; die kommerzielle Rechteprüfung bleibt offen.
 ausschließlich durch deterministische Godot-Verkleinerung derselben 15 Originale.
 Sie sind keine weiteren individuellen Illustrationen. Quell- und Vorschauhashes
 sind in `data/production/art_previews.json` gebunden. Es wurde kein fehlendes
-Bild durch Hochskalieren erfunden. Aktueller Bestand: 15 individuelle visuell
-freigegebene Originale, 535 fehlende Originale, keine behauptete juristische
+Bild durch Hochskalieren erfunden. Bestand nach diesem historischen Paket: 15 individuelle visuell
+freigegebene Originale, damals 535 fehlende Originale, keine behauptete juristische
 Unbedenklichkeit oder Exklusivität. Einzelheiten: `docs/production/ART_BATCH2.md`.
+
+
+## Vollständige individuelle Bildlieferung (11.11.2026)
+
+550 tatsächliche, unterschiedliche Original-PNGs liegen unter `cards/originals/`, je 110 pro Macht und Neutral. Native Abmessungen und unveränderte Hashes stehen in `data/production/art_sources.json`, zusammen mit vollständigen Prompts, Quellen, tatsächlichen eigenen Bildreferenzen/Edits und delegierten Sichtprüfungen. Die ersten fünf Nativeimporte bleiben lossless, die übrigen 545 nutzen das bestehende Q90-Mipmapprofil; keine Original-PNG-Pixel wurden verändert oder hochskaliert. Die 550 proportional erzeugten 512px-Previews sind technische Derivate und erhöhen die Originalzahl nicht.
+
+Web liefert fünf gepinnte Previews, andere sichtbare Compactbilder und Originalauflösungen als separat geprüfte Q90-WebPs. Die Metadaten deklarieren verlustbehaftete Qualität 0.90 ausdrücklich. Die dokumentierte Lossless-Vergleichsprobe ergab bei denselben zehn Previews das 4.19-fache Datenvolumen; sie wird nicht als Standardcodec ausgegeben.
+
+Artist-Erstsichtungen, Kontaktprüfung aller 550 Thumbnails, 22 gezielte Originalöffnungen und Root-Stichprobe 275 Thumbnails sind getrennte Prüfumfänge. Die 106-Bilder-Überlappung des Kontaktprüfers mit früheren Erstsichtungen bleibt ausdrücklich erhalten. Kein zweiter 550-Bilder-Vollauflösungsreview und keine juristische Freigabe werden behauptet. Alle 550 kommerziellen Freigabeflags bleiben `false`. Technische Inventur, bekannte Motivähnlichkeiten und Grenzen: `docs/production/ART_PIPELINE.md`, `CONTACT_REVIEW.md` und `ASSET_RIGHTS_REVIEW.md`.

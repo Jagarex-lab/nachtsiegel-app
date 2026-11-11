@@ -1,0 +1,197 @@
+{
+  "scope": "Unmodified recorded rejection sidecars; excluded from delivered originals",
+  "entries": [
+    {
+      "source_path": "/workspace/generated_images/production-powers/houses/of-houses-021-rejected-1.json",
+      "sha256": "c18dced3d1440cd69cd0c9aac648763e450bb7328f5d2de2e2c7082422efebfd",
+      "record": {
+        "card_id": "of-houses-021",
+        "name": "Siegelwächter",
+        "asset_path": "res://assets/cards/originals/of-houses-021.png",
+        "original_local_path": "/workspace/generated_images/production-powers/houses/of-houses-021.png",
+        "tool_output_path": "/workspace/generated_images/exec-027ed89f-6193-4d34-a6c8-ed88d2650e3a.png",
+        "source_prompt": "Create ONE independent original illustration for ORAFOLD, a dark fantasy card game. Landscape 4:3 at native 1448 x 1086 or larger. Illustration only: NO card frame, border, UI, writing, letters, numbers, captions, watermark, logos or known protected characters. Painterly material realism, sophisticated tactile details, atmospheric depth and coherent anatomy; a single clear focal action, light from upper left. Zwölf Häuser identity: weathered copper, ivory and dark umber, memory, small preserved objects, repair and recurrence. Keep the defining subject and action in the central upper 80%; the lower right is later partly concealed by a separate diagonal interface. Do not establish any world history, named leader or secret about Eira. Subject: One built guardian construct shaped as a tall narrow ivory ceramic body with a single copper circular faceplate that is smooth and completely unmarked, two jointed clay arms and no human skin. It presses one copper palm against a repaired stone threshold, raising a thin protective planar shield behind it, while the other hand shelters a plain oval wax seal. Medium low camera through a shadowed gatehouse, deep copper fittings and windblown linen, upper-left warm beam, intentionally crafted anatomy and no armor-wearing human, symbols or lettering.",
+        "creator_or_generator": "OpenAI image generation tool",
+        "creation_date": "2026-11-10",
+        "original_width": 1448,
+        "original_height": 1086,
+        "sha256": "e29862170de89e99a4ff721dcea5ac5522571786b49d3182cf57d41378d14e8a",
+        "reference_sources": [],
+        "edits": [],
+        "status": "concept",
+        "individual_original": true,
+        "production_review": "pending",
+        "commercially_cleared": false,
+        "commercial_review": "pending; provenance and visual review do not establish legal clearance",
+        "alternative_text": "Siegelwächter – eigenständige Zwölf-Häuser-Illustration für ORAFOLD",
+        "visual_review": {
+          "approved": false,
+          "notes": "REJECTED after inspecting native image: the construct has an unintended third arm (wall-bracing arm plus two hands sheltering seal). Keep only as rejected generation evidence; do not integrate. Regeneration required."
+        }
+      }
+    },
+    {
+      "source_path": "/workspace/generated_images/production-powers/houses/of-houses-036-rejected-1.json",
+      "sha256": "d4066dd92773c86aaab8b9a092ac1850cec42d0228a05e485b5c8d704cb28cc1",
+      "record": {
+        "card_id": "of-houses-036",
+        "name": "Echozählerin",
+        "asset_path": "res://assets/cards/originals/of-houses-036.png",
+        "original_local_path": "/workspace/generated_images/production-powers/houses/of-houses-036.png",
+        "tool_output_path": "/workspace/generated_images/exec-59b7afc1-40e9-4cb3-91b3-2fd055088f97.png",
+        "source_prompt": "Create ONE independent original illustration for ORAFOLD, a dark fantasy card game. Landscape 4:3 at native 1448 x 1086 or larger. Illustration only: NO card frame, border, UI, writing, letters, numbers, captions, watermark, logos or known protected characters. Painterly material realism, sophisticated tactile details, atmospheric depth and coherent anatomy; a single clear focal action, light from upper left. Zwölf Häuser identity: weathered copper, ivory and dark umber, memory, small preserved objects, repair and recurrence. Keep the defining subject and action in the central upper 80%; the lower right is later partly concealed by a separate diagonal interface. Do not establish any world history, named leader or secret about Eira. Subject: A distinctive tall adult East African human woman with short tightly coiled red-brown hair, a long ivory work shawl and practical copper measuring tools. Her two coherent hands arrange three small blank copper bowls on a waist-high stone plinth; each bowl holds a different faint luminous trace of an ordinary lost object, and she compares them with intense concentration. Medium close view in an open ruined gallery above dark water, upper-left daylight and restrained warm strands, no written tallies, numerals, extra ghost people or claim that Echo is a species.",
+        "creator_or_generator": "OpenAI image generation tool",
+        "creation_date": "2026-11-10",
+        "original_width": 1448,
+        "original_height": 1086,
+        "sha256": "afdf940b4b3198eef82e7785c6fac024b6e03e0f2581163509af4c2ef33a7003",
+        "reference_sources": [],
+        "edits": [],
+        "status": "concept",
+        "individual_original": true,
+        "production_review": "pending",
+        "commercially_cleared": false,
+        "commercial_review": "pending; provenance and visual review do not establish legal clearance",
+        "alternative_text": "Echozählerin – eigenständige Zwölf-Häuser-Illustration für ORAFOLD",
+        "visual_review": {
+          "approved": false,
+          "notes": "REJECTED after full native inspection: the otherwise coherent human counter image includes readable numeral-like markings on measuring tapes at belt/table, contrary to no-lettering/no-numbers illustration requirement. Regenerate without measuring tapes or rulers."
+        }
+      }
+    },
+    {
+      "source_path": "/workspace/generated_images/production-powers/houses/of-houses-060-rejected-1.json",
+      "sha256": "2e7891b5df182c73078cb1a31b97f6f23d87f5666932b67c81e0c85115fd245e",
+      "record": {
+        "card_id": "of-houses-060",
+        "name": "Hundert Namen",
+        "asset_path": "res://assets/cards/originals/of-houses-060.png",
+        "original_local_path": "/workspace/generated_images/production-powers/houses/of-houses-060.png",
+        "tool_output_path": "/workspace/generated_images/exec-f4bb455b-86bb-481a-9dc7-34cb0c197b15.png",
+        "source_prompt": "Create ONE independent original illustration for ORAFOLD, a dark fantasy card game. Landscape 4:3 at native 1448 x 1086 or larger. Illustration only: NO card frame, border, UI, writing, letters, numbers, captions, watermark, logos or known protected characters. Painterly material realism, sophisticated tactile details, atmospheric depth and coherent anatomy; a single clear focal action, light from upper left. Zwölf Häuser identity: weathered copper, ivory and dark umber, memory, small preserved objects, repair and recurrence. Keep the defining subject and action in the central upper 80%; the lower right is later partly concealed by a separate diagonal interface. Do not establish any world history, named leader or secret about Eira. Subject: A powerful but coherent original amalgam made as one broad ivory-cloth and copper-membrane body, one calm central adult face, and exactly two large hands cupping many smooth completely blank copper name tokens. Different preserved material patches in its torso contain tiny personal objects, not additional faces or limbs. Chest-level frontal composition in an abandoned civic storehouse, upper-left warm light and deep dark umber space, tokens radiate a restrained shared memory glow, no lettering despite the name, no crown, throne or named leader.",
+        "creator_or_generator": "OpenAI image generation tool",
+        "creation_date": "2026-11-10",
+        "original_width": 1448,
+        "original_height": 1086,
+        "sha256": "79cf42b17c15e323a91ff4baeae6c20a579fabb4de6c4958d835eac29958759c",
+        "reference_sources": [],
+        "edits": [],
+        "status": "concept",
+        "individual_original": true,
+        "production_review": "pending",
+        "commercially_cleared": false,
+        "commercial_review": "pending; provenance and visual review do not establish legal clearance",
+        "alternative_text": "Hundert Namen – eigenständige Zwölf-Häuser-Illustration für ORAFOLD",
+        "visual_review": {
+          "approved": false,
+          "notes": "REJECTED for species clarity after native inspection: motif and hands are coherent, but the body reads too much as an ordinary clothed human carrying tokens; amalgam classification is insufficiently explicit. Regenerate an integrated nonhuman cloth/root/copper body."
+        }
+      }
+    },
+    {
+      "source_path": "/workspace/generated_images/production-powers/houses/of-houses-060-rejected-2.json",
+      "sha256": "8dae7a62fdfef77764e631a21ab6de57a599ff1f35dacb12d98cd34184f4bba2",
+      "record": {
+        "card_id": "of-houses-060",
+        "name": "Hundert Namen",
+        "asset_path": "res://assets/cards/originals/of-houses-060.png",
+        "original_local_path": "/workspace/generated_images/production-powers/houses/of-houses-060.png",
+        "tool_output_path": "/workspace/generated_images/exec-f4bb455b-86bb-481a-9dc7-34cb0c197b15.png",
+        "source_prompt": "Create ONE independent original illustration for ORAFOLD, a dark fantasy card game. Landscape 4:3 at native 1448 x 1086 or larger. Illustration only: NO card frame, border, UI, writing, letters, numbers, captions, watermark, logos or known protected characters. Painterly material realism, sophisticated tactile details, atmospheric depth and coherent anatomy; a single clear focal action, light from upper left. Zwölf Häuser identity: weathered copper, ivory and dark umber, memory, small preserved objects, repair and recurrence. Keep the defining subject and action in the central upper 80%; the lower right is later partly concealed by a separate diagonal interface. Do not establish any world history, named leader or secret about Eira. Subject: A powerful but coherent original amalgam made as one broad ivory-cloth and copper-membrane body, one calm central adult face, and exactly two large hands cupping many smooth completely blank copper name tokens. Different preserved material patches in its torso contain tiny personal objects, not additional faces or limbs. Chest-level frontal composition in an abandoned civic storehouse, upper-left warm light and deep dark umber space, tokens radiate a restrained shared memory glow, no lettering despite the name, no crown, throne or named leader.",
+        "creator_or_generator": "OpenAI image generation tool",
+        "creation_date": "2026-11-10",
+        "original_width": 1448,
+        "original_height": 1086,
+        "sha256": "79cf42b17c15e323a91ff4baeae6c20a579fabb4de6c4958d835eac29958759c",
+        "reference_sources": [],
+        "edits": [],
+        "status": "concept",
+        "individual_original": true,
+        "production_review": "pending",
+        "commercially_cleared": false,
+        "commercial_review": "pending; provenance and visual review do not establish legal clearance",
+        "alternative_text": "Hundert Namen – eigenständige Zwölf-Häuser-Illustration für ORAFOLD",
+        "visual_review": {
+          "approved": false,
+          "notes": "REJECTED: unchanged prior species review; figure still reads as clothed human rather than amalgam. Regenerate explicit integrated cloth/root/copper nonhuman body."
+        }
+      }
+    },
+    {
+      "source_path": "/workspace/generated_images/production-powers/houses/of-houses-064-rejected-1.json",
+      "sha256": "06c9a9c1aa4f0475a7e3db3f4d8b0d7a02ec4135c15536f208c847affc060033",
+      "record": {
+        "card_id": "of-houses-064",
+        "name": "Schrift aus Atem",
+        "asset_path": "res://assets/cards/originals/of-houses-064.png",
+        "original_local_path": "/workspace/generated_images/production-powers/houses/of-houses-064.png",
+        "tool_output_path": "/workspace/generated_images/exec-ebafc59b-130c-4d69-bbd6-503233c75039.png",
+        "source_prompt": "Create ONE independent original illustration for ORAFOLD, a dark fantasy card game. Landscape 4:3 at native 1448 x 1086 or larger. Illustration only: NO card frame, border, UI, writing, letters, numbers, captions, watermark, logos or known protected characters. Painterly material realism, sophisticated tactile details, atmospheric depth and coherent anatomy; a single clear focal action, light from upper left. Zwölf Häuser identity: weathered copper, ivory and dark umber, memory, small preserved objects, repair and recurrence. Keep the defining subject and action in the central upper 80%; the lower right is later partly concealed by a separate diagonal interface. Do not establish any world history, named leader or secret about Eira. Subject: An autonomous elemental-and-spirit figure made from translucent warm breath and fine ivory dust, a single clearly legible gentle adult face with two flowing paired arm shapes. It exhales a thin strand that reconstructs a small remembered flower inside a broken copper breathing vessel; do not generate letters despite the title. Low close three-quarter view on a pale stone windowsill above a misty canal, crisp focal particles and soft dark umber distance, upper-left warm illumination, no extra heads, humanoid armor, text, symbols or famous elemental design.",
+        "creator_or_generator": "OpenAI image generation tool",
+        "creation_date": "2026-11-10",
+        "original_width": 1448,
+        "original_height": 1086,
+        "sha256": "f7b99194ba1d259bd94b1bf510a8495c538a0f5e0aea453765eb60542ecb179d",
+        "reference_sources": [],
+        "edits": [],
+        "status": "concept",
+        "individual_original": true,
+        "production_review": "pending",
+        "commercially_cleared": false,
+        "commercial_review": "pending; provenance and visual review do not establish legal clearance",
+        "alternative_text": "Schrift aus Atem – eigenständige Zwölf-Häuser-Illustration für ORAFOLD",
+        "visual_review": {
+          "approved": false,
+          "notes": "REJECTED after actual native view: three distinct humanlike hands/arms visible around vessel. Regenerate a simple spirit/elemental silhouette with exactly two ribbon appendages and no human hands."
+        }
+      }
+    },
+    {
+      "source_path": "/workspace/generated_images/production-powers/stillwatch/of-stillwatch-024_rejected.json",
+      "sha256": "3b6396b9b172c192e05da15f8eecee3ea4286aced466c4d71363614c010bacda",
+      "record": {
+        "id": "of-stillwatch-024",
+        "name": "Eisadern",
+        "prompt": "Original premium painterly dark-fantasy ORAFOLD illustration, landscape 4:3 native 1448 by 1086. Single complete artwork, no text, numerals, logo, card frame, UI or border. Tactile polished brushwork, clear coherent focal anatomy, realistic silver and glass, rich deep shadows, restrained spatial folds. Stillwacht palette ice-blue, silver, midnight slate, clear crystal. Focal face/action central upper 80 percent and safe diagonal lower-right crop. New minor motifs VORSCHLAG only; no world origin, new named leader, Eira reveal, protected references. A conscious winter vine spreads across the underside of a broken stone bridge like a living network of luminous ice veins. Thick translucent root cords visibly fuse into the masonry and keep loose blocks suspended. One curled silver-blue leaf at the junction glows with tiny awareness, otherwise wholly plant, no face or arms. View upward from dark frozen river, roots sharp in upper middle, flurries and monumental arches, a strong single botanical support action.",
+        "generated_file": "/workspace/generated_images/exec-764ca8d2-a421-415a-8374-f3f8dff69e98.png",
+        "production_review": "rejected",
+        "visual_review": "Full native image inspected: unwanted pseudo-signature appears in lower-left corner. Rejected pending genuine tool repair.",
+        "repair_prompt": "Preserve this original composition and 1448 by 1086 landscape resolution. Remove every tiny pseudo-signature, watermark-like writing and glyph in the extreme bottom-left corner and replace that small area with continuous natural frozen river surface and ice. Do not add any text anywhere. Keep the luminous living ice-vines, leaf, hanging stones and bridge scene unchanged. This is a precise local painting cleanup, no cropping or scaling.",
+        "repair_source": "/workspace/generated_images/exec-fccecce7-f7a3-4c51-be6c-94b05a90ace3.png",
+        "repair_review": "Rejected after full native visual inspection: lower-left pseudo-signature persists after tool edit.",
+        "generation_attempts": [
+          {
+            "generated_file": "/workspace/generated_images/exec-764ca8d2-a421-415a-8374-f3f8dff69e98.png",
+            "source_prompt": "Original premium painterly dark-fantasy ORAFOLD illustration, landscape 4:3 native 1448 by 1086. Single complete artwork, no text, numerals, logo, card frame, UI or border. Tactile polished brushwork, clear coherent focal anatomy, realistic silver and glass, rich deep shadows, restrained spatial folds. Stillwacht palette ice-blue, silver, midnight slate, clear crystal. Focal face/action central upper 80 percent and safe diagonal lower-right crop. New minor motifs VORSCHLAG only; no world origin, new named leader, Eira reveal, protected references. A conscious winter vine spreads across the underside of a broken stone bridge like a living network of luminous ice veins. Thick translucent root cords visibly fuse into the masonry and keep loose blocks suspended. One curled silver-blue leaf at the junction glows with tiny awareness, otherwise wholly plant, no face or arms. View upward from dark frozen river, roots sharp in upper middle, flurries and monumental arches, a strong single botanical support action.",
+            "creator_or_generator": "OpenAI image_gen image generation tool",
+            "sha256": "2bec6a26a502ac58d16c9ae8973f4566d610c0365b8a678a34ce6669e4c0503d",
+            "native_pixels": [
+              1448,
+              1086
+            ],
+            "source_file_timestamp": "2026-11-10T22:24:22.780136+00:00",
+            "production_review": "rejected",
+            "visual_review": "Full native image inspected: unwanted pseudo-signature appears in lower-left corner. Rejected pending genuine tool repair.",
+            "reference_sources": []
+          },
+          {
+            "generated_file": "/workspace/generated_images/exec-fccecce7-f7a3-4c51-be6c-94b05a90ace3.png",
+            "source_prompt": "Preserve this original composition and 1448 by 1086 landscape resolution. Remove every tiny pseudo-signature, watermark-like writing and glyph in the extreme bottom-left corner and replace that small area with continuous natural frozen river surface and ice. Do not add any text anywhere. Keep the luminous living ice-vines, leaf, hanging stones and bridge scene unchanged. This is a precise local painting cleanup, no cropping or scaling.",
+            "creator_or_generator": "OpenAI image_gen image generation tool",
+            "sha256": "8f3bf8d1cf750195c59b8d9ceb5ae303904fa062abda5cff23319b04cff5075b",
+            "native_pixels": [
+              1448,
+              1086
+            ],
+            "source_file_timestamp": "2026-11-10T22:30:15.770505+00:00",
+            "production_review": "rejected",
+            "visual_review": "Rejected after full native visual inspection: lower-left pseudo-signature persists after tool edit.",
+            "reference_sources": [
+              "/workspace/generated_images/exec-764ca8d2-a421-415a-8374-f3f8dff69e98.png"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

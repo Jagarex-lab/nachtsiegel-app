@@ -72,9 +72,13 @@ are available in Settings. A functional first-game rules guide is available ther
 ## Illustrations
 
 Compact cards and full inspection share the production illustration resolver.
-Individual concept artwork is labelled separately from shared-atlas placeholders.
-Frames, text and values remain deterministic UI. No number of individual final
-illustrations is implied by the existence of 550 card records.
+The actual source inventory now contains550 visually approved individual originals;
+that count is established by files/provenance, not inferred from550 card records.
+The Web packs five pinned starter thumbnails, streams other compact images only
+for live visible Controls and gives full inspectors priority. Missing/offline
+responses remain explicit. Frames, text and values remain deterministic UI;
+commercial-clearance flags are separate. See ART_PIPELINE.md and
+ART_PREVIEW_STREAMING.md for actual codec, cache and review limits.
 
 ## Verification
 
