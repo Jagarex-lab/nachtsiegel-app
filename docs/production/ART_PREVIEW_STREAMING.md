@@ -2,8 +2,8 @@
 
 Implemented as a separate fifth stage after the fifteen-image full-art delivery
 in [ART_DELIVERY.md](ART_DELIVERY.md). This stage adds **zero illustrations**.
-The current branch has 15 visually approved originals and 535 missing originals;
-commercial clearance remains explicitly open. Counts change only when real
+At introduction this stage had 15 visually approved originals and 535 missing originals; the subsequent [complete 550 delivery](ART_550_DELIVERY.md) records the current 550-source inventory.
+Commercial clearance remains explicitly open. Counts change only when real
 originals and provenance are separately imported and validated.
 
 The Web PCK contains five pinned 512-edge previews: the four powers' first
@@ -74,8 +74,7 @@ The real odd-aspect proof uses an isolated image-conditioning project. Only its
 quit lifecycle is a fixture; the native generated PNG and production generator
 are actual. No illustration is resized to a prescribed 4:3 aspect.
 
-Browser success/failure/cancellation and the exact committed package must still
-be checked after committing this stage. The previous full-only browser proof
+Browser success/failure/cancellation and the exact committed package were subsequently checked on e6ba759: ten contexts,284 assertions,zero failures; see [complete 550 delivery](ART_550_DELIVERY.md). The previous full-only browser proof
 remains historical and does not count as a compact-streaming success. Reproduce:
 
 ```sh
@@ -103,10 +102,10 @@ against its prepared PNG. The actual generation run completed with 93 assertions
 failures. Lossless bodies totalled **2,750,150 bytes**, versus **656,692 bytes**
 for the same ten quality-0.90 bodies: **4.19×** mobile transfer size. This sample
 is not a measured 550-card transfer. On the production lead's explicit decision,
-compact delivery retains quality0.90, matching the existing native preview
+compact delivery retains quality 0.90, matching the existing native preview
 import standard. Correcting prose does not justify quadrupling mobile bandwidth.
 The experiment and original hashes remain in the test evidence; no source PNG
-pixels changed. Full delivery also retains its recorded quality0.90 encoding
+pixels changed. Full delivery also retains its recorded quality 0.90 encoding
 and actual original dimensions.
 
 The original HTTP and package checks proved bytes, geometry and transport
