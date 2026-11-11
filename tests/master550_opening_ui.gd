@@ -1,6 +1,9 @@
 extends SceneTree
 ## Actual touch input against the production Alpha shell; no model-state fixtures.
 const Shell=preload("res://scripts/alpha/shell.gd")
+class PresentationShell extends Shell:
+	# Arranged layout states are not replayable games and must not be saved.
+	func _checkpoint_duel() -> void:pass
 const Session=preload("res://scripts/alpha/session.gd")
 const Catalog=preload("res://scripts/production/catalog.gd")
 const FullFace=preload("res://scripts/card_system/card_face.gd")
@@ -133,28 +136,26 @@ func safe_area_checks() -> void:
 		root.size=dimensions;app.render();await settle()
 		for view in app.board_views.values():
 			check(bounded(view),"safe-area paired-path touch bounds "+str(dimensions))
-			check(view.title_paragraph(view.size.x-54,11).get_size().y+4<=view.size.y-19,"safe-area creature name stays above values")
+			var report=view.layout_report()
+			check(report.title.size.y==0 or report.title.end.y<=report.stats.position.y,"safe-area board name cannot overlap its permanent current values")
 		for view in app.hand_views:
 			smallest.x=minf(smallest.x,view.size.x);smallest.y=minf(smallest.y,view.size.y)
-			check(bounded(view) and view.stat_layout(view.size.x-45).fits,"safe-area hand values fit beside energy badge")
+			check(bounded(view) and view.layout_report().outer.encloses(view.layout_report().stats),"safe-area portrait values stay in their separate footer; energy has its own top-left socket")
 		check(bounded(app.actions.relic_slot) and bounded(app.actions.end),"safe-area relic target and primary action remain visible")
 		await shot("compact-fixture-%dx%d" % [dimensions.x,dimensions.y])
 	check(smallest.x>44 and smallest.y>=44,"smallest real six-card tile measured")
 	for card in Catalog.new().all_cards():
-		var view=app.CardView.new();view.card=card;view.size=smallest
-		var title=view.title_paragraph(smallest.x-16)
-		check(title.get_line_count()<=2 and title.get_size().y<=32,"whole card name fits smallest safe-area hand tile: "+card.name)
-		for line in title.get_line_count():check(title.get_line_size(line).x<=smallest.x-16,"no clipped name ink at smallest hand width")
-		var stats=view.stat_layout(smallest.x-45)
-		check(stats.fits and stats.font_size in [13,12,11,10] and stats.ink_width<=stats.available_width,"all 550 actual stat/type captions fit their measured ink area")
-		if card.kind=="creature":check(stats.text=="%d ANG %d LP" % [card.atk,card.hp],"both original combat values and explicit ANG/LP labels are retained")
-		check(8+stats.ink_width<=smallest.x-29,"stat glyphs never intersect the energy circle")
-		check(smallest.y-10-app.S.font.get_ascent(stats.font_size)>=smallest.y-24,"stat glyphs remain inside their opaque information strip")
-		if stats.font_size<13:check(app.S.font.get_string_size(stats.text,HORIZONTAL_ALIGNMENT_LEFT,-1,stats.font_size+1).x>stats.available_width,"font is reduced only when the larger size does not fit")
+		var view=app.CardView.new();view.card=card;view.display_role="hand";view.size=smallest
+		var report=view.layout_report()
+		check(report.title_fits,"whole card name fits smallest safe-area portrait name plate: "+card.name)
+		check(report.title.end.y<=report.stats.position.y+.1,"no name ink can cover the current values: "+card.id)
+		check(report.outer.encloses(report.stats) and report.outer.encloses(report.title),"both readable information areas remain within the common outer frame")
+		check(report.has_combat_values==(card.kind=="creature"),"only creatures render attack and life; impulse and relic use a type footer")
+		check(is_equal_approx(smallest.x/smallest.y,63.0/88.0),"real canonical portrait aspect survives the minimum measured safe hand tile")
 		view.free()
 func _initialize() -> void:call_deferred("run")
 func run() -> void:
-	app=Shell.new();root.add_child(app);await settle()
+	app=PresentationShell.new();root.add_child(app);await settle()
 	for dimensions in [Vector2i(844,390),Vector2i(915,412),Vector2i(844,320),Vector2i(1280,720)]:
 		root.size=dimensions;app.close_modal();app.match_use_starter=true;app.faction="houses";app.session.profile.last_seed=23;app.start_battle();await settle()
 		check(app.session.model.state.stage=="mulligan","real model starts in mulligan")

@@ -129,9 +129,9 @@ func run():
   root.size=dimensions;await settle()
   for view in app.board_views.values():
    if view.unit.is_empty():continue
-   var paragraph=view.title_paragraph(view.size.x-54,11)
-   check(paragraph.get_size().y+4<=view.size.y-19,"compact name does not overlap stats strip")
-   check(paragraph.get_line_count()<=2,"compact creature full name fits two lines")
+   var geometry=view.layout_report()
+   check(geometry.role=="board" and geometry.outer.encloses(geometry.stats),"compact board keeps readable values inside its frame")
+   check(geometry.title.size.y==0 or geometry.title.end.y<=geometry.stats.position.y,"optional compact name never overlaps stats; full name is available by tapping")
   await shot("battle-compact" if dimensions.y==320 else "battle-browser-height")
  app.page="builder";app.open_cards(false);root.size=Vector2i(1280,720);await settle();await shot("deckbuilder-desktop")
  app.queue_free();await settle()

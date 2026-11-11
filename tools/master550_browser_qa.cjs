@@ -47,6 +47,7 @@ async function runEngine(name){
    const filename=name+'-'+tag+'.png';fs.writeFileSync(path.join(OUTPUT,filename),buffer);shots.push(filename);
   }
   async function action(id,{render=true}={}){
+   if(['log','restart'].includes(id)&&!(await q()).actions[id])await action('actions');
    lastStep='action '+id;fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({step:lastStep,completed_actions:actions.length,assertions},null,2));
    await wait(key=>{const value=window.orafoldQA?.actions?.[key];return value&&!value.disabled;},id);
    const before=await q(),target=before.actions[id];rectCheck(target.rect,id);
@@ -63,7 +64,13 @@ async function runEngine(name){
    const state=await q();equal(Object.keys(state.board).sort(),['enemy0','enemy1','enemy2','enemy3','enemy4','hero0','hero1','hero2','hero3','hero4'].sort(),label+': ten actual paired paths');
    for(let lane=0;lane<5;lane++){
     const own=state.board['hero'+lane],enemy=state.board['enemy'+lane];rectCheck(own,label+' own '+lane);rectCheck(enemy,label+' enemy '+lane);
-    check(Math.abs(own[0]-enemy[0])<1&&Math.abs(own[2]-enemy[2])<1,label+': paired path alignment');
+    if(state.arena_mode==='spatial'){
+     // The perspective far row is intentionally narrower. Preserve the actual
+     // one-to-one lane footprint instead of requiring the former table grid.
+     const overlap=Math.max(0,Math.min(own[0]+own[2],enemy[0]+enemy[2])-Math.max(own[0],enemy[0]));
+     check(overlap>=Math.min(own[2],enemy[2])*.8,label+': paired perspective path footprint');
+     check(Math.abs(own[0]+own[2]/2-enemy[0]-enemy[2]/2)<own[2]*.18,label+': same logical lane stays visually paired');
+    }else check(Math.abs(own[0]-enemy[0])<1&&Math.abs(own[2]-enemy[2])<1,label+': paired flat path alignment');
    }
   }
   async function exactState(before,label){
@@ -76,8 +83,9 @@ async function runEngine(name){
   async function restartGame(){
    const state=await q();
    if(state.modal)await action('modal_close');
-   if((await q()).actions.restart){await action('restart');await action('confirm_restart');}
-   else{await action('menu');await action('confirm_menu');await beginGame();}
+   // Exercise the actual restart confirmation, including its new More-sheet
+   // route; returning to the lobby is not evidence that this control works.
+   await action('restart');await action('confirm_restart');
    await wait(()=>window.orafoldQA?.battle?.stage==='mulligan'&&window.orafoldQA.actions.mulligan_done);
   }
   async function opening({detailed=false}={}){

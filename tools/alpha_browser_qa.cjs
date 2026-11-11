@@ -111,7 +111,11 @@ function allVisibleCompactReady({expected,count}){
     await page.waitForTimeout(180);
    }
    const action=async (id,{render=true}={})=>{
-    lastAction=id;if(id==='convergence'&&!(await state()).actions[id])await action('actions');
+    lastAction=id;
+    // Secondary actions live in the actual More sheet in the premium arena.
+    // Open that visible sheet rather than requiring permanent debug buttons or
+    // invoking any model/UI callback from JavaScript.
+    if(['convergence','log','restart'].includes(id)&&!(await state()).actions[id])await action('actions');
     await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});
     let previous=await state();lastAction=id;
     if(legacyOnly&&!previous.action_visibility){
@@ -177,12 +181,14 @@ function allVisibleCompactReady({expected,count}){
      if(customPower)await action('custom_'+customPower);await action('deck_play');
      if(expectedCards){const hero=(await state()).battle.hero;assert.deepEqual([...hero.hand,...hero.deck].sort(),[...expectedCards].sort(),'actual new match contains the exact saved production template');}
      await checkBattleArt('mulligan');
+     await checkAllVisibleArt();
      if(recordOpening){gameplay.seed=(await state()).battle.seed;await sequenceFrame('mulligan');}
     }
     if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}
     await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');
     if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);
     await checkBattleArt('battle');
+    await checkAllVisibleArt();
     if(recordOpening)await sequenceFrame('opening');
    }
    async function toolbarViewportChecks(){
@@ -299,6 +305,7 @@ function allVisibleCompactReady({expected,count}){
      assert.deepEqual(detail.deck_ids,collection.deck_ids,'read-only collection inspection preserves the deck');
      assert.equal(detail.page,'collection','inspection stays in the collection');
      assert(inside(detail.actions.modal_close.rect)&&detail.actions.modal_close.rect[2]>=43.9&&detail.actions.modal_close.rect[3]>=43.9,'inspector close is visible >=44CSS');
+     await page.waitForFunction(()=>window.orafoldQA.inspection?.art?.state==='final',undefined,{timeout:90000});
      await shot('collection-inspection');await action('modal_close');
      const closed=await state();assert(!closed.modal&&closed.page==='collection','closing inspection restores collection');
      assert.deepEqual(closed.deck_ids,collection.deck_ids,'closing inspection preserves the deck');
@@ -307,8 +314,9 @@ function allVisibleCompactReady({expected,count}){
     await action('builder_back');
     if(!legacyOnly){await action('settings');const power={desktop:'houses','desktop-wide':'stillwatch',android:'ninth',iphone:'morph','android-bars':'houses','iphone-wide':'stillwatch','iphone-bars':'morph'}[name];await action('faction_'+power);await action('settings_back');}
     await opening();let q=await state();assert.equal(q.battle.hero.maxHp,legacyOnly?35:30);if(!legacyOnly)assert.equal(q.battle.enemy.maxHp,30);
-    for(const key of (legacyOnly?['end','actions','inspect','menu','log']:['end','actions','inspect','menu','log'])){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
+    for(const key of ['end','actions','inspect','menu']){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
     for(const r of Object.values(q.board))assert(r[2]>=43.9&&r[3]>=43.9&&r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,'board safe bounds');
+    const beforeLog=q.battle;await action('log');assert((await state()).modal&&(await state()).actions.verify_replay,'the secondary combat log is genuinely reachable through touch');await action('modal_close');assert.deepEqual((await state()).battle,beforeLog,'opening and closing the combat log preserves the complete battle');
     await shot('battle');if(!legacyOnly&&['desktop','iphone'].includes(name))await toolbarViewportChecks();await playTurn();
     if(!legacyOnly&&!(await state()).battle.winner)await checkAllVisibleArt();await shot('after-turn');
     if((await state()).battle.winner){await action('result_menu');}else{await action('menu');await action('confirm_menu');}
