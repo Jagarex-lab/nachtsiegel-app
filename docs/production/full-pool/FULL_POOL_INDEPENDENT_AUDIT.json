@@ -1,0 +1,43 @@
+{
+  "scope": "Independent read-only aggregation of the one actual immutable256+12 run; no additional played games",
+  "source_hashes": {
+    "raw": "ced1294a2eb14b008bfb13ed5ae6a274e1d226c6776a25b42a241f6b3743c112",
+    "plan": "a1a5179af0b8d179bc4896392c0c08933c1bc4af42b8e3211b5550428ef07e06",
+    "journal": "c4be2b4d4ff2987d7e0d23be65937e8f7dc35fd5b0cc4e3f7e8996aa9c180b09",
+    "log": "2e0960f12d481d4fa9de771ad425beb5c3cbf84e0ed9d2f5fbb183052badc4c8",
+    "summary": "03179b1d2187e36cc895fe905e2547628d373e99e0c88911e91ef4b4d6ff3faf"
+  },
+  "matrix_games": 256,
+  "controls_excluded_from_matrix_coverage": 12,
+  "observed_played_unique_ids": 546,
+  "matrix_successful_play_commands": 8914,
+  "control_successful_play_commands_not_added": 343,
+  "raw_and_journal_card_counts_identical": true,
+  "reporter_card_counts_identical": true,
+  "unplayed_cards": [
+    {
+      "id": "oa-houses-r01",
+      "name": "Ahnenregister",
+      "power": "houses",
+      "kind": "relic"
+    },
+    {
+      "id": "of-houses-068",
+      "name": "Zurück ins Licht",
+      "power": "houses",
+      "kind": "event"
+    },
+    {
+      "id": "of-houses-100",
+      "name": "Die offene Chronik",
+      "power": "houses",
+      "kind": "relic"
+    },
+    {
+      "id": "of-morph-095",
+      "name": "Häutungsklinge",
+      "power": "morph",
+      "kind": "relic"
+    }
+  ]
+}
