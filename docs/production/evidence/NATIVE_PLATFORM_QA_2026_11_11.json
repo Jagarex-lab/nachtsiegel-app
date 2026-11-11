@@ -1,0 +1,232 @@
+{
+  "schema_version": 1,
+  "scope": "Actual native debug platform jobs; no production release or physical device claim.",
+  "repository": "Jagarex-lab/nachtsiegel-app",
+  "pull_request": 22,
+  "tested_pr_head": "f5b5ab8eb6b5f1104cf457bbcb56a90130a6713c",
+  "actual_checked_out_pr_merge_commit": "02aafce6fe5554fdd70fc5e1af539e412cf32228",
+  "run_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42937319265",
+  "overall_workflow_conclusion_at_recording": "still running; native jobs individually completed successfully",
+  "job_results": {
+    "windows": {
+      "job_id": 130250572037,
+      "conclusion": "success",
+      "artifact_id": 13818792220,
+      "artifact_zip_bytes": 116700833,
+      "artifact_zip_sha256": "d451be816113ef8e068a111065e7b1cdebf18d981602c20dc8de5d73ebfb90ac",
+      "report": {
+        "schema_version": 2,
+        "status": "passed",
+        "platform": "windows",
+        "commit": "02aafce6fe5554fdd70fc5e1af539e412cf32228",
+        "working_tree_status": [
+          " M assets/art/arena.svg.import",
+          " M assets/art/arena_painted.png.import",
+          " M assets/art/atlas.png.import",
+          " M assets/art/hero_medallion.png.import",
+          " M assets/art/premium_slate.png.import",
+          " M assets/art/reliquary_frame.png.import",
+          " M assets/audio/ASH.wav.import",
+          " M assets/audio/THORN.wav.import",
+          " M assets/audio/TIDE.wav.import",
+          " M assets/audio/VEIL.wav.import",
+          " M assets/audio/atmosphere.ogg.import",
+          " M assets/audio/attack.wav.import",
+          " M assets/audio/draw.wav.import",
+          " M assets/audio/hit.wav.import",
+          " M assets/audio/lose.wav.import",
+          " M assets/audio/turn.wav.import",
+          " M assets/audio/ui.wav.import",
+          " M assets/audio/win.wav.import",
+          " M assets/cards/originals/oa-houses-c01.png.import",
+          " M assets/cards/originals/oa-morph-c01.png.import",
+          " M assets/cards/originals/oa-neutral-c02.png.import",
+          " M assets/cards/originals/oa-ninth-c01.png.import",
+          " M assets/cards/originals/oa-stillwatch-c01.png.import",
+          " M assets/fonts/Body.ttf.import",
+          " M assets/fonts/Cinzel.ttf.import",
+          " M assets/fonts/Display.ttf.import",
+          " M assets/icon.svg.import"
+        ],
+        "run_directory": "work\\production\\platforms\\run-8c1a47428193",
+        "builds": {
+          "orafold-preview.exe": {
+            "bytes": 127625808,
+            "sha256": "8c954cabf8dc61a2248173cb79b99a1a2039d1e4a10de359880b938992fd6540",
+            "path": "work\\production\\platforms\\run-8c1a47428193\\orafold-preview.exe",
+            "retained": true
+          },
+          "orafold-preview.console.exe": {
+            "bytes": 188928,
+            "sha256": "96ab1dcd4333e2505064b0ecf7a7a241d3eb9284cad2ad710021c35ca9037e5d",
+            "path": "work\\production\\platforms\\run-8c1a47428193\\orafold-preview.console.exe",
+            "retained": true
+          },
+          "orafold-runtime-qa.exe": {
+            "bytes": 127625856,
+            "sha256": "817ed09048b2f370379514a992cf680b8ed9db26e77f6f8fb57a66803e15a6c2",
+            "path": "work\\production\\platforms\\run-8c1a47428193\\orafold-runtime-qa.exe",
+            "retained": true
+          },
+          "orafold-runtime-qa.console.exe": {
+            "bytes": 188928,
+            "sha256": "96ab1dcd4333e2505064b0ecf7a7a241d3eb9284cad2ad710021c35ca9037e5d",
+            "path": "work\\production\\platforms\\run-8c1a47428193\\orafold-runtime-qa.console.exe",
+            "retained": true
+          }
+        },
+        "commands": [
+          {
+            "name": "orafold-preview-export",
+            "exit_code": 0,
+            "seconds": 7.187,
+            "log": "work\\production\\platforms\\run-8c1a47428193\\orafold-preview-export.log"
+          },
+          {
+            "name": "orafold-runtime-qa-export",
+            "exit_code": 0,
+            "seconds": 6.359,
+            "log": "work\\production\\platforms\\run-8c1a47428193\\orafold-runtime-qa-export.log"
+          },
+          {
+            "name": "orafold-runtime-qa-runtime",
+            "exit_code": 0,
+            "seconds": 1.891,
+            "log": "work\\production\\platforms\\run-8c1a47428193\\orafold-runtime-qa-runtime.log"
+          }
+        ],
+        "physical_iphone_tested": false,
+        "android_device_tested": false,
+        "ios_native_build": "not-built: requires Apple Xcode/signing environment",
+        "source_note": "Raw source/asset bytes are hashed; generated.uid/.import files are excluded. No test fixture or repository resource fallback is used by exported executables.",
+        "regular_game_pack_verified": true,
+        "regular_binary_runtime_executed": false,
+        "native_exported_duel": {
+          "assertions": 17,
+          "catalog_fingerprint": "877fdc66a5da9f336bc4124b61c53c7f0b3412047432215af05ab047af1f3655",
+          "failures": 0,
+          "main_menu_verified": true,
+          "round": 25,
+          "suite": "production_native_exported",
+          "winner": "hero"
+        },
+        "main_menu_verified": true,
+        "source_changed_during_run": false
+      }
+    },
+    "linux_android": {
+      "job_id": 130250571698,
+      "conclusion": "success",
+      "artifact_id": 13818558711,
+      "artifact_zip_bytes": 182200374,
+      "artifact_zip_sha256": "569c7c49a975a209f11a204ce3c4bb4f2d71fcec87e7b7eabe6a39020ede7e18",
+      "report": {
+        "schema_version": 2,
+        "status": "passed",
+        "platform": "linux-android",
+        "commit": "02aafce6fe5554fdd70fc5e1af539e412cf32228",
+        "working_tree_status": [],
+        "run_directory": "work/production/platforms/run-6eb854e2b4a2",
+        "builds": {
+          "orafold-preview.x86_64": {
+            "bytes": 98952752,
+            "sha256": "cf20677471149cac86e17dcf85f3efefe7fc349589ea1936ecdf273e7c1d07c1",
+            "path": "work/production/platforms/run-6eb854e2b4a2/orafold-preview.x86_64",
+            "retained": true
+          },
+          "orafold-preview.sh": {
+            "bytes": 127,
+            "sha256": "3da73611b6b39e7202628919d03cbe4f2c9577b0e91a006803bedd1f90caf4e8",
+            "path": "work/production/platforms/run-6eb854e2b4a2/orafold-preview.sh",
+            "retained": true
+          },
+          "orafold-runtime-qa.x86_64": {
+            "bytes": 98952800,
+            "sha256": "30feb6ac6171363c17cfaef75a779762aa7401b40d3f54454fab51d87fdaee6c",
+            "path": "work/production/platforms/run-6eb854e2b4a2/orafold-runtime-qa.x86_64",
+            "retained": true
+          },
+          "orafold-runtime-qa.sh": {
+            "bytes": 130,
+            "sha256": "39a5aec6aed89d2ad93b3d67d50e2545f689020d889564c9e7f95b6a1965d8f4",
+            "path": "work/production/platforms/run-6eb854e2b4a2/orafold-runtime-qa.sh",
+            "retained": true
+          },
+          "orafold-preview.apk": {
+            "bytes": 79915501,
+            "sha256": "d9364b5e860c11d299498aa12e85ada196e8ccdf104097f23d53bfcf343402d3",
+            "path": "work/production/platforms/run-6eb854e2b4a2/orafold-preview.apk",
+            "retained": true
+          }
+        },
+        "commands": [
+          {
+            "name": "orafold-preview-export",
+            "exit_code": 0,
+            "seconds": 4.777,
+            "log": "work/production/platforms/run-6eb854e2b4a2/orafold-preview-export.log"
+          },
+          {
+            "name": "orafold-runtime-qa-export",
+            "exit_code": 0,
+            "seconds": 3.473,
+            "log": "work/production/platforms/run-6eb854e2b4a2/orafold-runtime-qa-export.log"
+          },
+          {
+            "name": "orafold-runtime-qa-runtime",
+            "exit_code": 0,
+            "seconds": 1.418,
+            "log": "work/production/platforms/run-6eb854e2b4a2/orafold-runtime-qa-runtime.log"
+          },
+          {
+            "name": "android-export",
+            "exit_code": 0,
+            "seconds": 14.705,
+            "log": "work/production/platforms/run-6eb854e2b4a2/android-export.log"
+          },
+          {
+            "name": "android-signature",
+            "exit_code": 0,
+            "seconds": 0.67,
+            "log": "work/production/platforms/run-6eb854e2b4a2/android-signature.log"
+          },
+          {
+            "name": "android-badging",
+            "exit_code": 0,
+            "seconds": 0.274,
+            "log": "work/production/platforms/run-6eb854e2b4a2/android-badging.log"
+          }
+        ],
+        "physical_iphone_tested": false,
+        "android_device_tested": false,
+        "ios_native_build": "not-built: requires Apple Xcode/signing environment",
+        "source_note": "Raw source/asset bytes are hashed; generated.uid/.import files are excluded. No test fixture or repository resource fallback is used by exported executables.",
+        "regular_game_pack_verified": true,
+        "regular_binary_runtime_executed": false,
+        "native_exported_duel": {
+          "assertions": 17,
+          "catalog_fingerprint": "877fdc66a5da9f336bc4124b61c53c7f0b3412047432215af05ab047af1f3655",
+          "failures": 0,
+          "main_menu_verified": true,
+          "round": 25,
+          "suite": "production_native_exported",
+          "winner": "hero"
+        },
+        "main_menu_verified": true,
+        "android_debug_signature_verified": true,
+        "android_debug_key_only": true,
+        "source_changed_during_run": false
+      }
+    }
+  },
+  "source_binding": "Each uploaded results.json contains the raw source/asset SHA-256 inventory verified before and after the run. The report excerpts here follow actual job stdout, which omits that long inventory. Generated .import/.uid metadata is explicitly excluded; Windows regenerates .import files and reports that dirty status above.",
+  "limits": [
+    "550 card definitions, four starters and licenses were packed and source-verified; this tested core still had five individual illustrations, not the later 550-illustration integration.",
+    "Regular main packages were structurally verified, not forcibly terminated as a runtime test; QA entry instantiated the actual Shell and exercised its four main actions.",
+    "Native full-model duel and UI code were checked headlessly, not as rendered Windows/Linux GUI or physical touchscreen tests.",
+    "Android debug APK build/signature/ABI/CRC/source checks are not Android installation or device execution.",
+    "No native iOS build, Xcode, provisioning, Store signature or physical iPhone test was performed.",
+    "The final integrated gameplay/audio/art commit must rerun this workflow; this component evidence does not validate future changes.",
+    "No deployment or merge was performed by this component."
+  ]
+}

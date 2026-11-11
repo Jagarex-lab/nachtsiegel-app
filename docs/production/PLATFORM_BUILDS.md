@@ -57,3 +57,19 @@ Format-/Optionsgrundlage: offizieller Godot-4.6.3-Quellstand [PCK-Leser](https:/
 Der erste echte Plattform-CI-Versuch (Run `42935786627`, Merge-Prüfcommit `6d54fc90efb802b66aec6c21f222258882e7ed8f`) scheiterte vor einem erfolgreichen nativen Lauf: `setup-android@v3` forderte das nicht mehr verfügbare Standardpaket `tools` an; Windows konnte den extensionlosen `setup-godot`-Alias nicht per Python/CreateProcess auflösen. Die Konfiguration installiert jetzt explizit `platform-tools` und verwendet auf Windows die tatsächlich installierte offizielle `Godot_v4.6.3-stable_win64_console.exe` für Import und Export. Die 14 Parser-/Reportingtests liefen bereits auf Windows erfolgreich; das ist weiterhin kein bestandener nativer Spieltest. Ein neuer realer CI-Lauf muss diese Infrastrukturkorrektur bestätigen.
 
 Der Folgeversuch `42936408997` bestätigte einen weiteren Windows-Infrastrukturfehler: Der Windows-Cache von `setup-godot@v2` sichert nur die Haupt-EXE und lässt deren offizielle Konsolenbegleitdatei aus. Dieser Cache wird im Windows-Job deaktiviert; `Get-Command` und eine tatsächliche EXE-Inventur dokumentieren die Installation vor dem Import. Der Linux-/Android-Job desselben Runs war erfolgreich (Details im nachfolgenden Nachweis); ein Windows-Pass ist damit noch nicht belegt.
+
+## Tatsächlich bestandene CI-Plattformjobs
+
+[Run 42937319265](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42937319265) prüfte PR-Head `f5b5ab8eb6b5f1104cf457bbcb56a90130a6713c` über den tatsächlich ausgecheckten PR-Merge-Prüfcommit `02aafce6fe5554fdd70fc5e1af539e412cf32228`. Die beiden Plattformjobs waren erfolgreich:
+
+| Prüfung | Tatsächlicher Nachweis |
+| --- | --- |
+| Windows Server 2025 | Regulärer PE32+-x86_64-Export und separater QA-Export mit eingebettetem PCK; tatsächliche Ausführung über den offiziellen Debug-Konsolenwrapper aus leerem Arbeitsverzeichnis |
+| Linux Ubuntu 24.04 | Regulärer ELF64-x86_64-Export und separater QA-Export mit eingebettetem PCK; tatsächliche QA-Ausführung aus leerem Arbeitsverzeichnis |
+| Beide native QA-Programme | Je **17 Assertions, 0 Fehler**, echte Partie Seed 777 bis Sieg `hero` nach 25 Halbzügen; tatsächliche Shell-Lobby und vier verbundene Hauptaktionen; geordneter Shutdown ohne Scriptfehler oder Ressourcenlecks |
+| Android | Debug-APK tatsächlich exportiert; beide nativen ABI-Bibliotheken, ZIP-CRC, byteidentische Daten/Lizenzen, echte Debug-Signatur und Paketname/Label geprüft |
+| Quellbindung | Rohquellen und HEAD während des gesamten jeweiligen Laufs unverändert; Windows protokolliert neu generierte `.import`-Metadaten gesondert |
+
+[Maschinenlesbare Nachweise mit Binärgrößen, SHA-256, Job-/Artefakt-IDs und Grenzen](evidence/NATIVE_PLATFORM_QA_2026_11_11.json) halten die tatsächlichen Berichte fest. Die hochgeladenen `results.json` enthalten zusätzlich die vollständige Rohquellhashliste. Windows-Artefakt: [13818792220](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42937319265/artifacts/13818792220); Linux-/Android-Artefakt: [13818558711](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42937319265/artifacts/13818558711). Diese Debugdateien wurden nicht auf Pages oder in Stores veröffentlicht.
+
+Dieser Plattformnachweis betrifft weiterhin den Kern mit **550 Kartendefinitionen und damals fünf individuellen Illustrationen**. Er bestätigt weder eine spätere Integration aller Illustrationen noch den damaligen Gesamtworkflow, dessen übrige Tests zum Nachweiszeitpunkt noch liefen. Nach Zusammenführung von Karten-, Audio-, Art- und UI-Änderungen ist der tatsächliche Integrationscommit erneut zu bauen und zu prüfen. Native Gerätetests und die oben genannten iOS-/GUI-Grenzen bleiben offen.
