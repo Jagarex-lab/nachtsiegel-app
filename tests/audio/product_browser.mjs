@@ -1,7 +1,8 @@
 // Actual exported Alpha product, real canvas controls and mixed WebAudio output.
 // NODE_PATH=<playwright> AUDIO_PRODUCT_URL=http://127.0.0.1:8766 AUDIO_QA_PROFILE=chromium|webkit node tests/audio/product_browser.mjs
 import {createRequire} from 'node:module';
-import {mkdir,writeFile} from 'node:fs/promises';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 const require=createRequire(import.meta.url);
 const {chromium,webkit}=require('playwright');
@@ -9,11 +10,15 @@ const profile=process.env.AUDIO_QA_PROFILE||'chromium';
 const url=process.env.AUDIO_PRODUCT_URL||'http://127.0.0.1:8766';
 const evidence={profile,url,scope:'Actual exported product in browser; no physical device or human listening claim.',checks:[],errors:[],graphicsDiagnostics:[]};
 evidence.checks.push = function (...items) {console.error(items.join("; "));return Array.prototype.push.apply(this,items)};
+evidence.harnessSha256=createHash('sha256').update(await readFile(new URL(import.meta.url))).digest('hex');
+evidence.playwrightVersion=require('playwright/package.json').version;
+evidence.nodeVersion=process.version;
 let browser;
 let page;
 const deadline=setTimeout(()=>{console.error('Audio product browser deadline exceeded');process.exit(2)},600000);
 try {
   browser=await (profile==='webkit'?webkit:chromium).launch(profile==='webkit'?{headless:true}:{headless:true,channel:'chromium',ignoreDefaultArgs:['--mute-audio'],args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader','--autoplay-policy=user-gesture-required']});
+  evidence.browserVersion=browser.version();
   evidence.build=await (await fetch(`${url}/build-info.json`)).json();
   const context=await browser.newContext({viewport:{width:1100,height:800}});
   await context.addInitScript(() => {
@@ -80,11 +85,12 @@ try {
     let s=await state();assert(s.actions[key],`Missing actual action ${key}`);
     for(let attempt=0;attempt<12;attempt++){
       const r=s.actions[key].rect;const v=page.viewportSize();
+      const visible=s.action_visibility?.[key]?.visible_rect||r;
       const fixed=["settings_back","menu","modal_close"].includes(key);
-      if(r[1]>=(fixed?0:55)&&r[1]+r[3]<=v.height-10)break;
+      if(visible[2]>=Math.min(44,r[2])&&visible[3]>=Math.min(44,r[3])&&r[1]>=(fixed?0:55)&&r[1]+r[3]<=v.height-10)break;
       await page.mouse.move(v.width/2,v.height/2);await page.mouse.wheel(0,r[1]<55?-240:240);await settle();s=await state();
     }
-    const r=s.actions[key].rect;assert(!s.actions[key].disabled,`Disabled ${key}`);
+    const r=s.action_visibility?.[key]?.visible_rect||s.actions[key].rect;assert(r[2]>0&&r[3]>0,`Clipped ${key}`);assert(!s.actions[key].disabled,`Disabled ${key}`);
     await page.mouse.click(r[0]+r[2]/2,r[1]+r[3]/2);await settle();
   }
   async function volume(channel,value){
@@ -193,7 +199,7 @@ try {
   for(const key of ['audio_mute','audio_reduced']){const r=s.actions[key].rect;assert(r[2]>=44&&r[3]>=44);evidence.mobileTargets[key]=r}
   await volume('ui',.28);assert.equal((await state()).audio.settings.ui,.28);
   await settle();await mkdir('work/audio/product-browser',{recursive:true});await page.screenshot({path:`work/audio/product-browser/${profile}-mobile.png`});
-  evidence.checks.push('Mobile390x844 actual scroll/control editing and44px targets');
+  evidence.checks.push('Responsive390x844 viewport: actual scroll/control editing and44px targets');
   evidence.final=(await state()).audio;assert.equal(evidence.errors.length,0,JSON.stringify(evidence.errors));evidence.result='passed';
   }
  } catch(error){
