@@ -570,6 +570,11 @@ func snapshot() -> Dictionary:
 	result.suspension_reasons = {"manual":_manual_suspended,"focus":_focus_suspended,"application":_app_suspended}
 	result.unlocked = unlocked
 	result.events = _events.size()
+	result.buses = {}
+	for channel in BUS_NAMES:
+		var index := AudioServer.get_bus_index(BUS_NAMES[channel])
+		if index >= 0:
+			result.buses[channel] = {"volume_db":AudioServer.get_bus_volume_db(index),"muted":AudioServer.is_bus_mute(index),"peak_db":AudioServer.get_bus_peak_volume_left_db(index,0)}
 	result.last_save_error = last_save_error
 	result.web_storage_status = _web_storage_status
 	return result

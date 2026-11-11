@@ -166,6 +166,8 @@ func snapshot() -> Dictionary:
 		"transitioning": _duration > 0.0, "players": _players.size(),
 		"playing": playing, "gains": _gains.duplicate(), "suspended": _suspended,
 		"playback_positions": _players.map(func(player):return player.get_playback_position()),
+		"volume_db": _players.map(func(player):return player.volume_db),
+		"paused": _players.map(func(player):return player.stream_paused),
 		"resume_positions": _resume_positions.duplicate()}
 
 func _exit_tree() -> void:

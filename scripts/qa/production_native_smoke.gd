@@ -22,6 +22,7 @@ func run() -> void:
 	check(FileAccess.file_exists("res://data/audio/asset_manifest.json") and FileAccess.file_exists("res://assets/audio/ORAFOLD-LICENSES.md"),"audio provenance and redistribution notice packaged")
 	check(audio.play_event("card.draw"),"actual native packaged draw stream plays")
 	check(audio.set_music("menu",0.02) and audio.set_ambience("ambience.rift",0.02),"native packaged streaming music and ambience start")
+	for _frame in 3:await get_tree().process_frame
 	await get_tree().create_timer(0.10).timeout
 	check(audio.snapshot().music.playing==1 and audio._ambience.playing,"actual native streaming transports active before shutdown exercise")
 	check(audio.set_volume("ui",0.27),"native independent UI gain accepted")

@@ -25,6 +25,7 @@ try {
     const contexts = [];
     const analysers = [];
     const attached = new WeakSet();
+    const routing = [];
     for (const key of ['AudioContext', 'webkitAudioContext']) {
       const Native = window[key];
       if (!Native) continue;
@@ -39,6 +40,9 @@ try {
     const connect = AudioNode.prototype.connect;
     AudioNode.prototype.connect = function (...args) {
       const result = connect.apply(this, args);
+      if (args[0] === this.context.destination) {
+        routing.push({action:'connect_destination',source:this.constructor.name,already_observed:attached.has(this),at:performance.now()});
+      }
       if (args[0] === this.context.destination && !attached.has(this)) {
         attached.add(this);
         const analyser = this.context.createAnalyser();
@@ -54,6 +58,14 @@ try {
       }
       return result;
     };
+    const disconnect = AudioNode.prototype.disconnect;
+    AudioNode.prototype.disconnect = function (...args) {
+      routing.push({action:'disconnect',source:this.constructor.name,target:args[0]?.constructor?.name||String(args[0]),all:args.length===0,at:performance.now()});
+      // A global/output disconnect removes the observation branch as well.
+      // The next real destination connection must attach a fresh observer.
+      if (args.length===0 || typeof args[0]==='number') attached.delete(this);
+      return disconnect.apply(this,args);
+    };
     window.__audioQAProbe = () => {
       let peak = 0;
       let energy = 0;
@@ -68,7 +80,7 @@ try {
         }
       }
       return {contexts: contexts.map(item => ({state: item.state, sample_rate: item.sampleRate})),
-        analysers: analysers.length, peak, rms: samples ? Math.sqrt(energy / samples) : 0};
+        analysers: analysers.length, routing:routing.slice(-32), peak, rms: samples ? Math.sqrt(energy / samples) : 0};
     };
   });
   page=await context.newPage();
@@ -82,6 +94,7 @@ try {
   const settle=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(resolve,180)))));
   async function load(){await page.goto(`${url}/?qa=1`,{waitUntil:'domcontentloaded',timeout:45000});await page.waitForFunction(()=>window.orafoldQA?.audio?.events===52,null,{timeout:90000});await settle()}
   async function tap(key){
+    console.error(`Actual tap ${key}`);
     let s=await state();assert(s.actions[key],`Missing actual action ${key}`);
     for(let attempt=0;attempt<12;attempt++){
       const r=s.actions[key].rect;const v=page.viewportSize();
