@@ -1,5 +1,7 @@
 extends SceneTree
 const ART = preload("res://scripts/production/art_resolver.gd")
+const Catalog = preload("res://scripts/production/catalog.gd")
+const BUILD_METADATA := ["art_sources.json", "art_source_map.json", "art_briefs.json", "authoring.json", "art_previews.json"]
 var assertions := 0
 var failures := 0
 func _initialize() -> void: call_deferred("run")
@@ -9,10 +11,27 @@ func check(ok: bool, message: String) -> void:
 func run() -> void:
 	var native_pack := "--native" in OS.get_cmdline_user_args()
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_manifest.json"))
-	var originals: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_sources.json"))
+	var runtime_catalog = Catalog.new()
+	var runtime_cards: Array = runtime_catalog.all_cards()
+	var runtime_ids: Dictionary = {}
+	for card in runtime_cards: runtime_ids[str(card.id)] = true
+	check(runtime_catalog.load_error.is_empty() and runtime_cards.size() == 550 and runtime_ids.size() == 550, "actual packed production catalog has exactly550 valid distinct IDs")
+	var originals := {"entries": {}}
+	if native_pack:
+		# Native retains its independent canonical provenance crosscheck.
+		originals = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_sources.json"))
+	else:
+		# Web consumes the same validated lightweight manifest as the app.
+		# No authoring/provenance source file or checkout fallback is required.
+		for id in manifest.entries:
+			if manifest.entries[id].get("individual_original", false): originals.entries[id] = manifest.entries[id]
+		if not OS.has_feature("archive_qa") and not OS.has_feature("legacy_ui_qa"):
+			for filename in BUILD_METADATA:
+				check(not FileAccess.file_exists("res://data/production/" + filename) and not ResourceLoader.exists("res://data/production/" + filename), "normal Web pack excludes build-only metadata: " + filename)
 	var delivery: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_delivery.json"))
 	var previews: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_preview_delivery.json"))
 	var count: int = originals.entries.size()
+	check(count == 550 and manifest.entries.size() == 550 and originals.entries.keys().all(func(id): return runtime_ids.has(id)), "all550 individual manifest bindings exactly match actual runtime catalog identities")
 	check(manifest.inventory_card_count == 550 and manifest.individual_original_count == count and manifest.compact_preview_count == count, "actual PCK carries matching original/preview inventory")
 	check(manifest.final_individual_count == count and manifest.commercially_cleared_count == 0, "actual package distinguishes visual and legal approval")
 	check(delivery.entries.size() == count and delivery.profile == "orafold-web-art-v1", "actual full-art delivery inventory matches declared sources")
@@ -22,6 +41,11 @@ func run() -> void:
 	var compact_texture_bytes := 0
 	for id in originals.entries:
 		var entry: Dictionary = ART.manifest_entry(id)
+		check(entry.asset_path == "res://assets/cards/originals/" + str(id) + ".png", "runtime card identity binds its exact original path: " + str(id))
+		check(entry.original_width == delivery.entries[id].width and entry.original_height == delivery.entries[id].height, "runtime original dimensions match actual full delivery binding: " + str(id))
+		check(entry.preview_asset_path == previews.entries[id].asset_path and entry.preview_width == previews.entries[id].width and entry.preview_height == previews.entries[id].height, "runtime compact path/dimensions match actual preview binding: " + str(id))
+		if native_pack:
+			check(entry.sha256 == originals.entries[id].sha256 and entry.original_width == originals.entries[id].original_width and entry.original_height == originals.entries[id].original_height, "native runtime manifest retains canonical source hash/dimensions: " + str(id))
 		var original_size := Vector2(entry.original_width, entry.original_height)
 		var preview_size := Vector2(entry.preview_width, entry.preview_height)
 		var expected_preview: bool = native_pack or id in previews.pinned_card_ids
