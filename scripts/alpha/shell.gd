@@ -304,7 +304,7 @@ func battle() -> void:
 	button("log","Protokoll",show_log,top).size_flags_horizontal=Control.SIZE_SHRINK_END
 	button("restart","Neu",func():show_modal("Neue Partie?",func(box):button("confirm_restart","Neu starten",func():close_modal();start_battle(),box)),top).size_flags_horizontal=Control.SIZE_SHRINK_END
 	_battle_board()
-	var hand_height=60 if short_landscape else 66 if compact else 80
+	var hand_height=hand_height_for_viewport()
 	var hand=row();hand.custom_minimum_size.y=hand_height
 	for index in s.hero.hand.size():
 		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card);view.selected=selected==index
@@ -456,12 +456,19 @@ func field_click(side: String, lane: int) -> void:
 		detail.display_attack=maxi(0,int(detail.atk)-int(m.state[side].get("weak",0)))
 		detail.attack_penalty=int(m.state[side].get("weak",0))
 		inspect(session.card(detail.id),detail)
+func hand_height_for_viewport(preparing: bool=false) -> int:
+	if short_landscape:return 60
+	if compact:return 80 if preparing else 66
+	# Desktop/tablet space can show actual artwork instead of an 80px ribbon.
+	# Phone layouts keep their established board and touch budgets unchanged.
+	if layout.size.y>=620:return 160 if preparing or layout.size.y>=800 else 144
+	return 112 if preparing else 80
 func opening() -> void:
 	var s: Dictionary=session.model.state
 	var instructions={"mulligan":"1 / 3 · Tippe Karten zum Tauschen an. Details zeigt den vollständigen Kartentext.","origins":"2 / 3 · "+("Du beginnst. " if s.coin=="hero" else "Die KI beginnt. ")+"Wähle deinen Ursprung auf einem leuchtenden eigenen Pfad.","second":"3 / 3 · Zweite Möglichkeit: optional einmal Ursprung ändern und einmal eine Handkarte tauschen."}
 	if not short_landscape:text(instructions.get(s.stage,"Vorbereitung"),body,13)
 	_battle_board(true)
-	var hand_height=60 if short_landscape else 80 if compact else 112
+	var hand_height=hand_height_for_viewport(true)
 	var hand=row();hand.custom_minimum_size.y=hand_height
 	var signature=JSON.stringify(s.hero.hand)
 	var animate=signature!=opening_hand_signature and not session.profile.reduced_motion
@@ -766,8 +773,18 @@ func save_current_deck() -> void:
 	var valid=deck_check()
 	if not valid.ok:message=valid.message;render();return
 	var result=session.save_deck(collection_mode+":"+faction,deck,collection_mode);message=result.get("message","");render()
+func _qa_clip_rect(control: Control) -> Rect2:
+	var bounds=get_viewport_rect()
+	var ancestor: Node=control.get_parent()
+	while ancestor!=null:
+		var clipper=ancestor as Control
+		if clipper!=null and clipper.clip_contents:bounds=bounds.intersection(clipper.get_global_rect())
+		ancestor=ancestor.get_parent()
+	return bounds
+func _qa_css_rect(rect: Rect2) -> Array:
+	return [rect.position.x/density,rect.position.y/density,rect.size.x/density,rect.size.y/density]
 func publish_qa() -> void:
-	var state={"page":page,"mode":mode,"actions":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"search_text":filter_text,"font_msdf":S.font.multichannel_signed_distance_field,"library_total":library_total,"library_page":library_page,"library_pages":library_page_count,"library_visible_ids":library_visible_ids.duplicate()}
+	var state={"page":page,"mode":mode,"actions":{},"action_visibility":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"search_text":filter_text,"font_msdf":S.font.multichannel_signed_distance_field,"library_total":library_total,"library_page":library_page,"library_pages":library_page_count,"library_visible_ids":library_visible_ids.duplicate()}
 	if is_instance_valid(inspector_rules) and is_instance_valid(modal):
 		var r=inspector_rules.get_global_rect()
 		state.inspection={"id":inspector_card_id,"title":inspector_title.text,"rules":inspector_rules.text,"rules_font_size":inspector_rules.get_theme_font_size("font_size"),"rules_rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]}
@@ -776,6 +793,8 @@ func publish_qa() -> void:
 		var b=actions[key]
 		if is_instance_valid(b) and b.is_visible_in_tree():
 			var r=b.get_global_rect();state.actions[key]={"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density],"disabled":b.disabled if b is BaseButton else false}
+			var clip=_qa_clip_rect(b)
+			state.action_visibility[key]={"clip_rect":_qa_css_rect(clip),"visible_rect":_qa_css_rect(r.intersection(clip))}
 	for b in hand_views:
 		var r=b.get_global_rect();state.hand.append({"id":b.card.id,"name":b.card.name,"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]})
 	for key in board_views:
@@ -815,7 +834,7 @@ func _remove_card(id: String) -> void:
 func _portrait(parent: Node, index: int, height: int=32) -> void:
 	var tex=AtlasTexture.new();tex.atlas=preload("res://assets/art/atlas.png")
 	var cell=tex.atlas.get_size()/3.0;tex.region=Rect2(Vector2(index%3,floori(float(index)/3))*cell,cell)
-	var image=TextureRect.new();image.texture=tex;image.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS;image.custom_minimum_size=Vector2(height,height);image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(image)
+	var image=TextureRect.new();image.mouse_filter=Control.MOUSE_FILTER_IGNORE;image.texture=tex;image.texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS;image.custom_minimum_size=Vector2(height,height);image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED;parent.add_child(image)
 
 func load_last_replay() -> void:
 	var data=JSON.parse_string(FileAccess.get_file_as_string("user://orafold_last_replay.json"))
@@ -926,7 +945,7 @@ func deck_selection() -> void:
 	var grid=GridContainer.new();grid.columns=1 if portrait else 2;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",12);grid.add_theme_constant_override("v_separation",10);sc.add_child(grid)
 	var cat=alpha_catalog
 	for power in cat.deck_ids():
-		var frame=PanelContainer.new();frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",T.panel(S.POWER_COLORS[power],Color("15212d")));grid.add_child(frame)
+		var frame=PanelContainer.new();frame.mouse_filter=Control.MOUSE_FILTER_PASS;frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",T.panel(S.POWER_COLORS[power],Color("15212d")));grid.add_child(frame)
 		var box=VBoxContainer.new();frame.add_child(box)
 		var heading=row(box);_portrait(heading,{"houses":4,"stillwatch":5,"morph":1,"ninth":3}[power],48)
 		text(S.SYMBOLS[power]+"  "+cat.source.powers[power],heading,22).add_theme_color_override("font_color",S.POWER_COLORS[power])

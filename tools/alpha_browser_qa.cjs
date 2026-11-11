@@ -6,30 +6,69 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
  const legacyOnly=process.env.QA_LEGACY_ONLY==='1';
  fs.rmSync('work/alpha/browser-results.json',{force:true});
  const results=[],profiles={chromium:[{name:'desktop',viewport:{width:1280,height:720},hasTouch:true},{name:'desktop-wide',viewport:{width:1600,height:900},hasTouch:true},{...devices['Pixel 7'],name:'android',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['Pixel 7'],name:'android-bars',viewport:{width:844,height:320},deviceScaleFactor:2,insets:{left:44,right:44,top:0,bottom:21}}],webkit:[{...devices['iPhone 13'],name:'iphone',viewport:{width:844,height:390},deviceScaleFactor:3},{...devices['iPhone 13 Pro Max'],name:'iphone-wide',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['iPhone 13'],name:'iphone-bars',viewport:{width:844,height:320},deviceScaleFactor:1,reducedMotion:'reduce',insets:{left:44,right:44,top:0,bottom:21}}]};
- for(const engine of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
+ const selectedEngines=(process.env.QA_ENGINES||'chromium,webkit').split(',');
+ for(const engine of selectedEngines)assert(profiles[engine],'unsupported browser engine '+engine);
+ if(process.env.QA_PROFILES)for(const requested of process.env.QA_PROFILES.split(','))assert(selectedEngines.some(engine=>profiles[engine].some(profile=>profile.name===requested)),'unsupported profile '+requested);
+ for(const engine of selectedEngines){
   for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
   const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(process.env.QA_PROXY?{proxy:{server:process.env.QA_PROXY,bypass:"localhost,127.0.0.1"}}:{}),...(engine==='chromium'?{channel:'chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
-   let inspectedCard=null,profileTemplate=null;const relicActivations=[],toolbarTests=[];
+   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot';const relicActivations=[],toolbarTests=[],actionTrace=[];
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
    const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync(`work/alpha/browser-progress-${engine}-${name}.json`,JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
    const tap=async r=>{await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
-   const action=async id=>{if(id==='convergence'&&!(await state()).actions[id])await action('actions');await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});let previous=await state();if(id==='convergence'&&!previous.actions[id]){await action('actions');previous=await state();}
-    const inside=r=>r[0]>=-.1&&r[1]>=-.1&&r[0]+r[2]<=page.viewportSize().width+1&&r[1]+r[3]<=page.viewportSize().height+1;
-    if((previous.modal&&id!=='modal_close')||/^(custom_|template_|choose_|preview_)/.test(id)){
-     for(let tries=0;tries<8&&!inside(previous.actions[id].rect);tries++){
-      const r=previous.actions[id].rect,v=page.viewportSize();
-      await page.mouse.move(Math.max(1,Math.min(v.width-1,r[0]+r[2]/2)),v.height*.6);
-      await page.mouse.wheel(0,r[1]<0?-v.height*.55:v.height*.55);
-      await page.waitForTimeout(140);previous=await state();
-     }
+   const encloses=(outer,inner)=>outer&&inner&&inner[0]>=outer[0]-.1&&inner[1]>=outer[1]-.1&&inner[0]+inner[2]<=outer[0]+outer[2]+.1&&inner[1]+inner[3]<=outer[1]+outer[3]+.1;
+   const viewportRect=()=>[0,0,page.viewportSize().width,page.viewportSize().height];
+   const fullVisible=(current,id)=>{
+    const a=current.actions[id],visibility=current.action_visibility?.[id];
+    if(!visibility){assert(legacyOnly,'production clip diagnostics unsupported for '+id);return encloses(viewportRect(),a.rect);}
+    return encloses(viewportRect(),a.rect)&&encloses(visibility.clip_rect,a.rect)&&encloses(visibility.visible_rect,a.rect)&&visibility.visible_rect[2]>=43.9&&visibility.visible_rect[3]>=43.9;
+   };
+   async function panTowards(current,id){
+    const clip=current.action_visibility[id].clip_rect,r=current.actions[id].rect;
+    assert(clip[2]>=43.9&&clip[3]>=43.9,id+' scroll region can expose44CSS');
+    const down=r[1]+r[3]>clip[1]+clip[3]+.1,up=r[1]<clip[1]-.1;
+    assert(down||up,id+' horizontal clipping cannot be repaired by vertical pan');
+    const sameClip=value=>value&&value.every((n,i)=>Math.abs(n-clip[i])<.1);
+    const buttons=Object.entries(current.actions).filter(([key])=>sameClip(current.action_visibility[key]?.clip_rect)).map(([,value])=>value.rect);
+    const ys=[down?clip[1]+clip[3]-24:clip[1]+24,clip[1]+clip[3]*.5,...buttons.flatMap(value=>[value[1]-2,value[1]+value[3]+2])].filter(y=>y>=clip[1]+8&&y<=clip[1]+clip[3]-8).sort((a,b)=>down?b-a:a-b);
+    let point=null;
+    for(const y of ys){for(const fraction of [.75,.25,.5]){const x=clip[0]+clip[2]*fraction;if(!buttons.some(value=>x>=value[0]&&x<=value[0]+value[2]&&y>=value[1]&&y<=value[1]+value[3])){point={x,y};break;}}if(point)break;}
+    assert(point,id+' has a real scroll surface outside action buttons');
+    const available=down?point.y-(clip[1]+8):clip[1]+clip[3]-8-point.y;
+    const distance=Math.min(160,clip[3]*.6,available);assert(distance>10,id+' pan exceeds real scroll deadzone');
+    const end={x:point.x,y:point.y+(down?-distance:distance)};
+    if(capture){
+     await capture.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...point,id:0,radiusX:2,radiusY:2,force:1}]});
+     for(let step=1;step<=6;step++){await capture.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:point.x,y:point.y+(end.y-point.y)*step/6,id:0,radiusX:2,radiusY:2,force:1}]});await page.waitForTimeout(35);}
+     await capture.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+    }else{
+     // WebKit's public protocol provides tap only. Trusted browser mouse pan
+     // reaches Godot's configured touch emulation; no DOM event/model hook.
+     await page.mouse.move(point.x,point.y);await page.mouse.down();
+     for(let step=1;step<=6;step++){await page.mouse.move(point.x,point.y+(end.y-point.y)*step/6);await page.waitForTimeout(35);}
+     await page.mouse.up();
     }
-    assert(inside(previous.actions[id].rect),id+' actual visible touch bounds');
-    await tap(previous.actions[id].rect);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});};
+    actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end});
+    await page.waitForTimeout(180);
+   }
+   const action=async id=>{
+    lastAction=id;if(id==='convergence'&&!(await state()).actions[id])await action('actions');
+    await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});
+    let previous=await state();lastAction=id;
+    if(legacyOnly&&!previous.action_visibility){
+     for(let tries=0;tries<8&&!fullVisible(previous,id);tries++){
+      const r=previous.actions[id].rect,v=page.viewportSize();await page.mouse.move(Math.max(1,Math.min(v.width-1,r[0]+r[2]/2)),v.height*.6);await page.mouse.wheel(0,r[1]<0?-v.height*.55:v.height*.55);await page.waitForTimeout(140);previous=await state();
+     }
+    }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);previous=await state();}
+    assert(fullVisible(previous,id),id+' full44CSS control visible within ancestor clipping');
+    actionTrace.push({id,kind:'tap',rect:previous.actions[id].rect,visibility:previous.action_visibility?.[id]||null});
+    await tap(previous.actions[id].rect);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});
+   };
    const capture=engine==='chromium'?await context.newCDPSession(page):null;
    const shot=async tag=>{
     // QA render_version is updated while rebuilding Controls, before the
@@ -49,7 +88,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     fs.writeFileSync(`work/alpha/${engine}-${name}-${tag}.png`,buffer);
     return buffer;
    };
-   async function opening(customPower=null){await action('start');if(!legacyOnly){if(customPower)await action('custom_'+customPower);await action('deck_play');}if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);}
+   async function opening(customPower=null,expectedCards=null){await action('start');if(!legacyOnly){if(customPower)await action('custom_'+customPower);await action('deck_play');if(expectedCards){const hero=(await state()).battle.hero;assert.deepEqual([...hero.hand,...hero.deck].sort(),[...expectedCards].sort(),'actual new match contains the exact saved production template');}}if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);}
    async function toolbarViewportChecks(){
     // Obtain six real cards by drawing, or by holding the first hand for one
     // legal turn. No HP, cards, phase, seed or model state is injected.
@@ -119,7 +158,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     throw Error('UI action loop made no turn progress');
    }
    try{
-    if(process.env.EXPECTED_COMMIT){const r=await page.request.get(new URL('build-info.json',url).href);assert(r.ok());assert.equal((await r.json()).commit,process.env.EXPECTED_COMMIT);}
+    if(process.env.EXPECTED_COMMIT){const r=await page.request.get(new URL('build-info.json',url).href);assert(r.ok());testedBuildInfo=await r.json();assert.equal(testedBuildInfo.commit,process.env.EXPECTED_COMMIT);}
     await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');assert((await page.title()).includes('ORAFOLD'));
     console.log('LOBBY',engine,name);let menu=await state();
     for(const key of ['start','builder','collection','settings'])assert(menu.actions[key],key);
@@ -166,17 +205,18 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       assert(loaded.deck_ids.some(id=>id.startsWith('of-')),'fullbrowsergame uses actual genericproductioncards');
       await action('save_deck');await action('builder_back');
      }
-     await opening(productionTemplate?.power);
+     await opening(productionTemplate?.power,productionTemplate?.cards);
      let turns=0;while(!(await state()).battle.winner&&turns++<160){const q=await state();console.log('UI DUEL',engine,name,'turn',q.battle.round,'HP',q.battle.hero.hp,q.battle.enemy.hp,'commands',q.command_count);await playTurn();}
      q=await state();assert(q.battle.winner,'complete UI duel');if(profileTemplate==='prod-relic')assert(relicActivations.some(value=>value.generic),'Reliktstrategie must exercise at least one real generic activation through UI');await shot('result');await action('result_log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
      await action('restart');await action('confirm_restart');await wait(()=>!window.orafoldQA.battle.winner);await shot('restart');
     }
-    assert.equal(errors.length,0,errors.join('\n'));results.push({engine,profile:name,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,checks:'real touch, menu, collection, visible card inspector/close with unchanged deck, settings, opening, 44CSS bounds, cards, saved deck reload; fullAlpha games load real production strategy templates through builder; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null});
+    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
+    fs.writeFileSync(`work/alpha/browser-result-${engine}-${name}.json`,JSON.stringify(result,null,2));
     console.log('ALPHA BROWSER PASS:',engine,name);
-   }catch(error){await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,errors,diagnostic:await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,page:window.orafoldQA?.page})).catch(()=>null)},null,2));throw error;}
+   }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,diagnostic},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}
   }finally{await browser.close();}
   }
  }
- fs.writeFileSync('work/alpha/browser-results.json',JSON.stringify(results,null,2));console.log(`ALPHA BROWSER: ${results.length} profiles,0 failures`);
+ assert(results.length>0,'no browser profile executed');fs.writeFileSync('work/alpha/browser-results.json',JSON.stringify(results,null,2));console.log(`ALPHA BROWSER: ${results.length} profiles,0 failures`);
 })().catch(error=>{console.error(error);process.exit(1)});

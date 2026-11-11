@@ -12,9 +12,9 @@ python3 tools/production/validate_catalog.py
 python3 tools/production/art_manifest.py --check
 python3 -m unittest discover -s tests -p 'production_*_test.py' -v
 python3 -m unittest discover -s tools/production -p 'test_catalog.py' -v
-for suite in production_engine production_creature_kill_watchers production_mobile_metrics production_ai_policy production_art_pipeline production_card_text_layout production_ui production_short_landscape production_burst_ui; do
+for suite in production_engine production_creature_kill_watchers production_mobile_metrics production_ai_policy production_art_pipeline production_card_text_layout production_board_portrait production_desktop_hand production_selector_touch production_ui production_short_landscape production_burst_ui; do
   args=(--headless)
-  if [[ "$suite" == production_ui || "$suite" == production_art_pipeline || "$suite" == production_card_text_layout || "$suite" == production_short_landscape || "$suite" == production_burst_ui ]]; then args=(); fi
+  if [[ "$suite" == production_ui || "$suite" == production_art_pipeline || "$suite" == production_card_text_layout || "$suite" == production_short_landscape || "$suite" == production_desktop_hand || "$suite" == production_board_portrait || "$suite" == production_burst_ui ]]; then args=(); fi
   timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" "${args[@]}" --path . --audio-driver Dummy --script "tests/$suite.gd" > "work/production/$suite.log" 2>&1
   python3 - "$suite" <<'PY'
 import json,re,sys

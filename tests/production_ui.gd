@@ -4,7 +4,6 @@ extends SceneTree
 const Shell=preload("res://scripts/alpha/shell.gd")
 const CardView=preload("res://scripts/alpha/card_view.gd")
 const Feedback=preload("res://scripts/alpha/feedback.gd")
-const AlphaCatalog=preload("res://scripts/alpha/catalog.gd")
 const ProductionCatalog=preload("res://scripts/production/catalog.gd")
 class FixtureShell extends Shell:
 	var fixture_cards: Array=[]
@@ -28,7 +27,7 @@ func paging_checks() -> void:
 	for dimensions in [Vector2i(390,844),Vector2i(320,568),Vector2i(844,390),Vector2i(1280,720)]:
 		root.size=dimensions
 		var app=FixtureShell.new()
-		var original=AlphaCatalog.new().all_cards()[0]
+		var original=ProductionCatalog.new().all_cards()[0]
 		for index in 550:
 			var card: Dictionary=original.duplicate(true);card.id="ui-fixture-%03d" % index;card.name="UI Prüfmotiv %03d" % index
 			app.fixture_cards.append(card)
@@ -98,4 +97,4 @@ func status_checks() -> void:
 func run() -> void:
 	await paging_checks();card_ink_checks();await status_checks()
 	print("PRODUCTION UI: %d assertions, %d failures;550-entry layoutfixture, boundedpagination, all550actualcompactnames/values,currentattack/status,reducedmotion feedback" % [assertions,failures])
-	quit(1 if failures else 0)
+	root.get_node("GameAudio").request_quit(1 if failures else 0)

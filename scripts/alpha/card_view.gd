@@ -73,6 +73,24 @@ func _draw() -> void:
 			while shield_font>8 and S.font.get_string_size(shield_caption,HORIZONTAL_ALIGNMENT_LEFT,-1,shield_font).x>status_width-3:shield_font-=1
 			_ink(shield_caption,Vector2(size.x-status_width,28),shield_font,T.ENERGY,status_width-3)
 			if size.y>=48:_ink(marks.extra_short,Vector2(size.x-status_width,size.y-8),10,T.GOLD,status_width-3)
+		elif not unit.is_empty() and large_board_portrait():
+			# Tall desktop/tablet slots need an actual portrait surface. A fixed
+			# 66px side strip wasted most of a 300px-wide battlefield creature.
+			illustration(Rect2(5,5,size.x-10,size.y-10))
+			var name_height=36.0
+			draw_rect(Rect2(5,5,size.x-10,name_height),Color(.015,.025,.045,.96))
+			title_paragraph(size.x-20,12,name_height-4).draw(get_canvas_item(),Vector2(10,7),T.TEXT)
+			var info_y=size.y-52
+			draw_colored_polygon(PackedVector2Array([Vector2(5,info_y+6),Vector2(size.x-5,info_y-7),Vector2(size.x-5,size.y-5),Vector2(5,size.y-5)]),T.SURFACE)
+			draw_line(Vector2(5,info_y+6),Vector2(size.x-5,info_y-7),Color(edge,.85),2,true)
+			var labels=tall_board_labels()
+			_ink(labels.combat_text,Vector2(10,size.y-27),labels.value_font,T.TEXT,size.x-20)
+			var marks=board_status()
+			_ink(labels.status,Vector2(10,size.y-10),labels.status_font,T.ENERGY,size.x-20)
+			if not marks.extra_short.is_empty():
+				var badge_width=minf(size.x-20,maxf(34,S.font.get_string_size(marks.extra_short,HORIZONTAL_ALIGNMENT_LEFT,-1,11).x+12))
+				draw_style_box(T.panel(edge,T.SURFACE),Rect2(9,45,badge_width,22))
+				_ink(marks.extra_short,Vector2(15,60),11,T.GOLD,badge_width-10)
 		elif not unit.is_empty():
 			# Portrait, complete compact nameplate and permanent combat values.
 			var art_width=minf(66,size.x*.35)
@@ -97,7 +115,7 @@ func _draw() -> void:
 			_ink(str(int(card.cost)),Vector2(size.x-21,size.y-10),15,T.ENERGY,24)
 			if library:
 				var caption=TextParagraph.new();caption.width=size.x-16;caption.add_string(S.caption(card),S.font,11);caption.draw(get_canvas_item(),Vector2(8,size.y-59),color)
-		if card.get("rarity")=="legendary":draw_colored_polygon(PackedVector2Array([Vector2(0,size.y*.4),Vector2(3,size.y*.4-5),Vector2(6,size.y*.4),Vector2(3,size.y*.4+5)]),T.GOLD)
+		if card.get("rarity")=="legendary":draw_colored_polygon(PackedVector2Array([Vector2(3,size.y*.4),Vector2(6,size.y*.4-5),Vector2(9,size.y*.4),Vector2(6,size.y*.4+5)]),T.GOLD)
 		elif card.get("rarity")=="rare":
 			for offset in [-4,4]:draw_circle(Vector2(3,size.y*.4+offset),2,color)
 		elif card.get("rarity")=="epic":draw_line(Vector2(3,16),Vector2(3,size.y-16),color,3)
@@ -105,6 +123,18 @@ func _draw() -> void:
 	if invalid_target:
 		draw_line(Vector2(size.x-12,7),Vector2(size.x-5,14),T.DANGER,2,true);draw_line(Vector2(size.x-5,7),Vector2(size.x-12,14),T.DANGER,2,true)
 	if has_focus():draw_rect(rect.grow(-1),T.FOCUS,false,1)
+func large_board_portrait() -> bool:
+	return not unit.is_empty() and size.y>=160 and size.x>=170
+func tall_board_labels() -> Dictionary:
+	var marks=board_status()
+	var result={"combat_text":"%d ANG  %d LP" % [current_attack(),unit.get("hp",0)],"status":"Schild %d · Block %d · %s" % [marks.shield,marks.block,marks.ready_short],"value_font":15,"status_font":11}
+	for fs in [15,14,13,12]:
+		result.value_font=fs
+		if S.font.get_string_size(result.combat_text,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x<=size.x-20:break
+	for fs in [11,10,9]:
+		result.status_font=fs
+		if S.font.get_string_size(result.status,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x<=size.x-20:break
+	return result
 func stat_layout(available_width: float) -> Dictionary:
 	# Measure the same glyphs/font used for drawing. Values must end before the
 	# energy circle, including in a six-card hand inside mobile safe areas.
