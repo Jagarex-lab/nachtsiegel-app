@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import struct
 import sys
 import zlib
@@ -93,6 +94,72 @@ def checked_asset(root: Path, asset: str, directory: str = "originals") -> Path:
     return path
 
 
+def validate_edit_provenance(source: dict, root: Path = ROOT) -> None:
+    """Accept the two recorded generation formats without rewriting history.
+
+    Edit inputs are project-generated drafts, never unidentified third-party
+    references. Their portable archive is build evidence, not a runtime asset.
+    """
+    def require(ok: bool, message: str) -> None:
+        if not ok: raise ValueError("Invalid edit provenance: " + message)
+
+    def substantial(value, minimum: int = 1) -> bool:
+        return isinstance(value, str) and len(value.strip()) >= minimum
+
+    edits = source.get("edits", [])
+    require(isinstance(edits, list), "edits must be a list")
+    references = source.get("reference_sources")
+    require(isinstance(references, list), "reference_sources must be a list")
+    inputs = source.get("generation_inputs", [])
+    require(isinstance(inputs, list), "generation_inputs must be a list")
+    if not edits:
+        require(not references and not inputs, "an input requires its edit record")
+        return
+
+    stream_format = False
+    for edit in edits:
+        require(isinstance(edit, dict), "edit must be an object")
+        if set(edit) == {"method", "date", "instruction"}:
+            require(edit["method"] == "OpenAI Image Generation", "unknown method")
+            require(isinstance(edit["date"], str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", edit["date"]) is not None, "missing edit date")
+            require(substantial(edit["instruction"], 100), "missing edit instruction")
+            require(bool(references), "method format requires its archived reference")
+        elif set(edit) == {"tool", "prompt", "reason", "review"}:
+            stream_format = True
+            require(edit["tool"] == "OpenAI image generation tool", "unknown tool")
+            require(substantial(edit["prompt"], 100), "missing edit prompt")
+            require(substantial(edit["reason"]) and substantial(edit["review"]), "missing edit reason/review")
+            require(bool(inputs), "tool format requires its original generation input")
+        else:
+            raise ValueError("Invalid edit provenance: unknown or mixed edit format")
+
+    def verify_archive(relative: str, digest: str, dimensions=None) -> None:
+        require(isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) is not None, "invalid input SHA-256")
+        require(isinstance(relative, str) and relative.startswith("docs/production/art-evidence/source-references/") and relative.endswith(".png"), "unsafe input archive")
+        require(not any(token in relative for token in ("..", "\\", "%", ":", "//")), "unsafe input archive")
+        archive = root / relative
+        require(not any(p.is_symlink() for p in (archive, *archive.parents)), "symlink input archive")
+        width, height, actual = png_info(archive)
+        require(actual == digest, "archived input hash differs")
+        if dimensions is not None:
+            require((width, height) == dimensions, "archived input dimensions differ")
+
+    for reference in references:
+        require(isinstance(reference, dict) and reference.get("kind") == "project_generated_illustration", "unidentified reference")
+        verify_archive(reference.get("repository_path"), reference.get("sha256"))
+    if stream_format:
+        mapping = load(root / "docs/production/art-evidence/edit-inputs.json")
+        require(isinstance(mapping, dict) and mapping.get("schema_version") == 1 and isinstance(mapping.get("entries"), dict), "invalid portable input inventory")
+        for item in inputs:
+            require(isinstance(item, dict) and item.get("type") == "original_generated_image", "unidentified generation input")
+            require(substantial(item.get("source_prompt"), 100) and substantial(item.get("reason")), "missing original generation context")
+            digest = item.get("sha256")
+            require(isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) is not None, "invalid input SHA-256")
+            portable = mapping["entries"].get(digest)
+            require(isinstance(portable, dict) and portable.get("card_id") == source.get("card_id"), "generation input has no matching portable archive")
+            verify_archive(portable.get("repository_path"), digest, (item.get("original_width"), item.get("original_height")))
+
+
 def build(root: Path = ROOT) -> tuple[dict, dict]:
     catalog_path = root / "data/production/cards.json"
     catalog = load(catalog_path)
@@ -131,6 +198,7 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
             if source.get("status") == "final" and source.get("production_review") != "approved": raise ValueError(f"Final artwork lacks production approval: {card_id}")
             for key in ["source_prompt", "creator_or_generator", "creation_date", "alternative_text", "reference_sources", "commercial_review"]:
                 if key not in source: raise ValueError(f"Missing provenance {key}: {card_id}")
+            validate_edit_provenance(source, root)
             entry.update({key: source[key] for key in ["asset_path", "status", "individual_original", "production_review", "commercially_cleared", "commercial_review", "alternative_text", "original_width", "original_height", "sha256"]})
             if card_id in previews:
                 preview = previews[card_id]

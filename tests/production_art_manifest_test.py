@@ -45,9 +45,7 @@ class ProductionArtManifest(unittest.TestCase):
             self.assertGreaterEqual(width, 1024); self.assertGreaterEqual(height, 768)
             self.assertEqual(digest, entry["sha256"])
             self.assertNotIn(digest, digests)
-            for edit in entry.get("edits", []):
-                self.assertEqual(edit["method"], "OpenAI Image Generation")
-                self.assertGreater(len(edit["instruction"]), 100)
+            ART.validate_edit_provenance(entry)
             for reference in entry["reference_sources"]:
                 self.assertEqual(reference["kind"], "project_generated_illustration")
                 self.assertEqual(len(reference["sha256"]), 64)
@@ -56,8 +54,53 @@ class ProductionArtManifest(unittest.TestCase):
                 self.assertTrue(archive.resolve().is_relative_to((ROOT / "docs/production/art-evidence/source-references").resolve()))
                 self.assertFalse(archive.is_symlink())
                 self.assertEqual(ART.png_info(archive)[2], reference["sha256"])
-            self.assertIn("illustration", entry["source_prompt"].lower())
+            # The full collection uses both documented English art terms; the
+            # original fifteen-image fixture happened to use only one of them.
+            self.assertGreater(len(entry["source_prompt"].strip()), 100)
+            self.assertRegex(entry["source_prompt"].lower(), r"\b(?:illustration|artwork)\b")
             digests.add(digest)
+
+    def test_both_actual_edit_formats_retain_their_inputs(self):
+        entries = ART.load(ROOT / "data/production/art_sources.json")["entries"]
+        for card_id in ("of-morph-003", "of-neutral-010"):
+            with self.subTest(card_id=card_id):
+                entry = entries[card_id]
+                self.assertTrue(entry["edits"])
+                ART.validate_edit_provenance(entry)
+        neutral = entries["of-neutral-010"]
+        portable = ART.load(ROOT / "docs/production/art-evidence/edit-inputs.json")["entries"]
+        original = neutral["generation_inputs"][0]
+        self.assertEqual(ART.png_info(ROOT / portable[original["sha256"]]["repository_path"])[2], original["sha256"])
+        self.assertNotEqual(original["sha256"], neutral["sha256"])
+
+    def test_invalid_edit_records_are_rejected(self):
+        entries = ART.load(ROOT / "data/production/art_sources.json")["entries"]
+        for card_id in ("of-morph-003", "of-neutral-010"):
+            original = entries[card_id]
+            malformed = [None, {}, [None], [{}], [{"tool":"unknown", "prompt":"x"*120,"reason":"x","review":"x"}]]
+            for edit in malformed:
+                with self.subTest(card_id=card_id, edit=edit):
+                    changed = copy.deepcopy(original); changed["edits"] = edit
+                    with self.assertRaisesRegex(ValueError, "edit provenance"):
+                        ART.validate_edit_provenance(changed)
+            for key in original["edits"][0]:
+                with self.subTest(card_id=card_id, missing=key):
+                    changed = copy.deepcopy(original); del changed["edits"][0][key]
+                    with self.assertRaisesRegex(ValueError, "edit provenance"):
+                        ART.validate_edit_provenance(changed)
+            for key in ("reference_sources", "generation_inputs"):
+                if original.get(key):
+                    changed = copy.deepcopy(original); changed[key] = []
+                    with self.assertRaisesRegex(ValueError, "edit provenance"):
+                        ART.validate_edit_provenance(changed)
+
+    def test_changed_or_unidentified_generation_input_is_rejected(self):
+        original = ART.load(ROOT / "data/production/art_sources.json")["entries"]["of-neutral-010"]
+        for key, value in (("type", "external_unknown"), ("sha256", "0"*64), ("source_prompt", ""), ("original_width", 99)):
+            with self.subTest(key=key):
+                changed = copy.deepcopy(original); changed["generation_inputs"][0][key] = value
+                with self.assertRaisesRegex(ValueError, "edit provenance"):
+                    ART.validate_edit_provenance(changed)
 
     def test_corruption_not_accepted_as_image(self):
         original = (ROOT / "assets/cards/originals/oa-neutral-c02.png").read_bytes()

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "scope": "Integration failures from the real PR23 combined CI; corrected local component proofs, not final release approval.",
+  "failed_run": 42938524591,
+  "checked_pr_merge_commit": "3aa7cc960ef866de94b42ef257c4fc78b763d27d",
+  "failures": [
+    {
+      "job_id": 130254449081,
+      "cause": "Old fifteen-image test required method/instruction and literal illustration. The actual550 inventory includes documented tool/prompt/reason/review and artwork wording.",
+      "correction": "Strictly validate both recorded edit schemas, actual original-input archives and unknown/missing/mixed records. Keep canonical source metadata and accepted original pixels unchanged. Accept the two actual equivalent art-scope words, not an arbitrary nonempty prompt.",
+      "local_checks": 28,
+      "local_failures": 0,
+      "tests_log_sha256": "c0b26891ad7a60e0d9fa40b508357d51f4281426c3d4438ac374e515943c2cdc",
+      "remaining_prompt_word_failure_preserved_sha256": "12818bd0d7406a3efa4eeaf197f4c6a798551e8465d6517db4baa4d6fcbe301a",
+      "source_metadata_sha256": "6eafb4bdf0852dd0ecc0e3f7211e915e718955607e31babab54e3d52c891f6ef",
+      "test_duration_note": "442.394 seconds includes deliberate SIGSTOP while an exclusive UI render gate ran; not a speed benchmark."
+    },
+    {
+      "job_id": 130254449261,
+      "cause": "Two new Windows presets lacked the existing editor-addon exclusion. The actual native package guard correctly rejected compiled editor scripts.",
+      "correction_commit": "2f0bf9ce1df1c3289ca2657465b573e3c43b01a0",
+      "local_platform_test_groups": 15,
+      "local_failures": 0,
+      "actual_corrected_windows_binary_ci": "pending; required on final integration, forbidden-file guard unchanged"
+    }
+  ],
+  "tested_provenance_files_sha256": {
+    "tools/production/art_manifest.py": "b4726db5c03a03ba510f22a76d7349a470250a621f06c6ada8e69d222b5c2d53",
+    "tests/production_art_manifest_test.py": "c56912617838dc6bab68a281ea7f6eb9f90163895924f0e5a9d0881eed7e5d34",
+    "docs/production/art-evidence/edit-inputs.json": "7c04a28cea3feed4761eae4387c9ab13dac18f26fd50f194d645ed658659a7d1",
+    "docs/production/art-evidence/source-references/of-neutral-010-before-lettering-removal.png": "40014deea72298dd2e0f4916b3f3520ecfa096820ffe42a6a7e993656ba42cd3"
+  },
+  "unchanged": "Card values, production model, original accepted images and canonical art_sources.json remain unchanged by these fixes.",
+  "release_status": "Not published; combined CI, actual browsers and guarded manual release remain required."
+}
