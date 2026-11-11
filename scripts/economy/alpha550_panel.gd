@@ -64,6 +64,7 @@ func _label(value: String, parent: Node, font_size := 16, color: Color = T.TEXT)
 
 func _panel(parent: Node, edge: Color = T.METAL) -> VBoxContainer:
 	var frame := PanelContainer.new()
+	frame.mouse_filter = Control.MOUSE_FILTER_PASS
 	frame.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var decoration := T.panel(edge)
 	decoration.set_content_margin_all(18)
