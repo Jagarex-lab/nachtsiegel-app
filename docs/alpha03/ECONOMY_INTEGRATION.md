@@ -38,6 +38,17 @@ PR16 schema v2 remains in an independent namespace. Receipts, source IDs, balanc
 
 Web saves use one synchronous localStorage envelope, a last-good backup, damaged-primary quarantine, and a stale-envelope comparison before replacement. The exact expressions are tested in Chromium across reload and a second tab. This is local conflict detection, not a distributed transaction or multi-device ownership guarantee. Native crash-lock recovery and truly simultaneous browser-tab writes need further platform testing. Receipt history is retained without pruning and can grow over long test accounts. Mobile device pause/resume and physical Safari storage behavior require separate platform QA.
 
+The actual Web export exposed two transport differences that extracted-JavaScript tests did not exercise: JavaScriptBridge returned numeric `1`/`0` for boolean write results, and Godot's JSON parser changed integer `1` to float `1.0` when serializing the expected CAS envelope. The adapter now accepts only exact boolean `true` or numeric `1` as write success, and normalizes both CAS operands in JavaScript. Numeric `0`, other numbers, strings, missing values, quota failures and changed receipts remain failures. The native bridge seam passed 17 response-type cases; the actual emitted CAS expressions passed 5 focused checks including parsed-float expectations and stale-writer rejection.
+
+The actual exported candidate `314d3471450aff56273e04041c1e533c44ae2b82` passed `tests/economy_actual_web.test.cjs` in Chromium and WebKit: 2 tests, 0 failures and 0 browser/Godot errors. Fresh startup committed starter/migration/onboarding sequences 1/2/3 and displayed 350 gold, 1200 essence and 5 packs. A quota-denied real UI command preserved the raw paired wallet/receipt envelope; reloading matched the initial state. A subsequent real UI command spent 100 gold, another opened 5 real cards, and the final reload exactly matched the committed state. Chromium completed in 46.9s and WebKit in 71.7s on the shared QA machine; these are test durations, not performance promises. These engine tests do not establish physical iOS/Safari device behavior.
+
+```sh
+GAME_URL=http://127.0.0.1:8893/ \
+EXPECTED_COMMIT=314d3471450aff56273e04041c1e533c44ae2b82 \
+ECONOMY_WEB_ENGINES=chromium,webkit \
+node --test tests/economy_actual_web.test.cjs
+```
+
 ## Validation
 
 Use Godot4.6.3, `LP_NUM_THREADS=1`, headless CPU, and isolated XDG directories. No full editor import is needed when the repository's immutable import cache is already prepared.

@@ -92,7 +92,9 @@ func run() -> void:
 	await process_frame
 	await _campaign_integration()
 	print("CAMPAIGN BATTLE: %d assertions, %d failures; actual outcomes %s" % [assertions,failures,str(winners)])
-	quit(0 if failures==0 else 1)
+	# Use the same bounded audio shutdown as the actual application. The
+	# mixer needs one flush before ResourceCache teardown, even headless.
+	root.get_node("GameAudio").request_quit(0 if failures==0 else 1)
 
 func _receive_reward(key: String, payload: Dictionary) -> Dictionary:
 	if receiver_fails: return {"ok":false,"code":"simulated_unavailable"}
