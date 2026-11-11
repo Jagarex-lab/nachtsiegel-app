@@ -152,7 +152,7 @@ nur UI-Eingaben und ändert keine zugelassenen Engine-Befehle oder Zugphasen.
 Die ersten GitHub-Läufe von `567add86` enthalten sowohl den tatsächlichen
 320-Pixel-Oberflächenfehler als auch gesonderte Fehler vor Testbeginn durch
 Ubuntu-Mirror-DNS. Sie bleiben fehlgeschlagene Läufe. Der eng begrenzte
-[Abhängigkeitsinstaller](CI_DEPENDENCIES.md) besitzt 15 eigene Gegenproben,
+[Abhängigkeitsinstaller](CI_DEPENDENCIES.md) besitzt 17 eigene Gegenproben einschließlich eines tatsächlichen APT-Mirror-Parserlaufs,
 erhält Playwrights vollständige Abhängigkeits-/Hostprüfung und darf nach einem
 bestätigten Paketfehler einmal offizielle Ubuntu-HTTPS-Mirrors verwenden.
 Scheitert auch das, bleibt CI fehlgeschlagen. Temporäre Konfiguration wird
@@ -171,10 +171,28 @@ Geändert wurde ausschließlich die Testfixture, nicht der Installer oder Spielc
 
 Der Main-Nativjob erhält für die zusätzlichen vollständigen Bildrenderings und
 neun räumlichen Vergleichsläufe 20 Minuten zusätzliches Gesamtbudget (45 → 65).
-Die einzelnen 600-Sekunden-Testgrenzen und die Anforderungen bleiben erhalten.
+Die einzelnen 600-Sekunden-Testgrenzen und die Anforderungen bleiben erhalten. Der zusätzliche Premium-Browserjob erhält für seine kombinierte Layout-/Vollpartie-/Replay-Prüfung 45 statt 25 Minuten Gesamtbudget; alle bestehenden Aktions- und Fehlergrenzen bleiben erhalten. Die bisherigen Main-/Alpha-Browserjobs erhalten für ihre unveränderten vollständigen Profile jeweils 75 Minuten Gesamtbudget; insbesondere werden die drei Chromium-Partien nicht verkürzt oder entfernt. Diese Budgets berücksichtigen die gemessene Emulationslaufzeit, nicht angenommene physische Gerätegeschwindigkeit.
 Es werden keine Tests deaktiviert oder Fehler in Erfolg umgewandelt. Die
 abschließenden GitHub-Prüfungen müssen den tatsächlich aktuellen PR-Head testen;
 die älteren Quellenbelege dieses Berichts dienen der nachvollziehbaren Iteration.
+
+Zwei weitere Integrationsfehler wurden am tatsächlichen CI-Lauf erkannt:
+`production_desktop_hand.gd` hatte im neuen Fixture-Untertyp zwei Tabulatoren,
+während die bestehende Testdatei Leerzeichen verwendet. Die Datei scheiterte
+bereits beim Parsen. Die unveränderten Größenanforderungen werden tatsächlich
+erfüllt (115,48 Pixel kleine Öffnungskarten; 170,91 Pixel auf Desktop). Die
+Einrückung ist korrigiert; alle 32 geänderten GDScripts bestehen jetzt eine
+explizite Godot-`--check-only`-Prüfung. Der Alpha-Artefaktupload enthält nun auch
+die vorhandenen Produktions-Testlogs, damit solche Fehler direkt einsehbar sind.
+
+Der neue Ubuntu-Mirror-Fallback enthielt ein falsches Leerzeichen vor
+`priority:1`; APT benötigt dort einen Tabulator. Sobald DNS wieder antwortete,
+war dadurch ein tatsächlicher HTTP-400-Fehler sichtbar. Ein zusätzlicher Test
+mit dem echten APT-Parser und einem isolierten lokalen HTTP-Server reproduziert
+den alten fehlerhaften Pfad und prüft die korrekt getrennten Pfade. Der erwartete
+Fehler für ein nicht vorhandenes signiertes Repository bleibt dabei ein Fehler;
+die Prüfung schaltet weder Paket- noch Signaturkontrollen ab. Dies bestätigt das
+Mirrorformat, nicht bereits die Erreichbarkeit der echten Ubuntu-Server.
 
 ## Nachgewiesene Ausgangsprobleme
 

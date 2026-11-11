@@ -15,7 +15,9 @@ import sys
 import tempfile
 import time
 
-OFFICIAL_MIRRORS="https://archive.ubuntu.com/ubuntu priority:1\nhttps://security.ubuntu.com/ubuntu priority:2\n"
+# apt-transport-mirror requires a TAB before metadata. A space becomes part of
+# the URI and produces HTTP400 once DNS succeeds; keep this actual APT-tested.
+OFFICIAL_MIRRORS="https://archive.ubuntu.com/ubuntu\tpriority:1\nhttps://security.ubuntu.com/ubuntu\tpriority:2\n"
 APT_LIMITS='Acquire::Retries "2";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\nAPT::Update::Error-Mode "any";\n'
 
 

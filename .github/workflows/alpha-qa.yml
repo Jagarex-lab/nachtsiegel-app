@@ -70,12 +70,17 @@ jobs:
             work/alpha02/*.json
             work/alpha02/*.png
             work/master550/
+            work/production/*.log
+            work/production/*.json
             work/legacy/*.log
             work/*final.log
   browser:
     needs: alpha-playable
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    # Preserve every existing desktop/mobile profile and complete duel.
+    # Software rendering plus three Chromium matches needs a full budget;
+    # per-action and match limits are unchanged.
+    timeout-minutes: 75
     strategy:
       fail-fast: false
       matrix:

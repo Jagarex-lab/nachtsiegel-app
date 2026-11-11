@@ -186,7 +186,10 @@ jobs:
     runs-on: ubuntu-24.04
     # Full archive/Alpha/mobile/Master suites per engine, with WebGL startup and
     # reloads; independent workers remove the former sequential-engine deadline.
-    timeout-minutes: 45
+    # Preserve every existing desktop/mobile profile and complete duel.
+    # Software rendering plus three Chromium matches needs a full budget;
+    # per-action and match limits are unchanged.
+    timeout-minutes: 75
     strategy:
       fail-fast: false
       matrix:
@@ -296,7 +299,9 @@ jobs:
     # and PWA checks get their own worker and exact tested candidate.
     needs: test-and-export
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    # Layout plus a full mobile duel/replay/restart and bounded installation;
+    # retain all per-action failure limits, including Retina WebKit.
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:

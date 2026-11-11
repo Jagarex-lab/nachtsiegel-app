@@ -1,8 +1,8 @@
 extends SceneTree
 const Shell=preload("res://scripts/alpha/shell.gd")
 class PresentationShell extends Shell:
-	# Arranged layout states are not replayable games and must not be saved.
-	func _checkpoint_duel() -> void:pass
+ # Arranged layout states are not replayable games and must not be saved.
+ func _checkpoint_duel() -> void:pass
 var assertions:=0
 var failures:=0
 func _initialize() -> void:call_deferred("run")
