@@ -3,9 +3,11 @@ import json
 import os
 import re
 from pathlib import Path
+import signal
 import stat
 import subprocess
 import tempfile
+import time
 import unittest
 from unittest.mock import Mock,patch
 import yaml
@@ -33,9 +35,9 @@ codes=json.loads(os.environ.get('FAKE_CODES','[0]'));status=codes[min(len(rows),
 if os.environ.get('FAKE_SLEEP'):print('fake installer waiting',flush=True);time.sleep(3)
 if os.environ.get('FAKE_CHILD'):
  child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)'])
- pathlib.Path(os.environ['FAKE_CHILD']).write_text(str(child.pid))
  def terminate(signum,frame):child.wait(timeout=2);sys.exit(143)
  signal.signal(signal.SIGTERM,terminate)
+ pathlib.Path(os.environ['FAKE_CHILD']).write_text(str(child.pid))
  print('fake installer child waiting',flush=True);time.sleep(30)
 print(os.environ.get('FAKE_ERROR','Error: Installation process exited with code:100') if status else 'actual fake process completed')
 sys.exit(status)
@@ -115,7 +117,30 @@ sys.exit(status)
 
     def test_deadline_terminates_owned_child_group_before_cleanup(self):
         child_file=self.root/'child.pid';os.environ['FAKE_CHILD']=str(child_file)
-        self.assertEqual(self.run_installer(timeout=.2),124)
+        real_popen=deps.subprocess.Popen
+        def child_ready_popen(command,*args,**kwargs):
+            process=real_popen(command,*args,**kwargs)
+            if command[0]!=str(self.cli):return process
+            # The deadline tests cancellation of an existing child, not Python
+            # startup speed on a busy runner. Synchronize only this actual
+            # fixture; execute still owns the timeout and group termination.
+            ready_deadline=time.monotonic()+10
+            try:
+                while True:
+                    self.assertIsNone(process.poll(),'Fake installer exited before its child was ready.')
+                    ready_pid=child_file.read_text() if child_file.exists() else ''
+                    if ready_pid.isdigit():break
+                    self.assertLess(time.monotonic(),ready_deadline,'Fake installer child was not ready within10seconds.')
+                    time.sleep(.01)
+                self.assertIsNone(process.poll(),'Fake installer must be alive when the timeout is exercised.')
+            except BaseException:
+                # A setup failure must not leave a real process group behind.
+                if process.poll() is None:os.killpg(process.pid,signal.SIGKILL)
+                process.communicate(timeout=5)
+                raise
+            return process
+        with patch.object(deps.subprocess,'Popen',side_effect=child_ready_popen):
+            self.assertEqual(self.run_installer(timeout=.2),124)
         pid=int(child_file.read_text())
         with self.assertRaises(ProcessLookupError):os.kill(pid,0)
         self.assert_restored()

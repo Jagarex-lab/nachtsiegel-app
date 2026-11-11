@@ -7,6 +7,12 @@ Dieser Bericht trennt die tatsächlich ausgeführten Prüfungen von den noch
 ausstehenden Integrationsprüfungen. Frühere Alpha-0.3-Ergebnisse sind keine
 Freigabe eines neuen Commits.
 
+Die endgültige Abnahme des jeweils aktuellen Heads wird im
+[Prüfprotokoll von PR #28](https://github.com/Jagarex-lab/nachtsiegel-app/pull/28)
+mit den zugehörigen GitHub-Läufen und Artefakten festgehalten. Die nachstehenden
+Quellstände und Zahlen sind unveränderliche Iterationsbelege; ein späterer grüner
+Lauf ändert weder ihre ursprüngliche Quelle noch das Ergebnis eines Fehlversuchs.
+
 | Prüfung | Tatsächlicher Stand |
 | --- | --- |
 | Native Vorher-Aufnahmen | 9 echte Godot-Aufnahmen des Ausgangsstands erstellt; fünf Querformatgrößen, Inspektion sowie Menü/Starter/Deckbuilder im Hochformat |
@@ -151,6 +157,17 @@ erhält Playwrights vollständige Abhängigkeits-/Hostprüfung und darf nach ein
 bestätigten Paketfehler einmal offizielle Ubuntu-HTTPS-Mirrors verwenden.
 Scheitert auch das, bleibt CI fehlgeschlagen. Temporäre Konfiguration wird
 wiederhergestellt; keine Repository-Sicherheitseinstellung wird geändert.
+
+Die unabhängige Nachprüfung deckte außerdem ein Start-Rennen in einer neuen
+Installer-Testfixture auf: Ihre 0,2-Sekunden-Frist konnte unter Last bereits vor
+dem Schreiben der Kindprozess-ID enden (14 bestanden, ein Testfehler). Jetzt
+meldet der tatsächliche Test-Kindprozess seine Bereitschaft nach Installation
+des Signalhandlers. Ein auf zehn Sekunden begrenzter Test-Handshake wartet auf
+diese Meldung; anschließend bleibt die ursprüngliche Produktions-Timeout- und
+Prozessgruppenprüfung unverändert streng. Alle 15 Verträge bestanden danach
+zweimal unter Browserlast, ebenso eine zusätzliche gezielte Wiederholung.
+Vorher-/Nachher-Logs liegen unter `work/premium-mobile/independent-review/`.
+Geändert wurde ausschließlich die Testfixture, nicht der Installer oder Spielcode.
 
 Der Main-Nativjob erhält für die zusätzlichen vollständigen Bildrenderings und
 neun räumlichen Vergleichsläufe 20 Minuten zusätzliches Gesamtbudget (45 → 65).
