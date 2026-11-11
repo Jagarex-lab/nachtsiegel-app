@@ -85,7 +85,8 @@
   },
   "historical_reproduced_failures": 48,
   "new_regression_boundaries": 286,
-  "full_simulation_status": "not_yet_run_on_corrected_source",
+  "full_simulation_status": "complete_source_bound_ci",
   "notes": "All listed gates are actual engine executions. Boundary fixtures are not full matches. Legacy/Alpha assertions preserve existing golden fixtures/replays; no goldens regenerated.",
-  "new_printed_semantics_cases": 44
+  "new_printed_semantics_cases": 44,
+  "simulation_provenance": "KERNEL_SEMANTICS_SIMULATION_PROVENANCE.json"
 }

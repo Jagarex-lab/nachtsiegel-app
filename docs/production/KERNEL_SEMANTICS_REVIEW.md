@@ -57,9 +57,14 @@ and 1,100 arranged public card plays. Additional suites cover 44 printed cases,
 60 kill-watcher boundaries and 226 delayed-source boundaries.
 
 The earlier [848-match report](PRE_SEMANTICS_SIMULATION_RESULTS.json) remains
-historical evidence for its own executed source. A fresh complete matrix and
-pre-getter starter baseline are required for this corrected model. Resource
-comparison evidence must be rebound to that new source before use.
+historical evidence for its own executed source. The corrected source passed a fresh complete 848-match matrix plus 18 replay
+controls and 10 negative evidence guards, with zero failures/errors/censors.
+[KERNEL_SEMANTICS_SIMULATION_PROVENANCE.json](KERNEL_SEMANTICS_SIMULATION_PROVENANCE.json)
+records the official CI artifact and all 18 verified executed source hashes.
+[KERNEL_SEMANTICS_BEFORE_AFTER.json](KERNEL_SEMANTICS_BEFORE_AFTER.json) compares the
+actual identical 848-case plans: 84 winners and 42/64 starter event digests
+change, so the old resource-comparison baseline must be rebound before use.
+The pre-getter starter export comes from these 64 actual new starter records.
 
 Review limits: these targeted fixtures and heuristic AI matches do not prove
 all reachable 550-card interactions or human metagame balance. The actual

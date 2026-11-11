@@ -76,6 +76,8 @@ Spiegelpartien zählen zwei Deckteilnahmen pro Partie. Die Intervalle sind deskr
 
 Der erste vollständige Lauf bleibt in `BALANCE_BASELINE.json` erhalten. Der kontrollierte Vergleich von fünf legalen Deckzusammensetzungen mit 240 tatsächlichen Partien, vollständigen Vorherlisten und allen Ergebnissen steht in `DECK_COMPOSITION_EXPERIMENT.md` beziehungsweise `.json`. Das Zeitdeck, alle sichtbaren Starter, Kartenwerte und Regeln wurden für diese Deckübernahme unverändert gehalten. Der anschließende vollständige Lauf vor der separat geprüften Reliktbeobachter-Korrektur bleibt in `POST_DECK_BEFORE_KILL_WATCHER_FIX.json` erhalten. Diese historischen Läufe werden nicht zu den oben ausgewiesenen Partien addiert; jede Aussage gilt für ihre ausdrücklich gebundenen Quellen.
 
+Der spätere Quellen-/Timing-Review und seine tatsächlichen Vorherfehler stehen in `KERNEL_SEMANTICS_REVIEW.md`. `PRE_SEMANTICS_SIMULATION_RESULTS.json` bewahrt den Bericht vor diesen Korrekturen; `KERNEL_SEMANTICS_SIMULATION_PROVENANCE.json` bindet den neuen vollständigen Lauf an die tatsächlich ausgeführten korrigierten Quellen. Kartenwerte, Decklisten, KI-Policy und Ressourcenobergrenzen wurden dabei unverändert gehalten. Auch dieser frühere Lauf wird nicht zu den neuen Partiezahlen addiert.
+
 '''+ '\n'.join(tables)+'''## Auffällige Referenzdecks
 
 '''+ ('\n'.join(warning) if warning else 'In dieser Stichprobe überschreitet kein ausreichend oft gespieltes Referenzdeck die rein deskriptiven Schwellen von 65% bzw. unterschreitet 35%. Das ist kein Gleichgewichtsbeweis.')+'''
