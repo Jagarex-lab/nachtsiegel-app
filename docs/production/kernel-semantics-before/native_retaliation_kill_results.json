@@ -1,0 +1,141 @@
+{
+  "cases": 12,
+  "failures": 6,
+  "fixture_limits": "Actual Morph+Neutral versus Ninth, actual public relic/retaliator play. Unmodified printed HP/attack/power. Native attack controls. Reachable battle fixture, not full matches.",
+  "model_sha256": "4d1ed5652514cbc3e13a69cfea3784b1f42cb6a309ce15206966237ab8de9b27",
+  "results": [
+    {
+      "cause": "native_retaliation",
+      "error": "",
+      "kill_watcher_applied": 0,
+      "pass": false,
+      "relic": "of-neutral-093",
+      "resonance": 2,
+      "side": "hero",
+      "source_hp": 3,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_attack_control",
+      "error": "",
+      "kill_watcher_applied": 1,
+      "pass": true,
+      "relic": "of-neutral-093",
+      "resonance": 3,
+      "side": "hero",
+      "source_hp": 4.0,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_retaliation",
+      "error": "",
+      "kill_watcher_applied": 0,
+      "pass": false,
+      "relic": "of-neutral-094",
+      "resonance": 2,
+      "side": "hero",
+      "source_hp": 3,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_attack_control",
+      "error": "",
+      "kill_watcher_applied": 1,
+      "pass": true,
+      "relic": "of-neutral-094",
+      "resonance": 3,
+      "side": "hero",
+      "source_hp": 4.0,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_retaliation",
+      "error": "",
+      "kill_watcher_applied": 0,
+      "pass": false,
+      "relic": "of-neutral-095",
+      "resonance": 2,
+      "side": "hero",
+      "source_hp": 3,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_attack_control",
+      "error": "",
+      "kill_watcher_applied": 1,
+      "pass": true,
+      "relic": "of-neutral-095",
+      "resonance": 3,
+      "side": "hero",
+      "source_hp": 4.0,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_retaliation",
+      "error": "",
+      "kill_watcher_applied": 0,
+      "pass": false,
+      "relic": "of-neutral-093",
+      "resonance": 2,
+      "side": "enemy",
+      "source_hp": 3,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_attack_control",
+      "error": "",
+      "kill_watcher_applied": 1,
+      "pass": true,
+      "relic": "of-neutral-093",
+      "resonance": 3,
+      "side": "enemy",
+      "source_hp": 4.0,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_retaliation",
+      "error": "",
+      "kill_watcher_applied": 0,
+      "pass": false,
+      "relic": "of-neutral-094",
+      "resonance": 2,
+      "side": "enemy",
+      "source_hp": 3,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_attack_control",
+      "error": "",
+      "kill_watcher_applied": 1,
+      "pass": true,
+      "relic": "of-neutral-094",
+      "resonance": 3,
+      "side": "enemy",
+      "source_hp": 4.0,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_retaliation",
+      "error": "",
+      "kill_watcher_applied": 0,
+      "pass": false,
+      "relic": "of-neutral-095",
+      "resonance": 2,
+      "side": "enemy",
+      "source_hp": 3,
+      "victim_dead": true
+    },
+    {
+      "cause": "native_attack_control",
+      "error": "",
+      "kill_watcher_applied": 1,
+      "pass": true,
+      "relic": "of-neutral-095",
+      "resonance": 3,
+      "side": "enemy",
+      "source_hp": 4.0,
+      "victim_dead": true
+    }
+  ],
+  "suite": "native_retaliation_creature_kill_review"
+}

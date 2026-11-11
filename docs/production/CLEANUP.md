@@ -43,3 +43,29 @@ Es wurden Referenzen mit `rg` über `scripts/`, `scenes/`, `tests/`, `tools/`, `
 | Bereits getrennte historische Bestände | 100 Legacykarten und sieben Prototypkarten; keine zusätzlichen Alpha-Karten. |
 
 Diese Nullbilanz ist eine Sicherheitsentscheidung vor dem Nachfolgekatalog, keine Behauptung einer bereits vollständig bereinigten Produktion. Das folgende Implementierungspaket aktualisiert die Bilanz anhand tatsächlich migrierter IDs und erfolgreich geprüfter Abhängigkeiten.
+
+## Nachfolgestand des Produktionsbranches
+
+Der implementierte Nachfolger lädt in der regulären Session ausschließlich
+`data/production/cards.json`: genau 550 aktive Karten. Der unveränderte ursprüngliche
+55er-Katalog wird jetzt ausdrücklich als `alpha-55-v1` für alte Replays verwendet;
+die 100 Legacykarten und sieben Prototypkarten bleiben separate Regression-/Archivprofile.
+Es gibt keine zusammengeführte Sammlung mit 650 oder 705 Karten und keinen
+öffentlichen Archivumschalter im Hauptmenü.
+
+Alle 55 stabilen Alpha-IDs sind im neuen Katalog erhalten. Elf Produktionsfassungen
+haben dokumentierte Änderungen; die genaue Liste und Begründung stehen in
+[MIGRATION.md](MIGRATION.md). Die archivierten Originaldatensätze bleiben unverändert.
+Die Umleitung besitzt im neuen Pool tatsächlich verzögerte Quellen innerhalb ihrer
+Macht und entsprechend überarbeitete Starter. Alte gespeicherte Decks werden geprüft,
+bei Gültigkeit mit ursprünglicher Reihenfolge übernommen und andernfalls mit
+Originaldaten quarantänisiert. Das alte Profil bleibt lesbare Importquelle; Version 2
+benutzt eine getrennte Datei und im Web eine unabhängige Sicherung gegen alte Tabs.
+
+**Quelllöschungen bleiben null.** Das ist nach der Referenzprüfung beabsichtigt:
+Die alten Dateien werden noch durch ausführbare historische Tests und Replayprofile
+benötigt. Ihre Entfernung aus der aktiven Sammlung ist implementiert; ihre Löschung
+aus dem Repository wäre eine andere Maßnahme. Einzelillustrationen und mobile
+Derivate erhalten eigene Zuordnungen, während der Konzeptatlas nur für tatsächlich
+noch fehlende Bilder und historische Ansichten erhalten bleibt. Der genaue Bildstatus
+steht in `data/production/art_manifest.json`.

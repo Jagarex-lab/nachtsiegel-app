@@ -11,7 +11,7 @@ node tools/alpha_card_texts.cjs --check
 node tools/card_system/schema.cjs --check
 node tools/card_system/assets.cjs --check
 node tools/card_system/validate.cjs
-for suite in card_system_runtime master550_card_visual master550_opening_ui master550_library_filter master550_test_decks; do
+for suite in card_system_runtime card_system_trigger_bridge master550_card_visual master550_opening_ui master550_library_filter master550_test_decks; do
   timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --path . --audio-driver Dummy --script "tests/$suite.gd" > "work/master550/$suite.log" 2>&1
   python3 - "$suite" <<'PY'
 import json,re,sys

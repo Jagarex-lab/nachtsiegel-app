@@ -1,41 +1,44 @@
-# NACHTSIEGEL
+# ORAFOLD
 
-Eigenständiges Dark-Fantasy-Kartenduell in Godot 4.6.3, für Querformat auf iPhone und Android gestaltet. Fünf Pfade, illustrierte Reliquienkarten, Obsidianarena und lokaler KI-Gegner.
+Digitales Sammelkartenspiel in Godot 4.6.3: fünf Kampfpfade, lokale KI, 30-Karten-Decks, 30 Helden-Leben und die alternative Siegbedingung Konvergenz. Energie spielt Karten aus; Resonanz bezahlt besondere Eingriffe. Kämpfe sind für Querformat, Sammlung und Deckbuilder für mobile Hochformate ausgelegt.
 
-![Neue Arena](docs/design/premium/screenshots/full-board-six-hand-844x390.png)
+**Spielen:** https://jagarex-lab.github.io/nachtsiegel-app/
 
-**Direkt spielen:** https://jagarex-lab.github.io/nachtsiegel-app/?v=1d248153e27f
+**Tatsächlich veröffentlichter Commit:** [build-info.json](https://jagarex-lab.github.io/nachtsiegel-app/build-info.json). Ein Featurebranch oder grüner PR veröffentlicht nichts automatisch.
 
-[Premium-Designbericht mit drei gerenderten Konzepten](docs/design/premium/README.md) · [Spielerfahrung, Kampagne und Tests](docs/experience/README.md)
+## Produktionskandidat
 
-[Combat Presentation: Gameplay-Video, Effektfamilien, Audio und Messwerte](docs/combat/README.md)
+Der neue Kandidat verwendet genau 550 aktive Kartendefinitionen: je 110 für Zwölf Häuser, Stillwacht, Vielgestalt, Neunte Stunde und Neutral. Drei Haupttypen: Wesen, Impuls und Relikt. Die 100 Legacy-Kreaturen und der ursprüngliche 55er-Alpha-Katalog bleiben getrennte historische Regel-/Testprofile und erscheinen nicht zusätzlich in der regulären Sammlung.
 
-## Marken- und Lore-Entwurf
+**Diese Zahl ist keine Behauptung einer fertigen kommerziellen Version.** Individuelle Illustrationen, die Aussagekraft der Balance und Plattformprüfungen werden getrennt ausgewiesen. Aktuell liegen 550 tatsächlich erzeugte, individuell zugeordnete und delegiert visuell freigegebene Originalillustrationen vor; kein Einzelbild fehlt. [Bildpipeline](docs/production/ART_PIPELINE.md) und [Kontaktprüfung](docs/production/CONTACT_REVIEW.md) unterscheiden Artist-Erstsichtung, 550 Thumbnails, 22 gezielte Originalöffnungen und die ergänzende Root-Stichprobe. Die kommerzielle Rechteprüfung bleibt getrennt offen. Der [Produktionsaudit](docs/production/AUDIT.md) beschreibt die Ausgangslage; [Umsetzungsplan](docs/production/PLAN.md), [Bereinigungsbericht](docs/production/CLEANUP.md) und der [Produktions- und Abnahmebericht](docs/production/PRODUCTION_READINESS.md) trennen Implementierung, konkrete Teilnachweise und verbleibende Abnahmegrenzen.
 
-[Master Task A: vollständige Marken- und Lore-Bibel](docs/creative/README.md), mit 20 Namenskandidaten, Entscheidungsvorlage und strukturierten DE-/EN-Texten. NACHTSIEGEL bleibt der Produktname. Ein kuratierter Teil der Lore ist jetzt als lokale Fünf-Kapitel-Kampagne spielbar; weitere Entwürfe bleiben gekennzeichnet.
+## Spielen und Decks
 
-## Spielen
+Im Hauptmenü: Spielen, Deckbuilder, Sammlung, Einstellungen. Vor dem Duell stehen vier sichtbare Starterdecks mit Vorschau bereit. Auf dem tatsächlichen Spielfeld werden Starthandkarten zum Austausch markiert, dann Ursprung und gegebenenfalls Zweite Möglichkeit gewählt. Handkarte antippen und ein gültiges Ziel wählen oder sicher auf einen hervorgehobenen Zielbereich ziehen. Abgebrochene Berührungen spielen keine Karte aus. Ein Wesen trifft bei leerem direkt gegenüberliegendem Feld den gegnerischen Helden; Block und Schild absorbieren nach Kampfregeln.
 
-`project.godot` in Godot 4.6.3 öffnen und F5 starten. Startbildschirm → überspringbare Einführung → Held wählen → Tutorial. Danach stehen normales Duell, freigeschaltete Kampagnenkapitel, Sammlung und Einstellungen im Hauptmenü bereit. Fortschritt bleibt lokal gespeichert. Handkarte antippen, anschließend Zielpfad wählen. Zauber können auch direkt auf die gegnerische Kreaturenkarte gespielt werden. **Details** öffnet die Großansicht; **Menü → Spielhilfe** erklärt Kampf und Siegbedingungen. Nach Sieg/Niederlage führen die Ergebnisaktionen ins Hauptmenü, zur Wiederholung oder zur nächsten freigeschalteten Begegnung.
+Sammlung und Deckbuilder bieten Suche, Macht-/Typ-/Arten-/Seltenheits-/Kostenfilter, Sortierung und paginierte Kartenansichten. Genau eine Macht plus neutrale Karten; 30 Karten; maximal drei normale oder eine legendäre Kopie pro ID. Die Strategietestdecks lassen sich als Vorlage laden und ausdrücklich speichern. Fortschritt und Decks liegen lokal; beschädigte oder unbekannte Daten werden aufbewahrt und nicht stillschweigend ersetzt. Es gibt keine Echtgeldkäufe, Serverkonten oder vorgetäuschte Besitzbeschränkungen.
 
-Getestete Änderungen auf `develop` werden automatisch auf der Spielseite veröffentlicht und dort erneut im Browser geprüft. Der Entwicklungsstand baut auf `develop` auf. Die vorhandenen lokalen Spielregeln bleiben erhalten; dieser Stand ist kein nachgewiesener vollständiger Port des älteren [Webspiels](https://jagarex-lab.github.io/duel-deck/).
+## Entwickeln und prüfen
 
-## Prüfen und exportieren
+`project.godot` mit Godot 4.6.3 öffnen, F5 startet die reguläre Anwendung. Node 24 und Python 3 werden für Daten-/Buildprüfungen verwendet. GUI-Prüfungen benötigen ein Display, beispielsweise Xvfb:
 
 ```bash
-# Godot 4.6.3 und ein X11-Display, z. B. Xvfb :99, erforderlich
-DISPLAY=:99 tools/test.sh
-
-# Passende offizielle Godot-Exportvorlagen installieren
-mkdir -p work/build/web
-godot --headless --path . --export-debug 'Linux QA' work/build/nachtsiegel.x86_64
-godot --headless --path . --export-debug 'Web QA' work/build/web/index.html
-# Android SDK und Java unter Editor Settings → Export → Android konfigurieren
-godot --headless --path . --export-debug 'Android QA' work/build/nachtsiegel-debug.apk
+tools/test_legacy.sh
+xvfb-run -a tools/test_alpha.sh
+xvfb-run -a tools/test_master550.sh
+xvfb-run -a tools/test_production.sh
+tools/test_production_simulations.sh
+python3 -m unittest discover -s tests/release -v
 ```
 
-`tools/test.sh` legt Godot-Benutzerdaten ausschließlich unter `work/` ab. Exportvorlagen müssen daher unter diesem XDG-Datenverzeichnis verfügbar sein, wenn dieselben Umgebungsvariablen für den Export verwendet werden. Binärdateien, SDK, Debug-Schlüssel und temporäre Dateien werden nicht eingecheckt.
+`tools/build_alpha.sh` erzeugt einen isolierten Webkandidaten mit dem Quellcommit in `build-info.json`. `tools/package_alpha.py` erstellt ein reproduzierbares ZIP. Per lokalem HTTP nur über `localhost` testen; Smartphones benötigen HTTPS mit einer vom Gerät vertrauten Zertifikatskette. `file://` und unverschlüsseltes LAN-HTTP sind für den Webexport ungeeignet.
 
-[UX/UI, Kontrast und Tests](docs/QA-UX-2026-11-09.md) · [Grafikstufe Mondheiligtum](docs/QA-SANCTUM-2026-11-08.md) · [Erste Überarbeitung](docs/QA-2026-11-08.md) · [Asset-Herkunft](assets/ASSET_MANIFEST.md)
+Der [manuelle Releaseprozess](docs/release/PAGES_RELEASE_SAFETY.md) veröffentlicht ausschließlich das Artefakt einer vollständig erfolgreichen CI auf dem aktuellen `develop`-Commit. Er umgeht keine GitHub-Schutzregeln. Native Debugexporte existieren für Windows, Linux und Android. Die [Plattformprüfung](docs/production/PLATFORM_BUILDS.md) führt exportierte Windows-/Linux-QA-Duelle aus und prüft das Android-Paket; diese Läufe sind keine physischen Android- oder iPhone-Gerätetests. iOS benötigt zusätzlich Apples Build-/Signierumgebung.
 
-Godot: MIT. Projektcode und Spielinhalte: bestehender Rechtevorbehalt laut `LICENSE-NOTICE.md`. Illustrationen sind ausdrücklich als KI-Konzept-Platzhalter gekennzeichnet.
+## Lore, Rechte und historische Inhalte
+
+[docs/LORE-BIBLE.md](docs/LORE-BIBLE.md) ist die zentrale Storyreferenz. Bestätigter Kanon, Arbeitsstand, Vorschläge und historische Entwürfe bleiben getrennt. Die alte Arvess-Kampagne ist ein Archivprototyp und keine freigegebene ORAFOLD-Kampagne.
+
+[Asset-Herkunft](assets/ASSET_MANIFEST.md) · [Kartenstil](docs/master550/CARD_STYLE_GUIDE.md) · [Legacy-Migration](docs/migration/LEGACY_PARITY_AUDIT.md)
+
+Godot: MIT. Projektcode/-inhalte: bestehender Rechtevorbehalt laut `LICENSE-NOTICE.md`; Schriftlizenzen liegen bei. Generierte Einzelbilder besitzen dokumentierte Herkunft und eine getrennt ausgewiesene visuelle Produktionsprüfung; die kommerzielle Rechteprüfung ist noch offen. Eine spätere kommerzielle Freigabe wird nicht durch eine technische Datenprüfung ersetzt.

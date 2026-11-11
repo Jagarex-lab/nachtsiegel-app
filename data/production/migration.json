@@ -1,0 +1,736 @@
+{
+  "version": 1,
+  "from_ruleset": "orafold-alpha-0.1",
+  "to_ruleset": "orafold-production-candidate-1",
+  "retained": [
+    {
+      "old_id": "oa-neutral-c01",
+      "new_id": "oa-neutral-c01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c02",
+      "new_id": "oa-neutral-c02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c03",
+      "new_id": "oa-neutral-c03",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c04",
+      "new_id": "oa-neutral-c04",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c05",
+      "new_id": "oa-neutral-c05",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c06",
+      "new_id": "oa-neutral-c06",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c07",
+      "new_id": "oa-neutral-c07",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c08",
+      "new_id": "oa-neutral-c08",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-c09",
+      "new_id": "oa-neutral-c09",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-c01",
+      "new_id": "oa-houses-c01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-c02",
+      "new_id": "oa-houses-c02",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "atk": {
+          "old": 2,
+          "new": 1
+        },
+        "hp": {
+          "old": 4,
+          "new": 5
+        }
+      }
+    },
+    {
+      "old_id": "oa-houses-c03",
+      "new_id": "oa-houses-c03",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-c04",
+      "new_id": "oa-houses-c04",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "atk": {
+          "old": 2,
+          "new": 1
+        },
+        "hp": {
+          "old": 4,
+          "new": 5
+        }
+      }
+    },
+    {
+      "old_id": "oa-houses-c05",
+      "new_id": "oa-houses-c05",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-c06",
+      "new_id": "oa-houses-c06",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-c07",
+      "new_id": "oa-houses-c07",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "atk": {
+          "old": 5,
+          "new": 4
+        },
+        "hp": {
+          "old": 8,
+          "new": 7
+        },
+        "effect": {
+          "old": "pulse",
+          "new": "v2"
+        },
+        "power": {
+          "old": 3,
+          "new": 0
+        },
+        "description": {
+          "old": "Beim Beschwören: Erzeuge 3 Resonanz. Dein Held erhält 3 Schild. Beide eigenen Nachbarwesen erhalten +1 Angriff.",
+          "new": "Beim Beschwören: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nZu deinem Zugbeginn: Heile das eigene Wesen mit dem wenigsten Leben um 2 Leben. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Beschwöre Namenhüter auf dem ersten freien eigenen Pfad."
+        },
+        "abilities": {
+          "old": null,
+          "new": [
+            {
+              "mode": "triggered",
+              "effect": "return_card",
+              "target": "self",
+              "params": {
+                "count": 1
+              },
+              "limit": "once_per_event",
+              "trigger": "on_summon"
+            },
+            {
+              "mode": "triggered",
+              "effect": "heal_target",
+              "target": "own_lowest_health",
+              "params": {
+                "amount": 2
+              },
+              "limit": "once_per_turn",
+              "trigger": "on_turn_start"
+            },
+            {
+              "mode": "triggered",
+              "effect": "summon_card",
+              "target": "self",
+              "params": {
+                "card_id": "oa-houses-c01"
+              },
+              "limit": "once_per_event",
+              "trigger": "on_death"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "old_id": "oa-stillwatch-c01",
+      "new_id": "oa-stillwatch-c01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-c02",
+      "new_id": "oa-stillwatch-c02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-c03",
+      "new_id": "oa-stillwatch-c03",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-c04",
+      "new_id": "oa-stillwatch-c04",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-c05",
+      "new_id": "oa-stillwatch-c05",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-c06",
+      "new_id": "oa-stillwatch-c06",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-c07",
+      "new_id": "oa-stillwatch-c07",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "atk": {
+          "old": 5,
+          "new": 3
+        },
+        "effect": {
+          "old": "pulse",
+          "new": "v2"
+        },
+        "power": {
+          "old": 3,
+          "new": 0
+        },
+        "description": {
+          "old": "Beim Beschwören: Erzeuge 3 Resonanz. Dein Held erhält 3 Schild. Beide eigenen Nachbarwesen erhalten +1 Angriff.",
+          "new": "Beim Beschwören: Gewähre allen eigenen Wesen 2 Schild.\nBeim Verteidigen: Betäube das direkt gegenüberliegende gegnerische Wesen für 1 Angriffsphase. 1× pro Zug.\nZu deinem Zugbeginn: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn. 1× pro Zug."
+        },
+        "abilities": {
+          "old": null,
+          "new": [
+            {
+              "mode": "triggered",
+              "effect": "grant_shield",
+              "target": "own_all",
+              "params": {
+                "amount": 2
+              },
+              "limit": "once_per_event",
+              "trigger": "on_summon"
+            },
+            {
+              "mode": "triggered",
+              "effect": "stun_unit",
+              "target": "opposite_enemy_unit",
+              "params": {
+                "count": 1
+              },
+              "limit": "once_per_turn",
+              "trigger": "on_defend"
+            },
+            {
+              "mode": "triggered",
+              "effect": "grant_block",
+              "target": "own_hero",
+              "params": {
+                "amount": 2
+              },
+              "limit": "once_per_turn",
+              "trigger": "on_turn_start"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "old_id": "oa-morph-c01",
+      "new_id": "oa-morph-c01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-morph-c02",
+      "new_id": "oa-morph-c02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-morph-c03",
+      "new_id": "oa-morph-c03",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-morph-c04",
+      "new_id": "oa-morph-c04",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-morph-c05",
+      "new_id": "oa-morph-c05",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-morph-c06",
+      "new_id": "oa-morph-c06",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-morph-c07",
+      "new_id": "oa-morph-c07",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "hp": {
+          "old": 8,
+          "new": 5
+        },
+        "effect": {
+          "old": "pulse",
+          "new": "v2"
+        },
+        "power": {
+          "old": 3,
+          "new": 0
+        },
+        "description": {
+          "old": "Beim Beschwören: Erzeuge 3 Resonanz. Dein Held erhält 3 Schild. Beide eigenen Nachbarwesen erhalten +1 Angriff.",
+          "new": "Dauerhaft: Dieses Wesen kann im Zug seiner Beschwörung angreifen.\nBeim Ausspielen: Versetze dieses Wesen um einen Pfad nach rechts, falls dort Platz ist.\nBeim Pfadwechsel: Gewähre allen eigenen Wesen der Art Pflanzen +1 Angriff. 1× pro Zug."
+        },
+        "abilities": {
+          "old": null,
+          "new": [
+            {
+              "mode": "passive",
+              "effect": "haste",
+              "target": "self",
+              "params": {},
+              "limit": "while_on_board"
+            },
+            {
+              "mode": "triggered",
+              "effect": "move_unit",
+              "target": "self",
+              "params": {
+                "steps": 1
+              },
+              "limit": "once_per_event",
+              "trigger": "on_play"
+            },
+            {
+              "mode": "triggered",
+              "effect": "modify_attack",
+              "target": "own_species",
+              "params": {
+                "amount": 1,
+                "species": "plant"
+              },
+              "limit": "once_per_turn",
+              "trigger": "on_lane_change"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "old_id": "oa-ninth-c01",
+      "new_id": "oa-ninth-c01",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "atk": {
+          "old": 1,
+          "new": 2
+        },
+        "hp": {
+          "old": 3,
+          "new": 2
+        }
+      }
+    },
+    {
+      "old_id": "oa-ninth-c02",
+      "new_id": "oa-ninth-c02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-ninth-c03",
+      "new_id": "oa-ninth-c03",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-ninth-c04",
+      "new_id": "oa-ninth-c04",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-ninth-c05",
+      "new_id": "oa-ninth-c05",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-ninth-c06",
+      "new_id": "oa-ninth-c06",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "atk": {
+          "old": 3,
+          "new": 4
+        },
+        "hp": {
+          "old": 5,
+          "new": 4
+        }
+      }
+    },
+    {
+      "old_id": "oa-ninth-c07",
+      "new_id": "oa-ninth-c07",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-e01",
+      "new_id": "oa-neutral-e01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-e02",
+      "new_id": "oa-neutral-e02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-e03",
+      "new_id": "oa-neutral-e03",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-e04",
+      "new_id": "oa-neutral-e04",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-e01",
+      "new_id": "oa-houses-e01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-e02",
+      "new_id": "oa-houses-e02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-e01",
+      "new_id": "oa-stillwatch-e01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-e02",
+      "new_id": "oa-stillwatch-e02",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {
+        "effect": {
+          "old": "stasis",
+          "new": "v2"
+        },
+        "power": {
+          "old": 2,
+          "new": 0
+        },
+        "description": {
+          "old": "Beim Ausspielen: Versetze ein gegnerisches Wesen für mindestens 2 gegnerische Angriffsphasen in Stasis.",
+          "new": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 1 Angriffsphase.\nBeim Ausspielen: Gewähre dem eigenen Wesen mit dem wenigsten Leben 1 Schild."
+        },
+        "abilities": {
+          "old": null,
+          "new": [
+            {
+              "mode": "triggered",
+              "effect": "stun_unit",
+              "target": "enemy_lowest_health",
+              "params": {
+                "count": 1
+              },
+              "limit": "once_per_event",
+              "trigger": "on_play"
+            },
+            {
+              "mode": "triggered",
+              "effect": "grant_shield",
+              "target": "own_lowest_health",
+              "params": {
+                "amount": 1
+              },
+              "limit": "once_per_event",
+              "trigger": "on_play"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "old_id": "oa-morph-e01",
+      "new_id": "oa-morph-e01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-morph-e02",
+      "new_id": "oa-morph-e02",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "cost": {
+          "old": 3,
+          "new": 2
+        }
+      }
+    },
+    {
+      "old_id": "oa-ninth-e01",
+      "new_id": "oa-ninth-e01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-ninth-e02",
+      "new_id": "oa-ninth-e02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-r01",
+      "new_id": "oa-neutral-r01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-neutral-r02",
+      "new_id": "oa-neutral-r02",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-houses-r01",
+      "new_id": "oa-houses-r01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    },
+    {
+      "old_id": "oa-stillwatch-r01",
+      "new_id": "oa-stillwatch-r01",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {
+        "effect": {
+          "old": "relic_ward",
+          "new": "v2"
+        },
+        "power": {
+          "old": 1,
+          "new": 0
+        },
+        "description": {
+          "old": "Beim Aktivieren für 1 Energie: Dein Held erhält 2 Schild, höchstens 25 insgesamt. Nur 1 Reliktaktivierung je eigenem Zug.",
+          "new": "Aktivieren (1 Energie, 1 Resonanz): Gewähre deinem Helden 2 Schild.\nZu deinem Zugbeginn: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.\nJede Fähigkeit 1× pro Zug."
+        },
+        "abilities": {
+          "old": null,
+          "new": [
+            {
+              "mode": "activated",
+              "effect": "grant_shield",
+              "target": "own_hero",
+              "params": {
+                "amount": 2
+              },
+              "limit": "once_per_turn",
+              "activation": {
+                "energy": 1,
+                "resonance": 1
+              }
+            },
+            {
+              "mode": "triggered",
+              "effect": "grant_block",
+              "target": "own_hero",
+              "params": {
+                "amount": 1
+              },
+              "limit": "once_per_turn",
+              "trigger": "on_turn_start"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "old_id": "oa-morph-r01",
+      "new_id": "oa-morph-r01",
+      "decision": "revised_production_identity_preserved",
+      "name_changed": false,
+      "stats_changed": true,
+      "changes": {
+        "cost": {
+          "old": 2,
+          "new": 1
+        }
+      }
+    },
+    {
+      "old_id": "oa-ninth-r01",
+      "new_id": "oa-ninth-r01",
+      "decision": "retained_native_handler",
+      "name_changed": false,
+      "stats_changed": false,
+      "changes": {}
+    }
+  ],
+  "removed_active_ids": [],
+  "archived_pools": [
+    "data/legacy/cards.json",
+    "data/card_definitions.gd"
+  ],
+  "historical_concepts": "data/lore/card-concepts.json"
+}

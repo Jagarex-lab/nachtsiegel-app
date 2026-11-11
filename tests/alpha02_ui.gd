@@ -1,6 +1,6 @@
 extends SceneTree
 const Shell=preload("res://scripts/alpha/shell.gd")
-const Catalog=preload("res://scripts/alpha/catalog.gd")
+const Catalog=preload("res://scripts/production/catalog.gd")
 const Card=preload("res://scripts/alpha/card_view.gd")
 const Session=preload("res://scripts/alpha/session.gd")
 const Style=preload("res://scripts/alpha/style.gd")
@@ -86,6 +86,8 @@ func run():
   for c in Catalog.new().all_cards():
    if c.id!=id and app.can_add(c):replacement=c;break
   check(not replacement.is_empty(),"legal card replacement exists")
+  app.filter_text=replacement.name;app.render();await settle()
+  check(app.actions.has("add_"+replacement.id),"legal replacement reachable through real name search in paginated active pool")
   await tap(app.actions["add_"+replacement.id]);check(app.deck.size()==30,"touch adds replacement")
   var edited=app.deck.duplicate();await tap(app.actions.save_deck)
   check(Session.new().profile.decks["alpha:houses"].cards==edited,"edited deck actually persists, not only count")

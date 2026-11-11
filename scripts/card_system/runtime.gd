@@ -4,7 +4,13 @@ extends RefCounted
 signal effect_processed(entry: Dictionary)
 const Registry = preload("res://scripts/card_system/registry.gd")
 var registry = Registry.new()
-var model: RefCounted
+var _strong_model: RefCounted
+var _weak_model: WeakRef
+var model: RefCounted:
+	get: return _weak_model.get_ref() if _weak_model != null else _strong_model
+	set(value):
+		_strong_model = value
+		_weak_model = null
 var log: Array = []
 var last_error := ""
 var _queue: Array = []
@@ -12,10 +18,14 @@ var _resolving := false
 var _processed := 0
 var _chain := 0
 var _seen: Dictionary = {}
+var _publication_digest := "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 var _species: Dictionary = {}
 
-func _init(battle_model: RefCounted = null) -> void:
-	model = battle_model
+func _init(battle_model: RefCounted = null, weak_model := false) -> void:
+	# Explicit adapters own their model by default, as before. A model-owned
+	# opt-in adapter must use a weak back-reference to avoid a RefCounted cycle.
+	if weak_model and battle_model != null: _weak_model = weakref(battle_model)
+	else: model = battle_model
 
 func capabilities() -> Dictionary:
 	return registry.capabilities()
@@ -75,16 +85,25 @@ func _submit(trigger: String, side: String, abilities: Array, context: Dictionar
 	var batch: Array = []
 	for index in abilities.size():
 		var ability: Variant = abilities[index]
+		var ability_context: Dictionary=context.duplicate(true)
 		reason = registry.validate_ability(ability, activated)
 		if not reason.is_empty(): return _rejected(reason)
+		if model.has_method("production_bind_context"):
+			ability_context=model.production_bind_context(side,ability,ability_context)
+		if activated and ability.mode!="activated":return _rejected("not_activated")
+		if not activated and not ability.mode in ["triggered","reactive"]:return _rejected("unsupported_mode")
 		if not activated and ability.trigger != trigger: continue
-		reason = _preflight(side, ability, context, activated)
+		reason = _preflight(side, ability, ability_context, activated)
 		if not reason.is_empty(): return _rejected(reason)
-		batch.append({"trigger": trigger, "side": side, "ability": ability.duplicate(true), "context": context.duplicate(true), "index": index, "activated": activated})
+		batch.append({"trigger": trigger, "side": side, "ability": ability.duplicate(true), "context": ability_context, "index": index, "activated": activated})
 	if batch.is_empty(): return {"ok": true, "queued": 0, "processed": 0, "reason": "no_matching_abilities"}
 	return _queue_batch(trigger, side, batch, context)
 
 func _queue_batch(trigger: String, side: String, batch: Array, context: Dictionary) -> Dictionary:
+	# Weak ownership prevents a model/adapter cycle; this local reference keeps
+	# a synchronous drain safe if an observer releases its last external owner.
+	var active_model: RefCounted = model
+	if active_model == null: return _rejected("not_battle")
 	var key := side + ":" + trigger + ":" + str(context.event_id)
 	if _seen.has(key): return _rejected("duplicate_event")
 	if _seen.size() >= Registry.MAX_EVENT_HISTORY: return _rejected("event_history_limit")
@@ -92,6 +111,9 @@ func _queue_batch(trigger: String, side: String, batch: Array, context: Dictiona
 	if chain_used + _queue.size() + batch.size() > Registry.MAX_CHAIN: return _rejected("chain_limit")
 	# Reserve only after the whole batch validates: an invalid action does not mutate the battle.
 	_seen[key] = true
+	# Ordered accepted-publication chain. The legacy bridge retains its own
+	# canonical-map snapshot digest; only Production explicitly selects this ABI.
+	_publication_digest=(_publication_digest+":"+str(key.to_utf8_buffer().size())+":"+key).sha256_text()
 	_queue.append_array(batch)
 	if _resolving: return {"ok": true, "queued": batch.size(), "processed": 0, "reason": ""}
 	_chain += 1
@@ -99,7 +121,7 @@ func _queue_batch(trigger: String, side: String, batch: Array, context: Dictiona
 	_resolving = true
 	last_error = ""
 	while not _queue.is_empty():
-		if model.state.winner != null:
+		if active_model.state.winner != null:
 			_cancel_remaining("battle_finished")
 			break
 		var item: Dictionary = _queue.pop_front()
@@ -113,13 +135,19 @@ func _queue_batch(trigger: String, side: String, batch: Array, context: Dictiona
 		var failed_native := false
 		for native_key in ["activated", "summon_resolved", "chain_resolved"]:
 			if actual.has(native_key) and not actual[native_key]: failed_native = true
-		if failed_native or not model.state.get("error", "").is_empty():
+		if failed_native or not active_model.state.get("error", "").is_empty():
 			last_error = "native_effect_failed"
 			_record(item, "error", actual)
 			_cancel_remaining(last_error)
 			break
 		_record(item, "applied", actual)
-		model.check_winner()
+		# effect_processed is synchronous. An observer can cause a native failure
+		# after _apply succeeded; do not report the enclosing chain as successful.
+		if not active_model.state.get("error", "").is_empty():
+			last_error = "native_effect_failed"
+			_cancel_remaining(last_error)
+			break
+		active_model.check_winner()
 	_resolving = false
 	return {"ok": last_error.is_empty(), "queued": batch.size(), "processed": _processed, "reason": last_error}
 
@@ -128,6 +156,7 @@ func _ready(side: String) -> bool:
 
 func _validate_context(context: Dictionary) -> String:
 	var allowed := ["event_id", "source_lane", "source_uid", "target_lane", "target_uid", "target_species"]
+	if model != null and model.has_method("production_preflight"): allowed.append_array(["source_card_id", "ability_index", "source_relic", "event_lane", "event_side", "event_uid", "source_armed", "source_relic_uid", "source_instance", "selected_enemy_lane", "selected_enemy_uid", "opposite_enemy_lane", "opposite_enemy_uid", "fatal_damage_source"])
 	for key in context:
 		if not key in allowed: return "unknown_context_field:" + str(key)
 	if not context.get("event_id") is String or context.event_id.is_empty() or context.event_id.length() > 100: return "invalid_event_id"
@@ -136,6 +165,16 @@ func _validate_context(context: Dictionary) -> String:
 	for key in ["source_uid", "target_uid"]:
 		if context.has(key) and not Registry.integer(context[key], 1, 9007199254740991): return "invalid_uid"
 	if context.has("target_species") and not registry.contract.species.has(context.target_species): return "unknown_species"
+	if model != null and model.has_method("production_preflight"):
+		for key in ["selected_enemy_lane","opposite_enemy_lane"]:
+			if context.has(key) and not Registry.integer(context[key],0,4):return "invalid_lane"
+		for key in ["selected_enemy_uid","opposite_enemy_uid","source_relic_uid"]:
+			if context.has(key) and not Registry.integer(context[key],0,9007199254740991):return "invalid_uid"
+		for key in ["source_armed","source_instance"]:
+			if context.has(key) and not Registry.integer(context[key],1,9007199254740991):return "invalid_uid"
+		if context.has("fatal_damage_source") and not context.fatal_damage_source is bool:return "invalid_fatal_damage_context"
+		if context.has("ability_index") and not Registry.integer(context.ability_index,0,3):return "invalid_ability_index"
+		if context.has("source_card_id") and (not context.source_card_id is String or context.source_card_id.is_empty() or context.source_card_id.length()>100):return "invalid_source_card_id"
 	return ""
 
 func _target(side: String, context: Dictionary) -> String:
@@ -152,6 +191,8 @@ func _source(side: String, context: Dictionary) -> String:
 
 func _preflight(side: String, ability: Dictionary, context: Dictionary, activated: bool) -> String:
 	if not _ready(side): return "not_battle"
+	if Registry.ProductionEffects.OPS.has(ability.get("effect")):
+		return model.production_preflight(side, ability, context) if model.has_method("production_preflight") else "production_profile_required"
 	var p: Dictionary = model.state[side]
 	var other: String = model._other(side)
 	var op: Dictionary = model.state[other]
@@ -208,6 +249,8 @@ func _preflight(side: String, ability: Dictionary, context: Dictionary, activate
 	return ""
 
 func _apply(item: Dictionary) -> Dictionary:
+	if Registry.ProductionEffects.OPS.has(item.ability.get("effect")):
+		return model.production_apply(item.side, item.ability, item.context)
 	var side: String = item.side
 	var p: Dictionary = model.state[side]
 	var other: String = model._other(side)
@@ -227,12 +270,12 @@ func _apply(item: Dictionary) -> Dictionary:
 		"weave", "harvest": model.add_res(p, amount)
 		"draw": result["drawn"] = model.draw_cards(side, int(ability.params.count))
 		"drain":
-			var lost: int = model.damage(op, amount)
+			var lost: int = model._hero_damage(op, amount)
 			p.hp = mini(int(p.maxHp), int(p.hp) + lost)
 			result["hp_lost"] = lost
 		"strike":
 			if context.has("target_uid"): model._strike_target(side, int(context.target_lane), amount, int(context.get("source_lane", 0)))
-			else: result["hp_lost"] = model.damage(op, amount)
+			else: result["hp_lost"] = model._hero_damage(op, amount)
 		"bolt": model._lane_damage(other, int(context.target_lane), amount)
 		"rally":
 			var lane := int(context.source_lane)

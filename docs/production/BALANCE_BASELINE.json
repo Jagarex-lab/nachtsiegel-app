@@ -1,0 +1,278 @@
+{
+  "matrix_games": 848,
+  "strategy_matrix_games": 784,
+  "starter_matrix_games": 64,
+  "additional_verification_games": 18,
+  "fresh_constructor_verification_games": 8,
+  "assertions": 2688,
+  "failures": 0,
+  "negative_evidence_guard_tests": 10,
+  "source_changes_during_run": [],
+  "source_sha256": {
+    "data/alpha/cards.json": "0e5fcc20589961c5bdca662642870bc9abfc483b0ef2aebfbbf88be2876355ef",
+    "data/card_system/alpha_species.json": "e064020b50ba8584999eb7e2e8aa6f601ec41719e89cace249b0d689e3f7e531",
+    "data/card_system/registry.json": "0d4731ff5dead611844cbb68db1b0b8fd65a712245375f5244c546aa3dcbfc54",
+    "data/production/cards.json": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+    "data/production/starters.json": "79dbb5705c4f82f77ae5bd52ec4842e79b8dc47ede218acd3dc6bcccec848f52",
+    "data/production/test_decks.json": "78bd33a1a8a3f77526b6576b5dc6ee5f0d9854a2eb513e74e1b3aa8231ba4c01",
+    "scripts/alpha/catalog.gd": "fc8fbdb5822a0ae9a23f114227d90a8f67dfa27e8aaf0e72b7ca402163eb9374",
+    "scripts/alpha/model.gd": "e1e278afce7f711022a5ad8ddb0b2ed8c13f4b5f15a047e8b1b22fa4d9460da2",
+    "scripts/card_system/production_effects.gd": "e33d48710b4a2e1b0c24ddb55b8ac584fb51a9ea2149f5274fa294a71ebb7484",
+    "scripts/card_system/production_model.gd": "12fd1dc84bf8d8c2a1a33338542b0332c3725dadc85e671102913d7c26efb36b",
+    "scripts/card_system/registry.gd": "3d9dd99e032bd12c3dafce0535051cf354d99698048dee3ca7bf852ce7cc65da",
+    "scripts/card_system/runtime.gd": "ca2be2fc49f1a18748b3b887610655acdccac134cef6664ffe003cb93adbc8ad",
+    "scripts/card_system/trigger_model.gd": "ea1e5c0f441d14f0a051a6d859fcd7e66c3a5a1978af3d5a05cd8bf8fde5deee",
+    "scripts/legacy/battle_engine.gd": "857935d2d314393815d4cb97670e0fac9a85f6c3d873723e62dbf0d6c1af5559",
+    "scripts/legacy/rng.gd": "7b3bf48f8e66d51ff24ec5fdfefffbaac8847efee171407be498b34f47847abf",
+    "scripts/production/ai_policy.gd": "06aaca3502ebca7e9e0c83cbceb1a41fd77133e5ce0d0ff259c964fef0a9f2cf",
+    "scripts/production/catalog.gd": "7d7f8e158ddfbfb1365efee0ef504f023013fea70507bed402cbe3fff137ffe8",
+    "tests/production_simulations.gd": "54fdd86fb2b11e52cceb5d5f6767a6e74508acd0cc595bfea628a06204a514ff"
+  },
+  "shards": [
+    {
+      "index": 0,
+      "games": 212,
+      "verification_games": 4,
+      "file": "simulations-shard-0-of-4.json",
+      "sha256": "8df7b4fa1147caa0588f301c3fb5763e5a4f94eef35000296e70a0e6bd7f3e0a"
+    },
+    {
+      "index": 1,
+      "games": 212,
+      "verification_games": 5,
+      "file": "simulations-shard-1-of-4.json",
+      "sha256": "21039d19beeb52d12b14e365a92ea282b6ec87442f4d14e8b285b77295165152"
+    },
+    {
+      "index": 2,
+      "games": 212,
+      "verification_games": 5,
+      "file": "simulations-shard-2-of-4.json",
+      "sha256": "f2a894c950108e6fe43ba16bfeefd3552127a86f66b0144f32d3c9ecd3b408ae"
+    },
+    {
+      "index": 3,
+      "games": 212,
+      "verification_games": 4,
+      "file": "simulations-shard-3-of-4.json",
+      "sha256": "7e6d16391f3219346900050ef90ebdf1a5a9862f734f16679ac247c3e7acf51f"
+    }
+  ],
+  "scope": "First successful848-match baseline before the second reference-deck balancing iteration; technical completion is not a final balance claim",
+  "raw_report_sha256": "0379dbe163dc5fcea5bdbc967e4fb9296fd7f90997e9a367006b7dfec27ae175",
+  "raw_report_path": "work/production/balance-baseline/simulations.json",
+  "summary": {
+    "completed": 848,
+    "censored": 0,
+    "errors": 0,
+    "first_wins": 493,
+    "convergence_wins": 48,
+    "hero_damage_wins": 800,
+    "mean_round": 26.244103773584907,
+    "median_round": 23,
+    "distinct_cards_used": 233,
+    "longest_generic_chain": 6,
+    "deck_results": {
+      "starter-houses": {
+        "games": 32,
+        "wins": 20,
+        "first_games": 16,
+        "first_wins": 10,
+        "convergence_wins": 1,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 16
+      },
+      "starter-morph": {
+        "games": 32,
+        "wins": 13,
+        "first_games": 16,
+        "first_wins": 9,
+        "convergence_wins": 0,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 9
+      },
+      "starter-ninth": {
+        "games": 32,
+        "wins": 18,
+        "first_games": 16,
+        "first_wins": 8,
+        "convergence_wins": 3,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 14
+      },
+      "starter-stillwatch": {
+        "games": 32,
+        "wins": 13,
+        "first_games": 16,
+        "first_wins": 5,
+        "convergence_wins": 2,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 9
+      },
+      "prod-aggro": {
+        "games": 112,
+        "wins": 77,
+        "first_games": 56,
+        "first_wins": 49,
+        "convergence_wins": 2,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 60
+      },
+      "prod-block": {
+        "games": 112,
+        "wins": 46,
+        "first_games": 56,
+        "first_wins": 25,
+        "convergence_wins": 3,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 38
+      },
+      "prod-control": {
+        "games": 112,
+        "wins": 78,
+        "first_games": 56,
+        "first_wins": 46,
+        "convergence_wins": 4,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 54
+      },
+      "prod-convergence": {
+        "games": 112,
+        "wins": 78,
+        "first_games": 56,
+        "first_wins": 50,
+        "convergence_wins": 4,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 57
+      },
+      "prod-impulse": {
+        "games": 112,
+        "wins": 67,
+        "first_games": 56,
+        "first_wins": 39,
+        "convergence_wins": 3,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 48
+      },
+      "prod-midrange": {
+        "games": 112,
+        "wins": 75,
+        "first_games": 56,
+        "first_wins": 44,
+        "convergence_wins": 2,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 55
+      },
+      "prod-movement": {
+        "games": 112,
+        "wins": 22,
+        "first_games": 56,
+        "first_wins": 15,
+        "convergence_wins": 2,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 17
+      },
+      "prod-recurrence": {
+        "games": 112,
+        "wins": 22,
+        "first_games": 56,
+        "first_wins": 11,
+        "convergence_wins": 1,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 13
+      },
+      "prod-relic": {
+        "games": 112,
+        "wins": 17,
+        "first_games": 56,
+        "first_wins": 9,
+        "convergence_wins": 1,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 10
+      },
+      "prod-resonance": {
+        "games": 112,
+        "wins": 34,
+        "first_games": 56,
+        "first_wins": 20,
+        "convergence_wins": 3,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 26
+      },
+      "prod-resource": {
+        "games": 112,
+        "wins": 36,
+        "first_games": 56,
+        "first_wins": 19,
+        "convergence_wins": 2,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 24
+      },
+      "prod-shield": {
+        "games": 112,
+        "wins": 64,
+        "first_games": 56,
+        "first_wins": 40,
+        "convergence_wins": 7,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 53
+      },
+      "prod-species": {
+        "games": 112,
+        "wins": 76,
+        "first_games": 56,
+        "first_wins": 46,
+        "convergence_wins": 5,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 62
+      },
+      "prod-time": {
+        "games": 112,
+        "wins": 92,
+        "first_games": 56,
+        "first_wins": 48,
+        "convergence_wins": 3,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 67
+      }
+    },
+    "power_results": {
+      "houses": {
+        "games": 368,
+        "wins": 134,
+        "first_games": 184,
+        "first_wins": 74,
+        "convergence_wins": 5,
+        "nonmirror_games": 288,
+        "nonmirror_wins": 94
+      },
+      "morph": {
+        "games": 368,
+        "wins": 188,
+        "first_games": 184,
+        "first_wins": 119,
+        "convergence_wins": 9,
+        "nonmirror_games": 288,
+        "nonmirror_wins": 148
+      },
+      "ninth": {
+        "games": 480,
+        "wins": 247,
+        "first_games": 240,
+        "first_wins": 134,
+        "convergence_wins": 14,
+        "nonmirror_games": 344,
+        "nonmirror_wins": 179
+      },
+      "stillwatch": {
+        "games": 480,
+        "wins": 279,
+        "first_games": 240,
+        "first_wins": 166,
+        "convergence_wins": 20,
+        "nonmirror_games": 344,
+        "nonmirror_wins": 211
+      }
+    }
+  }
+}

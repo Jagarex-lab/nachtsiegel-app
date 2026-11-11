@@ -34,6 +34,8 @@ jobs:
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
       - name: New card contract, effect adapter, card faces and battlefield opening
         run: xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
+      - name: Production card engine, storage, presentation and data regression
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_production.sh
       - name: Existing archive desktop regression
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
       - name: Release separation regression

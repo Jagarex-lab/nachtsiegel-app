@@ -57,12 +57,14 @@ func snapshot() -> Dictionary:
 		for unit: Variant in p.lanes:
 			if unit==null:lanes.append(null);continue
 			var copy: Dictionary=unit.duplicate(true)
-			var definition: Dictionary=catalog.card(unit.id)
+			var definition: Dictionary=_snapshot_definition(unit.id)
 			copy["baseHp"]=definition.hp;copy["baseAtk"]=definition.atk
 			lanes.append(copy)
 		part["lanes"]=lanes;result[side]=part
 	for key: String in ["active","coin","round","winner","seed","level"]:result[key]=state[key]
 	return result
+func _snapshot_definition(id: String) -> Dictionary:
+	return catalog.card(id)
 func _trace(kind: String, side: String, detail: Dictionary = {}) -> void:
 	var event: Dictionary=detail.duplicate(true)
 	event["kind"]=kind;event["side"]=side;event["seq"]=events.size();event["state"]=snapshot();event["pendingDeath"]=pending_death.duplicate(true) if pending_death is Dictionary else null
@@ -83,6 +85,8 @@ static func damage(player: Dictionary, amount: float, pierce: bool = false) -> i
 		player.ward=int(player.ward)-k;n-=k
 	player.hp=maxi(0,int(player.hp)-n)
 	return before-int(player.hp)
+func _hero_damage(player: Dictionary, amount: float, pierce: bool=false) -> int:
+	return damage(player,amount,pierce)
 func begin_support(side: String) -> String:
 	return "" if _valid_side(side) else "invalid_side"
 func begin_turn(side: String) -> bool:
@@ -149,9 +153,14 @@ func _finish_draw_reference(side: String) -> bool:
 		p.fatigue=0;_trace("fatigue_reset",side)
 	return true
 func finish_draw(side: String) -> bool:
-	var probe=get_script().new();probe.state=state.duplicate(true)
+	var probe=_validation_probe()
 	if not probe._finish_draw_reference(side):return false
 	return _finish_draw_reference(side)
+func _validation_probe():
+	# Profile extension point: optional instance configuration must be cloned too.
+	# The default remains the original disposable state-only validation kernel.
+	var probe=get_script().new();probe.state=state.duplicate(true)
+	return probe
 func _burn_reference(side: String, index: Variant) -> bool:
 	if not _valid_side(side) or state.active!=side:return false
 	var p: Dictionary=state[side]
@@ -172,6 +181,8 @@ func recover(side: String) -> bool:
 	return true
 func _integer(value: Variant) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and float(value)==floor(float(value)) and abs(float(value))<=9007199254740991.0
+func supports_creature_effect(card: Dictionary) -> bool:
+	return card.get("effect") in EFFECTS
 func play_support(side: String, index: Variant, lane: Variant) -> String:
 	if not _valid_side(side):return "invalid_side"
 	var p: Dictionary=state[side]
@@ -180,7 +191,7 @@ func play_support(side: String, index: Variant, lane: Variant) -> String:
 	var card: Dictionary=catalog.card(str(p.hand[index]))
 	if card.is_empty():return "unknown_card"
 	if (summon_limit()>0 and int(p.summons)>=summon_limit()) or int(p.energy)<int(card.cost) or p.lanes[lane]!=null:return "invalid_resources_or_lane"
-	if not card.effect in EFFECTS:return "unknown_effect"
+	if not supports_creature_effect(card):return "unknown_effect"
 	return ""
 func play(side: String, index: Variant, lane: Variant) -> bool:
 	if not play_support(side,index,lane).is_empty():return false
@@ -188,13 +199,21 @@ func play(side: String, index: Variant, lane: Variant) -> bool:
 	var card: Dictionary=catalog.card(p.hand[index])
 	p.hand.remove_at(index);p.energy=int(p.energy)-int(card.cost);p.summons=int(p.summons)+1
 	p.lanes[lane]=make_unit(side,card,int(lane))
+	var played_unit: Dictionary=p.lanes[lane]
 	_trace("summon",side,{"lane":lane,"card_id":card.id})
 	if p.attune!=null and p.attune!=card.order:
 		add_res(p,2);_reaction(side,str(p.attune),str(card.order))
 	p.attune=card.order
 	check_winner()
-	if state.winner==null:enqueue({"type":"summon","side":side,"card_id":card.id,"lane":lane})
+	if state.winner==null:_after_card_played(side,card,int(lane))
+	if state.winner==null:
+		for current_lane in LANES:
+			if p.lanes[current_lane]!=null and is_same(p.lanes[current_lane],played_unit):
+				enqueue({"type":"summon","side":side,"card_id":card.id,"lane":lane if current_lane==int(lane) else current_lane});break
 	return true
+func _after_card_played(_side: String, _card: Dictionary, _lane: int) -> void:
+	# Empty unless a separately instantiated rule profile explicitly opts in.
+	pass
 func _death_seen(unit: Dictionary) -> bool:
 	for previous: Dictionary in _dead_units:
 		if is_same(previous,unit):return true
@@ -239,10 +258,14 @@ func _resolve_death(event: Dictionary) -> void:
 	pending_death={"side":event.side,"lane":event.get("lane"),"card":unit.id,"overkill":maxi(0,-int(unit.hp))}
 	p.discard.append(unit.id)
 	_trace("death",event.side,{"pendingDeath":pending_death})
-	if card.effect=="harvest":
-		p.resonance=mini(15,int(p.resonance)+int(card.power)+1)
-		_trace("harvest",event.side,{"card_id":unit.id})
+	_apply_death_effect(event,card)
 	pending_death=null
+func _apply_death_effect(event: Dictionary, card: Dictionary) -> void:
+	var p: Dictionary=state[event.side]
+	var unit: Dictionary=event.unit
+	if card.effect=="harvest":
+		p.resonance=mini(resonance_limit(),int(p.resonance)+int(card.power)+1)
+		_trace("harvest",event.side,{"card_id":unit.id})
 func attack_phase(side: String) -> bool:
 	if not _valid_side(side) or state.winner!=null:return false
 	var p: Dictionary=state[side]
@@ -270,7 +293,7 @@ func attack_phase(side: String) -> bool:
 			if int(target.hp)<=0:
 				var excess := maxi(0,-int(target.hp))
 				if card.effect=="pierce" and excess>0:
-					damage(opponent,excess);_trace("pierce_overflow",side,{"lane":lane})
+					_hero_damage(opponent,excess);_trace("pierce_overflow",side,{"lane":lane})
 				opponent.lanes[lane]=null
 				_trace("removed",other,{"lane":lane})
 				enqueue({"type":"death","side":other,"unit":target,"lane":lane})
@@ -279,7 +302,7 @@ func attack_phase(side: String) -> bool:
 				_trace("removed",side,{"lane":lane})
 				enqueue({"type":"death","side":side,"unit":unit,"lane":lane})
 		else:
-			damage(opponent,attack)
+			_hero_damage(opponent,attack)
 			_trace("hero_hit",side,{"lane":lane,"amount":attack})
 		check_winner()
 	p.weak=0
@@ -298,8 +321,7 @@ func advance_turn(side: String) -> bool:
 	if not _valid_side(side) or state.winner!=null or state.active!=side:return false
 	var p: Dictionary=state[side]
 	if p.phase!="main" or p.pendingShift!=null or p.pendingTarget!=null or p.hand.size()>6:return false
-	var probe = get_script().new()
-	probe.state=state.duplicate(true)
+	var probe = _validation_probe()
 	if not probe._advance_unchecked(side):return false
 	return _advance_unchecked(side)
 func _advance_unchecked(side: String) -> bool:
@@ -336,8 +358,9 @@ func execute(command: String, args: Array) -> Dictionary:
 		"fortify":ok=fortify(args[0],args[1])
 		"endTurn":ok=end_turn(args[0])
 	return {"ok":ok,"reason":"" if ok else "invalid_action"}
+func resonance_limit() -> int:return 15
 func add_res(player: Dictionary, amount: int) -> void:
-	player.resonance=mini(15,int(player.resonance)+amount)
+	player.resonance=mini(resonance_limit(),int(player.resonance)+amount)
 func _resolve_summon(event: Dictionary) -> void:
 	if state.winner!=null:return
 	var side: String=event.side
@@ -352,7 +375,7 @@ func _resolve_summon(event: Dictionary) -> void:
 			for i in LANES:
 				if op.lanes[i]!=null:targets.append(i)
 			if targets.is_empty():
-				damage(op,power+1);_trace("strike_hero",side)
+				_hero_damage(op,power+1);_trace("strike_hero",side)
 			elif side=="hero":
 				p.pendingTarget={"power":power+1,"sourceLane":lane};_trace("strike_pending",side)
 			else:
@@ -366,7 +389,7 @@ func _resolve_summon(event: Dictionary) -> void:
 		"mend":p.hp=mini(int(p.maxHp),int(p.hp)+power+2)
 		"weave":add_res(p,power+1)
 		"drain":
-			var lost := damage(op,power+1)
+			var lost := _hero_damage(op,power+1)
 			p.hp=mini(int(p.maxHp),int(p.hp)+lost);_trace("drain",side)
 		"rally":
 			var friend: Variant=p.lanes[lane-1] if lane>0 else null
@@ -374,7 +397,7 @@ func _resolve_summon(event: Dictionary) -> void:
 			if friend!=null:friend.atk=int(friend.atk)+power
 		"silence":
 			if op.lanes[lane]!=null:op.lanes[lane].stun=maxi(int(op.lanes[lane].stun),1)
-		"pierce":damage(op,power+2,true);_trace("pierce_arrival",side)
+		"pierce":_hero_damage(op,power+2,true);_trace("pierce_arrival",side)
 		"shift":
 			var choices := shift_choices(side,lane)
 			if choices.is_empty():_trace("shift_no_target",side)
@@ -450,7 +473,7 @@ func _reaction(side: String, from: String, to: String) -> void:
 	var enemy: Dictionary=state[_other(side)]
 	var key := reaction_order(from)+">"+reaction_order(to)
 	match key:
-		"ash>tide","ash>veil":damage(enemy,2)
+		"ash>tide","ash>veil":_hero_damage(enemy,2)
 		"tide>thorn":p.ward=mini(25,int(p.ward)+3)
 		"thorn>veil":p.hp=mini(int(p.maxHp),int(p.hp)+2)
 		"veil>ash":enemy.weak=maxi(int(enemy.weak),1)
@@ -473,7 +496,7 @@ func burst(side: String, order: Variant) -> bool:
 	p.resonance=int(p.resonance)-8;p.burstUsed=true
 	var enemy: Dictionary=state[_other(side)]
 	match reaction_order(str(order)):
-		"ash":damage(enemy,4+units.size()*3)
+		"ash":_hero_damage(enemy,4+units.size()*3)
 		"tide":p.ward=mini(25,int(p.ward)+6+units.size()*2)
 		"thorn":
 			for unit: Variant in p.lanes:

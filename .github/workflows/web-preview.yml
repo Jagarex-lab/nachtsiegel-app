@@ -4,7 +4,7 @@ on:
   push:
     branches: [develop, 'feature/**']
   pull_request:
-    branches: [develop]
+    branches: [develop, 'production/**']
   workflow_dispatch:
 
 permissions:
@@ -15,10 +15,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  production-audio:
+    # The guarded manual publisher requires this workflow's complete conclusion,
+    # including real exported-product audio and both browser engines.
+    uses: ./.github/workflows/audio-qa.yml
+
+  native-platforms:
+    # Part of this workflow's conclusion: a failed native build cannot be
+    # hidden behind a green release-candidate run. No publication happens here.
+    uses: ./.github/workflows/native-platform-qa.yml
+
   test-and-export:
     runs-on: ubuntu-24.04
     # Native regression suites and three exports; browser engines run separately.
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - name: Install Godot and matching templates
@@ -43,6 +53,7 @@ jobs:
           xvfb-run -a -s '-screen 0 1600x1000x24' tools/test_alpha.sh
           xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
           tools/test_master550_resources.sh
+          xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_production.sh
       - name: Export archive regression build
         run: |
           mkdir -p work/build/archive-web
@@ -64,7 +75,8 @@ jobs:
       - name: Verify localized data inside the exported package
         run: |
           game_name="nachtsiegel-${GITHUB_SHA:0:12}"
-          godot --headless --main-pack "work/build/archive-web/$game_name.pck" --script "$PWD/tests/narrative.gd" --quit-after 120 > work/exported-narrative-final.log 2>&1
+          mkdir -p work/isolated-pack-context
+          godot --headless --path "$PWD/work/isolated-pack-context" --main-pack "$PWD/work/build/archive-web/$game_name.pck" --script "$PWD/tests/narrative.gd" --quit-after 120 > work/exported-narrative-final.log 2>&1
           python3 - <<'PYCHECK'
           import re
           from pathlib import Path
@@ -76,7 +88,8 @@ jobs:
       - name: Verify campaign foundation in the exported package
         run: |
           game_name="nachtsiegel-${GITHUB_SHA:0:12}"
-          godot --headless --main-pack "work/build/archive-web/$game_name.pck" --script "$PWD/tests/exported_experience.gd" --quit-after 120 > work/exported-experience-final.log 2>&1
+          mkdir -p work/isolated-pack-context
+          godot --headless --path "$PWD/work/isolated-pack-context" --main-pack "$PWD/work/build/archive-web/$game_name.pck" --script "$PWD/tests/exported_experience.gd" --quit-after 120 > work/exported-experience-final.log 2>&1
           python3 - <<'PYCHECK'
           import re
           from pathlib import Path
@@ -99,6 +112,8 @@ jobs:
               info = json.loads((root / 'build-info.json').read_text())
               assert info['commit'] == os.environ['GITHUB_SHA'], (folder, info)
           PYBUILDS
+      - name: Export pinned previous runtime for same-origin storage migration
+        run: tools/build_migration_baseline.sh
       - name: Preserve native QA evidence and single release candidate
         if: always()
         uses: actions/upload-artifact@v4
@@ -120,6 +135,11 @@ jobs:
             work/alpha02/*.json
             work/alpha02/*.png
             work/master550/
+            work/production/
+            work/production-art/*.log
+            work/production-art/*.json
+            work/production-art/*.jsonl
+            work/production-storage/native.log
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png
@@ -175,6 +195,11 @@ jobs:
         run: node tools/alpha_browser_qa.cjs
       - name: Mobile orientation, Retina and deckbuilder browser regression
         run: node tools/alpha02_browser_qa.cjs
+      - name: Actual previous-version upgrade, stale-tab write and storage quota regression
+        env:
+          MIGRATION_OLD_BUILD: work/production/before-web
+          MIGRATION_NEW_BUILD: work/build/web
+        run: node tools/production/browser_migration_qa.cjs
       - name: Master card system and battlefield opening browser regression
         run: node tools/master550_browser_qa.cjs
       - name: Legacy UI Android regression
@@ -215,4 +240,218 @@ jobs:
             work/alpha02/${{ matrix.engine }}-*.json
             work/alpha02/browser-results.json
             work/master550/browser/
+            work/production-browser-migration/
           if-no-files-found: warn
+
+  production-art-native-package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      LP_NUM_THREADS: '2'
+      XDG_DATA_HOME: ${{ github.workspace }}/work/xdg/data
+      XDG_CONFIG_HOME: ${{ github.workspace }}/work/xdg/config
+      XDG_CACHE_HOME: ${{ github.workspace }}/work/xdg/cache
+    steps:
+      - uses: actions/checkout@v4
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Import the actual native illustration sources
+        run: |
+          mkdir -p work/production-art work/xdg/{data,config,cache}
+          touch work/.gdignore
+          godot --headless --editor --import --path . --quit
+      - name: Export and inspect all actual native illustration pixels
+        run: |
+          godot --headless --path . --export-pack 'Linux Runtime QA' work/production-art/native-art.pck
+          bash tools/test_production_art_package.sh work/production-art/native-art.pck native
+      - name: Preserve native package inventory evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-art-native-package
+          path: work/production-art/exported-art-package-native.log
+          if-no-files-found: error
+
+  production-art-browser:
+    needs: test-and-export
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    env:
+      QA_ENGINES: ${{ matrix.engine }}
+      ART_WEB_BUILD: work/build/web
+      ART_BROWSER_OUTPUT: work/production-art/browser-${{ matrix.engine }}
+      LP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Download the exact native-tested image candidate
+        uses: actions/download-artifact@v4
+        with:
+          name: nachtsiegel-arena-qa
+          path: work
+      - name: Install isolated image-delivery browser runtime
+        run: |
+          npm install --no-save --package-lock=false playwright@1.65.0
+          npx playwright install --with-deps ${{ matrix.engine }}
+      - name: Actual compact/full HTTP, failed bodies and cancellation
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' node tools/production/browser_art_delivery_qa.cjs
+      - name: Preserve actual image-delivery browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-art-browser-${{ matrix.engine }}
+          path: work/production-art/browser-${{ matrix.engine }}/
+          if-no-files-found: error
+
+  production-resources:
+    # Independent headless experiment; does not extend the native GUI/export job.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The report verifies the pre-seam baseline against its recorded commit.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import scripts for the headless resource comparison
+        run: |
+          mkdir -p work/production
+          godot --headless --editor --import --path . --audio-driver Dummy --quit > work/production/resource-import.log 2>&1
+      - name: Complete 192 paired starter games and 10 controls
+        run: bash tools/test_production_resources.sh
+      - name: Validate source binding and negative evidence guards
+        run: |
+          python3 tools/production/report_resources.py --verify-rejections --output-dir work/production/resource-report
+          python3 tools/production/report_resources.py --verify-rejections --output-dir work/production/resource-report --check
+      - name: Preserve actual resource comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-production-resources
+          path: |
+            work/production/resource-import.log
+            work/production/resource-models.log
+            work/production/resource-models.json
+            work/production/resource-report/
+          if-no-files-found: error
+
+  production-full-pool-coverage:
+    # A real additional sampler, included in this release-required workflow's
+    # conclusion. It neither replaces the starter matrix nor reuses old results.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    env:
+      LP_NUM_THREADS: '1'
+      # Leave time to report an interrupted attempt and upload its actual journal.
+      FULL_POOL_TIMEOUT: '1320'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The reporter verifies both the D3 core and exact executed sources.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import actual project resources and audio autoloads
+        run: |
+          mkdir -p work/production
+          godot --headless --editor --import --path . --audio-driver Dummy --quit > work/production/full-pool-import.log 2>&1
+      - name: Complete 256 real full-pool games and 12 separate controls
+        run: bash tools/test_production_full_pool_coverage.sh
+      - name: Preserve raw full-pool attempts, frozen plan, journal and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-production-full-pool-coverage
+          path: |
+            work/production/full-pool-import.log
+            work/production/full-pool-coverage.json
+            work/production/full-pool-coverage-plan.json
+            work/production/full-pool-coverage-journal.jsonl
+            work/production/full-pool-coverage.log
+            work/production/full-pool-report/
+          if-no-files-found: error
+
+  production-balance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import production data scripts
+        run: godot --headless --editor --import --path . --quit
+      - name: Complete paired production strategy and starter matches
+        run: tools/test_production_simulations.sh --shard=${{ matrix.shard }}/4
+      - name: Preserve complete simulation metrics and limits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-production-balance-${{ matrix.shard }}
+          path: |
+            work/production/simulations-shard-${{ matrix.shard }}-of-4.log
+            work/production/simulations-shard-${{ matrix.shard }}-of-4.json
+          if-no-files-found: error
+
+  production-balance-aggregate:
+    needs: production-balance
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download all four real simulation shards
+        uses: actions/download-artifact@v4
+        with:
+          pattern: orafold-production-balance-*
+          path: work/production/shards
+      - name: Verify disjoint coverage, all 848 real results and matching sources
+        run: python3 tools/production/aggregate_simulations.py --verify-rejections work/production/shards/*/simulations-shard-*-of-4.json
+      - name: Write actual balance report
+        run: python3 tools/production/report_simulations.py
+      - name: Preserve complete verified production matrix
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-production-full-matrix
+          path: |
+            work/production/simulations.json
+            docs/production/BALANCE_REPORT.md
+          if-no-files-found: error

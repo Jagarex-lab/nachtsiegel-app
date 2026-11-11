@@ -1,0 +1,134 @@
+{
+  "originals": {
+    "ctex_bytes": 18204810,
+    "count": 15,
+    "entries": [
+      {
+        "id": "oa-houses-c01",
+        "ctex_bytes": 2435352
+      },
+      {
+        "id": "oa-morph-c01",
+        "ctex_bytes": 2707462
+      },
+      {
+        "id": "oa-neutral-c02",
+        "ctex_bytes": 2671704
+      },
+      {
+        "id": "oa-ninth-c01",
+        "ctex_bytes": 2264922
+      },
+      {
+        "id": "oa-stillwatch-c01",
+        "ctex_bytes": 2840704
+      },
+      {
+        "id": "of-houses-020",
+        "ctex_bytes": 518680
+      },
+      {
+        "id": "of-houses-094",
+        "ctex_bytes": 321664
+      },
+      {
+        "id": "of-morph-003",
+        "ctex_bytes": 740090
+      },
+      {
+        "id": "of-morph-082",
+        "ctex_bytes": 727036
+      },
+      {
+        "id": "of-neutral-049",
+        "ctex_bytes": 450880
+      },
+      {
+        "id": "of-neutral-083",
+        "ctex_bytes": 683072
+      },
+      {
+        "id": "of-ninth-019",
+        "ctex_bytes": 299216
+      },
+      {
+        "id": "of-ninth-095",
+        "ctex_bytes": 397322
+      },
+      {
+        "id": "of-stillwatch-043",
+        "ctex_bytes": 575914
+      },
+      {
+        "id": "of-stillwatch-055",
+        "ctex_bytes": 570792
+      }
+    ]
+  },
+  "previews": {
+    "ctex_bytes": 1398800,
+    "count": 15,
+    "entries": [
+      {
+        "id": "oa-houses-c01",
+        "ctex_bytes": 94076
+      },
+      {
+        "id": "oa-morph-c01",
+        "ctex_bytes": 97862
+      },
+      {
+        "id": "oa-neutral-c02",
+        "ctex_bytes": 93802
+      },
+      {
+        "id": "oa-ninth-c01",
+        "ctex_bytes": 71612
+      },
+      {
+        "id": "oa-stillwatch-c01",
+        "ctex_bytes": 106010
+      },
+      {
+        "id": "of-houses-020",
+        "ctex_bytes": 96256
+      },
+      {
+        "id": "of-houses-094",
+        "ctex_bytes": 59508
+      },
+      {
+        "id": "of-morph-003",
+        "ctex_bytes": 127592
+      },
+      {
+        "id": "of-morph-082",
+        "ctex_bytes": 124100
+      },
+      {
+        "id": "of-neutral-049",
+        "ctex_bytes": 77492
+      },
+      {
+        "id": "of-neutral-083",
+        "ctex_bytes": 99190
+      },
+      {
+        "id": "of-ninth-019",
+        "ctex_bytes": 62348
+      },
+      {
+        "id": "of-ninth-095",
+        "ctex_bytes": 80030
+      },
+      {
+        "id": "of-stillwatch-043",
+        "ctex_bytes": 110178
+      },
+      {
+        "id": "of-stillwatch-055",
+        "ctex_bytes": 98744
+      }
+    ]
+  }
+}

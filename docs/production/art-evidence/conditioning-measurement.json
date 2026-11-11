@@ -1,0 +1,17 @@
+{
+  "native_dimensions": [
+    1448,
+    1086
+  ],
+  "source_png_bytes": 3064681,
+  "lossless_mipmapped_ctex_bytes": 3153018,
+  "lossy_quality": 0.9,
+  "lossy_mipmapped_ctex_bytes": 758262,
+  "reduction_percent": 75.95,
+  "psnr_db": 37.91,
+  "mipmaps": true,
+  "scope": "One actual generated image, Godot4.6.3 source unchanged; representative estimate not all550",
+  "source_generated_file": "exec-24ad1081-0cc3-4fb9-9089-73d5faaea2e4.png",
+  "source_sha256": "3890e9ce9cfa805579e3e8df4075f3503af358f195a49ad1af0f2473d57d2223",
+  "source_archive": "docs/production/art-evidence/source-references/of-morph-003-before-shaping.png"
+}

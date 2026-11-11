@@ -1,0 +1,11 @@
+{
+  "code": 0,
+  "seconds": 14.20081120901159,
+  "cpu_user_seconds": 10.966,
+  "cpu_system_seconds": 1.107877,
+  "maxrss_kib": 131036,
+  "calls": 58,
+  "late10_median_ms": 178.393,
+  "command_seconds": 11.009027,
+  "identical_combat_final_and_last30events": true
+}

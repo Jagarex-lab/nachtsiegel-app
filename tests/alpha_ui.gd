@@ -16,6 +16,9 @@ func tap(control: Control) -> void:
 	var center=control.get_global_rect().get_center()
 	var event=InputEventScreenTouch.new();event.index=0;event.position=center;event.pressed=true;Input.parse_input_event(event);await settle()
 	event=InputEventScreenTouch.new();event.index=0;event.position=center;event.pressed=false;Input.parse_input_event(event);await settle()
+func locate_card(id: String) -> void:
+	app.filter_text=app.alpha_catalog.card(id).name;app.render();await settle()
+	check(app.actions.has("card_"+id),"exactcard remains discoverable through normal namesearch")
 func snapshot(tag: String) -> void:
 	await settle();await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png("res://work/alpha/"+tag+".png")
@@ -32,7 +35,7 @@ func run() -> void:
 			check(Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(rect),"main menu within viewport "+id)
 		for id in ["archive","mode_legacy","mode_alpha"]:check(not app.actions.has(id),"no public compatibility navigation "+id)
 		await tap(app.actions.collection);check(app.page=="collection" and not app.actions.has("save_deck") and not app.actions.has("add_oa-neutral-c01"),"read-only functional collection")
-		await tap(app.actions["card_oa-neutral-c01"]);check(is_instance_valid(app.modal),"collection actual card detail");await tap(app.actions.modal_close)
+		await locate_card("oa-neutral-c01");await tap(app.actions["card_oa-neutral-c01"]);check(is_instance_valid(app.modal),"collection actual card detail");await tap(app.actions.modal_close)
 		await tap(app.actions.builder_back)
 		await tap(app.actions.settings)
 		var powers=["houses","stillwatch","morph","ninth","houses"]
@@ -68,8 +71,8 @@ func run() -> void:
 			var targets=app.session.model.legal_targets("hero",index)
 			if not targets.is_empty():
 				var c=app.session.card(p.hand[index]);await tap(app.hand_views[index])
-				var enemy_target: bool=c.effect in ["bolt","stasis","delay","redirect","displace"]
-				await tap(app.board_views[("enemy" if enemy_target else "hero")+str(targets[0])])
+				if c.kind=="relic":await tap(app.actions.relic_slot)
+				else:await tap(app.board_views[app.card_target_side(c)+str(targets[0])])
 				check(app.session.model.snapshot()!=before,"touch card play changes authoritative state");break
 		await tap(app.actions.log);check(is_instance_valid(app.modal),"combat log opens")
 		await snapshot("log-%dx%d" % [dimensions.x,dimensions.y]);await tap(app.actions.modal_close)
@@ -77,16 +80,25 @@ func run() -> void:
 		await tap(app.actions.result_restart);check(app.session.model.state.winner==null,"restart actual button")
 		app.close_modal();app.page="lobby";app.render();await settle()
 		await tap(app.actions.builder);check(app.page=="builder","deckbuilder actual touch")
+		var expected_saved: Array=app.deck.duplicate()
 		if dimensions==Vector2i(844,390):
+			var removed: String=expected_saved[0]
 			await tap(app.actions.deck_tab)
-			await tap(app.actions["remove_oa-neutral-c01"]);check(app.deck.size()==29,"actual builder removal")
+			await tap(app.actions["remove_"+removed]);expected_saved.erase(removed)
+			check(app.deck==expected_saved and app.deck.size()==29,"actual builder removes the first copy and preserves exact remaining order")
 			check(app.actions.save_deck.disabled,"UI prevents invalid 29-card save")
 			await tap(app.actions.library_tab)
-			await tap(app.actions["add_oa-neutral-c02"]);check(app.deck.size()==30 and app.deck.has("oa-neutral-c02"),"actual builder adds replacement")
+			var replacement: String=""
+			for card in app.alpha_catalog.all_cards():
+				if card.kind=="creature" and card.faction=="neutral" and card.rarity=="common" and card.id!=removed and expected_saved.count(card.id)<3:
+					replacement=card.id;break
+			check(not replacement.is_empty(),"actual active pool supplies a legal distinct replacement")
+			await locate_card(replacement);await tap(app.actions["add_"+replacement]);expected_saved.append(replacement)
+			check(app.deck==expected_saved and app.deck.size()==30,"actual builder appends the selected replacement in exact order")
 		await tap(app.actions.save_deck);check(app.message.contains("gespeichert"),"valid deck saved UI")
 		if dimensions==Vector2i(844,390):
 			var reloaded=preload("res://scripts/alpha/session.gd").new()
-			check(reloaded.profile.decks["alpha:houses"].cards.has("oa-neutral-c02"),"edited deck persisted across new session")
+			check(reloaded.profile.decks["alpha:houses"].cards==expected_saved,"exact edited deck persisted across new session")
 			await tap(app.actions.reset_deck);await tap(app.actions.save_deck)
 		await snapshot("builder-%dx%d" % [dimensions.x,dimensions.y])
 		await tap(app.actions.builder_back)

@@ -1,0 +1,35 @@
+{
+  "after_redraws": {
+    "cache_byte_limit": 33554432,
+    "cache_entry_limit": 48,
+    "estimated_retained_bytes": 24115456,
+    "hits": 15,
+    "loads": 16,
+    "profiles": {
+      "compact": 15,
+      "full": 1
+    },
+    "retained_textures": 16,
+    "thumbnail_builds": 15
+  },
+  "assertions": 38,
+  "before_redraws": {
+    "cache_byte_limit": 33554432,
+    "cache_entry_limit": 48,
+    "estimated_retained_bytes": 24115456,
+    "hits": 15,
+    "loads": 16,
+    "profiles": {
+      "compact": 15,
+      "full": 1
+    },
+    "retained_textures": 16,
+    "thumbnail_builds": 15
+  },
+  "failures": 0,
+  "first_draw_usec": 20674235,
+  "originals": 15,
+  "redraws": 20,
+  "renderer_texture_bytes": 43085385,
+  "scope": "Linux software renderer; no physical iPhone claim; estimates exclude other browser memory"
+}

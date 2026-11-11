@@ -24,7 +24,7 @@ func builder_checks() -> void:
 	root.size = Vector2i(390, 844)
 	var app = Shell.new(); root.add_child(app); await settle()
 	app.mode = "alpha"; app.faction = "houses"; app.open_cards(true); await settle()
-	check(app.library_cards().size() == 55 and tile_ids(app).size() == 55, "actual collection renders all 55 cards through filter module")
+	check(app.library_cards().size() == 550 and tile_ids(app).size() == 12, "actual550 collection creates only the first12 filtered card controls")
 	app.show_filters(); await settle()
 	for id in ["filter_type", "filter_cost", "filter_rarity", "filter_power", "filter_species", "filter_sort", "reset_filters"]:
 		check(app.actions.has(id), "existing filter actions retained and new filter action exists: " + id)
@@ -43,7 +43,7 @@ func builder_checks() -> void:
 	for sort_id in Filter.SORTS: check(app.actions.has("option_filter_sort_" + sort_id), "all offered sort options are implemented")
 	app.actions.option_filter_sort_cost_desc.pressed.emit(); await settle()
 	check(app.filter_sort == "cost_desc", "real sort button updates library state")
-	check(tile_ids(app) == ids(app.library_query().cards), "actual rendered tile order follows selected energy sort")
+	check(tile_ids(app) == ids(app.library_query().cards.slice(0,12)), "actual visible page follows selected energy sort")
 	app.show_filters(); await settle(); app.actions.filter_cost.pressed.emit(); await settle()
 	var costs: Array = Filter.choice_options(app.library_cards()).cost
 	for cost in range(1, 11): check(app.actions.has("option_filter_cost_" + str(cost)) == costs.has(cost), "cost choice is dynamic, not an empty future filter: " + str(cost))
@@ -56,9 +56,9 @@ func builder_checks() -> void:
 	for card in app.library_query().cards: check(card.kind == "event" and int(card.cost) == 2, "two actual UI filters compose")
 	app.show_filters(); await settle(); app.actions.reset_filters.pressed.emit(); await settle()
 	check(app.filter_cost == "all" and app.filter_type == "all" and app.filter_species == "all" and app.filter_sort == "cost_asc", "reset clears new and existing filter state")
-	check(tile_ids(app).size() == 55, "reset restores real full collection")
+	check(tile_ids(app).size() == 12 and app.library_total == 550 and app.library_page == 0, "reset restores firstpage of real550 collection")
 	app.open_cards(false); await settle()
-	check(app.library_cards().size() == 25, "builder keeps selected power plus neutral restriction")
+	check(app.library_cards().size() == 220, "builder keeps110 selectedpower plus110 neutral restriction")
 	for card in app.library_cards(): check(card.faction in ["houses", "neutral"], "filter integration preserves deck power rules")
 	app.close_modal(); app.queue_free(); await settle()
 func run() -> void:
@@ -128,5 +128,5 @@ func run() -> void:
 	check(ash.ok and ash.cards.size() == 25, "read-only legacy order fallback does not mistake numeric power")
 	check(Filter.choice_options(legacy).species.is_empty(), "legacy compatibility also invents no species")
 	await builder_checks()
-	print("MASTER550 LIBRARY: %d assertions, %d failures; all 55 active cards + 8 isolated pilots, stable ordering, equal species, exact filters and actual builder integration" % [assertions, failures])
+	print("MASTER550 LIBRARY: %d assertions, %d failures; archived55data +8isolatedpilots, active550paginatedUI, stableordering,equal species,exactfilters and actualbuilder integration" % [assertions, failures])
 	root.get_node("GameAudio").request_quit(0 if failures == 0 else 1)

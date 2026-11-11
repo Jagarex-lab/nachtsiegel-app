@@ -1,0 +1,2812 @@
+{
+  "catalog_sha256": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+  "reviewed_card_count": 550,
+  "generic_cards": 500,
+  "native_cards": 50,
+  "multipart_on_play_program_count": 82,
+  "programs": [
+    {
+      "id": "oa-stillwatch-e02",
+      "kind": "event",
+      "description": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 1 Angriffsphase.\nBeim Ausspielen: Gewähre dem eigenen Wesen mit dem wenigsten Leben 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-070",
+      "kind": "event",
+      "description": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Ziehe 2 Karten.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-073",
+      "kind": "event",
+      "description": "Beim Ausspielen: Erzeuge 1 Resonanz.\nBeim Ausspielen: Heile das eigene Wesen mit dem wenigsten Leben um 2 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-074",
+      "kind": "event",
+      "description": "Beim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-076",
+      "kind": "event",
+      "description": "Beim Ausspielen: Ziehe 1 Karte.\nBeim Ausspielen: Gewähre deinem Helden 2 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-077",
+      "kind": "event",
+      "description": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Erzeuge 3 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 3
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-078",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen der Art Konstrukte 2 Schild.\nBeim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_species",
+          "params": {
+            "amount": 2,
+            "species": "construct"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-079",
+      "kind": "event",
+      "description": "Beim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Heile deinen Helden um 2 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-080",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge dem gegnerischen Wesen mit dem wenigsten Leben 2 Schaden zu.\nBeim Ausspielen: Heile deinen Helden um 1 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "deal_damage",
+          "target": "enemy_lowest_health",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-081",
+      "kind": "event",
+      "description": "Beim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-082",
+      "kind": "event",
+      "description": "Beim Ausspielen: Beschwöre Torwache auf dem ersten freien eigenen Pfad.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-neutral-c02"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-083",
+      "kind": "event",
+      "description": "Beim Ausspielen: Ziehe 2 Karten.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-085",
+      "kind": "event",
+      "description": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 1 Angriffsphase.\nBeim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-086",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen der Art Menschen +2 Angriff.\nBeim Ausspielen: Heile alle eigenen Wesen um 1 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "modify_attack",
+          "target": "own_species",
+          "params": {
+            "amount": 2,
+            "species": "human"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-087",
+      "kind": "event",
+      "description": "Beim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-088",
+      "kind": "event",
+      "description": "Beim Ausspielen: Verringere den Angriff aller gegnerischen Wesen um 1.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "weaken_unit",
+          "target": "enemy_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-houses-089",
+      "kind": "event",
+      "description": "Beim Ausspielen: Beschwöre Namenhüter auf dem ersten freien eigenen Pfad.\nBeim Ausspielen: Beschwöre Torwache auf dem ersten freien eigenen Pfad.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-houses-c01"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-neutral-c02"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-063",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen 1 Schild.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-071",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das gegnerische Wesen mit dem wenigsten Leben um einen Pfad nach links, falls dort Platz ist.\nBeim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 1 Angriffsphase.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "steps": -1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-072",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge dem gegnerischen Wesen auf dem gewählten Pfad; ist der Pfad leer, dem gegnerischen Helden 2 Schaden zu.\nBeim Ausspielen: Gewähre deinem Helden 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "deal_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-075",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre deinem Helden 4 Block bis zu deinem Zugbeginn.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 4
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-077",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das eigene Wesen mit dem wenigsten Leben um einen Pfad nach links, falls dort Platz ist.\nBeim Ausspielen: Gewähre dem eigenen Wesen mit dem wenigsten Leben 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "own_lowest_health",
+          "params": {
+            "steps": -1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-078",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-079",
+      "kind": "event",
+      "description": "Beim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Gewähre deinem Helden 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-080",
+      "kind": "event",
+      "description": "Beim Ausspielen: Verringere den Angriff des gegnerischen Wesens mit dem wenigsten Leben um 3.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "weaken_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "amount": 3
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-081",
+      "kind": "event",
+      "description": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 1 Angriffsphase.\nBeim Ausspielen: Gewähre allen eigenen Wesen 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-082",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre deinem Helden 5 Block bis zu deinem Zugbeginn.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 5
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-083",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen 2 Schild.\nBeim Ausspielen: Heile deinen Helden um 2 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_all",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-084",
+      "kind": "event",
+      "description": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 2 Angriffsphasen.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-085",
+      "kind": "event",
+      "description": "Beim Ausspielen: Heile deinen Helden um 5 Leben.\nBeim Ausspielen: Gewähre dem eigenen Wesen mit dem wenigsten Leben 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_hero",
+          "params": {
+            "amount": 5
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-086",
+      "kind": "event",
+      "description": "Beim Ausspielen: Verringere den Angriff aller gegnerischen Wesen um 2.\nBeim Ausspielen: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "weaken_unit",
+          "target": "enemy_all",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-stillwatch-087",
+      "kind": "event",
+      "description": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 2 Angriffsphasen.\nBeim Ausspielen: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 4 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 4,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-082",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge dem gegnerischen Wesen mit dem wenigsten Leben 3 Schaden zu.\nBeim Ausspielen: Heile das eigene Wesen mit dem wenigsten Leben um 1 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "deal_damage",
+          "target": "enemy_lowest_health",
+          "params": {
+            "amount": 3
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-084",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen der Art Pflanzen +1 Angriff.\nBeim Ausspielen: Beschwöre Sprunglarve auf dem ersten freien eigenen Pfad.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "modify_attack",
+          "target": "own_species",
+          "params": {
+            "amount": 1,
+            "species": "plant"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-morph-c01"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-085",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das eigene Wesen mit dem wenigsten Leben um einen Pfad nach links, falls dort Platz ist.\nBeim Ausspielen: Gewähre allen eigenen Wesen 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "own_lowest_health",
+          "params": {
+            "steps": -1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-086",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen der Art Morphiden +2 Angriff.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "modify_attack",
+          "target": "own_species",
+          "params": {
+            "amount": 2,
+            "species": "morphid"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-087",
+      "kind": "event",
+      "description": "Beim Ausspielen: Beschwöre Sprunglarve auf dem ersten freien eigenen Pfad.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-morph-c01"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-088",
+      "kind": "event",
+      "description": "Beim Ausspielen: Heile alle eigenen Wesen um 2 Leben.\nBeim Ausspielen: Gewähre allen eigenen Wesen der Art Pflanzen +1 Angriff.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_all",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "modify_attack",
+          "target": "own_species",
+          "params": {
+            "amount": 1,
+            "species": "plant"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-089",
+      "kind": "event",
+      "description": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 2,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-090",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen +2 Angriff.\nBeim Ausspielen: Füge allen gegnerischen Wesen 1 Schaden zu.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "modify_attack",
+          "target": "own_all",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "deal_damage",
+          "target": "enemy_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-morph-091",
+      "kind": "event",
+      "description": "Beim Ausspielen: Beschwöre Sprunglarve auf dem ersten freien eigenen Pfad.\nBeim Ausspielen: Beschwöre Sprunglarve auf dem ersten freien eigenen Pfad.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-morph-c01"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-morph-c01"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-014",
+      "kind": "creature",
+      "description": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Ziehe 2 Karten.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-028",
+      "kind": "creature",
+      "description": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Ziehe 2 Karten.\nBeim Verursachen von Schaden: Erzeuge 1 Resonanz. 1× pro Zug.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-042",
+      "kind": "creature",
+      "description": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Ziehe 2 Karten.\nWenn du Resonanz ausgibst: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn. 1× pro Zug.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-058",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre deinem Helden 2 Schild.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-059",
+      "kind": "event",
+      "description": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 1 Angriffsphase.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-060",
+      "kind": "event",
+      "description": "Beim Ausspielen: Ziehe 1 Karte.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-062",
+      "kind": "event",
+      "description": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Ziehe 2 Karten.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 2,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-063",
+      "kind": "event",
+      "description": "Beim Ausspielen: Erzeuge 1 Resonanz.\nBeim Ausspielen: Verringere den Angriff des gegnerischen Wesens mit dem wenigsten Leben um 1.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "weaken_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-065",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge nach 3 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 2 Schaden zu; ein leerer Pfad trifft den Helden.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2,
+            "turn_changes": 3
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-066",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge dem gegnerischen Wesen auf dem gewählten Pfad; ist der Pfad leer, dem gegnerischen Helden 1 Schaden zu.\nBeim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 1 Angriffsphase.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "deal_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-067",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nBeim Ausspielen: Erzeuge 2 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-068",
+      "kind": "event",
+      "description": "Beim Ausspielen: Ziehe 1 Karte.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-070",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.\nBeim Ausspielen: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-072",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das eigene Wesen mit dem wenigsten Leben um einen Pfad nach rechts, falls dort Platz ist.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "own_lowest_health",
+          "params": {
+            "steps": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-073",
+      "kind": "event",
+      "description": "Beim Ausspielen: Betäube das gegnerische Wesen mit dem wenigsten Leben für 2 Angriffsphasen.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "stun_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-074",
+      "kind": "event",
+      "description": "Beim Ausspielen: Verringere den Angriff des gegnerischen Wesens mit dem wenigsten Leben um 2.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "weaken_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-075",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre deinem Helden 2 Schild.\nBeim Ausspielen: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 2 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-076",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das gegnerische Wesen mit dem wenigsten Leben um einen Pfad nach rechts, falls dort Platz ist.\nBeim Ausspielen: Gewähre deinem Helden 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "steps": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-077",
+      "kind": "event",
+      "description": "Beim Ausspielen: Heile deinen Helden um 3 Leben.\nBeim Ausspielen: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 2 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_hero",
+          "params": {
+            "amount": 3
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-078",
+      "kind": "event",
+      "description": "Beim Ausspielen: Erhalte 2 Energie für diesen Zug.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "gain_energy",
+          "target": "self",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-079",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das gegnerische Wesen mit dem wenigsten Leben um einen Pfad nach links, falls dort Platz ist.\nBeim Ausspielen: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 2 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "enemy_lowest_health",
+          "params": {
+            "steps": -1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-080",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge dem gegnerischen Wesen auf dem gewählten Pfad; ist der Pfad leer, dem gegnerischen Helden 5 Schaden zu.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "deal_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 5
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-081",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge nach 3 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 2 Schaden zu; ein leerer Pfad trifft den Helden.\nBeim Ausspielen: Erzeuge 2 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2,
+            "turn_changes": 3
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-082",
+      "kind": "event",
+      "description": "Beim Ausspielen: Ziehe 2 Karten.\nBeim Ausspielen: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-083",
+      "kind": "event",
+      "description": "Beim Ausspielen: Beschwöre Kausaljäger auf dem ersten freien eigenen Pfad.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "summon_card",
+          "target": "self",
+          "params": {
+            "card_id": "oa-ninth-c01"
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-084",
+      "kind": "event",
+      "description": "Beim Ausspielen: Verringere den Angriff aller gegnerischen Wesen um 1.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "weaken_unit",
+          "target": "enemy_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-085",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 4 Schaden zu; ein leerer Pfad trifft den Helden.\nBeim Ausspielen: Gewähre deinem Helden 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 4,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-086",
+      "kind": "event",
+      "description": "Beim Ausspielen: Erhalte 1 Energie für diesen Zug.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "gain_energy",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-087",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 3 Schaden zu; ein leerer Pfad trifft den Helden.\nBeim Ausspielen: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 3 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 3,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 3,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-069",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das eigene Wesen mit dem wenigsten Leben um einen Pfad nach rechts, falls dort Platz ist.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "own_lowest_health",
+          "params": {
+            "steps": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-072",
+      "kind": "event",
+      "description": "Beim Ausspielen: Füge dem gegnerischen Wesen auf dem gewählten Pfad; ist der Pfad leer, dem gegnerischen Helden 1 Schaden zu.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "deal_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-078",
+      "kind": "event",
+      "description": "Beim Ausspielen: Heile alle eigenen Wesen um 1 Leben.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-079",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre dem eigenen Wesen mit dem wenigsten Leben 1 Schild.\nBeim Ausspielen: Ziehe 1 Karte.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-080",
+      "kind": "event",
+      "description": "Beim Ausspielen: Heile deinen Helden um 4 Leben.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_hero",
+          "params": {
+            "amount": 4
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "discard_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-081",
+      "kind": "event",
+      "description": "Beim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Heile das eigene Wesen mit dem wenigsten Leben um 1 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "return_card",
+          "target": "self",
+          "params": {
+            "count": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-082",
+      "kind": "event",
+      "description": "Beim Ausspielen: Erzeuge 2 Resonanz.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-083",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen 1 Schild.\nBeim Ausspielen: Heile deinen Helden um 1 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-084",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre deinem Helden 3 Block bis zu deinem Zugbeginn.\nBeim Ausspielen: Heile das eigene Wesen mit dem wenigsten Leben um 1 Leben.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 3
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "heal_target",
+          "target": "own_lowest_health",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-085",
+      "kind": "event",
+      "description": "Beim Ausspielen: Versetze das eigene Wesen mit dem wenigsten Leben um einen Pfad nach links, falls dort Platz ist.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "move_unit",
+          "target": "own_lowest_health",
+          "params": {
+            "steps": -1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "gain_resonance",
+          "target": "self",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-086",
+      "kind": "event",
+      "description": "Beim Ausspielen: Gewähre allen eigenen Wesen +1 Angriff.\nBeim Ausspielen: Gewähre deinem Helden 1 Schild.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "modify_attack",
+          "target": "own_all",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_shield",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    },
+    {
+      "id": "of-neutral-087",
+      "kind": "event",
+      "description": "Beim Ausspielen: Ziehe 2 Karten.\nBeim Ausspielen: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn.",
+      "ordered_on_play": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "draw_cards",
+          "target": "self",
+          "params": {
+            "count": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "grant_block",
+          "target": "own_hero",
+          "params": {
+            "amount": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_play"
+        }
+      ]
+    }
+  ],
+  "delayed_creature_cards": [
+    {
+      "id": "of-ninth-001",
+      "description": "Beim Beschwören: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 2 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_summon"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-006",
+      "description": "Wenn dieses Wesen besiegt wird: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 3 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 3,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-015",
+      "description": "Beim Beschwören: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 2 Schaden zu; ein leerer Pfad trifft den Helden.\nBeim Verursachen von Schaden: Erzeuge 1 Resonanz. 1× pro Zug.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 2,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_summon"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-020",
+      "description": "Wenn dieses Wesen besiegt wird: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 3 Schaden zu; ein leerer Pfad trifft den Helden.\nBeim Verursachen von Schaden: Erzeuge 1 Resonanz. 1× pro Zug.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 3,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-029",
+      "description": "Beim Beschwören: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 3 Schaden zu; ein leerer Pfad trifft den Helden.\nWenn du Resonanz ausgibst: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn. 1× pro Zug.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 3,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_summon"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-034",
+      "description": "Wenn dieses Wesen besiegt wird: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 4 Schaden zu; ein leerer Pfad trifft den Helden.\nWenn du Resonanz ausgibst: Gewähre deinem Helden 1 Block bis zu deinem Zugbeginn. 1× pro Zug.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 4,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-043",
+      "description": "Beim Beschwören: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 3 Schaden zu; ein leerer Pfad trifft den Helden.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 3,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_summon"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-044",
+      "description": "Beim Angreifen: Erzeuge 2 Resonanz. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-045",
+      "description": "Wenn du Resonanz ausgibst: Gewähre diesem Wesen 2 Schild. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-046",
+      "description": "Wenn du ein Relikt aktivierst: Ziehe 1 Karte. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-047",
+      "description": "Zu deinem Zugende: Betäube das direkt gegenüberliegende gegnerische Wesen für 1 Angriffsphase. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-048",
+      "description": "Wenn dieses Wesen besiegt wird: Füge nach 1 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 4 Schaden zu; ein leerer Pfad trifft den Helden.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 0,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 4,
+            "turn_changes": 1
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        },
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-049",
+      "description": "Beim Beschwören: Verringere den Angriff des gegnerischen Wesens mit dem wenigsten Leben um 2.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-050",
+      "description": "Zu deinem Zugbeginn: Erhalte 1 Energie für diesen Zug. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-051",
+      "description": "Beim Verteidigen: Füge dem direkt gegenüberliegenden gegnerischen Wesen 3 Schaden zu. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-052",
+      "description": "Wenn du Resonanz ausgibst: Versetze dieses Wesen um einen Pfad nach rechts, falls dort Platz ist. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-053",
+      "description": "Wenn du eine Karte ziehst: Gewähre deinem Helden 2 Schild. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-054",
+      "description": "Beim Beschwören: Gewähre allen eigenen Wesen der Art Konstrukte +2 Angriff.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    },
+    {
+      "id": "of-ninth-055",
+      "description": "Sobald du mindestens 6 Resonanz hast: Füge dem gegnerischen Helden 3 Schaden zu. 1× pro Zug.\nWenn dieses Wesen besiegt wird: Füge nach 2 Zugwechseln dem gegnerischen Wesen auf diesem Pfad 1 Schaden zu; ein leerer Pfad trifft den Helden.",
+      "abilities": [
+        {
+          "index": 1,
+          "mode": "triggered",
+          "effect": "delay_damage",
+          "target": "enemy_lane",
+          "params": {
+            "amount": 1,
+            "turn_changes": 2
+          },
+          "limit": "once_per_event",
+          "trigger": "on_death"
+        }
+      ]
+    }
+  ],
+  "findings": {
+    "command_deferred_availability": [
+      "discard_card optional remaining hand",
+      "return_card optional discard/space",
+      "draw_cards available deck/space",
+      "move_unit conditional destination; live selected unit still required"
+    ],
+    "required_targets_preserved": [
+      "unit target selectors",
+      "at least one free path for summon_card"
+    ],
+    "summon_then_unit_buff_programs": [],
+    "sequential_summon_programs": [
+      "of-houses-089",
+      "of-morph-091"
+    ],
+    "review_limit": "Actual dataflow review of printed programs and existing automatic hooks; not an exhaustive reachable-state proof."
+  }
+}

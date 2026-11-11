@@ -7,7 +7,7 @@ const path=require('node:path');
 const assert=require('node:assert/strict');
 const OUTPUT='work/master550/browser';
 const TIMEOUT=120000;
-const cards=JSON.parse(fs.readFileSync('data/alpha/cards.json','utf8')).cards;
+const cards=JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards;
 const by=Object.fromEntries(cards.map(card=>[card.id,card]));
 const center=rect=>({x:rect[0]+rect[2]/2,y:rect[1]+rect[3]/2});
 fs.mkdirSync(OUTPUT,{recursive:true});
@@ -180,20 +180,9 @@ async function runEngine(name){
    console.log('MASTER550 DRAG',name,method,card.id,'commands',after.command_count);return card;
   }
   function choices(state){
-   const b=state.battle,p=b.hero,op=b.enemy,ready=(unit)=>unit&&!unit.stun&&(!unit.summoned||by[unit.id].effect==='haste')&&unit.atk>p.weak;
+   const b=state.battle,p=b.hero;
    if(b.winner||b.active!=='hero'||p.phase!=='main'||p.pendingTarget||p.pendingShift)return [];
-   return p.hand.map((id,index)=>({card:by[id],index})).filter(({card})=>{
-    if(!card||card.cost>p.energy)return false;
-    if(card.kind==='creature')return p.lanes.some(unit=>!unit);
-    switch(card.effect){
-     case 'stasis':return op.lanes.some(Boolean);
-     case 'displace':return op.lanes.some((unit,lane)=>unit&&[lane-1,lane+1].some(to=>to>=0&&to<5&&!op.lanes[to]));
-     case 'surge':return p.lanes.some(ready);
-     case 'recall':return p.lanes.some(unit=>!unit)&&p.discard.some(id=>by[id]?.kind==='creature');
-     case 'redirect':return b.delayed.some(event=>event.side==='hero');
-     default:return true;
-    }
-   });
+   return (state.legal_plays||[]).filter(legal=>legal.lanes.length).map(legal=>({card:by[legal.id],index:legal.index}));
   }
   async function resolvePending(){
    for(let n=0;n<8;n++){
@@ -238,7 +227,36 @@ async function runEngine(name){
   // A legal third play may win immediately; use the visible result-dialog path.
   await action((await q()).battle.winner?'result_log':'log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');checks.push('actual interaction commands replay identically');
   await action('menu');await action('confirm_menu');await resize(390,844);await action('collection');
-  const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));check(first,'actual collection card available');await action(first);
+  let library=await q();equal(library.library_total,550,'actualactivecatalog contains550entries');
+  equal(library.library_page,0,'collectionstartsfirstpage');
+  const seenCards=new Set(),totalPages=library.library_pages;
+  for(let pageIndex=0;pageIndex<totalPages;pageIndex++){
+   library=await q();equal(library.library_page,pageIndex,'actualbrowserpaging index');
+   check(library.library_visible_ids.length>0&&library.library_visible_ids.length<=12,'mobilecreatesatmost12cardcontrols');
+   const controlIds=Object.keys(library.actions).filter(key=>key.startsWith('card_')).map(key=>key.slice(5));
+   equal(new Set(controlIds).size,controlIds.length,'actual page controls have unique identities');
+   equal(new Set(library.library_visible_ids).size,library.library_visible_ids.length,'visible page has unique identities');
+   // actions is a JSON dictionary, whose key serialization order is unrelated
+   // to the cards' display/name order. Compare exact membership without mutating
+   // the separately ordered visible list used by paging and inspection below.
+   equal([...controlIds].sort(),[...library.library_visible_ids].sort(),'actualcontrols matchonlyvisiblepage');
+   for(const id of library.library_visible_ids){check(by[id]&&!seenCards.has(id),'eachactualcatalogidentityreachableonce');seenCards.add(id);}
+   rectCheck(library.actions.library_previous.rect,'previouspage');rectCheck(library.actions.library_next.rect,'nextpage');
+   if(pageIndex<totalPages-1)await action('library_next');
+  }
+  equal(seenCards.size,550,'all550actualcardsreachable throughrealbrowseractions');
+  check((await q()).actions.library_next.disabled,'lastpagecannotadvance');await shot('collection-last-page');
+  const lastId=(await q()).library_visible_ids.at(-1),searchRect=(await q()).actions.search.rect;
+  rectCheck(searchRect,'collectionsearch');const searchPoint=center(searchRect);await page.touchscreen.tap(searchPoint.x,searchPoint.y);await page.keyboard.type(by[lastId].name);
+  await wait(value=>window.orafoldQA.search_text===value,by[lastId].name);await action('search_apply');
+  equal((await q()).library_visible_ids,[lastId],'exactnamesearchfindsactual lastpagecard');equal((await q()).library_page,0,'namesearch resets page');
+  await action('filters');await action('reset_filters');await action('filters');await action('filter_species');await action('option_filter_species_human');
+  const filtered=await q();check(filtered.library_total>0,'actualhumanfilterhasnonemptyresults');for(const id of filtered.library_visible_ids)check((by[id].species||[]).includes('human'),'speciesfilter usesactualequalrank assignments');
+  await action('filters');await action('reset_filters');checks.push('550actualcards reached once byrealpagination;lastcardnamesearch;speciesfilter;bounded12cardcontrols');
+  const inspectionState=await q(),firstId=inspectionState.library_visible_ids[0],first='card_'+firstId;
+  check(firstId&&inspectionState.actions[first],'first displayed collection card available');
+  rectCheck(inspectionState.action_visibility[first].visible_rect,'first displayed card visible touch region');
+  await action(first);
   for(const [width,height] of [[390,844],[844,390],[756,390],[390,844]]){
    if(page.viewportSize().width!==width||page.viewportSize().height!==height)await resize(width,height);
    check((await q()).modal,'inspector stays open across sizes');rectCheck((await q()).actions.modal_close.rect,'inspector close');await shot('inspector-'+width+'x'+height);

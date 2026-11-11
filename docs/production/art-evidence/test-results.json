@@ -1,0 +1,44 @@
+{
+  "scope": "Art branch tests only; not a release or physical device test",
+  "base_commit": "c0e7de982088675643690705d80be387d7e68cd2",
+  "catalog_sha256": "dc925d5083102a0ef01bd4bfe292231b76c07fca31b7763e29c1100324a27bb9",
+  "individual_originals": 15,
+  "visually_approved": 15,
+  "commercially_cleared": 0,
+  "missing_individuals": 535,
+  "python_test_groups": 8,
+  "native_suites": [
+    {
+      "suite": "PRODUCTION ART PIPELINE",
+      "assertions": 169,
+      "failures": 0
+    },
+    {
+      "suite": "MASTER550 CARD VISUAL",
+      "assertions": 374,
+      "failures": 0
+    },
+    {
+      "suite": "PRODUCTION ART BATCH2",
+      "assertions": 90,
+      "failures": 0
+    },
+    {
+      "suite": "PRODUCTION ART CACHE",
+      "assertions": 38,
+      "failures": 0
+    },
+    {
+      "suite": "PRODUCTION ART PREVIEWS",
+      "assertions": 138,
+      "failures": 0
+    }
+  ],
+  "final_contact_sheet_sha256": "ded933f8faa7d03ad0e0dac8d0ee783be4ac57ee54b18ab53007e76c8b5164d4",
+  "exported_package": {
+    "assertions": 97,
+    "failures": 0,
+    "tested_commit": "c8b2d1da07e825f59d9cc8dde6f3134161dad7b9",
+    "project_source_visible": false
+  }
+}

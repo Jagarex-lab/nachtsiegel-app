@@ -2,14 +2,14 @@ extends RefCounted
 const RULESET_ID := "orafold-alpha-0.1"
 var source: Dictionary
 var cards: Dictionary={}
-func _init() -> void:
-	source=JSON.parse_string(FileAccess.get_file_as_string("res://data/alpha/cards.json"))
+func _init(source_path: String="res://data/alpha/cards.json") -> void:
+	source=JSON.parse_string(FileAccess.get_file_as_string(source_path))
 	# Editorial identity metadata is separate from the pinned mechanical pool.
 	# Every listed species has equal rank; this adds no automatic combat triggers.
 	var metadata: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/card_system/alpha_species.json"))
 	var known_species: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://data/card_system/registry.json")).species
 	for c in source.cards:
-		if c.kind=="creature":
+		if c.kind=="creature" and not c.has("species"):
 			assert(metadata.species_by_card_id.has(c.id),"Missing species metadata: "+c.id)
 			var types: Array=metadata.species_by_card_id[c.id]
 			assert(types.size() in [1,2],"Invalid species count: "+c.id)
