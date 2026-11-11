@@ -68,12 +68,17 @@ jobs:
           version: 4.6.3
           use-dotnet: false
           include-templates: true
+          # v2 caches only the main Windows EXE, omitting its console companion.
+          cache: false
       - name: Resolve the installed native Windows console executable
         run: |
           # setup-godot's extensionless hardlink works in PowerShell, but is
           # not resolved by Python/CreateProcess. Its official console binary
           # also waits for the real editor and preserves its logs/exit status.
-          $engine = Join-Path $env:USERPROFILE 'godot/Godot_v4.6.3-stable_win64_console.exe'
+          Get-Command godot | Format-List Name,Source,Path,CommandType
+          $install = Join-Path $env:USERPROFILE 'godot'
+          Get-ChildItem -LiteralPath $install -Filter '*.exe' | Format-Table Name,Length
+          $engine = Join-Path $install 'Godot_v4.6.3-stable_win64_console.exe'
           if (-not (Test-Path -LiteralPath $engine -PathType Leaf)) {
             throw "The pinned native Godot console executable is missing"
           }
