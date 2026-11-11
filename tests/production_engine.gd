@@ -194,9 +194,10 @@ func test_reactions_and_boundaries() -> void:
  var res_before:=int(model.state.hero.resonance)
  check(model.play("hero",0,2),"real reactive impulse play arms it")
  check(model.armed_impulses("hero").size()==1 and not model.state.hero.discard.has(reactive.id),"armed impulse is a separate pending zone")
+ put("hero",2)
  var enemy_attacker:=put("enemy",2);enemy_attacker.atk=5
  model.attack_phase("enemy")
- check(model.state.hero.hp==18 and model.state.hero.ward==0,"reactive shield appears before a direct hero attack")
+ check(model.state.hero.hp==20 and model.state.hero.ward==3 and model.state.hero.lanes[2]==null,"creature defense arms hero shield before the defender takes combat damage")
  check(model.armed_impulses("hero").is_empty() and model.state.hero.discard.has(reactive.id),"reactive impulse consumed exactly once")
  check(model.state.hero.resonance==res_before-1,"reactive printed resonance cost paid once")
  battle();model.state.hero.hand=[reactive.id];check(model.play("hero",0,2),"arm expiry case")
@@ -407,7 +408,7 @@ func test_lethal_damage_order() -> void:
     model.state.enemy.hand=["of-stillwatch-072"]
     check(model.play("enemy",0,2),"real generic two-damage impulse")
    if initial_hp==1:check(model.state.hero.hp==0 and model.state.winner=="enemy" and model.armed_impulses("hero").size()==1,"hero HP0 is terminal before postdamage healing for "+cause)
-   else:check(model.state.hero.hp==5 and model.state.winner==null and model.armed_impulses("hero").is_empty(),"nonlethal postdamage healing works for "+cause)
+   else:check(model.state.hero.hp==2 and model.state.winner==null and model.armed_impulses("hero").size()==1,"hero-only damage does not satisfy own-creature healing condition for "+cause)
   battle();var dying:=put("hero",2,"of-houses-007");dying.hp=1;model.state.active="enemy"
   if cause=="attack":
    var attacker:=put("enemy",2);attacker.atk=2;model.attack_phase("enemy")
@@ -427,9 +428,10 @@ func test_lethal_damage_order() -> void:
  check(not reply.ok and JSON.stringify([model.snapshot(),model.events],"",true)==before,"a caller cannot forge trusted fatal source capability for an arbitrary stale UID")
  battle();model.state.hero.hp=1;model.state.hero.hand=["of-stillwatch-070"]
  check(model.play("hero",0,2),"arm real before-hit shield")
- var attacker:=put("enemy",2);attacker.atk=2
+ var defender:=put("hero",2);defender.hp=1
+ var attacker:=put("enemy",2,"oa-ninth-c02")
  model.attack_phase("enemy")
- check(model.state.hero.hp==1 and model.state.hero.ward==1 and model.state.winner==null,"before-hit shield can still prevent lethal attack")
+ check(model.state.hero.hp==1 and model.state.hero.ward==2 and model.state.winner==null,"creature-defense shield prevents lethal native pierce overflow")
 
 func test_weaken_convergence_control() -> void:
  # Arrange an already declared binding; trigger the real printed weakening card.

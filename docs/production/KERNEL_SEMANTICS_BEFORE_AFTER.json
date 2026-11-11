@@ -1,0 +1,15 @@
+{
+  "before_raw_sha256": "fa507dc4a13b1043c1197094e5524cf61186e5ef2101969d0fa87586a67be681",
+  "after_raw_sha256": "5315796e48eb14c9428a0efb8f9a89f1ce2f4b9a928a8e396ea6241eba0da6d8",
+  "same848case_keys_and_first_sides": true,
+  "changed_executed_sources": [
+    "scripts/alpha/model.gd",
+    "scripts/card_system/production_model.gd"
+  ],
+  "changed_winners": 84,
+  "changed_event_digests": 605,
+  "changed_final_state_digests": 582,
+  "starter_changed_event_digests": 42,
+  "starter_changed_winners": 4,
+  "notes": "Two actual full matrices with identical cards/decks/AI and case plan. Combined correctness changes, not an isolated attribution of win changes to a single repair."
+}

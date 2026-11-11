@@ -7,6 +7,7 @@ var ai_policy: RefCounted = null
 func _phase_hook(_trigger: String, _side: String) -> void: pass
 func _combat_hook(_trigger: String, _side: String, _lane: int, _unit: Dictionary, _detail: Dictionary = {}) -> void: pass
 func _attack_damage_hero(_source_side: String, _source_lane: int, target: Dictionary, amount: int) -> int: return _hero_damage(target, amount)
+func _resolve_delayed_damage(event: Dictionary) -> void:_lane_damage(_other(event.side),int(event.lane),int(event.power))
 func _has_haste(card: Dictionary) -> bool: return card.effect == "haste"
 func _init() -> void:catalog=AlphaCatalog.new()
 func summon_limit() -> int:return 0
@@ -86,7 +87,7 @@ func begin_turn(side: String) -> bool:
 	state.delayed=future
 	for event in due:
 		if state.winner!=null:break
-		_lane_damage(_other(event.side),int(event.lane),int(event.power));_trace("delayed_resolved",event.side,event);check_winner()
+		_resolve_delayed_damage(event);_trace("delayed_resolved",event.side,event);check_winner()
 	if state.winner!=null:return true
 	var p: Dictionary=state[side]
 	if p.convergence!=null:
@@ -291,11 +292,17 @@ func attack_phase(side: String) -> bool:
 				var target_hp: int=int(target.hp)
 				hit_unit(target,amount)
 				if int(target.hp)<target_hp:_combat_hook("on_deal_damage",side,lane,u,{"amount":target_hp-int(target.hp)})
-				if amount>0 and target.hp>0 and catalog.card(target.id).effect=="retaliate":hit_unit(u,int(catalog.card(target.id).power))
+				var retaliation_killed:=false
+				if amount>0 and target.hp>0 and catalog.card(target.id).effect=="retaliate":
+					var attacker_hp:=int(u.hp)
+					hit_unit(u,int(catalog.card(target.id).power))
+					if int(u.hp)<attacker_hp:_combat_hook("on_deal_damage",_other(side),lane,target,{"amount":attacker_hp-int(u.hp),"cause":"retaliation"})
+					retaliation_killed=attacker_hp>0 and int(u.hp)<=0
 				if target.hp<=0:
 					if c.effect=="pierce":_hero_damage(op,maxi(0,-int(target.hp)))
 					if _remove_attack_casualty(_other(side),lane,target):_combat_hook("on_kill",side,lane,u,{"defeated_uid":target.uid})
-				if u.hp<=0:_remove_attack_casualty(side,lane,u)
+				if u.hp<=0:
+					if _remove_attack_casualty(side,lane,u) and retaliation_killed:_combat_hook("on_kill",_other(side),lane,target,{"defeated_uid":u.uid,"cause":"retaliation"})
 			_trace("attack",side,{"lane":lane,"amount":amount,"hero_target":target==null});check_winner()
 	p.weak=0;_refresh_bindings();return true
 func _remove_attack_casualty(side: String, original_lane: int, unit: Dictionary) -> bool:

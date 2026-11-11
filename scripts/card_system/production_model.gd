@@ -267,7 +267,10 @@ func _phase_hook(trigger: String, side: String) -> void:
  _evaluate_conditions()
 
 func _combat_hook(trigger: String, side: String, lane: int, unit: Dictionary, detail: Dictionary={}) -> void:
- if not unit.is_empty() and _bindings.has(unit.id):
+ # These printed hooks describe a creature acting/receiving damage. An empty
+ # defending lane is a hero attack, not an own creature defending.
+ if unit.is_empty():return
+ if _bindings.has(unit.id):
   var context:=_context_for(side,lane,unit)
   if detail.get("fatal_damage_source",false):context.fatal_damage_source=true
   _emit_trigger(trigger,side,unit.id,context,detail)
@@ -369,11 +372,16 @@ func production_preflight(side: String, a: Dictionary, context: Dictionary) -> S
    if unit==null:free=true
   if not free:return "no_effect_target"
  var future_hand_size: int=state[side].hand.size()-(1 if context.get("playing_from_hand",false) else 0)
- if a.effect=="return_card" and (_discard_unit(side)<0 or future_hand_size>=6):return "no_effect_target"
- if a.effect=="draw_cards" and (state[side].deck.is_empty() or future_hand_size>=6):return "no_effect_target"
- if a.effect=="discard_card" and future_hand_size<=0:return "no_effect_target"
+ # Hand/deck steps resolve in printed order after the played card leaves hand.
+ # Optional steps may fizzle; an earlier discard can supply a later return.
+ # Only command preflight defers these availability checks. FIFO publication
+ # and late resolution still validate the actual state for each step.
+ if not context.get("playing_from_hand",false):
+  if a.effect=="return_card" and (_discard_unit(side)<0 or future_hand_size>=6):return "no_effect_target"
+  if a.effect=="draw_cards" and (state[side].deck.is_empty() or future_hand_size>=6):return "no_effect_target"
+  if a.effect=="discard_card" and future_hand_size<=0:return "no_effect_target"
  if a.effect in ["deal_damage","grant_shield","grant_block","heal_target","modify_attack","weaken_unit","move_unit","stun_unit"] and a.target in ["self","opposite_enemy_unit","own_lowest_health","enemy_lowest_health","own_neighbors","own_all","enemy_all","own_species"] and _targets(side,a,context).is_empty():return "no_effect_target"
- if a.effect=="move_unit":
+ if a.effect=="move_unit" and not context.get("playing_from_hand",false):
   var can_move:=false
   for target in _targets(side,a,context):
    var to:=int(target.lane)+int(a.params.steps)
@@ -489,7 +497,11 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
    if lane>=0:
     var id: String=a.params.card_id;p.lanes[lane]=make_unit(side,catalog.card(id),lane)
     _trace("effect_summon",side,{"card_id":id,"lane":lane});actual.summon_resolved=enqueue({"type":"summon","side":side,"card_id":id,"lane":lane})
-  "delay_damage":state.delayed.append({"side":side,"lane":int(context.get("target_lane",0)),"due":int(state.round)+int(a.params.turn_changes),"power":amount})
+  "delay_damage":
+   var delayed: Dictionary={"side":side,"lane":int(context.get("target_lane",context.get("source_lane",0))),"due":int(state.round)+int(a.params.turn_changes),"power":amount}
+   if context.has("source_uid") and catalog.cards.get(str(context.get("source_card_id","")),{}).get("kind")=="creature":
+    delayed.creature_source={"owner":side,"source_card_id":context.source_card_id,"source_uid":int(context.source_uid),"source_lane":int(context.get("source_lane",0))}
+   state.delayed.append(delayed)
  _refresh_bindings();check_winner();_evaluate_conditions();_drain_pending_arrivals()
  return actual
 
@@ -610,13 +622,28 @@ func _lane_damage(side: String, lane: int, power: int) -> void:
  hit_unit(unit,power)
  if int(unit.hp)<=0:_remove_attack_casualty(side,lane,unit)
 
+func _resolve_delayed_damage(event: Dictionary) -> void:
+ var target_side:=_other(str(event.side));var lane:=int(event.lane)
+ var target: Variant=state[target_side].lanes[lane]
+ var before: int=int(target.hp) if target!=null else int(state[target_side].hp)
+ _lane_damage(target_side,lane,int(event.power))
+ # Delayed damage stays on its scheduled path and outlives its creator. Only
+ # the captured source UID can receive personal damage triggers; a later copy
+ # never inherits them. Relics can still observe a creature-caused defeat.
+ if not event.get("creature_source") is Dictionary:return
+ if event.creature_source.get("owner")!=event.side:return
+ var after: int=int(target.hp) if target!=null else int(state[target_side].hp)
+ if after>=before:return
+ var context: Dictionary=event.creature_source.duplicate(true)
+ context.erase("owner")
+ if target!=null and int(target.hp)<=0 and _arrival_lane(target_side,int(target.uid))<0:_publish_source("on_kill",str(event.side),context)
+ _publish_source("on_deal_damage",str(event.side),context)
+
 func _hero_damage(player: Dictionary, amount: float, pierce: bool=false) -> int:
  var lost:=super._hero_damage(player,amount,pierce)
- if lost>0:
-  check_winner()
-  if state.winner!=null:return lost
-  for side in ["hero","enemy"]:
-   if is_same(state.get(side),player):_publish_relic("on_take_damage",side,0);break
+ # Hero damage is terminal before later effects, but never satisfies the
+ # printed "own creature takes damage" condition on relics/armed impulses.
+ if lost>0:check_winner()
  return lost
 
 func production_bind_context(side: String, _ability: Dictionary, context: Dictionary) -> Dictionary:
@@ -794,12 +821,14 @@ func _strike_target(side: String,lane: Variant,power: int,source_lane: int) -> b
  if not _valid_side(side) or not _integer(lane) or lane<0 or lane>4:return false
  var other:=_other(side);var target: Variant=state[other].lanes[int(lane)]
  if target==null:return false
+ var source: Variant=state[side].lanes[source_lane]
  var hp_before:=int(target.hp)
  hit_unit(target,power);_trace("strike_hit",side,{"lane":lane})
- if int(target.hp)<hp_before and state[side].lanes[source_lane]!=null:_combat_hook("on_deal_damage",side,source_lane,state[side].lanes[source_lane],{"amount":hp_before-int(target.hp),"cause":"arrival_strike"})
+ if int(target.hp)<hp_before and source!=null:_combat_hook("on_deal_damage",side,source_lane,source,{"amount":hp_before-int(target.hp),"cause":"arrival_strike"})
  if int(target.hp)<=0:
   _trace("removed",other,{"lane":lane})
-  _remove_attack_casualty(other,int(lane),target)
+  if _remove_attack_casualty(other,int(lane),target) and source!=null:
+   _combat_hook("on_kill",side,source_lane,source,{"defeated_uid":target.uid,"cause":"arrival_strike"})
  check_winner()
  return true
 
