@@ -38,6 +38,9 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Strict reversible-source tests read the public pre-hook baseline.
+          fetch-depth: 0
       - name: Install Godot and matching templates
         uses: chickensoft-games/setup-godot@v2
         with:

@@ -25,8 +25,10 @@ def committed(revision, path):
 class SourceCompatibilityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.before = committed("1151530^", guard.MODEL)
-        cls.after = committed("1151530", guard.MODEL)
+        # This published baseline is reachable in a fresh full-history clone.
+        # The actual checkout must still match the exact approved after hash.
+        cls.before = committed("345edb6e683d4359b8141ef228683c0855773ac2", guard.MODEL)
+        cls.after = (ROOT / guard.MODEL).read_bytes()
 
     def test_exact_reviewed_hashes_and_reversible_diff(self):
         self.assertEqual(guard.sha(self.before), guard.BEFORE_SHA256)
