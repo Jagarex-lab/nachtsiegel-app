@@ -127,6 +127,87 @@
       "web_sha256": "2a1e9e7d0ac7a41e611f0fdc7d88f5bfa19e63c053875610e1bfba60603db67a",
       "width": 1448
     },
+    "oa-stillwatch-c02": {
+      "bytes": 438364,
+      "height": 1086,
+      "relative_url": "art/full/580916c4180e5f106915cf2eaa55e5d96db08178efb5af012b88015f4e11de63.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-c02.png",
+      "source_sha256": "0add03eb0971ad3a9b8b64c8db840bd01fc34949122fd6ac20c0ee6d1934d150",
+      "web_sha256": "580916c4180e5f106915cf2eaa55e5d96db08178efb5af012b88015f4e11de63",
+      "width": 1448
+    },
+    "oa-stillwatch-c03": {
+      "bytes": 229414,
+      "height": 1086,
+      "relative_url": "art/full/fbe97056a1d7d008b7f86e40d8888e8994649abae4417f2e54732d2d667154b0.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-c03.png",
+      "source_sha256": "da6a22cf0fbd347be312731ecc9b33af26eef5ba243f384c628719962096100a",
+      "web_sha256": "fbe97056a1d7d008b7f86e40d8888e8994649abae4417f2e54732d2d667154b0",
+      "width": 1448
+    },
+    "oa-stillwatch-c04": {
+      "bytes": 324178,
+      "height": 1086,
+      "relative_url": "art/full/a6b149ba74c01ccff839310e9a2beb2eb66a6ac7ae4ebe83d7660a6048ba291d.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-c04.png",
+      "source_sha256": "38b1176547cec7723e37149e8d22a808c1d783cf8981229a4e6540577c182382",
+      "web_sha256": "a6b149ba74c01ccff839310e9a2beb2eb66a6ac7ae4ebe83d7660a6048ba291d",
+      "width": 1448
+    },
+    "oa-stillwatch-c05": {
+      "bytes": 366588,
+      "height": 1086,
+      "relative_url": "art/full/bfde244aa520daf25293dac56220bc52fad30453ac994043b7b9efe9c0af304c.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-c05.png",
+      "source_sha256": "1f419a90109207e780a19539411ec71861d7152446a004e5153983a39a935763",
+      "web_sha256": "bfde244aa520daf25293dac56220bc52fad30453ac994043b7b9efe9c0af304c",
+      "width": 1448
+    },
+    "oa-stillwatch-c06": {
+      "bytes": 323608,
+      "height": 1086,
+      "relative_url": "art/full/a745e0c330d07f86c88c3711589c53629ad62a2fccb7737079b0329b88203129.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-c06.png",
+      "source_sha256": "187b30df42d912b0861e5ea0bce185b0a41e02ba68aec6f356160abb8869f064",
+      "web_sha256": "a745e0c330d07f86c88c3711589c53629ad62a2fccb7737079b0329b88203129",
+      "width": 1448
+    },
+    "oa-stillwatch-c07": {
+      "bytes": 514340,
+      "height": 1086,
+      "relative_url": "art/full/2cb94f620123de709a4d4b502adaf184c7e4faf8a8808ad0497f981de5e64a44.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-c07.png",
+      "source_sha256": "e142196fdfda64b56d2a2cb1b6d38b6e041eb4b506ac1ea0b0ffc46afa23a30d",
+      "web_sha256": "2cb94f620123de709a4d4b502adaf184c7e4faf8a8808ad0497f981de5e64a44",
+      "width": 1448
+    },
+    "oa-stillwatch-e01": {
+      "bytes": 240514,
+      "height": 1086,
+      "relative_url": "art/full/d0336887bc9a75a2ef453571296bebdba3bfc535c8a14c2dc98808aafaa9c54a.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-e01.png",
+      "source_sha256": "0e1a73943700c3e4285cad974e7872208b5f3bfce3010fbfe7327e1e4196bea0",
+      "web_sha256": "d0336887bc9a75a2ef453571296bebdba3bfc535c8a14c2dc98808aafaa9c54a",
+      "width": 1448
+    },
+    "oa-stillwatch-e02": {
+      "bytes": 277320,
+      "height": 1086,
+      "relative_url": "art/full/dbb9c527a52e3fc0aea5d7430cddb62e240fb8b619219f3c19131c3c67546c20.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-e02.png",
+      "source_sha256": "022ab1aa798cc21de49ba38f96b15310307819f5c545ebc9c6e7857f10e2ee53",
+      "web_sha256": "dbb9c527a52e3fc0aea5d7430cddb62e240fb8b619219f3c19131c3c67546c20",
+      "width": 1448
+    },
+    "oa-stillwatch-r01": {
+      "bytes": 272860,
+      "height": 1086,
+      "relative_url": "art/full/ff32e3945f0a6129cfd157f2e8c71c890348c0501f4dc14e8b16f5320a9ec173.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-stillwatch-r01.png",
+      "source_sha256": "b3d67bfe59a7f4ff8f023f60badc79b62f546ce4058e6ec3e07f1f3a1aa968b9",
+      "web_sha256": "ff32e3945f0a6129cfd157f2e8c71c890348c0501f4dc14e8b16f5320a9ec173",
+      "width": 1448
+    },
     "of-houses-001": {
       "bytes": 402442,
       "height": 1086,
@@ -1081,6 +1162,384 @@
       "web_sha256": "7fa45ef667e823c1abe6e21f96d1fda03b7543a599351227409b8233aed00e20",
       "width": 1448
     },
+    "of-stillwatch-001": {
+      "bytes": 323952,
+      "height": 1086,
+      "relative_url": "art/full/e10e4aed225b5c99b2fe92c46cbf0b144f1c8294238acd44709e31aecc1943a3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-001.png",
+      "source_sha256": "d7e2bd64c34cab0b21111ea2c7e1928fcbd563c3c07b11dd0608fdc74f945a02",
+      "web_sha256": "e10e4aed225b5c99b2fe92c46cbf0b144f1c8294238acd44709e31aecc1943a3",
+      "width": 1448
+    },
+    "of-stillwatch-002": {
+      "bytes": 412772,
+      "height": 1086,
+      "relative_url": "art/full/5b55c68981c29fb448e353e50a417116d4007314cfacb4446929f39b7573121d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-002.png",
+      "source_sha256": "8ca516689c972b37b919a22708c6059c4f0ef8c6626aed3a0c588e98c93ff4c2",
+      "web_sha256": "5b55c68981c29fb448e353e50a417116d4007314cfacb4446929f39b7573121d",
+      "width": 1448
+    },
+    "of-stillwatch-003": {
+      "bytes": 375778,
+      "height": 1086,
+      "relative_url": "art/full/fe0fba299f0ffa0a4672a0396fd7ae0b601dfd01d85cb21796cbb3b986ca3be1.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-003.png",
+      "source_sha256": "97530de7ba8fe135c6c4d270e2d62ef247883619fb6124f1c82087ec1552c9ad",
+      "web_sha256": "fe0fba299f0ffa0a4672a0396fd7ae0b601dfd01d85cb21796cbb3b986ca3be1",
+      "width": 1448
+    },
+    "of-stillwatch-004": {
+      "bytes": 451424,
+      "height": 1086,
+      "relative_url": "art/full/c0ab00c78285dc2ff4ebd6748dcf25bd6ec6bbfa25cf5a413165199bf5a516e8.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-004.png",
+      "source_sha256": "603557712dbc6f39f305b8ef946a8e9f49f9ee5c71d69bb868f446f315863cc5",
+      "web_sha256": "c0ab00c78285dc2ff4ebd6748dcf25bd6ec6bbfa25cf5a413165199bf5a516e8",
+      "width": 1448
+    },
+    "of-stillwatch-005": {
+      "bytes": 392270,
+      "height": 1086,
+      "relative_url": "art/full/e3d9993a93723cb9996503882f36016e248356e2bf0f721fbcacbe38f837eda7.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-005.png",
+      "source_sha256": "881caec46ed8eecbd31ae1cee3dbbc45e3639194c76386785486f1ad981f9e5d",
+      "web_sha256": "e3d9993a93723cb9996503882f36016e248356e2bf0f721fbcacbe38f837eda7",
+      "width": 1448
+    },
+    "of-stillwatch-006": {
+      "bytes": 491850,
+      "height": 1086,
+      "relative_url": "art/full/e36082fbd9c7f2c8202d49b454d330cb8bf45583ac31518ba01b597ce043f3cd.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-006.png",
+      "source_sha256": "62907b1661f541c43577a75fb8da83bf26f8238fe3009c8e29b67d664021926e",
+      "web_sha256": "e36082fbd9c7f2c8202d49b454d330cb8bf45583ac31518ba01b597ce043f3cd",
+      "width": 1448
+    },
+    "of-stillwatch-007": {
+      "bytes": 320510,
+      "height": 1086,
+      "relative_url": "art/full/b0a41853afa5b6a13d57a3af932d70e873f5e416294341bc8c9beab7ebaab4e2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-007.png",
+      "source_sha256": "5ccbfbf0b8d643bdf9503b0ba70d5ab088708b6410f9b6ead7abe76780250dc0",
+      "web_sha256": "b0a41853afa5b6a13d57a3af932d70e873f5e416294341bc8c9beab7ebaab4e2",
+      "width": 1448
+    },
+    "of-stillwatch-008": {
+      "bytes": 511884,
+      "height": 1086,
+      "relative_url": "art/full/cc770649a2b2a17e31a45ad8dc4668363c1b4955d9b6fe1d49a222151fc772fd.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-008.png",
+      "source_sha256": "55071f3d296d77f4ab5641b1495c5e26d435a0366afd2c11a4a7b10abfebe576",
+      "web_sha256": "cc770649a2b2a17e31a45ad8dc4668363c1b4955d9b6fe1d49a222151fc772fd",
+      "width": 1448
+    },
+    "of-stillwatch-009": {
+      "bytes": 275264,
+      "height": 1086,
+      "relative_url": "art/full/babaea741e871a4c22ddb7d9d071ebe753658faf99d7a332ac2e420ad4351723.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-009.png",
+      "source_sha256": "00df067d4fa304a65f9e0cc182f2b7f947257d6301b40c679bbe94fad034db07",
+      "web_sha256": "babaea741e871a4c22ddb7d9d071ebe753658faf99d7a332ac2e420ad4351723",
+      "width": 1448
+    },
+    "of-stillwatch-010": {
+      "bytes": 269502,
+      "height": 1086,
+      "relative_url": "art/full/63c4b965bc3fa156ecf1f22c61e21a06e37076b89a9d3ea6ae4c97200734618e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-010.png",
+      "source_sha256": "73effb09d472e76c2f63a45800e45686cf2e13fc2021529c264cf3669a31aef5",
+      "web_sha256": "63c4b965bc3fa156ecf1f22c61e21a06e37076b89a9d3ea6ae4c97200734618e",
+      "width": 1448
+    },
+    "of-stillwatch-011": {
+      "bytes": 372388,
+      "height": 1086,
+      "relative_url": "art/full/b2d7f0ea3cb5b644c842f814aa61c7d1891b730b5ddf2478ebe29a54f4b767cc.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-011.png",
+      "source_sha256": "1ccc7b389acc6b8db92203d66b28c3c10d01c4b894718968a5e96d802e6cdb9f",
+      "web_sha256": "b2d7f0ea3cb5b644c842f814aa61c7d1891b730b5ddf2478ebe29a54f4b767cc",
+      "width": 1448
+    },
+    "of-stillwatch-012": {
+      "bytes": 500330,
+      "height": 1086,
+      "relative_url": "art/full/7d53a8374b5ab595a05fc2953955960e5ea97721798e728f0b2caed3a54582cd.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-012.png",
+      "source_sha256": "da3c2c26c2c240de79931471d9e8a0828698c8f09d3ff064162b5beb32fbabfe",
+      "web_sha256": "7d53a8374b5ab595a05fc2953955960e5ea97721798e728f0b2caed3a54582cd",
+      "width": 1448
+    },
+    "of-stillwatch-013": {
+      "bytes": 346444,
+      "height": 1086,
+      "relative_url": "art/full/8f0c8b257df80df5871657cec82264da1f1f6101289485e42f9b06e1553913de.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-013.png",
+      "source_sha256": "b80f52fd1e2e655f15641b378344786f18973bdfb8799c4448686573768e633f",
+      "web_sha256": "8f0c8b257df80df5871657cec82264da1f1f6101289485e42f9b06e1553913de",
+      "width": 1448
+    },
+    "of-stillwatch-014": {
+      "bytes": 376694,
+      "height": 1086,
+      "relative_url": "art/full/0fe89f33fb0a0b94641fd33559d075d3ba9160fb796e8762c217ba5e343b0dc2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-014.png",
+      "source_sha256": "7b128d593c15adee1e34d488e49ece390e100e29681e92e9eec9e389b246010a",
+      "web_sha256": "0fe89f33fb0a0b94641fd33559d075d3ba9160fb796e8762c217ba5e343b0dc2",
+      "width": 1448
+    },
+    "of-stillwatch-015": {
+      "bytes": 314818,
+      "height": 1086,
+      "relative_url": "art/full/1d6d8a40c80d3e5a148e67ca41aa099577a697e07e1e3f6b4046404a04259e51.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-015.png",
+      "source_sha256": "dd3f515a554842c365f97d417e5796f172255c2265551e42a677d19ee103af80",
+      "web_sha256": "1d6d8a40c80d3e5a148e67ca41aa099577a697e07e1e3f6b4046404a04259e51",
+      "width": 1448
+    },
+    "of-stillwatch-016": {
+      "bytes": 448712,
+      "height": 1086,
+      "relative_url": "art/full/2a2463eeeae07a77665c11d357497d16657ecb597afeee939354dcc8b380fc5b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-016.png",
+      "source_sha256": "e1061762710c56c391d9ca779dd24db14cfe4cabebc754d66153b1c75cb82236",
+      "web_sha256": "2a2463eeeae07a77665c11d357497d16657ecb597afeee939354dcc8b380fc5b",
+      "width": 1448
+    },
+    "of-stillwatch-017": {
+      "bytes": 281530,
+      "height": 1086,
+      "relative_url": "art/full/b89740d58180fa75d191939a866eee690eb0e38b6ee70bf2f7fe75b0541d74d6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-017.png",
+      "source_sha256": "57f9cb4922bf8e161e29368e94c17aba3b9ec249214398b124d7779066ef9cd4",
+      "web_sha256": "b89740d58180fa75d191939a866eee690eb0e38b6ee70bf2f7fe75b0541d74d6",
+      "width": 1448
+    },
+    "of-stillwatch-018": {
+      "bytes": 467108,
+      "height": 1086,
+      "relative_url": "art/full/b805f2c13d8442618f6b163ee5fcf58f3decceaced077116a5961734b6ec3063.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-018.png",
+      "source_sha256": "e039d3b6fefe23444f0234473c3c49a2554751de082d8d4dd419b97c6dd50d01",
+      "web_sha256": "b805f2c13d8442618f6b163ee5fcf58f3decceaced077116a5961734b6ec3063",
+      "width": 1448
+    },
+    "of-stillwatch-019": {
+      "bytes": 484228,
+      "height": 1086,
+      "relative_url": "art/full/2004d8cda9ebeb60a42612b0be696f3879297d8755dc3aafa8d75b4b35b6d596.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-019.png",
+      "source_sha256": "d7179fdf0c8bf76717fab32e3907ac80bc5f6c952076367034125c4625d19e3c",
+      "web_sha256": "2004d8cda9ebeb60a42612b0be696f3879297d8755dc3aafa8d75b4b35b6d596",
+      "width": 1448
+    },
+    "of-stillwatch-020": {
+      "bytes": 437898,
+      "height": 1086,
+      "relative_url": "art/full/3394ae64db427dc82537fa87f19e2594ef32b95a1e6f45f6adc8f4098635d182.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-020.png",
+      "source_sha256": "f4bb5e8b4ade4504ceb3224b6ba418b4d984ddf8a0df3bbb1731de765ba6ca45",
+      "web_sha256": "3394ae64db427dc82537fa87f19e2594ef32b95a1e6f45f6adc8f4098635d182",
+      "width": 1448
+    },
+    "of-stillwatch-021": {
+      "bytes": 426474,
+      "height": 1086,
+      "relative_url": "art/full/21e559788495f9e57859bfa3b56d46721be13a3e81d51c2769d14a7ae1483054.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-021.png",
+      "source_sha256": "2292a10dbff7bc1a5a723ae886b11a8f50cf1c9171260e9feb5f535547d3dde8",
+      "web_sha256": "21e559788495f9e57859bfa3b56d46721be13a3e81d51c2769d14a7ae1483054",
+      "width": 1448
+    },
+    "of-stillwatch-022": {
+      "bytes": 428678,
+      "height": 1086,
+      "relative_url": "art/full/454938907bc46c131a96c8480c8edb3a3e0fae1fa2a4bd94662ff61102d282ff.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-022.png",
+      "source_sha256": "38917b7dc493b6622ed736ed9c6901b146b39cc5a138bde781e44c7eaf5cea48",
+      "web_sha256": "454938907bc46c131a96c8480c8edb3a3e0fae1fa2a4bd94662ff61102d282ff",
+      "width": 1448
+    },
+    "of-stillwatch-023": {
+      "bytes": 313170,
+      "height": 1086,
+      "relative_url": "art/full/05be4dead8116a26f652c0c833f36b0b7e030b68f93126af5ecff4a79948e8ab.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-023.png",
+      "source_sha256": "25b708056ef36a70e25c9b257e56fb42f7ece4414067bea9d81b96e89dac5c20",
+      "web_sha256": "05be4dead8116a26f652c0c833f36b0b7e030b68f93126af5ecff4a79948e8ab",
+      "width": 1448
+    },
+    "of-stillwatch-024": {
+      "bytes": 606444,
+      "height": 1086,
+      "relative_url": "art/full/da0e5d635f4e05a599ffe80f97e3d3102a18d62f66a409d0b6211ca4c107f59c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-024.png",
+      "source_sha256": "2ece2de69439b553a0435cd37254956ef39f1bb22e0f766706510837e660d46d",
+      "web_sha256": "da0e5d635f4e05a599ffe80f97e3d3102a18d62f66a409d0b6211ca4c107f59c",
+      "width": 1448
+    },
+    "of-stillwatch-025": {
+      "bytes": 368598,
+      "height": 1086,
+      "relative_url": "art/full/5e45e8417a933717415581a8d8d329b0d105423c6f52d026a943f6555f040efd.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-025.png",
+      "source_sha256": "eb051ec373cfb4d6c0393d9bc02c8e00604ea9681e4efd2b4408f4522360e555",
+      "web_sha256": "5e45e8417a933717415581a8d8d329b0d105423c6f52d026a943f6555f040efd",
+      "width": 1448
+    },
+    "of-stillwatch-026": {
+      "bytes": 441884,
+      "height": 1086,
+      "relative_url": "art/full/03e26f14960830bbb59f2a787e2aa4507a7e0120d27c4ceb60fe03ac954f67a5.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-026.png",
+      "source_sha256": "27b6c9391cb999bc37289abd1b5393b90d77685faf487c8260dce9c3cde87f68",
+      "web_sha256": "03e26f14960830bbb59f2a787e2aa4507a7e0120d27c4ceb60fe03ac954f67a5",
+      "width": 1448
+    },
+    "of-stillwatch-027": {
+      "bytes": 429844,
+      "height": 1086,
+      "relative_url": "art/full/8b7f5c25d51d4ed7fca74e8f3da30ab96b5434f0975ea6e85cc96ad05fcca6ae.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-027.png",
+      "source_sha256": "652902b06ffc91d30c2d758acda10b6a1a308ab1e819b65ded66be69db7c971c",
+      "web_sha256": "8b7f5c25d51d4ed7fca74e8f3da30ab96b5434f0975ea6e85cc96ad05fcca6ae",
+      "width": 1448
+    },
+    "of-stillwatch-028": {
+      "bytes": 511114,
+      "height": 1086,
+      "relative_url": "art/full/d8089e3c0fa151d31356406f9e5e30cd9bfcd75fcec5f88be4bbb0cd38502f13.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-028.png",
+      "source_sha256": "7fada471958a7d9b566f8ab17fdfa251ac56db41000973c65fa869101344456a",
+      "web_sha256": "d8089e3c0fa151d31356406f9e5e30cd9bfcd75fcec5f88be4bbb0cd38502f13",
+      "width": 1448
+    },
+    "of-stillwatch-029": {
+      "bytes": 319194,
+      "height": 1086,
+      "relative_url": "art/full/2fcea8d6c5fd41b7f05d7dfaca5966a6ecdd4b21725c28bc47f10f1e0d1096b2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-029.png",
+      "source_sha256": "c25055674e1e5d7e2c2bdee607f98f8a8e2b8e2cb8663329ba777cc9b869d486",
+      "web_sha256": "2fcea8d6c5fd41b7f05d7dfaca5966a6ecdd4b21725c28bc47f10f1e0d1096b2",
+      "width": 1448
+    },
+    "of-stillwatch-030": {
+      "bytes": 459098,
+      "height": 1086,
+      "relative_url": "art/full/3eb6c021f6beb41eece7f09e211d184b829c9642c14f263602ad42b193523b76.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-030.png",
+      "source_sha256": "cbba2ad86d275a6fb605904a96b38c719d2c0fb4674e601ddac621b35340a204",
+      "web_sha256": "3eb6c021f6beb41eece7f09e211d184b829c9642c14f263602ad42b193523b76",
+      "width": 1448
+    },
+    "of-stillwatch-031": {
+      "bytes": 344076,
+      "height": 1086,
+      "relative_url": "art/full/f3bd477aa912010428c442737554d7789ff69c57d8472e244ebf8a34db29fc8a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-031.png",
+      "source_sha256": "d2549f2ec2ce459ee0fc2df1b400e586d9eb3ba6e6ff8a2ae37f09074fa541d8",
+      "web_sha256": "f3bd477aa912010428c442737554d7789ff69c57d8472e244ebf8a34db29fc8a",
+      "width": 1448
+    },
+    "of-stillwatch-032": {
+      "bytes": 461472,
+      "height": 1086,
+      "relative_url": "art/full/da9f562e33aa5edd334698a7ef4a2feda7b3c9fbf8a5fc826e94afa54566a711.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-032.png",
+      "source_sha256": "1f2862c100429faca5ceccd054900aa4e82c51e3830f612a3d2c2f487c238d38",
+      "web_sha256": "da9f562e33aa5edd334698a7ef4a2feda7b3c9fbf8a5fc826e94afa54566a711",
+      "width": 1448
+    },
+    "of-stillwatch-033": {
+      "bytes": 396264,
+      "height": 1086,
+      "relative_url": "art/full/39a0446d4ed87ca7945d3a2c1cfddee4c3a00c21e8cc02b683cf884220059eb9.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-033.png",
+      "source_sha256": "950f84fd22597eb1823f5daff0d3473db311ae8ebef7a2b80fde5fc5ef6fcf0c",
+      "web_sha256": "39a0446d4ed87ca7945d3a2c1cfddee4c3a00c21e8cc02b683cf884220059eb9",
+      "width": 1448
+    },
+    "of-stillwatch-034": {
+      "bytes": 385870,
+      "height": 1086,
+      "relative_url": "art/full/004bd9c3fd4fcd0e63f6717061b50a7ca89be24ea13ebb458d5db73a902c72a9.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-034.png",
+      "source_sha256": "f0eff4d957d45d831d3b5693882da6e39b35be17c91f4d8acc60f6b60f4f37b1",
+      "web_sha256": "004bd9c3fd4fcd0e63f6717061b50a7ca89be24ea13ebb458d5db73a902c72a9",
+      "width": 1448
+    },
+    "of-stillwatch-035": {
+      "bytes": 264482,
+      "height": 1086,
+      "relative_url": "art/full/5e8153381d584f28a0cae764a5df7dc22fe2f330d6b0bc9cdc64ff6269cb7e43.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-035.png",
+      "source_sha256": "4caf738dc5db8aff7e0dbabacd12c1199a09e40cb934c0c76db3dd78deef1f3e",
+      "web_sha256": "5e8153381d584f28a0cae764a5df7dc22fe2f330d6b0bc9cdc64ff6269cb7e43",
+      "width": 1448
+    },
+    "of-stillwatch-036": {
+      "bytes": 611138,
+      "height": 1086,
+      "relative_url": "art/full/70cb877469005d0303488bf34214d319839659fdcf040eae2ec8bcd4dfa87807.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-036.png",
+      "source_sha256": "c5f64ece4479ea73270237edf38038254476801960ef3d4af710f249a81ccfdd",
+      "web_sha256": "70cb877469005d0303488bf34214d319839659fdcf040eae2ec8bcd4dfa87807",
+      "width": 1448
+    },
+    "of-stillwatch-037": {
+      "bytes": 404550,
+      "height": 1085,
+      "relative_url": "art/full/b89c463b044543e3f0f53a96c4715eaa3dbb105470a953f167b575a9764444fd.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-037.png",
+      "source_sha256": "ead077a9582f608ced355e20c79b834444dd2faa5f1df8a4b5e726c5a5bec2ff",
+      "web_sha256": "b89c463b044543e3f0f53a96c4715eaa3dbb105470a953f167b575a9764444fd",
+      "width": 1450
+    },
+    "of-stillwatch-038": {
+      "bytes": 365156,
+      "height": 1086,
+      "relative_url": "art/full/3fa799b5830815d6854f68884812e7d41d64aa36664c60a0775a28f0969b09ab.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-038.png",
+      "source_sha256": "2ef9311a155719201fee4422dc8f07855f3bc16983bee3f4723b704120c03cc5",
+      "web_sha256": "3fa799b5830815d6854f68884812e7d41d64aa36664c60a0775a28f0969b09ab",
+      "width": 1448
+    },
+    "of-stillwatch-039": {
+      "bytes": 524002,
+      "height": 1086,
+      "relative_url": "art/full/dcd4590682033e98278c60e90a9c53675d37e80a7b1eae4f78187907a1564029.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-039.png",
+      "source_sha256": "95c2429abbb50a90d0df507e3661ffb053a9fa4aea1f1c4f8b5709e431d3f3dc",
+      "web_sha256": "dcd4590682033e98278c60e90a9c53675d37e80a7b1eae4f78187907a1564029",
+      "width": 1448
+    },
+    "of-stillwatch-040": {
+      "bytes": 419898,
+      "height": 1086,
+      "relative_url": "art/full/ce2a317758f8fa99227880770f3ef80c605b6f165835d24849b6f87885020b4d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-040.png",
+      "source_sha256": "5c4a93b81b9075600f6597aff34c08bec8ceaaeb892cd4e1c70442bd4c53847b",
+      "web_sha256": "ce2a317758f8fa99227880770f3ef80c605b6f165835d24849b6f87885020b4d",
+      "width": 1448
+    },
+    "of-stillwatch-041": {
+      "bytes": 692258,
+      "height": 1086,
+      "relative_url": "art/full/0b61ae8073fa147930d8b6f2e53f71246a4c5f7dc170f7fb7907656a1e66a302.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-041.png",
+      "source_sha256": "1b1974a686921af743c7b20d2f4d8b86b5f755c341716c967388fa212b5d8343",
+      "web_sha256": "0b61ae8073fa147930d8b6f2e53f71246a4c5f7dc170f7fb7907656a1e66a302",
+      "width": 1448
+    },
+    "of-stillwatch-042": {
+      "bytes": 494832,
+      "height": 1086,
+      "relative_url": "art/full/7e35f075afdf35010d9132765f2f8d8857ae8f09aa32ef1034cdfa87002de112.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-042.png",
+      "source_sha256": "f6637c2f4fbfa3cdd0d6210ac927d304da6087bd60ab1127b750d1a89c212425",
+      "web_sha256": "7e35f075afdf35010d9132765f2f8d8857ae8f09aa32ef1034cdfa87002de112",
+      "width": 1448
+    },
     "of-stillwatch-043": {
       "bytes": 382682,
       "height": 1086,
@@ -1088,6 +1547,105 @@
       "source_asset_path": "res://assets/cards/originals/of-stillwatch-043.png",
       "source_sha256": "d114e7c485c9e66f854935786c78651e1d6e8c9dfa83847379c2698dd08730ad",
       "web_sha256": "1f5863116d210d4aa932b48086f08086e518e5e74b39e5ee6f54c0eac7d9f4ff",
+      "width": 1448
+    },
+    "of-stillwatch-044": {
+      "bytes": 339546,
+      "height": 1087,
+      "relative_url": "art/full/e5955da2b313f712337263406705902ba9a5a35a8a1a79b23f36769d9174a3ef.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-044.png",
+      "source_sha256": "962f88b5c654025fcd2168fb7b30948572c077084032d0ed28b5abbb2a5dc621",
+      "web_sha256": "e5955da2b313f712337263406705902ba9a5a35a8a1a79b23f36769d9174a3ef",
+      "width": 1447
+    },
+    "of-stillwatch-045": {
+      "bytes": 316206,
+      "height": 1086,
+      "relative_url": "art/full/a50084c38a77978655a99082877712728c28d9b367710e267c1c6a56b90cc469.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-045.png",
+      "source_sha256": "f04c6aca5cbc85e52a0ff7fb8277ceac3a7985a7cf4b8a855c00eec3b13cbcf5",
+      "web_sha256": "a50084c38a77978655a99082877712728c28d9b367710e267c1c6a56b90cc469",
+      "width": 1448
+    },
+    "of-stillwatch-046": {
+      "bytes": 372214,
+      "height": 1086,
+      "relative_url": "art/full/f0ab4a6f1a591c6845be57faa6dec22b77f16e2c179d05c8b08bebad936522a0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-046.png",
+      "source_sha256": "de6c3e8de48950b4a57f97e00af1c9e49b7b90fefb8b301e8db7af24c57850ff",
+      "web_sha256": "f0ab4a6f1a591c6845be57faa6dec22b77f16e2c179d05c8b08bebad936522a0",
+      "width": 1448
+    },
+    "of-stillwatch-047": {
+      "bytes": 544312,
+      "height": 1086,
+      "relative_url": "art/full/6bb8f1b2f99a746658c47cb4ca3a5dc75d697ff8641e7122535ec0702afe1c24.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-047.png",
+      "source_sha256": "33a39db44b66b42e0bd8d851b65096185518a1fa00041bcdedb5726adcd1fedd",
+      "web_sha256": "6bb8f1b2f99a746658c47cb4ca3a5dc75d697ff8641e7122535ec0702afe1c24",
+      "width": 1448
+    },
+    "of-stillwatch-048": {
+      "bytes": 351228,
+      "height": 1086,
+      "relative_url": "art/full/b63d55f6108f9833154d31f6d2b417c67fe0d56feec2fa1c65ee8282a9747cf8.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-048.png",
+      "source_sha256": "840b063d0ac2d0e66ab5896f29073edebd148af0de26996ba0cb3370c3ac569b",
+      "web_sha256": "b63d55f6108f9833154d31f6d2b417c67fe0d56feec2fa1c65ee8282a9747cf8",
+      "width": 1448
+    },
+    "of-stillwatch-049": {
+      "bytes": 547508,
+      "height": 1086,
+      "relative_url": "art/full/e409cc64ac1f1506fb17a1007e6a1ed6696f50bf96e5794800d1f212872df15d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-049.png",
+      "source_sha256": "d21d5677fda6267988d42ebdda1d3d5387d4321d01057e67899f0b4c41628b16",
+      "web_sha256": "e409cc64ac1f1506fb17a1007e6a1ed6696f50bf96e5794800d1f212872df15d",
+      "width": 1448
+    },
+    "of-stillwatch-050": {
+      "bytes": 351356,
+      "height": 1086,
+      "relative_url": "art/full/b94ecc61fcfb12d42b88217026318bc4fcfd961e114112f1a3b78afe94858038.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-050.png",
+      "source_sha256": "ff6e48eac87d1eec64f758a09502b4ab1161f9fbb40b5d7b8ebef48702b21406",
+      "web_sha256": "b94ecc61fcfb12d42b88217026318bc4fcfd961e114112f1a3b78afe94858038",
+      "width": 1448
+    },
+    "of-stillwatch-051": {
+      "bytes": 447158,
+      "height": 1086,
+      "relative_url": "art/full/7ea11fc8cca85e76267b89becd8e50a960d8eac871de193fef81c4772027a5a9.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-051.png",
+      "source_sha256": "0f2bc2de27dfba3dcbe1a183abe9e5018ed2080921d071378a017bd6249b8ed6",
+      "web_sha256": "7ea11fc8cca85e76267b89becd8e50a960d8eac871de193fef81c4772027a5a9",
+      "width": 1448
+    },
+    "of-stillwatch-052": {
+      "bytes": 322054,
+      "height": 1055,
+      "relative_url": "art/full/ba90753d92560944c1b44bb770688c346073e6c9b397a3ac997c709920b438b2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-052.png",
+      "source_sha256": "38982581c09976de588ae8ed19a982142686cdfcac5d2866340bfcdc9e04c7c9",
+      "web_sha256": "ba90753d92560944c1b44bb770688c346073e6c9b397a3ac997c709920b438b2",
+      "width": 1491
+    },
+    "of-stillwatch-053": {
+      "bytes": 331934,
+      "height": 1086,
+      "relative_url": "art/full/ca2586a9e34aad8f862add8bf9ccbf5ae5c95e946e4e93adf8e0cb367023c12e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-053.png",
+      "source_sha256": "38af9da0b3079219a45ee1c173e0ed6e68edfdd4217fbb90edeba8edd70ea205",
+      "web_sha256": "ca2586a9e34aad8f862add8bf9ccbf5ae5c95e946e4e93adf8e0cb367023c12e",
+      "width": 1448
+    },
+    "of-stillwatch-054": {
+      "bytes": 460244,
+      "height": 1086,
+      "relative_url": "art/full/6b0e59ae61a309477f00b3e4b92349a49cddfd3d2fdda29b7960715e2f60c0a6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-054.png",
+      "source_sha256": "b922f3befb6f1bec27ff6bd3d9a4fb127a9b8e7f49671585a2f7d46a435cd631",
+      "web_sha256": "6b0e59ae61a309477f00b3e4b92349a49cddfd3d2fdda29b7960715e2f60c0a6",
       "width": 1448
     },
     "of-stillwatch-055": {
@@ -1098,9 +1656,414 @@
       "source_sha256": "1afb6b88a991b63b0c26fcc90ff996785dfa84b52db5c71a6c590e9315b8b357",
       "web_sha256": "a30baef889eec918d0bb787bbbd13d1c319f053746c0be9c23610167c410847a",
       "width": 1448
+    },
+    "of-stillwatch-056": {
+      "bytes": 468552,
+      "height": 1086,
+      "relative_url": "art/full/4609f8221855d688b6d0cf94c98de7ce4e37a764c6ba5c060b32b1b58be7502d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-056.png",
+      "source_sha256": "a0c1b144242c92535ffef34d9d4e6e3465998d72eb537ee01ac047bb9f54a372",
+      "web_sha256": "4609f8221855d688b6d0cf94c98de7ce4e37a764c6ba5c060b32b1b58be7502d",
+      "width": 1448
+    },
+    "of-stillwatch-057": {
+      "bytes": 316710,
+      "height": 1086,
+      "relative_url": "art/full/70d3831ba5c61b83038ca0735c3a91c9e5c88b5982f85bf1c7d79ef32e31310d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-057.png",
+      "source_sha256": "2435692553066785af1dc78f33ca04ecb6170011cdf25b43e345220a358d6331",
+      "web_sha256": "70d3831ba5c61b83038ca0735c3a91c9e5c88b5982f85bf1c7d79ef32e31310d",
+      "width": 1448
+    },
+    "of-stillwatch-058": {
+      "bytes": 411510,
+      "height": 1087,
+      "relative_url": "art/full/b140f3099d017b0d0c3e98737e3718fbdad8a57d723ee677c199cf1cb0b9b470.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-058.png",
+      "source_sha256": "495476bbcf08fac6763d3c148456dfc290111c21263b6b5f8e36e660b3c213da",
+      "web_sha256": "b140f3099d017b0d0c3e98737e3718fbdad8a57d723ee677c199cf1cb0b9b470",
+      "width": 1447
+    },
+    "of-stillwatch-059": {
+      "bytes": 488640,
+      "height": 1086,
+      "relative_url": "art/full/d3028bb93c3843e7fef732fee7aac50a1c44d5f98c45075e946e40c1e2f5a6bb.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-059.png",
+      "source_sha256": "5f3fdcfe6e57fa88bcb3a6527e87fbff59c5c06d8dec3901f2d885cc757b7b57",
+      "web_sha256": "d3028bb93c3843e7fef732fee7aac50a1c44d5f98c45075e946e40c1e2f5a6bb",
+      "width": 1449
+    },
+    "of-stillwatch-060": {
+      "bytes": 354842,
+      "height": 1086,
+      "relative_url": "art/full/251f7d2432595de6943d3002247e44a2b833dd72dc883c938e42d40e1796df08.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-060.png",
+      "source_sha256": "c50870c93508b3bff529dd741d003095c8dd24a5720ce445713feff317416368",
+      "web_sha256": "251f7d2432595de6943d3002247e44a2b833dd72dc883c938e42d40e1796df08",
+      "width": 1448
+    },
+    "of-stillwatch-061": {
+      "bytes": 358898,
+      "height": 1086,
+      "relative_url": "art/full/87038a9e0796dfcdfbc5df9dd2a3c889c32b28ccc476f27d40629888a30f22e2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-061.png",
+      "source_sha256": "0836134b328bfc95eec0cdc7446fd77b64f7d0751cc003dd738d669326412a5b",
+      "web_sha256": "87038a9e0796dfcdfbc5df9dd2a3c889c32b28ccc476f27d40629888a30f22e2",
+      "width": 1448
+    },
+    "of-stillwatch-062": {
+      "bytes": 493928,
+      "height": 1086,
+      "relative_url": "art/full/de47e7fbc82232a3bfd0d2ef29845d3ae945b043ef267a1237e4c18db7546423.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-062.png",
+      "source_sha256": "9ae978e14ab81bc28fb8d8943521ca44ad63308bc840af0e34e599f54c6311b5",
+      "web_sha256": "de47e7fbc82232a3bfd0d2ef29845d3ae945b043ef267a1237e4c18db7546423",
+      "width": 1448
+    },
+    "of-stillwatch-063": {
+      "bytes": 565190,
+      "height": 1086,
+      "relative_url": "art/full/fc2f6de4df2480bd0f9aa9c1398892a07d56a031975d4e4aab7dff7654b9362d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-063.png",
+      "source_sha256": "db93960013ca8dacab3d74b9847f35d0735d04e595cc3e198e0e989a05d681b2",
+      "web_sha256": "fc2f6de4df2480bd0f9aa9c1398892a07d56a031975d4e4aab7dff7654b9362d",
+      "width": 1448
+    },
+    "of-stillwatch-064": {
+      "bytes": 481612,
+      "height": 1086,
+      "relative_url": "art/full/cc419e30fd807f307c3a93ff298c456c442abf490e96cd7d92c9aedca9449128.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-064.png",
+      "source_sha256": "857efbc3e75d9fd6dedc92a571eefffbb9de4f1404c62678ca808ccf494f2a70",
+      "web_sha256": "cc419e30fd807f307c3a93ff298c456c442abf490e96cd7d92c9aedca9449128",
+      "width": 1448
+    },
+    "of-stillwatch-065": {
+      "bytes": 400478,
+      "height": 1086,
+      "relative_url": "art/full/cb0312ef357f9e0ec0d646e883f2a85291b72cfadfca63bb6d3bfefc36360ca5.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-065.png",
+      "source_sha256": "3a38dbb0b4fcb55199438aff31d986679a0905431fcfa542251255393ea6a074",
+      "web_sha256": "cb0312ef357f9e0ec0d646e883f2a85291b72cfadfca63bb6d3bfefc36360ca5",
+      "width": 1448
+    },
+    "of-stillwatch-066": {
+      "bytes": 251800,
+      "height": 1086,
+      "relative_url": "art/full/de89c85dce61f7e4cfa2b0918065eb100fcb309bb2a1a5cda0dfa809470b1b13.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-066.png",
+      "source_sha256": "351421a43a01a7e233cb57f630256142223cdc4737761bc4a34e6e0a4d762f3d",
+      "web_sha256": "de89c85dce61f7e4cfa2b0918065eb100fcb309bb2a1a5cda0dfa809470b1b13",
+      "width": 1448
+    },
+    "of-stillwatch-067": {
+      "bytes": 256008,
+      "height": 1086,
+      "relative_url": "art/full/4b7cbad13abc8238fd007d148ac1e2919507ee66d3e3ced1c388c2292b14e65b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-067.png",
+      "source_sha256": "3e8de3c26bd5e26863e8653b0c6d44720a17807acae1b706abbfcd0bbad527a7",
+      "web_sha256": "4b7cbad13abc8238fd007d148ac1e2919507ee66d3e3ced1c388c2292b14e65b",
+      "width": 1448
+    },
+    "of-stillwatch-068": {
+      "bytes": 588402,
+      "height": 1086,
+      "relative_url": "art/full/09a19ac4f82c9af898a112b75cf8ad5c12461fa23f9925614dfa541b81cb3e6f.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-068.png",
+      "source_sha256": "dff664ecb7da9d5d2c7f2f2d67e88019fbace6f88633e6fb8f59ae371175c4db",
+      "web_sha256": "09a19ac4f82c9af898a112b75cf8ad5c12461fa23f9925614dfa541b81cb3e6f",
+      "width": 1448
+    },
+    "of-stillwatch-069": {
+      "bytes": 293354,
+      "height": 1086,
+      "relative_url": "art/full/a2e981160e3fe17925ca96cd11c6aa26d7ebed470e7e03f85461d8bb39900459.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-069.png",
+      "source_sha256": "d8bcb3ba38b4f793b3f6bb159819786fb7ceb710ae341e3b1633a6aaf17699d8",
+      "web_sha256": "a2e981160e3fe17925ca96cd11c6aa26d7ebed470e7e03f85461d8bb39900459",
+      "width": 1448
+    },
+    "of-stillwatch-070": {
+      "bytes": 423554,
+      "height": 1086,
+      "relative_url": "art/full/f708cc93faba41835cd90314f7de2c77c986475fee324741541652950e05ac01.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-070.png",
+      "source_sha256": "7e60c058a6dc72ced3589ab956e61524b9e24d475c253c51241e3907faae0ccd",
+      "web_sha256": "f708cc93faba41835cd90314f7de2c77c986475fee324741541652950e05ac01",
+      "width": 1448
+    },
+    "of-stillwatch-071": {
+      "bytes": 310786,
+      "height": 1086,
+      "relative_url": "art/full/c95e3bfb0b676bff9c1f177909947e7f238b111f53a2b6b4f5232f5ec6754b69.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-071.png",
+      "source_sha256": "d3de7c98d4ed399f8f80b0bc4e2e0e87ea7134322910f5df4aea1547ff6dd5ec",
+      "web_sha256": "c95e3bfb0b676bff9c1f177909947e7f238b111f53a2b6b4f5232f5ec6754b69",
+      "width": 1448
+    },
+    "of-stillwatch-072": {
+      "bytes": 382102,
+      "height": 1086,
+      "relative_url": "art/full/9987477974befaa4fde96a241b3eef8c8ec51d42108727912fbf371ef197c301.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-072.png",
+      "source_sha256": "89e6b142d10b413574a8337df7c14b58592e5e0e57c86319bd2e2a7a233f62f3",
+      "web_sha256": "9987477974befaa4fde96a241b3eef8c8ec51d42108727912fbf371ef197c301",
+      "width": 1448
+    },
+    "of-stillwatch-073": {
+      "bytes": 397128,
+      "height": 1086,
+      "relative_url": "art/full/9fb7e955a5a0960f500745054361d223d8aa17f122dd12c958e32915e69d71df.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-073.png",
+      "source_sha256": "73ee3a55d5120cee8b91547c6cec2b634cbf0eb596a6de73c5707d94ceaa41be",
+      "web_sha256": "9fb7e955a5a0960f500745054361d223d8aa17f122dd12c958e32915e69d71df",
+      "width": 1448
+    },
+    "of-stillwatch-074": {
+      "bytes": 459534,
+      "height": 1086,
+      "relative_url": "art/full/8610c15510b844fe33cef9f2d6f2abe2fe6c29527c931daa7a0f755a7b72b350.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-074.png",
+      "source_sha256": "a125b209f372da867f6edf70681e6764f40d36bc3773e8b891c3e0a4330c41a6",
+      "web_sha256": "8610c15510b844fe33cef9f2d6f2abe2fe6c29527c931daa7a0f755a7b72b350",
+      "width": 1448
+    },
+    "of-stillwatch-075": {
+      "bytes": 217786,
+      "height": 1086,
+      "relative_url": "art/full/34a86439670b3e2a632962f01581437e83b70615da05d91603f21f70cd2edfa3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-075.png",
+      "source_sha256": "b57197c32566282fe79aaa6ec9d8fdadfcdbe183ac60d32520107af49317eae5",
+      "web_sha256": "34a86439670b3e2a632962f01581437e83b70615da05d91603f21f70cd2edfa3",
+      "width": 1448
+    },
+    "of-stillwatch-076": {
+      "bytes": 448034,
+      "height": 1086,
+      "relative_url": "art/full/7f7e56de0b3b1cb6f7a9b3c4e0673d315730ecdc1bf66825d67e37faf70d1096.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-076.png",
+      "source_sha256": "a1ab031e0e57e6747f310a80d2215083d5e6a94c6a2dcbd53d7dea3d717caeeb",
+      "web_sha256": "7f7e56de0b3b1cb6f7a9b3c4e0673d315730ecdc1bf66825d67e37faf70d1096",
+      "width": 1448
+    },
+    "of-stillwatch-077": {
+      "bytes": 345758,
+      "height": 1086,
+      "relative_url": "art/full/696ec8ad75e64ec6bfe205c4d80f0adf70edd08a97e6d588f72fe8a4547c07c3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-077.png",
+      "source_sha256": "5d8a11afeef524cfd385ed2f0e590e000bea163f60f3c09d706b0386b01d9774",
+      "web_sha256": "696ec8ad75e64ec6bfe205c4d80f0adf70edd08a97e6d588f72fe8a4547c07c3",
+      "width": 1448
+    },
+    "of-stillwatch-078": {
+      "bytes": 276238,
+      "height": 1086,
+      "relative_url": "art/full/f092b82923c27e31abecbc0699e6edf9d530dc49856879f261cac4d53125f63e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-078.png",
+      "source_sha256": "af897fcf74f4efa258012bbc213213be25cdc8578abef03d6848742b020214c7",
+      "web_sha256": "f092b82923c27e31abecbc0699e6edf9d530dc49856879f261cac4d53125f63e",
+      "width": 1448
+    },
+    "of-stillwatch-079": {
+      "bytes": 445372,
+      "height": 1086,
+      "relative_url": "art/full/6aa8e222ceba0954f48b1f264f98847d3ff420ecc73bcb2c5760cb15210c1f6e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-079.png",
+      "source_sha256": "66d284ac435495a1b5c90978caa1774daaa41ea72d1fdffa522ed84e10fb2122",
+      "web_sha256": "6aa8e222ceba0954f48b1f264f98847d3ff420ecc73bcb2c5760cb15210c1f6e",
+      "width": 1448
+    },
+    "of-stillwatch-080": {
+      "bytes": 239944,
+      "height": 1086,
+      "relative_url": "art/full/7050a9a6640b8621abdc2c9373346dc2704af6d95a56b34efb94ad33a1b01658.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-080.png",
+      "source_sha256": "d9c2b224a8d63ca59fe75d7e14d7f01d6fc0c4723b4a419a5acf71485e59fe7e",
+      "web_sha256": "7050a9a6640b8621abdc2c9373346dc2704af6d95a56b34efb94ad33a1b01658",
+      "width": 1448
+    },
+    "of-stillwatch-081": {
+      "bytes": 485474,
+      "height": 1086,
+      "relative_url": "art/full/2f20b9c1b6de1e266e7c661e2e17d6b6a6811099f1324ac5deba6ac54d0b9046.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-081.png",
+      "source_sha256": "a30360b490b7a10d581bf15873593fea18004f92c1fcac33ff73820b9e9c40d8",
+      "web_sha256": "2f20b9c1b6de1e266e7c661e2e17d6b6a6811099f1324ac5deba6ac54d0b9046",
+      "width": 1448
+    },
+    "of-stillwatch-082": {
+      "bytes": 496614,
+      "height": 1086,
+      "relative_url": "art/full/dcca1e1ce6597499afe1408a54401f6153e6811aadf0a89c0785ef6ae043d828.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-082.png",
+      "source_sha256": "900014244a9e1d19d145922e09d856e2d1a059612171b079b557b4fa7c5da98f",
+      "web_sha256": "dcca1e1ce6597499afe1408a54401f6153e6811aadf0a89c0785ef6ae043d828",
+      "width": 1448
+    },
+    "of-stillwatch-083": {
+      "bytes": 454444,
+      "height": 1086,
+      "relative_url": "art/full/0c56a896c383941c4db6ae3f31f70531717215af1c04b92d3a8d0a7121066e31.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-083.png",
+      "source_sha256": "38778391213ff89ca295b3313e39033812e1fcac52ab2bf192559c8c98f761dc",
+      "web_sha256": "0c56a896c383941c4db6ae3f31f70531717215af1c04b92d3a8d0a7121066e31",
+      "width": 1448
+    },
+    "of-stillwatch-084": {
+      "bytes": 321470,
+      "height": 1086,
+      "relative_url": "art/full/2522ce621345a08c374d46be93c3d3a8cb14b6fa49ad1332b13537592b0c3d7a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-084.png",
+      "source_sha256": "9f982b3b96b484abd903d1aeabcc9583152c478e41138b1c9623da98a9c74f2f",
+      "web_sha256": "2522ce621345a08c374d46be93c3d3a8cb14b6fa49ad1332b13537592b0c3d7a",
+      "width": 1448
+    },
+    "of-stillwatch-085": {
+      "bytes": 351748,
+      "height": 1086,
+      "relative_url": "art/full/9507e4b51197de9beb9b76fa5637ddce56e0caa018956a1ffcb2ad6d75527637.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-085.png",
+      "source_sha256": "dbae926ff34903e4a117fcd0b8085c8e89a9607f207d6933f13ba69729859b36",
+      "web_sha256": "9507e4b51197de9beb9b76fa5637ddce56e0caa018956a1ffcb2ad6d75527637",
+      "width": 1448
+    },
+    "of-stillwatch-086": {
+      "bytes": 413938,
+      "height": 1086,
+      "relative_url": "art/full/17ef9413236b78d271b54c161921e89a856e8e21d79ce2173c07eeb88ee66a6a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-086.png",
+      "source_sha256": "1735fec2c12f9418e2c454545387bbea4ad82d4cd9a853051a6e41c4bbeb17a9",
+      "web_sha256": "17ef9413236b78d271b54c161921e89a856e8e21d79ce2173c07eeb88ee66a6a",
+      "width": 1448
+    },
+    "of-stillwatch-087": {
+      "bytes": 466154,
+      "height": 1086,
+      "relative_url": "art/full/2abcb4689c303a419278739647852a59aec588546ccfe90c6a2c76d72480299e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-087.png",
+      "source_sha256": "822613d1e13f785213ea43dc800f751778c690f9d01bb55f24d404945c9de49d",
+      "web_sha256": "2abcb4689c303a419278739647852a59aec588546ccfe90c6a2c76d72480299e",
+      "width": 1448
+    },
+    "of-stillwatch-088": {
+      "bytes": 427546,
+      "height": 1086,
+      "relative_url": "art/full/bf66f8377af77234b6bcc4c19544e7167eb94b61d2982d5c71ac33ae88e7651c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-088.png",
+      "source_sha256": "174a1c3b2b6ecf588744029753f417b434e9a9cd90e7eff7f1651f1b5e0c640b",
+      "web_sha256": "bf66f8377af77234b6bcc4c19544e7167eb94b61d2982d5c71ac33ae88e7651c",
+      "width": 1448
+    },
+    "of-stillwatch-089": {
+      "bytes": 314982,
+      "height": 1086,
+      "relative_url": "art/full/2ded43baa4de5ceff4ac4f5d1f399c627a648a0187e1e5584942a722d0d595bc.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-089.png",
+      "source_sha256": "1f5d884fe4895a452198cc7f89fb6f781d8d29410dbb410ce6ba78ad67c91adc",
+      "web_sha256": "2ded43baa4de5ceff4ac4f5d1f399c627a648a0187e1e5584942a722d0d595bc",
+      "width": 1448
+    },
+    "of-stillwatch-090": {
+      "bytes": 293482,
+      "height": 1086,
+      "relative_url": "art/full/2f9ac926681ecb9224e00e311393d6965a08e1076b75776a62a1ea59af1e80e2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-090.png",
+      "source_sha256": "ff1ca78b3cfd0a8b68946f069ef6367585496430b47f233e4dc948abd757d3dd",
+      "web_sha256": "2f9ac926681ecb9224e00e311393d6965a08e1076b75776a62a1ea59af1e80e2",
+      "width": 1448
+    },
+    "of-stillwatch-091": {
+      "bytes": 273592,
+      "height": 1086,
+      "relative_url": "art/full/dc7b6921fad59d192aeb37ad3142db12cc13103ed5254c7ddbaa3e6b5a55b01b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-091.png",
+      "source_sha256": "386cb7d03541611ab6aece79a4d18b9f7bcdaf87ab6003feaa604c985549559c",
+      "web_sha256": "dc7b6921fad59d192aeb37ad3142db12cc13103ed5254c7ddbaa3e6b5a55b01b",
+      "width": 1448
+    },
+    "of-stillwatch-092": {
+      "bytes": 295282,
+      "height": 1086,
+      "relative_url": "art/full/d9b6b71e998c6c26241a8cd89b3f0cb0dea1cdffce5aebb1c01beab138941a9c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-092.png",
+      "source_sha256": "512fca5f96de5f77fc6af82fe510cbae957bbecc2d7ef3f9c557f557851bc6c1",
+      "web_sha256": "d9b6b71e998c6c26241a8cd89b3f0cb0dea1cdffce5aebb1c01beab138941a9c",
+      "width": 1448
+    },
+    "of-stillwatch-093": {
+      "bytes": 303646,
+      "height": 1086,
+      "relative_url": "art/full/6cba5f5d608ab78b6fe29c0664293f77312ab82956739dfa9604b92844edd717.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-093.png",
+      "source_sha256": "b5e6945e004a7e10066f1911412fc04c26a7dff585831e39366ab0f0708f9a1a",
+      "web_sha256": "6cba5f5d608ab78b6fe29c0664293f77312ab82956739dfa9604b92844edd717",
+      "width": 1448
+    },
+    "of-stillwatch-094": {
+      "bytes": 393292,
+      "height": 1086,
+      "relative_url": "art/full/8f3ad7fc5447f15bb88b775e9a77bfb1a0d033e9aea0b0c397b9fb480f5e4dbf.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-094.png",
+      "source_sha256": "4d2f8d17edeb44f381f89eb561b87e33ec8600b95ec70d6d2bd406bc25ed2176",
+      "web_sha256": "8f3ad7fc5447f15bb88b775e9a77bfb1a0d033e9aea0b0c397b9fb480f5e4dbf",
+      "width": 1448
+    },
+    "of-stillwatch-095": {
+      "bytes": 377938,
+      "height": 1086,
+      "relative_url": "art/full/a959bf94946e3e3bf33ed2bf8b83068729ba5d67ab68e3bac1c81348a4e82cf4.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-095.png",
+      "source_sha256": "635512fc0dad9097b8c5752d80d502d6eee7511b679f8441b5ab9381e926bf19",
+      "web_sha256": "a959bf94946e3e3bf33ed2bf8b83068729ba5d67ab68e3bac1c81348a4e82cf4",
+      "width": 1448
+    },
+    "of-stillwatch-096": {
+      "bytes": 281968,
+      "height": 1086,
+      "relative_url": "art/full/eae7211e6eb91d4100b39a8f199ef7068c4d68f4dddb8d22ab4cf18281696859.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-096.png",
+      "source_sha256": "42207b08634119ec0a5f4f65be3b4cf1d00e047dcce8819b6710cf9586f6058d",
+      "web_sha256": "eae7211e6eb91d4100b39a8f199ef7068c4d68f4dddb8d22ab4cf18281696859",
+      "width": 1448
+    },
+    "of-stillwatch-097": {
+      "bytes": 381944,
+      "height": 1086,
+      "relative_url": "art/full/2a350f2f37aa1177170b43e170539e66363944632e6a068f33931a3f89f796f0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-097.png",
+      "source_sha256": "321c360931d74c868528e4e559073fd31936ac005b160cf2b090954e3fcbc8f6",
+      "web_sha256": "2a350f2f37aa1177170b43e170539e66363944632e6a068f33931a3f89f796f0",
+      "width": 1448
+    },
+    "of-stillwatch-098": {
+      "bytes": 501008,
+      "height": 1086,
+      "relative_url": "art/full/0150dff4754d595ef3cd0f33edb001f7cd05282cb88ace4b54d650e6c52a1479.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-098.png",
+      "source_sha256": "71e10dc33d6a9c11b77ebaa78561b5e5966069bcfcd2798e3edc05b4ea3ab268",
+      "web_sha256": "0150dff4754d595ef3cd0f33edb001f7cd05282cb88ace4b54d650e6c52a1479",
+      "width": 1448
+    },
+    "of-stillwatch-099": {
+      "bytes": 288362,
+      "height": 1086,
+      "relative_url": "art/full/c1e8846dcb2e968f7eb3f48de67bad6e40b432547d1bacc92456fe0db289c917.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-099.png",
+      "source_sha256": "236a2c96e25334801f7997d6c353fb7916ad1d2dd34795622ac181da62e9ce97",
+      "web_sha256": "c1e8846dcb2e968f7eb3f48de67bad6e40b432547d1bacc92456fe0db289c917",
+      "width": 1448
+    },
+    "of-stillwatch-100": {
+      "bytes": 294274,
+      "height": 1086,
+      "relative_url": "art/full/35d2d1533367e0e5407cd5c6c8e89a19fd79732e379cc9b2ad1167760731740a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-stillwatch-100.png",
+      "source_sha256": "11a22507b1dfd3541be304a4ae09e222d2406dbea416870e6e0cf3c3f2494452",
+      "web_sha256": "35d2d1533367e0e5407cd5c6c8e89a19fd79732e379cc9b2ad1167760731740a",
+      "width": 1448
     }
   },
-  "full_asset_count": 122,
+  "full_asset_count": 229,
   "individual_original_count_added": 0,
   "profile": "orafold-web-art-v1",
   "quality": 0.9,
