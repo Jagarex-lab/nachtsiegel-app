@@ -1,0 +1,136 @@
+{
+  "scope": "Interim standalone audio integration on old Core/kernel. Final combined kernel2ba+caps+550art+audio QA is pending and owned by the integration branch. No release/merge authorization implied.",
+  "created_at": "2026-11-11T01:26:48.578323+00:00",
+  "base_core": "53ad3d2",
+  "product_web_commit": "2c9e148aab36c6d364daedc62f3fd9601a981387",
+  "model_sha256": "4d1ed5652514cbc3e13a69cfea3784b1f42cb6a309ce15206966237ab8de9b27",
+  "browser_reports": {
+    "chromium": {
+      "path": "docs/audio/evidence/production-chromium-resume.json",
+      "sha256": "923732ac86ed3e228455f3569062a3d0fa9205a10e33cffd19b2dd3c086b0787",
+      "browser": "158.0.8127.18",
+      "harness_sha256": "a8a075ee025867e016c79d616c5fbc4c4bd0b84683102d20247c12df5f9d0e02",
+      "result": "passed",
+      "scope": "Two real audible duel pause/resume cycles in actual product; interim old kernel, no physical device or human hearing claim."
+    },
+    "webkit": {
+      "path": "docs/audio/evidence/production-webkit-resume.json",
+      "sha256": "a792116df1ffd677dc32de120a2a271d61802bfe78ccbc58e6f5e8bc95e6256a",
+      "browser": "27.2",
+      "harness_sha256": "5184bf2d64682495d3be42e8804368c6e790133b50a6ea74779a35790d9d0790",
+      "result": "passed",
+      "scope": "Two real audible duel pause/resume cycles in actual product; interim old kernel, no physical device or human hearing claim."
+    }
+  },
+  "suites": {
+    "audio_runtime": {
+      "assertions": 395,
+      "failures": 0,
+      "path": "docs/audio/evidence/production-audio_runtime.log",
+      "sha256": "614fc69d1c19a0e52891e528813f2f1f54b78fa22154a9af191165d9c5c42004",
+      "source_commit": "d27ae0da0f6b00da5d52990c5b615b4e7a95f152"
+    },
+    "audio_preview": {
+      "assertions": 31,
+      "failures": 0,
+      "path": "docs/audio/evidence/production-audio_preview.log",
+      "sha256": "bae8966145098911097fbec0478323fc1c7e9efa2f69a2a0089f06fec474f689",
+      "source_commit": "5372054ca4785c21dea29c3bee46b359c011dada"
+    },
+    "audio_integration": {
+      "assertions": 43,
+      "failures": 0,
+      "path": "docs/audio/evidence/production-audio_integration.log",
+      "sha256": "05f8316118d915296cd046a52594e34ca97057b937e7b8c04c396d439a0186f2",
+      "source_commit": "5372054ca4785c21dea29c3bee46b359c011dada"
+    },
+    "native_product": {
+      "assertions": 29,
+      "failures": 0,
+      "path": "docs/audio/evidence/production-native_product.log",
+      "sha256": "1d10b82a14ff75d2b0b2fa8d0498eb70d19f25435db99ce40c36cb0886296784",
+      "source_commit": "2c9e148aab36c6d364daedc62f3fd9601a981387"
+    },
+    "production_ui": {
+      "assertions": 5012,
+      "failures": 0,
+      "path": "docs/audio/evidence/production-production_ui.log",
+      "sha256": "28fc819bd85897283242f9bc2e48310a241f8a279e42aee8887651f8c72509ba",
+      "source_commit": "2c9e148aab36c6d364daedc62f3fd9601a981387"
+    },
+    "replay": {
+      "assertions": 204,
+      "failures": 0,
+      "path": "docs/audio/evidence/production-replay.log",
+      "sha256": "cf8ed7827516f0f5b696e3c49ecdf0149f574aa4369f4ed1e645309ad777e070",
+      "source_commit": "2c9e148aab36c6d364daedc62f3fd9601a981387"
+    },
+    "archive_combat": {
+      "assertions": 725,
+      "failures": 0,
+      "path": "docs/audio/evidence/production-archive_combat.log",
+      "sha256": "d5522d2b5e0f60147e76e8c0145320a75090c0c8747a9db31b116a386a49bb15",
+      "source_commit": null,
+      "source_note": "Historical pre-rebase integration log. Exact run commit was not captured. Preserve as supplementary legacy API coverage, not a fresh2c9 whole-tree proof."
+    }
+  },
+  "assets": {
+    "assertions": 3117,
+    "failures": 0,
+    "files": 163,
+    "events": 52,
+    "bytes": 7914598,
+    "report_sha256": "7516bbc488b1a0128849ffada707a3584130295f666a89280a2bf1fc7480e166",
+    "asset_manifest_sha256": "5b3a3875c96dc3296c4c658e1e95bf994b93f918a068fb3bdb1d8345499ac58f",
+    "asset_bytes_unchanged_since_original_audio_delivery": true
+  },
+  "web_files": {
+    "build-info.json": {
+      "bytes": 237,
+      "sha256": "2f0b2d2b6ee66a62f441e08b051bdb19d51337d9f5b29b27c16beba4523af9e3"
+    },
+    "index.html": {
+      "bytes": 8911,
+      "sha256": "2444b7bea866faf57a115dc129d5874a31f77ee0afb38c03308bd911f7157a29"
+    },
+    "orafold-2c9e148aab36.apple-touch-icon.png": {
+      "bytes": 23759,
+      "sha256": "6f0d99a7e12eec54e14b6c2f57fa4ed8117d8588b098c4704e247cc022e73bd2"
+    },
+    "orafold-2c9e148aab36.audio.position.worklet.js": {
+      "bytes": 2973,
+      "sha256": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8"
+    },
+    "orafold-2c9e148aab36.audio.worklet.js": {
+      "bytes": 7298,
+      "sha256": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3"
+    },
+    "orafold-2c9e148aab36.icon.png": {
+      "bytes": 33027,
+      "sha256": "c9b837bef23c6745cabcabdb0db3aad10a2cd51d28c8797e41b99520fae2fb0d"
+    },
+    "orafold-2c9e148aab36.js": {
+      "bytes": 279925,
+      "sha256": "8ee40f1dfac8ea4d9828cbe4f17fbf4834ba3e7708c1fe5a96c3388977f5ef38"
+    },
+    "orafold-2c9e148aab36.pck": {
+      "bytes": 29456044,
+      "sha256": "644fb842799d72c110c8afe14e36620e23c71726e9850a0a9352b811b563ba41"
+    },
+    "orafold-2c9e148aab36.png": {
+      "bytes": 21443,
+      "sha256": "3cb4495c0b98dfbe4b663cbf2b6836473572339beb66d902367893162a70be0e"
+    },
+    "orafold-2c9e148aab36.wasm": {
+      "bytes": 35754592,
+      "sha256": "9b772205387d214619428ef095c6c4319a4aa4514879ae411be515d405bad784"
+    }
+  },
+  "native_cleanup_receipt_sha256": "f53850004ed075903a2006b9a2d5713ea236d3ff00e2702e28f359b47b520f4c",
+  "limitations": [
+    "Complete actual-product gains/mute/reload/storage-denial/mobile suite is a CI and final-combined-build gate; local new-browser scope here is focused resume.",
+    "Chromium report predates the additional running-context/no-empty-measurement guard. Its stored windows independently show running context and39\u201344fresh blocks.",
+    "Action-window quiet-baseline/trusted-release logic is for the full CI probe; focused local runs use no action-capture windows.",
+    "Historical direct-RMS diagnostic failures are retained under work/audio and are superseded by the summed fresh AudioWorklet measurements, without claiming an A/B causal attribution for the transport fix."
+  ]
+}

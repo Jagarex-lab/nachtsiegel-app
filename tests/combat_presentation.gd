@@ -96,7 +96,7 @@ func run() -> void:
 	for i in 100:audio.cue("hit")
 	check(audio.history.size()<=64 and audio.voices.size()==16,"Audio burst cannot allocate unbounded players")
 	app.queue_free();await create_timer(.5).timeout
-	var file=FileAccess.open("res://work/combat/performance.json",FileAccess.WRITE);file.store_string(JSON.stringify({"environment":"Linux Xvfb / llvmpipe, Dummy audio; software renderer, NOT physical mobile hardware","duels":metrics},"  "))
+	var file=FileAccess.open("res://work/combat/performance.json",FileAccess.WRITE);file.store_string(JSON.stringify({"environment":"%s / %s display / %s audio; host QA, NOT physical mobile hardware" % [OS.get_name(),DisplayServer.get_name(),AudioServer.get_driver_name()],"duels":metrics},"  "))
 	print("COMBAT PRESENTATION: %d assertions, %d failures; complete duels, event order, rapid input, resize, bounded FX/audio and persisted mixer" % [assertions,failures])
 	finish_test(1 if failures else 0)
 

@@ -22,65 +22,97 @@ try {
   evidence.build=await (await fetch(`${url}/build-info.json`)).json();
   const context=await browser.newContext({viewport:{width:1100,height:800}});
   await context.addInitScript(() => {
-    const contexts = [];
-    const analysers = [];
-    const attached = new WeakSet();
-    const routing = [];
-    for (const key of ['AudioContext', 'webkitAudioContext']) {
-      const Native = window[key];
-      if (!Native) continue;
-      window[key] = new Proxy(Native, {
-        construct(target, args) {
-          const instance = Reflect.construct(target, args);
-          contexts.push(instance);
-          return instance;
-        },
-      });
-    }
-    const connect = AudioNode.prototype.connect;
-    AudioNode.prototype.connect = function (...args) {
-      const result = connect.apply(this, args);
-      if (args[0] === this.context.destination) {
-        routing.push({action:'connect_destination',source:this.constructor.name,already_observed:attached.has(this),at:performance.now()});
+    const contexts=[],meterMessages=[],meterErrors=[],routing=[];
+    const records=new WeakMap();
+    const connect=AudioNode.prototype.connect,disconnect=AudioNode.prototype.disconnect;
+    const meterModule=URL.createObjectURL(new Blob([`
+      class OrafoldQAMeter extends AudioWorkletProcessor {
+        constructor(){super();this.generation=0;this.reset();this.port.onmessage=event=>{if(typeof event.data.reset==='number'){this.generation=event.data.reset;this.reset();}};}
+        reset(){this.energy=0;this.samples=0;this.peak=0;this.maxRms=0;}
+        process(inputs){
+          let energy=0,n=0;
+          for(const channel of inputs[0]||[])for(const value of channel){this.peak=Math.max(this.peak,Math.abs(value));energy+=value*value;n++;}
+          this.energy+=energy;this.samples+=n;this.maxRms=Math.max(this.maxRms,n?Math.sqrt(energy/n):0);
+          if(this.samples>=4096){this.port.postMessage({generation:this.generation,at:currentTime,peak:this.peak,rms:Math.sqrt(this.energy/this.samples),maxRms:this.maxRms});this.reset();}
+          return true;
+        }
       }
-      if (args[0] === this.context.destination && !attached.has(this)) {
-        attached.add(this);
-        const analyser = this.context.createAnalyser();
-        analyser.fftSize = 2048;
-        connect.call(this, analyser, typeof args[1] === 'number' ? args[1] : 0);
-        // Keep the observation branch in the rendering graph without doubling
-        // the audible output. Some engines prune a dangling analyser output.
-        const silent = this.context.createGain();
-        silent.gain.value = 0;
-        connect.call(analyser, silent);
-        connect.call(silent, this.context.destination);
-        analysers.push(analyser);
+      registerProcessor('orafold-qa-meter',OrafoldQAMeter);
+    `],{type:'text/javascript'}));
+    function advance(record){
+      record.generation++;record.epoch=record.ctx.currentTime;
+      record.meter?.port.postMessage({reset:record.generation});
+    }
+    function observeContext(ctx){
+      const record={ctx,sources:new Map(),generation:1,epoch:ctx.currentTime,meter:null};
+      records.set(ctx,record);contexts.push(record);
+      // All real destination sources feed this one parallel summing point.
+      // The original audible edges remain untouched. Observation outputs zero.
+      record.sum=ctx.createGain();record.sum.gain.value=1;
+      record.sum.channelCount=ctx.destination.channelCount;
+      record.sum.channelCountMode='explicit';
+      record.analyser=ctx.createAnalyser();record.analyser.fftSize=2048;
+      record.silent=ctx.createGain();record.silent.gain.value=0;
+      connect.call(record.sum,record.analyser);connect.call(record.analyser,record.silent);
+      connect.call(record.silent,ctx.destination);
+      ctx.audioWorklet.addModule(meterModule).then(()=>{
+        if(ctx.state==='closed')return;
+        const meter=new AudioWorkletNode(ctx,'orafold-qa-meter');record.meter=meter;
+        meter.port.onmessage=event=>{
+          if(event.data.generation!==record.generation)return;
+          meterMessages.push({context:contexts.indexOf(record),...event.data});
+          if(meterMessages.length>512)meterMessages.splice(0,meterMessages.length-512);
+        };
+        connect.call(record.sum,meter);connect.call(meter,record.silent);
+        meter.port.postMessage({reset:record.generation});
+        routing.push({action:'summed_meter_attached',context:contexts.indexOf(record),at:performance.now()});
+      }).catch(error=>meterErrors.push(String(error)));
+    }
+    for(const key of ['AudioContext','webkitAudioContext']){
+      const Native=window[key];if(!Native)continue;
+      window[key]=new Proxy(Native,{construct(target,args){const instance=Reflect.construct(target,args);observeContext(instance);return instance;}});
+    }
+    AudioNode.prototype.connect=function(...args){
+      const result=connect.apply(this,args);
+      if(args[0]===this.context.destination){
+        const record=records.get(this.context),output=typeof args[1]==='number'?args[1]:0;
+        if(record){
+          let outputs=record.sources.get(this);
+          if(!outputs){outputs=new Set();record.sources.set(this,outputs);}
+          if(!outputs.has(output)){
+            outputs.add(output);connect.call(this,record.sum,output);advance(record);
+            routing.push({action:'real_destination_connected',source:this.constructor.name,output,generation:record.generation,at:performance.now()});
+          }
+        }
       }
       return result;
     };
-    const disconnect = AudioNode.prototype.disconnect;
-    AudioNode.prototype.disconnect = function (...args) {
-      routing.push({action:'disconnect',source:this.constructor.name,target:args[0]?.constructor?.name||String(args[0]),all:args.length===0,at:performance.now()});
-      // A global/output disconnect removes the observation branch as well.
-      // The next real destination connection must attach a fresh observer.
-      if (args.length===0 || typeof args[0]==='number') attached.delete(this);
-      return disconnect.apply(this,args);
-    };
-    window.__audioQAProbe = () => {
-      let peak = 0;
-      let energy = 0;
-      let samples = 0;
-      for (const analyser of analysers) {
-        const values = new Float32Array(analyser.fftSize);
-        analyser.getFloatTimeDomainData(values);
-        for (const value of values) {
-          peak = Math.max(peak, Math.abs(value));
-          energy += value * value;
-          samples++;
+    AudioNode.prototype.disconnect=function(...args){
+      const result=disconnect.apply(this,args),record=records.get(this.context);
+      if(record&&(args.length===0||typeof args[0]==='number'||args[0]===this.context.destination)){
+        const outputs=record.sources.get(this);
+        if(outputs){
+          const selected=typeof args[0]==='number'?args[0]:typeof args[1]==='number'?args[1]:null;
+          for(const output of [...outputs])if(selected===null||selected===output){
+            try{disconnect.call(this,record.sum,output)}catch{}
+            outputs.delete(output);
+          }
+          if(!outputs.size)record.sources.delete(this);
+          advance(record);
+          routing.push({action:'real_destination_disconnected_observer_detached',source:this.constructor.name,generation:record.generation,at:performance.now()});
         }
       }
-      return {contexts: contexts.map(item => ({state: item.state, sample_rate: item.sampleRate})),
-        analysers: analysers.length, routing:routing.slice(-32), peak, rms: samples ? Math.sqrt(energy / samples) : 0};
+      return result;
+    };
+    window.__audioQAProbe=()=>{
+      let peak=0,energy=0,samples=0;
+      for(const record of contexts){
+        if(!record.sources.size||record.ctx.state!=='running')continue;
+        const values=new Float32Array(record.analyser.fftSize);record.analyser.getFloatTimeDomainData(values);
+        for(const value of values){peak=Math.max(peak,Math.abs(value));energy+=value*value;samples++;}
+      }
+      return {contexts:contexts.map(record=>({state:record.ctx.state,sample_rate:record.ctx.sampleRate,current_time:record.ctx.currentTime,generation:record.generation,epoch:record.epoch,destination_sources:record.sources.size})),
+        routing:routing.slice(-32),meterErrors:meterErrors.slice(),meterMessages:meterMessages.slice(),peak,rms:samples?Math.sqrt(energy/samples):0};
     };
   });
   page=await context.newPage();
@@ -119,11 +151,49 @@ try {
     await page.waitForFunction(({channel,value})=>Math.abs(window.orafoldQA.audio.settings[channel]-value)<.00001,{channel,value});await settle();
   }
   async function capture(action,duration=2500){
-    const signal=page.evaluate(ms=>new Promise(resolve=>{
-      const started=performance.now();let peak=0,maxRms=0,n=0;
-      function tick(){const p=window.__audioQAProbe();peak=Math.max(peak,p.peak);maxRms=Math.max(maxRms,p.rms);n++;if(performance.now()-started>=ms)resolve({peak,maxRms,samples:n,contexts:p.contexts,analysers:p.analysers,audio:window.orafoldQA?.audio});else setTimeout(tick,25)}tick();
-    }),duration);
-    if(action)await action();return signal;
+    if(action){
+      const since=await page.evaluate(()=>window.__audioQAProbe().contexts.map(context=>context.current_time));
+      await page.waitForFunction(since=>{
+        const probe=window.__audioQAProbe();
+        return probe.contexts.every((context,index)=>{
+          if(context.state!=='running'||context.destination_sources===0)return true;
+          const blocks=probe.meterMessages.filter(message=>message.context===index&&message.generation===context.generation&&message.at>Math.max(since[index]+0.1,context.epoch+0.1)).slice(-8);
+          return blocks.length>=6&&blocks.at(-1).at-blocks[0].at>=0.2&&blocks.every(block=>block.maxRms<1e-7);
+        });
+      },since,{timeout:10000});
+    }
+    const signal=page.evaluate(({ms,waitForClick})=>new Promise((resolve,reject)=>{
+      function start(){
+        const started=performance.now(),base=window.__audioQAProbe();let n=0;
+        const cutoffs=base.contexts.map(context=>context.current_time+0.1);
+        function tick(){
+          const p=window.__audioQAProbe();n++;
+          // Only fresh, current-generation summed audio-thread blocks prove sound.
+          const meter=p.meterMessages.filter(message=>{
+            const current=p.contexts[message.context];
+            return current?.state==='running'&&current.destination_sources>0&&message.generation===current.generation&&message.at>Math.max(cutoffs[message.context],current.epoch+0.1);
+          });
+          const positive=meter.filter(message=>message.maxRms>0.000001);
+          const peak=Math.max(0,...meter.map(message=>message.peak)),maxRms=Math.max(0,...meter.map(message=>message.maxRms));
+          const positiveSpan=positive.length?positive.at(-1).at-positive[0].at:0;
+          if(performance.now()-started>=ms)resolve({peak,maxRms,positiveSpan,samples:n,meterBlocks:meter.length,nonzeroMeterBlocks:positive.length,meterErrors:p.meterErrors,routing:p.routing,contexts:p.contexts,analyserDiagnostic:{peak:p.peak,rms:p.rms},audio:window.orafoldQA?.audio});
+          else setTimeout(tick,25);
+        }tick();
+      }
+      if(waitForClick){
+        // Start at the actual trusted button release, after tap() scrolls/moves.
+        // Earlier cue tails cannot satisfy an action's measurement window.
+        const timeout=setTimeout(()=>{window.removeEventListener('mouseup',onClick,true);reject(new Error('No trusted action release reached the PCM window'))},30000);
+        function onClick(event){if(!event.isTrusted||event.button!==0)return;clearTimeout(timeout);window.removeEventListener('mouseup',onClick,true);start();}
+        window.addEventListener('mouseup',onClick,true);
+      }else start();
+    }),{ms:duration,waitForClick:!!action});
+    if(action)await action();
+    const measurement=await signal;
+    assert.equal(measurement.meterErrors.length,0,JSON.stringify(measurement.meterErrors));
+    const graphSilent=measurement.contexts.every(context=>context.state!=='running'||context.destination_sources===0);
+    assert(measurement.meterBlocks>0||graphSilent,'Missing fresh PCM measurement from an active destination graph');
+    return measurement;
   }
   async function settings(){if((await state()).page!=='settings')await tap('settings');await tap('settings_audio')}
   await load();
@@ -136,6 +206,10 @@ try {
   await page.waitForFunction(()=>window.orafoldQA.audio.music.playing>0&&!window.orafoldQA.audio.music.transitioning,null,{timeout:15000});
   evidence.afterGesture=(await state()).audio;
   evidence.audibleMenu=await capture();assert(evidence.audibleMenu.maxRms>0.000001);
+  assert.equal(evidence.audibleMenu.meterErrors.length,0,JSON.stringify(evidence.audibleMenu.meterErrors));
+  assert(evidence.audibleMenu.meterBlocks>0,"Independent audio-thread observer did not report real mixer blocks");
+  assert.equal(evidence.audibleMenu.contexts.length,1,"Product must use one audio context");
+  assert(evidence.audibleMenu.positiveSpan>=1,"Menu music did not span one second of fresh positive PCM blocks");
   if(process.env.AUDIO_QA_FOCUS==='resume'){
     await settings();await volume('sfx',0);await volume('ui',0);await volume('ambience',0);
     await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
@@ -145,10 +219,10 @@ try {
     await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
     evidence.audibleBeforePause=await capture();assert(evidence.audibleBeforePause.maxRms>0.000001);
     for(let repeat=0;repeat<2;repeat++){
-      await tap('menu');const paused=await capture();assert(paused.maxRms<1e-7);assert.equal((await state()).audio.suspended,true);
+      await tap('menu');const paused=await capture();evidence[`paused${repeat}`]=paused;assert(paused.maxRms<1e-7);assert.equal((await state()).audio.suspended,true);
       await tap('modal_close');evidence.resumeState=(await state()).audio;
       await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
-      evidence[`audibleResume${repeat}`]=await capture();assert(evidence[`audibleResume${repeat}`].maxRms>0.000001);
+      evidence[`audibleResume${repeat}`]=await capture();assert(evidence[`audibleResume${repeat}`].maxRms>0.000001);assert(evidence[`audibleResume${repeat}`].positiveSpan>=1,"Resumed music did not persist across fresh PCM blocks for one second");
     }
     evidence.checks.push('Two actual audible duel pause/resume cycles restore stream transport');
     evidence.final=(await state()).audio;assert.equal(evidence.errors.length,0,JSON.stringify(evidence.errors));evidence.result='passed';
@@ -193,7 +267,7 @@ try {
   evidence.audibleBeforePause=await capture();
   await tap('menu');evidence.audibleMusicPaused=await capture();assert(evidence.audibleMusicPaused.maxRms<1e-7);
   await tap('modal_close');evidence.resumeState=(await state()).audio;await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
-  evidence.audibleAfterResume=await capture();
+  evidence.audibleAfterResume=await capture();assert(evidence.audibleAfterResume.positiveSpan>=1,"Resumed music did not persist across fresh PCM blocks for one second");
   await tap('menu');await tap('confirm_menu');await settings();
   evidence.checks.push('Actual audible battle music becomes zero during menu pause and resumes audibly');
   await page.evaluate(()=>{window.__audioOriginalSet=Storage.prototype.setItem;Storage.prototype.setItem=function(k,v){if(k.startsWith('orafold.audio.'))throw new DOMException('QA quota','QuotaExceededError');return window.__audioOriginalSet.call(this,k,v)}});

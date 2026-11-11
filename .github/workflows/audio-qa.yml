@@ -13,6 +13,7 @@ on:
       - 'project.godot'
       - 'data/audio/**'
       - 'tests/audio/**'
+      - 'tests/combat_presentation.gd'
       - '.github/workflows/audio-qa.yml'
   workflow_dispatch:
 permissions:
@@ -23,7 +24,7 @@ concurrency:
 jobs:
   audio:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 40
     defaults:
       run:
         shell: bash
@@ -65,7 +66,7 @@ jobs:
           import json
           from pathlib import Path
           rows = [json.loads(line) for line in Path('work/audio/product-native-runtime.log').read_text().splitlines() if line.startswith('{')]
-          assert len(rows) == 1 and rows[0]['suite'] == 'production_native_exported' and rows[0]['failures'] == 0 and rows[0]['assertions'] >= 24, rows
+          assert len(rows) == 1 and rows[0]['suite'] == 'production_native_exported' and rows[0]['failures'] == 0 and rows[0]['assertions'] >= 29 and rows[0]['main_menu_verified'] is True, rows
           PYQA
       - name: Isolated browser dependencies
         run: |
