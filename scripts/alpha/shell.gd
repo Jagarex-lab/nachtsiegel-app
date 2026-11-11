@@ -35,6 +35,8 @@ var convergence_lanes: Array=[]
 var mulligan_indices: Array=[]
 var opening_hand_signature := ""
 var hand_drag: Dictionary={}
+var hand_tap_epoch := 0
+var hand_press_epoch := 0
 var drag_ghost: Control
 var deck: Array=[]
 var collection_mode := "alpha"
@@ -178,14 +180,32 @@ func button(id: String, caption: String, callback: Callable, parent: Node=null, 
 func _bind_press(control: BaseButton, callback: Callable) -> void:
 	# Godot Web also reports canceled ordinary taps as releases. Let BaseButton
 	# reset its held state, but never dispatch its action after DOM cancellation.
-	var press={"version":0}
+	var press={"version":0,"hand_epoch":0}
 	control.mouse_entered.connect(func():_audio_event("card.hover" if control is CardView else "ui.hover"))
-	control.button_down.connect(func():press.version=_web_drag_cancel_version())
+	control.button_down.connect(func():press.version=_web_drag_cancel_version();press.hand_epoch=hand_tap_epoch)
 	control.pressed.connect(func():
+		# A long portrait can still contain the release point after a drag. Godot
+		# can dispatch a synthesized GUI release after the owned gesture ends;
+		# it must never turn that drag into a second hand tap or an inspector.
+		if control is CardView and control.get("display_role")=="hand":
+			# Godot may deliver emulated mouse-up BEFORE the original touch-up
+			# carries its canceled flag. Validate after that input packet, without
+			# a timer/cooldown and without blocking the GUI's button-state reset.
+			if session.model!=null:_dispatch_hand_press.call_deferred(weakref(control),callback,int(press.hand_epoch),int(press.version),weakref(session.model),session.commands.size())
+			return
 		if not OS.has_feature("web") or int(press.version)==_web_drag_cancel_version():
 			if not control is CardView:_audio_event("ui.confirm")
 			callback.call()
 	)
+func _dispatch_hand_press(control_ref: WeakRef, callback: Callable, captured_epoch: int, cancel_version: int, model_ref: WeakRef, command_count: int) -> void:
+	var control=control_ref.get_ref()
+	if control==null or not control.is_inside_tree() or control.is_queued_for_deletion() or is_instance_valid(modal):return
+	if captured_epoch!=hand_tap_epoch or hand_press_epoch!=hand_tap_epoch:return
+	if OS.has_feature("web") and cancel_version!=_web_drag_cancel_version():return
+	if session.model!=model_ref.get_ref() or session.commands.size()!=command_count:return
+	var index=hand_views.find(control)
+	if session.model==null or index<0 or index>=session.model.state.hero.hand.size() or str(control.card.id)!=str(session.model.state.hero.hand[index]):return
+	callback.call()
 func dropdown(id: String, items: Array, current: String, callback: Callable, parent: Node) -> Button:
 	var labels={"all":"Alle","creature":"Wesen","event":"Impuls","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral","cost_asc":"Energie aufsteigend","cost_desc":"Energie absteigend","name_asc":"Name A–Z"}
 	labels.merge(LibraryFilter.species_labels())
@@ -591,7 +611,7 @@ func _combat_dock() -> void:
 		context=str(chosen.name)+(" · zum Verbrennen gewählt" if overflow else " · markiertes Ziel antippen")
 		if not overflow:
 			var availability=_card_availability(selected)
-			if not availability.playable:context=str(chosen.name)+" · "+str(availability.reason)
+			if not availability.playable:context=str(availability.reason)
 	elif s.hero.pendingTarget==null and s.hero.pendingShift==null and action_mode.is_empty():context="Handkarte wählen · Details durch erneutes Antippen" if s.hero.phase=="main" else "Ziehe deine Karten, dann beginnt die Aktionsphase."
 	if mode=="alpha" and s.enemy.get("convergence")!=null and selected<0 and action_mode.is_empty():context="KI-Konvergenz: markierten Gegenpfad bestreiten!" if not s.enemy.convergence.broken else "KI-Konvergenz unterbrochen."
 	if message.begins_with("Ungültiges Ziel"):context=message
@@ -654,7 +674,7 @@ func phase_message() -> String:
 	var p: Dictionary=session.model.state.hero
 	if p.pendingTarget!=null:return "Ankunftsschlag: tippe eine gegnerische Kreatur an."
 	if p.phase=="draw":return "Nachziehen: bei Handüberlauf zuerst eine Karte auswählen und verbrennen. Sonst Nachziehen bestätigen."
-	if p.pendingShift!=null:return "Positionswechsel: tippe einen Nachbarn der Quelle, dann ein freies eigenes Feld an."
+	if p.pendingShift!=null:return "Pfadwechsel: Nachbarwesen, dann freies Ziel wählen." if source_lane<0 else "Nun ein freies Nachbarfeld antippen."
 	if action_mode=="converge":return "Wähle drei kampffähige unbestrittene Pfade, dann Erklären."
 	if mode=="alpha" and session.model.state.enemy.convergence!=null and selected<0:return "KI-Konvergenz unterbrochen." if session.model.state.enemy.convergence.broken else "KI-Konvergenz: einen markierten Pfad bestreiten oder eine gebundene Kreatur ausschalten."
 	return message
@@ -721,7 +741,7 @@ func field_click(side: String, lane: int) -> void:
 		return
 	if selected>=0:
 		if target_allowed(side,lane):act("play",["hero",selected,lane])
-		else:_audio_event("ui.error");message="Ungültiges Ziel. Wähle einen leuchtenden Pfad oder prüfe die Kartendetails.";render()
+		else:_audio_event("ui.error");message="Ungültiges Ziel · Leuchtenden Pfad wählen.";render()
 	elif m.state[side].lanes[lane]!=null:
 		var detail: Dictionary=m.state[side].lanes[lane].duplicate(true)
 		detail.display_attack=maxi(0,int(detail.atk)-int(m.state[side].get("weak",0)))
@@ -734,7 +754,7 @@ func opening() -> void:
 	var s: Dictionary=session.model.state
 	_battle_board(true)
 	_build_hand(true)
-	var instructions={"mulligan":"Tippe Karten zum Tauschen an. Details zeigt die ganze Karte.","origins":("Du beginnst. " if s.coin=="hero" else "Die KI beginnt. ")+"Wähle unten einen Ursprung. Erste Beschwörung dort: 1 Schild.","second":"Optional: Ursprung ändern oder eine ausgewählte Handkarte tauschen."}
+	var instructions={"mulligan":"Tippe Karten zum Tauschen an. Details zeigt die ganze Karte.","origins":("Du beginnst · " if s.coin=="hero" else "KI beginnt · ")+"Ursprung: erstes Wesen erhält 1 Schild.","second":"Optional: Ursprung ändern + eine Handkarte tauschen."}
 	_dock_context(instructions.get(s.stage,"Vorbereitung"))
 	_dock_tools(true)
 	if s.stage=="mulligan":
@@ -1123,12 +1143,14 @@ func publish_qa() -> void:
 		var r=inspector_rules.get_global_rect()
 		state.inspection={"id":inspector_card_id,"title":inspector_title.text,"rules":inspector_rules.text,"rules_font_size":inspector_rules.get_theme_font_size("font_size"),"rules_rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]}
 		if is_instance_valid(inspector_face):state.inspection.card_rect=_qa_css_rect(inspector_face.get_global_rect());state.inspection.card_aspect=inspector_face.size.x/inspector_face.size.y
-		var art=CardView.ART.resolve({"id":inspector_card_id},"full",null,false)
-		state.inspection.art={"preview_only":art.preview_only,"state":art.delivery_state,"pixels":[art.texture.get_width(),art.texture.get_height()] if art.texture!=null else [],"asset":art.asset_path}
+		# Observe the face that actually painted the inspector, not a newer cache
+		# entry that may not have reached that Control's framebuffer yet.
+		state.inspection.art=inspector_face.art_report() if is_instance_valid(inspector_face) and inspector_face.has_method("art_report") else {"state":"unbound","preview_only":true,"pixels":[]}
 	state.library_art={}
 	for card_id in library_visible_ids:
-		var compact_art=CardView.ART.resolve({"id":card_id},"compact",null,false)
-		state.library_art[card_id]={"state":compact_art.delivery_state,"pixels":[compact_art.texture.get_width(),compact_art.texture.get_height()] if compact_art.texture!=null else [],"pending":compact_art.preview_pending}
+		var library_view=actions.get("card_"+str(card_id))
+		var observed=library_view.art_report() if is_instance_valid(library_view) and library_view.has_method("art_report") else {}
+		state.library_art[card_id]={"state":observed.get("delivery_state","unbound"),"pixels":observed.get("pixels",[]),"pending":observed.get("pending",true)}
 	var art_service=get_tree().root.get_node_or_null("ArtDelivery")
 	if art_service!=null:state.art_delivery=art_service.metrics();state.art_cache=CardView.ART.stats()
 	state.opening_marks=mulligan_indices.duplicate();state.drag={"active":bool(hand_drag.get("active",false)),"targets":hand_drag.get("targets",{}).keys()}
@@ -1365,6 +1387,9 @@ func _drag_press(at: Vector2, pointer: int) -> void:
 	if not hand_drag.is_empty():
 		if pointer!=int(hand_drag.pointer):get_viewport().set_input_as_handled()
 		return
+	# Arm from the original input event, never from a synthesized button_down
+	# emitted while Godot transfers a held pointer across a resize/rebuilt hand.
+	hand_press_epoch=hand_tap_epoch
 	if page!="battle" or mode!="alpha" or portrait or is_instance_valid(modal) or session.model==null:return
 	var s: Dictionary=session.model.state;var p: Dictionary=s.hero
 	if s.stage!="battle" or not str(s.get("error","")).is_empty() or s.winner!=null or s.active!="hero" or p.phase!="main" or p.pendingTarget!=null or p.pendingShift!=null or not action_mode.is_empty():return
@@ -1381,6 +1406,7 @@ func _drag_move(at: Vector2, pointer: int) -> void:
 		if at.distance_to(hand_drag.start)<12*density:return
 		var p: Dictionary=session.model.state.hero;var index=int(hand_drag.index)
 		if index>=p.hand.size() or p.hand[index]!=hand_drag.id:_cancel_hand_drag();return
+		hand_tap_epoch+=1
 		hand_drag.active=true;hand_drag.digest=Session.digest(session.model.snapshot());selected=index;source_lane=-1
 		var card=session.card(hand_drag.id)
 		for key in board_views:
@@ -1395,13 +1421,15 @@ func _drag_move(at: Vector2, pointer: int) -> void:
 	if is_instance_valid(drag_ghost):drag_ghost.position=layout.get_global_transform().affine_inverse()*at-Vector2(50,130)
 	get_viewport().set_input_as_handled()
 func _drag_release(at: Vector2, pointer: int, canceled: bool=false) -> void:
+	if canceled and hand_drag.is_empty():hand_tap_epoch+=1
 	if hand_drag.is_empty() or pointer!=int(hand_drag.pointer):return
 	# DOM touchcancel becomes an ordinary release in Godot's Web adapter. The
 	# capture-phase version is read here synchronously, before any play command.
 	if canceled or _web_drag_cancel_version()!=int(hand_drag.web_cancel):
-		get_viewport().set_input_as_handled();_cancel_hand_drag(true);return
+		# The epoch blocks the card action, while GUI still receives the release
+		# to clear its held-button/mouse-focus state before the next real tap.
+		_cancel_hand_drag(true);return
 	if not hand_drag.active:hand_drag.clear();return # Original tap-to-select still receives the release.
-	get_viewport().set_input_as_handled()
 	var index=int(hand_drag.index);var p: Dictionary=session.model.state.hero;var lane := -1
 	var valid=not canceled and hand_drag.viewport==get_viewport_rect().size and index<p.hand.size() and p.hand[index]==hand_drag.id and Session.digest(session.model.snapshot())==hand_drag.digest
 	if valid:
@@ -1411,15 +1439,16 @@ func _drag_release(at: Vector2, pointer: int, canceled: bool=false) -> void:
 			elif board_views.has(key) and board_views[key].get_global_rect().has_point(at):lane=int(board_views[key].lane);break
 	_cancel_hand_drag()
 	if valid and lane>=0:act("play",["hero",index,lane])
-	else:message="Karte nicht ausgespielt. Wähle ein gültiges Ziel oder tippe die Karte an.";render()
+	else:message="Karte nicht ausgespielt. Wähle ein gültiges Ziel oder tippe die Karte an.";render.call_deferred()
 func _cancel_hand_drag(redraw: bool=false) -> void:
 	if hand_drag.is_empty():return
 	var was_active=bool(hand_drag.active)
+	hand_tap_epoch+=1
 	if was_active:selected=int(hand_drag.previous)
 	hand_drag.clear()
 	if is_instance_valid(drag_ghost):drag_ghost.hide();drag_ghost.queue_free()
 	drag_ghost=null
-	if redraw and was_active:render()
+	if redraw:render.call_deferred()
 func _notification(what: int) -> void:
 	if what in [NOTIFICATION_WM_WINDOW_FOCUS_OUT,NOTIFICATION_APPLICATION_PAUSED]:
 		_cancel_hand_drag(true)
@@ -1438,6 +1467,7 @@ func _input(event: InputEvent) -> void:
 		if event.pressed:_drag_press(event.position,-2)
 		else:_drag_release(event.position,-2)
 	elif event is InputEventMouseMotion and event.button_mask&MOUSE_BUTTON_MASK_LEFT:_drag_move(event.position,-2)
+	elif event is InputEventKey and event.pressed:hand_press_epoch=hand_tap_epoch
 
 func battle_heading(s: Dictionary) -> String:
 	if mode=="alpha" and s.stage!="battle":return {"mulligan":"STARTHAND WÄHLEN","origins":"URSPRUNG WÄHLEN","second":"ZWEITE MÖGLICHKEIT"}.get(s.stage,"VORBEREITUNG")

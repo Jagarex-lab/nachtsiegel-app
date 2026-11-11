@@ -90,6 +90,7 @@ def run(root: Path, ready: Path, log: Path) -> None:
     log.write_text("")
     bodies = load_bodies(root)
     lock = threading.Lock()
+    attempts: dict[str, int] = {}
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *_args: object) -> None:
@@ -117,6 +118,13 @@ def run(root: Path, ready: Path, log: Path) -> None:
                 code, body = 302, b"redirect deliberately refused"
             elif route == "oversized":
                 body = bytes(8 * 1024 * 1024 + 1)
+            elif route == "recover" or route.startswith("recover-"):
+                with lock:
+                    attempt_key = route + "/" + relative
+                    attempts[attempt_key] = attempts.get(attempt_key, 0) + 1
+                    first_attempt = attempts[attempt_key] == 1
+                if first_attempt:
+                    code, body = 503, b"temporary art fixture outage"
             elif route == "slow":
                 time.sleep(0.35)
             elif route not in {"ok", "dimensions"}:

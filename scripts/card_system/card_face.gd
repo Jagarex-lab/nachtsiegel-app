@@ -26,6 +26,9 @@ const SECONDARY = Color("c5ccd7")
 var _illustration_binding := ""
 var _illustration_data: Dictionary = {}
 var _delivery_visible := false
+var _drawn_illustration_data: Dictionary = {}
+var _drawn_card_id := ""
+var _draw_count := 0
 var frame_concept := Frames.CHOSEN
 var reduced_motion := true
 var _glint_remaining := 0.0
@@ -33,10 +36,12 @@ var _glint_card := ""
 var card: Dictionary = {}:
 	set(value):
 		card=value
+		_drawn_illustration_data={};_drawn_card_id=""
 		queue_redraw()
 var face_down := false:
 	set(value):
 		face_down=value
+		_drawn_illustration_data={};_drawn_card_id=""
 		queue_redraw()
 
 func _ready() -> void:
@@ -58,6 +63,15 @@ func _process(delta: float) -> void:
 		_glint_remaining=maxf(0,_glint_remaining-delta) if visible_now and not reduced_motion else 0.0
 		queue_redraw()
 func _exit_tree() -> void: ART.release_owner(self)
+
+func art_report() -> Dictionary:
+	# Observe only the texture/metadata used by the last completed draw call.
+	# normalized(), layout queries and the shared cache are not drawing proof.
+	var bound:=not face_down and not _drawn_card_id.is_empty() and _drawn_card_id==str(card.get("id",""))
+	var data: Dictionary=_drawn_illustration_data if bound else {}
+	var texture: Texture2D=data.get("texture")
+	var state:=str(data.get("delivery_state","unbound"))
+	return {"card_id":_drawn_card_id if bound else "","requested_card_id":str(card.get("id","")) if not face_down else "","visible":not face_down and ART.visible_owner(self),"status":str(data.get("status","unbound")),"state":state,"delivery_state":state,"preview_only":bool(data.get("preview_only",true)),"pending":bool(data.get("preview_pending",true)),"pixels":[texture.get_width(),texture.get_height()] if texture!=null else [],"profile":"full","asset":str(data.get("asset_path","")),"texture_asset":str(data.get("texture_asset_path","")),"draw_count":_draw_count}
 
 func face_rect() -> Rect2:
 	var scale_value=minf(size.x/MASTER_SIZE.x,size.y/MASTER_SIZE.y)
@@ -124,8 +138,13 @@ func _draw() -> void:
 	if size.x<=0 or size.y<=0:return
 	var bounds=face_rect()
 	draw_set_transform(bounds.position,0,Vector2.ONE*(bounds.size.x/MASTER_SIZE.x))
-	if face_down:draw_back()
-	else:draw_front()
+	if face_down:
+		draw_back();_drawn_illustration_data={};_drawn_card_id=""
+	else:
+		draw_front()
+		_drawn_illustration_data=_illustration_data.duplicate()
+		_drawn_card_id=str(card.get("id",""))
+	_draw_count+=1
 	draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
 
 func draw_illustration(data: Dictionary) -> void:

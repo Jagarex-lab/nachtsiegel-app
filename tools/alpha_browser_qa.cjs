@@ -12,6 +12,7 @@ function allVisibleCompactReady({expected,count}){
  const legacyOnly=process.env.QA_LEGACY_ONLY==='1';
  const compactEntries=legacyOnly?[]:Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries);
  const compactGeometry=Object.fromEntries(compactEntries.map(([id,entry])=>[id,[entry.width,entry.height]]));
+ const fullGeometry=legacyOnly?{}:Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_delivery.json','utf8')).entries).map(([id,entry])=>[id,[entry.width,entry.height]]));
  const externalCompact=Object.fromEntries(compactEntries.filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
  const recordGameplay=process.env.QA_GAMEPLAY_SEQUENCE==='1',sha256=value=>crypto.createHash('sha256').update(value).digest('hex');
  let sequenceArtifact=null;
@@ -305,7 +306,7 @@ function allVisibleCompactReady({expected,count}){
      assert.deepEqual(detail.deck_ids,collection.deck_ids,'read-only collection inspection preserves the deck');
      assert.equal(detail.page,'collection','inspection stays in the collection');
      assert(inside(detail.actions.modal_close.rect)&&detail.actions.modal_close.rect[2]>=43.9&&detail.actions.modal_close.rect[3]>=43.9,'inspector close is visible >=44CSS');
-     await page.waitForFunction(()=>window.orafoldQA.inspection?.art?.state==='final',undefined,{timeout:90000});
+     await page.waitForFunction(expected=>{const i=window.orafoldQA.inspection,a=i?.art,size=expected[i?.id];return Boolean(size&&a?.state==='ready'&&a.status==='final'&&a.profile==='full'&&a.visible===true&&a.draw_count>0&&a.card_id===i.id&&a.requested_card_id===i.id&&a.preview_only===false&&a.pixels?.[0]===size[0]&&a.pixels?.[1]===size[1]);},fullGeometry,{timeout:90000});
      await shot('collection-inspection');await action('modal_close');
      const closed=await state();assert(!closed.modal&&closed.page==='collection','closing inspection restores collection');
      assert.deepEqual(closed.deck_ids,collection.deck_ids,'closing inspection preserves the deck');

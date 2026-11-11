@@ -7,7 +7,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const {performance}=require('node:perf_hooks');
-const {encloses,clearTouchPoint,battleGeometry,artReady,premiumArt,playability}=require('./browser_contract.cjs');
+const {encloses,clearTouchPoint,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
 const output=path.resolve(process.env.PREMIUM_BROWSER_OUTPUT||'work/premium-mobile/browser');
 const expectedCommit=process.env.EXPECTED_COMMIT;
 assert(/^[0-9a-f]{40}$/.test(expectedCommit||''),'EXPECTED_COMMIT must name the exact exported candidate');
@@ -16,6 +16,7 @@ const variants=[{width:844,height:390},{width:852,height:393},{width:932,height:
 const catalog=JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards;
 const by=Object.fromEntries(catalog.map(card=>[card.id,card]));
 const geometry=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json','utf8')).entries).map(([id,entry])=>[id,[entry.width,entry.height]]));
+const fullGeometry=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_delivery.json','utf8')).entries).map(([id,entry])=>[id,[entry.width,entry.height]]));
 const hash=value=>crypto.createHash('sha256').update(value).digest('hex');
 const results=[];
 fs.mkdirSync(output,{recursive:true});
@@ -28,7 +29,7 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
   assert(['chromium','webkit'].includes(engine),'known browser engine');
   const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(engine==='chromium'?{channel:'chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
   const report={engine,browser_version:browser.version(),playwright:require('playwright/package.json').version,source_commit:expectedCommit,physical_device:false,checks:[],screenshots:[],viewports:[],touch_samples:[],errors:[],status:'running',performance_scope:'Linux browser and software-rendered Godot on the available host. Startup/touch samples include test polling and host scheduling; JS heap is not total WebAssembly/GPU/device memory.'};
-  let context,page,cdp,lastAction='boot';
+  let context,page,cdp,lastAction='boot',heartbeat,heartbeatBusy=false;
   const check=(value,label)=>{assert(value,label);report.checks.push(label);};
   const save=()=>fs.writeFileSync(path.join(output,engine+'-results.json'),JSON.stringify(report,null,2));
   try{
@@ -41,6 +42,14 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
    page.on('console',message=>{if(message.type()==='error')report.errors.push(message.text());});
    const q=()=>page.evaluate(()=>window.orafoldQA);
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
+   heartbeat=setInterval(async()=>{
+    if(heartbeatBusy)return;heartbeatBusy=true;
+    try{
+     const current=await page.evaluate(()=>{const s=window.orafoldQA;return s?{page:s.page,modal:s.modal,render_version:s.render_version,command_count:s.command_count,selected:s.selected,battle_stage:s.battle?.stage,phase:s.battle?.hero?.phase,hand_size:s.hand?.length,inspection:s.inspection?.art,art_delivery:s.art_delivery}:null;});
+     fs.writeFileSync(path.join(output,engine+'-progress.json'),JSON.stringify({last_action:lastAction,checks:report.checks.length,screenshots:report.screenshots.length,viewports:report.viewports.length,current},null,2));
+    }catch{}finally{heartbeatBusy=false;}
+   },5000);heartbeat.unref();
+   const deadline=(promise,label,ms)=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(label)),ms);})]).finally(()=>clearTimeout(timer));};
    async function tapRect(rect,label,occluders=[]){
     const point=clearTouchPoint(rect,occluders);check(point,label+' exposes a44CSS touch region');
     check(encloses([0,0,page.viewportSize().width,page.viewportSize().height],rect),label+' stays inside viewport');
@@ -76,13 +85,15 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
     report.touch_samples.push({action:id,elapsed_ms:Math.round(performance.now()-before),meaning:'real touch to next published UI/model frame; includes host/test overhead'});
    }
    async function shot(label){
-    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    lastAction='screenshot:'+label;
+    await deadline(page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))),'Screenshot paint did not settle within15s',15000);
     await page.waitForTimeout(180);
     let bytes;
-    if(cdp){const v=page.viewportSize();const capture=await cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,clip:{x:0,y:0,width:v.width,height:v.height,scale:1}});bytes=Buffer.from(capture.data,'base64');}
+    if(cdp){const v=page.viewportSize();const capture=await deadline(cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,clip:{x:0,y:0,width:v.width,height:v.height,scale:1}}),'Screenshot readback did not finish within30s',30000);bytes=Buffer.from(capture.data,'base64');}
     else bytes=await page.screenshot({timeout:30000});
     const file=engine+'-'+label+'.png';fs.writeFileSync(path.join(output,file),bytes);
     check(bytes.readUInt32BE(16)===page.viewportSize().width&&bytes.readUInt32BE(20)===page.viewportSize().height,'screenshot contains native1x viewport '+label);
+    check(bytes.length>20000,'screenshot contains rendered content '+label);
     report.screenshots.push({file,sha256:hash(bytes),bytes:bytes.length,viewport:page.viewportSize()});save();
    }
    async function allArt(){
@@ -93,6 +104,13 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
     },geometry);
     const current=await q();check(artReady(current,geometry),'every visible card owns its final compact illustration');
     assert.deepEqual(current.battle,before.battle,'art delivery is read-only');check(current.command_count===before.command_count,'art delivery issues no command');
+   }
+   async function inspectorArt(){
+    await page.waitForFunction(expected=>{
+     const inspection=window.orafoldQA?.inspection,art=inspection?.art,size=expected[inspection?.id];
+     return Boolean(size&&art?.state==='ready'&&art.status==='final'&&art.profile==='full'&&art.visible===true&&art.draw_count>0&&art.card_id===inspection.id&&art.requested_card_id===inspection.id&&art.preview_only===false&&art.pixels?.[0]===size[0]&&art.pixels?.[1]===size[1]);
+    },fullGeometry);
+    check(fullArtReady(await q(),fullGeometry),'inspector owns its actual full-resolution final illustration');
    }
    async function resize(size){
     const current=page.viewportSize();if(current.width===size.width&&current.height===size.height)return q();
@@ -112,7 +130,7 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
    const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));
    check(first&&by[first.slice(5)],'the collection exposes actual production card IDs');await action(first);
    const detail=await q();check(detail.inspection?.title===by[first.slice(5)].name,'the inspector displays the complete actual name');
-   await page.waitForFunction(()=>window.orafoldQA?.inspection?.art?.state==='final');await shot('collection-inspection-portrait');await action('modal_close');await action('builder_back');
+   await inspectorArt();await shot('collection-inspection-portrait');await action('modal_close');await action('builder_back');
    await action('builder');check((await q()).deck_size===30,'builder loads an existing valid30-card deck');await shot('deckbuilder-portrait');
    await action('save_deck');await wait(()=>window.orafoldQA.message.includes('gespeichert'));await action('builder_back');
    await action('start');await wait(()=>window.orafoldQA.page==='decks');
@@ -144,7 +162,7 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
     report.viewports.push({size,layout,art,availability,physical_device:false});
     await shot('battle-'+size.width+'x'+size.height);
     const hand=(await q()).hand[0];await tapRect(hand.rect,'hand0');await wait(()=>window.orafoldQA.selected===0);
-    await action('inspect');await page.waitForFunction(()=>window.orafoldQA.inspection?.art?.state==='final');
+    await action('inspect');await inspectorArt();
     const inspected=await q();check(inspected.inspection?.title===by[hand.id].name,'full hand-card name is readable at '+size.width);
     check(Boolean(inspected.inspection.rules),'full actual ability text is present at '+size.width);await shot('inspection-'+size.width+'x'+size.height);await action('modal_close');
     if((await q()).actions.cancel_selection)await action('cancel_selection');
@@ -178,7 +196,7 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
   }catch(error){
    report.status='failed';report.last_action=lastAction;report.error=String(error);
    if(page){report.last_qa=await page.evaluate(()=>window.orafoldQA).catch(()=>null);await page.screenshot({path:path.join(output,engine+'-FAILED.png'),timeout:15000}).catch(()=>{});}save();throw error;
-  }finally{results.push(report);if(context)await context.close();await browser.close();fs.writeFileSync(path.join(output,'results.json'),JSON.stringify(results,null,2));}
+  }finally{clearInterval(heartbeat);results.push(report);if(context)await context.close();await browser.close();fs.writeFileSync(path.join(output,'results.json'),JSON.stringify(results,null,2));}
  }
  assert(results.length>0,'at least one actual browser profile executes');
  console.log('PREMIUM BROWSER:',results.map(r=>`${r.engine}: ${r.checks.length} checks / ${r.viewports.length} landscape sizes / ${r.status}`).join('; '));

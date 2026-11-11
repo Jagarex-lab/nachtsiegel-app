@@ -73,7 +73,7 @@ func _build() -> void:
 		face.pressed.connect(func():_inspect(card));add_child(face);hand_views.append(face)
 	var action:=Button.new();action.name="PrimaryAction";action.text="KARTE BETRACHTEN";action.tooltip_text="Entwicklervergleich: eingefrorene Darstellung, keine Spielzüge.";action.add_theme_font_override("font",Style.font);action.add_theme_font_size_override("font_size",14);add_child(action)
 	action.pressed.connect(func():_inspect(catalog.cards[HAND_IDS[0]]))
-	var secondary:=Label.new();secondary.name="Secondary";secondary.text="Karten antippen: Details\n1  Flach   2  Raumfalten   3  Echtes 3D";secondary.add_theme_font_override("font",Style.font);secondary.add_theme_font_size_override("font_size",11);secondary.add_theme_color_override("font_color",Color("98aebd"));add_child(secondary)
+	var secondary:=Label.new();secondary.name="Secondary";secondary.text="Karten antippen: Details\n1 / 2 / 3: Arena wechseln";secondary.add_theme_font_override("font",Style.font);secondary.add_theme_font_size_override("font_size",11);secondary.add_theme_color_override("font_color",Color("98aebd"));add_child(secondary)
 	_layout()
 
 func _layout() -> void:

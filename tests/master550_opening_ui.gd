@@ -1,5 +1,5 @@
 extends SceneTree
-## Actual touch input against the production Alpha shell; no model-state fixtures.
+## Actual opening/drag touch input, followed by explicitly labelled layout fixtures.
 const Shell=preload("res://scripts/alpha/shell.gd")
 class PresentationShell extends Shell:
 	# Arranged layout states are not replayable games and must not be saved.
@@ -35,7 +35,14 @@ func paths(label: String) -> void:
 		for lane in 5:
 			var view=app.board_views[side+str(lane)]
 			check(view.lane==lane and view.unit.is_empty() and bounded(view),label+": real empty lane, touch bounds")
-			if side=="hero":check(is_equal_approx(view.get_global_rect().position.x,app.board_views["enemy"+str(lane)].get_global_rect().position.x),label+": opposing paths aligned")
+			if side=="hero":
+				# Perspective slightly insets the far row, so paired paths retain
+				# their unique nearest centre instead of sharing a flat grid edge.
+				var closest=-1;var distance=INF
+				for opposing in 5:
+					var gap=absf(view.get_global_rect().get_center().x-app.board_views["enemy"+str(opposing)].get_global_rect().get_center().x)
+					if gap<distance:distance=gap;closest=opposing
+				check(closest==lane,label+": each own lane retains its unique directly opposing path")
 func shot(name: String) -> void:
 	DirAccess.make_dir_recursive_absolute("res://work/master550/opening")
 	await create_timer(.35).timeout;await RenderingServer.frame_post_draw
@@ -164,7 +171,7 @@ func run() -> void:
 		for index in 5:
 			check(app.actions["mulligan_"+str(index)]==app.hand_views[index],"mulligan action is the actual hand card")
 			check(app.hand_views[index].card.id==app.session.model.state.hero.hand[index] and bounded(app.hand_views[index]),"real hand data and touch bounds")
-			check(app.hand_views[index].title_paragraph(app.hand_views[index].size.x-16).get_line_count()<=2,"whole opening card name fits")
+			check(app.hand_views[index].layout_report().title_fits,"whole opening card name fits its actual portrait plate")
 		var digest=Session.digest(app.session.model.snapshot());var count=app.session.commands.size()
 		await tap(app.actions.mulligan_0);await tap(app.actions.mulligan_1);await tap(app.actions.mulligan_1)
 		check(app.mulligan_indices==[0] and app.selected==1,"mark, switch and unmark with real touch")

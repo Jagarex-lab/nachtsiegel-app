@@ -12,10 +12,3 @@ func _ready() -> void:
 		push_error("Unknown developer arena variant: "+requested);get_tree().quit(1);return
 	set("arena_mode",requested)
 	super._ready()
-
-func select_presentation_variant(requested:String) -> bool:
-	# Test/developer API only. No model command, RNG call, profile mutation or
-	# extra battle engine is involved in switching these views of one Session.
-	if requested not in CLI_MODES:return false
-	if str(get("arena_mode"))==requested:return true
-	set("arena_mode",requested);render();return true

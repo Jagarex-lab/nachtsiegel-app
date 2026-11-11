@@ -42,8 +42,3 @@ static func hand_rect(metrics: Dictionary, index: int, count: int, selected: boo
 		at.y=metrics.hand.position.y+1.0
 		dimensions*=float(metrics.selected_scale)
 	return Rect2(at,dimensions)
-
-static func fallback_slot(side: String, lane: int, area: Rect2) -> Rect2:
-	var width=(area.size.x-32.0)/5.0
-	var height=(area.size.y-14.0)/2.0
-	return Rect2(area.position+Vector2(lane*(width+8.0),0 if side=="enemy" else height+14.0),Vector2(width,height))

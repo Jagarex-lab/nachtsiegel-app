@@ -65,3 +65,25 @@ result=json.loads(Path('work/production-art/delivery-http-result.json').read_tex
 assert result['failures']==0 and result['http_success']==6
 print('ACTUAL HTTP SERVER: 6 verified-source body successes; 404, same-length corruption, geometry, redirect, connection-close and 8 MiB limit rejection; no compact requests')
 PY
+
+# Keep the original transport corpus above intact; then exercise its separate
+# deterministic cancelled-callback and visible-owner recovery regression.
+art_identity_status=0
+timeout "${GODOT_TEST_TIMEOUT:-120s}" "${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tests/production_art_transfer_identity.gd -- "$art_base_url" > work/production-art/transfer-identity.log 2>&1 || art_identity_status=$?
+if (( art_identity_status != 0 )); then
+  cat work/production-art/transfer-identity.log >&2
+  exit "$art_identity_status"
+fi
+python3 - <<'PYIDENTITY'
+import json,re
+from pathlib import Path
+text=Path('work/production-art/transfer-identity.log').read_text();print(text)
+assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:|instances leaked|resources still in use',text,re.M)
+assert re.search(r'PRODUCTION ART TRANSFER IDENTITY: \d+ assertions, 0 failures',text)
+result=json.loads(Path('work/production-art/transfer-identity-result.json').read_text())
+assert result['failures']==0 and result['observations']['after_late']['rejected']==0
+assert result['observations']['completed']['completed']==2
+assert result['observations']['recovered']['completed']==1
+assert result['observations']['recovered']['recent_failures'][0]['http_status']==503
+print('ACTUAL TRANSFER IDENTITY: late old response ignored; current native-size art verified; visible owner recovers after unchanged cooldown')
+PYIDENTITY

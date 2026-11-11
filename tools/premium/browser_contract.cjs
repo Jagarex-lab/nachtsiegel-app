@@ -54,6 +54,10 @@ function artReady(q,expected,requiredZones=['hand','board']){
   const size=expected[row.card_id];return size&&row.profile==='compact'&&row.status==='final'&&!row.pending&&row.pixels?.[0]===size[0]&&row.pixels?.[1]===size[1];
  });
 }
+function fullArtReady(q,expected){
+ const inspection=q?.inspection,art=inspection?.art,size=expected[inspection?.id];
+ return Boolean(size&&art?.state==='ready'&&art.status==='final'&&art.profile==='full'&&art.visible===true&&art.draw_count>0&&art.card_id===inspection.id&&art.requested_card_id===inspection.id&&art.preview_only===false&&art.pixels?.[0]===size[0]&&art.pixels?.[1]===size[1]);
+}
 function premiumArt(q,viewport){
  const cards=(q.battle_art||[]).filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
  assert(cards.length,'actual visible renderer reports exist');
@@ -79,4 +83,4 @@ function playability(q){
  }
  return {available:q.hand.filter(card=>card.playable).length,unavailable:q.hand.filter(card=>!card.playable).length};
 }
-module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,battleGeometry,artReady,premiumArt,playability};
+module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,battleGeometry,artReady,fullArtReady,premiumArt,playability};

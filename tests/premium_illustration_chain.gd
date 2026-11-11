@@ -87,6 +87,10 @@ func run() -> void:
 			check(status.shield == 2 and status.block == 1 and status.ready, "permanent separate battlefield values " + card.id)
 		var normalized: Dictionary = face.normalized()
 		check(normalized.illustration is Texture2D and normalized.art_status == "final", "actual inspection renderer texture " + card.id)
+		var painted: Dictionary = face.art_report()
+		check(painted.card_id == card.id and painted.status == "final" and not painted.preview_only, "inspection observes its last actually painted full illustration " + card.id)
+		check(painted.pixels == [normalized.illustration.get_width(), normalized.illustration.get_height()], "inspection observer matches actual full bound dimensions " + card.id)
+		row.inspection = painted
 		var layout: Dictionary = face.layout_report()
 		check(layout.title_fits and layout.rules_fit, "complete inspection title and effects " + card.id)
 		check(layout.has_combat_values == (card.kind == "creature"), "only Wesen show attack/life " + card.id)
