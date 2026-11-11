@@ -1,10 +1,16 @@
 name: ORAFOLD audio QA (no deployment)
 on:
   pull_request:
-    branches: [develop]
+    branches: [develop, production/catalog-engine]
     paths:
       - 'assets/audio/**'
       - 'scripts/audio/**'
+      - 'scripts/game_audio.gd'
+      - 'scripts/alpha/shell.gd'
+      - 'scripts/front_end.gd'
+      - 'scripts/qa/production_native_smoke.gd'
+      - 'export_presets.cfg'
+      - 'project.godot'
       - 'data/audio/**'
       - 'tests/audio/**'
       - '.github/workflows/audio-qa.yml'
@@ -63,6 +69,17 @@ jobs:
           AUDIO_QA_PROFILE=chromium node tests/audio/browser_smoke.mjs
           AUDIO_QA_PROFILE=android node tests/audio/browser_smoke.mjs
           AUDIO_QA_PROFILE=webkit node tests/audio/browser_smoke.mjs
+      - name: Export and test the actual product audio surface
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/audio/browser-tools/node_modules
+          LP_NUM_THREADS: '2'
+        run: |
+          bash tools/build_alpha.sh
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory work/alpha/web > work/audio/product-http.log 2>&1 &
+          product_server_pid=$!
+          trap 'kill "$product_server_pid"' EXIT
+          AUDIO_PRODUCT_URL=http://127.0.0.1:8766 AUDIO_QA_PROFILE=chromium node tests/audio/product_browser.mjs
+          AUDIO_PRODUCT_URL=http://127.0.0.1:8766 AUDIO_QA_PROFILE=webkit node tests/audio/product_browser.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -71,3 +88,7 @@ jobs:
             work/audio/*.log
             work/audio/*-results.json
             work/audio/browser/
+            work/audio/product-browser/
+            work/alpha/export.log
+            work/alpha/package-inspection.log
+            work/alpha/web/build-info.json

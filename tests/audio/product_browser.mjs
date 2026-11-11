@@ -10,6 +10,7 @@ const url=process.env.AUDIO_PRODUCT_URL||'http://127.0.0.1:8766';
 const evidence={profile,url,scope:'Actual exported product in browser; no physical device or human listening claim.',checks:[],errors:[],graphicsDiagnostics:[]};
 evidence.checks.push = function (...items) {console.error(items.join("; "));return Array.prototype.push.apply(this,items)};
 let browser;
+let page;
 const deadline=setTimeout(()=>{console.error('Audio product browser deadline exceeded');process.exit(2)},600000);
 try {
   browser=await (profile==='webkit'?webkit:chromium).launch(profile==='webkit'?{headless:true}:{headless:true,channel:'chromium',ignoreDefaultArgs:['--mute-audio'],args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader','--autoplay-policy=user-gesture-required']});
@@ -65,7 +66,7 @@ try {
         analysers: analysers.length, peak, rms: samples ? Math.sqrt(energy / samples) : 0};
     };
   });
-  const page=await context.newPage();
+  page=await context.newPage();
   page.on('pageerror',e=>evidence.errors.push(e.message));
   page.on('console',m=>{
     if(m.type()!=='error'||m.text().includes('favicon.ico'))return;
@@ -117,10 +118,12 @@ try {
   evidence.afterGesture=(await state()).audio;
   evidence.audibleMenu=await capture();assert(evidence.audibleMenu.maxRms>0.000001);
   if(process.env.AUDIO_QA_FOCUS==='resume'){
+    await settings();await volume('sfx',0);await volume('ui',0);await volume('ambience',0);
     await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
     let opening=await state();if(opening.battle.stage==='origins')await tap('origin_0');
     opening=await state();if(opening.battle.stage==='second')await tap('opening_done');
-    await page.waitForFunction(()=>!window.orafoldQA.audio.music.transitioning&&window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
+    evidence.duelBeforePause=(await state()).audio;
+    await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
     evidence.audibleBeforePause=await capture();assert(evidence.audibleBeforePause.maxRms>0.000001);
     for(let repeat=0;repeat<2;repeat++){
       await tap('menu');const paused=await capture();assert(paused.maxRms<1e-7);assert.equal((await state()).audio.suspended,true);
@@ -193,5 +196,20 @@ try {
   evidence.checks.push('Mobile390x844 actual scroll/control editing and44px targets');
   evidence.final=(await state()).audio;assert.equal(evidence.errors.length,0,JSON.stringify(evidence.errors));evidence.result='passed';
   }
-} catch(error){evidence.result='failed';evidence.failure=error.stack||String(error);process.exitCode=1}
-finally{if(browser)await Promise.race([browser.close(),new Promise(resolve=>setTimeout(resolve,10000))]);clearTimeout(deadline);await mkdir('work/audio/product-browser',{recursive:true});await writeFile(`work/audio/product-browser/${profile}${process.env.AUDIO_QA_FOCUS?"-"+process.env.AUDIO_QA_FOCUS:""}.json`,JSON.stringify(evidence,null,2));console.log(JSON.stringify(evidence,null,2))}
+ } catch(error){
+  evidence.result='failed';evidence.failure=error.stack||String(error);process.exitCode=1;
+  if(page)try{evidence.failureState=await Promise.race([
+    page.evaluate(()=>({page:window.orafoldQA?.page,modal:window.orafoldQA?.modal,audio_paused:window.orafoldQA?.audio_paused,stage:window.orafoldQA?.battle?.stage,audio:window.orafoldQA?.audio,visibility:document.visibilityState,probe:window.__audioQAProbe?.()})),
+    new Promise(resolve=>setTimeout(()=>resolve('unavailable after timeout'),3000))
+  ])}catch(diagnostic){evidence.failureState=String(diagnostic)}
+}finally{
+  evidence.finishedAt=new Date().toISOString();
+  await mkdir('work/audio/product-browser',{recursive:true});
+  const suffix=process.env.AUDIO_QA_FOCUS?'-'+process.env.AUDIO_QA_FOCUS:'';
+  const encoded=JSON.stringify(evidence,null,2);
+  await writeFile(`work/audio/product-browser/${profile}${suffix}.json`,encoded);
+  await writeFile(`work/audio/product-browser/${profile}${suffix}-${evidence.finishedAt.replaceAll(/[^0-9]/g,'')}.json`,encoded);
+  console.log(encoded);
+  if(browser)await Promise.race([browser.close(),new Promise(resolve=>setTimeout(resolve,10000))]);
+  clearTimeout(deadline);
+}

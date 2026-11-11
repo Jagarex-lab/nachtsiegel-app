@@ -1,5 +1,7 @@
 # ORAFOLD – Separater Integrationsschritt
 
+> Produktaktivierung und aktueller Integrationsumfang: [PRODUCTION-INTEGRATION.md](PRODUCTION-INTEGRATION.md). Dieser Liefertext dokumentiert den ursprünglichen isolierten Paketstand.
+
 Status dieses Feature-Pakets: Assets und Audioruntime sind isoliert nutzbar.
 Die produktive Alpha-Shell, Kampf-/Effekt-Engine, Kartenwerte, zentrale
 UI-Szenen, Projektkonfiguration und Exportpresets wurden nicht geändert.

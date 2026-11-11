@@ -1,5 +1,7 @@
 # ORAFOLD · Abschlussbericht Audiopaket
 
+> Produktaktivierung und aktueller Integrationsumfang: [PRODUCTION-INTEGRATION.md](PRODUCTION-INTEGRATION.md). Dieser Liefertext dokumentiert den ursprünglichen isolierten Paketstand.
+
 PR: https://github.com/Jagarex-lab/nachtsiegel-app/pull/14
 Branch: `feature/orafold-audio`, Basis `develop` / `17121e4`.
 Der aktuelle Liefercommit ist der Head dieses PRs. Kein Merge, Auto-Merge,
