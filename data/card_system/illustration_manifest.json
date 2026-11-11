@@ -5,7 +5,7 @@
   "source_catalog_card_count": 55,
   "inventory_card_count": 8,
   "shared_concept_card_count": 8,
-  "missing_individual_original_count": 6,
+  "missing_individual_original_count": 5,
   "final_individual_original_count": 0,
   "atlas": {
     "path": "assets/art/atlas.png",
@@ -135,8 +135,8 @@
       },
       "individual_original": {
         "expected_path": "assets/cards/originals/oa-morph-c04.png",
-        "exists": false,
-        "status": "missing",
+        "exists": true,
+        "status": "unreviewed",
         "commercially_cleared": false
       },
       "release_note_de": "Geteiltes Konzeptmotiv; keine fertiggestellte individuelle Kartenillustration behauptet."
