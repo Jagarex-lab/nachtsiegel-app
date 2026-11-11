@@ -1,0 +1,64 @@
+name: Recover one native QA log (read only)
+on:
+  push:
+    branches: [qa/recover-native-ada9]
+    paths: [.github/workflows/native-evidence-recovery.yml]
+permissions:
+  contents: read
+  actions: read
+jobs:
+  recover:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Bind immutable original failure evidence
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (context.repo.owner !== 'Jagarex-lab' || context.repo.repo !== 'nachtsiegel-app') throw Error('wrong repository');
+            const a = (await github.rest.actions.getArtifact({...context.repo, artifact_id:13895866598})).data;
+            const r = (await github.rest.actions.getWorkflowRun({...context.repo, run_id:43109351972})).data;
+            const j = (await github.rest.actions.getJobForWorkflowRun({...context.repo, job_id:130821145320})).data;
+            if(a.name !== 'orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478' || a.expired || a.workflow_run.id !== 43109351972 || a.digest !== 'sha256:c8032bb017122ca0adafd976a4856db9016642c5cd473c109ccb2692b86ddb22' || a.size_in_bytes !== 859156296) throw Error('artifact identity changed');
+            if(r.head_sha !== 'ada9ef91344b8df8042745ba089e6249d3dff478' || r.event !== 'push' || j.run_id !== r.id || j.conclusion !== 'failure') throw Error('original job identity changed');
+            fs.mkdirSync('recovery/compact',{recursive:true});
+            fs.writeFileSync('recovery/compact/original-provenance.json', JSON.stringify({artifact:a,run:r.id,head:r.head_sha,job:j.id,conclusion:j.conclusion,recovery:context.sha},null,2));
+      - name: Retrieve original artifact without executing its contents
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '13895866598'
+          run-id: '43109351972'
+          repository: Jagarex-lab/nachtsiegel-app
+          github-token: ${{ github.token }}
+          path: recovery/untrusted-archive
+      - name: Retain only bounded evidence files
+        shell: python
+        run: |
+          from pathlib import Path
+          import hashlib,json,shutil
+          source=Path('recovery/untrusted-archive')
+          destination=Path('recovery/compact/extracted')
+          rows=[]; total=0; runtime=[]
+          for p in source.rglob('*'):
+              if p.is_symlink(): raise SystemExit('symlink in original artifact')
+              if not p.is_file() or p.suffix not in ('.json','.log'): continue
+              size=p.stat().st_size; total+=size
+              if size>16*1024*1024 or total>32*1024*1024: raise SystemExit('evidence bound exceeded')
+              target=destination/p.relative_to(source)
+              target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(p,target)
+              rows.append({'path':str(p.relative_to(source)),'bytes':size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})
+              if p.name=='orafold-runtime-qa-runtime.log': runtime.append(p)
+          if len(runtime)!=1: raise SystemExit('missing/ambiguous original runtime log')
+          log=runtime[0].read_text(errors='replace')
+          print('ORIGINAL NATIVE RUNTIME LOG:')
+          print(log[-48000:])
+          Path('recovery/compact/extraction.json').write_text(json.dumps({'files':rows,'bytes':total,'binary_execution':False},indent=2))
+      - name: Preserve original compact failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-original-ada9-failure-evidence
+          path: recovery/compact/
+          if-no-files-found: error
+          retention-days: 30
