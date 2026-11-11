@@ -1,5 +1,12 @@
 # 550 individual illustrations: delivery and test evidence
 
+This is the source-bound historical e6 delivery report. Later battle-lifecycle,
+scoped cancellation and packaging corrections are recorded in
+[ART_BATTLE_VISIBILITY.md](ART_BATTLE_VISIBILITY.md),
+[WEB_RUNTIME_PACKAGE.md](WEB_RUNTIME_PACKAGE.md) and the
+[production readiness report](PRODUCTION_READINESS.md). Counts below are not
+silently relabelled a final integrated CI or public deployment.
+
 Implemented and pushed in [PR #23](https://github.com/Jagarex-lab/nachtsiegel-app/pull/23),
 stacked on PR #19. Actual tested Web artifact:
 `e6ba7592594f119f54736ebb81fb0e31e8abb587`, branch
