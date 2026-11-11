@@ -1,5 +1,15 @@
 # ORAFOLD · Audiopaket
 
+> **Aktueller Integrationsbranch:** Die Produktoberfläche verwendet jetzt den bestehenden `GameAudio`-Autoload als einzigen Audioeigentümer. Die verbindliche Beschreibung steht in [PRODUCTION-INTEGRATION.md](PRODUCTION-INTEGRATION.md). Aktivierung und QA sind Gegenstand der [Draft-PR #24](https://github.com/Jagarex-lab/nachtsiegel-app/pull/24); das ist kein Merge- oder Releasebeleg.
+
+Auf diesem Branch teilen Alpha und Archiv denselben begrenzten Mixer: 16 Effektstimmen, zwei Musikplayer und ein Umgebungsplayer, 52 unterstützte Katalogereignisse. Alpha-Einstellungen und aktuelle Vorschau haben fünf unabhängige Regler für Gesamt, Musik, Effekte, Bedienung und Umgebung sowie Mute und reduzierte Intensität. Native Speicherung und Web-Mirror zeigen Fehler an und schützen unbekannte zukünftige Formate. Nur bestätigte Präsentationsereignisse sind verbunden; fehlende Spielsemantiken werden nicht erfunden.
+
+Der unveränderte Originalbestand umfasst **163 Dateien: 153 SFX, neun Musikstücke und eine Umgebung, zusammen 7.914.598 Bytes**. Originalgenerator, Herkunft, per-Datei-Hashes und Lizenzen bleiben in [AUDIO-LICENSES.md](AUDIO-LICENSES.md) und `data/audio/asset_manifest.json` erhalten. Neue lokale Laufzeit-/Browserbelege und ihre ausdrücklich vorläufige Core-/Modellbindung stehen in [production-integration-summary.json](evidence/production-integration-summary.json). Die finale kombinierte Kernel-/Caps-/550-Art-/Audio-Prüfung bleibt ein Integrationsgate.
+
+## Historischer Lieferstand der isolierten PR14
+
+Die folgenden Abschnitte, insbesondere die Tabelle mit offenen Produktaufgaben, dokumentieren den damaligen isolierten Lieferstand. Sie sind keine Statusbeschreibung der jetzt aktivierten Produktoberfläche. Historische Audit- und QA-Belege werden dadurch nicht nachträglich zu neuen Abnahmen erklärt.
+
 Dieses Paket ist eigenständig nutzbar. Die produktive Alpha-Shell verwendet es
 noch nicht. Kampf-, Effekt-, Trigger- und Ressourcen-Engine, Karten und zentrale
 UI-Dateien bleiben unverändert. Kein Merge und kein produktiver Release.

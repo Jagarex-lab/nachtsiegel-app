@@ -1,25 +1,11 @@
 name: ORAFOLD audio QA (no deployment)
 on:
-  pull_request:
-    branches: [develop, production/catalog-engine]
-    paths:
-      - 'assets/audio/**'
-      - 'scripts/audio/**'
-      - 'scripts/game_audio.gd'
-      - 'scripts/alpha/shell.gd'
-      - 'scripts/front_end.gd'
-      - 'scripts/qa/production_native_smoke.gd'
-      - 'export_presets.cfg'
-      - 'project.godot'
-      - 'data/audio/**'
-      - 'tests/audio/**'
-      - 'tests/combat_presentation.gd'
-      - '.github/workflows/audio-qa.yml'
+  workflow_call:
   workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: audio-qa-${{ github.ref }}
+  group: audio-qa-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   audio:
@@ -54,13 +40,14 @@ jobs:
           godot --headless --editor --import --path work/audio/fixture --quit
           godot --headless --path work/audio/fixture --export-debug 'Audio Web QA'
           godot --headless --path work/audio/fixture --export-debug 'Audio Linux QA'
-          work/audio/fixture/build/audio-qa.x86_64 --headless --audio-driver Dummy -- --audio-fixture-native | tee work/audio/native-export-test.log
+          work/audio/fixture/build/audio-qa.x86_64 --headless --audio-driver Dummy -- --audio-fixture-native 2>&1 | tee work/audio/native-export-test.log
+          if rg -n '(^ERROR:|^SCRIPT ERROR:|ObjectDB instances leaked|resources still in use)' work/audio/native-export-test.log; then exit 1; fi
       - name: Actual native product runtime with streaming audio
         run: |
           mkdir -p work/audio/product-native work/audio/native-empty
           godot --headless --path . --export-debug 'Linux Runtime QA' work/audio/product-native/orafold-audio-runtime-qa.x86_64 > work/audio/product-native-export.log 2>&1
           audio_native_binary="$PWD/work/audio/product-native/orafold-audio-runtime-qa.x86_64"
-          (cd work/audio/native-empty && timeout 300 "$audio_native_binary" --headless --audio-driver Dummy) | tee work/audio/product-native-runtime.log
+          (cd work/audio/native-empty && timeout 300 "$audio_native_binary" --headless --audio-driver Dummy) 2>&1 | tee work/audio/product-native-runtime.log
           if rg -n '(^ERROR:|^SCRIPT ERROR:|ObjectDB instances leaked|resources still in use)' work/audio/product-native-runtime.log; then exit 1; fi
           python3 - <<'PYQA'
           import json
