@@ -64,7 +64,11 @@ records the official CI artifact and all 18 verified executed source hashes.
 [KERNEL_SEMANTICS_BEFORE_AFTER.json](KERNEL_SEMANTICS_BEFORE_AFTER.json) compares the
 actual identical 848-case plans: 84 winners and 42/64 starter event digests
 change, so the old resource-comparison baseline must be rebound before use.
-The pre-getter starter export comes from these 64 actual new starter records.
+The [pre-getter starter export](PRE_GETTER_STARTER_BASELINE.json) comes from
+these 64 actual new starter records and names the committed corrected report.
+An [independent local repeat](KERNEL_SEMANTICS_LOCAL_VERIFICATION.json) produced
+a byte-identical complete aggregate, including all four shard byte hashes.
+The displayed balance statistics still count one 848-match matrix.
 
 Review limits: these targeted fixtures and heuristic AI matches do not prove
 all reachable 550-card interactions or human metagame balance. The actual

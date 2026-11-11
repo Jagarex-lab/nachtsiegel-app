@@ -88,5 +88,7 @@
   "full_simulation_status": "complete_source_bound_ci",
   "notes": "All listed gates are actual engine executions. Boundary fixtures are not full matches. Legacy/Alpha assertions preserve existing golden fixtures/replays; no goldens regenerated.",
   "new_printed_semantics_cases": 44,
-  "simulation_provenance": "KERNEL_SEMANTICS_SIMULATION_PROVENANCE.json"
+  "simulation_provenance": "KERNEL_SEMANTICS_SIMULATION_PROVENANCE.json",
+  "pre_getter_baseline_report_anchor": "5cd7d8af657e95f1dd9ad76ef108af9a23711b68",
+  "independent_local_aggregate_byte_identical": true
 }
