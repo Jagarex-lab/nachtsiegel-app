@@ -1,0 +1,801 @@
+{
+  "version": 1,
+  "events": {
+    "ui.hover": {
+      "variants": [
+        "ui.hover.01",
+        "ui.hover.02",
+        "ui.hover.03"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 110,
+      "max_voices": 1,
+      "priority": 0,
+      "gain_db": -17,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "ui.select": {
+      "variants": [
+        "ui.select.01",
+        "ui.select.02",
+        "ui.select.03"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "ui.confirm": {
+      "variants": [
+        "ui.confirm.01",
+        "ui.confirm.02"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "ui.cancel": {
+      "variants": [
+        "ui.cancel.01",
+        "ui.cancel.02"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "ui.error": {
+      "variants": [
+        "ui.error.01",
+        "ui.error.02"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -15,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.draw": {
+      "variants": [
+        "card.draw.01",
+        "card.draw.02",
+        "card.draw.03",
+        "card.draw.04"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.hover": {
+      "variants": [
+        "card.hover.01",
+        "card.hover.02",
+        "card.hover.03"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 110,
+      "max_voices": 1,
+      "priority": 0,
+      "gain_db": -20,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.select": {
+      "variants": [
+        "card.select.01",
+        "card.select.02",
+        "card.select.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -14,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.enlarge": {
+      "variants": [
+        "card.enlarge.01",
+        "card.enlarge.02",
+        "card.enlarge.03"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 65,
+      "max_voices": 1,
+      "priority": 0,
+      "gain_db": -17,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.move": {
+      "variants": [
+        "card.move.01",
+        "card.move.02",
+        "card.move.03"
+      ],
+      "bus": "UI",
+      "cooldown_ms": 65,
+      "max_voices": 1,
+      "priority": 0,
+      "gain_db": -18,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.return": {
+      "variants": [
+        "card.return.01",
+        "card.return.02",
+        "card.return.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -14,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.play": {
+      "variants": [
+        "card.play.01",
+        "card.play.02",
+        "card.play.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -10,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      },
+      "rarity_layers": {
+        "rare": "rarity.rare",
+        "epic": "rarity.epic",
+        "legendary": "rarity.legendary"
+      }
+    },
+    "card.play.creature": {
+      "variants": [
+        "card.play.creature.01",
+        "card.play.creature.02",
+        "card.play.creature.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -10,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      },
+      "rarity_layers": {
+        "rare": "rarity.rare",
+        "epic": "rarity.epic",
+        "legendary": "rarity.legendary"
+      }
+    },
+    "card.play.impulse": {
+      "variants": [
+        "card.play.impulse.01",
+        "card.play.impulse.02",
+        "card.play.impulse.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      },
+      "rarity_layers": {
+        "rare": "rarity.rare",
+        "epic": "rarity.epic",
+        "legendary": "rarity.legendary"
+      }
+    },
+    "card.play.relic": {
+      "variants": [
+        "card.play.relic.01",
+        "card.play.relic.02",
+        "card.play.relic.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -10,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      },
+      "rarity_layers": {
+        "rare": "rarity.rare",
+        "epic": "rarity.epic",
+        "legendary": "rarity.legendary"
+      }
+    },
+    "card.discard": {
+      "variants": [
+        "card.discard.01",
+        "card.discard.02",
+        "card.discard.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -14,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.destroy": {
+      "variants": [
+        "card.destroy.01",
+        "card.destroy.02",
+        "card.destroy.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "card.shuffle": {
+      "variants": [
+        "card.shuffle.01",
+        "card.shuffle.02",
+        "card.shuffle.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "creature.summon": {
+      "variants": [
+        "creature.summon.01",
+        "creature.summon.02",
+        "creature.summon.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -10,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      },
+      "rarity_layers": {
+        "rare": "rarity.rare",
+        "epic": "rarity.epic",
+        "legendary": "rarity.legendary"
+      }
+    },
+    "creature.attack.prepare": {
+      "variants": [
+        "creature.attack.prepare.01",
+        "creature.attack.prepare.02",
+        "creature.attack.prepare.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -15,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "creature.attack": {
+      "variants": [
+        "creature.attack.01",
+        "creature.attack.02",
+        "creature.attack.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -10,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      }
+    },
+    "creature.hit": {
+      "variants": [
+        "creature.hit.01",
+        "creature.hit.02",
+        "creature.hit.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "creature.hit.strong": {
+      "variants": [
+        "creature.hit.strong.01",
+        "creature.hit.strong.02",
+        "creature.hit.strong.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "creature.defeated": {
+      "variants": [
+        "creature.defeated.01",
+        "creature.defeated.02",
+        "creature.defeated.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "creature.return": {
+      "variants": [
+        "creature.return.01",
+        "creature.return.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "hero.damage": {
+      "variants": [
+        "hero.damage.01",
+        "hero.damage.02",
+        "hero.damage.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "shield.gain": {
+      "variants": [
+        "shield.gain.01",
+        "shield.gain.02",
+        "shield.gain.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "shield.absorb": {
+      "variants": [
+        "shield.absorb.01",
+        "shield.absorb.02",
+        "shield.absorb.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "block.activate": {
+      "variants": [
+        "block.activate.01",
+        "block.activate.02",
+        "block.activate.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "combat.heal": {
+      "variants": [
+        "combat.heal.01",
+        "combat.heal.02",
+        "combat.heal.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "combat.buff": {
+      "variants": [
+        "combat.buff.01",
+        "combat.buff.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -14,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "combat.debuff": {
+      "variants": [
+        "combat.debuff.01",
+        "combat.debuff.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -14,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "combat.path_change": {
+      "variants": [
+        "combat.path_change.01",
+        "combat.path_change.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -14,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "combat.time": {
+      "variants": [
+        "combat.time.01",
+        "combat.time.02",
+        "combat.time.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "combat.reaction": {
+      "variants": [
+        "combat.reaction.01",
+        "combat.reaction.02",
+        "combat.reaction.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "combat.interrupt": {
+      "variants": [
+        "combat.interrupt.01",
+        "combat.interrupt.02",
+        "combat.interrupt.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "resonance.gain": {
+      "variants": [
+        "resonance.gain.01",
+        "resonance.gain.02",
+        "resonance.gain.03",
+        "resonance.gain.04"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "resonance.low": {
+      "variants": [
+        "resonance.low.01",
+        "resonance.low.02",
+        "resonance.low.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -17,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "resonance.medium": {
+      "variants": [
+        "resonance.medium.01",
+        "resonance.medium.02",
+        "resonance.medium.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -14,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "resonance.high": {
+      "variants": [
+        "resonance.high.01",
+        "resonance.high.02",
+        "resonance.high.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "resonance.spend": {
+      "variants": [
+        "resonance.spend.01",
+        "resonance.spend.02",
+        "resonance.spend.03",
+        "resonance.spend.04"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "resonance.unleash": {
+      "variants": [
+        "resonance.unleash.01",
+        "resonance.unleash.02",
+        "resonance.unleash.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 4,
+      "gain_db": -10,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      }
+    },
+    "relic.activate": {
+      "variants": [
+        "relic.activate.01",
+        "relic.activate.02",
+        "relic.activate.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -11,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015,
+      "faction_layers": {
+        "zwoelf_haeuser": "faction.zwoelf_haeuser",
+        "stillwacht": "faction.stillwacht",
+        "vielgestalt": "faction.vielgestalt",
+        "neunte_stunde": "faction.neunte_stunde"
+      },
+      "rarity_layers": {
+        "rare": "rarity.rare",
+        "epic": "rarity.epic",
+        "legendary": "rarity.legendary"
+      }
+    },
+    "relic.passive": {
+      "variants": [
+        "relic.passive.01",
+        "relic.passive.02",
+        "relic.passive.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 65,
+      "max_voices": 2,
+      "priority": 1,
+      "gain_db": -17,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "relic.spend": {
+      "variants": [
+        "relic.spend.01",
+        "relic.spend.02",
+        "relic.spend.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "relic.replace": {
+      "variants": [
+        "relic.replace.01",
+        "relic.replace.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 2,
+      "priority": 2,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "relic.destroy": {
+      "variants": [
+        "relic.destroy.01",
+        "relic.destroy.02",
+        "relic.destroy.03"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "convergence.prepare": {
+      "variants": [
+        "convergence.prepare.01",
+        "convergence.prepare.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "convergence.complete": {
+      "variants": [
+        "convergence.complete.01",
+        "convergence.complete.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 4,
+      "gain_db": -10,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "convergence.interrupt": {
+      "variants": [
+        "convergence.interrupt.01",
+        "convergence.interrupt.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 3,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "battle.victory": {
+      "variants": [
+        "battle.victory.01",
+        "battle.victory.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 4,
+      "gain_db": -12,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    },
+    "battle.defeat": {
+      "variants": [
+        "battle.defeat.01",
+        "battle.defeat.02"
+      ],
+      "bus": "SFX",
+      "cooldown_ms": 90,
+      "max_voices": 3,
+      "priority": 4,
+      "gain_db": -13,
+      "pitch_min": 0.985,
+      "pitch_max": 1.015
+    }
+  }
+}

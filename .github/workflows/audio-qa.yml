@@ -1,0 +1,95 @@
+name: ORAFOLD audio QA (no deployment)
+on:
+  workflow_call:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: audio-qa-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  audio:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - name: Audio validation dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python3 -m pip install 'numpy==2.3.5'
+      - name: Audio runtime, preview and complete asset checks
+        run: bash tests/audio/run.sh
+      - name: Export disposable audio project
+        run: |
+          python3 tests/audio/build_fixture.py
+          godot --headless --editor --import --path work/audio/fixture --quit
+          godot --headless --path work/audio/fixture --export-debug 'Audio Web QA'
+          godot --headless --path work/audio/fixture --export-debug 'Audio Linux QA'
+          work/audio/fixture/build/audio-qa.x86_64 --headless --audio-driver Dummy -- --audio-fixture-native 2>&1 | tee work/audio/native-export-test.log
+          if rg -n '(^ERROR:|^SCRIPT ERROR:|ObjectDB instances leaked|resources still in use)' work/audio/native-export-test.log; then exit 1; fi
+      - name: Actual native product runtime with streaming audio
+        run: |
+          mkdir -p work/audio/product-native work/audio/native-empty
+          godot --headless --path . --export-debug 'Linux Runtime QA' work/audio/product-native/orafold-audio-runtime-qa.x86_64 > work/audio/product-native-export.log 2>&1
+          audio_native_binary="$PWD/work/audio/product-native/orafold-audio-runtime-qa.x86_64"
+          (cd work/audio/native-empty && timeout 300 "$audio_native_binary" --headless --audio-driver Dummy) 2>&1 | tee work/audio/product-native-runtime.log
+          if rg -n '(^ERROR:|^SCRIPT ERROR:|ObjectDB instances leaked|resources still in use)' work/audio/product-native-runtime.log; then exit 1; fi
+          python3 - <<'PYQA'
+          import json
+          from pathlib import Path
+          rows = [json.loads(line) for line in Path('work/audio/product-native-runtime.log').read_text().splitlines() if line.startswith('{')]
+          assert len(rows) == 1 and rows[0]['suite'] == 'production_native_exported' and rows[0]['failures'] == 0 and rows[0]['assertions'] >= 29 and rows[0]['main_menu_verified'] is True, rows
+          PYQA
+      - name: Isolated browser dependencies
+        run: |
+          npm install --prefix work/audio/browser-tools --no-save --package-lock=false playwright@1.62.1
+          work/audio/browser-tools/node_modules/.bin/playwright install --with-deps chromium webkit
+      - name: Desktop, Android emulation and WebKit audio checks
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/audio/browser-tools/node_modules
+        run: |
+          export CHROMIUM_PATH="$(node -e "process.stdout.write(require('playwright').chromium.executablePath())")"
+          python3 -m http.server 8765 --bind 127.0.0.1 --directory work/audio/fixture/build/web > work/audio/browser-http.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          AUDIO_QA_PROFILE=chromium node tests/audio/browser_smoke.mjs
+          AUDIO_QA_PROFILE=android node tests/audio/browser_smoke.mjs
+          AUDIO_QA_PROFILE=webkit node tests/audio/browser_smoke.mjs
+      - name: Export and test the actual product audio surface
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/audio/browser-tools/node_modules
+          LP_NUM_THREADS: '2'
+        run: |
+          bash tools/build_alpha.sh
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory work/alpha/web > work/audio/product-http.log 2>&1 &
+          product_server_pid=$!
+          trap 'kill "$product_server_pid"' EXIT
+          AUDIO_PRODUCT_URL=http://127.0.0.1:8766 AUDIO_QA_PROFILE=chromium node tests/audio/product_browser.mjs
+          AUDIO_PRODUCT_URL=http://127.0.0.1:8766 AUDIO_QA_PROFILE=webkit node tests/audio/product_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: orafold-audio-qa
+          path: |
+            work/audio/*.log
+            work/audio/*-results.json
+            work/audio/browser/
+            work/audio/product-browser/
+            work/alpha/export.log
+            work/alpha/package-inspection.log
+            work/alpha/web/build-info.json

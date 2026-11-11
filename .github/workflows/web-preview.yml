@@ -15,6 +15,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  production-audio:
+    # The guarded manual publisher requires this workflow's complete conclusion,
+    # including real exported-product audio and both browser engines.
+    uses: ./.github/workflows/audio-qa.yml
+
   native-platforms:
     # Part of this workflow's conclusion: a failed native build cannot be
     # hidden behind a green release-candidate run. No publication happens here.
