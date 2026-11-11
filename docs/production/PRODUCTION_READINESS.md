@@ -77,3 +77,11 @@ Nachweise: `docs/production/simulation-results.json`, `RESOURCE_MODEL_EXPERIMENT
 - 848er-Matrix: `5315796e48eb14c9428a0efb8f9a89f1ce2f4b9a928a8e396ea6241eba0da6d8`
 - Ressourcenlauf: `d64fcb5368b1412ed6ca05b3370557fe7586b6f441e8f7b92678f94e49e9f676`
 - Full-Pool: `ced1294a2eb14b008bfb13ed5ae6a274e1d226c6776a25b42a241f6b3743c112`
+
+## Tatsächliche Audio-Laufzeitkorrektur nach D6
+
+Der gemeinsame D6-Lauf `42955951871` scheiterte im echten Produktions-Burst-UI-Test trotz32 bestandener Regeln/Bedienungsassertions an einem zusätzlichen Godotfehler: `Cannot/Can’t play finished Tween`. Die exakte Originalmeldung lautet `Can't play finished Tween, use stop() first to reset its state.` Der Stack führt durch `AudioManager._update_suspension` und den realen Modalwechsel. Dies ist ausdrücklich ein Laufzeitfehler, kein bloßer Test-Timingfall.
+
+Godot4.6.3 markiert einen Tween beim letzten Schritt bereits `dead`, während `is_valid()` im selben finished-Signal noch true sein kann. Der neue Manager gibt abgeschlossene Ambience-Handles in diesem Signal frei, bindet die Bereinigung an die Instanz-ID und setzt nur tatsächlich von ihm pausierte laufende Tweens bei einem echten Suspensionswechsel fort. Stop/Ersetzen räumen Handle und Pauseflag auf. Fadezeiten, Gains, Musikcontroller, Karten und Kampfregeln ändern sich nicht.
+
+Die bestehenden395 Audio-Runtimeprüfungen bleiben erhalten.16 neue Prüfungen reproduzieren das echte Signalfenster ohne künstliche Fehlerunterdrückung und prüfen Live-Pause/Resume, eingefrorene Zeit/Lautstärke ohne Neustart, überlagernde Fokusgründe, Ersatz und Stop. Vorher411Assertions/5Failures plus3 echte Tweenfehler; nachher411/0 ohne Engine-/Scriptfehler oder Leaks. [Quell- und Logbindung](evidence/AUDIO_TWEEN_LIFECYCLE.json). Die neue vollständige CI muss anschließend den tatsächlichen integrierten Export und die Browser bestätigen. Ältere0f-Browserbelege bleiben auf0f gebunden; nur UI/Daten/Artwork/Regeldateien sind weiter byteidentisch, der Audio-Manager ist gezielt korrigiert.
