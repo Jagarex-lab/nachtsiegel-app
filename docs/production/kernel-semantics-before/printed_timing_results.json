@@ -1,0 +1,452 @@
+{
+  "cases": 28,
+  "fixture_limits": "Exact catalog definitions, public play execution and native combat; direct reachable battle arrangement mirrors existing tests. No definition/stat changes, no full match claim.",
+  "model_sha256": "4d1ed5652514cbc3e13a69cfea3784b1f42cb6a309ce15206966237ab8de9b27",
+  "positive_control_failures": 0,
+  "printed_semantics_failures": 14,
+  "results": [
+    {
+      "case": "optional_or_ordered_play:of-houses-077",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "discard": [],
+        "energy": 8,
+        "hand": [
+          "of-houses-077"
+        ],
+        "printed_text": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Erzeuge 3 Resonanz.",
+        "rejection_atomic": true,
+        "reply": {
+          "ok": false,
+          "reason": "no_effect_target"
+        },
+        "resonance": 10
+      },
+      "positive_control": false,
+      "side": "hero"
+    },
+    {
+      "case": "same_card_with_preexisting_targets:of-houses-077",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "hand": [],
+        "reply": {
+          "ok": true,
+          "reason": ""
+        },
+        "resonance": 13
+      },
+      "positive_control": true,
+      "side": "hero"
+    },
+    {
+      "case": "optional_or_ordered_play:of-ninth-078",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "discard": [],
+        "energy": 5,
+        "hand": [
+          "of-ninth-078"
+        ],
+        "printed_text": "Beim Ausspielen: Erhalte 2 Energie für diesen Zug.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+        "rejection_atomic": true,
+        "reply": {
+          "ok": false,
+          "reason": "no_effect_target"
+        },
+        "resonance": 10
+      },
+      "positive_control": false,
+      "side": "hero"
+    },
+    {
+      "case": "same_card_with_preexisting_targets:of-ninth-078",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "hand": [],
+        "reply": {
+          "ok": true,
+          "reason": ""
+        },
+        "resonance": 10
+      },
+      "positive_control": true,
+      "side": "hero"
+    },
+    {
+      "case": "optional_or_ordered_play:of-morph-089",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "discard": [],
+        "energy": 8,
+        "hand": [
+          "of-morph-089",
+          "oa-neutral-c02"
+        ],
+        "printed_text": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+        "rejection_atomic": true,
+        "reply": {
+          "ok": false,
+          "reason": "no_effect_target"
+        },
+        "resonance": 10
+      },
+      "positive_control": false,
+      "side": "hero"
+    },
+    {
+      "case": "same_card_with_preexisting_targets:of-morph-089",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "hand": [
+          "oa-neutral-c02"
+        ],
+        "reply": {
+          "ok": true,
+          "reason": ""
+        },
+        "resonance": 11
+      },
+      "positive_control": true,
+      "side": "hero"
+    },
+    {
+      "case": "hero_only_damage:of-houses-075",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 11,
+        "own_creature_present": false,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Heile deinen Helden um 3 Leben. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": false,
+      "side": "hero"
+    },
+    {
+      "case": "actual_creature_damage:of-houses-075",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 13,
+        "own_creature_present": true,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Heile deinen Helden um 3 Leben. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": true,
+      "side": "hero"
+    },
+    {
+      "case": "hero_only_damage:of-neutral-076",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 2,
+        "hp": 8,
+        "own_creature_present": false,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": false,
+      "side": "hero"
+    },
+    {
+      "case": "actual_creature_damage:of-neutral-076",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 2,
+        "hp": 10,
+        "own_creature_present": true,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": true,
+      "side": "hero"
+    },
+    {
+      "case": "empty_lane_defense:of-stillwatch-070",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 10,
+        "own_creature_present": false,
+        "printed_text": "Wenn ein eigenes Wesen verteidigt (Reaktion, 1 Resonanz): Gewähre deinem Helden 3 Schild. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9,
+        "ward": 1
+      },
+      "positive_control": false,
+      "side": "hero"
+    },
+    {
+      "case": "actual_creature_defense:of-stillwatch-070",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 10,
+        "own_creature_present": true,
+        "printed_text": "Wenn ein eigenes Wesen verteidigt (Reaktion, 1 Resonanz): Gewähre deinem Helden 3 Schild. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9,
+        "ward": 3
+      },
+      "positive_control": true,
+      "side": "hero"
+    },
+    {
+      "case": "empty_lane_defense:of-stillwatch-093",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 10,
+        "own_creature_present": false,
+        "printed_text": "Aktivieren (1 Energie, 1 Resonanz): Gewähre dem eigenen Wesen mit dem wenigsten Leben 3 Schild.\nZu deinem Zugbeginn: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nWenn ein eigenes Wesen verteidigt: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nJede Fähigkeit 1× pro Zug.",
+        "resonance": 10,
+        "ward": 0
+      },
+      "positive_control": false,
+      "side": "hero"
+    },
+    {
+      "case": "actual_creature_defense:of-stillwatch-093",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 2,
+        "hp": 10,
+        "own_creature_present": true,
+        "printed_text": "Aktivieren (1 Energie, 1 Resonanz): Gewähre dem eigenen Wesen mit dem wenigsten Leben 3 Schild.\nZu deinem Zugbeginn: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nWenn ein eigenes Wesen verteidigt: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nJede Fähigkeit 1× pro Zug.",
+        "resonance": 10,
+        "ward": 0
+      },
+      "positive_control": true,
+      "side": "hero"
+    },
+    {
+      "case": "optional_or_ordered_play:of-houses-077",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "discard": [],
+        "energy": 8,
+        "hand": [
+          "of-houses-077"
+        ],
+        "printed_text": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Erzeuge 3 Resonanz.",
+        "rejection_atomic": true,
+        "reply": {
+          "ok": false,
+          "reason": "no_effect_target"
+        },
+        "resonance": 10
+      },
+      "positive_control": false,
+      "side": "enemy"
+    },
+    {
+      "case": "same_card_with_preexisting_targets:of-houses-077",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "hand": [],
+        "reply": {
+          "ok": true,
+          "reason": ""
+        },
+        "resonance": 13
+      },
+      "positive_control": true,
+      "side": "enemy"
+    },
+    {
+      "case": "optional_or_ordered_play:of-ninth-078",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "discard": [],
+        "energy": 5,
+        "hand": [
+          "of-ninth-078"
+        ],
+        "printed_text": "Beim Ausspielen: Erhalte 2 Energie für diesen Zug.\nBeim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.",
+        "rejection_atomic": true,
+        "reply": {
+          "ok": false,
+          "reason": "no_effect_target"
+        },
+        "resonance": 10
+      },
+      "positive_control": false,
+      "side": "enemy"
+    },
+    {
+      "case": "same_card_with_preexisting_targets:of-ninth-078",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "hand": [],
+        "reply": {
+          "ok": true,
+          "reason": ""
+        },
+        "resonance": 10
+      },
+      "positive_control": true,
+      "side": "enemy"
+    },
+    {
+      "case": "optional_or_ordered_play:of-morph-089",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "discard": [],
+        "energy": 8,
+        "hand": [
+          "of-morph-089",
+          "oa-neutral-c02"
+        ],
+        "printed_text": "Beim Ausspielen: Wirf die erste Handkarte ab, falls vorhanden.\nBeim Ausspielen: Nimm das zuletzt abgelegte eigene Wesen auf die Hand, falls Platz ist.\nBeim Ausspielen: Erzeuge 1 Resonanz.",
+        "rejection_atomic": true,
+        "reply": {
+          "ok": false,
+          "reason": "no_effect_target"
+        },
+        "resonance": 10
+      },
+      "positive_control": false,
+      "side": "enemy"
+    },
+    {
+      "case": "same_card_with_preexisting_targets:of-morph-089",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "hand": [
+          "oa-neutral-c02"
+        ],
+        "reply": {
+          "ok": true,
+          "reason": ""
+        },
+        "resonance": 11
+      },
+      "positive_control": true,
+      "side": "enemy"
+    },
+    {
+      "case": "hero_only_damage:of-houses-075",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 11,
+        "own_creature_present": false,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Heile deinen Helden um 3 Leben. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": false,
+      "side": "enemy"
+    },
+    {
+      "case": "actual_creature_damage:of-houses-075",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 13,
+        "own_creature_present": true,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Heile deinen Helden um 3 Leben. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": true,
+      "side": "enemy"
+    },
+    {
+      "case": "hero_only_damage:of-neutral-076",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 2,
+        "hp": 8,
+        "own_creature_present": false,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": false,
+      "side": "enemy"
+    },
+    {
+      "case": "actual_creature_damage:of-neutral-076",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 2,
+        "hp": 10,
+        "own_creature_present": true,
+        "printed_text": "Wenn ein eigenes Wesen Schaden erleidet (Reaktion, 1 Resonanz): Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9
+      },
+      "positive_control": true,
+      "side": "enemy"
+    },
+    {
+      "case": "empty_lane_defense:of-stillwatch-070",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 10,
+        "own_creature_present": false,
+        "printed_text": "Wenn ein eigenes Wesen verteidigt (Reaktion, 1 Resonanz): Gewähre deinem Helden 3 Schild. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9,
+        "ward": 1
+      },
+      "positive_control": false,
+      "side": "enemy"
+    },
+    {
+      "case": "actual_creature_defense:of-stillwatch-070",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 10,
+        "own_creature_present": true,
+        "printed_text": "Wenn ein eigenes Wesen verteidigt (Reaktion, 1 Resonanz): Gewähre deinem Helden 3 Schild. Beim Ausspielen bis zu deinem nächsten Zugbeginn vorbereiten. 1× pro Zug.",
+        "resonance": 9,
+        "ward": 3
+      },
+      "positive_control": true,
+      "side": "enemy"
+    },
+    {
+      "case": "empty_lane_defense:of-stillwatch-093",
+      "expected_printed_semantics_pass": false,
+      "observed": {
+        "armed": [],
+        "block": 0,
+        "hp": 10,
+        "own_creature_present": false,
+        "printed_text": "Aktivieren (1 Energie, 1 Resonanz): Gewähre dem eigenen Wesen mit dem wenigsten Leben 3 Schild.\nZu deinem Zugbeginn: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nWenn ein eigenes Wesen verteidigt: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nJede Fähigkeit 1× pro Zug.",
+        "resonance": 10,
+        "ward": 0
+      },
+      "positive_control": false,
+      "side": "enemy"
+    },
+    {
+      "case": "actual_creature_defense:of-stillwatch-093",
+      "expected_printed_semantics_pass": true,
+      "observed": {
+        "armed": [],
+        "block": 2,
+        "hp": 10,
+        "own_creature_present": true,
+        "printed_text": "Aktivieren (1 Energie, 1 Resonanz): Gewähre dem eigenen Wesen mit dem wenigsten Leben 3 Schild.\nZu deinem Zugbeginn: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nWenn ein eigenes Wesen verteidigt: Gewähre deinem Helden 2 Block bis zu deinem Zugbeginn.\nJede Fähigkeit 1× pro Zug.",
+        "resonance": 10,
+        "ward": 0
+      },
+      "positive_control": true,
+      "side": "enemy"
+    }
+  ],
+  "suite": "isolated_actual_printed_timing_review"
+}

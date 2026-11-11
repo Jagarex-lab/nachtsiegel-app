@@ -1,0 +1,24 @@
+{
+  "source_commit": "4a288cc",
+  "model_sha256": "4d1ed5652514cbc3e13a69cfea3784b1f42cb6a309ce15206966237ab8de9b27",
+  "files": {
+    "printed_timing_repro.gd": "027382202f06ba03ac9438f2a7e394d9f25055aaa97b4337500e3729a03b73ce",
+    "printed_timing_results.json": "cb663ece03cbbf380abe4a76c2f6dfadcf3c3d5b742955875314f993a18c2726",
+    "printed_timing.log": "c7ec5a75b194c7bde68e13a89849a62ba03a70999067bfa6aeb89a6d1a548ddf",
+    "native_arrival_kill_repro.gd": "3b67f5a9476da33e6baa64484377253eb9e950d8ed540a89446c26c0764bbdf0",
+    "native_arrival_kill_results.json": "58f93a8e2b7550e26c3d7876b71f58b80309e37ec2c57da1930a950b883f8f19",
+    "native_arrival_kill.log": "e9c563e3b24751a38920209cbeb3433fe942785bc219d81a560fe06f8d9a8d41",
+    "native_retaliation_kill_repro.gd": "c263c49b0c09b6d8e177d21860d525c671b3218b08c114781b3c9e43b9a17250",
+    "native_retaliation_kill_results.json": "75e0c599efa72cf21dcaf9692ed4afb3db119f5b8d7b073298e49a30b10aed71",
+    "native_retaliation_kill.log": "3a12165cae2d3ad9d0635df6384b1890cba985ae9dc8432af010bddb29ba198c",
+    "conditional_move_repro.gd": "0d84fd98e1615dd09b46a9579e43e7847f252bea25e0ca2cd8eabe1206bd594a",
+    "conditional_move_results.json": "db5a76a41596b69687675c977b86091f14728448869d2468852cf40523f46cb2",
+    "conditional_move.log": "b34c0e5c0c9794efd7219905a7ac7ac34daf2bb228255541523e9d8f4e5d0409",
+    "delayed_creature_repro.gd": "675e083f6faf954d81cde1085c59f63050a9ae15c6c58b263cbc0c464991a88b",
+    "delayed_creature_results.json": "6f6da207bfdc79eded86ffce40632fb08184e1f2973794695b4893b94908a9d6",
+    "delayed_creature.log": "6e332aadb8f2cfeb293aea42d41efd2321e67f477aae7af5c82133f0ec2e8421"
+  },
+  "historical_expected_failure_cases": 48,
+  "positive_control_failures": 0,
+  "notes": "Actual unchanged catalog/model actions. Reproduction files use res:// paths and can also exercise the corrected worktree; historical logs/results are retained byte-for-byte."
+}

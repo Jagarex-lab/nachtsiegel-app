@@ -1,0 +1,91 @@
+{
+  "base_commit": "4a288cc",
+  "source_sha256": {
+    "scripts/card_system/production_model.gd": "2ba9076d81e45540c563aa17ccd8b755bb59858bc33472eeb4cfa27f2a34aac7",
+    "scripts/alpha/model.gd": "d93dff14897c0d94e33d8b5da8b35f8b156d38462e49cca9dc79d98176fb30bc",
+    "data/production/cards.json": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7"
+  },
+  "logs": {
+    "production_engine": {
+      "sha256": "8e457e1a40bfea0c6e428ea93b3f9a145d3a4718fe851b27aaa0bced8fca2cad",
+      "assertions": 4425,
+      "failures": 0
+    },
+    "production_printed_semantics": {
+      "sha256": "846d30d3e9f475dee9a6b5500c41b950589e7bc1ed8b66e385ff67e0e016d5e0",
+      "assertions": 44,
+      "failures": 0
+    },
+    "production_creature_kill_watchers": {
+      "sha256": "634bc0affe8a305980f42a221dc96d6c641e31805a202151c422a095cdd55d03",
+      "assertions": 456,
+      "failures": 0
+    },
+    "production_delayed_sources": {
+      "sha256": "467fd96afbd47b93153f3198495a8501ac897f3d3269a4cfbf348a4538da5ebd",
+      "assertions": 799,
+      "failures": 0
+    },
+    "production_ai_policy": {
+      "sha256": "8e8796465d963374b60bcee57762743f8d0cf5c9c75cd610c2f1565f3e59ce77",
+      "assertions": 187,
+      "failures": 0
+    },
+    "production_ai_finishers": {
+      "sha256": "40b6267bc2feac57de110600b493078574e75bf0f32c3768936541aa17055f8a",
+      "assertions": 91,
+      "failures": 0
+    },
+    "production_storage": {
+      "sha256": "5fad81dbef612b4599d8e0c9f28bd7a37ce5ec3e44937ee1214203add56b80d9",
+      "assertions": 511,
+      "failures": 0
+    },
+    "legacy_foundations": {
+      "sha256": "20bf1dd6f0afc804a555d0c2e1e07757171258f12bf04bb5167be7ed289fee43",
+      "assertions": 2171,
+      "failures": 0
+    },
+    "legacy_engine": {
+      "sha256": "142457ac97953ee912725755040e9c594c8381a414af2da9a739ac3f983d1fe9",
+      "assertions": 2235,
+      "failures": 0
+    },
+    "legacy_p05_p06": {
+      "sha256": "4c60928098c8c9e32e2ed699c535a4809bea5c340925caf6b23238ec0e32367b",
+      "assertions": 2340,
+      "failures": 0
+    },
+    "legacy_p07": {
+      "sha256": "c35adc1580806d63a19b13427ca9aba31744daabd1d37865e1b3fa650060ec79",
+      "assertions": 7562,
+      "failures": 0
+    },
+    "legacy_matches": {
+      "sha256": "7346f81c2b1409463da1fd32b01329e12a3c5e6a29e0b5dd3714ddc0007d09d9",
+      "assertions": 2235,
+      "failures": 0
+    },
+    "alpha_rules": {
+      "sha256": "5ea6dd1b9c0e70961baf7b1d257b737cc263962771c71fe6bbbda19cd3d1fc4d",
+      "failures": 0
+    },
+    "alpha_replay": {
+      "sha256": "cf8ed7827516f0f5b696e3c49ecdf0149f574aa4369f4ed1e645309ad777e070",
+      "failures": 0
+    },
+    "card_system_trigger_bridge": {
+      "sha256": "6bc56d1a97f5f2bd3f4ca24eb6a93d139dff8d829c70447498f6f08e81c4bd74",
+      "failures": 0
+    },
+    "card_system_runtime": {
+      "sha256": "553c98e89dd5b6830801ed7776f35d0480e02e69388c41eae0b54d71d50ecb16",
+      "failures": 0
+    }
+  },
+  "historical_reproduced_failures": 48,
+  "new_regression_boundaries": 286,
+  "full_simulation_status": "not_yet_run_on_corrected_source",
+  "notes": "All listed gates are actual engine executions. Boundary fixtures are not full matches. Legacy/Alpha assertions preserve existing golden fixtures/replays; no goldens regenerated.",
+  "new_printed_semantics_cases": 44
+}
