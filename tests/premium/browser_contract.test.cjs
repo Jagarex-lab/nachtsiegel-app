@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {clearTouchPoint,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('../../tools/premium/browser_contract.cjs');
+const {clearTouchPoint,scrollGesture,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('../../tools/premium/browser_contract.cjs');
 function fixture(){
  const board={};for(const [side,y]of [['enemy',48],['hero',140]])for(let lane=0;lane<5;lane++)board[side+lane]=[10+lane*164,y,156,84];
  const actions={};for(const [id,x,y,w]of [['menu',0,0,44],['actions',650,330,90],['end',650,230,180],['inspect',740,330,90]])actions[id]={rect:[x,y,w,44],disabled:false};
@@ -11,6 +11,13 @@ test('the real runner accepts ten distinct44px paths and six portrait cards',()=
 test('old wide text-strip hands fail rather than passing as premium cards',()=>{const q=fixture();q.hand[0].rect[2]=138;q.hand[0].rect[3]=70;assert.throws(()=>battleGeometry(q,[0,0,844,390]),/portrait collectible/);});
 test('a concealed or overlapping path never passes touch geometry',()=>{const q=fixture();q.board.hero1=q.board.hero0;assert.throws(()=>battleGeometry(q,[0,0,844,390]));});
 test('occluded hand cards need an exposed44px region rather than an AABB center',()=>{assert.deepEqual(clearTouchPoint([0,0,80,112],[[40,0,80,112]]),null);assert(clearTouchPoint([0,0,90,126],[[70,0,90,126]]));});
+test('mobile scroll gestures use real unoccupied canvas space in the correct direction',()=>{
+ const q={actions:{card:{rect:[10,1000,180,250]},visible:{rect:[10,100,180,250]}},action_visibility:{card:{clip_rect:[0,100,390,600]},visible:{clip_rect:[0,100,390,600]}}};
+ const down=scrollGesture(q,'card');assert(down.to.y<down.from.y);assert(down.from.x>190,'the initial touch avoids the visible card');
+ q.actions.card.rect[1]=-300;const up=scrollGesture(q,'card');assert(up.to.y>up.from.y);
+ q.actions.card.rect=[-50,120,44,44];assert.throws(()=>scrollGesture(q,'card'),/horizontal clipping/);
+ q.actions.cover={rect:[0,100,390,600]};q.action_visibility.cover={clip_rect:[0,100,390,600]};q.actions.card.rect=[10,1000,180,250];assert.throws(()=>scrollGesture(q,'card'),/outside action buttons/);
+});
 test('permanent log buttons fail the deliberately compact battle composition',()=>{const q=fixture();q.actions.log={rect:[44,0,70,44]};assert.throws(()=>battleGeometry(q,[0,0,844,390]),/secondary log/);});
 test('missing sixth card and clipped primary action fail',()=>{const q=fixture();q.hand.pop();assert.throws(()=>battleGeometry(q,[0,0,844,390],{requireSix:true}),/six cards/);q.actions.end.rect[0]=800;assert.throws(()=>battleGeometry(q,[0,0,844,390]),/inside the usable viewport/);});
 test('all visible illustrations must finish with exact delivered geometry',()=>{const q=fixture(),sizes=Object.fromEntries(q.hand.map(c=>[c.id,[512,384]]));assert(artReady(q,sizes));q.battle_art[5].pending=true;assert(!artReady(q,sizes));q.battle_art[5].pending=false;q.battle_art[2].pixels=[128,96];assert(!artReady(q,sizes));});

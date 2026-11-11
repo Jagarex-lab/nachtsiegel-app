@@ -11,6 +11,11 @@ func check(value: bool,label: String) -> void:
 	if not value:failures+=1;printerr("FAIL: "+label)
 func settle() -> void:
 	for frame in 8:await process_frame
+func tap(control: Control) -> void:
+	var point=control.get_global_rect().get_center()
+	for pressed in [true,false]:
+		var event=InputEventScreenTouch.new();event.index=0;event.position=point;event.pressed=pressed;Input.parse_input_event(event)
+		await settle()
 func run() -> void:
 	for desktop in [false,true]:
 		for width in [156.0,292.0,362.0,508.0,611.0,775.0,965.0,1264.0]:
@@ -61,6 +66,32 @@ func run() -> void:
 		app.actions["detail_"+add_id].pressed.emit();await settle()
 		check(is_instance_valid(app.modal),"separate details action opens actual inspector")
 		app.close_modal();app.queue_free();await settle()
+	# One live library must shrink after a previous wide layout. Fresh instances
+	# cannot catch a ScrollContainer feeding its old child minimum back into the
+	# width measurement used to resize that same child.
+	root.size=Vector2i(1280,720)
+	var rotating=LibraryShell.new();root.add_child(rotating);await settle()
+	rotating.open_cards(false);await settle()
+	var retained_deck: Array=rotating.deck.duplicate()
+	for dimensions in [Vector2i(915,412),Vector2i(320,568),Vector2i(393,852),Vector2i(844,390),Vector2i(390,844)]:
+		root.size=dimensions;await settle()
+		var viewport=Rect2(Vector2.ZERO,Vector2(dimensions))
+		check(viewport.encloses(rotating.body.get_global_rect()),"existing library shrinks to actual viewport after rotation "+str(dimensions))
+		check(viewport.encloses(rotating.library_scroll.get_global_rect()),"library pane never feeds old width into its parent "+str(dimensions))
+		var horizontal=rotating.library_scroll.get_h_scroll_bar()
+		check(horizontal.max_value<=horizontal.page+1,"fitted library has no hidden horizontal overflow after rotation")
+		check(rotating.deck==retained_deck,"rotation never changes the current deck")
+		for key in ["builder_back","search","search_apply","filters","save_deck","load_deck","reset_deck"]:
+			check(viewport.encloses(rotating.actions[key].get_global_rect()),"real builder action remains in viewport: "+key+str(dimensions))
+		if rotating.actions.has("builder_power"):
+			var picker: Control=rotating.actions.builder_power
+			check(viewport.encloses(picker.get_global_rect()),"power picker remains in narrow rotated viewport")
+			if viewport.encloses(picker.get_global_rect()):
+				await tap(picker)
+				check(rotating.actions.has("builder_power_houses"),"real touch opens the constrained power picker")
+				if rotating.actions.has("builder_power_houses"):
+					await tap(rotating.actions.modal_close)
+	rotating.queue_free();await settle()
 	print("PREMIUM LIBRARY: %d assertions, %d failures" % [assertions,failures])
 	var audio=get_root().get_node_or_null("GameAudio")
 	if audio!=null:audio.request_quit(1 if failures else 0)

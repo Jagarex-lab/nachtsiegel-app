@@ -34,8 +34,10 @@ jobs:
 
   test-and-export:
     runs-on: ubuntu-24.04
-    # Native regression suites and three exports; browser engines run separately.
-    timeout-minutes: 45
+    # Existing native regressions/exports plus all550 painted faces and nine
+    # actual spatial comparisons. Preserve each individual600s failure bound;
+    # reserve20 additional minutes for the new software-rendered evidence.
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
         with:
@@ -54,7 +56,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install rendered contrast and release-contract checkers
-        run: python3 -m pip install 'Pillow>=11,<14' 'PyYAML==6.0.3'
+        run: |
+          python3 -m pip install 'Pillow>=11,<14' 'PyYAML==6.0.3'
+          python3 -m unittest discover -s tests/ci -v
       - name: Rules, real GUI input, landscape layout and render tests
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
       - name: Complete pinned Legacy and new Alpha regressions
@@ -206,8 +210,10 @@ jobs:
           path: work
       - name: Install isolated browser runtime
         run: |
-          npm install --no-save --package-lock=false playwright@1.65.0
-          npx playwright install --with-deps ${{ matrix.engine }}
+          set -o pipefail
+          mkdir -p "work/alpha"
+          npm install --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/alpha/browser-install-${{ matrix.engine }}.log"
+          python3 tools/ci/install_dependencies.py --log work/alpha/browser-install-${{ matrix.engine }}.log playwright node_modules/.bin/playwright ${{ matrix.engine }}
       - name: Serve the three tested builds
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/archive-web > work/http.log 2>&1 &
@@ -269,6 +275,7 @@ jobs:
             work/browser-results.json
             work/http.log
             work/alpha/http.log
+            work/alpha/browser-install-*.log
             work/alpha/legacy-http.log
             work/alpha/legacy-browser.log
             work/alpha/legacy-browser-results.json
@@ -316,8 +323,10 @@ jobs:
           path: work
       - name: Install isolated pinned browser runtime
         run: |
-          npm install --no-save --package-lock=false playwright@1.65.0
-          npx playwright install --with-deps ${{ matrix.engine }}
+          set -o pipefail
+          mkdir -p "work/premium-mobile/browser-${{ matrix.engine }}"
+          npm install --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/premium-mobile/browser-${{ matrix.engine }}/dependency-install.log"
+          python3 tools/ci/install_dependencies.py --log work/premium-mobile/browser-${{ matrix.engine }}/dependency-install.log playwright node_modules/.bin/playwright ${{ matrix.engine }}
       - name: Serve the candidate under the actual repository subpath
         run: |
           mkdir -p work/premium-site
@@ -396,8 +405,10 @@ jobs:
           path: work
       - name: Install isolated image-delivery browser runtime
         run: |
-          npm install --no-save --package-lock=false playwright@1.65.0
-          npx playwright install --with-deps ${{ matrix.engine }}
+          set -o pipefail
+          mkdir -p "work/production-art/browser-${{ matrix.engine }}"
+          npm install --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/production-art/browser-${{ matrix.engine }}/dependency-install.log"
+          python3 tools/ci/install_dependencies.py --log work/production-art/browser-${{ matrix.engine }}/dependency-install.log playwright node_modules/.bin/playwright ${{ matrix.engine }}
       - name: Actual compact/full HTTP, failed bodies and cancellation
         run: xvfb-run -a -s '-screen 0 1600x1200x24' node tools/production/browser_art_delivery_qa.cjs
       - name: Preserve actual image-delivery browser evidence

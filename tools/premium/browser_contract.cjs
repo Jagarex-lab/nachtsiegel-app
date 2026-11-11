@@ -23,6 +23,21 @@ function clearTouchPoint(target,occluders=[],minimum=44){
  for(const y of ys)for(const x of xs){const candidate=[x-half,y-half,minimum,minimum];if(encloses(target,candidate,.1)&&occluders.every(other=>overlap(candidate,other)<.1))return [x,y];}
  return null;
 }
+function scrollGesture(q,id){
+ const target=q.actions[id].rect,clip=q.action_visibility[id].clip_rect;
+ rect(clip,'scroll clip');assert(clip[2]>=44&&clip[3]>=44,'scroll viewport exposes usable input space');
+ const down=target[1]+target[3]>clip[1]+clip[3]+.1,up=target[1]<clip[1]-.1;
+ assert(down||up,'horizontal clipping cannot be repaired by a vertical gesture');
+ const same=value=>value&&value.every((n,i)=>Math.abs(n-clip[i])<.1);
+ const buttons=Object.entries(q.actions).filter(([key])=>same(q.action_visibility[key]?.clip_rect)).map(([,value])=>value.rect);
+ const ys=[down?clip[1]+clip[3]-24:clip[1]+24,clip[1]+clip[3]/2,...buttons.flatMap(r=>[r[1]-2,r[1]+r[3]+2])].filter(y=>y>=clip[1]+8&&y<=clip[1]+clip[3]-8).sort((a,b)=>down?b-a:a-b);
+ let from;
+ for(const y of ys){for(const fraction of [.75,.25,.5]){const x=clip[0]+clip[2]*fraction;if(!buttons.some(r=>x>=r[0]&&x<=r[0]+r[2]&&y>=r[1]&&y<=r[1]+r[3])){from={x,y};break;}}if(from)break;}
+ assert(from,'scroll gesture starts on a real surface outside action buttons');
+ const room=down?from.y-(clip[1]+8):clip[1]+clip[3]-8-from.y;
+ const distance=Math.min(160,clip[3]*.6,room);assert(distance>10,'scroll gesture exceeds the actual deadzone');
+ return {clip,from,to:{x:from.x,y:from.y+(down?-distance:distance)}};
+}
 function battleGeometry(q,viewport,{minimumHandAspect=.57,maximumHandAspect=.90,requireSix=false}={}){
  assert(q?.page==='battle'&&q.battle,'a real battle is displayed');
  assert(!q.portrait&&!q.actions.rotate_menu,'no blocking portrait guide in landscape');
@@ -83,4 +98,4 @@ function playability(q){
  }
  return {available:q.hand.filter(card=>card.playable).length,unavailable:q.hand.filter(card=>!card.playable).length};
 }
-module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,battleGeometry,artReady,fullArtReady,premiumArt,playability};
+module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,scrollGesture,battleGeometry,artReady,fullArtReady,premiumArt,playability};

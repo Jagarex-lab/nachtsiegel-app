@@ -7,7 +7,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const {performance}=require('node:perf_hooks');
-const {encloses,clearTouchPoint,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
+const {encloses,clearTouchPoint,scrollGesture,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
 const output=path.resolve(process.env.PREMIUM_BROWSER_OUTPUT||'work/premium-mobile/browser');
 const expectedCommit=process.env.EXPECTED_COMMIT;
 assert(/^[0-9a-f]{40}$/.test(expectedCommit||''),'EXPECTED_COMMIT must name the exact exported candidate');
@@ -64,9 +64,21 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
      const clip=v?.clip_rect||[0,0,page.viewportSize().width,page.viewportSize().height];
      const hit=id.startsWith('card_')&&v?v.visible_rect:a.rect;
      if(encloses(clip,hit)&&encloses([0,0,page.viewportSize().width,page.viewportSize().height],hit)&&hit[2]>=43.9&&hit[3]>=43.9)break;
-     await page.mouse.move(clip[0]+clip[2]/2,clip[1]+clip[3]/2);
-     await page.mouse.wheel(0,a.rect[1]<clip[1]?-Math.min(240,clip[3]*.7):Math.min(240,clip[3]*.7));
-     await page.waitForTimeout(160);
+     const gesture=scrollGesture(current,id);
+     if(cdp){
+      await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...gesture.from,id:0,radiusX:2,radiusY:2,force:1}]});
+      for(let step=1;step<=6;step++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:gesture.from.x,y:gesture.from.y+(gesture.to.y-gesture.from.y)*step/6,id:0,radiusX:2,radiusY:2,force:1}]});await page.waitForTimeout(35);}
+      await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+     }else{
+      // Mobile WebKit exposes tap but no wheel or protocol touchMove. Trusted
+      // browser pointer pan reaches Godot's configured touch emulation. It is
+      // real canvas input, never DOM scrolling or a ScrollContainer mutation.
+      await page.mouse.move(gesture.from.x,gesture.from.y);await page.mouse.down();
+      for(let step=1;step<=6;step++){await page.mouse.move(gesture.from.x,gesture.from.y+(gesture.to.y-gesture.from.y)*step/6);await page.waitForTimeout(35);}
+      await page.mouse.up();
+     }
+     (report.scroll_gestures||=[]).push({action:id,driver:cdp?'CDP primary touch':'trusted browser pointer with Godot touch emulation',...gesture});
+     await page.waitForTimeout(180);
      check(tries<19,id+' becomes reachable through real scroll input');
     }
     // Compare three newly published observations; geometry movement must settle

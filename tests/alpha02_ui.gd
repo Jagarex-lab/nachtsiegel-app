@@ -30,7 +30,11 @@ func _initialize():call_deferred("run")
 func run():
  app=Shell.new();root.add_child(app);await settle()
  check(Style.font.multichannel_signed_distance_field,"Alpha-only scalable MSDF font")
- for color in Style.POWER_COLORS.values():check(Tokens.contrast(color,Tokens.SURFACE)>=4.5,"power labels meet 4.5 contrast")
+ for color in Style.POWER_TEXT_COLORS.values():
+  for surface in [Tokens.SURFACE,Tokens.SURFACE_RAISED,Color("15212d")]:check(Tokens.contrast(color,surface)>=4.5,"actual power label colours meet 4.5 contrast on each real surface")
+ for power in Style.POWER_COLORS:
+  var expected={"houses":"B9824A","stillwatch":"58A9CF","morph":"5B9E68","ninth":"9867BE","neutral":"8B98A5"}
+  check(Style.POWER_COLORS[power]==Color(expected[power]),"material pigments retain exact approved identity")
  for raw in Catalog.new().all_cards():
   var view=Card.new();view.card=raw
   for width in [80,100,140]:
@@ -76,7 +80,12 @@ func run():
   app.page="lobby";app.render();await settle();await tap(app.actions.builder)
   root.size=dimensions;await settle()
   check(visible_bounds(app.actions.save_deck),"portrait save always within viewport")
-  if not app.actions.has("builder_power_houses"):await tap(app.actions.builder_power)
+  if not app.actions.has("builder_power_houses"):
+   check(visible_bounds(app.actions.builder_power),"power picker stays inside portrait after repeated rotation")
+   await tap(app.actions.builder_power)
+   check(app.actions.has("builder_power_houses"),"actual power picker tap opens reachable choices")
+   if not app.actions.has("builder_power_houses"):
+    app.queue_free();await settle();root.get_node("GameAudio").request_quit(1);return
   await tap(app.actions.builder_power_houses)
   app.deck=Catalog.new().deck("houses");app.render();await settle()
   await tap(app.actions.deck_tab)

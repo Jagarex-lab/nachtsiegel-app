@@ -96,6 +96,7 @@ var viewport_version := -1
 var first_frame := true
 var render_pending := false
 var last_primary_ms := -1000
+var last_primary_frame := -1
 var primary_ref: WeakRef
 var rotation_block_until := 0
 var render_version := 0
@@ -342,7 +343,7 @@ func settings_page() -> void:
 			if power_index%2==0:power_row=row(box)
 			power_index+=1
 			var b=button("faction_"+power,("● " if faction==power else "○ ")+alpha_catalog.source.powers[power],func():faction=power;save_preferences();render(),power_row)
-			b.modulate=S.POWER_COLORS[power]
+			b.add_theme_color_override("font_color",S.POWER_TEXT_COLORS[power])
 	var options=row(box)
 	dropdown("difficulty",["Normal","Einfach","Taktisch"],"Einfach" if difficulty==1 else "Taktisch" if difficulty==5 else "Normal",func(v):difficulty={"Normal":2,"Einfach":1,"Taktisch":5}[v];save_preferences();render(),options)
 	button("motion","Bewegung: "+("reduziert" if session.profile.reduced_motion else "normal"),func():session.profile.reduced_motion=not session.profile.reduced_motion;save_preferences();render(),options)
@@ -407,6 +408,7 @@ func start_battle() -> void:
 	if not session.start_match(mode,alpha_catalog.deck(faction) if mode=="alpha" and match_use_starter else current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
 	services.begin_duel()
 	last_primary_ms=-1000
+	last_primary_frame=-1
 	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];opening_hand_signature="";message="Wähle deine Starthand. Danach legst du den Ursprung fest.";render()
 	_checkpoint_duel()
 func _update_primary_readiness() -> void:
@@ -415,14 +417,14 @@ func _update_primary_readiness() -> void:
 	if primary==null:return
 	# SceneTreeTimer can consume the previous slow frame's delta immediately.
 	# Readiness and command rejection must use the same monotonic clock.
-	primary.disabled=bool(primary.get_meta("rule_blocked",true)) or Time.get_ticks_msec()-last_primary_ms<180
+	primary.disabled=bool(primary.get_meta("rule_blocked",true)) or Engine.get_process_frames()==last_primary_frame or Time.get_ticks_msec()-last_primary_ms<180
 func act(command: String, args: Array) -> void:
-	var primary_command=command in ["endTurn","finishDraw","burn","converge"]
-	if primary_command and Time.get_ticks_msec()-last_primary_ms<180:return
+	var primary_command=command in ["endTurn","finishDraw","burn","converge","skipShift"]
+	if primary_command and (Engine.get_process_frames()==last_primary_frame or Time.get_ticks_msec()-last_primary_ms<180):return
 	var event_offset: int=session.model.events.size()
 	var before=session.model.snapshot()
 	var reply=session.command(command,args)
-	if primary_command:last_primary_ms=Time.get_ticks_msec()
+	if primary_command:last_primary_ms=Time.get_ticks_msec();last_primary_frame=Engine.get_process_frames()
 	var names={"play":"Karte ausgespielt.","endTurn":"Angriffe und KI-Zug abgeschlossen.","finishDraw":"Nachziehphase abgeschlossen.","burn":"Karte abgelegt. Bestätige anschließend das Nachziehen.","mulligan":"Austausch abgeschlossen.","origin":"Ursprünge aufgedeckt.","openingDone":"Der Kampf beginnt.","secondOrigin":"Zweiter Ursprung gewählt.","secondCard":"Handkarte ausgetauscht.","converge":"Konvergenz am Zugende geprüft.","activateRelic":"Relikt aktiviert.","burst":"Entfesselung ausgeführt.","recover":"Karte zurückgeholt.","tacticalMove":"Kreatur verschoben.","fortify":"Pfadwacht ausgeführt.","moveCreature":"Positionswechsel abgeschlossen.","skipShift":"Positionswechsel übersprungen.","chooseStrikeTarget":"Ankunftsschlag ausgeführt."}
 	var technical_failure=not reply.ok and bool(reply.get("accepted",false))
 	message="Partie angehalten: "+str(session.model.state.get("error","Effektauflösung fehlgeschlagen.")) if technical_failure else names.get(command,"Aktion ausgeführt.") if reply.ok else "Bedingungen fehlen: Energie, Resonanz, gültiges Ziel oder eine noch offene Auswahl prüfen."
@@ -1023,7 +1025,13 @@ func library_panel(parent: Node, desktop: bool) -> void:
 	if not query.ok:
 		text("Filter konnte nicht angewendet werden: "+str(query.error),pane);return
 	var window=library_window(query.cards,desktop)
-	var sc=ScrollContainer.new();library_scroll=sc;sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.size_flags_horizontal=Control.SIZE_EXPAND_FILL;sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;sc.scroll_deadzone=10;pane.add_child(sc)
+	var sc=ScrollContainer.new();library_scroll=sc;sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	# DISABLED propagates the old fitted grid minimum into the scroll pane.
+	# After a wide-to-narrow rotation that prevents sc from ever shrinking, so
+	# the measured width feeds itself back and moves controls offscreen. The
+	# hidden scroll axis lets the parent constrain sc; fit_cards then sizes the
+	# grid to that actual width. Settled content has no horizontal overflow.
+	sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_NEVER;sc.scroll_deadzone=10;pane.add_child(sc)
 	sc.set_deferred("scroll_vertical",library_scroll_position)
 	# A short search result retains the same portrait-card width as a full page;
 	# shrinking the grid prevents one result stretching across the whole pane.
@@ -1315,7 +1323,7 @@ func deck_selection() -> void:
 		var frame=PanelContainer.new();frame.mouse_filter=Control.MOUSE_FILTER_PASS;frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",T.panel(S.POWER_COLORS[power],Color("15212d")));grid.add_child(frame)
 		var box=VBoxContainer.new();frame.add_child(box)
 		var heading=row(box);_portrait(heading,{"houses":4,"stillwatch":5,"morph":1,"ninth":3}[power],48)
-		text(S.SYMBOLS[power]+"  "+cat.source.powers[power],heading,22).add_theme_color_override("font_color",S.POWER_COLORS[power])
+		text(S.SYMBOLS[power]+"  "+cat.source.powers[power],heading,22).add_theme_color_override("font_color",S.POWER_TEXT_COLORS[power])
 		text(S.STYLES[power]+"\n"+S.DIFFICULTY[power],box,14)
 		var choices=row(box)
 		button("preview_"+power,"Eigenes ansehen" if faction==power and not match_use_starter else "Starter ansehen",func():preview_deck(power,not(faction==power and not match_use_starter)),choices)
