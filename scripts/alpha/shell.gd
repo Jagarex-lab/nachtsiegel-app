@@ -250,9 +250,13 @@ func open_feature(feature: String) -> void:
 
 func close_feature() -> void:
 	if is_instance_valid(hosted_page):
-		layout.remove_child(hosted_page)
+		# The exit signal can run inside Button.pressed. Keep its sender in the
+		# tree until Godot finishes dispatching the current input event.
+		hosted_page.hide()
 		hosted_page.queue_free()
 	hosted_page=null;hosted_name="";page="lobby"
+	# Campaign presentation owns its music; discard the old menu cache.
+	audio_context=""
 	set_audio_paused(false)
 	render()
 

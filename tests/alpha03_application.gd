@@ -42,6 +42,7 @@ func run() -> void:
 	check(app.hosted_page.manager==manager and JSON.stringify(manager.state.data,"",true)==checkpoint,"campaign panel/checkpoint survives host resize")
 	app.hosted_page.exit_requested.emit();await settle()
 	check(app.page=="lobby","campaign exit signal returns to main menu")
+	check(root.get_node("GameAudio").snapshot().music.context=="menu","campaign exit restores actual menu music")
 	app.open_feature("online");await settle()
 	check(app.page=="online" and is_instance_valid(app.hosted_page),"actual online connection panel opens")
 	app.hosted_page.back_requested.emit();await settle()
