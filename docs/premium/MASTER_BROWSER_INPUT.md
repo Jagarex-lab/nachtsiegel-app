@@ -94,3 +94,38 @@ trotz großem PNG, einseitig zu kleine Backingbuffer, Geometrieänderungen und
 die unveränderten Aufnahmelimits. 27 Vertragsgruppen und die Syntaxprüfungen
 aller vier Treiber bestehen. Der erneute vollständige Master-Lauf mit der
 korrigierten Aufnahme und passiven Eingabeprotokollen ist noch ausstehend.
+
+## Native-DPR-Lauf und künstliche Maus-Zwischenschritte
+
+Der nächste echte Chromium-Lauf (`d71bcf3`, unverändertes b3d-Spielartefakt)
+scheiterte nach 773 Prüfungen beim Anheben einer Handkarte in Kommando 21.
+Alle fünf bis dahin erstellten Spielaufnahmen behielten tatsächlich DPR 2
+und 1688×780 beziehungsweise 1688×640 Canvas-Pixel. WebKit wurde in diesem
+abgebrochenen Gesamtlauf noch nicht ausgeführt.
+
+Das passive Ereignisprotokoll belegt hier die konkrete Ursache: Die alte
+`mouse.move(...,{steps:4})`-Unterteilung zerlegte die 34-CSS-Pixel-Anhebebewegung
+in vier einzeln bestätigte Schritte. Der erste legte nur 8,5 CSS-Pixel zurück,
+weniger als Godots unveränderte Aktivierungsschwelle von 12 CSS-Pixeln. Die
+nächste Bewegung kam auf dem Softwaregrafik-Host erst 21,322 Sekunden später an;
+danach folgten Abstände von 12,372 und 13,353 Sekunden. Der unveränderte
+Acht-Sekunden-Leerlaufschutz hatte die angefangene Geste bereits abgebrochen.
+DPR, Canvasgröße und DOM-Abbruchzähler blieben unverändert; es gab weder
+Fokus-/Orientierungswechsel noch Modellkommando oder Modellfehler. Belege:
+`work/premium-mobile/master-native-d71/failure-analysis.json` und das unveränderte
+`work/master550/browser/chromium-error.json` samt Screenshot.
+
+Der Test verwendet deshalb für jede geplante Mausposition jetzt einen einzelnen
+vertrauenswürdigen Browser-Mausbewegungsaufruf. Die tatsächlichen Positionen
+Quelle → Anheben um 34 Pixel → gültiges/ungültiges Ziel sowie Loslassen,
+Maus-/Touchfälle, Abbruch- und Rotationsprüfungen bleiben erhalten. Es gibt
+keine künstlichen Bestätigungspausen nach vier Unterpunkten. Produktcode,
+Acht-Sekunden-Abbruchschutz und 120-Sekunden-Prüflimits bleiben unverändert.
+Die passiven Zeit- und Ereignisprotokolle bleiben aktiv. Ein erneut langsamer
+Einzelaufruf darf weiterhin fehlschlagen; er wird nicht durch eine verlängerte
+Produkt-Lease als bestanden gewertet.
+
+Diese Messung erklärt den konkreten d71-Lauf. Die frühere 938-Störung bei
+Kommando 33 bleibt mangels damaliger Zeitdaten rückwirkend ungeklärt. Der neue
+vollständige Zweibrowserlauf ist noch ausstehend; der 773-Prüfungs-Lauf ist
+weiterhin ausdrücklich fehlgeschlagen.

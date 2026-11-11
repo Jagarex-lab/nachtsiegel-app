@@ -181,7 +181,7 @@ async function runEngine(name){
     },{type,at});
    },
    async start(method,at){if(method==='mouse'){await page.mouse.move(at.x,at.y);await page.mouse.down();}else await this.touch('touchStart',at);},
-   async move(method,at){if(method==='mouse')await page.mouse.move(at.x,at.y,{steps:4});else await this.touch('touchMove',at);},
+   async move(method,at){if(method==='mouse')await page.mouse.move(at.x,at.y);else await this.touch('touchMove',at);},
    async end(method,at,canceled=false){if(method==='mouse'){await page.mouse.move(at.x,at.y);await page.mouse.up();}else await this.touch(canceled?'touchCancel':'touchEnd',at);}
   };
   async function canceledTap(rect,label,holdMs=120){
