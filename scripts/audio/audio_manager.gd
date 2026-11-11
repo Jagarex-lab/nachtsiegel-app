@@ -37,6 +37,8 @@ var _volume_tweens: Dictionary = {}
 var _ambience: AudioStreamPlayer
 var _pending_ambience := ""
 var _ambience_tween: Tween
+var _ambience_resume_active := false
+var _ambience_resume_position := 0.0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -504,6 +506,7 @@ func _notification(what: int) -> void:
 func _update_suspension() -> void:
 	if not _initialized:
 		return
+	var was_suspended := _suspended
 	_suspended = _manual_suspended or _focus_suspended or _app_suspended
 	if _suspended:
 		# Transient effects are intentionally discarded rather than replayed on resume.
@@ -511,7 +514,15 @@ func _update_suspension() -> void:
 			voice.player.stop()
 		_apply_settings(false)
 	music_controller.set_suspended(_suspended)
+	if _suspended and not was_suspended:
+		_ambience_resume_active = _ambience.playing
+		_ambience_resume_position = _ambience.get_playback_position() if _ambience.playing else 0.0
 	_ambience.stream_paused = _suspended
+	if not _suspended and was_suspended and _ambience_resume_active and _ambience.stream != null:
+		if OS.has_feature("web") or not _ambience.playing:
+			_ambience.stop()
+			_ambience.play(_ambience_resume_position)
+		_ambience_resume_active = false
 	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():
 		if _suspended:
 			_ambience_tween.pause()
@@ -523,6 +534,7 @@ func _update_suspension() -> void:
 		set_ambience(pending)
 
 func stop_ambience() -> void:
+	_ambience_resume_active = false
 	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid(): _ambience_tween.kill()
 	if is_instance_valid(_ambience):
 		_ambience.stop()
@@ -530,6 +542,7 @@ func stop_ambience() -> void:
 	_pending_ambience = ""
 
 func stop_all(clear_cache: bool = false) -> void:
+	_ambience_resume_active = false
 	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():
 		_ambience_tween.kill()
 	for voice in _voices:
@@ -554,6 +567,7 @@ func snapshot() -> Dictionary:
 	result.settings = settings.duplicate()
 	result.music = music_controller.snapshot() if is_instance_valid(music_controller) else {}
 	result.suspended = _suspended
+	result.suspension_reasons = {"manual":_manual_suspended,"focus":_focus_suspended,"application":_app_suspended}
 	result.unlocked = unlocked
 	result.events = _events.size()
 	result.last_save_error = last_save_error

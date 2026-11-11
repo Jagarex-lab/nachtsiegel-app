@@ -14,4 +14,8 @@ GODOT_BIN="${GODOT_BIN:-godot}"
 if rg -n '(^ERROR:|^SCRIPT ERROR:|ObjectDB instances leaked|resources still in use)' work/audio/runtime.log work/audio/preview.log; then
     exit 1
 fi
+"$GODOT_BIN" --headless --audio-driver Dummy --path . --script tests/audio/integration.gd 2>&1 | tee work/audio/integration.log
+if rg -n '(^ERROR:|^SCRIPT ERROR:|ObjectDB instances leaked|resources still in use)' work/audio/integration.log; then
+    exit 1
+fi
 python3 tests/audio/validate_assets.py --report work/audio/asset-results.json

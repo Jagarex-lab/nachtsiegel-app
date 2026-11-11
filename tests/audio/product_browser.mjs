@@ -10,9 +10,10 @@ const url=process.env.AUDIO_PRODUCT_URL||'http://127.0.0.1:8766';
 const evidence={profile,url,scope:'Actual exported product in browser; no physical device or human listening claim.',checks:[],errors:[],graphicsDiagnostics:[]};
 evidence.checks.push = function (...items) {console.error(items.join("; "));return Array.prototype.push.apply(this,items)};
 let browser;
-const deadline=setTimeout(()=>{console.error('Audio product browser deadline exceeded');process.exit(2)},300000);
+const deadline=setTimeout(()=>{console.error('Audio product browser deadline exceeded');process.exit(2)},600000);
 try {
   browser=await (profile==='webkit'?webkit:chromium).launch(profile==='webkit'?{headless:true}:{headless:true,channel:'chromium',ignoreDefaultArgs:['--mute-audio'],args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader','--autoplay-policy=user-gesture-required']});
+  evidence.build=await (await fetch(`${url}/build-info.json`)).json();
   const context=await browser.newContext({viewport:{width:1100,height:800}});
   await context.addInitScript(() => {
     const contexts = [];
@@ -86,14 +87,21 @@ try {
     await page.mouse.click(r[0]+r[2]/2,r[1]+r[3]/2);await settle();
   }
   async function volume(channel,value){
-    await tap(`audio_${channel}`);await page.keyboard.press('Home');
-    for(let i=0;i<Math.round(value*100);i++)await page.keyboard.press('ArrowRight');
+    await tap(`audio_${channel}`);
+    if(value===0||value===1)await page.keyboard.press(value===0?'Home':'End');
+    else{
+      const r=(await state()).actions[`audio_${channel}`].rect;
+      await page.mouse.click(r[0]+r[2]*value,r[1]+r[3]/2);await settle();
+      const current=(await state()).audio.settings[channel];
+      const steps=Math.round((value-current)*100);
+      for(let i=0;i<Math.abs(steps);i++)await page.keyboard.press(steps>0?'ArrowRight':'ArrowLeft');
+    }
     await page.waitForFunction(({channel,value})=>Math.abs(window.orafoldQA.audio.settings[channel]-value)<.00001,{channel,value});await settle();
   }
-  async function capture(action,duration=650){
+  async function capture(action,duration=2500){
     const signal=page.evaluate(ms=>new Promise(resolve=>{
       const started=performance.now();let peak=0,maxRms=0,n=0;
-      function tick(){const p=window.__audioQAProbe();peak=Math.max(peak,p.peak);maxRms=Math.max(maxRms,p.rms);n++;if(performance.now()-started>=ms)resolve({peak,maxRms,samples:n,contexts:p.contexts,analysers:p.analysers});else requestAnimationFrame(tick)}tick();
+      function tick(){const p=window.__audioQAProbe();peak=Math.max(peak,p.peak);maxRms=Math.max(maxRms,p.rms);n++;if(performance.now()-started>=ms)resolve({peak,maxRms,samples:n,contexts:p.contexts,analysers:p.analysers,audio:window.orafoldQA?.audio});else setTimeout(tick,25)}tick();
     }),duration);
     if(action)await action();return signal;
   }
@@ -104,8 +112,25 @@ try {
   assert.equal(evidence.initial.cached_streams,153);
   evidence.checks.push('Packaged52events153effectassets and single bounded owner; locked before gesture');
   await tap('settings');await page.waitForFunction(()=>window.orafoldQA.audio.unlocked);
-  await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
+  evidence.firstMixedSignal=await (await page.waitForFunction(()=>{const probe=window.__audioQAProbe();return probe.rms>0.000001?probe:false},null,{timeout:15000})).jsonValue();
+  await page.waitForFunction(()=>window.orafoldQA.audio.music.playing>0&&!window.orafoldQA.audio.music.transitioning,null,{timeout:15000});
+  evidence.afterGesture=(await state()).audio;
   evidence.audibleMenu=await capture();assert(evidence.audibleMenu.maxRms>0.000001);
+  if(process.env.AUDIO_QA_FOCUS==='resume'){
+    await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
+    let opening=await state();if(opening.battle.stage==='origins')await tap('origin_0');
+    opening=await state();if(opening.battle.stage==='second')await tap('opening_done');
+    await page.waitForFunction(()=>!window.orafoldQA.audio.music.transitioning&&window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
+    evidence.audibleBeforePause=await capture();assert(evidence.audibleBeforePause.maxRms>0.000001);
+    for(let repeat=0;repeat<2;repeat++){
+      await tap('menu');const paused=await capture();assert(paused.maxRms<1e-7);assert.equal((await state()).audio.suspended,true);
+      await tap('modal_close');evidence.resumeState=(await state()).audio;
+      await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
+      evidence[`audibleResume${repeat}`]=await capture();assert(evidence[`audibleResume${repeat}`].maxRms>0.000001);
+    }
+    evidence.checks.push('Two actual audible duel pause/resume cycles restore stream transport');
+    evidence.final=(await state()).audio;assert.equal(evidence.errors.length,0,JSON.stringify(evidence.errors));evidence.result='passed';
+  }else{
   await settings();
   await volume('master',0);evidence.masterZero=await capture();assert(evidence.masterZero.maxRms<1e-7,'Master zero did not silence actual output');
   await volume('master',1);await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
@@ -145,7 +170,7 @@ try {
   await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
   evidence.audibleBeforePause=await capture();
   await tap('menu');evidence.audibleMusicPaused=await capture();assert(evidence.audibleMusicPaused.maxRms<1e-7);
-  await tap('modal_close');await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
+  await tap('modal_close');evidence.resumeState=(await state()).audio;await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
   evidence.audibleAfterResume=await capture();
   await tap('menu');await tap('confirm_menu');await settings();
   evidence.checks.push('Actual audible battle music becomes zero during menu pause and resumes audibly');
@@ -167,5 +192,6 @@ try {
   await settle();await mkdir('work/audio/product-browser',{recursive:true});await page.screenshot({path:`work/audio/product-browser/${profile}-mobile.png`});
   evidence.checks.push('Mobile390x844 actual scroll/control editing and44px targets');
   evidence.final=(await state()).audio;assert.equal(evidence.errors.length,0,JSON.stringify(evidence.errors));evidence.result='passed';
+  }
 } catch(error){evidence.result='failed';evidence.failure=error.stack||String(error);process.exitCode=1}
-finally{if(browser)await Promise.race([browser.close(),new Promise(resolve=>setTimeout(resolve,10000))]);clearTimeout(deadline);await mkdir('work/audio/product-browser',{recursive:true});await writeFile(`work/audio/product-browser/${profile}.json`,JSON.stringify(evidence,null,2));console.log(JSON.stringify(evidence,null,2))}
+finally{if(browser)await Promise.race([browser.close(),new Promise(resolve=>setTimeout(resolve,10000))]);clearTimeout(deadline);await mkdir('work/audio/product-browser',{recursive:true});await writeFile(`work/audio/product-browser/${profile}${process.env.AUDIO_QA_FOCUS?"-"+process.env.AUDIO_QA_FOCUS:""}.json`,JSON.stringify(evidence,null,2));console.log(JSON.stringify(evidence,null,2))}

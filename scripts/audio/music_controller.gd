@@ -16,6 +16,8 @@ var _context := ""
 var _pending_context := ""
 var _pending_duration := 1.5
 var _suspended := false
+var _resume_positions: Array[float] = [0.0, 0.0]
+var _resume_active: Array[bool] = [false, false]
 var _unlocked := true
 var _bus := "ORAFOLD Music"
 
@@ -118,9 +120,21 @@ func _process(delta: float) -> void:
 		request_music(pending, _pending_duration)
 
 func set_suspended(value: bool) -> void:
+	if value == _suspended: return
 	_suspended = value
-	for player in _players:
+	for index in range(_players.size()):
+		var player := _players[index]
+		if value:
+			_resume_active[index] = player.playing
+			_resume_positions[index] = player.get_playback_position() if player.playing else 0.0
 		player.stream_paused = value
+		if not value and _resume_active[index] and player.stream != null:
+			# Web STREAM playback may be dropped by the backend while paused.
+			# Restart only a previously active stream, at its captured position.
+			if OS.has_feature("web") or not player.playing:
+				player.stop()
+				player.play(_resume_positions[index])
+			_resume_active[index] = false
 	set_process(not value and _duration > 0.0)
 	if not value and _unlocked and _duration <= 0.0 and not _pending_context.is_empty():
 		var pending := _pending_context
@@ -128,6 +142,8 @@ func set_suspended(value: bool) -> void:
 		request_music(pending, _pending_duration)
 
 func stop_all() -> void:
+	_resume_active = [false, false]
+	_resume_positions = [0.0, 0.0]
 	for player in _players:
 		player.stop()
 		player.stream = null
@@ -148,7 +164,9 @@ func snapshot() -> Dictionary:
 			playing += 1
 	return {"context": _context, "pending_context": _pending_context,
 		"transitioning": _duration > 0.0, "players": _players.size(),
-		"playing": playing, "gains": _gains.duplicate(), "suspended": _suspended}
+		"playing": playing, "gains": _gains.duplicate(), "suspended": _suspended,
+		"playback_positions": _players.map(func(player):return player.get_playback_position()),
+		"resume_positions": _resume_positions.duplicate()}
 
 func _exit_tree() -> void:
 	stop_all()

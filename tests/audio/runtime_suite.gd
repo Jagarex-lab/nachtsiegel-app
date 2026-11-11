@@ -273,6 +273,17 @@ func run() -> void:
 		var music_player := manager.music_controller.get_node("Music0") as AudioStreamPlayer
 		check(music_player.stream is AudioStreamOggVorbis, "Ogg streaming context " + context)
 		check(music_player.stream.loop == bool(catalog.clips[catalog.music[context]].loop), "context loop/stinger flag " + context)
+	# A streaming backend can drop paused playback; resume restores the active stream.
+	manager.stop_all()
+	manager.set_music("menu",0.02)
+	await wait_realtime(100)
+	var resume_player := manager.music_controller.get_node("Music0") as AudioStreamPlayer
+	manager.set_suspended(true)
+	resume_player.stop()
+	manager.set_suspended(true) # repeated lifecycle guard must retain resume state
+	manager.set_suspended(false)
+	check(resume_player.playing, "backend-dropped music resumes from captured active transport")
+	check(manager.snapshot().music.playing == 1, "resume keeps one settled music voice")
 	# Pausing releases short voices and freezes music/fade work until explicit resume.
 	manager.play_event("creature.attack")
 	manager.set_suspended(true)
@@ -306,7 +317,9 @@ func run() -> void:
 	check(manager.get_node("Ambience").playing, "ambience starts after fade callback")
 	manager.set_suspended(true)
 	check(manager.get_node("Ambience").stream_paused, "ambience pauses in background")
+	manager.get_node("Ambience").stop()
 	manager.set_suspended(false)
+	check(manager.get_node("Ambience").playing, "backend-dropped ambience resumes from captured active transport")
 	manager.stop_all(true)
 	check(manager.get_node("Ambience").stream == null, "ambience resource released")
 	manager.set_suspended(true)

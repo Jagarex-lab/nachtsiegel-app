@@ -261,9 +261,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode==KEY_ESCAPE:_go_back();get_viewport().set_input_as_handled()
 
 func _start_battle(mode: String, chapter_number: int = 0) -> void:
-	get_node("/root/GameAudio").set_music("duel")
 	var id=store.begin_run(mode,chapter_number)
 	if id.is_empty():return
+	get_node("/root/GameAudio").set_music("duel")
 	run_id=id;run_mode=mode;current_chapter=chapter_number
 	if OS.has_feature("web"):JavaScriptBridge.eval("delete window.nachtsiegelQA",true)
 	if is_instance_valid(battle_node):remove_child(battle_node);battle_node.queue_free()
