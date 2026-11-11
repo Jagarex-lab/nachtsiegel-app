@@ -11,7 +11,7 @@ remain missing in this branch. Every commercial-clearance flag remains false.
 ## Build and asset identity
 
 `tools/production/prepare_art_delivery.gd` decodes each actual immutable original
-PNG and encodes a lossless WebP at its original 1448 × 1086 dimensions. It never
+PNG and encodes a lossy quality-0.90 WebP at its original 1448 × 1086 dimensions. It never
 upscales or edits source pixels. The committed `data/production/art_delivery.json`
 records the original SHA-256, encoded SHA-256, exact byte length and dimensions.
 The source cache is ignored build output, not another source/provenance record.

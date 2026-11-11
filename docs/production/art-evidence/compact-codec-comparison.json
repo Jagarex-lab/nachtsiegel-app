@@ -1,0 +1,191 @@
+{
+  "assertions": 40,
+  "failures": 0,
+  "lossless_encoded_bytes": 2750150,
+  "lossless_to_quality90_ratio": 4.18788412223691,
+  "quality90_encoded_bytes": 656692,
+  "rows": [
+    {
+      "card_id": "of-houses-020",
+      "height": 384,
+      "lossless_bytes": 270652,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "f9b238725306508fd83ed64781f4c2059cf6d91510f83011094f6548b6cb3252",
+      "prepared_png_sha256": "2e93679785eb2adf418119641ccea159e33778871a6be0348f18007069d33631",
+      "quality90_bytes": 67450,
+      "quality90_metrics_rgba": {
+        "max": 54.0,
+        "mean": 1.88915761311849,
+        "mean_squared": 9.97105662027995,
+        "peak_snr": 38.1433917847978,
+        "root_mean_squared": 3.15769799383664
+      },
+      "quality90_sha256": "797c0ddd7fcdaaf036f2753266e73a747b99e35846099980658f37b3f6dac219",
+      "width": 512
+    },
+    {
+      "card_id": "of-houses-094",
+      "height": 384,
+      "lossless_bytes": 211696,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "50d2f748e2b295769ce8fe5e611474531a2c37575ca147c87bfa05c4e94bae1d",
+      "prepared_png_sha256": "a35210bfac754ca8aa759eb62ed1b90c3191a1e8e1e1e6f37e8558986ea0a201",
+      "quality90_bytes": 39958,
+      "quality90_metrics_rgba": {
+        "max": 51.0,
+        "mean": 1.51962916056315,
+        "mean_squared": 7.96968205769857,
+        "peak_snr": 39.1163936485967,
+        "root_mean_squared": 2.82306253166638
+      },
+      "quality90_sha256": "19e89d07c060200dece0b89a453f947f509d5b7c7e6b93eb0ba0245a14493c1b",
+      "width": 512
+    },
+    {
+      "card_id": "of-stillwatch-043",
+      "height": 384,
+      "lossless_bytes": 296428,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "881131bee5cc7781c030ab294f43ed7cdba4dd4413af29c2868c6161518993d5",
+      "prepared_png_sha256": "f3cbfa3a6086f71fac46a1ca43d60539784c81d908cd46e33951e90105a65de7",
+      "quality90_bytes": 77224,
+      "quality90_metrics_rgba": {
+        "max": 32.0,
+        "mean": 1.90456899007161,
+        "mean_squared": 8.88604990641276,
+        "peak_snr": 38.6437161284323,
+        "root_mean_squared": 2.98094782014257
+      },
+      "quality90_sha256": "d3ef5a5f22256e6f1be3a16baa4350af60d94c2da48e585cc618a18b37577bbb",
+      "width": 512
+    },
+    {
+      "card_id": "of-stillwatch-055",
+      "height": 384,
+      "lossless_bytes": 280584,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "5cb33a1858f7fff7c1c076e72f93ab1c388418170f0028b898fa4953881b5e0f",
+      "prepared_png_sha256": "ac68c927c426ee9f6c2b5fa0d5bada25eadf30c4d48d50718ad3bf13e5866f70",
+      "quality90_bytes": 69818,
+      "quality90_metrics_rgba": {
+        "max": 59.0,
+        "mean": 1.95556259155273,
+        "mean_squared": 10.4820899963379,
+        "peak_snr": 37.9263247675251,
+        "root_mean_squared": 3.23760559616793
+      },
+      "quality90_sha256": "11cf343d0c6c697eb368886777a728af08e2c4d97b9f7daf2d2e3197c518cab3",
+      "width": 512
+    },
+    {
+      "card_id": "of-morph-003",
+      "height": 384,
+      "lossless_bytes": 343970,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "62812d32bf36798c11541f54f580f11f44d27f95b4d469321a3364538d211130",
+      "prepared_png_sha256": "e29df605c5e2c828d49e22205ff0cba53140a993cd627020734617b8e9090629",
+      "quality90_bytes": 92170,
+      "quality90_metrics_rgba": {
+        "max": 90.0,
+        "mean": 2.80514780680339,
+        "mean_squared": 23.3183898925781,
+        "peak_snr": 34.4538180126934,
+        "root_mean_squared": 4.82891187459226
+      },
+      "quality90_sha256": "4f85e1081fd81aff8f450420110a87b8069132ed21aa6dc7963c6f51d1160045",
+      "width": 512
+    },
+    {
+      "card_id": "of-morph-082",
+      "height": 384,
+      "lossless_bytes": 351332,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "34d5276612b5e18c64c01715b51d2d3b9ea1721a1e80f7be57513b23f61710cc",
+      "prepared_png_sha256": "12c84c6ce3812c4f491decfb16404138ffa97a6cce3fbc5ba2e3cb1a5b982b00",
+      "quality90_bytes": 87848,
+      "quality90_metrics_rgba": {
+        "max": 96.0,
+        "mean": 2.87590916951497,
+        "mean_squared": 26.6321016947428,
+        "peak_snr": 33.8767492036163,
+        "root_mean_squared": 5.16062997072478
+      },
+      "quality90_sha256": "5fe964b6af6c3d0a6dc885750dd4cc7c0fc2a92bc83213a1f00a37b809eba673",
+      "width": 512
+    },
+    {
+      "card_id": "of-ninth-019",
+      "height": 384,
+      "lossless_bytes": 225566,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "3f6705b1faaae264cb2dfb496a2deca97309fb0b617da7c27c52625f23a9b2f0",
+      "prepared_png_sha256": "5742f88206ec290058aba9b219cb6e094b60f60f8fb4a214d9d520b7b67ca910",
+      "quality90_bytes": 41208,
+      "quality90_metrics_rgba": {
+        "max": 35.0,
+        "mean": 1.44262568155924,
+        "mean_squared": 5.58646774291992,
+        "peak_snr": 40.6594306543836,
+        "root_mean_squared": 2.36357097268517
+      },
+      "quality90_sha256": "f7802c0e983c4d7e5bc258e9d50cf6dd3831cdbce8e06fc62bf175e60e41cdff",
+      "width": 512
+    },
+    {
+      "card_id": "of-ninth-095",
+      "height": 384,
+      "lossless_bytes": 246762,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "fba33648050f70ff9821608b99ee3f806c84d7e260792a3dfec5d98afda59cca",
+      "prepared_png_sha256": "aedc13096b7a3a75862e934cf188e44982e29f40f4e40900598b5cf92492a2a3",
+      "quality90_bytes": 54448,
+      "quality90_metrics_rgba": {
+        "max": 32.0,
+        "mean": 1.58073425292969,
+        "mean_squared": 6.27825673421224,
+        "peak_snr": 40.1524128971224,
+        "root_mean_squared": 2.50564497369684
+      },
+      "quality90_sha256": "2d1235181ac2b3e756ab41a6a0b8755cb72290f39eb4fde8284578bcbbfcae93",
+      "width": 512
+    },
+    {
+      "card_id": "of-neutral-049",
+      "height": 384,
+      "lossless_bytes": 246120,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "17cf9910483055389293ec93617dec52b8874f86fc5aab2cffddda63e050754e",
+      "prepared_png_sha256": "67a49b4cb2ecf106d15ef5489eb7d30d22fa11152f4002f65c18b58a5130ec58",
+      "quality90_bytes": 54334,
+      "quality90_metrics_rgba": {
+        "max": 58.0,
+        "mean": 1.63011932373047,
+        "mean_squared": 7.48936716715495,
+        "peak_snr": 39.3863523841861,
+        "root_mean_squared": 2.73667081819406
+      },
+      "quality90_sha256": "3eb4237a139ec868f6a94bb861fadec9226770f77015b24d1d279c60609d7a6f",
+      "width": 512
+    },
+    {
+      "card_id": "of-neutral-083",
+      "height": 384,
+      "lossless_bytes": 277040,
+      "lossless_pixels_equal": true,
+      "lossless_sha256": "ddfa0e82bccd442a1bd7b5f2ea34cee9e8fccd727fdbefa8a1108622f3e0efc8",
+      "prepared_png_sha256": "85bcf4f200a39eac5ab83d0cb46a67370a44a64e4dd631b6ccdf332ea7101e3a",
+      "quality90_bytes": 72234,
+      "quality90_metrics_rgba": {
+        "max": 25.0,
+        "mean": 1.64806493123372,
+        "mean_squared": 6.26520411173503,
+        "peak_snr": 40.1614513659022,
+        "root_mean_squared": 2.50303897527286
+      },
+      "quality90_sha256": "1d1252f3a7ce1eb990e8739240058b8964794a1f6f9f7a37086c84a251f02e77",
+      "width": 512
+    }
+  ],
+  "sample_actual_previews": 10,
+  "scope": "Actual same ten512px prepared illustrations; codec/byte comparison, not a550-card transfer or physical-phone result. No source/output image files rewritten."
+}

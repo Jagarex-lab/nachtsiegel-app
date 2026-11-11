@@ -18,6 +18,18 @@ func check(ok: bool, message: String) -> bool:
 func digest(bytes: PackedByteArray) -> String:
 	var context := HashingContext.new(); context.start(HashingContext.HASH_SHA256); context.update(bytes)
 	return context.finish().hex_encode()
+func lossless_webp(bytes: PackedByteArray) -> bool:
+	if bytes.size() < 20 or bytes.slice(0,4).get_string_from_ascii() != "RIFF" or bytes.slice(8,12).get_string_from_ascii() != "WEBP": return false
+	var offset := 12
+	while offset + 8 <= bytes.size():
+		var kind := bytes.slice(offset,offset+4).get_string_from_ascii()
+		var length := int(bytes.decode_u32(offset+4))
+		if offset + 8 + length > bytes.size(): return false
+		if kind == "VP8 ": return false
+		if kind == "VP8L": return true
+		offset += 8 + length + (length % 2)
+	return false
+
 func run() -> void:
 	var args := OS.get_cmdline_user_args()
 	checking = "--check" in args; ensuring = "--ensure-cache" in args
@@ -48,13 +60,15 @@ func run() -> void:
 		var old: Dictionary = existing.get(id, {})
 		if ensuring and old.get("asset_path") == path and old.get("source_sha256") == preview.source_sha256 and old.get("preview_sha256") == preview.sha256 and old.get("width") == preview.width and old.get("height") == preview.height and old.get("delivery") == "external" and old.get("web_sha256") is String:
 			var cached := CACHE.path_join(str(old.web_sha256) + ".webp")
-			if FileAccess.file_exists(cached) and FileAccess.get_sha256(cached) == old.web_sha256 and FileAccess.get_file_as_bytes(cached).size() == old.get("bytes") and old.get("relative_url") == "art/preview/" + str(old.web_sha256) + ".webp":
+			if FileAccess.file_exists(cached) and FileAccess.get_sha256(cached) == old.web_sha256 and not lossless_webp(FileAccess.get_file_as_bytes(cached)) and FileAccess.get_file_as_bytes(cached).size() == old.get("bytes") and old.get("relative_url") == "art/preview/" + str(old.web_sha256) + ".webp":
 				entries[id] = old; continue
 		var image := Image.new()
 		if not check(image.load_png_from_buffer(FileAccess.get_file_as_bytes(path)) == OK and not image.is_empty(), "actual prepared pixels decode: " + str(id)): continue
 		if not check(image.get_width() == int(preview.width) and image.get_height() == int(preview.height) and maxi(image.get_width(), image.get_height()) == 512, "exact prepared dimensions, no resizing: " + str(id)): continue
 		var bytes := image.save_webp_to_buffer(true, 0.9)
-		if not check(not bytes.is_empty() and bytes.size() <= 1024 * 1024, "actual compact WebP within one MiB bound: " + str(id)): continue
+		if not check(not bytes.is_empty() and bytes.size() <= 1024 * 1024 and not lossless_webp(bytes), "actual compact WebP within one MiB bound: " + str(id)): continue
+		var decoded := Image.new()
+		if not check(decoded.load_webp_from_buffer(bytes) == OK and decoded.get_width() == image.get_width() and decoded.get_height() == image.get_height(), "actual quality90 preview WebP decodes: " + str(id)): continue
 		var sha := digest(bytes)
 		entry.merge({"web_sha256": sha, "relative_url": "art/preview/" + sha + ".webp", "bytes": bytes.size()})
 		entries[id] = entry
@@ -62,7 +76,7 @@ func run() -> void:
 		if not checking:
 			var file := FileAccess.open(CACHE.path_join(sha + ".webp"), FileAccess.WRITE)
 			if check(file != null, "encoded preview cache writable: " + str(id)): file.store_buffer(bytes); file.close()
-	var result := {"schema_version": 1, "profile": "orafold-web-preview-v1", "resource_kind": "compact_preview", "maximum_edge": 512, "external_codec": "webp", "external_lossless": true, "individual_original_count_added": 0, "pinned_card_ids": pinned, "preview_count": entries.size(), "external_preview_count": external_count, "entries": entries}
+	var result := {"schema_version": 1, "profile": "orafold-web-preview-v1", "resource_kind": "compact_preview", "maximum_edge": 512, "external_codec": "webp", "external_lossless": false, "quality": 0.9, "individual_original_count_added": 0, "pinned_card_ids": pinned, "preview_count": entries.size(), "external_preview_count": external_count, "entries": entries}
 	var serialized := JSON.stringify(result, "  ", true) + "\n"
 	if checking:
 		check(FileAccess.file_exists(OUTPUT) and FileAccess.get_file_as_string(OUTPUT) == serialized, "data-only preview manifest current and reproducible")

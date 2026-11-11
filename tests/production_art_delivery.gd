@@ -58,11 +58,11 @@ func run() -> void:
 	base_url = args[0]
 	var manifest: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_delivery.json"))
 	ids = manifest.entries.keys(); ids.sort()
-	check(ids.size() == 15, "fifteen actual native-size WebP deliveries available")
+	check(ids.size() >= 15 and ids.size() == ART.inventory_counts().individual, "complete current actual native-size WebP inventory available")
 	await attach("ok")
 	for id in ids:
 		var compact := ART.resolve({"id": id}, "compact")
-		check(compact.texture is Texture2D and compact.texture.get_size() == Vector2(512, 384), "real compact preview without HTTP: " + str(id))
+		check(compact.texture is Texture2D and compact.texture.get_size() == Vector2(ART.manifest_entry(str(id)).preview_width, ART.manifest_entry(str(id)).preview_height), "real compact preview without HTTP: " + str(id))
 	for frame in 3: await process_frame
 	check(service.metrics().started == 0, "compact collection does not start any HTTP request")
 	var id: String = ids[0]

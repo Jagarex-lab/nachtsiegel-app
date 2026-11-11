@@ -19,7 +19,7 @@ def external_entries(manifest: dict, preview: bool = False) -> dict:
     entries = manifest["entries"]
     if preview:
         pinned = manifest.get("pinned_card_ids")
-        if not isinstance(pinned, list) or len(pinned) != 5 or len(set(pinned)) != 5 or manifest.get("resource_kind") != "compact_preview":
+        if not isinstance(pinned, list) or len(pinned) != 5 or len(set(pinned)) != 5 or manifest.get("resource_kind") != "compact_preview" or manifest.get("external_lossless") is not False or manifest.get("quality") != 0.9 or manifest.get("external_codec") != "webp" or manifest.get("maximum_edge") != 512 or manifest.get("individual_original_count_added") != 0:
             raise ValueError("Invalid data-only pinned preview metadata")
         packed = {card_id for card_id, entry in entries.items() if entry.get("delivery") == "packed"}
         if packed != set(pinned): raise ValueError("Pinned preview entries disagree")

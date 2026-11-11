@@ -14,7 +14,8 @@
     "pinned_card_ids",
     "preview_count",
     "external_preview_count",
-    "entries"
+    "entries",
+    "quality"
   ],
   "properties": {
     "schema_version": {
@@ -33,7 +34,7 @@
       "const": "webp"
     },
     "external_lossless": {
-      "const": true
+      "const": false
     },
     "individual_original_count_added": {
       "const": 0
@@ -67,6 +68,9 @@
       "additionalProperties": {
         "$ref": "#/$defs/entry"
       }
+    },
+    "quality": {
+      "const": 0.9
     }
   },
   "$defs": {

@@ -152,7 +152,7 @@
     }
   },
   "external_codec": "webp",
-  "external_lossless": true,
+  "external_lossless": false,
   "external_preview_count": 10,
   "individual_original_count_added": 0,
   "maximum_edge": 512,
@@ -165,6 +165,7 @@
   ],
   "preview_count": 15,
   "profile": "orafold-web-preview-v1",
+  "quality": 0.9,
   "resource_kind": "compact_preview",
   "schema_version": 1
 }

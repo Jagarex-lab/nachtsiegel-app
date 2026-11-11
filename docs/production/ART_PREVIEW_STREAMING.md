@@ -7,7 +7,7 @@ commercial clearance remains explicitly open. Counts change only when real
 originals and provenance are separately imported and validated.
 
 The Web PCK contains five pinned 512-edge previews: the four powers' first
-starter creatures and Torwache. Other compact previews are lossless WebPs beside
+starter creatures and Torwache. Other compact previews are quality-0.90 WebPs beside
 `index.html`, addressed by SHA-256. Full original-resolution WebPs remain
 separate. Native packages retain every imported preview and full texture.
 Original PNGs, their dimensions, source hashes and quality-90 native imports are
@@ -88,3 +88,26 @@ bash tools/test_production_art_package.sh work/alpha/web/orafold-COMMIT.pck web
 python3 tools/package_alpha.py
 node tools/production/browser_art_delivery_qa.cjs
 ```
+
+## Corrected codec review and measured decision
+
+The initial working-tree generator called `save_webp_to_buffer(true, 0.9)`
+while incorrectly labelling its compact output lossless. Godot's first argument
+is **lossy**; the actual RIFF chunk was `VP8 `. Those earlier 656,692 bytes were
+quality-0.90 compact WebPs. The metadata/schema now explicitly declare
+`external_lossless:false` and `quality:0.9`.
+
+A real same-image comparison encoded the ten current external previews losslessly
+using `false`, verified the `VP8L` envelope and compared every decoded RGBA byte
+against its prepared PNG. The actual generation run completed with 93 assertions, zero
+failures. Lossless bodies totalled **2,750,150 bytes**, versus **656,692 bytes**
+for the same ten quality-0.90 bodies: **4.19×** mobile transfer size. This sample
+is not a measured 550-card transfer. On the production lead's explicit decision,
+compact delivery retains quality0.90, matching the existing native preview
+import standard. Correcting prose does not justify quadrupling mobile bandwidth.
+The experiment and original hashes remain in the test evidence; no source PNG
+pixels changed. Full delivery also retains its recorded quality0.90 encoding
+and actual original dimensions.
+
+The original HTTP and package checks proved bytes, geometry and transport
+behavior. They did not prove lossless pixels and are not reported as such.

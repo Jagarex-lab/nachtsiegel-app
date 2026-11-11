@@ -41,7 +41,9 @@ func run() -> void:
 	await frames()
 	var first_draw_usec := Time.get_ticks_usec() - start
 	var initial: Dictionary = ART.stats().duplicate(true)
-	check(initial.profiles.compact == ids.size() and initial.profiles.full == 1, "fifteen compact previews plus one native inspector retained")
+	check(initial.profiles.compact > 0 and initial.profiles.compact <= ids.size() and initial.profiles.full == 1, "bounded shared cache retains inspector and fitting visible previews")
+	for control in controls:
+		check(control._illustration_data.get("texture") is Texture2D, "all actual visible Controls retain their image even when an LRU entry is evicted")
 	check(initial.loads == ids.size()+1 and initial.thumbnail_builds == 0, "each prepared compact preview loads once, no source resampling on first display")
 	check(initial.estimated_retained_bytes < ART.MAX_CACHE_BYTES, "actual fifteen compact views plus inspector remain under 32 MiB cache estimate")
 	for id in ids:
@@ -66,5 +68,5 @@ func run() -> void:
 	f.store_string(JSON.stringify({"originals": ids.size(), "first_draw_usec": first_draw_usec, "before_redraws": before, "after_redraws": after, "redraws": 20, "renderer_texture_bytes": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED), "assertions": assertions, "failures": failures, "scope": "Linux software renderer; no physical iPhone claim; estimates exclude other browser memory"}, "  ")); f.close()
 	viewport.queue_free(); await process_frame
 	ART.clear_cache()
-	print("PRODUCTION ART CACHE: %d assertions, %d failures; fifteen actual illustrated compact cards and one full inspector, twenty rendered redraws" % [assertions, failures])
+	print("PRODUCTION ART CACHE: %d assertions, %d failures; %d actual illustrated compact cards and one full inspector, twenty rendered redraws" % [assertions, failures, ids.size()])
 	root.get_node("GameAudio").request_quit(0 if failures == 0 else 1)

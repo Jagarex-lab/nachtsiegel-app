@@ -123,7 +123,7 @@ class ProductionArtDeliveryPackage(unittest.TestCase):
             return value
         entries = {id: item(id, "packed") for id in pinned}
         entries["preview-fixture"] = item("preview-fixture", "external")
-        manifest = {"schema_version": 1, "profile": "orafold-web-preview-v1", "resource_kind": "compact_preview", "pinned_card_ids": pinned, "preview_count": 6, "external_preview_count": 1, "entries": entries}
+        manifest = {"schema_version": 1, "profile": "orafold-web-preview-v1", "resource_kind": "compact_preview", "external_lossless": False, "quality": 0.9, "external_codec": "webp", "maximum_edge": 512, "individual_original_count_added": 0, "pinned_card_ids": pinned, "preview_count": 6, "external_preview_count": 1, "entries": entries}
         (self.source / "data/production/art_preview_delivery.json").write_text(json.dumps(manifest))
         original = cache / (digest + ".webp"); original.write_bytes(body)
         return manifest, original, body
@@ -149,6 +149,7 @@ class ProductionArtDeliveryPackage(unittest.TestCase):
         for field, value in [("relative_url", "https://elsewhere/compact.webp"), ("width", 513), ("height", 0), ("bytes", 1024 * 1024 + 1), ("script", "untrusted.gd")]:
             candidate = copy.deepcopy(previews); candidate["entries"]["preview-fixture"][field] = value; bad.append(candidate)
         candidate = copy.deepcopy(previews); candidate["external_preview_count"] = 2; bad.append(candidate)
+        candidate = copy.deepcopy(previews); candidate["external_lossless"] = True; bad.append(candidate)
         candidate = copy.deepcopy(previews); candidate["pinned_card_ids"] = ["absent"] * 5; bad.append(candidate)
         candidate = copy.deepcopy(previews); candidate["entries"]["pilot-0"]["delivery"] = "external"; bad.append(candidate)
         for candidate in bad:
