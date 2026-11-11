@@ -340,6 +340,10 @@ jobs:
           python3 tools/wait_http.py http://127.0.0.1:8790/nachtsiegel-app/build-info.json
       - name: Real touch, five landscape sizes, portrait menus, inspection, PWA and verified resume
         run: node tools/premium/browser_qa.cjs
+      - name: Real production booster transactions, campaign opening and saved reload
+        run: node tools/premium/hosted_browser_qa.cjs
+      - name: Campaign logical Retina dimensions and repeated header rotation
+        run: node tools/premium/campaign_header_browser_qa.cjs
       - name: Preserve actual premium browser evidence
         if: always()
         uses: actions/upload-artifact@v4

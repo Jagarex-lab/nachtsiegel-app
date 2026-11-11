@@ -637,3 +637,121 @@ mit `build-info.json` dokumentierte Export `b3d4441`; die Audio-Testdateien geh�
 zum neueren Feature-Arbeitsstand. `source-bindings.json` im lokalen Evidence-
 Verzeichnis enthält die jeweiligen Prüfsummen und diese Prüfgrenze. Das ist kein
 Release-Nachweis für einen anderen Commit.
+
+## Ergänzende tatsächliche Menü-, Booster- und Kampagnenprüfungen
+
+Die folgenden Ergebnisse sind getrennte lokale Iterationsnachweise. Sie ersetzen
+weder die vollständige CI des späteren Heads noch eine physische Geräteabnahme.
+Die reproduzierbaren Treiber liegen jetzt unter `tools/premium/`; zuvor lagen
+ihre erfolgreichen Fassungen ausschließlich im lokalen Evidence-Verzeichnis.
+
+| Nachweis | Exakte Quelle und tatsächlich bestandener Umfang |
+| --- | --- |
+| Gehostete Produktoberflächen | `f65d61ddb7b859cbbc536d05e4241e447ecd4567`: Chromium 158.0.8127.18 und WebKit 27.2, Playwright 1.65.0; je 79 Prüfungen, zusammen 84 echte Bedienaktionen, 28 Ziehgesten und 18 native DPR2-PNGs |
+| Kampagnenkopf nach Retina-Korrektur | `f670d41ff5a8ded5820157e3ab92e8ebe640feb0`: dieselben Browserfamilien; je 37 gezielte Prüfungen, zusammen 74 Prüfungen und vier native DPR2-PNGs; Hochformat → Querformat → Hochformat |
+
+Die lokalen Belege stehen in
+`work/premium-mobile/additional-ui/f65-ACCEPTANCE-RECEIPT.json` und
+`work/premium-mobile/additional-ui/header-f670d41/RECEIPT.json`. Sie binden die
+ursprünglichen Berichte, Treiber, Quellstände und Screenshots durch Prüfsummen.
+Die f65-Gesamtwege werden durch den späteren gezielten f670-Kopfzeilentest nicht
+rückwirkend zu f670-Gesamtläufen. Der neue verpflichtende CI-Durchlauf führt beide
+versionierten Treiber nochmals auf seinem eigenen exakten Export aus. Bis zu
+diesem Ergebnis bleibt die finale Prüfung des neuen Heads ausstehend.
+
+`hosted_browser_qa.cjs` prüft über normale Eingaben die tatsächliche illustrierte
+Starthand samt zweizeiligem Mulligan-Hinweis, den Weg über das Hauptmenü zur
+Economy, Kauf und zwei Öffnungen echter Produktionsbooster sowie Reload und
+Speicherung. Jede Öffnung enthält fünf echte Katalog-IDs mit Seltenheit und
+Neu-/Duplikatstatus. Der protokollierte Ausgangsbestand entsteht durch das normale
+Onboarding einschließlich seiner bestehenden Levelbelohnung; es wird kein
+Guthaben injiziert. Ein Kauf reduziert Gold von 350 auf 250 und erhöht den
+Boosterbestand von fünf auf sechs; die beiden Öffnungen verbrauchen je einen
+Booster. Schnelle echte Ziehgesten über die finanziellen Schaltflächen dürfen
+weder gespeicherte Bestände noch die Transaktionssequenz verändern. Rotation und
+Reload erhalten den tatsächlich gespeicherten Economy-Zustand.
+
+Der Kampagnenweg öffnet den ausdrücklich vorläufigen Überblick, Dialog und eine
+Entscheidung, startet den vorhandenen 550-Karten-Kampfadapter und prüft die
+Wiederaufnahme. Nach dem Rückweg aus der Übersicht stimmen das beobachtete
+Kampf-Snapshot und die akzeptierte Befehlszahl überein. Nach Browser-Reload wird
+der dokumentierte sichere Start derselben Begegnung mit demselben Seed wieder
+erreicht. Das ist kein Nachweis einer exakten Wiederaufnahme mitten im Zug.
+Ein vollständiger Kapitelabschluss, ein natürlicher Kampagnensieg oder eine
+zusätzliche vollständige KI-Partie wird durch diesen Treiber nicht gezählt.
+
+Der erste f65-Versuch mit 66 Prüfungen blieb fehlgeschlagen: Seine feste
+Pan-Startlinie traf einen hohen Kampagnen-Handbutton statt einer freien Fläche.
+Es wurde kein Mulligan-Befehl ausgeführt. Der erfolgreiche Treiber sucht eine
+tatsächlich beobachtete freie Fläche. Ein weiterer WebKit-Versuch mit 49 Prüfungen
+blieb ebenfalls fehlgeschlagen: Eine langsamere separate Kampagnenbeobachtung
+plante noch „Weiter“, während die aktuelle tatsächliche Oberfläche bereits eine
+Entscheidung anbot. Die Planung verwendet jetzt den zusammengehörigen aktuellen
+Shell-UI-Kanal. Der frühere WebKit-Start ohne die benötigte lokale
+Bibliotheksumgebung führte null Anwendungsszenarien aus. Diese Versuche bleiben
+in der f65-Quittung als Fehler erhalten; keiner wurde nachträglich als bestanden
+umgedeutet oder durch direkte GUI-, Modell- oder Speicheränderungen umgangen.
+
+Die zweite Produktkorrektur betrifft die eingebettete Kampagne: Der bisherige
+Header verwendete auf Retina den physischen Backing-Viewport statt der logischen
+Control-Abmessungen. Er zeigt nun im 390×844-Hochformat drei Navigationszeilen
+und im 844×390-Querformat eine. Der gezielte Header-Treiber prüft alle fünf
+tatsächlichen mindestens 44-Pixel-Ziele, DPR2 und beide Canvas-Achsen; Flags und
+gespeicherte Kampagnen-/Economy-Bytes bleiben über beide Rotationen unverändert.
+
+Visuelle Grenze: Die normalen Handkarten zeigen ihre individuellen Illustrationen
+und Rahmen. Das bestehende Boosterergebnis ist dagegen eine lesbare Textliste,
+keine illustrierte Karten-Aufdeckanimation; im Querformat erreicht normales
+Scrollen den Rest der Liste. Die Kampagne bleibt klar als `TECHNISCHER PROTOTYP`,
+`KEINE FREIGEGEBENE HAUPTGESCHICHTE` und `VORSCHLAG` gekennzeichnet. Ihr vorhandener
+Kampfadapter ist eine Text-/Listenoberfläche und nicht die Premium-Hauptarena.
+Diese funktionsfähigen Prototypen werden nicht als abgeschlossene Premium-
+Booster- oder Kampagnenpräsentation bezeichnet. Kanon, Kampfregeln und
+Transaktionslogik wurden für diese beiden Layoutkorrekturen nicht geändert.
+
+### Verpflichtende Wiederholung im bestehenden Browserjob
+
+Im Job `premium-browser` laufen die drei folgenden Befehle nacheinander; jeder
+Fehler schlägt den bestehenden Job fehl. Matrix, bestehende Profile, 45-Minuten-
+Joblimit, individuelle Aktionsfristen und Leseberechtigungen bleiben erhalten.
+Die zusätzlichen Ergebnisse liegen unter `${PREMIUM_BROWSER_OUTPUT}/hosted/`
+und `${PREMIUM_BROWSER_OUTPUT}/campaign-header/` und werden vom vorhandenen
+enginebezogenen Artefakt vollständig aufgenommen.
+
+```sh
+# Der ausgecheckte Stand muss genau der zuvor exportierte Kandidat sein.
+export EXPECTED_COMMIT="$(git rev-parse HEAD)"
+export GAME_URL=http://127.0.0.1:8790/nachtsiegel-app/
+export QA_ENGINES=chromium,webkit
+export PREMIUM_BROWSER_OUTPUT=work/premium-mobile/browser-reproduction
+node tools/premium/browser_qa.cjs
+node tools/premium/hosted_browser_qa.cjs
+node tools/premium/campaign_header_browser_qa.cjs
+```
+
+Die zusätzlichen lokalen Prüfungen verwenden Linux-Software-Rendering und
+simulierte mobile Browserprofile. Sie sind keine physischen iPhone-/Android-
+Tests, keine Hardware-Performancemessung und kein Veröffentlichungsnachweis.
+Der aktive Pages-Publisher und dessen Guard bleiben unverändert; die neuen
+Schritte veröffentlichen nichts und erteilen keine Releasefreigabe.
+
+### Native Shutdown-Beobachtung bleibt offen
+
+Die Push- und PR-Native-Jobs des Zwischenheads
+`831337ddd4840d0d019386b83b2125ca43dbbfe2` bestanden auf Linux und Windows jeweils
+acht unabhängige echte Starts, zusammen 32. Der PR prüfte seinen ausdrücklich
+protokollierten Merge-Commit `cdb0e55bc9a31243dc593189ff83fb8ba0dc5383`; der Push
+prüfte 831337d selbst. Jeder Start behält sein eigenes vollständiges Log, verlangt
+29 bestandene Prüfungen und verwirft Fehler oder Leaks auch bei Exitcode null.
+Fingerprint, Heldensieg und Runde 25 stimmten in allen Durchläufen überein.
+
+Das frühere Windows-Ergebnis auf `ada9ef9` bleibt fehlgeschlagen: Nach 29
+bestandenen Prüfungen meldete der tatsächliche Shutdown undichte ObjectDB-
+Instanzen und drei noch verwendete Ressourcen. Das vollständig zurückgewonnene
+Originalprotokoll enthält ohne damaliges `--verbose` keine Objektidentitäten.
+Die Ursache ist weiterhin ungeklärt; 32 spätere saubere Starts beweisen keine
+Behebung dieses sporadischen Fehlers. Die neue QA führt acht Starts ohne neuen
+Export und ohne Wiederholungsakzeptanz aus: Jeder erste Fehler beendet den Job.
+Separate kleine JSON-/Log-Artefakte und begrenzte Fehlerauszüge machen die
+Diagnose unabhängig vom großen Binärartefakt zugänglich. Ein endgültiger grüner
+Lauf oder eine Fehlerbehebung des späteren Kandidaten wird hier nicht vorweggenommen.
