@@ -1,0 +1,205 @@
+{
+  "scope": "Real Godot4.6.3 source fixture, headless AudioDummy; no new native export and no product edits.",
+  "patch": "/tmp/audio-crossfade-fixture.patch",
+  "base_commit": "945f57070a0b6756bea865c283df8727887ba726",
+  "patched_fixture_sha256": "027741b51a377ef3371c2fe8936ffa3093113dab797fde844166a2c8ecd214ed",
+  "checks": [
+    {
+      "case": "positive",
+      "exit_code": 0,
+      "elapsed_seconds": 0.828,
+      "result": {
+        "failures": [],
+        "last_id": -1,
+        "last_result": false,
+        "native_checks": 7,
+        "ready": true,
+        "snapshot": {
+          "accepted": 1,
+          "active_voices": 0,
+          "buses": {
+            "ambience": {
+              "muted": false,
+              "peak_db": -200.0,
+              "volume_db": -7.95880031585693
+            },
+            "master": {
+              "muted": false,
+              "peak_db": -30.6040649414062,
+              "volume_db": -1.93820023536682
+            },
+            "music": {
+              "muted": false,
+              "peak_db": -32.0094299316406,
+              "volume_db": -8.63596534729004
+            },
+            "sfx": {
+              "muted": false,
+              "peak_db": -41.1586036682129,
+              "volume_db": -2.498774766922
+            },
+            "ui": {
+              "muted": false,
+              "peak_db": -200.0,
+              "volume_db": -2.498774766922
+            }
+          },
+          "cached_streams": 153,
+          "events": 52,
+          "last_save_error": 0,
+          "missing_assets": 0,
+          "music": {
+            "context": "duel",
+            "gains": [
+              0.0,
+              1.0
+            ],
+            "paused": [
+              false,
+              false
+            ],
+            "pending_context": "",
+            "playback_positions": [
+              0.0,
+              0.096000000834465
+            ],
+            "players": 2,
+            "playing": 1,
+            "resume_positions": [
+              0.0,
+              0.096000000834465
+            ],
+            "suspended": false,
+            "transitioning": false,
+            "volume_db": [
+              -89.0,
+              -9.0
+            ]
+          },
+          "peak_voices": 1,
+          "pool_size": 16,
+          "rejected": 2,
+          "settings": {
+            "ambience": 0.4,
+            "master": 0.8,
+            "music": 0.37,
+            "muted": false,
+            "reduced_intensity": false,
+            "sfx": 0.75,
+            "ui": 0.75
+          },
+          "stolen_voices": 0,
+          "suspended": false,
+          "suspension_reasons": {
+            "application": false,
+            "focus": false,
+            "manual": false
+          },
+          "unlocked": true,
+          "web_storage_status": "native"
+        }
+      },
+      "log_sha256": "dc8a21bbb09f86e1dd437a0859db46887de3c1639649e9b1e77272bd8230731b"
+    },
+    {
+      "case": "negative-held-controller",
+      "exit_code": 1,
+      "elapsed_seconds": 2.535,
+      "result": {
+        "failures": [
+          "crossfade timeout after 2007 ms; actual music state: {\"context\":\"menu\",\"gains\":[0.0,0.0],\"paused\":[false,false],\"pending_context\":\"duel\",\"playback_positions\":[1.95200002193451,0.0],\"players\":2,\"playing\":1,\"resume_positions\":[0.0,0.0],\"suspended\":false,\"transitioning\":true,\"volume_db\":[-80.0,-80.0]}"
+        ],
+        "last_id": -1,
+        "last_result": false,
+        "native_checks": 7,
+        "ready": true,
+        "snapshot": {
+          "accepted": 1,
+          "active_voices": 0,
+          "buses": {
+            "ambience": {
+              "muted": false,
+              "peak_db": -200.0,
+              "volume_db": -7.95880031585693
+            },
+            "master": {
+              "muted": false,
+              "peak_db": -101.949081420898,
+              "volume_db": -1.93820023536682
+            },
+            "music": {
+              "muted": false,
+              "peak_db": -102.010871887207,
+              "volume_db": -8.63596534729004
+            },
+            "sfx": {
+              "muted": false,
+              "peak_db": -199.999984741211,
+              "volume_db": -2.498774766922
+            },
+            "ui": {
+              "muted": false,
+              "peak_db": -200.0,
+              "volume_db": -2.498774766922
+            }
+          },
+          "cached_streams": 153,
+          "events": 52,
+          "last_save_error": 0,
+          "missing_assets": 0,
+          "music": {
+            "context": "menu",
+            "gains": [
+              0.0,
+              0.0
+            ],
+            "paused": [
+              false,
+              false
+            ],
+            "pending_context": "duel",
+            "playback_positions": [
+              1.95200002193451,
+              0.0
+            ],
+            "players": 2,
+            "playing": 1,
+            "resume_positions": [
+              1.95200002193451,
+              0.0
+            ],
+            "suspended": false,
+            "transitioning": true,
+            "volume_db": [
+              -80.0,
+              -80.0
+            ]
+          },
+          "peak_voices": 1,
+          "pool_size": 16,
+          "rejected": 2,
+          "settings": {
+            "ambience": 0.4,
+            "master": 0.8,
+            "music": 0.37,
+            "muted": false,
+            "reduced_intensity": false,
+            "sfx": 0.75,
+            "ui": 0.75
+          },
+          "stolen_voices": 0,
+          "suspended": false,
+          "suspension_reasons": {
+            "application": false,
+            "focus": false,
+            "manual": false
+          },
+          "unlocked": true,
+          "web_storage_status": "native"
+        }
+      },
+      "log_sha256": "23389b6375384464ddbffe848ea81a0609f1dd6bc525e58714154c9e5b80eb08"
+    }
+  ],
+  "original_ci_failure_log": "/tmp/final-audio-945-failure.log"
+}

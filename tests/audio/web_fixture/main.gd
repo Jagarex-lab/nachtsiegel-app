@@ -76,8 +76,20 @@ func _native_checks() -> void:
 	audio.set_volume("music", 0.37)
 	if audio.save_settings() != OK: failures.append("save failed")
 	if not audio.set_music("duel", 0.1): failures.append("music rejected")
-	await get_tree().create_timer(0.25).timeout
-	if audio.snapshot().music.transitioning: failures.append("crossfade stuck")
+	# The requested duel fade is queued behind the initial menu fade. A fixed
+	# delay equal to both nominal durations can end one process frame too soon.
+	# Observe the real terminal state, and still fail a genuinely stuck fade.
+	var crossfade_started := Time.get_ticks_msec()
+	var crossfade_settled := false
+	var music_state: Dictionary = audio.snapshot().music
+	while Time.get_ticks_msec() - crossfade_started < 2000:
+		music_state = audio.snapshot().music
+		if music_state.context == "duel" and music_state.pending_context == "" and not music_state.transitioning and music_state.playing == 1:
+			crossfade_settled = true
+			break
+		await get_tree().process_frame
+	if not crossfade_settled:
+		failures.append("crossfade timeout after %d ms; actual music state: %s" % [Time.get_ticks_msec() - crossfade_started, JSON.stringify(music_state)])
 	audio.set_suspended(true)
 	if audio.play_event("card.draw"): failures.append("suspended event accepted")
 	audio.set_suspended(false)
