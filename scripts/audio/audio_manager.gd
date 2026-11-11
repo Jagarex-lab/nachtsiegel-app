@@ -37,6 +37,7 @@ var _volume_tweens: Dictionary = {}
 var _ambience: AudioStreamPlayer
 var _pending_ambience := ""
 var _ambience_tween: Tween
+var _ambience_tween_paused := false
 var _ambience_resume_active := false
 var _ambience_resume_position := 0.0
 
@@ -255,14 +256,27 @@ func set_ambience(clip_id: String, fade_seconds: float = 0.75) -> bool:
 		stream.loop = bool(clip.get("loop", true))
 	var fade := _number(fade_seconds, 0.75, 0.02, 8.0)
 	var gain := _number(clip.get("gain_db", -12.0), -12.0, -40.0, 0.0)
-	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():
-		_ambience_tween.kill()
+	_clear_ambience_tween()
 	_ambience_tween = create_tween()
+	_ambience_tween.finished.connect(_ambience_tween_finished.bind(_ambience_tween.get_instance_id()), CONNECT_ONE_SHOT)
 	if _ambience.playing:
 		_ambience_tween.tween_property(_ambience, "volume_db", -80.0, fade * 0.5)
 	_ambience_tween.tween_callback(_begin_ambience.bind(stream))
 	_ambience_tween.tween_property(_ambience, "volume_db", gain, fade * 0.5)
 	return true
+
+func _clear_ambience_tween() -> void:
+	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():
+		_ambience_tween.kill()
+	_ambience_tween = null
+	_ambience_tween_paused = false
+
+func _ambience_tween_finished(tween_id: int) -> void:
+	# Godot marks a finished Tween dead before invalidating it. Release the
+	# handle in that signal frame, before a modal/focus callback can resume it.
+	if is_instance_valid(_ambience_tween) and _ambience_tween.get_instance_id() == tween_id:
+		_ambience_tween = null
+		_ambience_tween_paused = false
 
 func _begin_ambience(stream: AudioStream) -> void:
 	_ambience.stop()
@@ -523,10 +537,12 @@ func _update_suspension() -> void:
 			_ambience.stop()
 			_ambience.play(_ambience_resume_position)
 		_ambience_resume_active = false
-	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():
-		if _suspended:
+	if _suspended != was_suspended and is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():
+		if _suspended and _ambience_tween.is_running():
 			_ambience_tween.pause()
-		else:
+			_ambience_tween_paused = true
+		elif not _suspended and _ambience_tween_paused:
+			_ambience_tween_paused = false
 			_ambience_tween.play()
 	if not _suspended and unlocked and not _pending_ambience.is_empty():
 		var pending := _pending_ambience
@@ -535,7 +551,7 @@ func _update_suspension() -> void:
 
 func stop_ambience() -> void:
 	_ambience_resume_active = false
-	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid(): _ambience_tween.kill()
+	_clear_ambience_tween()
 	if is_instance_valid(_ambience):
 		_ambience.stop()
 		_ambience.stream = null
@@ -543,8 +559,7 @@ func stop_ambience() -> void:
 
 func stop_all(clear_cache: bool = false) -> void:
 	_ambience_resume_active = false
-	if is_instance_valid(_ambience_tween) and _ambience_tween.is_valid():
-		_ambience_tween.kill()
+	_clear_ambience_tween()
 	for voice in _voices:
 		voice.player.stop()
 		voice.player.stream = null
