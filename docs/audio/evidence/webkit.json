@@ -1,0 +1,8 @@
+{
+  "profile": "webkit",
+  "url": "http://127.0.0.1:8765",
+  "checked": [],
+  "errors": [],
+  "result": "failed",
+  "failure": "browserType.launch: \n╔══════════════════════════════════════════════════════╗\n║ Host system is missing dependencies to run browsers. ║\n║ Missing libraries:                                   ║\n║     libgtk-4.so.1                                    ║\n║     libgraphene-1.0.so.0                             ║\n║     libharfbuzz-icu.so.0                             ║\n║     libmanette-0.2.so.0                              ║\n║     libhyphen.so.0                                   ║\n║     libGLESv2.so.2                                   ║\n╚══════════════════════════════════════════════════════╝\n    at /workspace/nachtsiegel-audio/tests/audio/browser_smoke.mjs:21:31\n    at async node:internal/modules/esm/loader:647:26"
+}

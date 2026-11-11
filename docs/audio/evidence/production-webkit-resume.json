@@ -1,0 +1,1439 @@
+{
+  "profile": "webkit",
+  "url": "http://127.0.0.1:8766",
+  "scope": "Actual exported product in browser; no physical device or human listening claim.",
+  "checks": [
+    "Packaged52events153effectassets and single bounded owner; locked before gesture",
+    "Two actual audible duel pause/resume cycles restore stream transport"
+  ],
+  "errors": [],
+  "graphicsDiagnostics": [],
+  "harnessSha256": "5184bf2d64682495d3be42e8804368c6e790133b50a6ea74779a35790d9d0790",
+  "playwrightVersion": "1.65.0",
+  "nodeVersion": "v24.22.1",
+  "browserVersion": "27.2",
+  "build": {
+    "commit": "2c9e148aab36c6d364daedc62f3fd9601a981387",
+    "version": "ORAFOLD Alpha 0.3 – Katalogvorschau",
+    "channel": "isolated-test",
+    "rulesets": [
+      "legacy-34b3062",
+      "orafold-alpha-0.1",
+      "production-550-v1"
+    ]
+  },
+  "initial": {
+    "accepted": 0,
+    "active_voices": 0,
+    "buses": {
+      "ambience": {
+        "muted": false,
+        "peak_db": -200,
+        "volume_db": -7.95880031585693
+      },
+      "master": {
+        "muted": false,
+        "peak_db": -200,
+        "volume_db": -1.93820023536682
+      },
+      "music": {
+        "muted": false,
+        "peak_db": -200,
+        "volume_db": -5.19274616241455
+      },
+      "sfx": {
+        "muted": false,
+        "peak_db": -200,
+        "volume_db": -2.498774766922
+      },
+      "ui": {
+        "muted": false,
+        "peak_db": -200,
+        "volume_db": -2.498774766922
+      }
+    },
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "",
+      "gains": [
+        0,
+        0
+      ],
+      "paused": [
+        false,
+        false
+      ],
+      "pending_context": "menu",
+      "playback_positions": [
+        0,
+        0
+      ],
+      "players": 2,
+      "playing": 0,
+      "resume_positions": [
+        0,
+        0
+      ],
+      "suspended": false,
+      "transitioning": false,
+      "volume_db": [
+        -80,
+        -80
+      ]
+    },
+    "peak_voices": 0,
+    "pool_size": 16,
+    "rejected": 0,
+    "settings": {
+      "ambience": 0.4,
+      "master": 0.8,
+      "music": 0.55,
+      "muted": false,
+      "reduced_intensity": false,
+      "sfx": 0.75,
+      "ui": 0.75
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "suspension_reasons": {
+      "application": false,
+      "focus": false,
+      "manual": false
+    },
+    "unlocked": false,
+    "web_storage_status": "missing"
+  },
+  "firstMixedSignal": {
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100,
+        "current_time": 0.9752380952380952,
+        "generation": 4,
+        "epoch": 0.08997732426303855,
+        "destination_sources": 1
+      }
+    ],
+    "routing": [
+      {
+        "action": "real_destination_connected",
+        "source": "GainNode",
+        "output": 0,
+        "generation": 2,
+        "at": 6580
+      },
+      {
+        "action": "real_destination_disconnected_observer_detached",
+        "source": "GainNode",
+        "generation": 3,
+        "at": 8024
+      },
+      {
+        "action": "summed_meter_attached",
+        "context": 0,
+        "at": 9388
+      },
+      {
+        "action": "real_destination_connected",
+        "source": "AudioWorkletNode",
+        "output": 0,
+        "generation": 4,
+        "at": 9389
+      }
+    ],
+    "meterErrors": [],
+    "meterMessages": [
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.1364172335600907,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.18285714285714286,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.22929705215419502,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.27573696145124715,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.3221768707482993,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.3686167800453515,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.41505668934240364,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.4614965986394558,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.5079365079365079,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.5543764172335601,
+        "peak": 0.02288818359375,
+        "rms": 0.009788403776171371,
+        "maxRms": 0.012544192741028186
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.6008163265306122,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.6472562358276645,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.6936961451247166,
+        "peak": 0,
+        "rms": 0,
+        "maxRms": 0
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.7401360544217687,
+        "peak": 0.01873779296875,
+        "rms": 0.007528966821927313,
+        "maxRms": 0.01117100551493087
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.7865759637188209,
+        "peak": 0.016876220703125,
+        "rms": 0.008932889021487577,
+        "maxRms": 0.010553331718082927
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.833015873015873,
+        "peak": 0.01788330078125,
+        "rms": 0.008635330974842382,
+        "maxRms": 0.010359421137656937
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.8794557823129252,
+        "peak": 0.016632080078125,
+        "rms": 0.0057247569893657466,
+        "maxRms": 0.00932851750649888
+      },
+      {
+        "context": 0,
+        "generation": 4,
+        "at": 0.9258956916099773,
+        "peak": 0.017120361328125,
+        "rms": 0.008011098855420931,
+        "maxRms": 0.00930716637065046
+      }
+    ],
+    "peak": 0.017547607421875,
+    "rms": 0.004628973555485814
+  },
+  "afterGesture": {
+    "accepted": 1,
+    "active_voices": 0,
+    "buses": {
+      "ambience": {
+        "muted": false,
+        "peak_db": -200,
+        "volume_db": -7.95880031585693
+      },
+      "master": {
+        "muted": false,
+        "peak_db": -25.3840198516846,
+        "volume_db": -1.93820023536682
+      },
+      "music": {
+        "muted": false,
+        "peak_db": -25.4458179473877,
+        "volume_db": -5.19274616241455
+      },
+      "sfx": {
+        "muted": false,
+        "peak_db": -200,
+        "volume_db": -2.498774766922
+      },
+      "ui": {
+        "muted": false,
+        "peak_db": -199.999984741211,
+        "volume_db": -2.498774766922
+      }
+    },
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "menu",
+      "gains": [
+        1,
+        0
+      ],
+      "paused": [
+        false,
+        false
+      ],
+      "pending_context": "",
+      "playback_positions": [
+        1.07200002670288,
+        0
+      ],
+      "players": 2,
+      "playing": 1,
+      "resume_positions": [
+        0,
+        0
+      ],
+      "suspended": false,
+      "transitioning": false,
+      "volume_db": [
+        -9,
+        -80
+      ]
+    },
+    "peak_voices": 1,
+    "pool_size": 16,
+    "rejected": 1,
+    "settings": {
+      "ambience": 0.4,
+      "master": 0.8,
+      "music": 0.55,
+      "muted": false,
+      "reduced_intensity": false,
+      "sfx": 0.75,
+      "ui": 0.75
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "suspension_reasons": {
+      "application": false,
+      "focus": false,
+      "manual": false
+    },
+    "unlocked": true,
+    "web_storage_status": "missing"
+  },
+  "audibleMenu": {
+    "peak": 0.057525634765625,
+    "maxRms": 0.04080803035933999,
+    "positiveSpan": 2.36843537414966,
+    "samples": 48,
+    "meterBlocks": 52,
+    "nonzeroMeterBlocks": 52,
+    "meterErrors": [],
+    "routing": [
+      {
+        "action": "real_destination_connected",
+        "source": "GainNode",
+        "output": 0,
+        "generation": 2,
+        "at": 6580
+      },
+      {
+        "action": "real_destination_disconnected_observer_detached",
+        "source": "GainNode",
+        "generation": 3,
+        "at": 8024
+      },
+      {
+        "action": "summed_meter_attached",
+        "context": 0,
+        "at": 9388
+      },
+      {
+        "action": "real_destination_connected",
+        "source": "AudioWorkletNode",
+        "output": 0,
+        "generation": 4,
+        "at": 9389
+      }
+    ],
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100,
+        "current_time": 4.6439909297052155,
+        "generation": 4,
+        "epoch": 0.08997732426303855,
+        "destination_sources": 1
+      }
+    ],
+    "analyserDiagnostic": {
+      "peak": 0.0519256591796875,
+      "rms": 0.020996190046908985
+    },
+    "audio": {
+      "accepted": 1,
+      "active_voices": 0,
+      "buses": {
+        "ambience": {
+          "muted": false,
+          "peak_db": -200,
+          "volume_db": -7.95880031585693
+        },
+        "master": {
+          "muted": false,
+          "peak_db": -31.9347476959229,
+          "volume_db": -1.93820023536682
+        },
+        "music": {
+          "muted": false,
+          "peak_db": -31.996545791626,
+          "volume_db": -5.19274616241455
+        },
+        "sfx": {
+          "muted": false,
+          "peak_db": -200,
+          "volume_db": -2.498774766922
+        },
+        "ui": {
+          "muted": false,
+          "peak_db": -200,
+          "volume_db": -2.498774766922
+        }
+      },
+      "cached_streams": 153,
+      "events": 52,
+      "last_save_error": 0,
+      "missing_assets": 0,
+      "music": {
+        "context": "menu",
+        "gains": [
+          1,
+          0
+        ],
+        "paused": [
+          false,
+          false
+        ],
+        "pending_context": "",
+        "playback_positions": [
+          3.39199995994568,
+          0
+        ],
+        "players": 2,
+        "playing": 1,
+        "resume_positions": [
+          0,
+          0
+        ],
+        "suspended": false,
+        "transitioning": false,
+        "volume_db": [
+          -9,
+          -80
+        ]
+      },
+      "peak_voices": 1,
+      "pool_size": 16,
+      "rejected": 1,
+      "settings": {
+        "ambience": 0.4,
+        "master": 0.8,
+        "music": 0.55,
+        "muted": false,
+        "reduced_intensity": false,
+        "sfx": 0.75,
+        "ui": 0.75
+      },
+      "stolen_voices": 0,
+      "suspended": false,
+      "suspension_reasons": {
+        "application": false,
+        "focus": false,
+        "manual": false
+      },
+      "unlocked": true,
+      "web_storage_status": "missing"
+    }
+  },
+  "duelBeforePause": {
+    "accepted": 18,
+    "active_voices": 4,
+    "buses": {
+      "ambience": {
+        "muted": true,
+        "peak_db": -199.999984741211,
+        "volume_db": -80
+      },
+      "master": {
+        "muted": false,
+        "peak_db": -33.5787582397461,
+        "volume_db": -1.93820023536682
+      },
+      "music": {
+        "muted": false,
+        "peak_db": -33.6405563354492,
+        "volume_db": -5.19274616241455
+      },
+      "sfx": {
+        "muted": true,
+        "peak_db": -199.999984741211,
+        "volume_db": -80
+      },
+      "ui": {
+        "muted": true,
+        "peak_db": -199.999984741211,
+        "volume_db": -80
+      }
+    },
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "duel",
+      "gains": [
+        0,
+        1
+      ],
+      "paused": [
+        false,
+        false
+      ],
+      "pending_context": "",
+      "playback_positions": [
+        0,
+        11.0880002975464
+      ],
+      "players": 2,
+      "playing": 1,
+      "resume_positions": [
+        0,
+        0
+      ],
+      "suspended": false,
+      "transitioning": false,
+      "volume_db": [
+        -89,
+        -9
+      ]
+    },
+    "peak_voices": 5,
+    "pool_size": 16,
+    "rejected": 1,
+    "settings": {
+      "ambience": 0,
+      "master": 0.8,
+      "music": 0.55,
+      "muted": false,
+      "reduced_intensity": false,
+      "sfx": 0,
+      "ui": 0
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "suspension_reasons": {
+      "application": false,
+      "focus": false,
+      "manual": false
+    },
+    "unlocked": true,
+    "web_storage_status": "saved"
+  },
+  "audibleBeforePause": {
+    "peak": 0.054595947265625,
+    "maxRms": 0.04669864966420646,
+    "positiveSpan": 2.368435374149662,
+    "samples": 38,
+    "meterBlocks": 52,
+    "nonzeroMeterBlocks": 52,
+    "meterErrors": [],
+    "routing": [
+      {
+        "action": "real_destination_connected",
+        "source": "GainNode",
+        "output": 0,
+        "generation": 2,
+        "at": 6580
+      },
+      {
+        "action": "real_destination_disconnected_observer_detached",
+        "source": "GainNode",
+        "generation": 3,
+        "at": 8024
+      },
+      {
+        "action": "summed_meter_attached",
+        "context": 0,
+        "at": 9388
+      },
+      {
+        "action": "real_destination_connected",
+        "source": "AudioWorkletNode",
+        "output": 0,
+        "generation": 4,
+        "at": 9389
+      }
+    ],
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100,
+        "current_time": 32.05804988662131,
+        "generation": 4,
+        "epoch": 0.08997732426303855,
+        "destination_sources": 1
+      }
+    ],
+    "analyserDiagnostic": {
+      "peak": 0.0373382568359375,
+      "rms": 0.015706950585200743
+    },
+    "audio": {
+      "accepted": 18,
+      "active_voices": 0,
+      "buses": {
+        "ambience": {
+          "muted": true,
+          "peak_db": -199.999984741211,
+          "volume_db": -80
+        },
+        "master": {
+          "muted": false,
+          "peak_db": -30.3378391265869,
+          "volume_db": -1.93820023536682
+        },
+        "music": {
+          "muted": false,
+          "peak_db": -30.3996391296387,
+          "volume_db": -5.19274616241455
+        },
+        "sfx": {
+          "muted": true,
+          "peak_db": -199.999984741211,
+          "volume_db": -80
+        },
+        "ui": {
+          "muted": true,
+          "peak_db": -199.999984741211,
+          "volume_db": -80
+        }
+      },
+      "cached_streams": 153,
+      "events": 52,
+      "last_save_error": 0,
+      "missing_assets": 0,
+      "music": {
+        "context": "duel",
+        "gains": [
+          0,
+          1
+        ],
+        "paused": [
+          false,
+          false
+        ],
+        "pending_context": "",
+        "playback_positions": [
+          0,
+          12.960000038147
+        ],
+        "players": 2,
+        "playing": 1,
+        "resume_positions": [
+          0,
+          0
+        ],
+        "suspended": false,
+        "transitioning": false,
+        "volume_db": [
+          -89,
+          -9
+        ]
+      },
+      "peak_voices": 5,
+      "pool_size": 16,
+      "rejected": 1,
+      "settings": {
+        "ambience": 0,
+        "master": 0.8,
+        "music": 0.55,
+        "muted": false,
+        "reduced_intensity": false,
+        "sfx": 0,
+        "ui": 0
+      },
+      "stolen_voices": 0,
+      "suspended": false,
+      "suspension_reasons": {
+        "application": false,
+        "focus": false,
+        "manual": false
+      },
+      "unlocked": true,
+      "web_storage_status": "saved"
+    }
+  },
+  "paused0": {
+    "peak": 0,
+    "maxRms": 0,
+    "positiveSpan": 0,
+    "samples": 34,
+    "meterBlocks": 51,
+    "nonzeroMeterBlocks": 0,
+    "meterErrors": [],
+    "routing": [
+      {
+        "action": "real_destination_connected",
+        "source": "GainNode",
+        "output": 0,
+        "generation": 2,
+        "at": 6580
+      },
+      {
+        "action": "real_destination_disconnected_observer_detached",
+        "source": "GainNode",
+        "generation": 3,
+        "at": 8024
+      },
+      {
+        "action": "summed_meter_attached",
+        "context": 0,
+        "at": 9388
+      },
+      {
+        "action": "real_destination_connected",
+        "source": "AudioWorkletNode",
+        "output": 0,
+        "generation": 4,
+        "at": 9389
+      }
+    ],
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100,
+        "current_time": 35.09986394557823,
+        "generation": 4,
+        "epoch": 0.08997732426303855,
+        "destination_sources": 1
+      }
+    ],
+    "analyserDiagnostic": {
+      "peak": 0,
+      "rms": 0
+    },
+    "audio": {
+      "accepted": 20,
+      "active_voices": 0,
+      "buses": {
+        "ambience": {
+          "muted": true,
+          "peak_db": -199.999984741211,
+          "volume_db": -80
+        },
+        "master": {
+          "muted": false,
+          "peak_db": -199.999984741211,
+          "volume_db": -1.93820023536682
+        },
+        "music": {
+          "muted": false,
+          "peak_db": -199.999984741211,
+          "volume_db": -5.19274616241455
+        },
+        "sfx": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        },
+        "ui": {
+          "muted": true,
+          "peak_db": -199.999984741211,
+          "volume_db": -80
+        }
+      },
+      "cached_streams": 153,
+      "events": 52,
+      "last_save_error": 0,
+      "missing_assets": 0,
+      "music": {
+        "context": "duel",
+        "gains": [
+          0,
+          1
+        ],
+        "paused": [
+          false,
+          true
+        ],
+        "pending_context": "",
+        "playback_positions": [
+          0,
+          13.0640001296997
+        ],
+        "players": 2,
+        "playing": 0,
+        "resume_positions": [
+          0,
+          13.0520000457764
+        ],
+        "suspended": true,
+        "transitioning": false,
+        "volume_db": [
+          -89,
+          -9
+        ]
+      },
+      "peak_voices": 5,
+      "pool_size": 16,
+      "rejected": 1,
+      "settings": {
+        "ambience": 0,
+        "master": 0.8,
+        "music": 0.55,
+        "muted": false,
+        "reduced_intensity": false,
+        "sfx": 0,
+        "ui": 0
+      },
+      "stolen_voices": 0,
+      "suspended": true,
+      "suspension_reasons": {
+        "application": false,
+        "focus": false,
+        "manual": true
+      },
+      "unlocked": true,
+      "web_storage_status": "saved"
+    }
+  },
+  "resumeState": {
+    "accepted": 22,
+    "active_voices": 0,
+    "buses": {
+      "ambience": {
+        "muted": true,
+        "peak_db": -199.999984741211,
+        "volume_db": -80
+      },
+      "master": {
+        "muted": false,
+        "peak_db": -28.0918655395508,
+        "volume_db": -1.93820023536682
+      },
+      "music": {
+        "muted": false,
+        "peak_db": -28.1536655426025,
+        "volume_db": -5.19274616241455
+      },
+      "sfx": {
+        "muted": true,
+        "peak_db": -200,
+        "volume_db": -80
+      },
+      "ui": {
+        "muted": true,
+        "peak_db": -200,
+        "volume_db": -80
+      }
+    },
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "duel",
+      "gains": [
+        0,
+        1
+      ],
+      "paused": [
+        false,
+        false
+      ],
+      "pending_context": "",
+      "playback_positions": [
+        0,
+        15.8879690170288
+      ],
+      "players": 2,
+      "playing": 1,
+      "resume_positions": [
+        0,
+        15.5959997177124
+      ],
+      "suspended": false,
+      "transitioning": false,
+      "volume_db": [
+        -89,
+        -9
+      ]
+    },
+    "peak_voices": 5,
+    "pool_size": 16,
+    "rejected": 5,
+    "settings": {
+      "ambience": 0,
+      "master": 0.8,
+      "music": 0.55,
+      "muted": false,
+      "reduced_intensity": false,
+      "sfx": 0,
+      "ui": 0
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "suspension_reasons": {
+      "application": false,
+      "focus": false,
+      "manual": false
+    },
+    "unlocked": true,
+    "web_storage_status": "saved"
+  },
+  "audibleResume0": {
+    "peak": 0.048126220703125,
+    "maxRms": 0.04006624362256616,
+    "positiveSpan": 2.3219954648526127,
+    "samples": 43,
+    "meterBlocks": 51,
+    "nonzeroMeterBlocks": 51,
+    "meterErrors": [],
+    "routing": [
+      {
+        "action": "real_destination_connected",
+        "source": "GainNode",
+        "output": 0,
+        "generation": 2,
+        "at": 6580
+      },
+      {
+        "action": "real_destination_disconnected_observer_detached",
+        "source": "GainNode",
+        "generation": 3,
+        "at": 8024
+      },
+      {
+        "action": "summed_meter_attached",
+        "context": 0,
+        "at": 9388
+      },
+      {
+        "action": "real_destination_connected",
+        "source": "AudioWorkletNode",
+        "output": 0,
+        "generation": 4,
+        "at": 9389
+      }
+    ],
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100,
+        "current_time": 38.32163265306122,
+        "generation": 4,
+        "epoch": 0.08997732426303855,
+        "destination_sources": 1
+      }
+    ],
+    "analyserDiagnostic": {
+      "peak": 0.0437774658203125,
+      "rms": 0.015164218224138373
+    },
+    "audio": {
+      "accepted": 20,
+      "active_voices": 0,
+      "buses": {
+        "ambience": {
+          "muted": true,
+          "peak_db": -199.999984741211,
+          "volume_db": -80
+        },
+        "master": {
+          "muted": false,
+          "peak_db": -35.8836822509766,
+          "volume_db": -1.93820023536682
+        },
+        "music": {
+          "muted": false,
+          "peak_db": -35.9454803466797,
+          "volume_db": -5.19274616241455
+        },
+        "sfx": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        },
+        "ui": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        }
+      },
+      "cached_streams": 153,
+      "events": 52,
+      "last_save_error": 0,
+      "missing_assets": 0,
+      "music": {
+        "context": "duel",
+        "gains": [
+          0,
+          1
+        ],
+        "paused": [
+          false,
+          false
+        ],
+        "pending_context": "",
+        "playback_positions": [
+          0,
+          15.4919996261597
+        ],
+        "players": 2,
+        "playing": 1,
+        "resume_positions": [
+          0,
+          13.0520000457764
+        ],
+        "suspended": false,
+        "transitioning": false,
+        "volume_db": [
+          -89,
+          -9
+        ]
+      },
+      "peak_voices": 5,
+      "pool_size": 16,
+      "rejected": 3,
+      "settings": {
+        "ambience": 0,
+        "master": 0.8,
+        "music": 0.55,
+        "muted": false,
+        "reduced_intensity": false,
+        "sfx": 0,
+        "ui": 0
+      },
+      "stolen_voices": 0,
+      "suspended": false,
+      "suspension_reasons": {
+        "application": false,
+        "focus": false,
+        "manual": false
+      },
+      "unlocked": true,
+      "web_storage_status": "saved"
+    }
+  },
+  "paused1": {
+    "peak": 0,
+    "maxRms": 0,
+    "positiveSpan": 0,
+    "samples": 39,
+    "meterBlocks": 52,
+    "nonzeroMeterBlocks": 0,
+    "meterErrors": [],
+    "routing": [
+      {
+        "action": "real_destination_connected",
+        "source": "GainNode",
+        "output": 0,
+        "generation": 2,
+        "at": 6580
+      },
+      {
+        "action": "real_destination_disconnected_observer_detached",
+        "source": "GainNode",
+        "generation": 3,
+        "at": 8024
+      },
+      {
+        "action": "summed_meter_attached",
+        "context": 0,
+        "at": 9388
+      },
+      {
+        "action": "real_destination_connected",
+        "source": "AudioWorkletNode",
+        "output": 0,
+        "generation": 4,
+        "at": 9389
+      }
+    ],
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100,
+        "current_time": 41.27637188208617,
+        "generation": 4,
+        "epoch": 0.08997732426303855,
+        "destination_sources": 1
+      }
+    ],
+    "analyserDiagnostic": {
+      "peak": 0,
+      "rms": 0
+    },
+    "audio": {
+      "accepted": 22,
+      "active_voices": 0,
+      "buses": {
+        "ambience": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        },
+        "master": {
+          "muted": false,
+          "peak_db": -199.999984741211,
+          "volume_db": -1.93820023536682
+        },
+        "music": {
+          "muted": false,
+          "peak_db": -200,
+          "volume_db": -5.19274616241455
+        },
+        "sfx": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        },
+        "ui": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        }
+      },
+      "cached_streams": 153,
+      "events": 52,
+      "last_save_error": 0,
+      "missing_assets": 0,
+      "music": {
+        "context": "duel",
+        "gains": [
+          0,
+          1
+        ],
+        "paused": [
+          false,
+          true
+        ],
+        "pending_context": "",
+        "playback_positions": [
+          0,
+          15.6079998016357
+        ],
+        "players": 2,
+        "playing": 0,
+        "resume_positions": [
+          0,
+          15.5959997177124
+        ],
+        "suspended": true,
+        "transitioning": false,
+        "volume_db": [
+          -89,
+          -9
+        ]
+      },
+      "peak_voices": 5,
+      "pool_size": 16,
+      "rejected": 3,
+      "settings": {
+        "ambience": 0,
+        "master": 0.8,
+        "music": 0.55,
+        "muted": false,
+        "reduced_intensity": false,
+        "sfx": 0,
+        "ui": 0
+      },
+      "stolen_voices": 0,
+      "suspended": true,
+      "suspension_reasons": {
+        "application": false,
+        "focus": false,
+        "manual": true
+      },
+      "unlocked": true,
+      "web_storage_status": "saved"
+    }
+  },
+  "audibleResume1": {
+    "peak": 0.04974365234375,
+    "maxRms": 0.03623390594344246,
+    "positiveSpan": 2.3219954648526056,
+    "samples": 43,
+    "meterBlocks": 51,
+    "nonzeroMeterBlocks": 51,
+    "meterErrors": [],
+    "routing": [
+      {
+        "action": "real_destination_connected",
+        "source": "GainNode",
+        "output": 0,
+        "generation": 2,
+        "at": 6580
+      },
+      {
+        "action": "real_destination_disconnected_observer_detached",
+        "source": "GainNode",
+        "generation": 3,
+        "at": 8024
+      },
+      {
+        "action": "summed_meter_attached",
+        "context": 0,
+        "at": 9388
+      },
+      {
+        "action": "real_destination_connected",
+        "source": "AudioWorkletNode",
+        "output": 0,
+        "generation": 4,
+        "at": 9389
+      }
+    ],
+    "contexts": [
+      {
+        "state": "running",
+        "sample_rate": 44100,
+        "current_time": 44.39655328798186,
+        "generation": 4,
+        "epoch": 0.08997732426303855,
+        "destination_sources": 1
+      }
+    ],
+    "analyserDiagnostic": {
+      "peak": 0.0298919677734375,
+      "rms": 0.010876379078532658
+    },
+    "audio": {
+      "accepted": 22,
+      "active_voices": 0,
+      "buses": {
+        "ambience": {
+          "muted": true,
+          "peak_db": -199.999984741211,
+          "volume_db": -80
+        },
+        "master": {
+          "muted": false,
+          "peak_db": -30.4840431213379,
+          "volume_db": -1.93820023536682
+        },
+        "music": {
+          "muted": false,
+          "peak_db": -30.5458450317383,
+          "volume_db": -5.19274616241455
+        },
+        "sfx": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        },
+        "ui": {
+          "muted": true,
+          "peak_db": -200,
+          "volume_db": -80
+        }
+      },
+      "cached_streams": 153,
+      "events": 52,
+      "last_save_error": 0,
+      "missing_assets": 0,
+      "music": {
+        "context": "duel",
+        "gains": [
+          0,
+          1
+        ],
+        "paused": [
+          false,
+          false
+        ],
+        "pending_context": "",
+        "playback_positions": [
+          0,
+          18.0359687805176
+        ],
+        "players": 2,
+        "playing": 1,
+        "resume_positions": [
+          0,
+          15.5959997177124
+        ],
+        "suspended": false,
+        "transitioning": false,
+        "volume_db": [
+          -89,
+          -9
+        ]
+      },
+      "peak_voices": 5,
+      "pool_size": 16,
+      "rejected": 5,
+      "settings": {
+        "ambience": 0,
+        "master": 0.8,
+        "music": 0.55,
+        "muted": false,
+        "reduced_intensity": false,
+        "sfx": 0,
+        "ui": 0
+      },
+      "stolen_voices": 0,
+      "suspended": false,
+      "suspension_reasons": {
+        "application": false,
+        "focus": false,
+        "manual": false
+      },
+      "unlocked": true,
+      "web_storage_status": "saved"
+    }
+  },
+  "final": {
+    "accepted": 22,
+    "active_voices": 0,
+    "buses": {
+      "ambience": {
+        "muted": true,
+        "peak_db": -199.999984741211,
+        "volume_db": -80
+      },
+      "master": {
+        "muted": false,
+        "peak_db": -30.4840431213379,
+        "volume_db": -1.93820023536682
+      },
+      "music": {
+        "muted": false,
+        "peak_db": -30.5458450317383,
+        "volume_db": -5.19274616241455
+      },
+      "sfx": {
+        "muted": true,
+        "peak_db": -200,
+        "volume_db": -80
+      },
+      "ui": {
+        "muted": true,
+        "peak_db": -200,
+        "volume_db": -80
+      }
+    },
+    "cached_streams": 153,
+    "events": 52,
+    "last_save_error": 0,
+    "missing_assets": 0,
+    "music": {
+      "context": "duel",
+      "gains": [
+        0,
+        1
+      ],
+      "paused": [
+        false,
+        false
+      ],
+      "pending_context": "",
+      "playback_positions": [
+        0,
+        18.0359687805176
+      ],
+      "players": 2,
+      "playing": 1,
+      "resume_positions": [
+        0,
+        15.5959997177124
+      ],
+      "suspended": false,
+      "transitioning": false,
+      "volume_db": [
+        -89,
+        -9
+      ]
+    },
+    "peak_voices": 5,
+    "pool_size": 16,
+    "rejected": 5,
+    "settings": {
+      "ambience": 0,
+      "master": 0.8,
+      "music": 0.55,
+      "muted": false,
+      "reduced_intensity": false,
+      "sfx": 0,
+      "ui": 0
+    },
+    "stolen_voices": 0,
+    "suspended": false,
+    "suspension_reasons": {
+      "application": false,
+      "focus": false,
+      "manual": false
+    },
+    "unlocked": true,
+    "web_storage_status": "saved"
+  },
+  "result": "passed",
+  "finishedAt": "2026-11-11T01:25:19.678Z"
+}

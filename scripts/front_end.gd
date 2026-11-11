@@ -102,6 +102,7 @@ func _heading(title: String, subtitle: String = "") -> void:
 	if not subtitle.is_empty():_label(subtitle,Rect2(76,154,logical_width-470,100),28,T.SECONDARY)
 	_button("back","ZURÜCK",Rect2(logical_width-290,36,220,104),_go_back)
 func show_page(page: String) -> void:
+	get_node("/root/GameAudio").set_music("collection" if page=="collection" else "menu")
 	current_page=page;screen.visible=true
 	for c in screen.get_children():screen.remove_child(c);c.queue_free()
 	actions.clear();labels.clear();audio_sliders.clear()
@@ -262,6 +263,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 func _start_battle(mode: String, chapter_number: int = 0) -> void:
 	var id=store.begin_run(mode,chapter_number)
 	if id.is_empty():return
+	get_node("/root/GameAudio").set_music("duel")
 	run_id=id;run_mode=mode;current_chapter=chapter_number
 	if OS.has_feature("web"):JavaScriptBridge.eval("delete window.nachtsiegelQA",true)
 	if is_instance_valid(battle_node):remove_child(battle_node);battle_node.queue_free()

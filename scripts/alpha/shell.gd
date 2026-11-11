@@ -7,6 +7,12 @@ const LegacyCatalog=preload("res://scripts/legacy/catalog.gd")
 const CardView=preload("res://scripts/alpha/card_view.gd")
 const FullCardFace=preload("res://scripts/card_system/card_face.gd")
 const LibraryFilter=preload("res://scripts/card_system/library_filter.gd")
+const PresentationAudio=preload("res://scripts/audio/presentation_audio.gd")
+const AudioSettings=preload("res://scripts/audio/audio_settings_panel.gd")
+var audio_events=PresentationAudio.new()
+var audio_settings: VBoxContainer
+var audio_context := ""
+var audio_paused := false
 var session=Session.new()
 var alpha_catalog=AlphaCatalog.new()
 var page := "lobby"
@@ -147,9 +153,12 @@ func _bind_press(control: BaseButton, callback: Callable) -> void:
 	# Godot Web also reports canceled ordinary taps as releases. Let BaseButton
 	# reset its held state, but never dispatch its action after DOM cancellation.
 	var press={"version":0}
+	control.mouse_entered.connect(func():_audio_event("card.hover" if control is CardView else "ui.hover"))
 	control.button_down.connect(func():press.version=_web_drag_cancel_version())
 	control.pressed.connect(func():
-		if not OS.has_feature("web") or int(press.version)==_web_drag_cancel_version():callback.call()
+		if not OS.has_feature("web") or int(press.version)==_web_drag_cancel_version():
+			if not control is CardView:_audio_event("ui.confirm")
+			callback.call()
 	)
 func dropdown(id: String, items: Array, current: String, callback: Callable, parent: Node) -> Button:
 	var labels={"all":"Alle","creature":"Wesen","event":"Impuls","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral","cost_asc":"Energie aufsteigend","cost_desc":"Energie absteigend","name_asc":"Name A–Z"}
@@ -175,6 +184,7 @@ func _render_now() -> void:
 	restore_search_focus=actions.has("search") and is_instance_valid(actions.search) and actions.search.has_focus()
 	if restore_search_focus:search_caret=actions.search.caret_column
 	_clear()
+	_sync_audio_context()
 	if is_instance_valid(modal):modal.visible=not (page=="battle" and portrait)
 	if page=="lobby":lobby()
 	elif page=="decks":deck_selection()
@@ -214,6 +224,7 @@ func save_preferences() -> void:
 func settings_page() -> void:
 	var top=row();text("EINSTELLUNGEN",top,22);button("settings_back","Hauptmenü",func():page="lobby";render(),top)
 	var box=scroll()
+	button("settings_audio","Ton und Lautstärke",func():box.get_parent().ensure_control_visible(audio_settings.sliders.master),box)
 	text("Starterdeck / gespeichertes Deck",box,18)
 	if not session.profile_issues.is_empty():button("profile_recovery","Hinweise zur Wiederherstellung lokaler Daten",show_profile_issues,box)
 	button("game_guide","Spielregeln und Touch-Bedienung",show_game_guide,box)
@@ -230,6 +241,14 @@ func settings_page() -> void:
 	button("motion","Bewegung: "+("reduziert" if session.profile.reduced_motion else "normal"),func():session.profile.reduced_motion=not session.profile.reduced_motion;save_preferences();render(),options)
 	if FileAccess.file_exists("user://orafold_last_replay.json"):button("last_replay","LETZTES REPLAY ÖFFNEN",load_last_replay,box)
 	text("Deckwahl, Schwierigkeit und Bewegung werden lokal gespeichert. Keine Konten oder Käufe.",box,14)
+	audio_settings=AudioSettings.new()
+	audio_settings.name="AlphaSettings"
+	audio_settings.bind_manager(get_node("/root/GameAudio"))
+	box.add_child(audio_settings)
+	for channel in audio_settings.sliders:
+		actions["audio_"+channel]=audio_settings.sliders[channel]
+	actions["audio_mute"]=audio_settings.mute_toggle
+	actions["audio_reduced"]=audio_settings.reduced_toggle
 func show_game_guide() -> void:
 	show_modal("ORAFOLD · ERSTE PARTIE",func(box):
 		text("1 · Wähle eine Macht und ein gültiges 30-Karten-Deck. Beide Helden beginnen mit 30 Leben, die Starthand enthält 5 Karten.",box,16)
@@ -249,6 +268,8 @@ func current_deck() -> Array:
 		if validation.ok:return ids.duplicate()
 	return alpha_catalog.deck(faction) if mode=="alpha" else LegacyCatalog.new().deck(faction)
 func start_battle() -> void:
+	audio_events.reset()
+	set_audio_paused(false)
 	var seed_value=int(session.profile.last_seed)+1
 	var enemy=alpha_catalog.deck(["houses","stillwatch","morph","ninth"][(seed_value%4)]) if mode=="alpha" else []
 	if not session.start_match(mode,alpha_catalog.deck(faction) if mode=="alpha" and match_use_starter else current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
@@ -272,9 +293,13 @@ func act(command: String, args: Array) -> void:
 	var technical_failure=not reply.ok and bool(reply.get("accepted",false))
 	message="Partie angehalten: "+str(session.model.state.get("error","Effektauflösung fehlgeschlagen.")) if technical_failure else names.get(command,"Aktion ausgeführt.") if reply.ok else "Bedingungen fehlen: Energie, Resonanz, gültiges Ziel oder eine noch offene Auswahl prüfen."
 	if reply.ok:
+		for sound in audio_events.collect(session.model.events.slice(event_offset),before,session.model.catalog):
+			_audio_event(sound.event,sound.context)
 		selected=-1;source_lane=-1;action_mode="";pulse=.5
 		call_deferred("_feedback_events",session.model.events.slice(event_offset),before)
 	render()
+	if not reply.ok:_audio_event("ui.error")
+	_sync_audio_context()
 	if technical_failure:show_engine_error()
 	elif session.model.state.winner!=null:result_dialog()
 func battle() -> void:
@@ -564,10 +589,12 @@ func show_modal(title: String, content: Callable) -> void:
 	var top=row(box);text(title,top,18);button("modal_close","ZURÜCK",close_modal,top).size_flags_horizontal=Control.SIZE_SHRINK_END
 	var content_box=scroll(box);content.call(content_box)
 func close_modal() -> void:
+	set_audio_paused(false)
 	modal_version+=1
 	if is_instance_valid(modal):modal.hide();modal.queue_free()
 	modal=null;inspector_rules=null;inspector_title=null;inspector_card_id=""
 func inspect(c: Dictionary, current: Dictionary={}) -> void:
+	_audio_event("card.enlarge",{"faction":c.get("faction",c.get("order","neutral")),"rarity":c.get("rarity","common")})
 	show_modal(str(c.get("name",c.id)),func(box):
 		if portrait or layout.size.y>=560:
 			# This wrapper has no horizontal minimum derived from the card. An open
@@ -631,6 +658,7 @@ func confirm_menu() -> void:
 		text("Laufende Partien werden nicht fortgesetzt. Gespeicherte Decks bleiben erhalten.",box)
 		button("confirm_menu","Zum Hauptmenü",func():close_modal();page="lobby";render(),box)
 	)
+	set_audio_paused(true)
 func builder() -> void:
 	var small_builder=layout.size.y<600
 	var top=row();text("SAMMLUNG" if collection_only else "DECKWERKSTATT",top,22);button("builder_back","Menü",func():page="lobby";render(),top).size_flags_horizontal=Control.SIZE_SHRINK_END
@@ -785,6 +813,13 @@ func _qa_css_rect(rect: Rect2) -> Array:
 	return [rect.position.x/density,rect.position.y/density,rect.size.x/density,rect.size.y/density]
 func publish_qa() -> void:
 	var state={"page":page,"mode":mode,"actions":{},"action_visibility":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"search_text":filter_text,"font_msdf":S.font.multichannel_signed_distance_field,"library_total":library_total,"library_page":library_page,"library_pages":library_page_count,"library_visible_ids":library_visible_ids.duplicate()}
+	state.audio=get_node("/root/GameAudio").snapshot()
+	state.audio_paused=audio_paused
+	state.audio_controls={}
+	if is_instance_valid(audio_settings) and audio_settings.is_inside_tree():
+		for channel in audio_settings.sliders:
+			state.audio_controls[channel]=audio_settings.sliders[channel].value
+		state.audio_persistence_note=audio_settings.persistence_note.text
 	if is_instance_valid(inspector_rules) and is_instance_valid(modal):
 		var r=inspector_rules.get_global_rect()
 		state.inspection={"id":inspector_card_id,"title":inspector_title.text,"rules":inspector_rules.text,"rules_font_size":inspector_rules.get_theme_font_size("font_size"),"rules_rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]}
@@ -821,7 +856,7 @@ func _hand_click(index: int) -> void:
 	if index<0 or index>=session.model.state.hero.hand.size():return
 	var c=session.card(session.model.state.hero.hand[index])
 	if selected==index:inspect(c)
-	else:selected=index;source_lane=-1;action_mode="";message=c.name+" · leuchtendes Ziel wählen. Nochmals tippen: Details.";render()
+	else:_audio_event("card.select");selected=index;source_lane=-1;action_mode="";message=c.name+" · leuchtendes Ziel wählen. Nochmals tippen: Details.";render()
 func _toggle_mulligan(index: int) -> void:
 	if mulligan_indices.has(index):mulligan_indices.erase(index)
 	else:mulligan_indices.append(index)
@@ -1095,3 +1130,31 @@ func _input(event: InputEvent) -> void:
 func battle_heading(s: Dictionary) -> String:
 	if mode=="alpha" and s.stage!="battle":return {"mulligan":"STARTHAND WÄHLEN","origins":"URSPRUNG WÄHLEN","second":"ZWEITE MÖGLICHKEIT"}.get(s.stage,"VORBEREITUNG")
 	return ("PARTIE ANGEHALTEN" if not str(s.get("error","")).is_empty() else "PARTIE BEENDET" if s.winner!=null else "DEIN ZUG" if s.active=="hero" else "KI AM ZUG")+" · "+{"draw":"NACHZIEHEN","main":"AKTIONSPHASE","attack":"ANGRIFFE","end":"ZUGENDE"}.get(s.hero.phase,"VORBEREITUNG")+" · Runde %d" % (floori(float(s.round-1)/2)+1)
+
+func _audio_event(event_name: String, context: Dictionary={}) -> void:
+	var audio=get_node_or_null("/root/GameAudio")
+	if audio!=null:audio.play_event(event_name,context)
+
+func set_audio_paused(value: bool) -> void:
+	audio_paused=value
+	var audio=get_node_or_null("/root/GameAudio")
+	if audio!=null:audio.set_suspended(value)
+
+func _sync_audio_context() -> void:
+	var wanted="collection" if page=="collection" else "deckbuilder" if page=="builder" else "duel" if page=="battle" else "menu"
+	if page=="battle" and session.model!=null:
+		var state: Dictionary=session.model.state
+		if state.winner!=null:
+			wanted="victory" if state.winner=="hero" else "defeat" if state.winner=="enemy" else "menu"
+		elif state.hero.get("convergence")!=null or state.enemy.get("convergence")!=null:wanted="convergence"
+	if wanted==audio_context:return
+	audio_context=wanted
+	var audio=get_node_or_null("/root/GameAudio")
+	if audio==null:return
+	audio.set_music(wanted)
+	if page=="battle":audio.set_ambience("ambience.rift")
+	else:audio.stop_ambience()
+	if wanted in ["victory","defeat"]:_audio_event("battle."+wanted)
+
+func _exit_tree() -> void:
+	set_audio_paused(false)
