@@ -299,6 +299,44 @@ bestandener Teiltest gezählt.
 
 ## Unabhängige visuelle Gegenprüfung während der Umsetzung
 
+### Gepackter CI-Eingabetreiber und kinetische Testgesten
+
+Auf GitHub-Kandidat `5dcf82c` bestanden die neue native Premium-Suite und beide
+Premium-Browserjobs einschließlich der schnellen Zwei-Pan-Regression. Die drei
+nativen Exportjobs scheiterten jedoch an ihrem gemeinsamen älteren Menütreiber.
+Dieser sendete direkt `pressed`, ohne ursprüngliche Eingabe. Die gezielte
+gepackte Gegenprobe zeigte zusätzlich den tatsächlichen Headless-Standardviewport
+von nur64×64: Das Startziel lag bei y80 außerhalb des Clips. Der ausschließlich
+für QA konfigurierte1280×720-Viewport und echte Touch-Ereignisse beheben beides;
+Details und die begrenzte lokale PCK-Provenienz stehen im separaten Abschnitt
+zum nativen Exporttreiber. Die vollständigen offiziellen nativen Exporte bleiben
+ein erforderlicher frischer CI-Nachweis.
+
+Der allgemeine WebKit-Lauf erreichte nach vollständigen iPhone-/iPhone-wide-
+Partien den besonders niedrigen Settings-Clip `[48,50,748,245]`. Ein adaptiver
+118px-Drag brachte den44px-Schalter zunächst von y351 nach y55; anschließend
+rollte er bis y−389 weiter. Die Gegenbewegung überschoss wieder bis y351.
+Die adaptive Strecke allein verhinderte diese tatsächliche kinetische
+Oszillation noch nicht. Seite, Dialog und Modell blieben dabei unverändert.
+Diese fehlgeschlagenen5dcf-Läufe werden nicht als bestanden gezählt.
+
+Der normale Browser-Testhelfer hält deshalb den ursprünglichen Zeiger vor dem
+Loslassen unbewegt, bis vier **neu veröffentlichte** QA-Beobachtungen mindestens
+250ms ruhige Geometrie und denselben Kontext bestätigen. Die Wartezeit ist auf
+zehn Sekunden begrenzt; Loslassen und Handle-Freigabe erfolgen auch bei Fehlern.
+Das entspricht dem tatsächlichen stationären Geschwindigkeitssampling im
+[Godot4.6.3-ScrollContainer](https://github.com/godotengine/godot/blob/4.6.3-stable/scene/gui/scroll_container.cpp).
+Die vorhandenen44px-, Kontext- und Nachlaufprüfungen bleiben erhalten. Die beiden
+schnellen Produkt-Regressionsgesten erhalten ausdrücklich **keinen** Ruheabschnitt
+und lassen weiterhin sofort los. Kein Scrolloffset wird per Script gesetzt,
+keine Spielphysik verändert und keine Testgröße oder Partie entfernt.
+
+18 Node-Vertragsgruppen bestehen, einschließlich der realen CI-Positionsfolge,
+staler Beobachtungen, fehlender Ruhezeit, Kontextwechsel und Handle-Fehler.
+Die tatsächlichen Browserprotokolle und die frische Gesamt-CI des jeweils
+benannten Kandidaten liefern den zusätzlichen Ausführungsnachweis; diese
+Beschreibung ist keine Veröffentlichungsgenehmigung.
+
 Die erste tatsächlich gerenderte Rahmenfassung ließ Seltenheit bei 84×117 Pixeln
 weiter überwiegend über kleine Diamanten und feine Kanten erkennen. Diese
 Darstellung wurde nicht als ausreichender Abschluss gewertet. Nach der Rückmeldung
@@ -384,3 +422,44 @@ Chromiums JS-Heap ist nicht der gesamte WebAssembly-, GPU- oder Gerätespeicher.
 Die Werte dürfen weder als iPhone-Leistungszertifizierung noch als physischer
 Safari-/Android-Test bezeichnet werden. WebKit-Emulation ergänzt die Abdeckung;
 die echte Geräteabnahme bleibt eine eigenständige offene Aufgabe.
+
+## Korrektur der exportierten Native-QA-Eingaben
+
+Die nachfolgende CI meldete in Linux-/Windows- und Audio-Native-QA dieselben vier
+Menüfehler. `scripts/qa/production_native_smoke.gd` verwendete noch
+`control.pressed.emit()` ohne ursprüngliches Zeigerereignis. Der neue Schutz für
+Scrollgesten lehnte diese künstlichen Aktivierungen korrekt ab. Der vollständig
+berechnete KI-Kampf bestand bereits; die vier Menübehauptungen waren nicht belegt.
+
+Der QA-Einstieg verwendet jetzt selbst enthaltene `InputEventScreenTouch`-Press-/
+Release-Eingaben auf tatsächlich geclippten Flächen von mindestens 44 Pixeln und
+wartet begrenzt auf das erwartete Seitenziel. Ein Verweis auf `tests/` wurde
+vermieden, da diese Dateien aus den nativen Paketen ausgeschlossen sind.
+Zusätzlich zeigte die Paketdiagnose, dass der headless Native-Displayserver das
+Rootfenster mit **64×64** startet. Der QA-Einstieg richtet deshalb ausdrücklich
+sein Desktop-Prüfprofil **1280×720** ein. Die Sichtbarkeitsprüfung bleibt bestehen;
+Produktauflösung, Benutzeroberfläche und Eingabeschutz wurden nicht geändert.
+
+Der lokale kontrollierte Paketvergleich reproduzierte zunächst **29 Assertions,
+4 Fehler**. Mit den korrigierten QA-Eingaben und dem eingerichteten Prüfviewport
+bestanden **29 Assertions, 0 Fehler**; alle bisherigen Prüfungen bleiben erhalten.
+Spielen öffnete die Deckauswahl, Sammlung, Deckbuilder und Einstellungen ihre
+jeweiligen tatsächlichen Seiten. Das eine Ergebnisdokument protokolliert die vier
+Touchflächen: 520×48 beziehungsweise 256×44 Pixel. Der vollständige echte
+KI-Modellkampf endete in beiden Paketen unverändert in Runde 25 mit Helden-Sieg
+und demselben Katalogfingerprint. Kein Gewinner wurde eingesetzt.
+
+**Prüfgrenze:** Dieser fokussierte Daten-PCK wurde aus einem isolierten QA-Projekt
+mit echtem `native_smoke_qa`-Exportmerkmal erzeugt und aus einem leeren
+Arbeitsverzeichnis mit Godot 4.6.3 ausgeführt. Die Laufzeit war der Editor-Build;
+Original-Kartenbilder wurden wegen des lokalen Speicherlimits aus diesem
+zusätzlichen PCK ausgeschlossen. Das ist kein Ersatz für die erneuten offiziellen
+Linux-/Windows-Template-Läufe, Android-Paketprüfungen oder vollständige native
+Illustrationsprüfungen der CI. Keine physische Geräteprüfung wird behauptet.
+
+Rohprotokolle, Paketprüfsummen, Eingabeflächen und die Negativdiagnose liegen unter
+`work/premium-mobile/native-export-input/`. Ein erster reiner Eingabetreiber-Versuch
+scheiterte noch an dem nachgewiesenen 64×64-Fenster und bleibt ausdrücklich als
+fehlgeschlagener Zwischenlauf erhalten. Eine Diagnose las nach erfolgreicher
+Navigation einen inzwischen freigegebenen alten Control und brach deshalb ab;
+dies war ein Fehler dieser Diagnose, kein nachgewiesener Produktabsturz.

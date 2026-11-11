@@ -7,7 +7,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const {performance}=require('node:perf_hooks');
-const {encloses,clearTouchPoint,scrollGesture,assertPanContext,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
+const {encloses,clearTouchPoint,scrollGesture,assertPanContext,settleHeldPan,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
 const output=path.resolve(process.env.PREMIUM_BROWSER_OUTPUT||'work/premium-mobile/browser');
 const expectedCommit=process.env.EXPECTED_COMMIT;
 assert(/^[0-9a-f]{40}$/.test(expectedCommit||''),'EXPECTED_COMMIT must name the exact exported candidate');
@@ -55,19 +55,25 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
     check(encloses([0,0,page.viewportSize().width,page.viewportSize().height],rect),label+' stays inside viewport');
     await page.touchscreen.tap(point[0],point[1]);
    }
-   async function canvasPan(gesture,{steps=6,stepDelay=35}={}){
+   async function canvasPan(gesture,{steps=6,stepDelay=35,controlled=null}={}){
+     let quiet=null;
      if(cdp){
       await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...gesture.from,id:0,radiusX:2,radiusY:2,force:1}]});
+      try{
       for(let step=1;step<=steps;step++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:gesture.from.x,y:gesture.from.y+(gesture.to.y-gesture.from.y)*step/steps,id:0,radiusX:2,radiusY:2,force:1}]});if(stepDelay)await page.waitForTimeout(stepDelay);}
-      await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+      if(controlled)quiet=await settleHeldPan(page,controlled.id,controlled.before);
+      }finally{await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
      }else{
       // Mobile WebKit exposes tap but no wheel or protocol touchMove. Trusted
       // browser pointer pan reaches Godot's configured touch emulation. It is
       // real canvas input, never DOM scrolling or a ScrollContainer mutation.
       await page.mouse.move(gesture.from.x,gesture.from.y);await page.mouse.down();
+      try{
       for(let step=1;step<=steps;step++){await page.mouse.move(gesture.from.x,gesture.from.y+(gesture.to.y-gesture.from.y)*step/steps);if(stepDelay)await page.waitForTimeout(stepDelay);}
-      await page.mouse.up();
+      if(controlled)quiet=await settleHeldPan(page,controlled.id,controlled.before);
+      }finally{await page.mouse.up();}
      }
+     return quiet;
    }
    async function rapidLibraryScroll(id){
     // Regression for a real WebKit failure: a fast pan ended over a moving
@@ -100,10 +106,10 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
      const hit=id.startsWith('card_')&&v?v.visible_rect:a.rect;
      if(encloses(clip,hit)&&encloses([0,0,page.viewportSize().width,page.viewportSize().height],hit)&&hit[2]>=43.9&&hit[3]>=43.9)break;
      lastAction='scroll:'+id;const gesture=scrollGesture(current,id);
-     await canvasPan(gesture);
+     const quiet=await canvasPan(gesture,{controlled:{id,before:current}});
      await page.waitForTimeout(180);
      const afterPan=await q(),context=s=>({page:s.page,modal:s.modal,modal_version:s.modal_version,render_version:s.render_version,inspection_id:s.inspection?.id});
-     (report.scroll_gestures||=[]).push({action:id,driver:cdp?'CDP primary touch':'trusted browser pointer with Godot touch emulation',...gesture,before:context(current),after:context(afterPan),target_before:current.actions[id]?.rect,target_after:afterPan.actions[id]?.rect});
+     (report.scroll_gestures||=[]).push({action:id,driver:cdp?'CDP primary touch':'trusted browser pointer with Godot touch emulation',...gesture,quiet_before_release:quiet,before:context(current),after:context(afterPan),target_before:current.actions[id]?.rect,target_after:afterPan.actions[id]?.rect});
      assertPanContext(current,afterPan,id);
      // Wait for genuinely new canvas reports and settled content before
      // computing the next gesture from its current clip/position.

@@ -1,6 +1,7 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {clearTouchPoint,scrollGesture,assertPanContext,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('../../tools/premium/browser_contract.cjs');
+const {clearTouchPoint,scrollGesture,assertPanContext,heldPanQuiet,settleHeldPan,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('../../tools/premium/browser_contract.cjs');
+const vm=require('node:vm');
 function fixture(){
  const board={};for(const [side,y]of [['enemy',48],['hero',140]])for(let lane=0;lane<5;lane++)board[side+lane]=[10+lane*164,y,156,84];
  const actions={};for(const [id,x,y,w]of [['menu',0,0,44],['actions',650,330,90],['end',650,230,180],['inspect',740,330,90]])actions[id]={rect:[x,y,w,44],disabled:false};
@@ -33,6 +34,34 @@ test('scrolling may never silently open a wrong inspector or switch a dialog or 
  const before={page:'collection',modal:false,modal_version:0},same={...before};assertPanContext(before,same,'card_actual');
  for(const after of [{...same,modal:true,modal_version:2,inspection:{id:'wrong'}},{...same,page:'settings'},{...same,modal_version:1},{...same,inspection:{id:'wrong'}}])assert.throws(()=>assertPanContext(before,after,'card_actual'),/scrolling/);
  const modal={page:'settings',modal:true,modal_version:3};assertPanContext(modal,{...modal},'difficulty');assert.throws(()=>assertPanContext(modal,{...modal,modal:false},'difficulty'),/scrolling/);
+});
+function quietFixture(){
+ let clock=0;const sandbox={window:{orafoldQA:null},performance:{now:()=>clock}};
+ const predicate=vm.runInNewContext('('+heldPanQuiet.toString()+')',sandbox);
+ const sample={id:'faction_morph',context:{page:'settings',modal:true,modal_version:3,inspection_id:undefined},previous:null,last:null,count:0,since:0};
+ const q=y=>({page:'settings',modal:true,modal_version:3,actions:{faction_morph:{rect:[48,y,367,44]}}});
+ return {sample,q,set(value,time){sandbox.window.orafoldQA=value;clock=time;return predicate(sample);}};
+}
+test('held pan requires four freshly published frames and real quiet time before release',()=>{
+ const stale=quietFixture(),same=stale.q(81);assert.equal(stale.set(same,0),false);
+ assert.equal(stale.set(same,10000),false,'re-reading one canvas report cannot count as new frames');
+ const f=quietFixture();assert.equal(f.set(f.q(81),0),false);
+ for(const t of [50,100,150])assert.equal(f.set(f.q(81),t),false,'four rapid fresh reports alone cannot prove250ms quiet');
+ const ready=f.set(f.q(81),250);assert.equal(ready.fresh_samples,5);assert.equal(ready.held_quiet_ms,250);
+});
+test('real CI overshoot positions reset the held-pan quiet window; context and missing targets fail',()=>{
+ const f=quietFixture();let t=0;
+ for(const y of [351,55,-389,-119,19,351]){assert.equal(f.set(f.q(y),t),false);t+=50;}
+ for(const time of [400,500])assert.equal(f.set(f.q(351),time),false);
+ assert.equal(f.set(f.q(351),600).fresh_samples,4);
+ for(const mutate of [q=>q.page='battle',q=>q.modal=false,q=>q.modal_version=4,q=>q.inspection={id:'wrong'},q=>delete q.actions.faction_morph,q=>q.actions.faction_morph.rect[0]=NaN]){
+  const bad=quietFixture(),q=bad.q(81);mutate(q);assert.throws(()=>bad.set(q,0));
+ }
+});
+test('held-pan observer is bounded and disposes its read-only browser handle on failure',async()=>{
+ let disposed=false;
+ const page={async waitForFunction(fn,sample,options){assert.equal(fn,heldPanQuiet);assert.equal(sample.id,'faction_morph');assert.equal(options.timeout,10000);return {async jsonValue(){throw new Error('readback failed');},async dispose(){disposed=true;}};}};
+ await assert.rejects(settleHeldPan(page,'faction_morph',{page:'settings',modal:true,modal_version:3}),/readback failed/);assert(disposed);
 });
 test('permanent log buttons fail the deliberately compact battle composition',()=>{const q=fixture();q.actions.log={rect:[44,0,70,44]};assert.throws(()=>battleGeometry(q,[0,0,844,390]),/secondary log/);});
 test('missing sixth card and clipped primary action fail',()=>{const q=fixture();q.hand.pop();assert.throws(()=>battleGeometry(q,[0,0,844,390],{requireSix:true}),/six cards/);q.actions.end.rect[0]=800;assert.throws(()=>battleGeometry(q,[0,0,844,390]),/inside the usable viewport/);});

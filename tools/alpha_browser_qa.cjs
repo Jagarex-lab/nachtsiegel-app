@@ -1,6 +1,6 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
-const {scrollGesture,assertPanContext}=require('./premium/browser_contract.cjs');
+const {scrollGesture,assertPanContext,settleHeldPan}=require('./premium/browser_contract.cjs');
 const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards,...JSON.parse(fs.readFileSync('data/legacy/cards.json','utf8')).cards],by=Object.fromEntries(cards.map(c=>[c.id,c]));
 function allVisibleCompactReady({expected,count}){
  const rows=(window.orafoldQA?.battle_art||[]).filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
@@ -87,20 +87,25 @@ function allVisibleCompactReady({expected,count}){
    };
    async function panTowards(current,id){
     const gesture=scrollGesture(current,id),clip=gesture.clip,point=gesture.from,end=gesture.to;
+    let quiet;
     if(capture){
      await capture.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...point,id:0,radiusX:2,radiusY:2,force:1}]});
+     try{
      for(let step=1;step<=6;step++){await capture.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:point.x,y:point.y+(end.y-point.y)*step/6,id:0,radiusX:2,radiusY:2,force:1}]});await page.waitForTimeout(35);}
-     await capture.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+     quiet=await settleHeldPan(page,id,current);
+     }finally{await capture.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
     }else{
      // WebKit's public protocol provides tap only. Trusted browser mouse pan
      // reaches Godot's configured touch emulation; no DOM event/model hook.
      await page.mouse.move(point.x,point.y);await page.mouse.down();
+     try{
      for(let step=1;step<=6;step++){await page.mouse.move(point.x,point.y+(end.y-point.y)*step/6);await page.waitForTimeout(35);}
-     await page.mouse.up();
+     quiet=await settleHeldPan(page,id,current);
+     }finally{await page.mouse.up();}
     }
     await page.waitForTimeout(180);
     const after=await state(),context=s=>({page:s.page,modal:s.modal,modal_version:s.modal_version,render_version:s.render_version,inspection_id:s.inspection?.id});
-    actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end,before:context(current),after:context(after),target_before:current.actions[id]?.rect,target_after:after.actions[id]?.rect});
+    actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end,quiet_before_release:quiet,before:context(current),after:context(after),target_before:current.actions[id]?.rect,target_after:after.actions[id]?.rect});
     assertPanContext(current,after,id);
    }
    const action=async (id,{render=true}={})=>{

@@ -52,6 +52,24 @@ function assertPanContext(before,after,id){
  assert.equal(after.modal_version,before.modal_version,id+' scrolling must preserve the current dialog identity');
  assert.equal(after.inspection?.id,before.inspection?.id,id+' scrolling must not inspect a different card');
 }
+// Serializable read-only Playwright predicate. Keep the pointer held without
+// further motion: Godot4.6 ScrollContainer samples zero drag speed after0.1s.
+// Post-release geometry alone cannot prove this; a flick can still start later.
+function heldPanQuiet(sample){
+ const q=window.orafoldQA;if(!q||q===sample.previous)return false;sample.previous=q;
+ const c=sample.context;
+ if(q.page!==c.page||Boolean(q.modal)!==Boolean(c.modal)||q.modal_version!==c.modal_version||q.inspection?.id!==c.inspection_id)throw new Error('Held scroll changed page or dialog: '+sample.id);
+ const r=q.actions[sample.id]?.rect;if(!r||r.length!==4||!r.every(Number.isFinite))throw new Error('Held scroll lost its actual target: '+sample.id);
+ const now=performance.now(),same=sample.last&&r.every((n,i)=>Math.abs(n-sample.last[i])<=.25);
+ if(!same){sample.count=0;sample.since=now;}
+ sample.count++;sample.last=[...r];
+ return sample.count>=4&&now-sample.since>=250?{rect:[...r],fresh_samples:sample.count,held_quiet_ms:now-sample.since}:false;
+}
+async function settleHeldPan(page,id,before){
+ const context={page:before.page,modal:before.modal,modal_version:before.modal_version,inspection_id:before.inspection?.id};
+ const handle=await page.waitForFunction(heldPanQuiet,{id,context,previous:null,last:null,count:0,since:0},{timeout:10000});
+ try{return await handle.jsonValue();}finally{await handle.dispose();}
+}
 function battleGeometry(q,viewport,{minimumHandAspect=.57,maximumHandAspect=.90,requireSix=false}={}){
  assert(q?.page==='battle'&&q.battle,'a real battle is displayed');
  assert(!q.portrait&&!q.actions.rotate_menu,'no blocking portrait guide in landscape');
@@ -112,4 +130,4 @@ function playability(q){
  }
  return {available:q.hand.filter(card=>card.playable).length,unavailable:q.hand.filter(card=>!card.playable).length};
 }
-module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,scrollGesture,assertPanContext,battleGeometry,artReady,fullArtReady,premiumArt,playability};
+module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,scrollGesture,assertPanContext,heldPanQuiet,settleHeldPan,battleGeometry,artReady,fullArtReady,premiumArt,playability};
