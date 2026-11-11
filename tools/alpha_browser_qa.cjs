@@ -45,7 +45,24 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     const height=Math.max(160,Math.min(m.pixelsHeight/q.density-top,m.visibleHeight)-(safe.top||0)-(safe.bottom||0));
     return Math.abs(m.cssWidth-viewport.width)<1&&Math.abs(m.cssHeight-viewport.height)<1&&Math.abs(m.pixelsWidth/m.cssWidth-q.density)<.02&&Math.abs(q.layout_size[0]-width)<1&&Math.abs(q.layout_size[1]-height)<1;
    },page.viewportSize(),{timeout:90000});
-   const tap=async r=>{if(gameplay?.recording){const q=await state();gameplay.inputs.push({kind:'touch',point:[r[0]+r[2]/2,r[1]+r[3]/2],rect:r,seed:q.battle?.seed,command_count:q.command_count,selected:q.selected,phase:q.battle?.hero.phase,action:lastAction});}await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
+   const stableTarget=async target=>{
+    const handle=await page.waitForFunction(sample=>{
+     const q=window.orafoldQA;if(!q||q===sample.previous)return false;sample.previous=q;
+     const t=sample.target,a=t.action?q.actions[t.action]:null;
+     const rect=t.action?(t.action.startsWith('card_')&&q.action_visibility?.[t.action]?q.action_visibility[t.action].visible_rect:a?.rect):t.board?q.board[t.board]:q.hand[t.hand]?.id===t.card_id?q.hand[t.hand].rect:null;
+     if(!rect||a?.disabled){sample.count=0;return false;}
+     sample.count=sample.last&&rect.every((n,i)=>Math.abs(n-sample.last[i])<=1)?sample.count+1:1;sample.last=[...rect];
+     return sample.count>=3?{rect,action_rect:a?.rect,visibility:t.action?q.action_visibility?.[t.action]:null,samples:sample.count}:false;
+    },{target,previous:null,last:null,count:0},{timeout:90000});
+    try{return await handle.jsonValue();}finally{await handle.dispose();}
+   };
+   const tap=async (r,target=null)=>{
+    if(!target){const q=await state(),same=value=>value&&value.every((n,i)=>Math.abs(n-r[i])<.1),id=Object.keys(q.actions).find(id=>same(touchRect(q,id))||same(q.actions[id].rect)),board=Object.keys(q.board).find(id=>same(q.board[id])),hand=q.hand.findIndex(card=>same(card.rect));target=id?{action:id}:board?{board}:hand>=0?{hand,card_id:q.hand[hand].id}:null;assert(target,'touch has an actual tracked UI target');}
+    const settled=await stableTarget(target);r=settled.rect;const q=await state();settled.render_version=q.render_version;settled.modal_version=q.modal_version;
+    if(target.action)assert(fullVisible(q,target.action),target.action+' stays fully touch-visible after kinetic scrolling settles');
+    if(gameplay?.recording)gameplay.inputs.push({kind:'touch',point:[r[0]+r[2]/2,r[1]+r[3]/2],rect:r,target,seed:q.battle?.seed,command_count:q.command_count,selected:q.selected,phase:q.battle?.hero.phase,action:lastAction});
+    actionTrace.push({kind:'stable_touch',target,rect:r,fresh_qa_samples:settled.samples});await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);return settled;
+   };
    const encloses=(outer,inner)=>outer&&inner&&inner[0]>=outer[0]-.1&&inner[1]>=outer[1]-.1&&inner[0]+inner[2]<=outer[0]+outer[2]+.1&&inner[1]+inner[3]<=outer[1]+outer[3]+.1;
    const viewportRect=()=>[0,0,page.viewportSize().width,page.viewportSize().height];
    const touchRect=(current,id)=>id.startsWith('card_')&&current.action_visibility?.[id]?current.action_visibility[id].visible_rect:current.actions[id].rect;
@@ -93,12 +110,11 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
      for(let tries=0;tries<8&&!fullVisible(previous,id);tries++){
       const r=previous.actions[id].rect,v=page.viewportSize();await page.mouse.move(Math.max(1,Math.min(v.width-1,r[0]+r[2]/2)),v.height*.6);await page.mouse.wheel(0,r[1]<0?-v.height*.55:v.height*.55);await page.waitForTimeout(140);previous=await state();
      }
-    }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);previous=await state();}
+    }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);await stableTarget({action:id});previous=await state();}
     assert(fullVisible(previous,id),id+' requires a visible44CSS card region or a fully visible button');
     const hit=touchRect(previous,id);assert(hit[2]>=43.9&&hit[3]>=43.9,id+' actual touch region remains44CSS');
-    actionTrace.push({id,kind:'tap',rect:previous.actions[id].rect,hit_rect:hit,visibility:previous.action_visibility?.[id]||null});
     const destination={builder:'builder',collection:'collection',settings:'settings',start:legacyOnly?'battle':'decks',deck_play:'battle',builder_back:'lobby',settings_back:'lobby',decks_back:'lobby',confirm_menu:'lobby',result_menu:'lobby'}[id];
-    await tap(hit);if(render)await page.waitForFunction(({previous,destination})=>{const q=window.orafoldQA;return(q.render_version>previous.render_version||q.modal_version!==previous.modal_version)&&(!destination||q.page===destination);},{previous,destination},{timeout:90000});
+    const settled=await tap(hit,{action:id});actionTrace.push({id,kind:'tap',rect:settled.action_rect,hit_rect:settled.rect,visibility:settled.visibility});if(render)await page.waitForFunction(({previous,destination})=>{const q=window.orafoldQA;return(q.render_version>previous.render_version||q.modal_version!==previous.modal_version)&&(!destination||q.page===destination);},{previous:settled,destination},{timeout:90000});
    };
    const capture=engine==='chromium'?await context.newCDPSession(page):null;
    const deadline=async (promise,message,ms)=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(message)),ms);})]).finally(()=>clearTimeout(timer));};
