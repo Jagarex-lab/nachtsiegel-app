@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "scope": "Read-only platform/audio/release integration review; earlier passing job scopes are not an overall or final-candidate release approval.",
+  "reviewed_candidate": "945f57070a0b6756bea865c283df8727887ba726",
+  "earlier_ci": {
+    "run_id": 42949575160,
+    "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42949575160",
+    "branch_head": "0f346b0df29ad1098e92088c65e2e8c5fc1e6297",
+    "actual_checked_out_pr_merge_commit": "2db3b5ec8fef286a492fa6a32ab71b772c86cd42",
+    "event": "pull_request",
+    "overall_conclusion": "failure",
+    "scope_note": "Requested native/audio/native-art jobs passed; both general browser jobs failed. This run is not a successful complete release QA run.",
+    "jobs": [
+      {
+        "job_id": 130290585669,
+        "name": "production-art-native-package",
+        "status": "completed",
+        "conclusion": "success",
+        "actual_checked_out_commit": "2db3b5ec8fef286a492fa6a32ab71b772c86cd42",
+        "artifact_id": 13823623844,
+        "artifact_zip_sha256": "b831872ce154f1dc1d9336c86b67cb2504541df03dc64ac8c248c24e7ab1e0d8",
+        "actual_native_pack": {
+          "assertions": 7715,
+          "failures": 0,
+          "full_textures": 550,
+          "prepared_previews": 550,
+          "source_files_visible": false
+        }
+      },
+      {
+        "job_id": 130290586103,
+        "name": "production-audio / audio",
+        "status": "completed",
+        "conclusion": "success",
+        "actual_checked_out_commit": "2db3b5ec8fef286a492fa6a32ab71b772c86cd42",
+        "artifact_id": 13825007382,
+        "artifact_zip_sha256": "96896bd01c710b7595d83f6d9a0baa7cdfc0af1cf33b85070a06a75a30265a4b",
+        "product_native_runtime": {
+          "assertions": 29,
+          "failures": 0,
+          "real_duel_completed": true,
+          "streaming_audio_and_licenses_checked": true
+        }
+      },
+      {
+        "job_id": 130290586167,
+        "name": "native-platforms / linux-android",
+        "status": "completed",
+        "conclusion": "success",
+        "actual_checked_out_commit": "2db3b5ec8fef286a492fa6a32ab71b772c86cd42",
+        "artifact_id": 13824921461,
+        "artifact_zip_sha256": "c4dfdfab826c9bc48ff554b5302203f63094d3d9bef0c07ef9fb4746a10f3811",
+        "real_native_qa": {
+          "assertions": 29,
+          "failures": 0,
+          "winner": "hero",
+          "halfturns": 25,
+          "main_menu_verified": true,
+          "actual_exported_runtime": true
+        }
+      },
+      {
+        "job_id": 130290586280,
+        "name": "native-platforms / windows",
+        "status": "completed",
+        "conclusion": "success",
+        "actual_checked_out_commit": "2db3b5ec8fef286a492fa6a32ab71b772c86cd42",
+        "artifact_id": 13824661420,
+        "artifact_zip_sha256": "ab9f0764a341ea827051fab99c663a96fed5c404dfe1bced145c29d27c828b84",
+        "real_native_qa": {
+          "assertions": 29,
+          "failures": 0,
+          "winner": "hero",
+          "halfturns": 25,
+          "main_menu_verified": true,
+          "actual_exported_runtime": true
+        }
+      }
+    ],
+    "other_job_failures": [
+      {
+        "job_id": 130295713895,
+        "name": "browser (webkit)",
+        "conclusion": "failure"
+      },
+      {
+        "job_id": 130295713948,
+        "name": "browser (chromium)",
+        "conclusion": "failure"
+      }
+    ]
+  },
+  "release_rules": {
+    "only_publisher": ".github/workflows/pages-release.yml",
+    "only_trigger": "workflow_dispatch on refs/heads/develop",
+    "double_guard": true,
+    "requires_exact_current_develop_head": true,
+    "requires_exact_completed_successful_develop_main_ci": true,
+    "allowed_qa_events": [
+      "push",
+      "workflow_dispatch"
+    ],
+    "pull_request_qa_is_not_publishable": true,
+    "second_identity_required_by_repository_code": false,
+    "all10_main_jobs_contribute_to_conclusion": true,
+    "existing9_art_jobs_unchanged_from_7e": true,
+    "all9_presets_include_audio_provenance_and_licenses": true,
+    "separate_release_safety_workflow_independently_required_by_guard": false
+  },
+  "limitations": [
+    "Final head CI still needs completion; later harness changes require a new exact-head CI record.",
+    "No physical iPhone/Android, rendered native Windows UI or native iOS build is claimed.",
+    "No repository/environment settings changed; no merge or deployment performed."
+  ],
+  "observed_utc": "2026-11-11T03:48:25.507833+00:00",
+  "pages": {
+    "build_type": "workflow",
+    "html_url": "https://jagarex-lab.github.io/nachtsiegel-app/",
+    "https_enforced": true,
+    "source": {
+      "branch": "main",
+      "path": "/"
+    }
+  },
+  "environment": {
+    "name": "github-pages",
+    "can_admins_bypass": true,
+    "deployment_branch_policy": {
+      "protected_branches": false,
+      "custom_branch_policies": true
+    },
+    "protection_rules": [
+      {
+        "id": 71163406,
+        "node_id": "GA_kwDOVh7KYc4EPd4O",
+        "type": "branch_policy"
+      }
+    ],
+    "branch_policies": [
+      {
+        "name": "develop",
+        "type": "branch"
+      },
+      {
+        "name": "main",
+        "type": "branch"
+      }
+    ],
+    "required_reviewers_present": false,
+    "wait_timer_present": false
+  },
+  "repository_branch_protection": {
+    "status": "unknown",
+    "exit_code": 1,
+    "error": "gh: Resource not accessible by integration (HTTP 403)",
+    "response": {
+      "message": "Resource not accessible by integration",
+      "documentation_url": "https://docs.github.com/rest/branches/branch-protection#get-branch-protection",
+      "status": "403"
+    }
+  },
+  "runtime_data_asset_identity_to_earlier_0f": {
+    "byte_identical": true,
+    "changed_watched_paths": []
+  },
+  "current_pages_environment_blockers": [],
+  "concrete_release_blockers": [
+    "The complete final exact-head CI is not yet established as successful.",
+    "Release guard deliberately requires a fresh completed successful develop push/manual QA after integration; PR job evidence cannot be published as a substitute."
+  ]
+}
