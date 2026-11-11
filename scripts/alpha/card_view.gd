@@ -9,6 +9,7 @@ var _illustration_data: Dictionary = {}
 var art_profile := "compact"
 var _delivery_card_id := ""
 var _delivery_profile := ""
+var _delivery_visible := false
 var unit: Dictionary={}
 var selected := false
 var target := false
@@ -32,17 +33,26 @@ func _ready() -> void:
 func _ink(value: String, at: Vector2, fs: int, tint: Color, width: float) -> void:
 	draw_string(S.font,at,value,HORIZONTAL_ALIGNMENT_LEFT,width,fs,tint)
 func _process(_delta: float) -> void:
-	if _delivery_card_id != str(card.get("id", "")) or _delivery_profile != art_profile or not ART.visible_owner(self):
+	var visible_now: bool = not card.is_empty() and ART.visible_owner(self)
+	if _delivery_card_id != str(card.get("id", "")) or _delivery_profile != art_profile or not visible_now:
 		ART.release_owner(self); _delivery_card_id = ""; _delivery_profile = ""
-	if not card.is_empty() and ART.visible_owner(self):
-		if _delivery_card_id.is_empty(): _illustration_binding = ""
+	if visible_now:
+		if not _delivery_visible or _delivery_card_id.is_empty(): _illustration_binding = ""
 		if ART.binding_key(card, art_profile) != _illustration_binding: queue_redraw()
+	_delivery_visible = visible_now
 func _exit_tree() -> void: ART.release_owner(self)
+func art_report() -> Dictionary:
+	# Observe the actual bound pixels; never resolve/load/request through QA.
+	var texture: Texture2D = _illustration_data.get("texture")
+	return {"card_id": str(card.get("id", "")), "visible": ART.visible_owner(self), "status": str(_illustration_data.get("status", "unbound")), "pixels": [texture.get_width(), texture.get_height()] if texture != null else [], "pending": bool(_illustration_data.get("preview_pending", true)), "profile": str(_illustration_data.get("profile", art_profile)), "delivery_state": str(_illustration_data.get("delivery_state", "unbound"))}
 func illustration(aperture: Rect2, tint: Color=Color.WHITE) -> void:
 	var binding := ART.binding_key(card, art_profile)
 	if binding != _illustration_binding:
 		_illustration_data = ART.resolve(card, art_profile, self); _illustration_binding = binding
 		_delivery_card_id = str(card.get("id", "")); _delivery_profile = art_profile
+		# Drawing can precede final container geometry. A refused offscreen
+		# request is not registration; retry once when the real view is visible.
+		_delivery_visible = ART.visible_owner(self)
 	var resolved = _illustration_data
 	if resolved.get("preview_pending", false):
 		draw_rect(aperture, Color(.045,.06,.075))

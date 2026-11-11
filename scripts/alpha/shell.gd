@@ -841,9 +841,12 @@ func publish_qa() -> void:
 			var r=b.get_global_rect();state.actions[key]={"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density],"disabled":b.disabled if b is BaseButton else false}
 			var clip=_qa_clip_rect(b)
 			state.action_visibility[key]={"clip_rect":_qa_css_rect(clip),"visible_rect":_qa_css_rect(r.intersection(clip))}
+	state.battle_art=[]
 	for b in hand_views:
+		var report=b.art_report();report.zone="hand";state.battle_art.append(report)
 		var r=b.get_global_rect();state.hand.append({"id":b.card.id,"name":b.card.name,"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]})
 	for key in board_views:
+		var report=board_views[key].art_report();report.zone="board";report.slot=key;state.battle_art.append(report)
 		var r=board_views[key].get_global_rect();state.board[key]=[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]
 	if session.model!=null:
 		state.battle=session.model.snapshot();state.command_count=session.commands.size()

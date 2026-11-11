@@ -238,7 +238,7 @@ func _received(result: int, response_code: int, _headers: PackedStringArray, bod
 	_states[key] = "ready"; _retry_after.erase(key); completed += 1; _active = ""; _unowned.erase(key)
 	_changed(key); _start_next.call_deferred()
 func metrics() -> Dictionary:
-	return {"started": requests_started, "completed": completed, "rejected": rejected, "cancelled": cancelled, "queued": _queue.size(), "active": _active, "origin_enabled": not _origin.is_empty(), "started_profiles": _started_profiles.duplicate(), "last_http_result": _last_http_result, "last_http_status": _last_http_status, "last_body_bytes": _last_body_bytes, "last_failure": _last_failure}
+	return {"started": requests_started, "completed": completed, "rejected": rejected, "cancelled": cancelled, "queued": _queue.size(), "active": _active, "origin_enabled": not _origin.is_empty(), "full_entries": _entries.size(), "preview_entries": _previews.size(), "owner_keys": _owners.size(), "started_profiles": _started_profiles.duplicate(), "last_http_result": _last_http_result, "last_http_status": _last_http_status, "last_body_bytes": _last_body_bytes, "last_failure": _last_failure}
 func _exit_tree() -> void:
 	if is_instance_valid(_http): _http.cancel_request()
 	_finish_web(_active, true)

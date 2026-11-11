@@ -36,7 +36,7 @@ text=Path('work/production-art/prepare_art_previews.log').read_text();print(text
 assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:|instances leaked|resources still in use',text,re.M)
 assert re.search(r'PRODUCTION ART PREVIEWS: \d+ assertions, 0 failures',text)
 PY
-for suite in production_art_batch2 production_art_cache; do
+for suite in production_art_batch2 production_art_cache production_art_visibility; do
   timeout "${GODOT_TEST_TIMEOUT:-600s}" "${GODOT_BIN:-godot}" --path . --audio-driver Dummy --script "tests/$suite.gd" > "work/production-art/$suite.log" 2>&1
   python3 - "$suite" <<'PY'
 from pathlib import Path
