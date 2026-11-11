@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ORAFOLD data-only low-resolution illustration delivery",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile",
+    "resource_kind",
+    "maximum_edge",
+    "external_codec",
+    "external_lossless",
+    "individual_original_count_added",
+    "pinned_card_ids",
+    "preview_count",
+    "external_preview_count",
+    "entries",
+    "quality"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "profile": {
+      "const": "orafold-web-preview-v1"
+    },
+    "resource_kind": {
+      "const": "compact_preview"
+    },
+    "maximum_edge": {
+      "const": 512
+    },
+    "external_codec": {
+      "const": "webp"
+    },
+    "external_lossless": {
+      "const": false
+    },
+    "individual_original_count_added": {
+      "const": 0
+    },
+    "pinned_card_ids": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "preview_count": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 550
+    },
+    "external_preview_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 545
+    },
+    "entries": {
+      "type": "object",
+      "maxProperties": 550,
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/entry"
+      }
+    },
+    "quality": {
+      "const": 0.9
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "delivery",
+        "asset_path",
+        "source_sha256",
+        "preview_sha256",
+        "width",
+        "height"
+      ],
+      "properties": {
+        "delivery": {
+          "enum": [
+            "packed",
+            "external"
+          ]
+        },
+        "asset_path": {
+          "type": "string",
+          "pattern": "^res://assets/cards/previews/[a-z0-9-]+\\.png$"
+        },
+        "source_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "preview_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "width": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "height": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 512
+        },
+        "web_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "relative_url": {
+          "type": "string",
+          "pattern": "^art/preview/[0-9a-f]{64}\\.webp$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "delivery": {
+                "const": "external"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "web_sha256",
+              "relative_url",
+              "bytes"
+            ]
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "web_sha256"
+                  ]
+                },
+                {
+                  "required": [
+                    "relative_url"
+                  ]
+                },
+                {
+                  "required": [
+                    "bytes"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

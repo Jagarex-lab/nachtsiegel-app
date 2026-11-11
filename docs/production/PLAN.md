@@ -31,7 +31,7 @@ Vor PR11-Übernahme dessen aktuellen Head prüfen und auf dem aktuellen develop 
 
 Erhalten bleiben fünf Pfade, leerer direkter Gegenpfad → Heldenangriff, ursprüngliche Schadensabsorption, zwei Siegbedingungen, maximal ein Relikt und Tap-Alternative zum Drag. Änderung nur als konkrete begründete Version mit Tests.
 
-Vor neuer Kostenkurve 9/10 muss Energieerreichbarkeit produktiv entschieden sein. Bestehende E10/R15-Empfehlung ist keine bereits veröffentlichte Regel. Resonanz bleibt eigenständig. Aktivierbare und reaktive Fähigkeiten bezahlen reale Bruttokosten und benutzen per Quelle/Zug/Kette geprüfte Grenzen.
+Vor neuer Kostenkurve 9/10 muss Energieerreichbarkeit produktiv entschieden sein. Der abgeschlossene [Ressourcenvergleich](RESOURCE_MODEL_EXPERIMENT.md) bestätigt den Produktionsdefault E8/R15; E10/R15 und E10/R20 bleiben ausschließlich Testprofile. Resonanz bleibt eigenständig. Aktivierbare und reaktive Fähigkeiten bezahlen reale Bruttokosten und benutzen per Quelle/Zug/Kette geprüfte Grenzen.
 
 Die vier Machtidentitäten und zwölf Arten sind Kanon. Namen/Orte aus #12 bleiben Vorschlag. Neue Hauptereignisse, Führungsfiguren und Eira-Enthüllungen bleiben ausdrücklich Vorschläge; keine neue Kampagne ungefragt kanonisieren.
 

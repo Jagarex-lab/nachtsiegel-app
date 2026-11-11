@@ -31,3 +31,4 @@ PY
 done
 tools/test_production_finishers.sh
 tools/test_production_storage.sh
+tools/test_production_art.sh

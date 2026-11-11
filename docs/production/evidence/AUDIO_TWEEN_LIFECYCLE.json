@@ -1,0 +1,19 @@
+{
+  "base_commit": "2c088eb330c48f4376bbde8dffb2d427002995bf",
+  "scope": "Real Godot4.6.3 Dummy/headless AudioManager lifecycle; existing full audio runtime suite plus16 assertions. Minimal isolated project avoids the550-art checkout. No model, fade-time or gain changes.",
+  "before": {
+    "path": "work/before-real.log",
+    "sha256": "8864f687093e8c074626023bd1faa99749294d6c64b30531911b584ad031fc6e",
+    "assertions": 411,
+    "failures": 5,
+    "actual_finished_tween_errors": 3
+  },
+  "after": {
+    "path": "work/after-real.log",
+    "sha256": "24289cf0c5c1412b3aebb63e52aeb18ea9f57442bb0eda656e99719aec01e18e",
+    "assertions": 411,
+    "failures": 0,
+    "engine_error_leak_lines": 0
+  },
+  "fixture_project_sha256": "baeabdc88034b019b9f02b93e07a2a61909a446c1f47d665b75f48d9b5b7fe60"
+}

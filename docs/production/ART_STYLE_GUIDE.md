@@ -60,7 +60,7 @@ rank: both should be supported by the image when anatomy matters.
 An echo is not a thirteenth species. Memory magic alone does not turn a human into
 a spirit, and metal clothing alone does not turn a person into a mechanoid.
 
-## Five delivered visual production reviews
+## Initial five visual production reviews (historical)
 
 The implementing and root agents inspected all five generated full images and
 their actual Godot master-card renders: each has a
@@ -72,6 +72,18 @@ Kausaljäger studies three causal positions of a pebble. This limited visual che
 does not replace later commercial rights review. The root agent approved these
 five for the current visual production direction; legal clearance remains false.
 
-For the remaining 545 images, expand the catalog briefs into distinctive
+After the additional ten approved originals in [art batch 2](ART_BATCH2.md),
+535 images remain. For those images, expand the catalog briefs into distinctive
 compositions and locations before generation. A repeated prompt with only a name
 changed is not sufficient art direction or evidence of commercial quality.
+
+
+## Completed 550-image production batch
+
+The current pipeline contains 550 actual individual illustrations, 110 for each
+power and neutral. The original first-five/second-ten paragraphs describe earlier
+batches. Current provenance, native dimension variants, contact review coverage,
+known motif similarities and open commercial flags are recorded in
+[ART_PIPELINE.md](ART_PIPELINE.md) and [CONTACT_REVIEW.md](CONTACT_REVIEW.md).
+All local visual motifs remain proposals; no image promotes an Eira revelation,
+leader, origin event or universal species law into canon.

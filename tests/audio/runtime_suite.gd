@@ -41,6 +41,70 @@ func wait_realtime(milliseconds: int) -> void:
 	while Time.get_ticks_msec() < until:
 		await create_timer(0.01).timeout
 
+func wait_ambience_finish(manager: Node) -> bool:
+	var deadline := Time.get_ticks_msec() + 2000
+	while is_instance_valid(manager._ambience_tween) and manager._ambience_tween.is_running() and Time.get_ticks_msec() < deadline:
+		await process_frame
+	return manager._ambience_tween == null
+
+func ambience_tween_lifecycle(manager: Node, clip_id: String) -> void:
+	manager.stop_all()
+	check(manager.set_ambience(clip_id, 0.05), "finished-window ambience starts")
+	var completed: Tween = manager._ambience_tween
+	var seen := [false]
+	completed.finished.connect(func():
+		seen[0] = true
+		check(completed.is_valid() and not completed.is_running(), "real finished signal exposes valid but terminal Tween")
+		check(manager._ambience_tween == null, "terminal ambience handle is released synchronously")
+		manager.set_suspended(false)
+		manager.set_suspended(true)
+		manager.set_suspended(false)
+	, CONNECT_ONE_SHOT)
+	completed.custom_step(1.0)
+	check(seen[0], "actual Tween completion emitted finished")
+	var stream: AudioStream = manager._ambience.stream
+	manager.set_suspended(false)
+	check(manager._ambience.stream == stream, "redundant resume preserves settled ambience")
+	manager.stop_ambience()
+	check(manager.set_ambience(clip_id, 0.4), "unfinished ambience fade starts")
+	var live: Tween = manager._ambience_tween
+	live.custom_step(0.04)
+	var elapsed := live.get_total_elapsed_time()
+	var gain: float = manager._ambience.volume_db
+	check(live.is_running() and elapsed > 0.0, "real live fade advances before pause")
+	manager.set_suspended(true)
+	for _frame in 3: await process_frame
+	check(not live.is_running() and is_equal_approx(live.get_total_elapsed_time(), elapsed) and is_equal_approx(manager._ambience.volume_db, gain), "pause retains elapsed time and actual ambience gain")
+	manager.notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	manager.set_suspended(true)
+	manager.set_suspended(false)
+	for _frame in 3: await process_frame
+	check(manager.snapshot().suspended and not live.is_running() and is_equal_approx(live.get_total_elapsed_time(), elapsed), "remaining focus guard keeps live fade frozen")
+	manager.notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	check(live.is_running() and is_equal_approx(live.get_total_elapsed_time(), elapsed), "last guard resumes without stop or reset")
+	check(await wait_ambience_finish(manager), "resumed live fade completes within bound")
+	check(is_equal_approx(manager._ambience.volume_db, float(manager._catalog.clips[clip_id].gain_db)), "resume reaches unchanged catalog gain")
+	manager.set_ambience(clip_id, 0.4)
+	var replaced: Tween = manager._ambience_tween
+	replaced.custom_step(0.04)
+	manager.set_suspended(true)
+	manager.set_ambience(clip_id, 0.1)
+	manager.set_suspended(false)
+	check(manager._ambience_tween != replaced and not replaced.is_valid(), "queued replacement kills old paused fade")
+	check(await wait_ambience_finish(manager), "replacement has independent completion lifecycle")
+	manager.set_ambience(clip_id, 0.4)
+	var stopped: Tween = manager._ambience_tween
+	stopped.custom_step(0.04)
+	manager.set_suspended(true)
+	manager.stop_ambience()
+	manager.set_suspended(false)
+	check(manager._ambience_tween == null and not stopped.is_valid() and manager._ambience.stream == null, "stop while paused cannot restart stale ambience")
+	manager.set_ambience(clip_id, 0.4)
+	manager.set_suspended(true)
+	manager.stop_all()
+	manager.set_suspended(false)
+	check(manager._ambience_tween == null and manager._ambience.stream == null, "stop_all clears paused ambience lifecycle")
+
 func _initialize() -> void:
 	call_deferred("run")
 
@@ -329,6 +393,7 @@ func run() -> void:
 	await wait_realtime(100)
 	check(manager.get_node("Ambience").playing, "queued ambience resumes after user returns")
 	manager.stop_all(true)
+	await ambience_tween_lifecycle(manager, ambience_ids[0])
 	# Missing files and malformed data are audio errors; no gameplay model is involved.
 	var missing_catalog := catalog.duplicate(true)
 	missing_catalog.clips["test_missing"] = {"path":"res://assets/audio/absent.wav","bus":"SFX","gain_db":0,"loop":false}

@@ -1,0 +1,24 @@
+{
+  "verified_at_utc": "2026-11-11T00:21:42.308579+00:00",
+  "review_coverage_valid": true,
+  "pages": 10,
+  "contact_ids": 550,
+  "native_original_followups": 22,
+  "source_png_hashes_reverified": 550,
+  "source_manifest_unchanged": true,
+  "source_catalog_unchanged": true,
+  "power_counts": {
+    "houses": 110,
+    "stillwatch": 110,
+    "morph": 110,
+    "ninth": 110,
+    "neutral": 110
+  },
+  "review_directory_bytes_before_proof": 23673721,
+  "review_json_sha256": "849bb569531194cb68f9473bce73c288d6d85bda20722f42dd5d7654cb1191c3",
+  "review_md_sha256": "6af6a7aa52e84da72f2550b42df843964affe87d389ff0ae6d3c1bd010e8e4a2",
+  "portable_copy": {
+    "original_document_sha256": "8167ceaf829547e32e86bfc6e0de7a8a0c93865cfd829bbae6422066f2669c77",
+    "changed": "Recorded external input paths replaced with repository-relative equivalents; review facts, counts, original input/page hashes and limits preserved. Historical builder hash refers to the original external builder."
+  }
+}

@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import re
 import struct
 import sys
 import zlib
@@ -77,8 +78,10 @@ def png_info(path: Path) -> tuple[int, int, str]:
     return width, height, hashlib.sha256(data).hexdigest()
 
 
-def checked_asset(root: Path, asset: str) -> Path:
-    if not asset.startswith("res://assets/cards/originals/") or not asset.endswith(".png"):
+def checked_asset(root: Path, asset: str, directory: str = "originals") -> Path:
+    if directory not in ["originals", "previews"]:
+        raise ValueError("Unknown illustration directory")
+    if not asset.startswith(f"res://assets/cards/{directory}/") or not asset.endswith(".png"):
         raise ValueError(f"Original path outside illustration directory: {asset}")
     relative = asset.removeprefix("res://")
     if any(token in relative for token in ["..", "\\", "%", ":", "//"]):
@@ -86,9 +89,75 @@ def checked_asset(root: Path, asset: str) -> Path:
     path = root / relative
     if any(part.is_symlink() for part in [path, *path.parents] if part != root.parent):
         raise ValueError(f"Symlink artwork rejected: {asset}")
-    if not path.resolve().is_relative_to((root / "assets/cards/originals").resolve()):
+    if not path.resolve().is_relative_to((root / f"assets/cards/{directory}").resolve()):
         raise ValueError(f"Asset escapes original directory: {asset}")
     return path
+
+
+def validate_edit_provenance(source: dict, root: Path = ROOT) -> None:
+    """Accept the two recorded generation formats without rewriting history.
+
+    Edit inputs are project-generated drafts, never unidentified third-party
+    references. Their portable archive is build evidence, not a runtime asset.
+    """
+    def require(ok: bool, message: str) -> None:
+        if not ok: raise ValueError("Invalid edit provenance: " + message)
+
+    def substantial(value, minimum: int = 1) -> bool:
+        return isinstance(value, str) and len(value.strip()) >= minimum
+
+    edits = source.get("edits", [])
+    require(isinstance(edits, list), "edits must be a list")
+    references = source.get("reference_sources")
+    require(isinstance(references, list), "reference_sources must be a list")
+    inputs = source.get("generation_inputs", [])
+    require(isinstance(inputs, list), "generation_inputs must be a list")
+    if not edits:
+        require(not references and not inputs, "an input requires its edit record")
+        return
+
+    stream_format = False
+    for edit in edits:
+        require(isinstance(edit, dict), "edit must be an object")
+        if set(edit) == {"method", "date", "instruction"}:
+            require(edit["method"] == "OpenAI Image Generation", "unknown method")
+            require(isinstance(edit["date"], str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", edit["date"]) is not None, "missing edit date")
+            require(substantial(edit["instruction"], 100), "missing edit instruction")
+            require(bool(references), "method format requires its archived reference")
+        elif set(edit) == {"tool", "prompt", "reason", "review"}:
+            stream_format = True
+            require(edit["tool"] == "OpenAI image generation tool", "unknown tool")
+            require(substantial(edit["prompt"], 100), "missing edit prompt")
+            require(substantial(edit["reason"]) and substantial(edit["review"]), "missing edit reason/review")
+            require(bool(inputs), "tool format requires its original generation input")
+        else:
+            raise ValueError("Invalid edit provenance: unknown or mixed edit format")
+
+    def verify_archive(relative: str, digest: str, dimensions=None) -> None:
+        require(isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) is not None, "invalid input SHA-256")
+        require(isinstance(relative, str) and relative.startswith("docs/production/art-evidence/source-references/") and relative.endswith(".png"), "unsafe input archive")
+        require(not any(token in relative for token in ("..", "\\", "%", ":", "//")), "unsafe input archive")
+        archive = root / relative
+        require(not any(p.is_symlink() for p in (archive, *archive.parents)), "symlink input archive")
+        width, height, actual = png_info(archive)
+        require(actual == digest, "archived input hash differs")
+        if dimensions is not None:
+            require((width, height) == dimensions, "archived input dimensions differ")
+
+    for reference in references:
+        require(isinstance(reference, dict) and reference.get("kind") == "project_generated_illustration", "unidentified reference")
+        verify_archive(reference.get("repository_path"), reference.get("sha256"))
+    if stream_format:
+        mapping = load(root / "docs/production/art-evidence/edit-inputs.json")
+        require(isinstance(mapping, dict) and mapping.get("schema_version") == 1 and isinstance(mapping.get("entries"), dict), "invalid portable input inventory")
+        for item in inputs:
+            require(isinstance(item, dict) and item.get("type") == "original_generated_image", "unidentified generation input")
+            require(substantial(item.get("source_prompt"), 100) and substantial(item.get("reason")), "missing original generation context")
+            digest = item.get("sha256")
+            require(isinstance(digest, str) and re.fullmatch(r"[0-9a-f]{64}", digest) is not None, "invalid input SHA-256")
+            portable = mapping["entries"].get(digest)
+            require(isinstance(portable, dict) and portable.get("card_id") == source.get("card_id"), "generation input has no matching portable archive")
+            verify_archive(portable.get("repository_path"), digest, (item.get("original_width"), item.get("original_height")))
 
 
 def build(root: Path = ROOT) -> tuple[dict, dict]:
@@ -96,6 +165,10 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
     catalog = load(catalog_path)
     cards = catalog["cards"] if isinstance(catalog, dict) else catalog
     sources = load(root / "data/production/art_sources.json")["entries"]
+    preview_manifest_path = root / "data/production/art_previews.json"
+    previews = load(preview_manifest_path)["entries"] if preview_manifest_path.exists() else {}
+    if previews and set(previews) != set(sources):
+        raise ValueError("Every actual original must have its own current compact preview")
     cards_by_id = {c["id"]: c for c in cards}
     if len(cards_by_id) != len(cards): raise ValueError("Duplicate catalog card IDs")
     if set(sources) - set(cards_by_id): raise ValueError("Orphan art source IDs")
@@ -118,14 +191,26 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
             width, height, digest = png_info(path)
             if source.get("sha256") != digest or (width, height) != (source.get("original_width"), source.get("original_height")):
                 raise ValueError(f"Original hash/dimensions changed: {card_id}")
-            if width < 672 or height < 500: raise ValueError(f"Insufficient native source dimensions: {card_id}")
+            if width < 1024 or height < 768: raise ValueError(f"Insufficient native source dimensions for full-card inspection: {card_id}")
             if digest in hashes: raise ValueError(f"One image assigned as two originals: {card_id}/{hashes[digest]}")
             hashes[digest] = card_id
             if source.get("status") not in ["concept", "final"]: raise ValueError(f"Unsupported source status: {card_id}")
             if source.get("status") == "final" and source.get("production_review") != "approved": raise ValueError(f"Final artwork lacks production approval: {card_id}")
             for key in ["source_prompt", "creator_or_generator", "creation_date", "alternative_text", "reference_sources", "commercial_review"]:
                 if key not in source: raise ValueError(f"Missing provenance {key}: {card_id}")
+            validate_edit_provenance(source, root)
             entry.update({key: source[key] for key in ["asset_path", "status", "individual_original", "production_review", "commercially_cleared", "commercial_review", "alternative_text", "original_width", "original_height", "sha256"]})
+            if card_id in previews:
+                preview = previews[card_id]
+                expected_preview = f"res://assets/cards/previews/{card_id}.png"
+                if preview.get("asset_path") != expected_preview or preview.get("source_asset_path") != expected_path or preview.get("source_sha256") != digest:
+                    raise ValueError(f"Preview/source binding mismatch: {card_id}")
+                pw, ph, pdigest = png_info(checked_asset(root, expected_preview, "previews"))
+                ratio = min(1.0, 512 / max(width, height))
+                expected_dimensions = (int(width * ratio + 0.5), int(height * ratio + 0.5))
+                if (pw, ph) != expected_dimensions or (pw, ph) != (preview.get("width"), preview.get("height")) or pdigest != preview.get("sha256") or preview.get("profile") != "compact-512-v1":
+                    raise ValueError(f"Preview dimensions/hash/profile mismatch: {card_id}")
+                entry.update({"preview_asset_path": expected_preview, "preview_width": pw, "preview_height": ph, "preview_sha256": pdigest})
         entries[card_id] = entry
         briefs.append({
             "card_id": card_id, "name": name, "power": power, "kind": card["kind"],
@@ -139,7 +224,9 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
         })
     disk_art = {"res://" + str(p.relative_to(root)) for p in (root / "assets/cards/originals").glob("*.png")}
     represented = {e["asset_path"] for e in entries.values() if e["asset_path"]}
-    manifest = {"schema_version": 1, "source_catalog": "data/production/cards.json", "source_catalog_sha256": hashlib.sha256(catalog_path.read_bytes()).hexdigest(), "provenance": "data/production/art_sources.json", "inventory_card_count": len(cards), "individual_original_count": len(sources), "final_individual_count": sum(e["status"] == "final" for e in entries.values()), "missing_individual_count": len(cards) - len(sources), "commercially_cleared_count": sum(e["commercially_cleared"] for e in entries.values()), "orphan_files": sorted(disk_art - represented), "entries": entries}
+    preview_disk = {"res://" + str(p.relative_to(root)) for p in (root / "assets/cards/previews").glob("*.png")}
+    represented_previews = {e["preview_asset_path"] for e in entries.values() if e.get("preview_asset_path")}
+    manifest = {"schema_version": 1, "source_catalog": "data/production/cards.json", "source_catalog_sha256": hashlib.sha256(catalog_path.read_bytes()).hexdigest(), "provenance": "data/production/art_sources.json", "inventory_card_count": len(cards), "individual_original_count": len(sources), "final_individual_count": sum(e["status"] == "final" for e in entries.values()), "missing_individual_count": len(cards) - len(sources), "commercially_cleared_count": sum(e["commercially_cleared"] for e in entries.values()), "orphan_files": sorted(disk_art - represented), "compact_preview_count": len(previews), "orphan_preview_files": sorted(preview_disk - represented_previews), "entries": entries}
     return manifest, {"schema_version": 1, "lore_source": "docs/LORE-BIBLE.md", "scope_de": "Art-Briefs sind vorläufige Produktionsanweisungen, keine erzeugten Illustrationen und kein zusätzlicher Kanon.", "count": len(briefs), "entries": briefs}
 
 

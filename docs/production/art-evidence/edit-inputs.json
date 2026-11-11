@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "scope": "Portable archive of an own project-generated input to a recorded image edit. Not an active illustration or legal clearance.",
+  "entries": {
+    "40014deea72298dd2e0f4916b3f3520ecfa096820ffe42a6a7e993656ba42cd3": {
+      "card_id": "of-neutral-010",
+      "repository_path": "docs/production/art-evidence/source-references/of-neutral-010-before-lettering-removal.png",
+      "source_path_recorded_in_unchanged_provenance": "/workspace/generated_images/exec-50c760b1-f77d-424f-84fe-1bc3e5556c95.png",
+      "reason": "Own rejected generated draft; supplies the exact original input to the accepted no-lettering edit. Source provenance and accepted output remain unchanged."
+    }
+  }
+}

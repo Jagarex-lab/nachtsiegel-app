@@ -1,0 +1,624 @@
+{
+  "complete_scenario_coverage": true,
+  "single_run": false,
+  "provisional_working_tree": true,
+  "exact_git_source": false,
+  "base_commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+  "metadata_note": "build-info identifies the base commit only; modified/untracked sources are recorded.",
+  "assertions": 236,
+  "unexpected_failures": 0,
+  "scenarios": [
+    "success",
+    "offline",
+    "corrupt",
+    "redirect",
+    "oversized"
+  ],
+  "engines": [
+    "chromium",
+    "webkit"
+  ],
+  "real_device": false,
+  "artifact_manifest": {
+    "orafold-d880c450baa5.audio.worklet.js": "5b476a9c9ce642c0ee4256436d1bc31d9c38f868aca0f9a8e2a57c18d2dec2a3",
+    "orafold-d880c450baa5.pck": "063038c07e04451c8a50835124de373a5ebb032eef437a79096132c34d1abbb9",
+    "orafold-d880c450baa5.apple-touch-icon.png": "6f0d99a7e12eec54e14b6c2f57fa4ed8117d8588b098c4704e247cc022e73bd2",
+    "orafold-d880c450baa5.icon.png": "c9b837bef23c6745cabcabdb0db3aad10a2cd51d28c8797e41b99520fae2fb0d",
+    "build-info.json": "14c2904f2f3c8ce2dea45ab8ef40cdced1327979adad04f3c8ba8842d5f7193e",
+    "orafold-d880c450baa5.wasm": "9b772205387d214619428ef095c6c4319a4aa4514879ae411be515d405bad784",
+    "orafold-d880c450baa5.audio.position.worklet.js": "be33985bc7160d6bf9646f259cd86b259cd67b02ccb297ee5c44f8ac84327bc8",
+    "art-delivery.json": "78f66e93995b5c6433c94865cfaa101f96e5d346d5bb318a12ba93329885860b",
+    "index.html": "8c76c403709595e2f17d1167c2e6d80b0936cdb39acd3264912a0cddacf71669",
+    "orafold-d880c450baa5.js": "8ee40f1dfac8ea4d9828cbe4f17fbf4834ba3e7708c1fe5a96c3388977f5ef38",
+    "orafold-d880c450baa5.png": "3cb4495c0b98dfbe4b663cbf2b6836473572339beb66d902367893162a70be0e",
+    "art/full/d49ca6bf5b2fd527b2f691399408bb9eee5fee813becf881d1ccb4c78958cadd.webp": "d49ca6bf5b2fd527b2f691399408bb9eee5fee813becf881d1ccb4c78958cadd",
+    "art/full/d7d1fee6a703ce59dbcd848fe4ea3bddcee840926c1bcccf7fe10d7aff72b762.webp": "d7d1fee6a703ce59dbcd848fe4ea3bddcee840926c1bcccf7fe10d7aff72b762",
+    "art/full/46584e8360f5bb0c57f5456e87c9d00a1a1eb28683268fe56280c45b8a1a984f.webp": "46584e8360f5bb0c57f5456e87c9d00a1a1eb28683268fe56280c45b8a1a984f",
+    "art/full/a30baef889eec918d0bb787bbbd13d1c319f053746c0be9c23610167c410847a.webp": "a30baef889eec918d0bb787bbbd13d1c319f053746c0be9c23610167c410847a",
+    "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp": "559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9",
+    "art/full/f23adc194b29e38f3a0bd88e9d69b7d207a8fba7752882d6733c4120c347ecff.webp": "f23adc194b29e38f3a0bd88e9d69b7d207a8fba7752882d6733c4120c347ecff",
+    "art/full/ecac59b338c73e0437e1019d11308bdb44646055523405093ae23c615e34ff76.webp": "ecac59b338c73e0437e1019d11308bdb44646055523405093ae23c615e34ff76",
+    "art/full/7fa45ef667e823c1abe6e21f96d1fda03b7543a599351227409b8233aed00e20.webp": "7fa45ef667e823c1abe6e21f96d1fda03b7543a599351227409b8233aed00e20",
+    "art/full/6cfc5a8bb831db10503b153e386905ca32ee7597c9e95e1fdbd9013ce1e85b0d.webp": "6cfc5a8bb831db10503b153e386905ca32ee7597c9e95e1fdbd9013ce1e85b0d",
+    "art/full/8080cea236239dbb9de4b063cb3197ed8f79705be35ca335bc8d0aff241559f4.webp": "8080cea236239dbb9de4b063cb3197ed8f79705be35ca335bc8d0aff241559f4",
+    "art/full/f5520d21b153b370cf4957f2606fa603a08df1dee670e72b221ad95ac47f920b.webp": "f5520d21b153b370cf4957f2606fa603a08df1dee670e72b221ad95ac47f920b",
+    "art/full/2a1e9e7d0ac7a41e611f0fdc7d88f5bfa19e63c053875610e1bfba60603db67a.webp": "2a1e9e7d0ac7a41e611f0fdc7d88f5bfa19e63c053875610e1bfba60603db67a",
+    "art/full/90424fe04dafde09791f74472d990b3027a49a362bfb41aaaae3c000fbe9ca3b.webp": "90424fe04dafde09791f74472d990b3027a49a362bfb41aaaae3c000fbe9ca3b",
+    "art/full/1f5863116d210d4aa932b48086f08086e518e5e74b39e5ee6f54c0eac7d9f4ff.webp": "1f5863116d210d4aa932b48086f08086e518e5e74b39e5ee6f54c0eac7d9f4ff",
+    "art/full/5e8b852186ac524d4f2269fbbb55a506d0932a7b6f9f531f7403b7ecd21d20dc.webp": "5e8b852186ac524d4f2269fbbb55a506d0932a7b6f9f531f7403b7ecd21d20dc"
+  },
+  "changed_between_successful_phases": [
+    "tools/production/browser_art_delivery_qa.cjs"
+  ],
+  "provenance_files": [
+    "work/production-art/browser-provisional-transport-settled/provenance.json",
+    "work/production-art/browser-provisional-webkit-network/provenance.json"
+  ],
+  "scope": "Ten actual same-origin browser contexts over the same unchanged provisional runtime artifact. Prior eight contexts used the stricter zero-pageerror harness; last two distinguish one exact native WebKit forced-302 notification and independently assert zero unhandled promise rejections. This does not establish exact Git source, publication, physical device behavior, or a measured Web memory cap.",
+  "failed_attempts_preserved": [
+    "work/production-art/browser-provisional-transport/chromium-redirect-failure.json",
+    "work/production-art/browser-provisional-transport-settled/webkit-redirect-failure.json"
+  ],
+  "results": [
+    {
+      "engine": "chromium",
+      "scenario": "success",
+      "assertions": 23,
+      "failures": 0,
+      "browser_version": "158.0.8127.18",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "state": "ready"
+      },
+      "requests": [
+        {
+          "scenario": "success",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 200,
+          "bytes": 350886,
+          "sha256": "559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/success/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/chromium-success.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "chromium",
+      "scenario": "offline",
+      "assertions": 23,
+      "failures": 0,
+      "browser_version": "158.0.8127.18",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "offline",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 404,
+          "bytes": 51,
+          "sha256": "b22072a5eea63ed8eb9471f475da5f02bd51332f37d8eb934cceacd1b92402bd"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/offline/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/chromium-offline.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "chromium",
+      "scenario": "corrupt",
+      "assertions": 24,
+      "failures": 0,
+      "browser_version": "158.0.8127.18",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "corrupt",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 200,
+          "bytes": 350886,
+          "sha256": "22ea34a27947f64538b34f2ca97268a74c217288567fa67801df107b5209d4c1"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/corrupt/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/chromium-corrupt.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "chromium",
+      "scenario": "redirect",
+      "assertions": 24,
+      "failures": 0,
+      "browser_version": "158.0.8127.18",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "redirect",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 302,
+          "bytes": 38,
+          "sha256": "51b5b1ac1c47408d23d85f20e5124e5d37c2fb464c944323be4a9239a8ddfcb9"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/redirect/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [
+        "Failed to load resource: net::ERR_FAILED",
+        "TypeError: Failed to fetch\n    at guard.wrapper (eval at _godot_js_eval (http://127.0.0.1:38707/orafold-delivery/redirect/orafold-d880c450baa5.js:1:185731), <anonymous>:13:23)\n    at Object.create (http://127.0.0.1:38707/orafold-delivery/redirect/orafold-d880c450baa5.js:1:187615)\n    at _godot_js_fetch_create (http://127.0.0.1:38707/orafold-delivery/redirect/orafold-d880c450baa5.js:1:188628)\n    at wasm://wasm/08864982:wasm-function[51578]:0x198f49b\n    at wasm://wasm/08864982:wasm-function[24410]:0xe51ce5\n    at wasm://wasm/08864982:wasm-function[66513]:0x1c0fbeb\n    at wasm://wasm/08864982:wasm-function[644]:0x69f10\n    at wasm://wasm/08864982:wasm-function[24286]:0xe41cc1\n    at wasm://wasm/08864982:wasm-function[24289]:0xe4262f\n    at wasm://wasm/08864982:wasm-function[66087]:0x1bf81f6"
+      ],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/chromium-redirect.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "chromium",
+      "scenario": "oversized",
+      "assertions": 23,
+      "failures": 0,
+      "browser_version": "158.0.8127.18",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "oversized",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 200,
+          "bytes": 8388609,
+          "sha256": "4459f957d031a8b782dfee09d2c7070a4b5e6c33130a8f20ac35393fd97fc57a"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/oversized/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/chromium-oversized.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "webkit",
+      "scenario": "success",
+      "assertions": 23,
+      "failures": 0,
+      "browser_version": "27.2",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "state": "ready"
+      },
+      "requests": [
+        {
+          "scenario": "success",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 200,
+          "bytes": 350886,
+          "sha256": "559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/success/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/webkit-success.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "webkit",
+      "scenario": "offline",
+      "assertions": 23,
+      "failures": 0,
+      "browser_version": "27.2",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "offline",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 404,
+          "bytes": 51,
+          "sha256": "b22072a5eea63ed8eb9471f475da5f02bd51332f37d8eb934cceacd1b92402bd"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/offline/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/webkit-offline.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "webkit",
+      "scenario": "corrupt",
+      "assertions": 24,
+      "failures": 0,
+      "browser_version": "27.2",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "corrupt",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 200,
+          "bytes": 350886,
+          "sha256": "22ea34a27947f64538b34f2ca97268a74c217288567fa67801df107b5209d4c1"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:38707/orafold-delivery/corrupt/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-transport-settled/webkit-corrupt.json",
+      "harness_sha256": "f6292924f407b06fc0e4f8f41821090b2274fbfaaf65e8cdba2f11f1815b3456"
+    },
+    {
+      "engine": "webkit",
+      "scenario": "redirect",
+      "assertions": 25,
+      "failures": 0,
+      "browser_version": "27.2",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "redirect",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 302,
+          "bytes": 38,
+          "sha256": "51b5b1ac1c47408d23d85f20e5124e5d37c2fb464c944323be4a9239a8ddfcb9"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:35713/orafold-delivery/redirect/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [
+        "Not allowed to follow a redirection while loading http://127.0.0.1:35713/orafold-delivery/redirect/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+        "Failed to load resource: Not allowed to follow a redirection while loading http://127.0.0.1:35713/orafold-delivery/redirect/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+        "TypeError: Load failed"
+      ],
+      "page_error_records": [
+        {
+          "message": "Fetch API cannot load http: /127.0.0.1:35713/orafold-delivery/redirect/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp due to access control checks.",
+          "stack": "",
+          "name": "Fetch API cannot load http"
+        }
+      ],
+      "expected_network_errors": [
+        {
+          "message": "Fetch API cannot load http: /127.0.0.1:35713/orafold-delivery/redirect/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp due to access control checks.",
+          "stack": "",
+          "name": "Fetch API cannot load http"
+        }
+      ],
+      "unhandled_rejections": [],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-webkit-network/webkit-redirect.json",
+      "harness_sha256": "27775b75c5cca0dcff3aa62e75d42e54fe13f32a47519b99b3a245d06bf207e4"
+    },
+    {
+      "engine": "webkit",
+      "scenario": "oversized",
+      "assertions": 24,
+      "failures": 0,
+      "browser_version": "27.2",
+      "playwright": "1.65.0",
+      "build_info": {
+        "commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+        "version": "ORAFOLD Alpha 0.3 \u2013 Katalogvorschau",
+        "channel": "isolated-test",
+        "rulesets": [
+          "legacy-34b3062",
+          "orafold-alpha-0.1",
+          "production-550-v1"
+        ]
+      },
+      "preview": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "loading"
+      },
+      "result": {
+        "asset": "res://assets/cards/originals/of-houses-020.png",
+        "pixels": [
+          512,
+          384
+        ],
+        "preview_only": true,
+        "state": "failed"
+      },
+      "requests": [
+        {
+          "scenario": "oversized",
+          "relative": "art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp",
+          "status": 200,
+          "bytes": 8388609,
+          "sha256": "4459f957d031a8b782dfee09d2c7070a4b5e6c33130a8f20ac35393fd97fc57a"
+        }
+      ],
+      "browser_art_urls": [
+        "http://127.0.0.1:35713/orafold-delivery/oversized/art/full/559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9.webp"
+      ],
+      "console_errors": [],
+      "page_error_records": [],
+      "expected_network_errors": [],
+      "unhandled_rejections": [],
+      "simulated": true,
+      "real_device": false,
+      "evidence_file": "work/production-art/browser-provisional-webkit-network/webkit-oversized.json",
+      "harness_sha256": "27775b75c5cca0dcff3aa62e75d42e54fe13f32a47519b99b3a245d06bf207e4"
+    }
+  ],
+  "changed_source_hashes_unchanged_after_final_context": true
+}

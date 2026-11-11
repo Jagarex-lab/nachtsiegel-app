@@ -233,7 +233,13 @@ async function runEngine(name){
   for(let pageIndex=0;pageIndex<totalPages;pageIndex++){
    library=await q();equal(library.library_page,pageIndex,'actualbrowserpaging index');
    check(library.library_visible_ids.length>0&&library.library_visible_ids.length<=12,'mobilecreatesatmost12cardcontrols');
-   equal(Object.keys(library.actions).filter(key=>key.startsWith('card_')).map(key=>key.slice(5)),library.library_visible_ids,'actualcontrols matchonlyvisiblepage');
+   const controlIds=Object.keys(library.actions).filter(key=>key.startsWith('card_')).map(key=>key.slice(5));
+   equal(new Set(controlIds).size,controlIds.length,'actual page controls have unique identities');
+   equal(new Set(library.library_visible_ids).size,library.library_visible_ids.length,'visible page has unique identities');
+   // actions is a JSON dictionary, whose key serialization order is unrelated
+   // to the cards' display/name order. Compare exact membership without mutating
+   // the separately ordered visible list used by paging and inspection below.
+   equal([...controlIds].sort(),[...library.library_visible_ids].sort(),'actualcontrols matchonlyvisiblepage');
    for(const id of library.library_visible_ids){check(by[id]&&!seenCards.has(id),'eachactualcatalogidentityreachableonce');seenCards.add(id);}
    rectCheck(library.actions.library_previous.rect,'previouspage');rectCheck(library.actions.library_next.rect,'nextpage');
    if(pageIndex<totalPages-1)await action('library_next');
@@ -247,7 +253,10 @@ async function runEngine(name){
   await action('filters');await action('reset_filters');await action('filters');await action('filter_species');await action('option_filter_species_human');
   const filtered=await q();check(filtered.library_total>0,'actualhumanfilterhasnonemptyresults');for(const id of filtered.library_visible_ids)check((by[id].species||[]).includes('human'),'speciesfilter usesactualequalrank assignments');
   await action('filters');await action('reset_filters');checks.push('550actualcards reached once byrealpagination;lastcardnamesearch;speciesfilter;bounded12cardcontrols');
-  const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));check(first,'actual collection card available');await action(first);
+  const inspectionState=await q(),firstId=inspectionState.library_visible_ids[0],first='card_'+firstId;
+  check(firstId&&inspectionState.actions[first],'first displayed collection card available');
+  rectCheck(inspectionState.action_visibility[first].visible_rect,'first displayed card visible touch region');
+  await action(first);
   for(const [width,height] of [[390,844],[844,390],[756,390],[390,844]]){
    if(page.viewportSize().width!==width||page.viewportSize().height!==height)await resize(width,height);
    check((await q()).modal,'inspector stays open across sizes');rectCheck((await q()).actions.modal_close.rect,'inspector close');await shot('inspector-'+width+'x'+height);

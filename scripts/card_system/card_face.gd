@@ -22,6 +22,9 @@ const INK = Color("10151f")
 const RULES = Color("161d29")
 const TEXT = Color("f3ede2")
 const SECONDARY = Color("c5ccd7")
+var _illustration_binding := ""
+var _illustration_data: Dictionary = {}
+var _delivery_visible := false
 var card: Dictionary = {}:
 	set(value):
 		card=value
@@ -37,6 +40,14 @@ func _ready() -> void:
 	texture_filter=CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 	resized.connect(queue_redraw)
 
+func _process(_delta: float) -> void:
+	var visible_now: bool = not face_down and not card.is_empty() and ART.visible_owner(self)
+	if not visible_now: ART.release_owner(self)
+	elif not _delivery_visible: _illustration_binding = ""
+	_delivery_visible = visible_now
+	if visible_now and ART.binding_key(card) != _illustration_binding: queue_redraw()
+func _exit_tree() -> void: ART.release_owner(self)
+
 func face_rect() -> Rect2:
 	var scale_value=minf(size.x/MASTER_SIZE.x,size.y/MASTER_SIZE.y)
 	return Rect2((size-MASTER_SIZE*scale_value)/2,MASTER_SIZE*scale_value)
@@ -48,11 +59,14 @@ func normalized() -> Dictionary:
 	var species_names: Array[String]=[]
 	for species_id in card.get("species",[]):
 		if SPECIES.has(str(species_id)):species_names.append(SPECIES[str(species_id)])
-	var resolved=ART.resolve(card)
+	var binding := ART.binding_key(card)
+	if binding != _illustration_binding:
+		_illustration_data = ART.resolve(card, "full", self); _illustration_binding = binding
+	var resolved = _illustration_data
 	var illustration: Texture2D=resolved.texture
 	var art_status: String=resolved.status
 	var art_label: String=resolved.label
-	return {"id":str(card.get("id","")),"name":str(card.get("name","")),"power":power_id,"kind":str(card.get("kind","creature")),"rarity":str(card.get("rarity","common")),"cost":int(card.get("energy_cost",card.get("cost",0))),"resonance":int(card.get("resonance_cost",0)),"attack":int(card.get("attack",card.get("atk",0))),"health":int(card.get("health",card.get("hp",0))),"species":" · ".join(species_names),"text":str(card.get("text_de",card.get("description",""))),"art_status":art_status,"art_label":art_label,"illustration":illustration}
+	return {"id":str(card.get("id","")),"name":str(card.get("name","")),"power":power_id,"kind":str(card.get("kind","creature")),"rarity":str(card.get("rarity","common")),"cost":int(card.get("energy_cost",card.get("cost",0))),"resonance":int(card.get("resonance_cost",0)),"attack":int(card.get("attack",card.get("atk",0))),"health":int(card.get("health",card.get("hp",0))),"species":" · ".join(species_names),"text":str(card.get("text_de",card.get("description",""))),"art_status":art_status,"art_label":art_label,"preview_pending":resolved.get("preview_pending",false),"illustration":illustration}
 
 func paragraph(value: String, width: float, height: float, maximum: int, minimum: int) -> TextParagraph:
 	var result: TextParagraph
@@ -107,6 +121,8 @@ func draw_illustration(data: Dictionary) -> void:
 		else:
 			source.size.y=dimensions.x/target_ratio;source.position.y=(dimensions.y-source.size.y)/2
 		draw_texture_rect_region(data.illustration,ART_RECT,source)
+	elif data.get("preview_pending", false):
+		draw_rect(ART_RECT, Color(.045,.06,.075))
 	else:
 		var cell=ATLAS.get_size()/3.0
 		var index=absi(str(data.id).hash())%7

@@ -1,0 +1,228 @@
+{
+  "scope": "Actual15 previews and actual550-card catalog candidate; projections do not represent550 existing illustrations, network timing or physical-device behavior.",
+  "preview_count": 15,
+  "import_profile": {
+    "dimensions": [
+      512,
+      384
+    ],
+    "compress_mode": 1,
+    "lossy_quality": 0.9,
+    "mipmaps": true
+  },
+  "preview_png_bytes": 5447721,
+  "preview_ctex_bytes": 1398800,
+  "preview_ctex_mean_bytes": 93253.33333333333,
+  "actual_web_pck_bytes": 15294284,
+  "actual_wasm_bytes": 35754592,
+  "sample_based_550_projection": {
+    "preview_ctex_bytes": 51289333.33333333,
+    "pck_bytes_holding_other_content_constant": 65184817.33333333
+  },
+  "rows": [
+    {
+      "card_id": "oa-houses-c01",
+      "png_bytes": 353231,
+      "ctex_bytes": 94076,
+      "ctex_sha256": "33ba495d87d95cfba8884fbe2c2c00424eb65e41a3f3391097863c3a01982913",
+      "rgb_psnr_db_against_prepared_png": 37.51154744682452
+    },
+    {
+      "card_id": "oa-morph-c01",
+      "png_bytes": 366753,
+      "ctex_bytes": 97862,
+      "ctex_sha256": "77871e44c6d68f5d9692fd3be7525776840d570cb02ba04aeee14c16688e37cc",
+      "rgb_psnr_db_against_prepared_png": 34.630387430069575
+    },
+    {
+      "card_id": "oa-neutral-c02",
+      "png_bytes": 367624,
+      "ctex_bytes": 93802,
+      "ctex_sha256": "c1468127cdcee83f3454d3cc01247a1b8a6a766915a936de25ee4711f08adacd",
+      "rgb_psnr_db_against_prepared_png": 38.433315513856556
+    },
+    {
+      "card_id": "oa-ninth-c01",
+      "png_bytes": 331248,
+      "ctex_bytes": 71612,
+      "ctex_sha256": "0d267e57e10df2e58774e69063c43d7178983a6ec758b0549c5aace54277b9c2",
+      "rgb_psnr_db_against_prepared_png": 39.491851886657294
+    },
+    {
+      "card_id": "oa-stillwatch-c01",
+      "png_bytes": 392070,
+      "ctex_bytes": 106010,
+      "ctex_sha256": "37067ee1933ff09f4959dbd9743e8b0ed9daec51c47fb7e66604c2a2c4c4c0c7",
+      "rgb_psnr_db_against_prepared_png": 37.21341530860813
+    },
+    {
+      "card_id": "of-houses-020",
+      "png_bytes": 358140,
+      "ctex_bytes": 96256,
+      "ctex_sha256": "f966edc87f36cb2545d13a210203f50656c700415142ec1923fb3920f3bd4106",
+      "rgb_psnr_db_against_prepared_png": 36.894004418714765
+    },
+    {
+      "card_id": "of-houses-094",
+      "png_bytes": 279896,
+      "ctex_bytes": 59508,
+      "ctex_sha256": "8535430e8a7dce4eefc9cdf04d54c2f0ccf10a643160342cbb0e01a7944f9aae",
+      "rgb_psnr_db_against_prepared_png": 37.867006282513685
+    },
+    {
+      "card_id": "of-morph-003",
+      "png_bytes": 432199,
+      "ctex_bytes": 127592,
+      "ctex_sha256": "46096741dd84ecad43380e6b3a8865f80830ab53798ddcf29f0b6b4efdd69704",
+      "rgb_psnr_db_against_prepared_png": 33.20443064661039
+    },
+    {
+      "card_id": "of-morph-082",
+      "png_bytes": 424638,
+      "ctex_bytes": 124100,
+      "ctex_sha256": "c5b4daa5e3cd6e5cacff50fd8ca5861ed1d3a82f884763c81e83db55feb2b307",
+      "rgb_psnr_db_against_prepared_png": 32.62736183753334
+    },
+    {
+      "card_id": "of-neutral-049",
+      "png_bytes": 331263,
+      "ctex_bytes": 77492,
+      "ctex_sha256": "fe2f9e8905e636f510ff92e845fa7097d3adc4a5f94f4267a8d4beecb576a117",
+      "rgb_psnr_db_against_prepared_png": 38.13696501810306
+    },
+    {
+      "card_id": "of-neutral-083",
+      "png_bytes": 392709,
+      "ctex_bytes": 99190,
+      "ctex_sha256": "8aeb2c1ae6d81855295e7af7e00a9a6f358888026840e93413e84bf817d2d4fe",
+      "rgb_psnr_db_against_prepared_png": 38.912063999819175
+    },
+    {
+      "card_id": "of-ninth-019",
+      "png_bytes": 301401,
+      "ctex_bytes": 62348,
+      "ctex_sha256": "6bb877bba44bd0651c9211408baf4868b0457d2dd118d58a1c988895b80450aa",
+      "rgb_psnr_db_against_prepared_png": 39.41004328830057
+    },
+    {
+      "card_id": "of-ninth-095",
+      "png_bytes": 337805,
+      "ctex_bytes": 80030,
+      "ctex_sha256": "c4cb17539805522e637acf18fba0e47ad9cab3b74caf2eb1c4518aa8a2cc5542",
+      "rgb_psnr_db_against_prepared_png": 38.90302553103944
+    },
+    {
+      "card_id": "of-stillwatch-043",
+      "png_bytes": 402114,
+      "ctex_bytes": 110178,
+      "ctex_sha256": "34880c57ae46e7c8fd0b252babfe3ea75cd835e63c5d35773e6e0e85ea391a77",
+      "rgb_psnr_db_against_prepared_png": 37.39432876234928
+    },
+    {
+      "card_id": "of-stillwatch-055",
+      "png_bytes": 376630,
+      "ctex_bytes": 98744,
+      "ctex_sha256": "24297a76aa3427daeb38ceea22468fc6b4f9eb7be468a193a71c8d2feae4f858",
+      "rgb_psnr_db_against_prepared_png": 36.67693740144214
+    }
+  ],
+  "isolated_actual_pack_probe": {
+    "actual_packed_preview_ctex_bytes": 1398800,
+    "failures": 0,
+    "preview_count": 15,
+    "project_source_visible": false,
+    "rows": [
+      {
+        "actual_packed_ctex_bytes": 94076,
+        "actual_packed_ctex_sha256": "33ba495d87d95cfba8884fbe2c2c00424eb65e41a3f3391097863c3a01982913",
+        "card_id": "oa-houses-c01",
+        "imported_path": "res://.godot/imported/oa-houses-c01.png-6569384ca3b0439e5a0bed5ff2c79792.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 97862,
+        "actual_packed_ctex_sha256": "77871e44c6d68f5d9692fd3be7525776840d570cb02ba04aeee14c16688e37cc",
+        "card_id": "oa-morph-c01",
+        "imported_path": "res://.godot/imported/oa-morph-c01.png-29f822bc3617068a961d2bffa8fadcd0.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 93802,
+        "actual_packed_ctex_sha256": "c1468127cdcee83f3454d3cc01247a1b8a6a766915a936de25ee4711f08adacd",
+        "card_id": "oa-neutral-c02",
+        "imported_path": "res://.godot/imported/oa-neutral-c02.png-e950f934f9b65360f68a6cdee0420eee.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 71612,
+        "actual_packed_ctex_sha256": "0d267e57e10df2e58774e69063c43d7178983a6ec758b0549c5aace54277b9c2",
+        "card_id": "oa-ninth-c01",
+        "imported_path": "res://.godot/imported/oa-ninth-c01.png-fe43d9809d131aa7785d6554bcd846e0.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 106010,
+        "actual_packed_ctex_sha256": "37067ee1933ff09f4959dbd9743e8b0ed9daec51c47fb7e66604c2a2c4c4c0c7",
+        "card_id": "oa-stillwatch-c01",
+        "imported_path": "res://.godot/imported/oa-stillwatch-c01.png-76e86c566f59e9492749e6bb5cbe83d8.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 96256,
+        "actual_packed_ctex_sha256": "f966edc87f36cb2545d13a210203f50656c700415142ec1923fb3920f3bd4106",
+        "card_id": "of-houses-020",
+        "imported_path": "res://.godot/imported/of-houses-020.png-46f2f92702746233521f7927eb2e8909.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 59508,
+        "actual_packed_ctex_sha256": "8535430e8a7dce4eefc9cdf04d54c2f0ccf10a643160342cbb0e01a7944f9aae",
+        "card_id": "of-houses-094",
+        "imported_path": "res://.godot/imported/of-houses-094.png-540841b26107f15d948b36f8d0e5a9d0.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 127592,
+        "actual_packed_ctex_sha256": "46096741dd84ecad43380e6b3a8865f80830ab53798ddcf29f0b6b4efdd69704",
+        "card_id": "of-morph-003",
+        "imported_path": "res://.godot/imported/of-morph-003.png-08dc3bd8db284c8b3a4e38de9e4e01b3.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 124100,
+        "actual_packed_ctex_sha256": "c5b4daa5e3cd6e5cacff50fd8ca5861ed1d3a82f884763c81e83db55feb2b307",
+        "card_id": "of-morph-082",
+        "imported_path": "res://.godot/imported/of-morph-082.png-b2516253bbc3bc884fe40ffa6fa5ad99.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 77492,
+        "actual_packed_ctex_sha256": "fe2f9e8905e636f510ff92e845fa7097d3adc4a5f94f4267a8d4beecb576a117",
+        "card_id": "of-neutral-049",
+        "imported_path": "res://.godot/imported/of-neutral-049.png-37f920d99b160c41339f261d8d05253c.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 99190,
+        "actual_packed_ctex_sha256": "8aeb2c1ae6d81855295e7af7e00a9a6f358888026840e93413e84bf817d2d4fe",
+        "card_id": "of-neutral-083",
+        "imported_path": "res://.godot/imported/of-neutral-083.png-f341283787056f15ec2b8fd2da0bf992.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 62348,
+        "actual_packed_ctex_sha256": "6bb877bba44bd0651c9211408baf4868b0457d2dd118d58a1c988895b80450aa",
+        "card_id": "of-ninth-019",
+        "imported_path": "res://.godot/imported/of-ninth-019.png-f688fb13f7617110b3fb4f9a97f74b6c.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 80030,
+        "actual_packed_ctex_sha256": "c4cb17539805522e637acf18fba0e47ad9cab3b74caf2eb1c4518aa8a2cc5542",
+        "card_id": "of-ninth-095",
+        "imported_path": "res://.godot/imported/of-ninth-095.png-d47aeb5e757a9418b0691b520756180c.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 110178,
+        "actual_packed_ctex_sha256": "34880c57ae46e7c8fd0b252babfe3ea75cd835e63c5d35773e6e0e85ea391a77",
+        "card_id": "of-stillwatch-043",
+        "imported_path": "res://.godot/imported/of-stillwatch-043.png-df237b6b4b1bb961245736ac80e1f319.ctex"
+      },
+      {
+        "actual_packed_ctex_bytes": 98744,
+        "actual_packed_ctex_sha256": "24297a76aa3427daeb38ceea22468fc6b4f9eb7be468a193a71c8d2feae4f858",
+        "card_id": "of-stillwatch-055",
+        "imported_path": "res://.godot/imported/of-stillwatch-055.png-57313435ec57348b849e00ccb4015b02.ctex"
+      }
+    ],
+    "scope": "Actual exported Web PCK in empty cwd/path; imported texture byte lengths, not projected files"
+  }
+}

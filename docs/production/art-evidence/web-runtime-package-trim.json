@@ -1,0 +1,66 @@
+{
+  "scope": "Metadata-only Web QA and Alpha Web QA packaging; no runtime/card/asset/source-metadata changes",
+  "measurement_source": "Working-tree patch over b6f39bd7cfdb250a80fd1cbf208da7244698d364; exact committed rebuild follows",
+  "before": {
+    "build_commit": "17134e4daf5f0bd0203294e125e1803ec973d279",
+    "pck_name": "orafold-17134e4daf5f.pck",
+    "pck_bytes": 22404608,
+    "pck_sha256": "c4b40182d9979179ac3ad609896debcae26cf575c5f112478ffcf01d58bdacc3",
+    "resource_bytes": 22348490
+  },
+  "after": {
+    "pck_name": "orafold-b6f39bd7cfdb.pck",
+    "pck_bytes": 17159136,
+    "pck_sha256": "c747844abdd0f3b60c1c232bcef49bfe859f11549331c2459d20e76d2d57c8d5",
+    "resource_bytes": 17103418,
+    "isolated_art_assertions": 5535,
+    "failures": 0,
+    "actual_runtime_card_ids": 550,
+    "full_textures": 0,
+    "pinned_previews": 5,
+    "missing_build_metadata": [
+      "res://data/production/art_sources.json",
+      "res://data/production/art_source_map.json",
+      "res://data/production/art_briefs.json",
+      "res://data/production/authoring.json",
+      "res://data/production/art_previews.json"
+    ],
+    "retained_runtime_manifests": [
+      "res://data/production/cards.json",
+      "res://data/production/art_manifest.json",
+      "res://data/production/art_delivery.json",
+      "res://data/production/art_preview_delivery.json",
+      "res://data/production/test_decks.json"
+    ]
+  },
+  "excluded_metadata": {
+    "art_sources.json": {
+      "bytes": 3119731,
+      "sha256": "6eafb4bdf0852dd0ecc0e3f7211e915e718955607e31babab54e3d52c891f6ef"
+    },
+    "art_source_map.json": {
+      "bytes": 945184,
+      "sha256": "626cc3e4a2684c1eaf152e85fdc79eea508dcf6e5e0fc5654ac30bd46ef094dd"
+    },
+    "art_briefs.json": {
+      "bytes": 587938,
+      "sha256": "c233283fe5b4bc8a43de8be12c329d09f33fc4bfcb363e8488d1d4a87db91421"
+    },
+    "authoring.json": {
+      "bytes": 277516,
+      "sha256": "5aa43a4eb6b3d140f1b399d307dd9d027b2332bd3e7bf36334928ab592604f2a"
+    },
+    "art_previews.json": {
+      "bytes": 314703,
+      "sha256": "05bfd17211441d071a87ccaea52e15faa829fad66c73ee6cf9bd388eb0546c59"
+    }
+  },
+  "saved_resource_bytes": 5245072,
+  "saved_pck_bytes": 5245472,
+  "native_archive_legacy_export_presets": "exactly unchanged",
+  "limits": [
+    "Size measurement only; no network/load-time measurement or claim",
+    "No physical iPhone/Android device test in this CLI check",
+    "Build-only metadata and originals remain immutable in repository; native canonical provenance checks retained"
+  ]
+}

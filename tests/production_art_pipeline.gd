@@ -15,14 +15,15 @@ func run() -> void:
 	ART.clear_cache(true)
 	check(ART.stats().retained_textures == 0, "manifest/renderer do not eagerly load all 550 illustrations")
 	var image_hashes: Dictionary = {}
-	for id in ["oa-neutral-c02", "oa-stillwatch-c01", "oa-morph-c01", "oa-houses-c01", "oa-ninth-c01"]:
+	var source: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/production/art_sources.json"))
+	for id in source.entries:
 		var record = ART.manifest_entry(id)
 		check(record.individual_original and record.status == "final" and record.production_review == "approved", "individual original has completed visual review state " + id)
 		check(not record.commercially_cleared, "no automatic legal clearance " + id)
 		var resolved = ART.resolve({"id": id})
 		check(resolved.texture is Texture2D, "real imported illustration is loadable " + id)
 		if resolved.texture == null: continue
-		check(resolved.texture.get_size() == Vector2(1448, 1086), "native dimensions retained; no upscaling " + id)
+		check(resolved.texture.get_size() == Vector2(record.original_width, record.original_height), "native dimensions retained; no upscaling " + id)
 		check(resolved.status == "final" and resolved.label.is_empty() and resolved.individual, "visually approved individual rendered as final " + id)
 		var pixels = resolved.texture.get_image()
 		var digest = hash(pixels.get_data())
@@ -58,5 +59,5 @@ func run() -> void:
 	face.free()
 	ART.clear_cache()
 	check(ART.stats().retained_textures == 0 and ART.stats().estimated_retained_bytes == 0, "explicit memory-pressure release clears retained references")
-	print("PRODUCTION ART PIPELINE: %d assertions, %d failures; 5 real individual originals, missing fallback, security paths and bounded lazy cache" % [assertions, failures])
+	print("PRODUCTION ART PIPELINE: %d assertions, %d failures; %d real individual originals, missing fallback, security paths and bounded lazy cache" % [assertions, failures, source.entries.size()])
 	root.get_node("GameAudio").request_quit(0 if failures == 0 else 1)

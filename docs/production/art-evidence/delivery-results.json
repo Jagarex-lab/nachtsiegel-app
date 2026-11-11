@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "source_base_commit": "d880c450baa5a9644c6065ed0a2f3677a9514d49",
+  "provisional_working_tree": true,
+  "exact_git_source": false,
+  "scope": "Actual local native/HTTP/PCK/ZIP and two-phase simulated-browser tests; not a release, physical-device test, total-memory cap, or complete550-image delivery.",
+  "current_individual_originals": 15,
+  "missing_individual_originals": 535,
+  "commercially_cleared": 0,
+  "artifacts": {
+    "web_pck": {
+      "path": "work/alpha/web/orafold-d880c450baa5.pck",
+      "bytes": 15294284,
+      "sha256": "063038c07e04451c8a50835124de373a5ebb032eef437a79096132c34d1abbb9"
+    },
+    "native_pck": {
+      "path": "work/production-art/native-art.pck",
+      "bytes": 33505260,
+      "sha256": "1ec7bedb9abf3b92937b7b57c4dacebef3e82e3ed669e11dbf52908170d82015"
+    },
+    "zip": {
+      "path": "work/alpha/orafold-alpha-0.3-d880c450baa5.zip",
+      "bytes": 27867527,
+      "sha256": "66fa15994d6a990f603992da2411809e87f17aedb6571e7725788d763f4d0cc7"
+    }
+  },
+  "source_file_sha256": {
+    "export_presets.cfg": "2136e8f8501320a5a13997f698cb87cddc8963f213bec0bd776ae984c3828693",
+    "project.godot": "a46b702d19c84f17f167fb41f0f2d6135bb5c1d8cbcdedc42353be2cc5331148",
+    "scripts/alpha/card_view.gd": "763419182532cee7362d5e0491bd3d778ed473ea60cf807e3fe26d34991b2592",
+    "scripts/alpha/shell.gd": "1f44481a87c255c18f7e94d195c69685f362ba55abce59c5f546ae7abc0a94c9",
+    "scripts/card_system/card_face.gd": "768c82c95ca5c665b3873af6099b04fcb7acc7753713aec1255eb90cc74f3eb0",
+    "scripts/production/art_resolver.gd": "3a848f2dec558af0162df24c3710495f54b738428029aff533d47c0ad69b5d88",
+    "scripts/production/art_delivery.gd": "0a2190975b2073455ff13627aff3e4268c50a57e93f7d8785a7a73a37e85ae0f",
+    "scripts/production/art_quality_label.gd": "04cf0d5cba5667068116168c43a327b759b87e1561eca92bc0350dba4aff2abf",
+    "data/production/art_delivery.json": "78f66e93995b5c6433c94865cfaa101f96e5d346d5bb318a12ba93329885860b",
+    "tools/build_alpha.sh": "a4fd6956975dcf5b2805255991f62b8d916c1966c391e0323817c4e6ece3f784",
+    "tools/package_alpha.py": "16ebc1be85d8c8acdf1f05303aba769df525c19c84bf7085aa89a1ae5b5ed4b3",
+    "tools/production/prepare_art_delivery.gd": "5eed909135ab27b0890d11ab7cd1d3fe464774acb2357555cbbfc79d6316976a",
+    "tools/production/stage_art_delivery.py": "988bfd0e9763f4485b77c923ba43c68ea2dd50b272269694482aa885aeeb282d"
+  },
+  "derivative_regeneration": {
+    "assertions": 77,
+    "failures": 0
+  },
+  "actual_missing_cache_reconstruction": {
+    "assertions": 37,
+    "failures": 0,
+    "metadata_unchanged": true,
+    "encoded_bytes_identical": true
+  },
+  "http": {
+    "actual_source_dimensions": [
+      1448,
+      1086
+    ],
+    "assertions": 74,
+    "failures": 0,
+    "http_rejection_cases": [
+      "404",
+      "same-length SHA mismatch",
+      "dimension mismatch after verified SHA",
+      "redirect refused",
+      "connection closed without response",
+      "response over 8 MiB"
+    ],
+    "http_success": 6,
+    "queue_limit": 4,
+    "scope": "actual loopback HTTP and native runtime; browser proof is separate"
+  },
+  "isolated_pack_results": {
+    "web": {
+      "actual_originals": 0,
+      "actual_previews": 15,
+      "assertions": 144,
+      "failures": 0,
+      "mode": "web",
+      "process_working_directory": "/workspace/orafold-art-production/work/production-art/.pack-inspection.F9m7Le",
+      "resource_root": "",
+      "source_files_visible": false
+    },
+    "native": {
+      "actual_originals": 15,
+      "actual_previews": 15,
+      "assertions": 144,
+      "failures": 0,
+      "mode": "native",
+      "process_working_directory": "/workspace/orafold-art-production/work/production-art/.pack-inspection.7oLCbM",
+      "resource_root": "",
+      "source_files_visible": false
+    }
+  },
+  "native_visible_cache": {
+    "assertions": 38,
+    "failures": 0,
+    "measurement": {
+      "after_redraws": {
+        "cache_byte_limit": 33554432,
+        "cache_entry_limit": 48,
+        "estimated_retained_bytes": 24115456,
+        "hits": 15,
+        "loads": 16,
+        "profiles": {
+          "compact": 15,
+          "full": 1
+        },
+        "retained_textures": 16,
+        "thumbnail_builds": 0
+      },
+      "assertions": 38,
+      "before_redraws": {
+        "cache_byte_limit": 33554432,
+        "cache_entry_limit": 48,
+        "estimated_retained_bytes": 24115456,
+        "hits": 15,
+        "loads": 16,
+        "profiles": {
+          "compact": 15,
+          "full": 1
+        },
+        "retained_textures": 16,
+        "thumbnail_builds": 0
+      },
+      "failures": 0,
+      "first_draw_usec": 1819885,
+      "originals": 15,
+      "redraws": 20,
+      "renderer_texture_bytes": 43085385,
+      "scope": "Linux software renderer; no physical iPhone claim; estimates exclude other browser memory"
+    }
+  },
+  "unit_tests": {
+    "provenance": 8,
+    "packaging_and_staging_boundaries": 11,
+    "staging_success_and_rollback": 6,
+    "exact_web_guard_scoping_and_release": 4,
+    "failures": 0
+  },
+  "browser": {
+    "assertions": 236,
+    "unexpected_failures": 0,
+    "actual_contexts": 10,
+    "single_run": false,
+    "results": "delivery-browser-results.json",
+    "provenance": "delivery-browser-provenance.json"
+  },
+  "oversized_response_scope": "Actual over8MiB responses were rejected with previews retained; expected-byte mismatch and transport limit were not independently distinguished.",
+  "preview_measurement": "preview-byte-measurement.json",
+  "follow_up": "Rebuild the fourth commit at its exact SHA, then integrate/rebuild against frozen Core. A separate fifth stage will externalize non-pinned previews."
+}
