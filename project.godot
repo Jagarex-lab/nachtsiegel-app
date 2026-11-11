@@ -7,6 +7,7 @@ config_version=5
 config/name="ORAFOLD"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="godot/app_userdata/NACHTSIEGEL"
+config/custom_user_dir_name.native_smoke_qa="godot/app_userdata/ORAFOLD_NATIVE_QA"
 config/icon="res://assets/icon.svg"
 run/main_scene="res://scenes/alpha_shell.tscn"
 run/main_scene.archive_qa="res://scenes/front_end.tscn"

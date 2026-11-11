@@ -264,7 +264,7 @@ func _apply_death_effect(event: Dictionary, card: Dictionary) -> void:
 	var p: Dictionary=state[event.side]
 	var unit: Dictionary=event.unit
 	if card.effect=="harvest":
-		p.resonance=mini(15,int(p.resonance)+int(card.power)+1)
+		p.resonance=mini(resonance_limit(),int(p.resonance)+int(card.power)+1)
 		_trace("harvest",event.side,{"card_id":unit.id})
 func attack_phase(side: String) -> bool:
 	if not _valid_side(side) or state.winner!=null:return false
@@ -358,8 +358,9 @@ func execute(command: String, args: Array) -> Dictionary:
 		"fortify":ok=fortify(args[0],args[1])
 		"endTurn":ok=end_turn(args[0])
 	return {"ok":ok,"reason":"" if ok else "invalid_action"}
+func resonance_limit() -> int:return 15
 func add_res(player: Dictionary, amount: int) -> void:
-	player.resonance=mini(15,int(player.resonance)+amount)
+	player.resonance=mini(resonance_limit(),int(player.resonance)+amount)
 func _resolve_summon(event: Dictionary) -> void:
 	if state.winner!=null:return
 	var side: String=event.side

@@ -23,9 +23,13 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
    const tap=async r=>{await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
    const encloses=(outer,inner)=>outer&&inner&&inner[0]>=outer[0]-.1&&inner[1]>=outer[1]-.1&&inner[0]+inner[2]<=outer[0]+outer[2]+.1&&inner[1]+inner[3]<=outer[1]+outer[3]+.1;
    const viewportRect=()=>[0,0,page.viewportSize().width,page.viewportSize().height];
+   const touchRect=(current,id)=>id.startsWith('card_')&&current.action_visibility?.[id]?current.action_visibility[id].visible_rect:current.actions[id].rect;
    const fullVisible=(current,id)=>{
     const a=current.actions[id],visibility=current.action_visibility?.[id];
     if(!visibility){assert(legacyOnly,'production clip diagnostics unsupported for '+id);return encloses(viewportRect(),a.rect);}
+    // A library CardView can exceed the scroll viewport. Its visible body must
+    // still supply a real44x44 touch region; ordinary buttons stay fully visible.
+    if(id.startsWith('card_'))return encloses(viewportRect(),visibility.visible_rect)&&encloses(a.rect,visibility.visible_rect)&&encloses(visibility.clip_rect,visibility.visible_rect)&&visibility.visible_rect[2]>=43.9&&visibility.visible_rect[3]>=43.9;
     return encloses(viewportRect(),a.rect)&&encloses(visibility.clip_rect,a.rect)&&encloses(visibility.visible_rect,a.rect)&&visibility.visible_rect[2]>=43.9&&visibility.visible_rect[3]>=43.9;
    };
    async function panTowards(current,id){
@@ -65,9 +69,10 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       const r=previous.actions[id].rect,v=page.viewportSize();await page.mouse.move(Math.max(1,Math.min(v.width-1,r[0]+r[2]/2)),v.height*.6);await page.mouse.wheel(0,r[1]<0?-v.height*.55:v.height*.55);await page.waitForTimeout(140);previous=await state();
      }
     }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);previous=await state();}
-    assert(fullVisible(previous,id),id+' full44CSS control visible within ancestor clipping');
-    actionTrace.push({id,kind:'tap',rect:previous.actions[id].rect,visibility:previous.action_visibility?.[id]||null});
-    await tap(previous.actions[id].rect);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});
+    assert(fullVisible(previous,id),id+' requires a visible44CSS card region or a fully visible button');
+    const hit=touchRect(previous,id);assert(hit[2]>=43.9&&hit[3]>=43.9,id+' actual touch region remains44CSS');
+    actionTrace.push({id,kind:'tap',rect:previous.actions[id].rect,hit_rect:hit,visibility:previous.action_visibility?.[id]||null});
+    await tap(hit);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});
    };
    const capture=engine==='chromium'?await context.newCDPSession(page):null;
    const shot=async tag=>{
@@ -169,12 +174,12 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
      const inside=r=>r[0]>=(insets?.left||0)&&r[1]>=(insets?.top||0)&&r[0]+r[2]<=viewport.width-(insets?.right||0)+1&&r[1]+r[3]<=viewport.height-(insets?.bottom||0)+1;
      // Cards are sorted by energy/name. A fixed card ID can be below the
      // ScrollContainer's visible first row; its full rect still exists in QA.
-     // Inspect an actual fully visible card using browser touch, never an
-     // offscreen coordinate or a direct game-model/test-hook call.
-     const visible=Object.entries(collection.actions).filter(([id,a])=>id.startsWith('card_')&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9&&inside(a.rect)).sort((a,b)=>a[1].rect[1]-b[1].rect[1]||a[1].rect[0]-b[1].rect[0]);
+     // Inspect through the card's actual visible44CSS region. Its full176px
+     // body may exceed a short scroll viewport; no offscreen/model hook is used.
+     const visible=Object.entries(collection.actions).filter(([id,a])=>{const hit=touchRect(collection,id);return id.startsWith('card_')&&!a.disabled&&hit[2]>=43.9&&hit[3]>=43.9&&inside(hit);}).sort((a,b)=>touchRect(collection,a[0])[1]-touchRect(collection,b[0])[1]||touchRect(collection,a[0])[0]-touchRect(collection,b[0])[0]);
      assert(visible.length>0,'collection has an actual visible >=44CSS card');
      const [id,target]=visible[0],card=by[id.slice('card_'.length)];assert(card,'visible collection action identifies a real card');
-     inspectedCard={id:card.id,name:card.name,rect:target.rect};
+     inspectedCard={id:card.id,name:card.name,rect:target.rect,hit_rect:touchRect(collection,id)};
      await action(id);const detail=await state();
      assert(detail.modal&&detail.actions.inspect_target&&detail.actions.modal_close,'card inspector with explicit close actions');
      assert(detail.modal_version>collection.modal_version,'inspection opened a new modal');

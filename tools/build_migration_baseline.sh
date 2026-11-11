@@ -5,7 +5,10 @@ cd "$(dirname "$0")/.."
 baseline_commit=2b8ea627853b29ac80a5fca2f1c7a00253f92666
 mkdir -p work/production work/xdg/{data,config,cache}
 touch work/.gdignore
-export XDG_DATA_HOME="$PWD/work/xdg/data" XDG_CONFIG_HOME="$PWD/work/xdg/config" XDG_CACHE_HOME="$PWD/work/xdg/cache"
+# Keep the caller's template directory. CI installs official templates in the
+# default data home; replacing it with the isolated test-save directory hides
+# those templates and makes the pinned export fail before package inspection.
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}" XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}" XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 export LP_NUM_THREADS="${LP_NUM_THREADS:-2}"
 if ! git cat-file -e "$baseline_commit^{commit}" 2>/dev/null; then
   git fetch --no-tags origin "$baseline_commit"
@@ -24,11 +27,14 @@ trap 'exit 130' INT
 trap 'exit 143' TERM
 git worktree add --detach "$baseline_source" "$baseline_commit"
 baseline_registered=1
-(
+if ! (
   cd "$baseline_source"
   test "$(git rev-parse HEAD)" = "$baseline_commit"
   tools/build_alpha.sh
-) > work/production/baseline-export.log 2>&1
+) > work/production/baseline-export.log 2>&1; then
+  cat work/production/baseline-export.log
+  exit 1
+fi
 cp -a "$baseline_source/work/alpha/web/." "$baseline_stage/"
 python3 - "$baseline_commit" "$baseline_stage" <<'PY'
 import json,sys

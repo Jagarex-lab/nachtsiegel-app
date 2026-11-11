@@ -208,7 +208,7 @@ func _effect_score(model: RefCounted, side: String, ability: Dictionary, lane: i
 			if p.deck.is_empty(): score = -2.0
 		"resources", "gain_energy", "gain_resonance", "weave", "harvest", "relic_res":
 			if effect=="gain_energy" or params.get("resource", "resonance") == "energy": score = amount * (1.2 if p.hand.size() > 1 else 0.2)
-			else: score = minf(amount, maxf(0.0, 15.0 - float(p.resonance))) * 0.45
+			else: score = minf(amount, maxf(0.0, float(model.resonance_limit()) - float(p.resonance))) * 0.45
 		"modify_attack", "rally":
 			if own != null: score = amount * (1.1 if model.can_fight(side,lane) else 0.55)
 			elif kind == "creature": score = amount * 0.6
@@ -363,7 +363,7 @@ func _try_relic(model: RefCounted, side: String) -> void:
 	var card: Dictionary = model.catalog.card(p.relic.id)
 	var effect := str(card.get("effect",""))
 	if int(p.energy) < 1: return
-	if (effect == "relic_heal" and int(p.hp) < int(p.maxHp)) or (effect == "relic_ward" and int(p.ward) < 25) or (effect == "relic_res" and int(p.resonance) < 15) or effect == "relic_draw": _act(model,side,"activate_relic",[side])
+	if (effect == "relic_heal" and int(p.hp) < int(p.maxHp)) or (effect == "relic_ward" and int(p.ward) < 25) or (effect == "relic_res" and int(p.resonance) < model.resonance_limit()) or effect == "relic_draw": _act(model,side,"activate_relic",[side])
 
 func _try_burst(model: RefCounted, side: String) -> void:
 	var p: Dictionary = model.state[side]

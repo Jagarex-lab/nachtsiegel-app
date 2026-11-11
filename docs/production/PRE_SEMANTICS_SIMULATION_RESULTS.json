@@ -1,0 +1,8671 @@
+{
+  "schema_version": 1,
+  "profile": "production-550-v1",
+  "godot": "4.6.3-stable (official)",
+  "quick": false,
+  "shard_index": 0,
+  "shard_count": 4,
+  "aggregated": true,
+  "shards": [
+    {
+      "index": 0,
+      "games": 212,
+      "verification_games": 4,
+      "file": "simulations-shard-0-of-4.json",
+      "sha256": "6937c9c63cf13195f80ba08ae64d148b6fdf6e4bd41ee303ddfa0b29bdc434f4"
+    },
+    {
+      "index": 1,
+      "games": 212,
+      "verification_games": 5,
+      "file": "simulations-shard-1-of-4.json",
+      "sha256": "5a71a8534e1e9216dfd47a3779ebcafe327827233dd16ed91b2bebbc9e2aaee7"
+    },
+    {
+      "index": 2,
+      "games": 212,
+      "verification_games": 5,
+      "file": "simulations-shard-2-of-4.json",
+      "sha256": "ef848cf6dec2f25ba13dbada5fa1746e30a5433922431a6d0cd061fc5b654df0"
+    },
+    {
+      "index": 3,
+      "games": 212,
+      "verification_games": 4,
+      "file": "simulations-shard-3-of-4.json",
+      "sha256": "021a1a36f5a65e55c6ad672de6431ea26ebab8aeae4bdd345bc26eeff1a6f2e7"
+    }
+  ],
+  "seeds_per_first_side": 2,
+  "expected_global_matrix_games": 848,
+  "expected_matrix_games": 848,
+  "matrix_games": 848,
+  "strategy_matrix_games": 784,
+  "starter_matrix_games": 64,
+  "additional_verification_games": 18,
+  "expected_verification_games": 18,
+  "fresh_constructor_verification_games": 8,
+  "assertions": 2688,
+  "failures": 0,
+  "measurement_notes": [
+    "Full real model matches, standard30-card/30HP rules; no altered resource rules.",
+    "Each ordered pair has equal counts for hero/enemy first, seeds selected deterministically.",
+    "AI reads only public opponent board/hero values and its own cards; no bonus resources.",
+    "Immutable validated configuration is shared between fresh match instances; first two deterministic repeats use wholly fresh constructors and compare complete final state/event order.",
+    "action_net_resonance totals are measured net changes per AI action; automatic effects between actions and cancelling simultaneous gains/spends are not a gross resource-flow accounting.",
+    "known_card_energy_paid counts printed successfully played card costs; it excludes relic/tactic costs and automatic gains.",
+    "These heuristic AI games do not prove human metagame balance or exhaustive550-card interactions.",
+    "Quick strategy mode covers only a ring of fourteen strategy pairs; full mode covers196 ordered strategy pairs. Both include16 ordered starter pairs.",
+    "Aggregate verifies every successful shard source binding, disjoint predeclared case sets, exact212 directed pair coverage,848 cases at default sampling, and balanced first sides; it generates no games."
+  ],
+  "source_sha256": {
+    "data/alpha/cards.json": "0e5fcc20589961c5bdca662642870bc9abfc483b0ef2aebfbbf88be2876355ef",
+    "data/card_system/alpha_species.json": "e064020b50ba8584999eb7e2e8aa6f601ec41719e89cace249b0d689e3f7e531",
+    "data/card_system/registry.json": "0d4731ff5dead611844cbb68db1b0b8fd65a712245375f5244c546aa3dcbfc54",
+    "data/production/cards.json": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+    "data/production/starters.json": "79dbb5705c4f82f77ae5bd52ec4842e79b8dc47ede218acd3dc6bcccec848f52",
+    "data/production/test_decks.json": "0e35b231be3ac4420ca9ab257ad0146ba2dd248b578555ff44a7f28e6cc18bd0",
+    "scripts/alpha/catalog.gd": "fc8fbdb5822a0ae9a23f114227d90a8f67dfa27e8aaf0e72b7ca402163eb9374",
+    "scripts/alpha/model.gd": "e1e278afce7f711022a5ad8ddb0b2ed8c13f4b5f15a047e8b1b22fa4d9460da2",
+    "scripts/card_system/production_effects.gd": "e33d48710b4a2e1b0c24ddb55b8ac584fb51a9ea2149f5274fa294a71ebb7484",
+    "scripts/card_system/production_model.gd": "4d1ed5652514cbc3e13a69cfea3784b1f42cb6a309ce15206966237ab8de9b27",
+    "scripts/card_system/registry.gd": "3d9dd99e032bd12c3dafce0535051cf354d99698048dee3ca7bf852ce7cc65da",
+    "scripts/card_system/runtime.gd": "ca2be2fc49f1a18748b3b887610655acdccac134cef6664ffe003cb93adbc8ad",
+    "scripts/card_system/trigger_model.gd": "ea1e5c0f441d14f0a051a6d859fcd7e66c3a5a1978af3d5a05cd8bf8fde5deee",
+    "scripts/legacy/battle_engine.gd": "857935d2d314393815d4cb97670e0fac9a85f6c3d873723e62dbf0d6c1af5559",
+    "scripts/legacy/rng.gd": "7b3bf48f8e66d51ff24ec5fdfefffbaac8847efee171407be498b34f47847abf",
+    "scripts/production/ai_policy.gd": "06aaca3502ebca7e9e0c83cbceb1a41fd77133e5ce0d0ff259c964fef0a9f2cf",
+    "scripts/production/catalog.gd": "7d7f8e158ddfbfb1365efee0ef504f023013fea70507bed402cbe3fff137ffe8",
+    "tests/production_simulations.gd": "54fdd86fb2b11e52cceb5d5f6767a6e74508acd0cc595bfea628a06204a514ff"
+  },
+  "source_changes_during_run": [],
+  "planned_cases": [
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 5
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-houses",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 7
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 7
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-morph",
+      "seed": 7
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 5
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-ninth",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-houses",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-morph",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 5
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 4
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 0
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 1
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 2
+    },
+    {
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "group": "starter",
+      "hero": "starter-stillwatch",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 5
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-aggro",
+      "seed": 7
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-block",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-control",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-convergence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-impulse",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-midrange",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-movement",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-recurrence",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-relic",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resonance",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-resource",
+      "seed": 3
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-shield",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-species",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-aggro",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-block",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-block",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-control",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-control",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-convergence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-impulse",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-midrange",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-movement",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-recurrence",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-relic",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resonance",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-resource",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-shield",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-species",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-species",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 0
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 1
+    },
+    {
+      "enemy": "prod-time",
+      "first": "enemy",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 2
+    },
+    {
+      "enemy": "prod-time",
+      "first": "hero",
+      "group": "strategy",
+      "hero": "prod-time",
+      "seed": 4
+    }
+  ],
+  "negative_evidence_guard_tests": 10,
+  "summary": {
+    "games": 848,
+    "completed": 848,
+    "censored": 0,
+    "errors": 0,
+    "draws": 0,
+    "first_wins": 528,
+    "convergence_wins": 35,
+    "hero_damage_wins": 813,
+    "round_sum": 19648,
+    "deck_results": {
+      "starter-houses": {
+        "games": 32,
+        "wins": 20,
+        "first_games": 16,
+        "first_wins": 10,
+        "convergence_wins": 1,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 16
+      },
+      "starter-morph": {
+        "games": 32,
+        "wins": 13,
+        "first_games": 16,
+        "first_wins": 9,
+        "convergence_wins": 0,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 9
+      },
+      "starter-ninth": {
+        "games": 32,
+        "wins": 18,
+        "first_games": 16,
+        "first_wins": 8,
+        "convergence_wins": 3,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 14
+      },
+      "starter-stillwatch": {
+        "games": 32,
+        "wins": 13,
+        "first_games": 16,
+        "first_wins": 5,
+        "convergence_wins": 2,
+        "nonmirror_games": 24,
+        "nonmirror_wins": 9
+      },
+      "prod-aggro": {
+        "games": 112,
+        "wins": 58,
+        "first_games": 56,
+        "first_wins": 42,
+        "convergence_wins": 2,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 44
+      },
+      "prod-block": {
+        "games": 112,
+        "wins": 20,
+        "first_games": 56,
+        "first_wins": 14,
+        "convergence_wins": 1,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 12
+      },
+      "prod-control": {
+        "games": 112,
+        "wins": 56,
+        "first_games": 56,
+        "first_wins": 36,
+        "convergence_wins": 4,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 32
+      },
+      "prod-convergence": {
+        "games": 112,
+        "wins": 58,
+        "first_games": 56,
+        "first_wins": 42,
+        "convergence_wins": 4,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 37
+      },
+      "prod-impulse": {
+        "games": 112,
+        "wins": 47,
+        "first_games": 56,
+        "first_wins": 29,
+        "convergence_wins": 3,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 39
+      },
+      "prod-midrange": {
+        "games": 112,
+        "wins": 53,
+        "first_games": 56,
+        "first_wins": 32,
+        "convergence_wins": 1,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 43
+      },
+      "prod-movement": {
+        "games": 112,
+        "wins": 56,
+        "first_games": 56,
+        "first_wins": 40,
+        "convergence_wins": 0,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 42
+      },
+      "prod-recurrence": {
+        "games": 112,
+        "wins": 51,
+        "first_games": 56,
+        "first_wins": 37,
+        "convergence_wins": 0,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 40
+      },
+      "prod-relic": {
+        "games": 112,
+        "wins": 83,
+        "first_games": 56,
+        "first_wins": 43,
+        "convergence_wins": 1,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 68
+      },
+      "prod-resonance": {
+        "games": 112,
+        "wins": 79,
+        "first_games": 56,
+        "first_wins": 48,
+        "convergence_wins": 1,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 58
+      },
+      "prod-resource": {
+        "games": 112,
+        "wins": 72,
+        "first_games": 56,
+        "first_wins": 38,
+        "convergence_wins": 3,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 50
+      },
+      "prod-shield": {
+        "games": 112,
+        "wins": 35,
+        "first_games": 56,
+        "first_wins": 27,
+        "convergence_wins": 4,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 24
+      },
+      "prod-species": {
+        "games": 112,
+        "wins": 46,
+        "first_games": 56,
+        "first_wins": 31,
+        "convergence_wins": 1,
+        "nonmirror_games": 88,
+        "nonmirror_wins": 38
+      },
+      "prod-time": {
+        "games": 112,
+        "wins": 70,
+        "first_games": 56,
+        "first_wins": 37,
+        "convergence_wins": 4,
+        "nonmirror_games": 80,
+        "nonmirror_wins": 57
+      }
+    },
+    "power_results": {
+      "houses": {
+        "games": 368,
+        "wins": 207,
+        "first_games": 184,
+        "first_wins": 122,
+        "convergence_wins": 3,
+        "nonmirror_games": 288,
+        "nonmirror_wins": 167
+      },
+      "morph": {
+        "games": 368,
+        "wins": 173,
+        "first_games": 184,
+        "first_wins": 122,
+        "convergence_wins": 3,
+        "nonmirror_games": 288,
+        "nonmirror_wins": 133
+      },
+      "ninth": {
+        "games": 480,
+        "wins": 286,
+        "first_games": 240,
+        "first_wins": 160,
+        "convergence_wins": 14,
+        "nonmirror_games": 344,
+        "nonmirror_wins": 218
+      },
+      "stillwatch": {
+        "games": 480,
+        "wins": 182,
+        "first_games": 240,
+        "first_wins": 124,
+        "convergence_wins": 15,
+        "nonmirror_games": 344,
+        "nonmirror_wins": 114
+      }
+    },
+    "matchups": {
+      "starter-houses/starter-houses": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-houses/starter-morph": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-houses/starter-ninth": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-houses/starter-stillwatch": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-morph/starter-houses": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-morph/starter-morph": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-morph/starter-ninth": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-morph/starter-stillwatch": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-ninth/starter-houses": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-ninth/starter-morph": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-ninth/starter-ninth": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-ninth/starter-stillwatch": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-stillwatch/starter-houses": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-stillwatch/starter-morph": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-stillwatch/starter-ninth": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "starter-stillwatch/starter-stillwatch": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-aggro": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-control": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-convergence": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-impulse": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-midrange": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-movement": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-relic": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-resonance": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-resource": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-shield": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-species": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-aggro/prod-time": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-aggro": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-block": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-control": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-convergence": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-impulse": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-midrange": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-movement": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-relic": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-resonance": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-resource": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-shield": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-species": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-block/prod-time": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-aggro": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-control": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-convergence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-impulse": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-midrange": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-movement": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-relic": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-resonance": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-resource": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-shield": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-species": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-control/prod-time": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-aggro": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-control": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-convergence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-impulse": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-midrange": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-movement": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-relic": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-resonance": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-resource": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-shield": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-species": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-convergence/prod-time": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-aggro": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-control": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-convergence": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-impulse": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-midrange": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-movement": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-relic": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-resonance": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-resource": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-shield": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-species": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-impulse/prod-time": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-aggro": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-control": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-convergence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-impulse": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-midrange": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-movement": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-relic": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-resonance": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-resource": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-shield": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-species": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-midrange/prod-time": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-aggro": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-block": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-control": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-convergence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-impulse": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-midrange": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-movement": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-relic": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-resonance": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-resource": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-shield": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-species": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-movement/prod-time": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-aggro": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-control": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-convergence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-impulse": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-midrange": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-movement": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-relic": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-resonance": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-resource": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-shield": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-species": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-recurrence/prod-time": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-aggro": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-control": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-convergence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-impulse": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-midrange": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-movement": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-relic": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-resonance": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-resource": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-shield": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-species": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-relic/prod-time": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-aggro": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-block": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-control": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-convergence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-impulse": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-midrange": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-movement": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-relic": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-resonance": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-resource": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-shield": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-species": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resonance/prod-time": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-aggro": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-control": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-convergence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-impulse": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-midrange": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-movement": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-relic": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-resonance": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-resource": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-shield": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-species": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-resource/prod-time": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-aggro": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-block": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-control": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-convergence": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-impulse": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-midrange": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-movement": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-relic": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-resonance": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-resource": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-shield": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-species": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-shield/prod-time": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-aggro": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-control": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-convergence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-impulse": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-midrange": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-movement": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-relic": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-resonance": {
+        "games": 4,
+        "hero_wins": 0,
+        "enemy_wins": 4,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-resource": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-shield": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-species": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-species/prod-time": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-aggro": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-block": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-control": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-convergence": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-impulse": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-midrange": {
+        "games": 4,
+        "hero_wins": 3,
+        "enemy_wins": 1,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-movement": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-recurrence": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-relic": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-resonance": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-resource": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-shield": {
+        "games": 4,
+        "hero_wins": 4,
+        "enemy_wins": 0,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-species": {
+        "games": 4,
+        "hero_wins": 2,
+        "enemy_wins": 2,
+        "draws": 0,
+        "censored": 0
+      },
+      "prod-time/prod-time": {
+        "games": 4,
+        "hero_wins": 1,
+        "enemy_wins": 3,
+        "draws": 0,
+        "censored": 0
+      }
+    },
+    "card_uses": {
+      "oa-houses-c01": 109,
+      "of-houses-001": 1363,
+      "of-houses-038": 67,
+      "of-houses-045": 115,
+      "of-houses-052": 346,
+      "of-houses-057": 958,
+      "of-houses-062": 598,
+      "of-neutral-049": 657,
+      "of-neutral-056": 158,
+      "of-houses-010": 32,
+      "of-houses-058": 240,
+      "of-houses-082": 123,
+      "of-houses-086": 95,
+      "of-houses-094": 181,
+      "oa-neutral-c02": 40,
+      "of-houses-087": 66,
+      "of-houses-089": 33,
+      "of-houses-099": 97,
+      "of-houses-068": 33,
+      "of-houses-061": 254,
+      "of-houses-072": 69,
+      "oa-morph-c01": 319,
+      "of-morph-003": 128,
+      "of-morph-038": 185,
+      "of-morph-055": 53,
+      "of-morph-073": 58,
+      "of-morph-082": 35,
+      "of-morph-090": 55,
+      "of-neutral-007": 74,
+      "oa-morph-c07": 115,
+      "oa-morph-e02": 118,
+      "of-morph-001": 144,
+      "of-morph-037": 90,
+      "of-morph-076": 79,
+      "of-morph-096": 135,
+      "of-morph-013": 78,
+      "of-morph-031": 112,
+      "of-morph-032": 459,
+      "of-morph-043": 55,
+      "of-neutral-014": 57,
+      "of-houses-020": 78,
+      "oa-ninth-c01": 520,
+      "oa-ninth-e01": 53,
+      "of-neutral-095": 26,
+      "of-ninth-001": 64,
+      "of-ninth-019": 75,
+      "of-ninth-033": 65,
+      "of-ninth-043": 759,
+      "of-ninth-044": 512,
+      "of-ninth-045": 75,
+      "of-ninth-046": 262,
+      "of-ninth-050": 397,
+      "of-ninth-056": 164,
+      "of-ninth-065": 279,
+      "of-ninth-079": 125,
+      "of-ninth-015": 106,
+      "of-ninth-020": 49,
+      "of-ninth-051": 258,
+      "of-ninth-070": 298,
+      "of-ninth-090": 112,
+      "of-ninth-095": 91,
+      "oa-stillwatch-c01": 57,
+      "of-neutral-043": 269,
+      "of-neutral-050": 110,
+      "of-neutral-057": 80,
+      "of-neutral-064": 229,
+      "of-neutral-083": 57,
+      "of-stillwatch-001": 43,
+      "of-stillwatch-043": 275,
+      "of-stillwatch-046": 191,
+      "of-stillwatch-050": 264,
+      "of-stillwatch-055": 209,
+      "of-stillwatch-056": 267,
+      "of-stillwatch-057": 196,
+      "of-stillwatch-081": 342,
+      "of-stillwatch-083": 174,
+      "of-stillwatch-085": 196,
+      "of-stillwatch-097": 354,
+      "of-morph-084": 34,
+      "of-neutral-016": 89,
+      "of-stillwatch-016": 146,
+      "of-stillwatch-017": 188,
+      "of-stillwatch-019": 244,
+      "of-stillwatch-021": 210,
+      "of-stillwatch-026": 286,
+      "of-morph-029": 44,
+      "oa-stillwatch-c02": 84,
+      "oa-stillwatch-c07": 176,
+      "of-neutral-025": 183,
+      "of-stillwatch-002": 66,
+      "of-stillwatch-015": 92,
+      "of-stillwatch-020": 83,
+      "of-stillwatch-023": 135,
+      "of-stillwatch-080": 183,
+      "of-stillwatch-086": 168,
+      "of-neutral-073": 88,
+      "of-neutral-087": 77,
+      "of-stillwatch-075": 62,
+      "of-stillwatch-078": 56,
+      "of-stillwatch-009": 86,
+      "of-stillwatch-040": 67,
+      "of-stillwatch-045": 143,
+      "of-stillwatch-064": 82,
+      "of-stillwatch-066": 61,
+      "of-stillwatch-069": 67,
+      "of-stillwatch-084": 71,
+      "oa-stillwatch-e02": 129,
+      "of-stillwatch-003": 53,
+      "of-stillwatch-005": 27,
+      "of-stillwatch-031": 71,
+      "of-stillwatch-061": 70,
+      "of-stillwatch-087": 69,
+      "of-stillwatch-033": 35,
+      "of-stillwatch-051": 230,
+      "of-stillwatch-053": 81,
+      "of-neutral-063": 61,
+      "of-ninth-008": 78,
+      "of-ninth-057": 68,
+      "of-ninth-009": 62,
+      "of-ninth-087": 173,
+      "of-ninth-004": 76,
+      "of-ninth-055": 32,
+      "of-ninth-060": 49,
+      "of-ninth-082": 326,
+      "of-ninth-086": 30,
+      "of-ninth-014": 64,
+      "oa-houses-c07": 153,
+      "of-houses-064": 17,
+      "of-morph-039": 126,
+      "of-morph-002": 140,
+      "of-morph-093": 79,
+      "oa-morph-e01": 86,
+      "of-morph-030": 15,
+      "of-morph-044": 137,
+      "of-morph-085": 27,
+      "oa-neutral-c01": 355,
+      "of-houses-029": 170,
+      "of-neutral-086": 68,
+      "oa-houses-e01": 84,
+      "oa-ninth-c06": 430,
+      "of-ninth-016": 57,
+      "of-ninth-081": 136,
+      "oa-neutral-c09": 363,
+      "of-ninth-084": 259,
+      "of-ninth-096": 139,
+      "of-ninth-068": 153,
+      "of-ninth-078": 60,
+      "of-ninth-091": 74,
+      "oa-ninth-c07": 125,
+      "of-ninth-047": 196,
+      "of-neutral-059": 111,
+      "of-morph-027": 91,
+      "of-morph-063": 66,
+      "of-morph-018": 94,
+      "of-morph-022": 37,
+      "of-morph-025": 41,
+      "of-morph-053": 48,
+      "of-morph-070": 38,
+      "of-morph-074": 63,
+      "of-ninth-052": 103,
+      "of-neutral-039": 50,
+      "of-stillwatch-012": 63,
+      "of-stillwatch-037": 41,
+      "of-stillwatch-071": 30,
+      "of-stillwatch-048": 107,
+      "of-ninth-048": 193,
+      "of-ninth-100": 18,
+      "of-houses-048": 92,
+      "of-morph-036": 47,
+      "of-ninth-058": 91,
+      "of-neutral-066": 43,
+      "of-morph-004": 26,
+      "of-morph-049": 29,
+      "of-morph-086": 65,
+      "of-morph-098": 12,
+      "of-houses-066": 38
+    },
+    "unknown_card_ids": [],
+    "event_counts": {
+      "alpha_start": 848,
+      "attack": 37892,
+      "begin": 19574,
+      "burn": 1763,
+      "card_system_effect": 56400,
+      "convergence_declared": 428,
+      "convergence_failed": 384,
+      "death": 14317,
+      "draw_finished": 19574,
+      "effect": 2144,
+      "effect_summon": 724,
+      "event": 5367,
+      "fortify": 1653,
+      "generic_return": 2802,
+      "harvest": 524,
+      "mulligan": 848,
+      "origins_revealed": 848,
+      "phase_attack": 19559,
+      "phase_end": 18800,
+      "relic_activated": 2661,
+      "relic_installed": 1318,
+      "result": 813,
+      "second_origin": 424,
+      "summon": 19120,
+      "summon_wait": 18778,
+      "v2_effect_outcome": 53744,
+      "v2_trigger": 63206,
+      "v2_trigger_fizzled": 9462,
+      "recover": 477,
+      "tactical_move": 280,
+      "generic_move": 392,
+      "delayed_resolved": 4428,
+      "strike_hit": 585,
+      "stun_skip": 2938,
+      "recycle": 78,
+      "removed": 293,
+      "strike_hero": 300,
+      "burst": 31,
+      "strike_pending": 308,
+      "target_complete": 308,
+      "convergence_win": 35,
+      "reaction_stun_skip": 960,
+      "generic_discard": 121,
+      "recall": 84,
+      "second_card": 224,
+      "arrival_deferred": 3
+    },
+    "total_energy_at_action_phase": 109831,
+    "known_card_energy_paid": 82047,
+    "unspent_energy_at_end": 25244,
+    "action_net_resonance_gained": 9910,
+    "action_net_resonance_spent": 9423,
+    "failed_action_attempts": 0,
+    "longest_native_chain": 3,
+    "longest_generic_chain": 6,
+    "games_with_generic_chain_at_least10": 0,
+    "generic_effect_statuses": {
+      "applied": 56400,
+      "fizzled": 5
+    },
+    "played_card_game_results": {
+      "oa-houses-c01": {
+        "side_games_played": 59,
+        "side_games_won": 29
+      },
+      "of-houses-001": {
+        "side_games_played": 220,
+        "side_games_won": 127
+      },
+      "of-houses-038": {
+        "side_games_played": 63,
+        "side_games_won": 28
+      },
+      "of-houses-045": {
+        "side_games_played": 104,
+        "side_games_won": 44
+      },
+      "of-houses-052": {
+        "side_games_played": 192,
+        "side_games_won": 87
+      },
+      "of-houses-057": {
+        "side_games_played": 276,
+        "side_games_won": 139
+      },
+      "of-houses-062": {
+        "side_games_played": 318,
+        "side_games_won": 187
+      },
+      "of-neutral-049": {
+        "side_games_played": 375,
+        "side_games_won": 227
+      },
+      "of-neutral-056": {
+        "side_games_played": 102,
+        "side_games_won": 53
+      },
+      "of-houses-010": {
+        "side_games_played": 28,
+        "side_games_won": 18
+      },
+      "of-houses-058": {
+        "side_games_played": 158,
+        "side_games_won": 107
+      },
+      "of-houses-082": {
+        "side_games_played": 87,
+        "side_games_won": 50
+      },
+      "of-houses-086": {
+        "side_games_played": 95,
+        "side_games_won": 68
+      },
+      "of-houses-094": {
+        "side_games_played": 177,
+        "side_games_won": 111
+      },
+      "oa-neutral-c02": {
+        "side_games_played": 24,
+        "side_games_won": 17
+      },
+      "of-houses-087": {
+        "side_games_played": 56,
+        "side_games_won": 40
+      },
+      "of-houses-089": {
+        "side_games_played": 33,
+        "side_games_won": 21
+      },
+      "of-houses-099": {
+        "side_games_played": 96,
+        "side_games_won": 76
+      },
+      "of-houses-068": {
+        "side_games_played": 33,
+        "side_games_won": 21
+      },
+      "of-houses-061": {
+        "side_games_played": 170,
+        "side_games_won": 103
+      },
+      "of-houses-072": {
+        "side_games_played": 65,
+        "side_games_won": 44
+      },
+      "oa-morph-c01": {
+        "side_games_played": 224,
+        "side_games_won": 113
+      },
+      "of-morph-003": {
+        "side_games_played": 128,
+        "side_games_won": 49
+      },
+      "of-morph-038": {
+        "side_games_played": 114,
+        "side_games_won": 51
+      },
+      "of-morph-055": {
+        "side_games_played": 53,
+        "side_games_won": 23
+      },
+      "of-morph-073": {
+        "side_games_played": 58,
+        "side_games_won": 21
+      },
+      "of-morph-082": {
+        "side_games_played": 35,
+        "side_games_won": 18
+      },
+      "of-morph-090": {
+        "side_games_played": 55,
+        "side_games_won": 28
+      },
+      "of-neutral-007": {
+        "side_games_played": 74,
+        "side_games_won": 32
+      },
+      "oa-morph-c07": {
+        "side_games_played": 115,
+        "side_games_won": 60
+      },
+      "oa-morph-e02": {
+        "side_games_played": 109,
+        "side_games_won": 52
+      },
+      "of-morph-001": {
+        "side_games_played": 111,
+        "side_games_won": 53
+      },
+      "of-morph-037": {
+        "side_games_played": 90,
+        "side_games_won": 39
+      },
+      "of-morph-076": {
+        "side_games_played": 79,
+        "side_games_won": 37
+      },
+      "of-morph-096": {
+        "side_games_played": 135,
+        "side_games_won": 68
+      },
+      "of-morph-013": {
+        "side_games_played": 62,
+        "side_games_won": 25
+      },
+      "of-morph-031": {
+        "side_games_played": 75,
+        "side_games_won": 34
+      },
+      "of-morph-032": {
+        "side_games_played": 307,
+        "side_games_won": 140
+      },
+      "of-morph-043": {
+        "side_games_played": 55,
+        "side_games_won": 18
+      },
+      "of-neutral-014": {
+        "side_games_played": 57,
+        "side_games_won": 39
+      },
+      "of-houses-020": {
+        "side_games_played": 67,
+        "side_games_won": 37
+      },
+      "oa-ninth-c01": {
+        "side_games_played": 254,
+        "side_games_won": 169
+      },
+      "oa-ninth-e01": {
+        "side_games_played": 30,
+        "side_games_won": 16
+      },
+      "of-neutral-095": {
+        "side_games_played": 25,
+        "side_games_won": 14
+      },
+      "of-ninth-001": {
+        "side_games_played": 31,
+        "side_games_won": 18
+      },
+      "of-ninth-019": {
+        "side_games_played": 75,
+        "side_games_won": 55
+      },
+      "of-ninth-033": {
+        "side_games_played": 65,
+        "side_games_won": 47
+      },
+      "of-ninth-043": {
+        "side_games_played": 438,
+        "side_games_won": 271
+      },
+      "of-ninth-044": {
+        "side_games_played": 295,
+        "side_games_won": 196
+      },
+      "of-ninth-045": {
+        "side_games_played": 72,
+        "side_games_won": 48
+      },
+      "of-ninth-046": {
+        "side_games_played": 181,
+        "side_games_won": 106
+      },
+      "of-ninth-050": {
+        "side_games_played": 212,
+        "side_games_won": 126
+      },
+      "of-ninth-056": {
+        "side_games_played": 120,
+        "side_games_won": 79
+      },
+      "of-ninth-065": {
+        "side_games_played": 175,
+        "side_games_won": 105
+      },
+      "of-ninth-079": {
+        "side_games_played": 84,
+        "side_games_won": 61
+      },
+      "of-ninth-015": {
+        "side_games_played": 104,
+        "side_games_won": 53
+      },
+      "of-ninth-020": {
+        "side_games_played": 45,
+        "side_games_won": 30
+      },
+      "of-ninth-051": {
+        "side_games_played": 191,
+        "side_games_won": 103
+      },
+      "of-ninth-070": {
+        "side_games_played": 213,
+        "side_games_won": 123
+      },
+      "of-ninth-090": {
+        "side_games_played": 110,
+        "side_games_won": 57
+      },
+      "of-ninth-095": {
+        "side_games_played": 88,
+        "side_games_won": 57
+      },
+      "oa-stillwatch-c01": {
+        "side_games_played": 31,
+        "side_games_won": 13
+      },
+      "of-neutral-043": {
+        "side_games_played": 215,
+        "side_games_won": 89
+      },
+      "of-neutral-050": {
+        "side_games_played": 109,
+        "side_games_won": 43
+      },
+      "of-neutral-057": {
+        "side_games_played": 79,
+        "side_games_won": 26
+      },
+      "of-neutral-064": {
+        "side_games_played": 228,
+        "side_games_won": 112
+      },
+      "of-neutral-083": {
+        "side_games_played": 56,
+        "side_games_won": 19
+      },
+      "of-stillwatch-001": {
+        "side_games_played": 29,
+        "side_games_won": 11
+      },
+      "of-stillwatch-043": {
+        "side_games_played": 197,
+        "side_games_won": 71
+      },
+      "of-stillwatch-046": {
+        "side_games_played": 158,
+        "side_games_won": 58
+      },
+      "of-stillwatch-050": {
+        "side_games_played": 185,
+        "side_games_won": 83
+      },
+      "of-stillwatch-055": {
+        "side_games_played": 158,
+        "side_games_won": 71
+      },
+      "of-stillwatch-056": {
+        "side_games_played": 187,
+        "side_games_won": 77
+      },
+      "of-stillwatch-057": {
+        "side_games_played": 161,
+        "side_games_won": 71
+      },
+      "of-stillwatch-081": {
+        "side_games_played": 243,
+        "side_games_won": 136
+      },
+      "of-stillwatch-083": {
+        "side_games_played": 152,
+        "side_games_won": 59
+      },
+      "of-stillwatch-085": {
+        "side_games_played": 134,
+        "side_games_won": 52
+      },
+      "of-stillwatch-097": {
+        "side_games_played": 354,
+        "side_games_won": 157
+      },
+      "of-morph-084": {
+        "side_games_played": 34,
+        "side_games_won": 10
+      },
+      "of-neutral-016": {
+        "side_games_played": 85,
+        "side_games_won": 17
+      },
+      "of-stillwatch-016": {
+        "side_games_played": 86,
+        "side_games_won": 17
+      },
+      "of-stillwatch-017": {
+        "side_games_played": 132,
+        "side_games_won": 46
+      },
+      "of-stillwatch-019": {
+        "side_games_played": 168,
+        "side_games_won": 60
+      },
+      "of-stillwatch-021": {
+        "side_games_played": 95,
+        "side_games_won": 14
+      },
+      "of-stillwatch-026": {
+        "side_games_played": 149,
+        "side_games_won": 47
+      },
+      "of-morph-029": {
+        "side_games_played": 44,
+        "side_games_won": 17
+      },
+      "oa-stillwatch-c02": {
+        "side_games_played": 80,
+        "side_games_won": 16
+      },
+      "oa-stillwatch-c07": {
+        "side_games_played": 175,
+        "side_games_won": 99
+      },
+      "of-neutral-025": {
+        "side_games_played": 105,
+        "side_games_won": 20
+      },
+      "of-stillwatch-002": {
+        "side_games_played": 59,
+        "side_games_won": 15
+      },
+      "of-stillwatch-015": {
+        "side_games_played": 87,
+        "side_games_won": 18
+      },
+      "of-stillwatch-020": {
+        "side_games_played": 75,
+        "side_games_won": 14
+      },
+      "of-stillwatch-023": {
+        "side_games_played": 128,
+        "side_games_won": 59
+      },
+      "of-stillwatch-080": {
+        "side_games_played": 95,
+        "side_games_won": 20
+      },
+      "of-stillwatch-086": {
+        "side_games_played": 153,
+        "side_games_won": 72
+      },
+      "of-neutral-073": {
+        "side_games_played": 80,
+        "side_games_won": 18
+      },
+      "of-neutral-087": {
+        "side_games_played": 68,
+        "side_games_won": 18
+      },
+      "of-stillwatch-075": {
+        "side_games_played": 53,
+        "side_games_won": 11
+      },
+      "of-stillwatch-078": {
+        "side_games_played": 48,
+        "side_games_won": 16
+      },
+      "of-stillwatch-009": {
+        "side_games_played": 84,
+        "side_games_won": 46
+      },
+      "of-stillwatch-040": {
+        "side_games_played": 66,
+        "side_games_won": 37
+      },
+      "of-stillwatch-045": {
+        "side_games_played": 122,
+        "side_games_won": 57
+      },
+      "of-stillwatch-064": {
+        "side_games_played": 79,
+        "side_games_won": 52
+      },
+      "of-stillwatch-066": {
+        "side_games_played": 60,
+        "side_games_won": 30
+      },
+      "of-stillwatch-069": {
+        "side_games_played": 64,
+        "side_games_won": 38
+      },
+      "of-stillwatch-084": {
+        "side_games_played": 67,
+        "side_games_won": 44
+      },
+      "oa-stillwatch-e02": {
+        "side_games_played": 127,
+        "side_games_won": 82
+      },
+      "of-stillwatch-003": {
+        "side_games_played": 50,
+        "side_games_won": 31
+      },
+      "of-stillwatch-005": {
+        "side_games_played": 25,
+        "side_games_won": 19
+      },
+      "of-stillwatch-031": {
+        "side_games_played": 70,
+        "side_games_won": 33
+      },
+      "of-stillwatch-061": {
+        "side_games_played": 69,
+        "side_games_won": 43
+      },
+      "of-stillwatch-087": {
+        "side_games_played": 65,
+        "side_games_won": 35
+      },
+      "of-stillwatch-033": {
+        "side_games_played": 33,
+        "side_games_won": 15
+      },
+      "of-stillwatch-051": {
+        "side_games_played": 178,
+        "side_games_won": 92
+      },
+      "of-stillwatch-053": {
+        "side_games_played": 81,
+        "side_games_won": 28
+      },
+      "of-neutral-063": {
+        "side_games_played": 61,
+        "side_games_won": 35
+      },
+      "of-ninth-008": {
+        "side_games_played": 78,
+        "side_games_won": 38
+      },
+      "of-ninth-057": {
+        "side_games_played": 68,
+        "side_games_won": 35
+      },
+      "of-ninth-009": {
+        "side_games_played": 62,
+        "side_games_won": 28
+      },
+      "of-ninth-087": {
+        "side_games_played": 156,
+        "side_games_won": 100
+      },
+      "of-ninth-004": {
+        "side_games_played": 76,
+        "side_games_won": 29
+      },
+      "of-ninth-055": {
+        "side_games_played": 32,
+        "side_games_won": 17
+      },
+      "of-ninth-060": {
+        "side_games_played": 49,
+        "side_games_won": 28
+      },
+      "of-ninth-082": {
+        "side_games_played": 203,
+        "side_games_won": 128
+      },
+      "of-ninth-086": {
+        "side_games_played": 30,
+        "side_games_won": 18
+      },
+      "of-ninth-014": {
+        "side_games_played": 63,
+        "side_games_won": 31
+      },
+      "oa-houses-c07": {
+        "side_games_played": 146,
+        "side_games_won": 83
+      },
+      "of-houses-064": {
+        "side_games_played": 17,
+        "side_games_won": 8
+      },
+      "of-morph-039": {
+        "side_games_played": 104,
+        "side_games_won": 46
+      },
+      "of-morph-002": {
+        "side_games_played": 83,
+        "side_games_won": 44
+      },
+      "of-morph-093": {
+        "side_games_played": 79,
+        "side_games_won": 46
+      },
+      "oa-morph-e01": {
+        "side_games_played": 75,
+        "side_games_won": 49
+      },
+      "of-morph-030": {
+        "side_games_played": 15,
+        "side_games_won": 8
+      },
+      "of-morph-044": {
+        "side_games_played": 84,
+        "side_games_won": 39
+      },
+      "of-morph-085": {
+        "side_games_played": 24,
+        "side_games_won": 5
+      },
+      "oa-neutral-c01": {
+        "side_games_played": 197,
+        "side_games_won": 117
+      },
+      "of-houses-029": {
+        "side_games_played": 74,
+        "side_games_won": 39
+      },
+      "of-neutral-086": {
+        "side_games_played": 67,
+        "side_games_won": 37
+      },
+      "oa-houses-e01": {
+        "side_games_played": 59,
+        "side_games_won": 39
+      },
+      "oa-ninth-c06": {
+        "side_games_played": 202,
+        "side_games_won": 137
+      },
+      "of-ninth-016": {
+        "side_games_played": 48,
+        "side_games_won": 23
+      },
+      "of-ninth-081": {
+        "side_games_played": 85,
+        "side_games_won": 57
+      },
+      "oa-neutral-c09": {
+        "side_games_played": 168,
+        "side_games_won": 111
+      },
+      "of-ninth-084": {
+        "side_games_played": 154,
+        "side_games_won": 96
+      },
+      "of-ninth-096": {
+        "side_games_played": 138,
+        "side_games_won": 87
+      },
+      "of-ninth-068": {
+        "side_games_played": 80,
+        "side_games_won": 52
+      },
+      "of-ninth-078": {
+        "side_games_played": 53,
+        "side_games_won": 31
+      },
+      "of-ninth-091": {
+        "side_games_played": 70,
+        "side_games_won": 42
+      },
+      "oa-ninth-c07": {
+        "side_games_played": 120,
+        "side_games_won": 75
+      },
+      "of-ninth-047": {
+        "side_games_played": 164,
+        "side_games_won": 110
+      },
+      "of-neutral-059": {
+        "side_games_played": 111,
+        "side_games_won": 46
+      },
+      "of-morph-027": {
+        "side_games_played": 68,
+        "side_games_won": 23
+      },
+      "of-morph-063": {
+        "side_games_played": 66,
+        "side_games_won": 27
+      },
+      "of-morph-018": {
+        "side_games_played": 73,
+        "side_games_won": 32
+      },
+      "of-morph-022": {
+        "side_games_played": 37,
+        "side_games_won": 15
+      },
+      "of-morph-025": {
+        "side_games_played": 41,
+        "side_games_won": 18
+      },
+      "of-morph-053": {
+        "side_games_played": 48,
+        "side_games_won": 27
+      },
+      "of-morph-070": {
+        "side_games_played": 38,
+        "side_games_won": 19
+      },
+      "of-morph-074": {
+        "side_games_played": 57,
+        "side_games_won": 36
+      },
+      "of-ninth-052": {
+        "side_games_played": 72,
+        "side_games_won": 55
+      },
+      "of-neutral-039": {
+        "side_games_played": 49,
+        "side_games_won": 26
+      },
+      "of-stillwatch-012": {
+        "side_games_played": 61,
+        "side_games_won": 32
+      },
+      "of-stillwatch-037": {
+        "side_games_played": 39,
+        "side_games_won": 18
+      },
+      "of-stillwatch-071": {
+        "side_games_played": 30,
+        "side_games_won": 24
+      },
+      "of-stillwatch-048": {
+        "side_games_played": 107,
+        "side_games_won": 54
+      },
+      "of-ninth-048": {
+        "side_games_played": 132,
+        "side_games_won": 84
+      },
+      "of-ninth-100": {
+        "side_games_played": 18,
+        "side_games_won": 7
+      },
+      "of-houses-048": {
+        "side_games_played": 66,
+        "side_games_won": 28
+      },
+      "of-morph-036": {
+        "side_games_played": 47,
+        "side_games_won": 14
+      },
+      "of-ninth-058": {
+        "side_games_played": 58,
+        "side_games_won": 36
+      },
+      "of-neutral-066": {
+        "side_games_played": 43,
+        "side_games_won": 21
+      },
+      "of-morph-004": {
+        "side_games_played": 26,
+        "side_games_won": 14
+      },
+      "of-morph-049": {
+        "side_games_played": 29,
+        "side_games_won": 16
+      },
+      "of-morph-086": {
+        "side_games_played": 51,
+        "side_games_won": 29
+      },
+      "of-morph-098": {
+        "side_games_played": 12,
+        "side_games_won": 8
+      },
+      "of-houses-066": {
+        "side_games_played": 37,
+        "side_games_won": 23
+      }
+    },
+    "mean_round": 23.169811320754718,
+    "median_round": 21,
+    "distinct_cards_used": 176,
+    "first_win_rate": 0.6226415094339622
+  },
+  "raw_evidence_sha256": "fa507dc4a13b1043c1197094e5524cf61186e5ef2101969d0fa87586a67be681"
+}

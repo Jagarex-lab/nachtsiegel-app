@@ -1,0 +1,432 @@
+{
+  "schema_version": 1,
+  "raw_evidence_sha256": "afb9cbfb7489329177b3931ba1e66e032a335231dd9e0e1d93ac78df4b05ba82",
+  "source_sha256": {
+    "data/production/cards.json": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+    "data/production/starters.json": "79dbb5705c4f82f77ae5bd52ec4842e79b8dc47ede218acd3dc6bcccec848f52",
+    "scripts/alpha/model.gd": "f5d9183d7161387c4ebd64181a00281db7bf838ce177ed73ce71a265c8a17be0",
+    "scripts/card_system/production_effects.gd": "e33d48710b4a2e1b0c24ddb55b8ac584fb51a9ea2149f5274fa294a71ebb7484",
+    "scripts/card_system/production_model.gd": "ad71f0680983c9968b48d017adba4a2c09c441530d8054d449832ced8b69da54",
+    "scripts/card_system/runtime.gd": "ca2be2fc49f1a18748b3b887610655acdccac134cef6664ffe003cb93adbc8ad",
+    "scripts/card_system/trigger_model.gd": "ea1e5c0f441d14f0a051a6d859fcd7e66c3a5a1978af3d5a05cd8bf8fde5deee",
+    "scripts/legacy/battle_engine.gd": "7a3bfaea53d7aa0bacb3aa380a4bca0770f64c238f267b34020874ab8ace3698",
+    "scripts/production/ai_policy.gd": "52ba7a1e78cbdb224a28822b5120254b55421e3e8db3f6de804121588571f2c4",
+    "scripts/production/catalog.gd": "7d7f8e158ddfbfb1365efee0ef504f023013fea70507bed402cbe3fff137ffe8",
+    "tests/fixtures/production/resource_baseline.json": "5732cf1c26dafbd6a56761a598603fb2c8eaf42dd2e85ea0687f4a9ec88392a1",
+    "tests/production_resource_models.gd": "c153a1ca8079992a50a4359690e56d277213629791a2ba8ac40814dfe068c65b"
+  },
+  "baseline_report_sha256": "fa507dc4a13b1043c1197094e5524cf61186e5ef2101969d0fa87586a67be681",
+  "assertions": 1435,
+  "failures": 0,
+  "matrix_games": 192,
+  "additional_verification_games": 10,
+  "pre_seam_default_comparisons": 64,
+  "negative_evidence_guards": [
+    "altered default state",
+    "altered default trace",
+    "altered payment",
+    "censored game",
+    "changed cap",
+    "duplicate case",
+    "engine error",
+    "extra game",
+    "failed checks",
+    "invalid winner",
+    "missing game",
+    "missing golden",
+    "missing replay",
+    "missing source",
+    "mixed baseline",
+    "unknown card",
+    "unknown condition",
+    "wrong first side",
+    "wrong source"
+  ],
+  "conditions": {
+    "energy8_res15": {
+      "energy_at_actions": 8889,
+      "known_card_energy_paid": 5847,
+      "unspent_energy": 2823,
+      "net_resonance_gain": 636,
+      "net_resonance_spent": 565,
+      "games": 64,
+      "mean_round": 24.46875,
+      "first_wins": 32,
+      "draws": 0,
+      "convergence_wins": 6,
+      "resonance_peak": 15,
+      "games_over_resonance15": 0,
+      "winner_changes": 0,
+      "event_changes": 0,
+      "state_changes": 0,
+      "paired_mean_round_delta": 0
+    },
+    "energy10_res15": {
+      "energy_at_actions": 9846,
+      "known_card_energy_paid": 5852,
+      "unspent_energy": 3808,
+      "net_resonance_gain": 574,
+      "net_resonance_spent": 519,
+      "games": 64,
+      "mean_round": 24.328125,
+      "first_wins": 32,
+      "draws": 0,
+      "convergence_wins": 4,
+      "resonance_peak": 12,
+      "games_over_resonance15": 0,
+      "winner_changes": 4,
+      "event_changes": 47,
+      "state_changes": 44,
+      "paired_mean_round_delta": -0.140625
+    },
+    "energy10_res20": {
+      "energy_at_actions": 9846,
+      "known_card_energy_paid": 5852,
+      "unspent_energy": 3808,
+      "net_resonance_gain": 574,
+      "net_resonance_spent": 519,
+      "games": 64,
+      "mean_round": 24.328125,
+      "first_wins": 32,
+      "draws": 0,
+      "convergence_wins": 4,
+      "resonance_peak": 12,
+      "games_over_resonance15": 0,
+      "winner_changes": 4,
+      "event_changes": 47,
+      "state_changes": 44,
+      "paired_mean_round_delta": -0.140625
+    }
+  },
+  "directed_pairs": {
+    "starter-houses/starter-houses": {
+      "energy8_res15": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 29
+      },
+      "energy10_res15": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 30
+      },
+      "energy10_res20": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 30
+      }
+    },
+    "starter-houses/starter-morph": {
+      "energy8_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 17.75
+      },
+      "energy10_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 18.25
+      },
+      "energy10_res20": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 18.25
+      }
+    },
+    "starter-houses/starter-ninth": {
+      "energy8_res15": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 34
+      },
+      "energy10_res15": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 23.5
+      },
+      "energy10_res20": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 23.5
+      }
+    },
+    "starter-houses/starter-stillwatch": {
+      "energy8_res15": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 34
+      },
+      "energy10_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 33.25
+      },
+      "energy10_res20": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 33.25
+      }
+    },
+    "starter-morph/starter-houses": {
+      "energy8_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 15.75
+      },
+      "energy10_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 15.75
+      },
+      "energy10_res20": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 15.75
+      }
+    },
+    "starter-morph/starter-morph": {
+      "energy8_res15": {
+        "hero_wins": 0,
+        "draws": 0,
+        "enemy_wins": 4,
+        "mean_round": 15
+      },
+      "energy10_res15": {
+        "hero_wins": 0,
+        "draws": 0,
+        "enemy_wins": 4,
+        "mean_round": 15
+      },
+      "energy10_res20": {
+        "hero_wins": 0,
+        "draws": 0,
+        "enemy_wins": 4,
+        "mean_round": 15
+      }
+    },
+    "starter-morph/starter-ninth": {
+      "energy8_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 15.75
+      },
+      "energy10_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 15.75
+      },
+      "energy10_res20": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 15.75
+      }
+    },
+    "starter-morph/starter-stillwatch": {
+      "energy8_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 19.25
+      },
+      "energy10_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 19.25
+      },
+      "energy10_res20": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 19.25
+      }
+    },
+    "starter-ninth/starter-houses": {
+      "energy8_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 20.75
+      },
+      "energy10_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 22.25
+      },
+      "energy10_res20": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 22.25
+      }
+    },
+    "starter-ninth/starter-morph": {
+      "energy8_res15": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 16.25
+      },
+      "energy10_res15": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 16.25
+      },
+      "energy10_res20": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 16.25
+      }
+    },
+    "starter-ninth/starter-ninth": {
+      "energy8_res15": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 20.75
+      },
+      "energy10_res15": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 20.25
+      },
+      "energy10_res20": {
+        "hero_wins": 4,
+        "draws": 0,
+        "enemy_wins": 0,
+        "mean_round": 20.25
+      }
+    },
+    "starter-ninth/starter-stillwatch": {
+      "energy8_res15": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 39.5
+      },
+      "energy10_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 43.75
+      },
+      "energy10_res20": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 43.75
+      }
+    },
+    "starter-stillwatch/starter-houses": {
+      "energy8_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 24.75
+      },
+      "energy10_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 26.25
+      },
+      "energy10_res20": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 26.25
+      }
+    },
+    "starter-stillwatch/starter-morph": {
+      "energy8_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 20.75
+      },
+      "energy10_res15": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 20.75
+      },
+      "energy10_res20": {
+        "hero_wins": 3,
+        "draws": 0,
+        "enemy_wins": 1,
+        "mean_round": 20.75
+      }
+    },
+    "starter-stillwatch/starter-ninth": {
+      "energy8_res15": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 35.5
+      },
+      "energy10_res15": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 37.25
+      },
+      "energy10_res20": {
+        "hero_wins": 2,
+        "draws": 0,
+        "enemy_wins": 2,
+        "mean_round": 37.25
+      }
+    },
+    "starter-stillwatch/starter-stillwatch": {
+      "energy8_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 32.75
+      },
+      "energy10_res15": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 31.75
+      },
+      "energy10_res20": {
+        "hero_wins": 1,
+        "draws": 0,
+        "enemy_wins": 3,
+        "mean_round": 31.75
+      }
+    }
+  },
+  "resonance_pair_comparison": {
+    "profiles": [
+      "energy10_res15",
+      "energy10_res20"
+    ],
+    "paired_games": 64,
+    "identical_state_event_pairs": 64,
+    "all_results_and_digests_identical": true
+  }
+}
