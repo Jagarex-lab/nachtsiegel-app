@@ -62,13 +62,22 @@ func card_ink_checks() -> void:
 		var view=CardView.new();view.card=card;view.size=Vector2(114,66)
 		var title=view.title_paragraph(98)
 		check(title.get_line_count()<=2 and title.get_size().y<=32,"actualcardnamefits compacthand: "+card.id)
+		check(view.title_layout(98).font_size>=10,"normal compact names never fall below10px: "+card.id)
 		for line in title.get_line_count():check(title.get_line_size(line).x<=98,"actualcardnameink stays insidehand: "+card.id)
 		var stats=view.stat_layout(69)
 		check(stats.fits and 8+stats.ink_width<=85,"actualvalues/type endbeforecost: "+card.id)
 		if card.kind=="creature":
-			var board_title=view.title_paragraph(86,11,21)
+			var board_title=view.title_paragraph(86,11,21,8)
 			check(board_title.get_line_count()<=2 and board_title.get_size().y<=21,"actualcreaturename fits44px battlefieldnamezone: "+card.id)
 		view.free()
+	var compact_view=CardView.new();compact_view.card=ProductionCatalog.new().card("oa-stillwatch-c01")
+	compact_view.size=Vector2(159,86)
+	var name_width=compact_view.size.x-minf(66,compact_view.size.x*.35)-17
+	var compact_title=compact_view.title_layout(name_width,12,compact_view.size.y-47)
+	check(compact_view.card.name=="Glaskonservator" and compact_title.fits and not compact_title.split_word,"actual mobile Glaskonservator avoids a detached word tail")
+	if preload("res://scripts/alpha/style.gd").font.get_string_size(compact_view.card.name,HORIZONTAL_ALIGNMENT_LEFT,-1,11).x<=name_width:
+		check(compact_title.font_size>=11,"complete mobile name retains11px wherever it fits")
+	compact_view.free()
 func status_checks() -> void:
 	var view=CardView.new();view.card={"id":"ui-status","name":"Statusprobe","kind":"creature","atk":4,"hp":5,"cost":3}
 	view.unit={"id":"ui-status","atk":6,"hp":3,"ward":2,"block":1,"stun":0,"summoned":false,"extra_attacks":1}
@@ -77,6 +86,13 @@ func status_checks() -> void:
 	var status=view.board_status()
 	check(status.shield==2 and status.block==1 and status.ready and status.ready_short=="✓","unitshield and attackreadiness stay distinct")
 	check(status.extra_short.contains("-1") and status.extra_short.contains("×2") and status.extra_short.contains("U") and status.extra_short.contains("K"),"buff/debuff, extraattack, origin/convergence metadata visible")
+	view.size=Vector2(144,80)
+	for values in [[0,0],[25,25],[999,999]]:
+		view.unit.ward=values[0];view.unit.block=values[1]
+		var labels=view.compact_board_labels()
+		check(labels.status=="Schild %d · Block %d" % [values[0],values[1]] and labels.fits and labels.font_size>=10,"normal compact shield/block have complete labels and legible numeric ink "+str(values))
+	var combat=view.compact_combat_labels(72,11)
+	check(combat.fits and combat.font_size>=10 and combat.text.contains("3 ANG") and combat.text.contains("3 LP"),"short-tier combat values still fit beside occupied path badge")
 	view.unit.stun=2;view.combat_ready=false
 	check(view.board_status().ready_short=="Z2","stasis shows actual remainingduration")
 	view.unit.stun=0;view.unit.summoned=true

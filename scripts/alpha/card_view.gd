@@ -55,15 +55,16 @@ func _draw() -> void:
 		if origin:_ink("U",Vector2(size.x/2-radius-12,16),12,T.GOLD,20)
 	else:
 		draw_style_box(T.panel(edge,Color(.025,.04,.065,.88)),rect)
-		draw_line(Vector2(8,4),Vector2(size.x-10,4),Color(edge,.7),1,true)
 		if not unit.is_empty() and size.y<72:
 			# The narrow battlefield has a name/stat area and a separate status
 			# column. Shield and readiness can never disappear behind a long name.
 			var status_width=37.0;var name_width=size.x-status_width-14
 			illustration(Rect2(size.x-status_width-2,5,status_width-3,maxf(18,size.y-10)),Color(.5,.55,.65))
-			title_paragraph(name_width,11,maxf(14,size.y-23)).draw(get_canvas_item(),Vector2(8,4),T.TEXT)
+			title_paragraph(name_width,11,maxf(14,size.y-23),8).draw(get_canvas_item(),Vector2(8,4),T.TEXT)
 			draw_rect(Rect2(5,size.y-19,size.x-status_width-8,15),T.SURFACE)
-			_ink("%d ANG %d LP" % [current_attack(),unit.hp],Vector2(7,size.y-7),11,T.TEXT,name_width)
+			var combat=compact_combat_labels(name_width-(21 if lane>=0 else 0),11)
+			_ink(combat.text,Vector2(28 if lane>=0 else 7,size.y-7),combat.font_size,T.TEXT,combat.available_width)
+			if lane>=0:_path_badge(Rect2(7,size.y-18,16,14),edge)
 			var marks=board_status()
 			draw_rect(Rect2(size.x-status_width-3,5,status_width,size.y-10),Color(.015,.025,.04,.92))
 			var ready_caption=marks.ready_short+(" U" if origin else "")+(" K" if convergence else " ×" if broken_convergence else "")
@@ -79,7 +80,8 @@ func _draw() -> void:
 			illustration(Rect2(5,5,size.x-10,size.y-10))
 			var name_height=36.0
 			draw_rect(Rect2(5,5,size.x-10,name_height),Color(.015,.025,.045,.96))
-			title_paragraph(size.x-20,12,name_height-4).draw(get_canvas_item(),Vector2(10,7),T.TEXT)
+			title_paragraph(board_title_width(),12,name_height-4).draw(get_canvas_item(),Vector2(10,7),T.TEXT)
+			if lane>=0:_path_badge(Rect2(size.x-28,9,19,20),edge)
 			var info_y=size.y-52
 			draw_colored_polygon(PackedVector2Array([Vector2(5,info_y+6),Vector2(size.x-5,info_y-7),Vector2(size.x-5,size.y-5),Vector2(5,size.y-5)]),T.SURFACE)
 			draw_line(Vector2(5,info_y+6),Vector2(size.x-5,info_y-7),Color(edge,.85),2,true)
@@ -97,12 +99,19 @@ func _draw() -> void:
 			illustration(Rect2(5,5,art_width,size.y-10))
 			var x=art_width+10;var width=size.x-x-7
 			title_paragraph(width,12,maxf(20,size.y-47)).draw(get_canvas_item(),Vector2(x,4),T.TEXT)
-			_ink("%d ANG  %d LP" % [current_attack(),unit.hp],Vector2(x,size.y-24),12,T.TEXT,width)
+			var combat=compact_combat_labels(width)
+			_ink(combat.text,Vector2(x,size.y-24),combat.font_size,T.TEXT,combat.available_width)
 			var marks=board_status()
-			_ink("S%d B%d · %s" % [marks.shield,marks.block,marks.ready_short],Vector2(x,size.y-8),10,T.ENERGY,width)
+			var labels=compact_board_labels()
+			draw_rect(Rect2(5,size.y-21,size.x-10,17),T.SURFACE)
+			_ink(labels.status,Vector2(8,size.y-8),labels.font_size,T.ENERGY,labels.available_width)
+			if lane>=0:_path_badge(Rect2(8,7,18,17),edge)
+			var ready_x=29.0 if lane>=0 else 8.0
+			draw_rect(Rect2(ready_x-1,7,art_width+5-ready_x,17),Color(.015,.025,.04,.96))
+			_ink(marks.ready_short,Vector2(ready_x,19),10,T.SUCCESS if combat_ready else T.WARNING,art_width+4-ready_x)
 			if not marks.extra_short.is_empty():
-				draw_rect(Rect2(6,size.y-21,art_width-2,15),Color(.015,.025,.04,.94))
-				_ink(marks.extra_short,Vector2(8,size.y-9),10,T.GOLD,art_width-6)
+				draw_rect(Rect2(6,size.y-39,art_width-2,16),Color(.015,.025,.04,.94))
+				_ink(marks.extra_short,Vector2(8,size.y-27),10,T.GOLD,art_width-6)
 		else:
 			illustration(Rect2(5,5,size.x-10,size.y-10),Color(.8,.85,.9))
 			draw_rect(Rect2(5,5,size.x-10,32),Color(.025,.04,.065,.94))
@@ -119,19 +128,49 @@ func _draw() -> void:
 		elif card.get("rarity")=="rare":
 			for offset in [-4,4]:draw_circle(Vector2(3,size.y*.4+offset),2,color)
 		elif card.get("rarity")=="epic":draw_line(Vector2(3,16),Vector2(3,size.y-16),color,3)
+		_material_frame(edge)
 	if target:draw_rect(rect.grow(-3),T.SUCCESS,false,2)
 	if invalid_target:
 		draw_line(Vector2(size.x-12,7),Vector2(size.x-5,14),T.DANGER,2,true);draw_line(Vector2(size.x-5,7),Vector2(size.x-12,14),T.DANGER,2,true)
 	if has_focus():draw_rect(rect.grow(-1),T.FOCUS,false,1)
+func _material_frame(edge: Color) -> void:
+	# All bevel ink stays inside the existing frame; hit areas and layout do not
+	# change. State/focus outlines are drawn afterwards and remain dominant.
+	var light=T.STONE_LIGHT.lerp(T.BRONZE,.35).lerp(edge,.2)
+	draw_line(Vector2(5,4),Vector2(size.x-5,4),Color(light,.9),1,true)
+	draw_line(Vector2(4,5),Vector2(4,size.y-5),Color(light,.7),1,true)
+	draw_line(Vector2(5,size.y-5),Vector2(size.x-5,size.y-5),Color(T.INK,.9),1,true)
+	draw_line(Vector2(size.x-5,5),Vector2(size.x-5,size.y-5),Color(T.INK,.9),1,true)
+func _path_badge(at: Rect2, edge: Color) -> void:
+	var frame=T.panel(Color(edge,.75),T.INK)
+	frame.set_border_width_all(1);frame.set_corner_radius_all(3)
+	draw_style_box(frame,at)
+	var fs=11 if at.size.y>=17 else 10
+	var label=str(lane+1)
+	var ink=S.font.get_string_size(label,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x
+	_ink(label,Vector2(at.position.x+(at.size.x-ink)/2,at.position.y+(at.size.y-S.font.get_height(fs))/2+S.font.get_ascent(fs)),fs,T.TEXT,at.size.x-4)
 func large_board_portrait() -> bool:
 	return not unit.is_empty() and size.y>=160 and size.x>=170
+func board_title_width() -> float:
+	return size.x-(48 if lane>=0 else 20)
+func compact_combat_labels(width: float, maximum_size: int=12) -> Dictionary:
+	var caption="%d ANG %d LP" % [current_attack(),unit.get("hp",0)]
+	var fs=maximum_size
+	while fs>10 and S.font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x>width:fs-=1
+	return {"text":caption,"font_size":fs,"available_width":width,"fits":S.font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x<=width}
+func compact_board_labels() -> Dictionary:
+	var marks=board_status()
+	var caption="Schild %d · Block %d" % [marks.shield,marks.block]
+	var width=size.x-16;var fs=11
+	if S.font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x>width:fs=10
+	return {"status":caption,"font_size":fs,"available_width":width,"fits":S.font.get_string_size(caption,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x<=width}
 func tall_board_labels() -> Dictionary:
 	var marks=board_status()
 	var result={"combat_text":"%d ANG  %d LP" % [current_attack(),unit.get("hp",0)],"status":"Schild %d · Block %d · %s" % [marks.shield,marks.block,marks.ready_short],"value_font":15,"status_font":11}
 	for fs in [15,14,13,12]:
 		result.value_font=fs
 		if S.font.get_string_size(result.combat_text,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x<=size.x-20:break
-	for fs in [11,10,9]:
+	for fs in [11,10]:
 		result.status_font=fs
 		if S.font.get_string_size(result.status,HORIZONTAL_ALIGNMENT_LEFT,-1,fs).x<=size.x-20:break
 	return result
@@ -160,14 +199,36 @@ func board_status() -> Dictionary:
 	if attack_delta!=0:extra.append(("+" if attack_delta>0 else "")+str(attack_delta))
 	if int(unit.get("extra_attacks",0))>0:extra.append("×"+str(1+int(unit.extra_attacks)))
 	return {"shield":maxi(0,int(unit.get("ward",0))),"block":maxi(0,int(unit.get("block",0))),"stun":stun,"ready":combat_ready,"ready_short":ready,"extra_short":" ".join(extra)}
-func title_paragraph(width: float, maximum_size: int=12, available_height: float=-1) -> TextParagraph:
+func title_paragraph(width: float, maximum_size: int=12, available_height: float=-1, minimum_size: int=10) -> TextParagraph:
+	return title_layout(width,maximum_size,available_height,minimum_size).paragraph
+func title_layout(width: float, maximum_size: int=12, available_height: float=-1, minimum_size: int=10) -> Dictionary:
 	maximum_size=mini(maximum_size,title_maximum_size)
 	if title_available_height>=0:available_height=minf(available_height,title_available_height) if available_height>=0 else title_available_height
-	var paragraph: TextParagraph
-	for fs in [12,11,10,9,8]:
-		if fs>maximum_size:continue
-		paragraph=TextParagraph.new();paragraph.width=maxf(24,width)
-		paragraph.break_flags=TextServer.BREAK_MANDATORY|TextServer.BREAK_WORD_BOUND|TextServer.BREAK_ADAPTIVE
-		paragraph.add_string(str(card.get("name",card.get("id",""))),S.font,fs)
-		if paragraph.get_line_count()<=2 and (available_height<0 or paragraph.get_size().y<=available_height):break
-	return paragraph
+	var name=str(card.get("name",card.get("id","")))
+	var result: Dictionary={}
+	var word_breaks=TextServer.BREAK_MANDATORY|TextServer.BREAK_WORD_BOUND|TextServer.BREAK_ADAPTIVE
+	for breaks in [word_breaks,TextServer.BREAK_MANDATORY|TextServer.BREAK_GRAPHEME_BOUND]:
+		var largest_fit: Dictionary={}
+		for fs in [12,11,10,9,8]:
+			if fs>maximum_size or fs<minimum_size:continue
+			var paragraph=TextParagraph.new()
+			# Text shaping rounds line extents to pixels; rounding the budget down
+			# prevents a 77px glyph run from entering a 76.6px neighbouring strip.
+			paragraph.width=maxf(24,width if minimum_size<10 else floorf(width))
+			paragraph.break_flags=breaks;paragraph.add_string(name,S.font,fs)
+			var fits=paragraph.get_line_count()<=2 and (available_height<0 or paragraph.get_size().y<=available_height)
+			var split_word=false
+			for line in paragraph.get_line_count():
+				if minimum_size>=10 and paragraph.get_line_size(line).x>width:fits=false
+				if line==paragraph.get_line_count()-1:continue
+				var cut=paragraph.get_line_range(line).y
+				if cut>0 and cut<name.length() and not name.substr(cut-1,1) in [" ","-","/","\n"] and not name.substr(cut,1) in [" ","\n"]:split_word=true
+			result={"paragraph":paragraph,"font_size":fs,"fits":fits,"split_word":split_word}
+			if not fits:continue
+			if largest_fit.is_empty():largest_fit=result
+			# Keep the <72px tier's original budget. Else prefer complete words at
+			# 11/10px. Grapheme wrapping is a final two-line fallback when word
+			# wrapping would need three lines even at the 10px minimum.
+			if minimum_size<10 or not split_word:return result
+		if not largest_fit.is_empty():return largest_fit
+	return result
