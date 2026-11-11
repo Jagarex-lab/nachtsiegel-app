@@ -4,6 +4,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
 (async()=>{
  const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
  const legacyOnly=process.env.QA_LEGACY_ONLY==='1';
+ const externalCompact=legacyOnly?{}:Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries).filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
  const recordGameplay=process.env.QA_GAMEPLAY_SEQUENCE==='1',sha256=value=>crypto.createHash('sha256').update(value).digest('hex');
  let sequenceArtifact=null;
  if(recordGameplay){
@@ -31,7 +32,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
-   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot',gameplay=null;const relicActivations=[],toolbarTests=[],actionTrace=[];
+   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot',gameplay=null;const relicActivations=[],toolbarTests=[],actionTrace=[],battleArtChecks=[];
    const sequenceEnabled=recordGameplay&&engine==='chromium'&&name==='desktop',sequenceDir=path.resolve(process.env.QA_GAMEPLAY_OUTPUT||'work/alpha/gameplay-sequence');
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
@@ -121,16 +122,26 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     const file=path.join(sequenceDir,tag+'.png');fs.writeFileSync(file,buffer);
     gameplay.frames.push({stage,file:path.basename(file),sha256:sha256(buffer),bytes:buffer.length,seed:after.battle.seed,command_count:after.command_count,round:after.battle.round,winner:after.battle.winner,page:after.page,modal:after.modal,message:after.message,render_version:after.render_version,input_count:gameplay.inputs.length,evidence,live_session_battle:after.battle});saveSequence();
    }
+   async function checkBattleArt(stage){
+    const before=await state();assert(Array.isArray(before.battle_art),'production bound hand/board art diagnostics are required');
+    assert(before.battle.hero.hand.some(id=>externalCompact[id])||before.battle_art.some(row=>row.zone==='board'&&externalCompact[row.card_id]),'actual opening includes at least one nonpacked illustration');
+    await page.waitForFunction(expected=>window.orafoldQA.battle_art?.some(row=>row.visible&&['hand','board'].includes(row.zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&expected[row.card_id]&&row.pixels[0]===expected[row.card_id][0]&&row.pixels[1]===expected[row.card_id][1]&&Math.max(...row.pixels)===512),externalCompact,{timeout:90000});
+    const current=await state();assert.equal(current.battle.stage,stage,'waiting for actual image delivery does not advance the opening');assert.equal(current.command_count,before.command_count,'image delivery issues no gameplay command');
+    const delivered=current.battle_art.filter(row=>row.visible&&['hand','board'].includes(row.zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&externalCompact[row.card_id]&&row.pixels[0]===externalCompact[row.card_id][0]&&row.pixels[1]===externalCompact[row.card_id][1]);
+    assert(delivered.length>0,'a visible nonpacked card owns its actual decoded compact texture');battleArtChecks.push({stage,seed:current.battle.seed,command_count:current.command_count,delivered,delivery:current.art_delivery});
+   }
    async function opening(customPower=null,expectedCards=null,recordOpening=false){
     await action('start');
     if(!legacyOnly){
      if(customPower)await action('custom_'+customPower);await action('deck_play');
      if(expectedCards){const hero=(await state()).battle.hero;assert.deepEqual([...hero.hand,...hero.deck].sort(),[...expectedCards].sort(),'actual new match contains the exact saved production template');}
+     await checkBattleArt('mulligan');
      if(recordOpening){gameplay.seed=(await state()).battle.seed;await sequenceFrame('mulligan');}
     }
     if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}
     await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');
     if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);
+    await checkBattleArt('battle');
     if(recordOpening)await sequenceFrame('opening');
    }
    async function toolbarViewportChecks(){
@@ -306,7 +317,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       gameplay.recording=false;gameplay.status='passed';gameplay.action_trace=actionTrace;saveSequence();
      }
     }
-    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,gameplay_sequence:gameplay?{status:gameplay.status,manifest:path.join(sequenceDir,"sequence.json"),seed:gameplay.seed,restart_seed:gameplay.restart_seed,frames:gameplay.frames.length,replay_sha256:gameplay.replay.sha256}:null,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
+    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,bound_battle_art_checks:battleArtChecks,gameplay_sequence:gameplay?{status:gameplay.status,manifest:path.join(sequenceDir,"sequence.json"),seed:gameplay.seed,restart_seed:gameplay.restart_seed,frames:gameplay.frames.length,replay_sha256:gameplay.replay.sha256}:null,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
     fs.writeFileSync(`work/alpha/browser-result-${engine}-${name}.json`,JSON.stringify(result,null,2));
     console.log('ALPHA BROWSER PASS:',engine,name);
    }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);if(gameplay){gameplay.status='failed';gameplay.error=String(error);gameplay.action_trace=actionTrace;saveSequence();}await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,diagnostic},null,2));throw error;}
