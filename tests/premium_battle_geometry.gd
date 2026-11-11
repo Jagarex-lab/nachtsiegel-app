@@ -22,6 +22,61 @@ func bounded(control: Control) -> bool:
 	return Rect2(Vector2.ZERO,Vector2(root.size)).grow(.1).encloses(control.get_global_rect()) and control.size.x>=43.9 and control.size.y>=43.9
 func complete_state() -> String:
 	return Session.digest({"snapshot":app.session.model.snapshot(),"events":app.session.model.events,"commands":app.session.commands,"rng_state":app.session.model.rng.state,"rng_calls":app.session.model.rng.calls,"selected":app.selected,"source_lane":app.source_lane,"action_mode":app.action_mode,"mulligan":app.mulligan_indices,"convergence":app.convergence_lanes})
+func active_action(id: String) -> bool:
+	return app.actions.has(id) and is_instance_valid(app.actions[id]) and app.actions[id].is_inside_tree() and not app.actions[id].is_queued_for_deletion()
+func modal_has_text(value: String) -> bool:
+	for label in app.modal.find_children("*","Label",true,false):
+		if label.text==value:return true
+	return false
+func tap_action(id: String) -> void:
+	check(active_action(id),"real native touch action exists: "+id)
+	if not active_action(id):return
+	var control: Control=app.actions[id]
+	var parent=control.get_parent()
+	while parent!=null:
+		if parent is ScrollContainer:parent.ensure_control_visible(control);await settle()
+		parent=parent.get_parent()
+	var visible=control.get_global_rect().intersection(root.get_visible_rect())
+	parent=control.get_parent()
+	while parent!=null:
+		if parent is Control and parent.clip_contents:visible=visible.intersection(parent.get_global_rect())
+		parent=parent.get_parent()
+	check(visible.size.x>=43.9 and visible.size.y>=43.9,"actual ancestor-clipped44px touch surface: "+id)
+	if visible.size.x<43.9 or visible.size.y<43.9:return
+	for pressed in [true,false]:
+		var event=InputEventScreenTouch.new();event.index=0;event.position=visible.get_center();event.pressed=pressed;Input.parse_input_event(event)
+		await settle()
+func verify_enemy_relic() -> void:
+	# Explicitly arranged public relics, not a played match or forged outcome.
+	# Same-ID relics distinguish enemy inspection from the existing own activation.
+	var card: Dictionary=app.alpha_catalog.card("of-houses-094")
+	check(card.kind=="relic" and not str(card.description).is_empty(),"real production relic has inspectable text")
+	var previous_hero: Variant=app.session.model.state.hero.relic
+	var previous_enemy: Variant=app.session.model.state.enemy.relic
+	app.session.model.state.hero.relic={"id":card.id,"uid":9201}
+	app.session.model.state.enemy.relic={"id":card.id,"uid":9202}
+	app.render();await settle()
+	var before=complete_state()
+	await tap_action("relic_slot")
+	check(active_action("inspect_relic_activate"),"own relic inspection retains its existing activation control")
+	await tap_action("modal_close")
+	await tap_action("actions")
+	check(modal_has_text("Gegnerisches Relikt: "+str(card.name)),"More exposes the actual public enemy relic name")
+	await tap_action("enemy_relic_details")
+	check(app.inspector_card_id==card.id and is_instance_valid(app.inspector_face) and app.inspector_face.card.id==card.id,"enemy details bind the real public card")
+	check(app.inspector_title.text==card.name and app.inspector_rules.text==card.description,"enemy inspector contains full actual name and ability")
+	check(modal_has_text("Gegnerisches Relikt · "+str(card.name)),"enemy ownership is explicit in the detail heading")
+	check(not active_action("inspect_relic_activate"),"enemy inspection never offers own activation even for the same card ID")
+	await tap_action("modal_close")
+	check(before==complete_state(),"enemy/own inspection preserves full state, events, RNG, commands and selection")
+	app.session.model.state.enemy.relic=null;app.render();await settle()
+	before=complete_state()
+	await tap_action("actions")
+	check(modal_has_text("Gegnerisches Relikt: keines") and not active_action("enemy_relic_details"),"empty enemy relic slot is clear and has no false details action")
+	await tap_action("modal_close")
+	check(before==complete_state(),"empty-relic information is read-only")
+	app.session.model.state.hero.relic=previous_hero;app.session.model.state.enemy.relic=previous_enemy
+	app.render();await settle()
 func save_frame(label: String) -> void:
 	if not capture:return
 	await RenderingServer.frame_post_draw
@@ -90,6 +145,7 @@ func run() -> void:
 		for id in ["log","restart"]:check(app.actions.has(id) and bounded(app.actions[id]),"secondary "+id+" is reachable through More")
 		app.close_modal();await settle()
 		check(before==Session.digest(app.session.model.snapshot()) and commands==app.session.commands.size(),"selection, inspector and secondary sheets never change rules or RNG")
+		await verify_enemy_relic()
 		if dimensions==Vector2i(844,390):
 			var retained=complete_state()
 			for variant in ["flat","spatial","three_d","spatial"]:

@@ -872,6 +872,13 @@ func show_actions() -> void:
 		button("restart","Neue Partie",func():show_modal("Neue Partie?",func(confirm):button("confirm_restart","Neu starten",func():close_modal();start_battle(),confirm)),navigation)
 		text("Energie %d · Resonanz %d/15" % [p.energy,p.resonance],box,22)
 		text("Nachziehstapel %d · Ablage %d · Hand %d/6" % [p.deck.size(),p.discard.size(),p.hand.size()],box,14)
+		if mode=="alpha":
+			var enemy_relic: Variant=session.model.state.enemy.relic
+			if enemy_relic!=null:
+				var enemy_card: Dictionary=session.card(str(enemy_relic.id))
+				text("Gegnerisches Relikt: "+str(enemy_card.name),box,16)
+				button("enemy_relic_details","Relikt des Gegners ansehen",func():inspect(enemy_card,{},"enemy"),box)
+			else:text("Gegnerisches Relikt: keines",box,14)
 		if not _duel_save_issue().is_empty():text("Fortsetzen noch nicht gesichert: "+_duel_save_issue()+" Die Partie bleibt spielbar. Nicht gesicherte Spielzüge können beim Neuladen verloren gehen.",box,14).add_theme_color_override("font_color",T.WARNING)
 		if not armed_impulses().is_empty():button("armed_impulses","Bereite Reaktionen · %d" % armed_impulses().size(),show_armed_impulses,box)
 		button("resource_help","Energie, Resonanz und Schlüsselwörter erklärt",resource_help,box)
@@ -921,9 +928,9 @@ func close_modal() -> void:
 	modal_version+=1
 	if is_instance_valid(modal):modal.hide();modal.queue_free()
 	modal=null;inspector_rules=null;inspector_title=null;inspector_face=null;inspector_card_id=""
-func inspect(c: Dictionary, current: Dictionary={}) -> void:
+func inspect(c: Dictionary, current: Dictionary={}, relic_owner: String="hero") -> void:
 	_audio_event("card.enlarge",{"faction":c.get("faction",c.get("order","neutral")),"rarity":c.get("rarity","common")})
-	show_modal(str(c.get("name",c.id)),func(box):
+	show_modal(("Gegnerisches Relikt · " if relic_owner=="enemy" else "")+str(c.get("name",c.id)),func(box):
 		# Every orientation gets the canonical portrait face. The adjacent readable
 		# rules column reflows below it on portrait rotation without closing or
 		# rebuilding the inspected card, selection or model.
@@ -959,7 +966,7 @@ func inspect(c: Dictionary, current: Dictionary={}) -> void:
 		text("SCHLÜSSELWÖRTER",details,14);text(S.card_keywords(c),details,14)
 		var art_note=ArtQualityLabel.new();art_note.card=c;details.add_child(art_note)
 		if c.kind=="event" and c.effect=="redirect":text("Voraussetzung: Ein eigener verzögerter Treffer wartet bereits. Neunte-Stunde-Karten wie Vorgemerkter Einschlag bereiten ihn vor.",details,14)
-		if page=="battle" and mode=="alpha" and c.kind=="relic" and session.model.state.hero.relic!=null and session.model.state.hero.relic.id==c.id:
+		if page=="battle" and mode=="alpha" and relic_owner=="hero" and c.kind=="relic" and session.model.state.hero.relic!=null and session.model.state.hero.relic.id==c.id:
 			button("inspect_relic_activate","RELIKT AKTIVIEREN · "+relic_cost_caption(),func():close_modal();act("activateRelic",["hero"]),details,not relic_can_activate())
 	)
 func show_log(requested_page: int=0) -> void:
