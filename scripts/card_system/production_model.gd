@@ -481,7 +481,7 @@ func production_apply(side: String, a: Dictionary, context: Dictionary) -> Dicti
  # Side-wide operations deliberately execute once, not once per matching unit.
  match str(a.effect):
   "gain_resonance":add_res(p,amount)
-  "gain_energy":p.energy=mini(8,int(p.energy)+amount)
+  "gain_energy":p.energy=mini(energy_limit(),int(p.energy)+amount)
   "draw_cards":actual.drawn=draw_cards(side,int(a.params.count))
   "discard_card":
    if not p.hand.is_empty():

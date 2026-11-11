@@ -11,6 +11,7 @@ func _resolve_delayed_damage(event: Dictionary) -> void:_lane_damage(_other(even
 func _has_haste(card: Dictionary) -> bool: return card.effect == "haste"
 func _init() -> void:catalog=AlphaCatalog.new()
 func summon_limit() -> int:return 0
+func energy_limit() -> int:return 8
 func reaction_order(order: String) -> String:
 	return {"houses":"thorn","stillwatch":"tide","morph":"veil","ninth":"ash"}.get(order,order)
 func start_alpha(deck: Array, opponent_deck: Array, seed_value: int, difficulty: int=2) -> bool:
@@ -99,7 +100,7 @@ func begin_turn(side: String) -> bool:
 		if holds:state.winner=side;_trace("convergence_win",side);return true
 		_trace("convergence_failed",side)
 	p.block=0;p.burstUsed=false;p.cycled=false;p.tacticUsed=false;p.fortifyUsed=false;p.relic_used=false;p.summons=0;p.attune=null
-	p.turns=int(p.turns)+1;p.energy=mini(8,int(p.turns));p.phase="draw";p.drawDone=false
+	p.turns=int(p.turns)+1;p.energy=mini(energy_limit(),int(p.turns));p.phase="draw";p.drawDone=false
 	p.pendingDraw=0 if int(p.turns)==1 and state.coin==side else 1
 	_refill_deck(side)
 	if state.winner!=null:return true
