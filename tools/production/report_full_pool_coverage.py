@@ -19,6 +19,10 @@ import statistics
 import subprocess
 import sys
 from pathlib import Path
+try:
+    from .source_compatibility import compare_frozen_source
+except ImportError:
+    from source_compatibility import compare_frozen_source
 
 ROOT = Path(__file__).resolve().parents[2]
 CORE = "d3c7c7bf1e2d714aef896d39538bfd343d2365c2"
@@ -95,11 +99,15 @@ def context():
     require(len(catalog) == 550, "Expected actual550 catalog")
     hashes = {path: sha((ROOT / path).read_bytes()) for path in BOUND_PATHS}
     core_hashes = {}
+    compatibility = {}
     for path in sorted(BOUND_PATHS - NEW_PATHS):
         data = subprocess.check_output(["git", "show", CORE + ":" + path], cwd=ROOT)
         core_hashes[path] = sha(data)
-        require(hashes[path] == core_hashes[path], "Sampler modified existing core/model/data/AI/inherited harness: " + path)
+        proof = compare_frozen_source(path, (ROOT / path).read_bytes(), data)
+        if proof is not None:
+            compatibility[path] = proof
     return {"fixture": fixture, "catalog": catalog, "hashes": hashes, "core_hashes": core_hashes,
+            "source_compatibility": compatibility,
             "decks": {d["id"]: d for d in fixture["decks"]}}
 
 
@@ -486,6 +494,7 @@ def markdown(summary, report, guards):
     if not summary["unplayed_cards"]: lines.append("| – | Alle550 IDs beobachtet ausgespielt; vollständige Balance dennoch nicht belegt. | – | – |")
     exit_code = str(summary["engine_exit_code"]) if summary["engine_exit_code"] is not None else "BEOBACHTETER_EXITCODE"
     lines += ["", "## Quellen und Reproduktion", "", f"Core: `{CORE}`. Godot: `{report['godot']}`. Der JSON-Bericht bindet Rohdaten-, Plan-, Journal-, Engine-Log- und Reporterhash sowie alle20 ausgeführten Quellen. Vollständige Decklisten und alle Fall-/Seed-/Startseitenangaben bleiben in den Rohdaten und im Plan.", "", "Der Wrapper übergibt den tatsächlichen Engine-Exitcode. Der Wert 0 darf bei manueller Reproduktion nur für einen wirklich erfolgreichen Prozessabschluss verwendet werden; ein Fehlercode darf nicht durch 0 ersetzt werden. Ein fehlender Exitcode bleibt unverifiziert und kann keinen bestandenen Bericht erzeugen.", "", "```sh", "bash tools/test_production_full_pool_coverage.sh", f"python3 tools/production/report_full_pool_coverage.py --source work/production/full-pool-coverage.json --plan work/production/full-pool-coverage-plan.json --journal work/production/full-pool-coverage-journal.jsonl --engine-log work/production/full-pool-coverage.log --engine-exit-code {exit_code} --verify-rejections", "```", ""]
+    lines += ["", "Explizite Quellenkompatibilität (ursprüngliche Core-Hashes und tatsächliche Laufhashes bleiben getrennt): `" + json.dumps(summary.get("source_compatibility", {}), sort_keys=True) + "`. Ausschließlich die exakt reversible Controller-Naht ist zulässig; neue Laufdaten müssen weiterhin die tatsächlichen Quellen binden.", ""]
     return "\n".join(lines)
 
 
@@ -570,7 +579,7 @@ def main():
         summary.update(schema_version=1, suite=SUITE, base_core_commit=CORE, provenance=provenance,
                        runtime_log_checked=engine_log_raw is not None, runtime_log_errors=log_errors,
                        engine_exit_code=args.engine_exit_code,
-                       source_sha256=report["source_sha256"], core_source_sha256=ctx["core_hashes"], executed_commit=report["executed_commit"],
+                       source_sha256=report["source_sha256"], core_source_sha256=ctx["core_hashes"], source_compatibility=ctx["source_compatibility"], executed_commit=report["executed_commit"],
                        engine_assertions_snapshot=report["assertions"], engine_failures_snapshot=report["failures"],
                        negative_evidence_guards=guards, measurement_notes=report["measurement_notes"])
         atomic(args.output_dir / "FULL_POOL_COVERAGE.json", (json.dumps(summary, ensure_ascii=False, indent=2) + "\n").encode(), args.check)

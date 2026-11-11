@@ -1,0 +1,12 @@
+{
+  "base": "17121e40a49838f479d1655d88d354ed836ad20e",
+  "source_commit": "206ae9dbf1c2192280cae591fa358e38425ddab3",
+  "existing_tracked_files_modified": 0,
+  "all_existing_combat_cards_audio_project_export_ui_save_files_unchanged": true,
+  "campaign_assertions": 3673,
+  "regression_assertions": 2681,
+  "chromium_profiles": 2,
+  "physical_device_acceptance": false,
+  "narrative_main_story_approved": false,
+  "deployment_performed": false
+}

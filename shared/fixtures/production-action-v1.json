@@ -1,0 +1,8 @@
+{
+  "protocol_version": 1,
+  "type": "match.action",
+  "request_id": "example-human-mulligan-1",
+  "match_id": "example-match",
+  "sequence": 1,
+  "action": { "type": "command", "name": "mulligan", "args": [[]] }
+}

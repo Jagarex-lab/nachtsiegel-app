@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="440" viewBox="0 0 880 440"><rect width="100%" height="100%" fill="#141a28"/><g font-family="sans-serif" fill="#edf1f7"><text x="25" y="30" font-size="20">550-card collection: unique ownership</text>
+<path d="M72 370.0 H860" stroke="#354052"/><text x="10" y="374.0" font-size="12">0</text>
+<path d="M72 308.0 H860" stroke="#354052"/><text x="10" y="312.0" font-size="12">20</text>
+<path d="M72 246.0 H860" stroke="#354052"/><text x="10" y="250.0" font-size="12">40</text>
+<path d="M72 184.0 H860" stroke="#354052"/><text x="10" y="188.0" font-size="12">60</text>
+<path d="M72 122.0 H860" stroke="#354052"/><text x="10" y="126.0" font-size="12">80</text>
+<path d="M72 60.0 H860" stroke="#354052"/><text x="10" y="64.0" font-size="12">100</text>
+<text x="74.2" y="392" font-size="12">1</text>
+<text x="136.8" y="392" font-size="12">30</text>
+<text x="266.3" y="392" font-size="12">90</text>
+<text x="460.6" y="392" font-size="12">180</text>
+<text x="860.0" y="392" font-size="12">365</text>
+<polyline points="74.2,314.7 87.1,270.9 136.8,197.0 266.3,120.0 460.6,81.7 860.0,61.7" fill="none" stroke="#62d9b5" stroke-width="3"/>
+<text x="72" y="425" fill="#62d9b5" font-size="13">A</text>
+<polyline points="74.2,314.8 87.1,267.5 136.8,187.7 266.3,113.3 460.6,76.8 860.0,60.6" fill="none" stroke="#79a9ff" stroke-width="3"/>
+<text x="217" y="425" fill="#79a9ff" font-size="13">B</text>
+<polyline points="74.2,311.9 87.1,258.6 136.8,172.3 266.3,99.5 460.6,68.8 860.0,60.0" fill="none" stroke="#e0b858" stroke-width="3"/>
+<text x="362" y="425" fill="#e0b858" font-size="13">C</text>
+<polyline points="74.2,314.9 87.1,267.4 136.8,183.8 266.3,109.6 460.6,74.1 860.0,60.2" fill="none" stroke="#e984c9" stroke-width="3"/>
+<text x="507" y="425" fill="#e984c9" font-size="13">D</text>
+<polyline points="74.2,305.4 87.1,238.1 136.8,139.2 266.3,78.0 460.6,61.1 860.0,60.0" fill="none" stroke="#ef775e" stroke-width="3"/>
+<text x="652" y="425" fill="#ef775e" font-size="13">E</text>
+<text x="440.0" y="402" font-size="13">Days · collection_pct</text></g></svg>

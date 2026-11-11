@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "copy_limits": {
+    "common": 3,
+    "rare": 3,
+    "epic": 3,
+    "legendary": 1
+  },
+  "starters": {
+    "count": 4,
+    "cards_per_deck": 30,
+    "grant": "onboarding_all_four",
+    "binding": "bound",
+    "ownership_rule": "Maximum copy count of each shared card across decks, not sum.",
+    "source_adapter": "scripts/economy/catalog_adapter.gd"
+  },
+  "cosmetics": {
+    "separate_from_playable_ownership": true,
+    "duplicate_cosmetic_gold": 0
+  },
+  "trading": {
+    "enabled": false,
+    "local_ownership_trusted": false,
+    "authoritative_server_required": true,
+    "regular_cards_transfer_policy": "reserved_pending_product_decision",
+    "starter_transferable": false,
+    "crafted_transferable": false
+  }
+}

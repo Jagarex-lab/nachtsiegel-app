@@ -1,0 +1,40 @@
+{
+  "seed": 56112026,
+  "repetitions": 200,
+  "horizon_days": 730,
+  "base_trajectories": 4000,
+  "sensitivity_trajectories": 1000,
+  "extra_pack_timing_cases": 3200,
+  "analysis_config_sha256": "ad15a8e2a8f534f0a44fcb10d83d12d90fe5472d0fe8d919aa4aa649e1f610d8",
+  "economy_config_sha256": "9d4509ecbf72d4f05c9410305d3c39c77be4d9a390b02fd9237c418d0c319e7b",
+  "module_sha256": "c97489ba8f15ca1a3c79c831613e4ef8a8539ba549914487537a3c2242ce89c4",
+  "base_model_sha256": "9c8ac24bd4008127a2152b4faf20cf4b407a31497e153e904481b42f89eadd83",
+  "elapsed_seconds": 266.43,
+  "status": "illustrative_analysis_not_implemented_prices_or_retention_evidence",
+  "target_essence_policy": "Once/account300at10/20/30/40completedmatches; permanent, target-baskets-only; noweeklyexpiry",
+  "crafting_policy": "First1L2Ethenfull12basket; secondbasketfromday180. Regularshardsremainbankedaftertargets. Affordablemetricsindependentlypricecheapestmissingcards; noextraownershipclaimed.",
+  "unsaturation_formula": "mean((extra_pack_new_unique/5)*(missing_unique_after_spending_regular_shards/max(1,missing_owned_unique))); clipped[0,1]. Conjecturalpack-demandproxy, notwillingness-to-pay.",
+  "weight_sets": {
+    "equal": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "moderate": [
+      1,
+      1.5,
+      2,
+      3
+    ],
+    "steep": [
+      1,
+      2,
+      4,
+      8
+    ]
+  },
+  "censoring": "Unreachedthresholdat730iscensored; cappedstatisticsuse731andarenotobservedcompletionmeans.",
+  "weekly_timing": "Earned10-matchweeklyrewardbankedatday7evenifofflineday; noadditionalclaimplayassumed.",
+  "expansion_sensitivity": "110syntheticcardsaddedat181/361/541/721; distinctIDs; existingcards/stocks/pityretained; noactualreleasecommitment."
+}

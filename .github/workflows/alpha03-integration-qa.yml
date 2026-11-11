@@ -1,0 +1,54 @@
+name: ORAFOLD Alpha 0.3 integration QA (no deployment)
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  integrated-modules:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GODOT_SILENCE_ROOT_WARNING: '1'
+      LP_NUM_THREADS: '1'
+      NODE_PATH: ${{ github.workspace }}/work/alpha03/browser-tools/node_modules
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The draw-boundary regression compiles the pinned pre-hook source.
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: server/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Install the existing storage-expression browser runtime
+        run: |
+          npm install --prefix work/alpha03/browser-tools --no-save --package-lock=false playwright@1.65.0
+          work/alpha03/browser-tools/node_modules/.bin/playwright install --with-deps chromium
+      - name: Economy, campaign, actual online duel and hosted application
+        # One import, strict completion/error/leak checks, and no publication.
+        run: bash tools/test_alpha03.sh
+      - name: Preserve complete integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-alpha03-integration
+          path: |
+            work/alpha03/*.log
+            work/alpha03/*.json
+            work/campaign_orafold/*.log
+            work/campaign_orafold/*.json
+            work/economy/*.log
+            work/economy/*.json
+          if-no-files-found: error

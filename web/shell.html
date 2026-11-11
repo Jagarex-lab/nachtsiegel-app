@@ -31,7 +31,7 @@ body {
 	inset: 0;
 	/* Godot writes an inline pixel size. It must not expand the mobile
 	   layout viewport after a landscape-to-portrait transition. */
-	width: 100vw !important;
+	width: var(--game-width, 100vw) !important;
 	max-width: 100%;
 	height: var(--game-height, 100dvh) !important;
 }
@@ -150,19 +150,77 @@ window.nachtsiegelInsets = function() {
  probe.remove();
  return result;
 };
-function syncGameHeight() {
- // Godot policy 2 sizes its buffer from innerHeight. Keep CSS isotropic;
- // the Alpha layout separately fits visualViewport (keyboard/browser chrome).
- const height = window.innerHeight;
- window.orafoldViewportVersion=(window.orafoldViewportVersion||0)+1;
- document.documentElement.style.setProperty('--game-height',height+'px');
+// ORAFOLD_VIEWPORT_BEGIN: shared by the browser regression harness.
+let viewportSnapshot = null;
+let viewportSignature = '';
+let viewportTimers = [];
+let viewportFrame = 0;
+let notifyingGameResize = false;
+let unoccludedViewport = null;
+const positiveViewportNumber = (value, fallback) => Number.isFinite(value) && value > 0 ? value : fallback;
+function syncGameViewport(notifyEngine = false) {
+ const width = positiveViewportNumber(window.innerWidth, document.documentElement.clientWidth || 1);
+ const height = positiveViewportNumber(window.innerHeight, document.documentElement.clientHeight || 1);
+ const editable = document.activeElement?.matches('input,textarea,[contenteditable="true"]');
+ // A keyboard may shrink the layout viewport too. Preserve its orientation
+ // while the same-width editable view is occluded; a real turn changes width.
+ if (!editable || !unoccludedViewport || Math.abs(width - unoccludedViewport.width) > 2) unoccludedViewport = {width,height};
+ const orientation = editable && unoccludedViewport ? unoccludedViewport : {width,height};
+ const style = document.documentElement.style;
+ const canvasChanged = style.getPropertyValue('--game-width') !== width+'px' || style.getPropertyValue('--game-height') !== height+'px';
+ style.setProperty('--game-width',width+'px');
+ style.setProperty('--game-height',height+'px');
+ const visual = window.visualViewport;
+ const zoom = positiveViewportNumber(visual?.scale,1);
+ // Safari can briefly expose the old visual viewport after the layout has
+ // turned. Width * scale must match before its height/offsets are usable.
+ const visualValid = !!visual && Number.isFinite(visual.width) && visual.width > 0 && Number.isFinite(visual.height) && visual.height > 0 &&
+  Math.abs(visual.width * zoom - width) <= Math.max(4,width*.025) && visual.height <= height + 4;
+ const left = visualValid ? Math.max(0,Math.min(width,Number(visual.offsetLeft)||0)) : 0;
+ const top = visualValid ? Math.max(0,Math.min(height,Number(visual.offsetTop)||0)) : 0;
+ const canvas = gameCanvas.getBoundingClientRect();
+ viewportSnapshot = {width,height,portrait:orientation.height > orientation.width,
+  canvasWidth:canvas.width,canvasHeight:canvas.height,
+  visibleLeft:left,visibleTop:top,visibleWidth:visualValid ? Math.min(width-left,visual.width) : width,
+  visibleHeight:visualValid ? Math.min(height-top,visual.height) : height,
+  zoom,visualValid,insets:window.nachtsiegelInsets()};
+ const signature = JSON.stringify(viewportSnapshot);
+ if (signature !== viewportSignature) {
+  viewportSignature = signature;
+  window.orafoldViewportVersion = (window.orafoldViewportVersion || 0) + 1;
+ }
+ // Delayed Safari changes need to wake Godot's canvas policy as well as the
+ // UI. The guard prevents our synthetic resize from starting another retry.
+ if (notifyEngine && canvasChanged) {
+  notifyingGameResize = true;
+  window.dispatchEvent(new Event('resize'));
+  notifyingGameResize = false;
+ }
+ return viewportSnapshot;
 }
-syncGameHeight();
-if(window.visualViewport) window.visualViewport.addEventListener('resize',() => {syncGameHeight();window.dispatchEvent(new Event('resize'));});
-window.addEventListener('resize',syncGameHeight);
-window.addEventListener('orientationchange',()=>requestAnimationFrame(syncGameHeight));
-window.addEventListener('pageshow',syncGameHeight);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncGameHeight();});
+function settleGameViewport() {
+ if (notifyingGameResize) return;
+ syncGameViewport(true);
+ cancelAnimationFrame(viewportFrame);
+ viewportTimers.forEach(clearTimeout);
+ viewportFrame = requestAnimationFrame(() => syncGameViewport(true));
+ // iOS does not guarantee a final resize after orientationchange. Retry for
+ // a bounded period, including toolbar and safe-area settling after resume.
+ viewportTimers = [50,150,300,600,1000,1600].map(delay => setTimeout(() => syncGameViewport(true),delay));
+}
+window.orafoldViewportMetrics = () => viewportSnapshot || syncGameViewport();
+settleGameViewport();
+if(window.visualViewport) {
+ window.visualViewport.addEventListener('resize',settleGameViewport);
+ window.visualViewport.addEventListener('scroll',settleGameViewport);
+}
+window.addEventListener('resize',settleGameViewport);
+window.addEventListener('orientationchange',settleGameViewport);
+window.addEventListener('pageshow',settleGameViewport);
+document.addEventListener('focusin',settleGameViewport);
+document.addEventListener('focusout',settleGameViewport);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)settleGameViewport();});
+// ORAFOLD_VIEWPORT_END
 // Diagnostic measurements, not an orientation lock or rotated canvas.
 window.orafoldDisplayMetrics=()=>{const c=document.querySelector('canvas'),r=c.getBoundingClientRect();return {cssWidth:r.width,cssHeight:r.height,pixelsWidth:c.width,pixelsHeight:c.height,dpr:window.devicePixelRatio||1,zoom:window.visualViewport?.scale||1,visibleHeight:window.visualViewport?.height||innerHeight,lockAvailable:typeof screen.orientation?.lock==='function'};};
 </script>

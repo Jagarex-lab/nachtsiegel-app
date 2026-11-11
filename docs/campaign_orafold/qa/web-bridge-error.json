@@ -1,0 +1,25 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Die unbeschriebene Zeile|The Unwritten Line/. Input:\n\n'TECHNISCHER PROTOTYP · KEINE FREIGEGEBENE HAUPTGESCHICHTE'\n",
+  "errors": [
+    "SCRIPT ERROR: Invalid operands 'int' and 'bool' in operator '!='.",
+    "   at: save (res://scripts/campaign_orafold/campaign_state.gd:188)",
+    "   GDScript backtrace (most recent call first):",
+    "       [0] save (res://scripts/campaign_orafold/campaign_state.gd:188)",
+    "       [1] _commit (res://scripts/campaign_orafold/campaign_manager.gd:271)",
+    "       [2] load_campaign (res://scripts/campaign_orafold/campaign_manager.gd:58)",
+    "       [3] _ready (res://scripts/campaign_orafold/presentation.gd:43)"
+  ],
+  "state": {
+    "actions": {},
+    "compact": false,
+    "flags": {},
+    "logical_viewport": [
+      1280,
+      900
+    ],
+    "save_error": "",
+    "scene_id": "",
+    "screen": "overview",
+    "title": "TECHNISCHER PROTOTYP · KEINE FREIGEGEBENE HAUPTGESCHICHTE"
+  }
+}

@@ -1,0 +1,416 @@
+{
+  "cases": [
+    {
+      "difficulty": 1,
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "hero": "starter-ninth",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-houses",
+      "first": "hero",
+      "hero": "starter-ninth",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "hero": "starter-ninth",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-houses",
+      "first": "hero",
+      "hero": "starter-ninth",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "hero": "starter-houses",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "hero": "starter-houses",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "hero": "starter-houses",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "hero": "starter-houses",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "hero": "starter-ninth",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "hero": "starter-ninth",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "hero": "starter-ninth",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "hero": "starter-ninth",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "hero": "starter-stillwatch",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "hero": "starter-stillwatch",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "hero": "starter-stillwatch",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "hero": "starter-stillwatch",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-morph",
+      "first": "hero",
+      "hero": "starter-ninth",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "hero": "starter-ninth",
+      "seed": 930020
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-morph",
+      "first": "hero",
+      "hero": "starter-ninth",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "hero": "starter-ninth",
+      "seed": 930020
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "hero": "starter-morph",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "hero": "starter-morph",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-ninth",
+      "first": "enemy",
+      "hero": "starter-morph",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-ninth",
+      "first": "hero",
+      "hero": "starter-morph",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-houses",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-houses",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-houses",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "starter-houses",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "starter-houses",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "starter-houses",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "starter-houses",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-stillwatch",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-stillwatch",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "starter-stillwatch",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "starter-stillwatch",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "starter-stillwatch",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "starter-stillwatch",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-morph",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930019
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-morph",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "starter-morph",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930019
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "starter-morph",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "starter-morph",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "starter-morph",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "starter-morph",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-relic",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-relic",
+      "first": "enemy",
+      "hero": "prod-time",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-relic",
+      "first": "hero",
+      "hero": "prod-time",
+      "seed": 930018
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "prod-relic",
+      "seed": 930017
+    },
+    {
+      "difficulty": 1,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "prod-relic",
+      "seed": 930018
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "enemy",
+      "hero": "prod-relic",
+      "seed": 930017
+    },
+    {
+      "difficulty": 5,
+      "enemy": "prod-time",
+      "first": "hero",
+      "hero": "prod-relic",
+      "seed": 930018
+    }
+  ],
+  "source_hashes": {
+    "data/alpha/cards.json": "0e5fcc20589961c5bdca662642870bc9abfc483b0ef2aebfbbf88be2876355ef",
+    "data/card_system/alpha_species.json": "e064020b50ba8584999eb7e2e8aa6f601ec41719e89cace249b0d689e3f7e531",
+    "data/card_system/registry.json": "0d4731ff5dead611844cbb68db1b0b8fd65a712245375f5244c546aa3dcbfc54",
+    "data/production/cards.json": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+    "data/production/starters.json": "79dbb5705c4f82f77ae5bd52ec4842e79b8dc47ede218acd3dc6bcccec848f52",
+    "data/production/test_decks.json": "0e35b231be3ac4420ca9ab257ad0146ba2dd248b578555ff44a7f28e6cc18bd0",
+    "scripts/alpha/catalog.gd": "fc8fbdb5822a0ae9a23f114227d90a8f67dfa27e8aaf0e72b7ca402163eb9374",
+    "scripts/alpha/model.gd": "fd1c2937f74bf587a4bcdf7a82e0da5990ad8dfadb7bf812b4ad0728b9fa6bd2",
+    "scripts/card_system/production_effects.gd": "e33d48710b4a2e1b0c24ddb55b8ac584fb51a9ea2149f5274fa294a71ebb7484",
+    "scripts/card_system/production_model.gd": "11b384202d75ab490df16bda95d93cd611be62241afce9d626e3883b8ab25ca5",
+    "scripts/card_system/registry.gd": "3d9dd99e032bd12c3dafce0535051cf354d99698048dee3ca7bf852ce7cc65da",
+    "scripts/card_system/runtime.gd": "ca2be2fc49f1a18748b3b887610655acdccac134cef6664ffe003cb93adbc8ad",
+    "scripts/card_system/trigger_model.gd": "ea1e5c0f441d14f0a051a6d859fcd7e66c3a5a1978af3d5a05cd8bf8fde5deee",
+    "scripts/legacy/battle_engine.gd": "7a3bfaea53d7aa0bacb3aa380a4bca0770f64c238f267b34020874ab8ace3698",
+    "scripts/legacy/rng.gd": "7b3bf48f8e66d51ff24ec5fdfefffbaac8847efee171407be498b34f47847abf",
+    "scripts/production/ai_policy.gd": "52ba7a1e78cbdb224a28822b5120254b55421e3e8db3f6de804121588571f2c4",
+    "scripts/production/catalog.gd": "7d7f8e158ddfbfb1365efee0ef504f023013fea70507bed402cbe3fff137ffe8",
+    "tests/alpha03_balance.gd": "4c4c928410c26e1646702871e188d292ac08556de95c481f9d36dc01bce52799"
+  }
+}

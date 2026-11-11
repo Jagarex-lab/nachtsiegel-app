@@ -6,6 +6,10 @@ import hashlib
 import json
 import math
 from pathlib import Path
+try:
+    from .source_compatibility import verify_executed_draw_controller, MODEL
+except ImportError:
+    from source_compatibility import verify_executed_draw_controller, MODEL
 ROOT=Path(__file__).resolve().parents[2]
 
 def wilson(w,n):
@@ -17,6 +21,8 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--source',default='work/production/simulations.json');args=parser.parse_args()
     source=ROOT/args.source
     r=json.loads(source.read_text());s=r['summary'];games=r['games']
+    model_source=(ROOT/MODEL).read_bytes()
+    compatibility={MODEL:verify_executed_draw_controller(r['source_sha256'],model_source)}
     ok=r['failures']==0 and s['errors']==0 and s['censored']==0 and not r.get('source_changes_during_run') and r['matrix_games']==r['expected_matrix_games']
     catalog=json.loads((ROOT/'data/production/cards.json').read_text());cards={c['id']:c for c in catalog['cards']}
     tables=[]
@@ -46,6 +52,7 @@ def main():
     digest=hashlib.sha256(source.read_bytes()).hexdigest()
     summary={k:v for k,v in r.items() if k not in ('games','summary')}
     summary['summary']=s;summary['raw_evidence_sha256']=digest
+    summary['source_compatibility']=compatibility
     target=ROOT/'docs/production/simulation-results.json';target.write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
     text=f'''# Produktions-Balancing: tatsächlicher Simulationsbericht
 
@@ -113,6 +120,8 @@ python3 tools/production/report_simulations.py
 ```
 
 Engine: `{r['godot']}`. Die vollständigen Seeds, Zustands-/Ereignisdigests, Aktionszahlen, Kartennutzungen, Quellen-SHA-256 und Messgrenzen stehen in `work/production/simulations.json` (CI-Artefakt), SHA-256 `{digest}`. Der eingecheckte kompakte Nachweis steht in `docs/production/simulation-results.json`; er enthält Zusammenfassung und Quellenbindung, keine behaupteten zusätzlichen Partien.
+
+Explizite Modellquellen-Kompatibilität: `{json.dumps(compatibility,sort_keys=True)}`. Nur die exakt reversible Controller-Naht wird gegen den ursprünglichen Modellanker normalisiert; tatsächliche Laufhashes bleiben unverändert und müssen dem aktuellen Checkout entsprechen.
 '''
     (ROOT/'docs/production/BALANCE_REPORT.md').write_text(text)
     print(f"PRODUCTION SIMULATION REPORT: {'PASS' if ok else 'FAIL'}, {r['matrix_games']}+{r['additional_verification_games']} games; raw SHA256 {digest}")

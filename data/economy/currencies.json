@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "currencies": {
+    "gold": {
+      "enabled": true,
+      "purchasable": false,
+      "transferable": false,
+      "initial_balance": 0,
+      "maximum_balance": 1000000000
+    },
+    "premium": {
+      "enabled": false,
+      "purchasable": false,
+      "transferable": false,
+      "initial_balance": 0,
+      "maximum_balance": 0
+    },
+    "crafting": {
+      "enabled": true,
+      "purchasable": false,
+      "transferable": false,
+      "initial_balance": 0,
+      "maximum_balance": 1000000000
+    }
+  },
+  "excluded_combat_resources": [
+    "resonance",
+    "energy"
+  ],
+  "premium_decision": "Not necessary for alpha; reserved disabled schema only."
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="470" viewBox="0 0 960 470">
+<rect width="960" height="470" fill="#141a28"/><g fill="#edf1f7" font-family="sans-serif">
+<text x="25" y="28" font-size="18">Hypothetical 24-month ex-VAT spending, 10,000 acquired accounts</text>
+<text x="25" y="50" font-size="12">Scenario assumptions; before refunds, fees and costs; no observed sales</text>
+<path d="M70 370 H930" stroke="#354052"/><text x="8" y="374" font-size="12">0</text>
+<path d="M70 312 H930" stroke="#354052"/><text x="8" y="316" font-size="12">1954</text>
+<path d="M70 254 H930" stroke="#354052"/><text x="8" y="258" font-size="12">3909</text>
+<path d="M70 196 H930" stroke="#354052"/><text x="8" y="200" font-size="12">5863</text>
+<path d="M70 138 H930" stroke="#354052"/><text x="8" y="142" font-size="12">7818</text>
+<path d="M70 80 H930" stroke="#354052"/><text x="8" y="84" font-size="12">9772</text>
+<rect x="100" y="355.45" width="35" height="14.55" fill="#ef917a"/>
+<rect x="142" y="287.36" width="35" height="82.64" fill="#82b5ff"/>
+<rect x="184" y="114.31" width="35" height="255.69" fill="#76d4b3"/>
+<text x="95" y="397" font-size="12">baseline96</text>
+<rect x="310" y="354.60" width="35" height="15.40" fill="#ef917a"/>
+<rect x="352" y="283.07" width="35" height="86.93" fill="#82b5ff"/>
+<rect x="394" y="102.81" width="35" height="267.19" fill="#76d4b3"/>
+<text x="305" y="397" font-size="12">scarcity</text>
+<rect x="520" y="355.25" width="35" height="14.75" fill="#ef917a"/>
+<rect x="562" y="286.31" width="35" height="83.69" fill="#82b5ff"/>
+<rect x="604" y="111.36" width="35" height="258.64" fill="#76d4b3"/>
+<text x="515" y="397" font-size="12">protected_weekly</text>
+<rect x="730" y="354.05" width="35" height="15.95" fill="#ef917a"/>
+<rect x="772" y="277.76" width="35" height="92.24" fill="#82b5ff"/>
+<rect x="814" y="80.00" width="35" height="290.00" fill="#76d4b3"/>
+<text x="725" y="397" font-size="12">cosmetics_first</text>
+<text x="150" y="445" fill="#ef917a" font-size="14">pessimistic</text>
+<text x="400" y="445" fill="#82b5ff" font-size="14">base</text>
+<text x="650" y="445" fill="#76d4b3" font-size="14">optimistic</text>
+</g></svg>

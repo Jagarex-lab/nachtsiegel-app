@@ -1,0 +1,129 @@
+{
+  "active_player_id": "b",
+  "coin_player_id": "b",
+  "finished": false,
+  "legal_actions": [
+    {
+      "args": [
+        0
+      ],
+      "name": "origin"
+    },
+    {
+      "args": [
+        1
+      ],
+      "name": "origin"
+    },
+    {
+      "args": [
+        2
+      ],
+      "name": "origin"
+    },
+    {
+      "args": [
+        3
+      ],
+      "name": "origin"
+    },
+    {
+      "args": [
+        4
+      ],
+      "name": "origin"
+    }
+  ],
+  "opening": {
+    "mulligan_done": true,
+    "opponent_mulligan_done": true,
+    "opponent_origin_done": false,
+    "origin_done": false,
+    "second_card": false,
+    "second_path": false,
+    "second_player_id": "a"
+  },
+  "opponent": {
+    "block": 0,
+    "burstUsed": false,
+    "convergence": null,
+    "cycled": false,
+    "cycles": 0,
+    "deckCount": 25,
+    "discard": [],
+    "energy": 0,
+    "fatigue": 0,
+    "fortifyUsed": false,
+    "handCount": 5,
+    "hp": 30,
+    "lanes": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "maxHp": 30,
+    "pendingDraw": 0,
+    "pendingShift": null,
+    "pendingTarget": null,
+    "phase": "opening",
+    "relic": null,
+    "relic_used": false,
+    "resonance": 0,
+    "seals": 0,
+    "tacticUsed": false,
+    "turns": 0,
+    "ward": 0,
+    "weak": 0
+  },
+  "origins": {
+    "opponent": -1,
+    "self": -1
+  },
+  "round": 0,
+  "rules_profile": "production-550-v1",
+  "self": {
+    "block": 0,
+    "burstUsed": false,
+    "convergence": null,
+    "cycled": false,
+    "cycles": 0,
+    "deckCount": 25,
+    "discard": [],
+    "energy": 0,
+    "fatigue": 0,
+    "fortifyUsed": false,
+    "hand": [
+      "of-houses-062",
+      "of-neutral-056",
+      "of-houses-020",
+      "of-neutral-056",
+      "of-houses-086"
+    ],
+    "handCount": 5,
+    "hp": 30,
+    "lanes": [
+      null,
+      null,
+      null,
+      null,
+      null
+    ],
+    "maxHp": 30,
+    "pendingDraw": 0,
+    "pendingShift": null,
+    "pendingTarget": null,
+    "phase": "opening",
+    "relic": null,
+    "relic_used": false,
+    "resonance": 0,
+    "seals": 0,
+    "tacticUsed": false,
+    "turns": 0,
+    "ward": 0,
+    "weak": 0
+  },
+  "stage": "origins",
+  "winner_player_id": null
+}

@@ -1,0 +1,10 @@
+{
+  "prototype_only": true,
+  "mode": "casual",
+  "regions": ["local", "eu", "na", "asia"],
+  "ready_timeout_ms": 30000,
+  "turn_timeout_ms": 30000,
+  "reconnect_grace_ms": 90000,
+  "queue_timeout_ms": 120000,
+  "note": "Reference defaults only; service constructor options are authoritative. These simulation deadlines are not approved ORAFOLD balance rules. See server/src/matchmaking/rules.ts for rating widening."
+}

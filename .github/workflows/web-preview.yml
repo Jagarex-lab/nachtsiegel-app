@@ -15,6 +15,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  alpha03-integration:
+    # Part of this release-required workflow's complete conclusion: economy,
+    # campaign, real Godot-backed multiplayer and hosted application checks.
+    uses: ./.github/workflows/alpha03-integration-qa.yml
+    permissions:
+      contents: read
+
   production-audio:
     # The guarded manual publisher requires this workflow's complete conclusion,
     # including real exported-product audio and both browser engines.
@@ -200,6 +207,16 @@ jobs:
           MIGRATION_OLD_BUILD: work/production/before-web
           MIGRATION_NEW_BUILD: work/build/web
         run: node tools/production/browser_migration_qa.cjs
+      - name: Safari delayed-viewport fault regressions in the actual shell bridge
+        run: |
+          mkdir -p work/alpha03
+          node tools/alpha03_viewport_browser.cjs > work/alpha03/viewport-${{ matrix.engine }}.json
+      - name: Integrated mobile menu, real module navigation and repeated rotation
+        run: node tools/alpha03_browser_qa.cjs
+      - name: Actual exported economy onboarding, purchase, opening, reload and quota failure
+        env:
+          ECONOMY_WEB_ENGINES: ${{ matrix.engine }}
+        run: node --test tests/economy_actual_web.test.cjs
       - name: Master card system and battlefield opening browser regression
         run: node tools/master550_browser_qa.cjs
       - name: Legacy UI Android regression
@@ -241,6 +258,8 @@ jobs:
             work/alpha02/browser-results.json
             work/master550/browser/
             work/production-browser-migration/
+            work/alpha03/browser/
+            work/alpha03/viewport-*.json
           if-no-files-found: warn
 
   production-art-native-package:

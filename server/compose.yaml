@@ -1,0 +1,24 @@
+# Historical transport fixture packaging, not the actual-duel hosting recipe.
+# See docs/alpha03/ONLINE_INTEGRATION.md for the source/Godot local server.
+services:
+  online:
+    image: orafold-online-prototype:local
+    build:
+      context: .
+    ports:
+      - "127.0.0.1:8787:8787"
+    environment:
+      ORIGIN: http://127.0.0.1:8787
+    volumes:
+      - online-data:/app/var
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 64
+    restart: "no"
+volumes:
+  online-data:

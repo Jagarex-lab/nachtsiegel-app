@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "pools": {
+    "standard": {
+      "enabled": true,
+      "price_gold": 100,
+      "card_filter": {
+        "set": "core"
+      },
+      "display_name_de": "Standardbooster"
+    },
+    "power": {
+      "enabled": false,
+      "price_gold": 100,
+      "card_filter": {
+        "set": "core"
+      },
+      "display_name_de": "Machtbooster"
+    },
+    "expansion": {
+      "enabled": false,
+      "price_gold": 100,
+      "card_filter": {
+        "set": "expansion"
+      },
+      "display_name_de": "Erweiterungsbooster"
+    },
+    "event": {
+      "enabled": false,
+      "price_gold": 0,
+      "card_filter": {
+        "set": "event"
+      },
+      "display_name_de": "Eventbooster"
+    }
+  }
+}

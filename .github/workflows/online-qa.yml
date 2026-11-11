@@ -1,0 +1,14 @@
+name: ORAFOLD online authority integration QA (no deployment)
+on:
+  pull_request:
+    branches: [develop]
+    paths: ['server/**', 'scripts/online/**', 'shared/**', 'tests/online*', 'data/online/**', 'docs/online/**', '.github/workflows/online-qa.yml']
+  push:
+    branches: [feature/orafold-online]
+permissions:
+  contents: read
+jobs:
+  online:
+    # The default server uses the actual Godot authority. The old simulation-
+    # only Compose smoke is superseded by the full required integration gate.
+    uses: ./.github/workflows/alpha03-integration-qa.yml

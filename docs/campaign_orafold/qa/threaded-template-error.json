@@ -1,0 +1,6 @@
+{
+  "error": "TimeoutError: page.waitForFunction: Timeout 90000ms exceeded.",
+  "errors": [
+    "DataCloneError: Failed to execute 'postMessage' on 'Worker': SharedArrayBuffer transfer requires self.crossOriginIsolated."
+  ]
+}

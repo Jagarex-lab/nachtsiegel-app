@@ -1,0 +1,10 @@
+{
+  "prototype_only": true,
+  "environment_variables": {
+    "HOST": "127.0.0.1",
+    "PORT": "8787",
+    "ORIGIN": "http://127.0.0.1:8787",
+    "DB_PATH": "var/orafold.sqlite"
+  },
+  "note": "Documentation template only. The server reads environment variables, not this JSON. NODE_ENV=production is refused. No secret required for local-only operation."
+}

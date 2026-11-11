@@ -1,0 +1,165 @@
+{
+  "scope": "Real Linux browser shell bridge; injected Safari timing/visual viewport faults. Not physical iPhone or full Godot export.",
+  "baseline": false,
+  "baselineRef": null,
+  "browsers": [
+    {
+      "name": "chromium",
+      "version": "158.0.8127.18",
+      "results": [
+        {
+          "label": "portrait without screen.orientation",
+          "pass": true
+        },
+        {
+          "label": "landscape despite stale portrait Godot buffer",
+          "pass": true
+        },
+        {
+          "label": "CSS canvas is upright and fills landscape",
+          "pass": true
+        },
+        {
+          "label": "stale screen.orientation cannot force portrait",
+          "pass": true
+        },
+        {
+          "label": "stale portrait visualViewport rejected",
+          "pass": true
+        },
+        {
+          "label": "late dimensions settle without final resize",
+          "pass": true
+        },
+        {
+          "label": "width-first rotation settles",
+          "pass": true
+        },
+        {
+          "label": "height-first rotation settles",
+          "pass": true
+        },
+        {
+          "label": "address bar and safe area retained in snapshot",
+          "pass": true
+        },
+        {
+          "label": "under248 usable landscape is not portrait",
+          "pass": true
+        },
+        {
+          "label": "same-width keyboard cannot flip portrait",
+          "pass": true
+        },
+        {
+          "label": "zoom and pan fit visible rect without changing orientation",
+          "pass": true
+        },
+        {
+          "label": "unavailable visual viewport dimensions use layout",
+          "pass": true
+        },
+        {
+          "label": "repeated turns return landscape upright",
+          "pass": true
+        },
+        {
+          "label": "settling retries end without redraw loop",
+          "pass": true
+        },
+        {
+          "label": "missing visualViewport uses layout",
+          "pass": true
+        },
+        {
+          "label": "fresh landscape document needs no extra rotation",
+          "pass": true
+        },
+        {
+          "label": "no browser script errors",
+          "pass": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "name": "webkit",
+      "version": "27.2",
+      "results": [
+        {
+          "label": "portrait without screen.orientation",
+          "pass": true
+        },
+        {
+          "label": "landscape despite stale portrait Godot buffer",
+          "pass": true
+        },
+        {
+          "label": "CSS canvas is upright and fills landscape",
+          "pass": true
+        },
+        {
+          "label": "stale screen.orientation cannot force portrait",
+          "pass": true
+        },
+        {
+          "label": "stale portrait visualViewport rejected",
+          "pass": true
+        },
+        {
+          "label": "late dimensions settle without final resize",
+          "pass": true
+        },
+        {
+          "label": "width-first rotation settles",
+          "pass": true
+        },
+        {
+          "label": "height-first rotation settles",
+          "pass": true
+        },
+        {
+          "label": "address bar and safe area retained in snapshot",
+          "pass": true
+        },
+        {
+          "label": "under248 usable landscape is not portrait",
+          "pass": true
+        },
+        {
+          "label": "same-width keyboard cannot flip portrait",
+          "pass": true
+        },
+        {
+          "label": "zoom and pan fit visible rect without changing orientation",
+          "pass": true
+        },
+        {
+          "label": "unavailable visual viewport dimensions use layout",
+          "pass": true
+        },
+        {
+          "label": "repeated turns return landscape upright",
+          "pass": true
+        },
+        {
+          "label": "settling retries end without redraw loop",
+          "pass": true
+        },
+        {
+          "label": "missing visualViewport uses layout",
+          "pass": true
+        },
+        {
+          "label": "fresh landscape document needs no extra rotation",
+          "pass": true
+        },
+        {
+          "label": "no browser script errors",
+          "pass": true
+        }
+      ],
+      "errors": []
+    }
+  ]
+}
