@@ -38,6 +38,13 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
    const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync(`work/alpha/browser-progress-${engine}-${name}.json`,JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
+   const waitViewport=()=>page.waitForFunction(viewport=>{
+    const q=window.orafoldQA,m=window.orafoldDisplayMetrics?.();if(!q||!m||!q.density||!q.layout_size)return false;
+    const safe=window.nachtsiegelInsets?.()||{},top=window.visualViewport?.offsetTop||0;
+    const width=Math.max(320,m.pixelsWidth/q.density-(safe.left||0)-(safe.right||0));
+    const height=Math.max(160,Math.min(m.pixelsHeight/q.density-top,m.visibleHeight)-(safe.top||0)-(safe.bottom||0));
+    return Math.abs(m.cssWidth-viewport.width)<1&&Math.abs(m.cssHeight-viewport.height)<1&&Math.abs(m.pixelsWidth/m.cssWidth-q.density)<.02&&Math.abs(q.layout_size[0]-width)<1&&Math.abs(q.layout_size[1]-height)<1;
+   },page.viewportSize(),{timeout:90000});
    const tap=async r=>{if(gameplay?.recording){const q=await state();gameplay.inputs.push({kind:'touch',point:[r[0]+r[2]/2,r[1]+r[3]/2],rect:r,seed:q.battle?.seed,command_count:q.command_count,selected:q.selected,phase:q.battle?.hero.phase,action:lastAction});}await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
    const encloses=(outer,inner)=>outer&&inner&&inner[0]>=outer[0]-.1&&inner[1]>=outer[1]-.1&&inner[0]+inner[2]<=outer[0]+outer[2]+.1&&inner[1]+inner[3]<=outer[1]+outer[3]+.1;
    const viewportRect=()=>[0,0,page.viewportSize().width,page.viewportSize().height];
@@ -90,7 +97,8 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     assert(fullVisible(previous,id),id+' requires a visible44CSS card region or a fully visible button');
     const hit=touchRect(previous,id);assert(hit[2]>=43.9&&hit[3]>=43.9,id+' actual touch region remains44CSS');
     actionTrace.push({id,kind:'tap',rect:previous.actions[id].rect,hit_rect:hit,visibility:previous.action_visibility?.[id]||null});
-    await tap(hit);if(render)await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});
+    const destination={builder:'builder',collection:'collection',settings:'settings',start:legacyOnly?'battle':'decks',deck_play:'battle',builder_back:'lobby',settings_back:'lobby',decks_back:'lobby',confirm_menu:'lobby',result_menu:'lobby'}[id];
+    await tap(hit);if(render)await page.waitForFunction(({previous,destination})=>{const q=window.orafoldQA;return(q.render_version>previous.render_version||q.modal_version!==previous.modal_version)&&(!destination||q.page===destination);},{previous,destination},{timeout:90000});
    };
    const capture=engine==='chromium'?await context.newCDPSession(page):null;
    const deadline=async (promise,message,ms)=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(message)),ms);})]).finally(()=>clearTimeout(timer));};
@@ -173,6 +181,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     }finally{
      await page.evaluate(()=>{const descriptor=window.__orafoldToolbarPriorInsets;if(descriptor)Object.defineProperty(window,'nachtsiegelInsets',descriptor);else delete window.nachtsiegelInsets;delete window.__orafoldToolbarPriorInsets;});
      const version=(await state()).render_version;await page.setViewportSize(previousViewport);await page.waitForFunction(v=>window.orafoldQA.render_version>v,version);
+     await waitViewport();
     }
     assert.deepEqual((await state()).battle,expected,'restoring browser geometry preserves all gameplay state');
    }
@@ -236,7 +245,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       sequenceArtifact.served_verified_files.push({file,sha256:actual,bytes:bytes.length});await response.dispose();
      }
     }
-    await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');assert((await page.title()).includes('ORAFOLD'));
+    await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');await waitViewport();assert((await page.title()).includes('ORAFOLD'));
     console.log('LOBBY',engine,name);let menu=await state();
     for(const key of ['start','builder','collection','settings'])assert(menu.actions[key],key);
     for(const key of ['archive','mode_alpha','mode_legacy'])assert(!menu.actions[key],'no public route '+key);
@@ -271,7 +280,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     await shot('battle');if(!legacyOnly&&['desktop','iphone'].includes(name))await toolbarViewportChecks();await playTurn();await shot('after-turn');
     if((await state()).battle.winner){await action('result_menu');}else{await action('menu');await action('confirm_menu');}
     await action('builder');await action('save_deck');await wait(()=>window.orafoldQA.message.includes('gespeichert'));await shot('builder');
-    await page.reload({waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');await action('builder');assert.equal((await state()).deck_size,legacyOnly?25:30);await action('builder_back');
+    await page.reload({waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');await waitViewport();await action('builder');assert.equal((await state()).deck_size,legacyOnly?25:30);await action('builder_back');
     if(['desktop','desktop-wide','android','iphone'].includes(name)){
      let productionTemplate=null;
      if(!legacyOnly){
