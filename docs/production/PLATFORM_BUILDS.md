@@ -23,3 +23,33 @@ DISPLAY=:99 tools/build_platform_qa.sh
 ```
 
 Die aktuellen Ergebnisse sind Debug-/Paketprüfungen. Kein Android-Gerät oder physisches iPhone wurde getestet. Native iOS-Builds, Xcode, Provisioning, Store-Signaturen, Touch-/GPU-/Thermaltests auf Geräten und kommerzielle Auslieferung bleiben offen. Die WebKit-Browserprüfungen sind gesonderte automatisierte Browsernachweise und ersetzen diese Gerätetests nicht.
+
+## Reproduzierbare native Plattform-CI
+
+Der separate Plattformbaustein ergänzt zwei Windows-x86_64-Debugpresets. `Windows QA` behält den normalen Spieleinstieg, `Windows Runtime QA` verwendet dieselbe bereits vorhandene QA-Szene wie Linux. Es gibt keine zweite Testkampfengine. Der offizielle Debug-Konsolenwrapper reicht Parameter/Logs an das tatsächlich exportierte Windows-Programm weiter. Windows-Pakete werden auf einem Windows-Runner ausgeführt; ein PE-Header auf Linux wird ausdrücklich nicht als Windows-Laufzeitprüfung gezählt.
+
+`tools/platform_qa.py` ist die gemeinsame Orchestrierung für Linux/Android und Windows. Sie prüft ELF64 beziehungsweise PE32+, das tatsächlich eingebettete Godot-V2/V3-PCK, die byteidentischen 550 Kartendefinitionen, Starter, Artmanifest und Schriftlizenzen. Versehentlich gepackte Checkout-/Test-/Buildpfade werden abgewiesen. Android erhält zusätzlich eine ZIP-/ABI-Prüfung beider tatsächlich enthaltenen nativen Bibliotheken sowie echte `apksigner verify`-/`aapt badging`-Aufrufe. Ein bewusst für diesen Lauf erzeugter Debugschlüssel ist keine Store-Signatur; Schlüssel und lokale Einstellungen werden nicht als CI-Artefakte hochgeladen.
+
+Die reguläre Binärdatei wird strukturell geprüft und ausdrücklich mit `runtime_executed=false` ausgewiesen. Die zweite native QA-Ausführung instanziiert denselben tatsächlichen Shell-Menücode, prüft Lobby und vier Hauptaktionen und muss eine erfolgreiche echte Duellzusammenfassung einschließlich `main_menu_verified=true` liefern. Sie beendet sich über den vorhandenen Audioowner. Ein erzwungenes `--quit-after` würde diesen geordneten Shutdown umgehen und ist deshalb keine Ersatzprobe. Exitcode null allein reicht nicht. Scriptfehler, Ressourcenlecks, fehlende Ausgabe, falsche Engineversion, unvollständige Partien, Source-/HEAD-Wechsel und Timeouts verhindern einen bestandenen Bericht. Das bleibt eine native Headless-Prüfung und keine gerenderte Geräteabnahme.
+
+```sh
+tools/build_platform_qa.sh --platform linux-android
+# Platzsparend für kleine Entwicklungscontainer: nach jeder tatsächlichen
+# Prüfung Hash/Größe/Log erhalten und nur die erzeugten Binärdateien entfernen.
+PLATFORMS_KEEP_BINARIES=0 tools/build_platform_qa.sh --platform linux-android
+
+# Auf Windows, mit Godot4.6.3 und passenden Templates:
+python tools/platform_qa.py --platform windows
+```
+
+Jeder Lauf erhält ein frisches Verzeichnis unter `work/production/platforms/run-*`. `results.json` benennt Status, tatsächlichen Commit, Quellhashes, Befehle, Laufzeiten, Binärhashes und den Aufbewahrungszustand der Dateien. In platzsparendem Modus bedeutet `retained=false`, dass kein lokaler Download dieser Datei behauptet wird. Generierte `.uid`-/`.import`-Metadaten sind von der Rohquellbindung getrennt; tatsächliche Skripte, Szenen, Definitionen, Illustrationen, Fonts und Exportkonfiguration werden vor und nach dem Lauf verglichen.
+
+Der wiederverwendbare Workflow `.github/workflows/native-platform-qa.yml` ist Teil der Gesamtkonklusion von `web-preview.yml`. Ein fehlgeschlagener nativer Lauf kann deshalb nicht hinter einem grünen freizugebenden Haupt-QA-Lauf verborgen werden. Zusätzlich ist ein rein manueller Debugtest möglich. Beide Wege haben ausschließlich `contents: read`, keine Pages-/Deploymentberechtigungen und keine Store-Geheimnisse.
+
+## Nachweisgrenzen dieses Bausteins
+
+Die lokalen 13 Python-Testgruppen prüfen Paketparser, falsche Architektur, kaputte Offsets, fehlende Lizenzen, Source-/HEAD-Drift, fehlende/fehlerhafte Duellzusammenfassungen, Fehler-/Leakzeilen, Timeouts und die sequentielle Artefaktaufbewahrung. Ihre kleinen synthetischen ELF-/PE-/APK-Container sind ausdrücklich Metadatenfixtures und keine zusätzlichen nativen Partien. Separat wurde ein vorhandener echter Linux-Audioexport mit 551 PCK-Einträgen strukturell gelesen; seine 550 Kartendefinitionen, Starter und Lizenzdateien stimmten byteidentisch mit der zugehörigen Quelle überein. Dieser reine Lesetest ist keine erneute Programmausführung und belegt keinen Windows- oder Android-Lauf.
+
+Erfolgreiche neue native CI-Läufe werden erst nach tatsächlichem Abschluss mit Run/Commit/Artefaktbindung als bestanden berichtet. Physische Android-/iPhone-Geräte, Xcode-/iOS-Signing, gerenderte Windows-GUI-/Touchtests, GPU-/Batterie-/Thermalmessungen und kommerzielle Store-Abnahme bleiben davon unabhängig offen.
+
+Format-/Optionsgrundlage: offizieller Godot-4.6.3-Quellstand [PCK-Leser](https://github.com/godotengine/godot/blob/4.6.3-stable/core/io/file_access_pack.cpp), [Desktop-Export/Konsolenwrapper](https://github.com/godotengine/godot/blob/4.6.3-stable/editor/export/editor_export_platform_pc.cpp) und [Android-Assetexport](https://github.com/godotengine/godot/blob/4.6.3-stable/platform/android/export/export_plugin.cpp).

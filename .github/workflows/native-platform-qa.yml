@@ -1,0 +1,85 @@
+name: Native debug platforms (no deployment)
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  linux-android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      PLATFORMS_KEEP_BINARIES: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - name: Install the pinned debug Android toolchain
+        run: sdkmanager 'platform-tools' 'platforms;android-35' 'build-tools;35.0.0'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - name: Import actual project resources
+        run: godot --headless --editor --import --path . --quit
+      - name: Orchestrator, native package parser and evidence guards
+        run: python3 -m unittest discover -s tests -p 'platform_qa_test.py' -v
+      - name: Export Linux, run the actual exported duel, and verify Android APK
+        run: tools/build_platform_qa.sh --platform linux-android
+      - name: Preserve actual platform binaries and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-linux-android-debug-${{ github.sha }}
+          path: |
+            work/production/platforms/results.json
+            work/production/platforms/run-*/*.json
+            work/production/platforms/run-*/*.log
+            work/production/platforms/run-*/*.x86_64
+            work/production/platforms/run-*/*.sh
+            work/production/platforms/run-*/*.apk
+          if-no-files-found: warn
+
+  windows:
+    runs-on: windows-2025
+    timeout-minutes: 30
+    env:
+      PLATFORMS_KEEP_BINARIES: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: true
+      - name: Import actual project resources
+        run: godot --headless --editor --import --path . --quit
+      - name: Orchestrator, native package parser and evidence guards
+        run: python -m unittest discover -s tests -p 'platform_qa_test.py' -v
+      - name: Export real PE64 packages and execute the native Windows duel
+        run: python tools/platform_qa.py --platform windows
+      - name: Preserve actual Windows executables and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-windows-debug-${{ github.sha }}
+          path: |
+            work/production/platforms/results.json
+            work/production/platforms/run-*/*.json
+            work/production/platforms/run-*/*.log
+            work/production/platforms/run-*/*.exe
+            work/production/platforms/run-*/*.dll
+          if-no-files-found: warn
