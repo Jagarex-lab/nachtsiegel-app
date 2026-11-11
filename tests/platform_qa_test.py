@@ -188,6 +188,13 @@ class PlatformEvidence(unittest.TestCase):
                 with self.assertRaises(ValueError):runner.finish()
                 self.assertNotEqual(runner.report['status'], 'passed')
 
+    def test_editor_config_isolated_without_hiding_installed_templates(self):
+        with mock.patch.object(p,'source_snapshot',return_value={}), mock.patch.object(p.subprocess,'check_output',side_effect=['a'*40,'']), mock.patch.dict(os.environ,{'XDG_DATA_HOME':'existing-template-data'}):
+            runner=p.Runner('linux',False,self.root)
+        self.assertEqual(runner.env['XDG_DATA_HOME'],'existing-template-data')
+        self.assertEqual(Path(runner.env['XDG_CONFIG_HOME']).parent,runner.stage/'xdg')
+        self.assertEqual(Path(runner.env['XDG_CACHE_HOME']).parent,runner.stage/'xdg')
+
     def test_real_subprocess_timeout_is_logged_not_counted_as_runtime_pass(self):
         runner = self.runner_fixture()
         with self.assertRaises(subprocess.TimeoutExpired):runner.run('intentional-timeout',[sys.executable,'-c','import time; time.sleep(1)'],timeout=.01)

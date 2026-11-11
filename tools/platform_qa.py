@@ -227,7 +227,10 @@ class Runner:
         self.isolated.mkdir()
         self.engine = os.environ.get("GODOT_BIN", "godot")
         self.env = os.environ.copy()
-        for kind in ("data", "config", "cache"):
+        # Preserve the data/template search path installed by setup-godot.
+        # The native_smoke_qa project feature isolates the game's user folder;
+        # a fresh XDG_DATA_HOME here would hide the real export templates.
+        for kind in ("config", "cache"):
             directory = self.stage / "xdg" / kind
             directory.mkdir(parents=True)
             self.env["XDG_" + kind.upper() + "_HOME"] = str(directory)
