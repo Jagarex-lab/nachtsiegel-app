@@ -143,6 +143,7 @@ async function run(engine,base,scenario){
   equal(unhandledRejections,[],'no unhandled promise rejections, including intentional fetch failures');
   equal(errors,[],'no unexpected browser script exceptions');
   check(!consoleErrors.some(value=>/SCRIPT ERROR|Parse Error|Compile Error|resources still in use|instances leaked/.test(value)),'no Godot script/resource errors');
+  check(!consoleErrors.some(value=>/\bAbortError\b/.test(value)),'owned request cancellation emits no engine AbortError console error');
   const result={engine,scenario,assertions,failures:0,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:JSON.parse(fs.readFileSync(path.join(BUILD,'build-info.json'),'utf8')),preview:preview.inspection.art,result:after.inspection.art,requests:rows,preview_requests:previewRequests.filter(row=>row.scenario===scenario),browser_art_urls:browserArtURLs,console_errors:consoleErrors,page_error_records:pageErrorRecords,expected_network_errors:expectedNetworkErrors,unhandled_rejections:unhandledRejections,simulated:true,real_device:false};
   fs.writeFileSync(path.join(OUTPUT,engine+'-'+scenario+'.json'),JSON.stringify(result,null,2));
   console.log('ART BROWSER',engine,scenario,assertions,'assertions, 0 failures');

@@ -57,3 +57,28 @@ compact art in both the real mulligan and battle. It verifies dimensions against
 the delivery manifest and checks that waiting for art issues no game command.
 Exact committed-artifact browser results are recorded separately by the final
 browser gate; the native results above alone are not a browser pass or release.
+
+## Intentional Web cancellation follow-up
+
+The first exact f8 browser run completed a real 45-command duel, replay viewer
+and restart with all eight gameplay frames, and the before/after midgame battle
+snapshots were identical (seed 8802028, command 13). All four board creatures and
+five hand cards now had real illustrations. A WebKit iPhone-bars profile also
+passed real mulligan, battle and newly drawn external-art checks. Nevertheless,
+the desktop run correctly **failed** on a normal owner-cancellation `AbortError`.
+It is not recorded as an overall passing browser run.
+
+Godot 4.6.3's Fetch.onerror logs a rejected fetch/body read even after its engine
+request object has been freed. The scoped art guard now handles only its own
+explicit AbortController cancellation: before headers it returns an empty
+non-success response (499); during body streaming it closes the pending reader.
+Other network/body failures still reject. Images remain streamed with ordinary
+backpressure, not downloaded in full before the engine sees their response.
+No global error filter or engine/generated-JS patch is introduced.
+
+Eight exact embedded-guard Node tests pass. The new pre-header and mid-body
+cancellation tests both fail with AbortError against the actual f8 source guard;
+negative evidence is `work/production-art/transport-abort-before.log`. The art
+browser harness now explicitly fails any AbortError console record as well as
+its existing pageerror/unhandled-rejection/script checks. Exact-artifact browser
+confirmation of this follow-up remains a release prerequisite.

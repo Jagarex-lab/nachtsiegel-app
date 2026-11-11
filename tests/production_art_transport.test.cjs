@@ -10,11 +10,11 @@ const source=fs.readFileSync(path.join(__dirname,'../scripts/production/art_deli
 const install=source.match(/const WEB_FETCH_GUARD := """([\s\S]*?)"""/)[1];
 const release=source.match(/const WEB_FETCH_RELEASE := """([\s\S]*?)"""/)[1];
 const prefix='https://art.example.test/game/art/';
-function fixture(){
+function fixture(transport=null){
  const calls=[];
- const original=function(resource,options){calls.push({resource,options});return Promise.resolve({status:200});};
+ const original=function(resource,options){calls.push({resource,options});return transport ? transport(resource,options) : Promise.resolve({status:200});};
  const window={location:{href:'https://art.example.test/game/?qa=1',origin:'https://art.example.test'},fetch:original};
- const context=vm.createContext({window,URL,Symbol,Map,Set,Array,AbortController});
+ const context=vm.createContext({window,URL,Symbol,Map,Set,Array,AbortController,Response,ReadableStream});
  const run=code=>vm.runInContext(code.replaceAll('__ART_PREFIX__',JSON.stringify(prefix)),context);
  return {calls,original,window,run};
 }
@@ -58,4 +58,29 @@ test('per-URL completion drops controllers and cancellation aborts only its imag
  guard.finish(first,true);assert.equal(f.calls[0].options.signal.aborted,true);assert.equal(f.calls[1].options.signal.aborted,false);
  guard.finish(second,false);assert.equal(guard.controllers.size,0);assert.equal(f.calls[1].options.signal.aborted,false);
  f.run(release);
+});
+
+test('owner cancellation before headers settles as empty failure without rejecting the freed engine request',async()=>{
+ const f=fixture((_resource,options)=>new Promise((_resolve,reject)=>options.signal.addEventListener('abort',()=>reject(options.signal.reason),{once:true})));
+ f.run(install);const url=prefix+'preview/slow-before-headers.webp',pending=f.window.fetch(url);
+ f.window[Symbol.for('orafold.art.fetch.guard.v2')].finish(url,true);
+ const response=await pending;
+ assert.equal(response.status,499);assert.equal(response.ok,false);assert.equal((await response.arrayBuffer()).byteLength,0);
+ assert.equal(f.calls[0].options.signal.aborted,true);assert.equal(f.window[Symbol.for('orafold.art.fetch.guard.v2')].controllers.size,0);
+});
+test('owner cancellation during streamed body closes the outstanding reader without logging an abort rejection',async()=>{
+ const f=fixture((_resource,options)=>Promise.resolve(new Response(new ReadableStream({start(stream){
+  stream.enqueue(new Uint8Array([11,22,33]));options.signal.addEventListener('abort',()=>stream.error(options.signal.reason),{once:true});
+ }}),{status:200,headers:{'Content-Type':'image/webp'}})));
+ f.run(install);const url=prefix+'preview/slow-body.webp',response=await f.window.fetch(url),reader=response.body.getReader();
+ assert.deepEqual(Array.from((await reader.read()).value),[11,22,33]);
+ const pending=reader.read();f.window[Symbol.for('orafold.art.fetch.guard.v2')].finish(url,true);
+ assert.deepEqual(await pending,{done:true,value:undefined});assert.equal(f.calls[0].options.signal.aborted,true);
+});
+test('genuine fetch failures and body failures still reject without an owner cancellation',async()=>{
+ const networkError=new Error('actual network failure'),f=fixture(()=>Promise.reject(networkError));f.run(install);
+ await assert.rejects(f.window.fetch(prefix+'full/network.webp'),error=>error===networkError);
+ const bodyError=new Error('actual body failure'),g=fixture(()=>Promise.resolve(new Response(new ReadableStream({start(stream){stream.error(bodyError);}}),{status:200})));g.run(install);
+ const response=await g.window.fetch(prefix+'preview/broken-body.webp');
+ await assert.rejects(response.arrayBuffer(),error=>error===bodyError);
 });

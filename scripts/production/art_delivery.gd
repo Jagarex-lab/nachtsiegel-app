@@ -29,9 +29,36 @@ const WEB_FETCH_GUARD := """(() => {
       const controller = new AbortController();
       const group = guard.controllers.get(url.href) || new Set();
       group.add(controller); guard.controllers.set(url.href, group);
-      return original.call(this, resource, { ...options, redirect: 'error', mode: 'same-origin', credentials: 'omit', signal: controller.signal }).catch(error => {
+      return original.call(this, resource, { ...options, redirect: 'error', mode: 'same-origin', credentials: 'omit', signal: controller.signal }).then(response => {
+        if (!response.body) return response;
+        const reader = response.body.getReader();
+        let finished = false;
+        const body = new ReadableStream({
+          async pull(stream) {
+            if (finished) return;
+            try {
+              const result = await reader.read();
+              if (finished) return;
+              if (result.done || controller.signal.aborted) { finished = true; stream.close(); }
+              else stream.enqueue(result.value);
+            } catch (error) {
+              if (finished) return;
+              finished = true;
+              if (controller.signal.aborted) stream.close(); else stream.error(error);
+            }
+          },
+          cancel(reason) {
+            finished = true;
+            return reader.cancel(reason).catch(error => { if (!controller.signal.aborted) throw error; });
+          },
+        });
+        return new Response(body, { status: response.status, statusText: response.statusText, headers: response.headers });
+      }).catch(error => {
         group.delete(controller);
         if (group.size === 0 && guard.controllers.get(url.href) === group) guard.controllers.delete(url.href);
+        // Godot logs even a freed fetch's rejection. Only our explicit owner
+        // cancellation becomes an empty failure response, never loaded art.
+        if (controller.signal.aborted) return new Response(null, { status: 499 });
         throw error;
       });
     };
