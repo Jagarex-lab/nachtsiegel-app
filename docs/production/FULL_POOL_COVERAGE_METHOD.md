@@ -5,6 +5,27 @@ eine kleine Laufzeitstichprobe. Er verändert weder Produktionsengine noch KI,
 Kartendaten, Regeln oder Ressourcenlimits. Er behauptet keine vollständige
 550-Karten-Balance und ersetzt nicht die bestehende 848-Partien-Matrix.
 
+Der tatsächliche Lauf auf Quellencommit
+`96c5028a91fd86f5b0e875bf1a7fab31c5f4f4f4` ist abgeschlossen: 256 Matrixpartien,
+acht Wiederholungen und vier Kontrollen mit frischem Konstruktor; 1.666
+Engineprüfungen, keine Fehler oder Zensierungen. Erfolgreich ausgespielt wurden
+546 von 550 IDs bei 8.914 erfolgreichen Ausspielkommandos. 343 Ausspielkommandos
+aus den Kontrollen bleiben aus dieser Matrixzählung ausgeschlossen. Die vier
+nicht ausgespielten Karten, vollständige Rohdaten,
+Plandatei, Journal, Log und Messgrenzen stehen im
+[Ergebnisbericht](full-pool/FULL_POOL_COVERAGE.md). 19 negative Nachweisprüfungen
+und die byteidentische Reproduktion aus den gespeicherten Artefakten bestehen.
+Die Ergebnisdateien ergänzen diese vor dem Lauf festgelegte Methode; sie ändern
+weder die Decks noch die Auswahl der tatsächlich gespielten Fälle.
+
+Eine unabhängige Aggregation von Rohdaten und Journal bestätigt dieselben
+Kartenzahlen (`full-pool/FULL_POOL_INDEPENDENT_AUDIT.json`). Fünf separat
+gekennzeichnete Prüfungen an Metadatenkopien bestätigen, dass zensierte oder
+fehlerhafte Fälle erhalten bleiben, fehlerhafte/unbekannte Prozessabgänge zu
+FAILED führen und ein Teiljournal keine fehlenden Ergebnisse erfindet
+(`full-pool/FULL_POOL_REPORT_HEALTH_CHECKS.json`). Diese Kopien sind weder weitere
+gespielte Partien noch beobachtete Enginefehler.
+
 ## Decks und Umfang
 
 `tools/production/build_full_pool_decks.py` erzeugt deterministisch 32 legale
@@ -83,6 +104,20 @@ in `work/production/full-pool-coverage*` und bewahrt frühere Versuche vor einem
 Neustart. Ein fehlgeschlagener oder unterbrochener Lauf darf nicht als bestanden
 bezeichnet werden. Der vollständige Bericht nennt tatsächlich ausgespielte und
 nicht ausgespielte IDs, getrennt von den 550 Listenmitgliedern.
+
+Der dokumentierte Hostlauf verwendete nach Freigabe des geteilten CPU-Slots
+abweichend `nice -n 15` und `LP_NUM_THREADS=1`. Der beobachtete Prozessabgang war 0.
+Der reine Berichts-Reproduktionslauf benötigt keine neuen Partien:
+
+```sh
+python3 tools/production/report_full_pool_coverage.py \
+  --source docs/production/full-pool/FULL_POOL_GAMES.json \
+  --plan docs/production/full-pool/FULL_POOL_PLAN.json \
+  --journal docs/production/full-pool/FULL_POOL_JOURNAL.jsonl \
+  --engine-log docs/production/full-pool/FULL_POOL_ENGINE.log \
+  --engine-exit-code 0 --output-dir docs/production/full-pool \
+  --verify-rejections --check
+```
 
 Eine erste reine Planungsprobe beendete sich wegen fehlendem schreibbarem
 XDG-Daten-/Fontcache vor dem Engine-Test. Das Infrastrukturprotokoll blieb
