@@ -10,6 +10,87 @@
       "web_sha256": "f23adc194b29e38f3a0bd88e9d69b7d207a8fba7752882d6733c4120c347ecff",
       "width": 1448
     },
+    "oa-houses-c02": {
+      "bytes": 415436,
+      "height": 1086,
+      "relative_url": "art/full/70eea3bd41674375047eee4c6a4a61b062ade03a3a35f80a1c7a3c05e7bdce93.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-c02.png",
+      "source_sha256": "b47bc7dea495fedd923dd122d0a0260f5f0431652a90c1a97f6ca9fdc1ca59e8",
+      "web_sha256": "70eea3bd41674375047eee4c6a4a61b062ade03a3a35f80a1c7a3c05e7bdce93",
+      "width": 1448
+    },
+    "oa-houses-c03": {
+      "bytes": 325824,
+      "height": 1086,
+      "relative_url": "art/full/8eb33f49bc66ff63f3001fab7d50162249ebf5223beaccafc84c621a0a23ec3b.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-c03.png",
+      "source_sha256": "9f50eca4b49d57605f0f535771305083c049496b9387e60aeb0296256673cf1e",
+      "web_sha256": "8eb33f49bc66ff63f3001fab7d50162249ebf5223beaccafc84c621a0a23ec3b",
+      "width": 1448
+    },
+    "oa-houses-c04": {
+      "bytes": 449974,
+      "height": 1086,
+      "relative_url": "art/full/077bcee83bd7dade8e94730e691e051dc251faf6e1142938480c26b38840ed19.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-c04.png",
+      "source_sha256": "ff65c71aa6a950ad2a5ca72ca71c0766c3d4c4c49bc02a1bbceb50ac9e362656",
+      "web_sha256": "077bcee83bd7dade8e94730e691e051dc251faf6e1142938480c26b38840ed19",
+      "width": 1448
+    },
+    "oa-houses-c05": {
+      "bytes": 438376,
+      "height": 1086,
+      "relative_url": "art/full/70be479006ade59cb859b9da4d122e6b8eb1e2ef14e92e8d8c965784981ce492.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-c05.png",
+      "source_sha256": "f0b73e4adab25d2105c4a75abb49ef6df77f1c9014ac7c04855f8a23690e8911",
+      "web_sha256": "70be479006ade59cb859b9da4d122e6b8eb1e2ef14e92e8d8c965784981ce492",
+      "width": 1448
+    },
+    "oa-houses-c06": {
+      "bytes": 322386,
+      "height": 1086,
+      "relative_url": "art/full/fc9807ba44ccb57fdad7579a4c71b7d278f2c723da17f10aade98792bf4d5582.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-c06.png",
+      "source_sha256": "3a835839bfd137836b5da794a4eb8341b11a87d2015c5db41c3c451bb2240df0",
+      "web_sha256": "fc9807ba44ccb57fdad7579a4c71b7d278f2c723da17f10aade98792bf4d5582",
+      "width": 1448
+    },
+    "oa-houses-c07": {
+      "bytes": 476320,
+      "height": 1086,
+      "relative_url": "art/full/db2d78eaef871591d6901356cddfe452ed18d8b92fcec5e4f113aab8c2efa69c.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-c07.png",
+      "source_sha256": "00677abaee3dcb9b19da8c3d2efbcdb4ba1d4667319bf6418458f4819de2fcb8",
+      "web_sha256": "db2d78eaef871591d6901356cddfe452ed18d8b92fcec5e4f113aab8c2efa69c",
+      "width": 1448
+    },
+    "oa-houses-e01": {
+      "bytes": 367142,
+      "height": 1086,
+      "relative_url": "art/full/8c3a0088de6fa51b042d497fa070f18389669453d9ded044e5533d174aa85a33.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-e01.png",
+      "source_sha256": "5f7a0c7d3bff0107cb345f7e8eb189c6be7430d42167e5161af1d37612d0cd7b",
+      "web_sha256": "8c3a0088de6fa51b042d497fa070f18389669453d9ded044e5533d174aa85a33",
+      "width": 1448
+    },
+    "oa-houses-e02": {
+      "bytes": 326762,
+      "height": 1086,
+      "relative_url": "art/full/c78bd7c6c89f4a305de4f2f4dcf184336c11745b08939a5ab4d901cf6dce763f.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-e02.png",
+      "source_sha256": "0c2b4695b09608b5ba9875d9fbd209270d6a058db8ba0e937c1c502368106a62",
+      "web_sha256": "c78bd7c6c89f4a305de4f2f4dcf184336c11745b08939a5ab4d901cf6dce763f",
+      "width": 1448
+    },
+    "oa-houses-r01": {
+      "bytes": 353204,
+      "height": 1086,
+      "relative_url": "art/full/89d0342378ce3b12efad3db1da691f53ca82b02c3ef9e1064536a40315052e36.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-houses-r01.png",
+      "source_sha256": "505a7ea9ed668176834d62713ef176dfbb36e945dea83355bf667129cf69436b",
+      "web_sha256": "89d0342378ce3b12efad3db1da691f53ca82b02c3ef9e1064536a40315052e36",
+      "width": 1448
+    },
     "oa-morph-c01": {
       "bytes": 364378,
       "height": 1086,
@@ -46,6 +127,177 @@
       "web_sha256": "2a1e9e7d0ac7a41e611f0fdc7d88f5bfa19e63c053875610e1bfba60603db67a",
       "width": 1448
     },
+    "of-houses-001": {
+      "bytes": 402442,
+      "height": 1086,
+      "relative_url": "art/full/f2dfbc722df951346ad8c67ed240f29a6971dae2417de7da4f1fe4ad243a9cc3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-001.png",
+      "source_sha256": "93f552007c69aa512220ec1804c56cb67d4fd43a4153f2834e42718968518c67",
+      "web_sha256": "f2dfbc722df951346ad8c67ed240f29a6971dae2417de7da4f1fe4ad243a9cc3",
+      "width": 1448
+    },
+    "of-houses-002": {
+      "bytes": 460966,
+      "height": 1086,
+      "relative_url": "art/full/840a760536666cf473a4a172f0837560841a44a3a0bfeb6b9e993918120c518d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-002.png",
+      "source_sha256": "72b0cf6582e905340b192e5741ad55ea297aee33fa794d01cf88d80995bfc3c9",
+      "web_sha256": "840a760536666cf473a4a172f0837560841a44a3a0bfeb6b9e993918120c518d",
+      "width": 1448
+    },
+    "of-houses-003": {
+      "bytes": 389164,
+      "height": 1086,
+      "relative_url": "art/full/6636748e94cb31d423b68a1e4ae0e0e5d8948e4f917731b20de6744094bab4dd.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-003.png",
+      "source_sha256": "24bbaa7db04f1b8fe275e644e35462adb3d126304ba3a3198ae8f2b58cb46566",
+      "web_sha256": "6636748e94cb31d423b68a1e4ae0e0e5d8948e4f917731b20de6744094bab4dd",
+      "width": 1448
+    },
+    "of-houses-004": {
+      "bytes": 277988,
+      "height": 1086,
+      "relative_url": "art/full/98da6ec9121b82dc23bd12fbeda3b2379090bb58c420861d18cd9bc4874cc8b3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-004.png",
+      "source_sha256": "42789e5c0310308c8651d11733cf28b485ba8a87493ee074d477838a0405cc77",
+      "web_sha256": "98da6ec9121b82dc23bd12fbeda3b2379090bb58c420861d18cd9bc4874cc8b3",
+      "width": 1448
+    },
+    "of-houses-005": {
+      "bytes": 467544,
+      "height": 1086,
+      "relative_url": "art/full/d24ede4eee81144a9b9243f433b7391239f40922de62e68243d6d3ce65a911d7.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-005.png",
+      "source_sha256": "137b993a3043cf9503b22d66994df5c185a67bbef5122747ef56f7dfd2333c29",
+      "web_sha256": "d24ede4eee81144a9b9243f433b7391239f40922de62e68243d6d3ce65a911d7",
+      "width": 1448
+    },
+    "of-houses-006": {
+      "bytes": 335578,
+      "height": 1086,
+      "relative_url": "art/full/99cfda3571cda4626545753b7357b27e00ce36895efcf011324c0af438707feb.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-006.png",
+      "source_sha256": "cd5fb62306c4828765a2072460c0c0c96b95876b9c09583c24835da11f91f3a1",
+      "web_sha256": "99cfda3571cda4626545753b7357b27e00ce36895efcf011324c0af438707feb",
+      "width": 1448
+    },
+    "of-houses-007": {
+      "bytes": 421750,
+      "height": 1086,
+      "relative_url": "art/full/e65ecea0eefbea6735bed09e9458d7ec2c1b95334b0c9cf408063771187dc670.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-007.png",
+      "source_sha256": "e1e3c9a503e054d678121ff03ea50b85cb7d1750eabad812a10e7db5f30e89f1",
+      "web_sha256": "e65ecea0eefbea6735bed09e9458d7ec2c1b95334b0c9cf408063771187dc670",
+      "width": 1448
+    },
+    "of-houses-008": {
+      "bytes": 421222,
+      "height": 1086,
+      "relative_url": "art/full/2709eac0bd037560416fb298e2c1ce8d366712d49cfeeb0844a67a7e1f874ba4.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-008.png",
+      "source_sha256": "ef5bde1b4adc1cca09337f713656015b8cac631e93e698c84a0877e228abc813",
+      "web_sha256": "2709eac0bd037560416fb298e2c1ce8d366712d49cfeeb0844a67a7e1f874ba4",
+      "width": 1448
+    },
+    "of-houses-009": {
+      "bytes": 374460,
+      "height": 1086,
+      "relative_url": "art/full/69008a29e01bcbf6c887e84589cae4a81087b30008eabedb009127265fd04a5b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-009.png",
+      "source_sha256": "ac3e37f527c7d48c583143a8b82bd9ea59efe604f87695f8aa2064709f732f39",
+      "web_sha256": "69008a29e01bcbf6c887e84589cae4a81087b30008eabedb009127265fd04a5b",
+      "width": 1448
+    },
+    "of-houses-010": {
+      "bytes": 280950,
+      "height": 1086,
+      "relative_url": "art/full/6f979c2a77453a864d2b58b7c206cf232f5e1ee7cbbc973c665118c686399091.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-010.png",
+      "source_sha256": "cba3046e76b793e4cf883fd4aacad8b48befba7d9072fea654dfefbd1e557ccd",
+      "web_sha256": "6f979c2a77453a864d2b58b7c206cf232f5e1ee7cbbc973c665118c686399091",
+      "width": 1448
+    },
+    "of-houses-011": {
+      "bytes": 432406,
+      "height": 1086,
+      "relative_url": "art/full/1685ff402fd592f6ed4f3e45c04de8122183def879747f0c145eb86e8db6bc12.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-011.png",
+      "source_sha256": "bd40d83c3cb671e40d0bd52ca87c2df1a253e93d7d6baeffe2418f872234927a",
+      "web_sha256": "1685ff402fd592f6ed4f3e45c04de8122183def879747f0c145eb86e8db6bc12",
+      "width": 1448
+    },
+    "of-houses-012": {
+      "bytes": 335836,
+      "height": 1086,
+      "relative_url": "art/full/bffd298fa55b05d3b9412ffd5d9b950a1db81bd273b7faf9358babb7ff7737e9.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-012.png",
+      "source_sha256": "ea3bca3398df3d4e4f0c0e3930917c46ecf7ce6abb31a2d54f0fb8a44cc6cbd6",
+      "web_sha256": "bffd298fa55b05d3b9412ffd5d9b950a1db81bd273b7faf9358babb7ff7737e9",
+      "width": 1448
+    },
+    "of-houses-013": {
+      "bytes": 364082,
+      "height": 1086,
+      "relative_url": "art/full/53b337c6066cad19358d197f9d1bb12c33fd2794a0fed83bcb5034e37fc065a6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-013.png",
+      "source_sha256": "2d448708d6671c2439950d32414b5fc74b7a9b43abca7d5475dee754beca4195",
+      "web_sha256": "53b337c6066cad19358d197f9d1bb12c33fd2794a0fed83bcb5034e37fc065a6",
+      "width": 1448
+    },
+    "of-houses-014": {
+      "bytes": 295766,
+      "height": 1086,
+      "relative_url": "art/full/4ee02b73c08f656806f9e9a4e128e61b116ef5b2bbfdfadc1d39ea3972c8a1d3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-014.png",
+      "source_sha256": "3daf501a18ec48910c19b9436b3065c0caec52de3c6e824c5317a0404ff5c3a6",
+      "web_sha256": "4ee02b73c08f656806f9e9a4e128e61b116ef5b2bbfdfadc1d39ea3972c8a1d3",
+      "width": 1448
+    },
+    "of-houses-015": {
+      "bytes": 365174,
+      "height": 1086,
+      "relative_url": "art/full/8dfdce588d8a6dccbf865b09e1d71098ed06052c8884b9c5ab609b53308d6843.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-015.png",
+      "source_sha256": "2a84f4b1e2e89d026163f8fbff3787689fe48e444df01ba42dfa2dab6e429528",
+      "web_sha256": "8dfdce588d8a6dccbf865b09e1d71098ed06052c8884b9c5ab609b53308d6843",
+      "width": 1448
+    },
+    "of-houses-016": {
+      "bytes": 411908,
+      "height": 1086,
+      "relative_url": "art/full/1ea9dfa2774f6fe827e64fd8ef9f0fbea7fad96aef798c041c5dc7b1e8e56c17.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-016.png",
+      "source_sha256": "0b424c9f9c1f3bce2edca5404c1bd4d196d204216ecffae1ba36d097b65f803d",
+      "web_sha256": "1ea9dfa2774f6fe827e64fd8ef9f0fbea7fad96aef798c041c5dc7b1e8e56c17",
+      "width": 1448
+    },
+    "of-houses-017": {
+      "bytes": 304308,
+      "height": 1086,
+      "relative_url": "art/full/bf7105e773f85f70536bdb3b3df6caba9d75495574f659996cdd52358ecf12af.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-017.png",
+      "source_sha256": "48b2d0c77ea9f122a98a6ea36db20f9699608a5f869c506ae830b4c1e4e95e8d",
+      "web_sha256": "bf7105e773f85f70536bdb3b3df6caba9d75495574f659996cdd52358ecf12af",
+      "width": 1448
+    },
+    "of-houses-018": {
+      "bytes": 512666,
+      "height": 1086,
+      "relative_url": "art/full/8f15bca163a5b8d461943c5c2010f6d35dedd9addf5b83bf76b778e44102e5bc.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-018.png",
+      "source_sha256": "87415d0968489df686cce42dd3bd992eff512df0757843735eb3b145150f3456",
+      "web_sha256": "8f15bca163a5b8d461943c5c2010f6d35dedd9addf5b83bf76b778e44102e5bc",
+      "width": 1448
+    },
+    "of-houses-019": {
+      "bytes": 469762,
+      "height": 1086,
+      "relative_url": "art/full/e0e75b9f275ce280d48c5eb85369e7c156625c5a0084f66e4e579ab49da29748.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-019.png",
+      "source_sha256": "1bda9b9f0cdfddcfb767fb4eeef03cd825c814336f2b188b9390c26c546ab7c2",
+      "web_sha256": "e0e75b9f275ce280d48c5eb85369e7c156625c5a0084f66e4e579ab49da29748",
+      "width": 1448
+    },
     "of-houses-020": {
       "bytes": 350886,
       "height": 1086,
@@ -55,6 +307,663 @@
       "web_sha256": "559b7e33bb609a0eec99c125f0aa3e5904f9512a8493724bc9fbab19c8af01c9",
       "width": 1448
     },
+    "of-houses-021": {
+      "bytes": 242398,
+      "height": 1086,
+      "relative_url": "art/full/b4ca3a8a216368c6e8f03ea781299de861a0faf5fb3f06509a9662e55cf88a66.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-021.png",
+      "source_sha256": "690e6a86a7b93cd5a99182e8f42501c95d0d75fbef3e27171e0e0fa722271a6b",
+      "web_sha256": "b4ca3a8a216368c6e8f03ea781299de861a0faf5fb3f06509a9662e55cf88a66",
+      "width": 1448
+    },
+    "of-houses-022": {
+      "bytes": 384790,
+      "height": 1086,
+      "relative_url": "art/full/8f394bf61a11f7e7ec284a44b6959707f28e8e28fcc57a3134a618f86a689af4.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-022.png",
+      "source_sha256": "a20bc8cb65a7c65ba8bf6fff751127d66a18d8e086be0e170f2d8e75ca3d9e9f",
+      "web_sha256": "8f394bf61a11f7e7ec284a44b6959707f28e8e28fcc57a3134a618f86a689af4",
+      "width": 1448
+    },
+    "of-houses-023": {
+      "bytes": 381528,
+      "height": 1086,
+      "relative_url": "art/full/2ea23192e7bd6bb2904a05678ae69a4c4c670e6d10356231c3b9cd0a8ad2927d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-023.png",
+      "source_sha256": "c8d582430677c03ecb91d7d178a5bc8ae682ad47bc55b27f00f421f424695923",
+      "web_sha256": "2ea23192e7bd6bb2904a05678ae69a4c4c670e6d10356231c3b9cd0a8ad2927d",
+      "width": 1448
+    },
+    "of-houses-024": {
+      "bytes": 447760,
+      "height": 1086,
+      "relative_url": "art/full/e414513fd85bb9c1acef9a70568058a60e1be9ba2f91a9162b8d65b2869d28bf.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-024.png",
+      "source_sha256": "08b92b876152910695bcdd556188af18142a1d8ac73a42430e55a7d4612064aa",
+      "web_sha256": "e414513fd85bb9c1acef9a70568058a60e1be9ba2f91a9162b8d65b2869d28bf",
+      "width": 1448
+    },
+    "of-houses-025": {
+      "bytes": 334770,
+      "height": 1086,
+      "relative_url": "art/full/e7d7b83162c1c634f3781db045e76d34ea5bd600e365a6071bc6c0024ad340b6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-025.png",
+      "source_sha256": "a1fb9fb71bcae2f472893b50cc85f2c396c2c6b3d23a3679d4d6b6167a3aafcd",
+      "web_sha256": "e7d7b83162c1c634f3781db045e76d34ea5bd600e365a6071bc6c0024ad340b6",
+      "width": 1448
+    },
+    "of-houses-026": {
+      "bytes": 386944,
+      "height": 1086,
+      "relative_url": "art/full/ba43b0ca166260beed009c70d5506f5a6e467a24ed35bcf1e6bf503360a9af43.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-026.png",
+      "source_sha256": "b6b9309601c0c561954b4523a0f9a202fe049cdf010da034dd812e1cee6551c0",
+      "web_sha256": "ba43b0ca166260beed009c70d5506f5a6e467a24ed35bcf1e6bf503360a9af43",
+      "width": 1448
+    },
+    "of-houses-027": {
+      "bytes": 362590,
+      "height": 1086,
+      "relative_url": "art/full/c4581f873523ee9a821a782d14355ede6689370001e62fbc1ac55252ae513278.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-027.png",
+      "source_sha256": "c392cfddd948ced7a83122ef337a505e6d03d1ed7655b13a65a43c06f169f867",
+      "web_sha256": "c4581f873523ee9a821a782d14355ede6689370001e62fbc1ac55252ae513278",
+      "width": 1448
+    },
+    "of-houses-028": {
+      "bytes": 336626,
+      "height": 1086,
+      "relative_url": "art/full/48ddc3ab41fa4e8af7ad0a501444fc3ca8e7afaa62ebc94fd4a6282f31a57625.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-028.png",
+      "source_sha256": "7da6e1f663ff851b24325289e00f24b3b9c992352c622e9a3174482309803acf",
+      "web_sha256": "48ddc3ab41fa4e8af7ad0a501444fc3ca8e7afaa62ebc94fd4a6282f31a57625",
+      "width": 1448
+    },
+    "of-houses-029": {
+      "bytes": 372728,
+      "height": 1086,
+      "relative_url": "art/full/84f254d314b7aa94b4a4edb73d2c5cbd4a52e023a94e7d3975328bc2983aa9db.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-029.png",
+      "source_sha256": "45da2b640397d3261b2201370ddb1e5f87bb39498bc091580b9e0d61f72e92f4",
+      "web_sha256": "84f254d314b7aa94b4a4edb73d2c5cbd4a52e023a94e7d3975328bc2983aa9db",
+      "width": 1448
+    },
+    "of-houses-030": {
+      "bytes": 413468,
+      "height": 1086,
+      "relative_url": "art/full/8f50c95dcb44c15355c9bdb13e36e9562a8043fcb541ae18f496b7ee551434e9.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-030.png",
+      "source_sha256": "7ed1066e1d4c8f9361e27dc696338c7e19a153db20a42bbe5cf6a70c5ed85a2e",
+      "web_sha256": "8f50c95dcb44c15355c9bdb13e36e9562a8043fcb541ae18f496b7ee551434e9",
+      "width": 1448
+    },
+    "of-houses-031": {
+      "bytes": 423030,
+      "height": 1086,
+      "relative_url": "art/full/e5188cf255998b3bae31500fbb693489b0ab535c99c3bd7cb8ecd36a72564ff3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-031.png",
+      "source_sha256": "94f478d348d68bc0aa231af3502d85943e06047472306028ff1408bbb36e1584",
+      "web_sha256": "e5188cf255998b3bae31500fbb693489b0ab535c99c3bd7cb8ecd36a72564ff3",
+      "width": 1448
+    },
+    "of-houses-032": {
+      "bytes": 292140,
+      "height": 1086,
+      "relative_url": "art/full/75345534751fda43d5080f2e8eb92e315dbc18c4fd0fd43435ef02f4f00eb85d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-032.png",
+      "source_sha256": "d68e8582533d7e9d2b169a2e24653f8a9e7d7c89598ac854632b7342cc62a58b",
+      "web_sha256": "75345534751fda43d5080f2e8eb92e315dbc18c4fd0fd43435ef02f4f00eb85d",
+      "width": 1448
+    },
+    "of-houses-033": {
+      "bytes": 289850,
+      "height": 1086,
+      "relative_url": "art/full/7d509b14c761660c0eb04ed1cdb52e3f836271a2a394383a02a6bb3394ff1d0d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-033.png",
+      "source_sha256": "7eec3cc6dc67687187bd7d87aa6dc40112a0233895c1ada37c57b74ff59d6502",
+      "web_sha256": "7d509b14c761660c0eb04ed1cdb52e3f836271a2a394383a02a6bb3394ff1d0d",
+      "width": 1448
+    },
+    "of-houses-034": {
+      "bytes": 351314,
+      "height": 1086,
+      "relative_url": "art/full/d8766af172aeecc4d74f92022522c93a52f1b4434f97310221a29dc3028268de.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-034.png",
+      "source_sha256": "429ffb53020aa3638ee477cc10afd2e1cde21f58b2609eeb4adc29b7d4b86630",
+      "web_sha256": "d8766af172aeecc4d74f92022522c93a52f1b4434f97310221a29dc3028268de",
+      "width": 1448
+    },
+    "of-houses-035": {
+      "bytes": 352888,
+      "height": 1086,
+      "relative_url": "art/full/8bf6f2047f2cbba7bd7c324031f096f90d49bc07892860865c4b6e63db6e1de8.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-035.png",
+      "source_sha256": "83ac3f2c394681a907479361598c402b41c5a278609dacd3bc817fe4aa2a0439",
+      "web_sha256": "8bf6f2047f2cbba7bd7c324031f096f90d49bc07892860865c4b6e63db6e1de8",
+      "width": 1448
+    },
+    "of-houses-036": {
+      "bytes": 413440,
+      "height": 1086,
+      "relative_url": "art/full/c594d88d4c906ed80dfa73c71c55fca307b67503fc02ec645136c0e01d3b1738.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-036.png",
+      "source_sha256": "7aca41a721b8f944ed3027f58da32a101e66f7bbca65c3dd567a30fccb88756c",
+      "web_sha256": "c594d88d4c906ed80dfa73c71c55fca307b67503fc02ec645136c0e01d3b1738",
+      "width": 1448
+    },
+    "of-houses-037": {
+      "bytes": 405470,
+      "height": 1086,
+      "relative_url": "art/full/0c525e481d31ba5d4e2625b38042d9f36e3e8181bd0969bdc4201c15098bd9d5.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-037.png",
+      "source_sha256": "8d9d067ee9eb4034bdeb528a57d9439a3f6084a777231c569adbc0ad0777e0fa",
+      "web_sha256": "0c525e481d31ba5d4e2625b38042d9f36e3e8181bd0969bdc4201c15098bd9d5",
+      "width": 1448
+    },
+    "of-houses-038": {
+      "bytes": 390356,
+      "height": 1086,
+      "relative_url": "art/full/881216dd71ca3c28a76dd78dd5a588d546ac15a3661e4fe950c3ee39bf96893a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-038.png",
+      "source_sha256": "0e9ab39f14aabc5a8d267b44d2c801c4739814d1e8b295753f853c879ebd61dc",
+      "web_sha256": "881216dd71ca3c28a76dd78dd5a588d546ac15a3661e4fe950c3ee39bf96893a",
+      "width": 1448
+    },
+    "of-houses-039": {
+      "bytes": 321344,
+      "height": 1086,
+      "relative_url": "art/full/a8158c102c26cdf49da9cced8f2792c5c0471f985b69084b92447053f22a4a05.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-039.png",
+      "source_sha256": "7aceabf0b63c2247fd23eef5f98454ff37541c44adb1678e2de9d87865e5561e",
+      "web_sha256": "a8158c102c26cdf49da9cced8f2792c5c0471f985b69084b92447053f22a4a05",
+      "width": 1448
+    },
+    "of-houses-040": {
+      "bytes": 509366,
+      "height": 1086,
+      "relative_url": "art/full/6e004fa8207eeade0fdb8d577ef8dec0305047ba9d78e6b3b51de5efa0226097.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-040.png",
+      "source_sha256": "660e6c3cecb5786a2cd873a84b19925bd4e8b21e813a4841be9a74f689239c4b",
+      "web_sha256": "6e004fa8207eeade0fdb8d577ef8dec0305047ba9d78e6b3b51de5efa0226097",
+      "width": 1448
+    },
+    "of-houses-041": {
+      "bytes": 351806,
+      "height": 1086,
+      "relative_url": "art/full/c971792060c45c6c21c8d326cbe924d5c578fd5be6ee1a29394ed58bf87ab667.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-041.png",
+      "source_sha256": "403492a8b0eb7241281a978173857569315b30687a6ba9bf226071424b02d580",
+      "web_sha256": "c971792060c45c6c21c8d326cbe924d5c578fd5be6ee1a29394ed58bf87ab667",
+      "width": 1448
+    },
+    "of-houses-042": {
+      "bytes": 472062,
+      "height": 1086,
+      "relative_url": "art/full/00a440190c6708ba4526524ab509d10c07978d35c77beaf78afa0c3da8a81dea.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-042.png",
+      "source_sha256": "504a120d6a0de261eda434f64bc61fc50f2ffdcaa2bfe007a91bba029181af66",
+      "web_sha256": "00a440190c6708ba4526524ab509d10c07978d35c77beaf78afa0c3da8a81dea",
+      "width": 1448
+    },
+    "of-houses-043": {
+      "bytes": 332452,
+      "height": 1086,
+      "relative_url": "art/full/de4ec53ca760fe107f5598b5b5223fac867bedb63f24808cb4250b1a79ab1ea0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-043.png",
+      "source_sha256": "c82a842c15e24869d475652bd5fc3cb160e1f80f913e00873e939ee88c09a558",
+      "web_sha256": "de4ec53ca760fe107f5598b5b5223fac867bedb63f24808cb4250b1a79ab1ea0",
+      "width": 1448
+    },
+    "of-houses-044": {
+      "bytes": 358840,
+      "height": 1086,
+      "relative_url": "art/full/b3814288feafe233fa6ef8970549ea03691562b31e982bb4fd07bdc14e7c5dbe.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-044.png",
+      "source_sha256": "0685a1abf09b25b3670b885ea6cf619275a2e0998732ee85ebc2ce8652b4094b",
+      "web_sha256": "b3814288feafe233fa6ef8970549ea03691562b31e982bb4fd07bdc14e7c5dbe",
+      "width": 1448
+    },
+    "of-houses-045": {
+      "bytes": 299684,
+      "height": 1086,
+      "relative_url": "art/full/8b43fbaa686b73e56de757efcb098770f94d546041ef1b459e48d73a97ce6048.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-045.png",
+      "source_sha256": "a08d0c940441040bfe7e5180384dfd58a280729a6bf49476eb57dbbb2aa2f19a",
+      "web_sha256": "8b43fbaa686b73e56de757efcb098770f94d546041ef1b459e48d73a97ce6048",
+      "width": 1448
+    },
+    "of-houses-046": {
+      "bytes": 438250,
+      "height": 1086,
+      "relative_url": "art/full/e891607e1487b02ecb446df7156cf49c23b967095397ec1cee48a8f4de549571.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-046.png",
+      "source_sha256": "ca5ab3447bc67a265438680fcf1e880cd5ee39cd6f194d930f7880e45f97b0aa",
+      "web_sha256": "e891607e1487b02ecb446df7156cf49c23b967095397ec1cee48a8f4de549571",
+      "width": 1448
+    },
+    "of-houses-047": {
+      "bytes": 304862,
+      "height": 1086,
+      "relative_url": "art/full/7c2baee56f6f5802002b83897e7b8cf7cdf0232c5a441a7b747c79b3c55d0c48.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-047.png",
+      "source_sha256": "2ed589f3ce62c36ed8c32ceb223a16b1214a1638ae9bdd535e1e67fbb931038a",
+      "web_sha256": "7c2baee56f6f5802002b83897e7b8cf7cdf0232c5a441a7b747c79b3c55d0c48",
+      "width": 1448
+    },
+    "of-houses-048": {
+      "bytes": 361660,
+      "height": 1086,
+      "relative_url": "art/full/bf0aee50b8494789d43bcfc8f82ac85f49f06dd74a9cecaece32446eed853817.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-048.png",
+      "source_sha256": "61ba75fd0251c06016e55da3b29081d23eebd0a6dd93a0691414d010be8acc7f",
+      "web_sha256": "bf0aee50b8494789d43bcfc8f82ac85f49f06dd74a9cecaece32446eed853817",
+      "width": 1448
+    },
+    "of-houses-049": {
+      "bytes": 481830,
+      "height": 1086,
+      "relative_url": "art/full/cdfabfb9ffd6e35ebba00b9cbe720e345a2da7e69be6532efd8088fa2a10dd4d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-049.png",
+      "source_sha256": "64b74e7b787b3180ed139d35dceaae2f70e2beb23d437f301dcd3104a48ec001",
+      "web_sha256": "cdfabfb9ffd6e35ebba00b9cbe720e345a2da7e69be6532efd8088fa2a10dd4d",
+      "width": 1448
+    },
+    "of-houses-050": {
+      "bytes": 365090,
+      "height": 1086,
+      "relative_url": "art/full/0486c205f22731a7853d86a23ce4f542b0fbe76f6b493c2acb3ef197d3fcb111.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-050.png",
+      "source_sha256": "4ce1cc4491e84798bf9d1a47d42ca0fdb03809370b95382ad2d2ef3537315272",
+      "web_sha256": "0486c205f22731a7853d86a23ce4f542b0fbe76f6b493c2acb3ef197d3fcb111",
+      "width": 1448
+    },
+    "of-houses-051": {
+      "bytes": 351356,
+      "height": 1086,
+      "relative_url": "art/full/c6a56f0db9e775a151779e8b175ed79d0686ab8354f438bff1cdac6b087d27ed.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-051.png",
+      "source_sha256": "9bbdc9f547ed83921420dc73d70330f44c5a1ed66511c6b1a5e51b2efa66204b",
+      "web_sha256": "c6a56f0db9e775a151779e8b175ed79d0686ab8354f438bff1cdac6b087d27ed",
+      "width": 1448
+    },
+    "of-houses-052": {
+      "bytes": 348364,
+      "height": 1086,
+      "relative_url": "art/full/8eb97acb7ea8cc7ce1347df17c0fe8c0af45327054027dbb852a4c05c11e5b70.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-052.png",
+      "source_sha256": "1e204290d4eae4a3c33effd7d60f1594149ace4ed2242d78aa24f9b6042d7a16",
+      "web_sha256": "8eb97acb7ea8cc7ce1347df17c0fe8c0af45327054027dbb852a4c05c11e5b70",
+      "width": 1448
+    },
+    "of-houses-053": {
+      "bytes": 410056,
+      "height": 1086,
+      "relative_url": "art/full/142eca72b1dc63bdda6693bfb2ad311431c9d704405fc5b8df39931509bc9fd0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-053.png",
+      "source_sha256": "99c8776cce2b7523ce62ad9b03c9b2b0b84a2b81465328f61e6989d5f5813f2f",
+      "web_sha256": "142eca72b1dc63bdda6693bfb2ad311431c9d704405fc5b8df39931509bc9fd0",
+      "width": 1448
+    },
+    "of-houses-054": {
+      "bytes": 303672,
+      "height": 1086,
+      "relative_url": "art/full/095d23314608b76119fa7762fa80ada35fc916bc70eb32f97327f53a76b71057.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-054.png",
+      "source_sha256": "1e1336428e89a95a5cc410d31da937216f28c0af9cdae5c6f11fe7d1aca69bec",
+      "web_sha256": "095d23314608b76119fa7762fa80ada35fc916bc70eb32f97327f53a76b71057",
+      "width": 1448
+    },
+    "of-houses-055": {
+      "bytes": 334288,
+      "height": 1086,
+      "relative_url": "art/full/3386f535cd99361853185263865332e29a4fb8de6a1cfcc9f6482b2e90f15854.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-055.png",
+      "source_sha256": "04aa4bf576081e91b6c6db873dafb9d342ed18d8220d3e72bd7cc11b63ad8b96",
+      "web_sha256": "3386f535cd99361853185263865332e29a4fb8de6a1cfcc9f6482b2e90f15854",
+      "width": 1448
+    },
+    "of-houses-056": {
+      "bytes": 428992,
+      "height": 1086,
+      "relative_url": "art/full/ae39672ccfbc107a6e2eaa2fb409ee8e331b8a5a1c6a7378ae0ec19d0f726d04.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-056.png",
+      "source_sha256": "9bfc4623a6a98da0273f13eeed1cb6c97064349bd385495c3e65337a05d81815",
+      "web_sha256": "ae39672ccfbc107a6e2eaa2fb409ee8e331b8a5a1c6a7378ae0ec19d0f726d04",
+      "width": 1448
+    },
+    "of-houses-057": {
+      "bytes": 344888,
+      "height": 1086,
+      "relative_url": "art/full/eef9d6cad9a1e9b595290ad5c6177e4a514b581c359a1033e57f24acb711f61d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-057.png",
+      "source_sha256": "3310db6b83b80bede5250ce5ed5ede8bdeb3969ac6d0d71a78f7037a722fc115",
+      "web_sha256": "eef9d6cad9a1e9b595290ad5c6177e4a514b581c359a1033e57f24acb711f61d",
+      "width": 1448
+    },
+    "of-houses-058": {
+      "bytes": 456750,
+      "height": 1086,
+      "relative_url": "art/full/a101d50000ae2cff5b443cabd26dd05bd610d3620cb66a07eabc56f8ead79e3b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-058.png",
+      "source_sha256": "670655d4296497f437916b7f28a8abf88ceaaa724711e635de12e86dbfcea8c4",
+      "web_sha256": "a101d50000ae2cff5b443cabd26dd05bd610d3620cb66a07eabc56f8ead79e3b",
+      "width": 1448
+    },
+    "of-houses-059": {
+      "bytes": 355764,
+      "height": 1086,
+      "relative_url": "art/full/9c6dc0b356095ff51b09df47af1b57c7a5edb6c0e6e7f32cfc2be49e0b293cc0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-059.png",
+      "source_sha256": "082d960c303680d37696ea089c87e86fb32569641def49fab9f311aed215a084",
+      "web_sha256": "9c6dc0b356095ff51b09df47af1b57c7a5edb6c0e6e7f32cfc2be49e0b293cc0",
+      "width": 1448
+    },
+    "of-houses-060": {
+      "bytes": 402478,
+      "height": 1086,
+      "relative_url": "art/full/83f927563af082c6921dbab1de720825b46d1aae3790297ea98f0cc8f742d783.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-060.png",
+      "source_sha256": "1ef4fbb93e9f8124c9ca09135b7fbef23007f59a0a665569747571dbc3392e40",
+      "web_sha256": "83f927563af082c6921dbab1de720825b46d1aae3790297ea98f0cc8f742d783",
+      "width": 1448
+    },
+    "of-houses-061": {
+      "bytes": 451796,
+      "height": 1086,
+      "relative_url": "art/full/95f49d5962ec171930bb8b3002e00937bd2bec82291a3b80925a6ccf6dc50a87.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-061.png",
+      "source_sha256": "9bb00b94c25140b978399c4034b3082a2b7362b519560c143e60f3c900b14eb7",
+      "web_sha256": "95f49d5962ec171930bb8b3002e00937bd2bec82291a3b80925a6ccf6dc50a87",
+      "width": 1448
+    },
+    "of-houses-062": {
+      "bytes": 391182,
+      "height": 1086,
+      "relative_url": "art/full/40ae23b5f3bfbd7aa6dd71f48e85980503f22d74a21e148feec8cc236c8dc79b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-062.png",
+      "source_sha256": "fc782145b5103ac8a11b3ef8e64bb5839de78ff170c229dabbf7a22e5b07ca96",
+      "web_sha256": "40ae23b5f3bfbd7aa6dd71f48e85980503f22d74a21e148feec8cc236c8dc79b",
+      "width": 1448
+    },
+    "of-houses-063": {
+      "bytes": 446146,
+      "height": 1086,
+      "relative_url": "art/full/d22013d76f8664f14538a15df2bf6816a4d0b71752db5c4e40f6d23dbb994c30.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-063.png",
+      "source_sha256": "c42e82bbdda082bca0f126cbd299411887955ac4415a3698a8b88f3539d71be7",
+      "web_sha256": "d22013d76f8664f14538a15df2bf6816a4d0b71752db5c4e40f6d23dbb994c30",
+      "width": 1448
+    },
+    "of-houses-064": {
+      "bytes": 303784,
+      "height": 1086,
+      "relative_url": "art/full/4435f12ac262f75aefd848822bcf1f2db2a89042a4de5c61dca98a5c2c619775.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-064.png",
+      "source_sha256": "46f602f97227a8badaf48c9b198ee8ed6863dd937a463a3ecd464081c269566b",
+      "web_sha256": "4435f12ac262f75aefd848822bcf1f2db2a89042a4de5c61dca98a5c2c619775",
+      "width": 1448
+    },
+    "of-houses-065": {
+      "bytes": 550926,
+      "height": 1086,
+      "relative_url": "art/full/c899215703731bdbd22237735de756af4b6e299330ffc3c6978c378c55075d5c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-065.png",
+      "source_sha256": "9c3489a96acfeb23aece571a88d547b910b705dbbe41c2c5930203327a7705ce",
+      "web_sha256": "c899215703731bdbd22237735de756af4b6e299330ffc3c6978c378c55075d5c",
+      "width": 1448
+    },
+    "of-houses-066": {
+      "bytes": 378172,
+      "height": 1086,
+      "relative_url": "art/full/1e3f8dcef95f147012942e4419aed1d9e6ba05d1e2eb0d255ee361c8b10813ec.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-066.png",
+      "source_sha256": "75c61735d6a2d50e563fa517d8f44072b28a7af9c2e50caf0bd9db1a2c75eb30",
+      "web_sha256": "1e3f8dcef95f147012942e4419aed1d9e6ba05d1e2eb0d255ee361c8b10813ec",
+      "width": 1448
+    },
+    "of-houses-067": {
+      "bytes": 315800,
+      "height": 1086,
+      "relative_url": "art/full/367c672e1fc147a079d609318875ea04b597cebb3f7478490b173b9cafb1f321.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-067.png",
+      "source_sha256": "2d2323feeca95f318fc1c098be1d15ca3d9b46d0480fcd0908ab35ff536f9642",
+      "web_sha256": "367c672e1fc147a079d609318875ea04b597cebb3f7478490b173b9cafb1f321",
+      "width": 1448
+    },
+    "of-houses-068": {
+      "bytes": 286598,
+      "height": 1086,
+      "relative_url": "art/full/ed8b99bc3756791c1f700718ee362f383b0d4243a6cdd28d212909c908095c1e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-068.png",
+      "source_sha256": "be855ae3ef308cdd28a255657b50cf0d0b8f36dc754a0414f8db707b87d21afe",
+      "web_sha256": "ed8b99bc3756791c1f700718ee362f383b0d4243a6cdd28d212909c908095c1e",
+      "width": 1448
+    },
+    "of-houses-069": {
+      "bytes": 297638,
+      "height": 1086,
+      "relative_url": "art/full/1c6c0b735cfc62b25f82169158303a0a1da24c0b4be10e6c8011e45178f06dc6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-069.png",
+      "source_sha256": "4a5f0eba7db1bb6331045ac8805f71fdfba132f64ad7a88742b357393b1a66ac",
+      "web_sha256": "1c6c0b735cfc62b25f82169158303a0a1da24c0b4be10e6c8011e45178f06dc6",
+      "width": 1448
+    },
+    "of-houses-070": {
+      "bytes": 351560,
+      "height": 1086,
+      "relative_url": "art/full/2c6d1289786810e98067e64dcab51723b97d761e8c029b67b36fe8c871cf4679.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-070.png",
+      "source_sha256": "5b456dc6a4ef9aaf2eba29d16080c5736b037c62ecd7d98fde8b9c5c73ae7806",
+      "web_sha256": "2c6d1289786810e98067e64dcab51723b97d761e8c029b67b36fe8c871cf4679",
+      "width": 1448
+    },
+    "of-houses-071": {
+      "bytes": 373234,
+      "height": 1086,
+      "relative_url": "art/full/f050794ffdea0acecd27bd038d0117b36a3f01db1c7361cd4fc05acbb145aa27.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-071.png",
+      "source_sha256": "c4b949a9bd57b733606b00bf831227a0d0ce4bb09a87d3f0c7f45c6802dff61d",
+      "web_sha256": "f050794ffdea0acecd27bd038d0117b36a3f01db1c7361cd4fc05acbb145aa27",
+      "width": 1448
+    },
+    "of-houses-072": {
+      "bytes": 396890,
+      "height": 1086,
+      "relative_url": "art/full/7deaaa8071af99e5cb95fbdf3fde2b5506ca191bc60d0f47865356ac7f244476.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-072.png",
+      "source_sha256": "06a2bf29edb48234cdc79eeadc85b01d33cf8fc16cec3087e019ac094bf78a18",
+      "web_sha256": "7deaaa8071af99e5cb95fbdf3fde2b5506ca191bc60d0f47865356ac7f244476",
+      "width": 1448
+    },
+    "of-houses-073": {
+      "bytes": 356022,
+      "height": 1086,
+      "relative_url": "art/full/20f3220b4414150774fc0def98d7aa6362490932602ab9e7ece950ddda379000.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-073.png",
+      "source_sha256": "71233e0ed8fe1cb09470feab78f55a5c08beec465d927386eb841b3c5bc5308b",
+      "web_sha256": "20f3220b4414150774fc0def98d7aa6362490932602ab9e7ece950ddda379000",
+      "width": 1448
+    },
+    "of-houses-074": {
+      "bytes": 307862,
+      "height": 1086,
+      "relative_url": "art/full/16b209484c8204eaf2456db595e36c5ad3caf199e1b0d820bd6c55a6b4825fd7.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-074.png",
+      "source_sha256": "9bf8eb31e336a77b6ae2822d64b4ef4eda8a98df2d78a4ea564fe6faac9df2ac",
+      "web_sha256": "16b209484c8204eaf2456db595e36c5ad3caf199e1b0d820bd6c55a6b4825fd7",
+      "width": 1448
+    },
+    "of-houses-075": {
+      "bytes": 442544,
+      "height": 1086,
+      "relative_url": "art/full/3fb7ec0d5c4bd570d6eb26788486f9f3182d693fbb40b04c23707a761dbe6a29.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-075.png",
+      "source_sha256": "680aa585d4191600715420f261d0fcdbef0b7a8caf86c38b8d39cf91297d3652",
+      "web_sha256": "3fb7ec0d5c4bd570d6eb26788486f9f3182d693fbb40b04c23707a761dbe6a29",
+      "width": 1448
+    },
+    "of-houses-076": {
+      "bytes": 330188,
+      "height": 1086,
+      "relative_url": "art/full/fd865af39479c934891dc1979329507a737abe78570610705ef6e2d268da969c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-076.png",
+      "source_sha256": "7d6df0212d6b7ccd958ec9913294b07a0321b34934f2c9972cd72ad7db444bc4",
+      "web_sha256": "fd865af39479c934891dc1979329507a737abe78570610705ef6e2d268da969c",
+      "width": 1448
+    },
+    "of-houses-077": {
+      "bytes": 374630,
+      "height": 1086,
+      "relative_url": "art/full/0e6c6643777a64031d8058dcdf51afe4dbfe74b186f47081c4b23cffe5f0aa3f.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-077.png",
+      "source_sha256": "4814098fa53fbf3d59873e514ff4500cb81514d33c62364872312400293be8eb",
+      "web_sha256": "0e6c6643777a64031d8058dcdf51afe4dbfe74b186f47081c4b23cffe5f0aa3f",
+      "width": 1448
+    },
+    "of-houses-078": {
+      "bytes": 318830,
+      "height": 1086,
+      "relative_url": "art/full/000fc702a9439e1b986b3c69e207b6f8edf740d8a8ef8acfdd846956f5b58431.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-078.png",
+      "source_sha256": "582c5d69e16222769fe804b61e3b62c2f965ff66b08714a10cd9e07c68a9c3ac",
+      "web_sha256": "000fc702a9439e1b986b3c69e207b6f8edf740d8a8ef8acfdd846956f5b58431",
+      "width": 1448
+    },
+    "of-houses-079": {
+      "bytes": 265078,
+      "height": 1086,
+      "relative_url": "art/full/689822e270b27af61ed7b0e97665bbccfab2ffe519369086f0af2e983edfba78.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-079.png",
+      "source_sha256": "5685e2996f7e490db51de53a01c29c09fcd2a2d353527b9905a52538faca5184",
+      "web_sha256": "689822e270b27af61ed7b0e97665bbccfab2ffe519369086f0af2e983edfba78",
+      "width": 1448
+    },
+    "of-houses-080": {
+      "bytes": 318782,
+      "height": 1086,
+      "relative_url": "art/full/75e8ba509e123c100744322e806c3a02889d2131c206e426d2e6df8169540d33.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-080.png",
+      "source_sha256": "c7da713b7efeaa28deaa90f0ae64c8795a88c909b630bbe8ebf8a5097b93c2cd",
+      "web_sha256": "75e8ba509e123c100744322e806c3a02889d2131c206e426d2e6df8169540d33",
+      "width": 1448
+    },
+    "of-houses-081": {
+      "bytes": 296532,
+      "height": 1086,
+      "relative_url": "art/full/7bf6d4b728f293e034cb084b7456d612a06e77d41341eb4501770de9ab697b69.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-081.png",
+      "source_sha256": "c30c27cc08edb223db293984e6096cd25dd44aa24bd73f26ed154da369eeec25",
+      "web_sha256": "7bf6d4b728f293e034cb084b7456d612a06e77d41341eb4501770de9ab697b69",
+      "width": 1448
+    },
+    "of-houses-082": {
+      "bytes": 505324,
+      "height": 1086,
+      "relative_url": "art/full/f7554ed4e6408db566d0d38e0301eb7f5548dd98493a3b53656cc8ecdefbe101.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-082.png",
+      "source_sha256": "e002aea15547c70de7afd83cadb6e2c789d7eccd6474d90aae70e0561797e405",
+      "web_sha256": "f7554ed4e6408db566d0d38e0301eb7f5548dd98493a3b53656cc8ecdefbe101",
+      "width": 1448
+    },
+    "of-houses-083": {
+      "bytes": 335298,
+      "height": 1086,
+      "relative_url": "art/full/ebcafee856ab13e7008a363081a7f856c2653df762b5bb5f332efade296f1bc4.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-083.png",
+      "source_sha256": "b63ba737faa36502901159e060d532f32a4caf3eb156f904cd8d5fcec5b3a5ab",
+      "web_sha256": "ebcafee856ab13e7008a363081a7f856c2653df762b5bb5f332efade296f1bc4",
+      "width": 1448
+    },
+    "of-houses-084": {
+      "bytes": 321206,
+      "height": 1086,
+      "relative_url": "art/full/b5d7950d8780c6b4816d64dd2d3a888a37667742f39ae660dccbf3ccd723b36b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-084.png",
+      "source_sha256": "efccc42a401538b66ddc88616c7c5937dfe723830ba12b57457d955c558e02a7",
+      "web_sha256": "b5d7950d8780c6b4816d64dd2d3a888a37667742f39ae660dccbf3ccd723b36b",
+      "width": 1448
+    },
+    "of-houses-085": {
+      "bytes": 420084,
+      "height": 1086,
+      "relative_url": "art/full/f65b2d64b67fa9399d7eda8048531c11a5a523e23e8626d5d07ca49b09feb132.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-085.png",
+      "source_sha256": "ebd251d059c2adde046321d2a684469b94f539256c72ec51d15f26659aa43b89",
+      "web_sha256": "f65b2d64b67fa9399d7eda8048531c11a5a523e23e8626d5d07ca49b09feb132",
+      "width": 1448
+    },
+    "of-houses-086": {
+      "bytes": 453998,
+      "height": 1086,
+      "relative_url": "art/full/bda1cbf38daa33ee319de4389d7df8ea21b107b64471b276e934678eb172b261.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-086.png",
+      "source_sha256": "7aa32bb97de9cf93d8ecbff37d1fc1303d60158acc7729582cba9a2581dd5c85",
+      "web_sha256": "bda1cbf38daa33ee319de4389d7df8ea21b107b64471b276e934678eb172b261",
+      "width": 1448
+    },
+    "of-houses-087": {
+      "bytes": 307654,
+      "height": 1086,
+      "relative_url": "art/full/c7a1f908206abc01303d3f794a9ae0b6be3fa851295f732d82410b7b89c70448.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-087.png",
+      "source_sha256": "71c2cdb40c1bf8dbbf10e807351ac163a799ba85b58f5cc34bf506ae56adffbf",
+      "web_sha256": "c7a1f908206abc01303d3f794a9ae0b6be3fa851295f732d82410b7b89c70448",
+      "width": 1448
+    },
+    "of-houses-088": {
+      "bytes": 338578,
+      "height": 1086,
+      "relative_url": "art/full/fc5e8d8281eed7c5d1e0411cd2e41e9da2c5bdc5c75b7e8f13b1f6f0dbb553d0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-088.png",
+      "source_sha256": "94bcde44e04e10f1f21ebaaead2617e7aa5ee6993b833261d76f03338be0bbe1",
+      "web_sha256": "fc5e8d8281eed7c5d1e0411cd2e41e9da2c5bdc5c75b7e8f13b1f6f0dbb553d0",
+      "width": 1448
+    },
+    "of-houses-089": {
+      "bytes": 501270,
+      "height": 1086,
+      "relative_url": "art/full/cdb55e3c2a1f5ef244b6463bc58d832e048604c428efa81e9fbe103dd8236dfb.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-089.png",
+      "source_sha256": "51b6925fa56161e6c241f014e3a8ecee8de4ed3c67e4725b674061b6b2d84361",
+      "web_sha256": "cdb55e3c2a1f5ef244b6463bc58d832e048604c428efa81e9fbe103dd8236dfb",
+      "width": 1448
+    },
+    "of-houses-090": {
+      "bytes": 291532,
+      "height": 1086,
+      "relative_url": "art/full/44da03ba48da62292f11420c1e3b1d2db1d92c288587dabea30e4dce2b8d7425.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-090.png",
+      "source_sha256": "082366e72c58fee145b9f954ceb73278116ca875ed0648154caef02b70b8be55",
+      "web_sha256": "44da03ba48da62292f11420c1e3b1d2db1d92c288587dabea30e4dce2b8d7425",
+      "width": 1448
+    },
+    "of-houses-091": {
+      "bytes": 303536,
+      "height": 1086,
+      "relative_url": "art/full/47b2a6833dc305ec0e8020ce212495fba03c881ac51a90434108303beeab7832.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-091.png",
+      "source_sha256": "85f2008a9e8e5987bbe34c710bbee9cad7461252c7ed557369f810204000a837",
+      "web_sha256": "47b2a6833dc305ec0e8020ce212495fba03c881ac51a90434108303beeab7832",
+      "width": 1448
+    },
+    "of-houses-092": {
+      "bytes": 302328,
+      "height": 1086,
+      "relative_url": "art/full/1ac0862d1a65ef25e4d9d9cebc3a61b27d07f2778f6bd82b742ce4a5f5ca858a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-092.png",
+      "source_sha256": "14db522063da0e2d5f76d5fd705b94b5df9aa283be04e28b095d1c69c7cf12b5",
+      "web_sha256": "1ac0862d1a65ef25e4d9d9cebc3a61b27d07f2778f6bd82b742ce4a5f5ca858a",
+      "width": 1448
+    },
+    "of-houses-093": {
+      "bytes": 291322,
+      "height": 1086,
+      "relative_url": "art/full/3f57421e984d9652fbe8dcfb150264d580bb1696d678391c067cf062582403a3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-093.png",
+      "source_sha256": "e8b8d4583f4d1671f1e045d4483c96f856710a64a23c2b0f1dd85ad12cddb405",
+      "web_sha256": "3f57421e984d9652fbe8dcfb150264d580bb1696d678391c067cf062582403a3",
+      "width": 1448
+    },
     "of-houses-094": {
       "bytes": 218374,
       "height": 1086,
@@ -62,6 +971,60 @@
       "source_asset_path": "res://assets/cards/originals/of-houses-094.png",
       "source_sha256": "cbca8fd11884aadcf4eff7985ec3338ca88233e94c7534994a0024ac7b44d554",
       "web_sha256": "6cfc5a8bb831db10503b153e386905ca32ee7597c9e95e1fdbd9013ce1e85b0d",
+      "width": 1448
+    },
+    "of-houses-095": {
+      "bytes": 292348,
+      "height": 1086,
+      "relative_url": "art/full/6693a5b535b922b8be25cba8cfd767b8d244d8afe64ca18c2084bd1f1d5c5465.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-095.png",
+      "source_sha256": "a018eec379ff7157a4863b4bbc78430e78e5207b4eafa03687350949aa83ae5e",
+      "web_sha256": "6693a5b535b922b8be25cba8cfd767b8d244d8afe64ca18c2084bd1f1d5c5465",
+      "width": 1448
+    },
+    "of-houses-096": {
+      "bytes": 303356,
+      "height": 1086,
+      "relative_url": "art/full/136018a7301321c1e52e60fa2871fa23d4c8072bc8947a8a4e7e613f98b65a72.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-096.png",
+      "source_sha256": "0fc7c4c1bfc8834d3693285acfd4708ef24c4ba3780105f11a38319390869b12",
+      "web_sha256": "136018a7301321c1e52e60fa2871fa23d4c8072bc8947a8a4e7e613f98b65a72",
+      "width": 1448
+    },
+    "of-houses-097": {
+      "bytes": 386408,
+      "height": 1086,
+      "relative_url": "art/full/fbbc533d03637920c32b8f77c3a2c3bdf03344cfaa5192b0d8fc3b4d53808937.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-097.png",
+      "source_sha256": "a85d2df122c0965ac8af60eeea04cae8ebec4809bda8a591d070aef7f537097c",
+      "web_sha256": "fbbc533d03637920c32b8f77c3a2c3bdf03344cfaa5192b0d8fc3b4d53808937",
+      "width": 1448
+    },
+    "of-houses-098": {
+      "bytes": 361140,
+      "height": 1086,
+      "relative_url": "art/full/a2f62972e7dfe778572cb53a85b14289cffc08d1060fff7e34df42eb29c10797.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-098.png",
+      "source_sha256": "ec5635b1dd97dc58eccdc1d101160cc3d869d5e7ce87111540eb6cb7206f249e",
+      "web_sha256": "a2f62972e7dfe778572cb53a85b14289cffc08d1060fff7e34df42eb29c10797",
+      "width": 1448
+    },
+    "of-houses-099": {
+      "bytes": 333656,
+      "height": 1086,
+      "relative_url": "art/full/3f3eeb1a9fe48bf7c02cb1d0aebb54c121d1381cb9a0777dc576ac0c2e0be296.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-099.png",
+      "source_sha256": "9d468f0a6fc591b2f57a686a27028e11d14a6e62c407f43eb738a142dd87e122",
+      "web_sha256": "3f3eeb1a9fe48bf7c02cb1d0aebb54c121d1381cb9a0777dc576ac0c2e0be296",
+      "width": 1448
+    },
+    "of-houses-100": {
+      "bytes": 396954,
+      "height": 1086,
+      "relative_url": "art/full/57da8a614163aa8fc0ee65500a9315db702f28475cdc496220ec3c1a02a79b23.webp",
+      "source_asset_path": "res://assets/cards/originals/of-houses-100.png",
+      "source_sha256": "ee9c104e3b96027e6a229cab37aec8fb5aea66f7e521c5b4086332be255889b2",
+      "web_sha256": "57da8a614163aa8fc0ee65500a9315db702f28475cdc496220ec3c1a02a79b23",
       "width": 1448
     },
     "of-morph-003": {
@@ -137,7 +1100,7 @@
       "width": 1448
     }
   },
-  "full_asset_count": 15,
+  "full_asset_count": 122,
   "individual_original_count_added": 0,
   "profile": "orafold-web-art-v1",
   "quality": 0.9,
