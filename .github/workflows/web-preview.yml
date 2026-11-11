@@ -230,6 +230,45 @@ jobs:
             work/production-browser-migration/
           if-no-files-found: warn
 
+  production-resources:
+    # Independent headless experiment; does not extend the native GUI/export job.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The report verifies the pre-seam baseline against its recorded commit.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import scripts for the headless resource comparison
+        run: |
+          mkdir -p work/production
+          godot --headless --editor --import --path . --audio-driver Dummy --quit > work/production/resource-import.log 2>&1
+      - name: Complete 192 paired starter games and 10 controls
+        run: bash tools/test_production_resources.sh
+      - name: Validate source binding and negative evidence guards
+        run: |
+          python3 tools/production/report_resources.py --verify-rejections --output-dir work/production/resource-report
+          python3 tools/production/report_resources.py --verify-rejections --output-dir work/production/resource-report --check
+      - name: Preserve actual resource comparison evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-production-resources
+          path: |
+            work/production/resource-import.log
+            work/production/resource-models.log
+            work/production/resource-models.json
+            work/production/resource-report/
+          if-no-files-found: error
+
   production-balance:
     runs-on: ubuntu-24.04
     timeout-minutes: 35

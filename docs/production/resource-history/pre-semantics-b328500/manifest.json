@@ -1,0 +1,10 @@
+{
+  "status": "historical pre-kernel-semantics evidence; excluded from current experiment totals",
+  "source_commit": "b3285006c0507472e9b10feb131ca6e5af634d89",
+  "files": {
+    "RESOURCE_MODEL_GAMES.json": "afb9cbfb7489329177b3931ba1e66e032a335231dd9e0e1d93ac78df4b05ba82",
+    "RESOURCE_MODEL_EXPERIMENT.json": "3bca10659633025f35667884ef6d8a0904733a7cc0fcd71c87e99dc58b6d77f2",
+    "RESOURCE_MODEL_EXPERIMENT.md": "8fc10b2d9af479bc1cb2475d197203f2c6bde369a3b861b30a1dee156c19854f",
+    "resource_baseline.json": "5732cf1c26dafbd6a56761a598603fb2c8eaf42dd2e85ea0687f4a9ec88392a1"
+  }
+}
