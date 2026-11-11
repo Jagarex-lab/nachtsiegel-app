@@ -1,10 +1,18 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
 const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards,...JSON.parse(fs.readFileSync('data/legacy/cards.json','utf8')).cards],by=Object.fromEntries(cards.map(c=>[c.id,c]));
+function allVisibleCompactReady({expected,count}){
+ const rows=(window.orafoldQA?.battle_art||[]).filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
+ return rows.length===count&&count>0&&rows.every(row=>{
+  const size=expected[row.card_id];return size&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&row.pixels[0]===size[0]&&row.pixels[1]===size[1];
+ });
+}
 (async()=>{
  const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
  const legacyOnly=process.env.QA_LEGACY_ONLY==='1';
- const externalCompact=legacyOnly?{}:Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries).filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
+ const compactEntries=legacyOnly?[]:Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries);
+ const compactGeometry=Object.fromEntries(compactEntries.map(([id,entry])=>[id,[entry.width,entry.height]]));
+ const externalCompact=Object.fromEntries(compactEntries.filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
  const recordGameplay=process.env.QA_GAMEPLAY_SEQUENCE==='1',sha256=value=>crypto.createHash('sha256').update(value).digest('hex');
  let sequenceArtifact=null;
  if(recordGameplay){
@@ -155,6 +163,14 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     const delivered=current.battle_art.filter(row=>row.visible&&['hand','board'].includes(row.zone)&&(!zone||row.zone===zone)&&row.profile==='compact'&&row.status==='final'&&row.pending===false&&expected[row.card_id]&&row.pixels[0]===expected[row.card_id][0]&&row.pixels[1]===expected[row.card_id][1]);
     assert(delivered.length>0,'a visible nonpacked card owns its actual decoded compact texture');battleArtChecks.push({stage,required_ids:requiredIds,zone,seed:current.battle.seed,command_count:current.command_count,delivered,delivery:current.art_delivery});
    }
+   async function checkAllVisibleArt(){
+    const before=await state(),rows=before.battle_art.filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
+    assert(rows.length>0,'actual hand/board cards must be visible before the all-art check');
+    await page.waitForFunction(allVisibleCompactReady,{expected:compactGeometry,count:rows.length},{timeout:90000});
+    const after=await state();assert.deepEqual(after.battle,before.battle,'waiting for all visible illustrations preserves the complete model');
+    assert.equal(after.command_count,before.command_count,'waiting for all visible illustrations issues no command');
+    battleArtChecks.push({check:'all-visible-before-after-turn',stage:after.battle.stage,seed:after.battle.seed,command_count:after.command_count,delivered:after.battle_art.filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone)),delivery:after.art_delivery});
+   }
    async function opening(customPower=null,expectedCards=null,recordOpening=false){
     await action('start');
     if(!legacyOnly){
@@ -293,7 +309,8 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     await opening();let q=await state();assert.equal(q.battle.hero.maxHp,legacyOnly?35:30);if(!legacyOnly)assert.equal(q.battle.enemy.maxHp,30);
     for(const key of (legacyOnly?['end','actions','inspect','menu','log']:['end','actions','inspect','menu','log'])){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
     for(const r of Object.values(q.board))assert(r[2]>=43.9&&r[3]>=43.9&&r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,'board safe bounds');
-    await shot('battle');if(!legacyOnly&&['desktop','iphone'].includes(name))await toolbarViewportChecks();await playTurn();await shot('after-turn');
+    await shot('battle');if(!legacyOnly&&['desktop','iphone'].includes(name))await toolbarViewportChecks();await playTurn();
+    if(!legacyOnly&&!(await state()).battle.winner)await checkAllVisibleArt();await shot('after-turn');
     if((await state()).battle.winner){await action('result_menu');}else{await action('menu');await action('confirm_menu');}
     await action('builder');await action('save_deck');await wait(()=>window.orafoldQA.message.includes('gespeichert'));await shot('builder');
     await page.reload({waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');await waitViewport();await action('builder');assert.equal((await state()).deck_size,legacyOnly?25:30);await action('builder_back');
