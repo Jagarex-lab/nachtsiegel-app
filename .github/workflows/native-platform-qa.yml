@@ -23,6 +23,9 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: android-actions/setup-android@v3
+        with:
+          # The action's historical default includes the retired SDK 'tools'.
+          packages: platform-tools
       - name: Install the pinned debug Android toolchain
         run: sdkmanager 'platform-tools' 'platforms;android-35' 'build-tools;35.0.0'
       - uses: chickensoft-games/setup-godot@v2
@@ -65,8 +68,20 @@ jobs:
           version: 4.6.3
           use-dotnet: false
           include-templates: true
+      - name: Resolve the installed native Windows console executable
+        run: |
+          # setup-godot's extensionless hardlink works in PowerShell, but is
+          # not resolved by Python/CreateProcess. Its official console binary
+          # also waits for the real editor and preserves its logs/exit status.
+          $engine = Join-Path $env:USERPROFILE 'godot/Godot_v4.6.3-stable_win64_console.exe'
+          if (-not (Test-Path -LiteralPath $engine -PathType Leaf)) {
+            throw "The pinned native Godot console executable is missing"
+          }
+          "GODOT_BIN=$engine" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Import actual project resources
-        run: godot --headless --editor --import --path . --quit
+        run: |
+          & $env:GODOT_BIN --headless --editor --import --path . --quit
+          exit $LASTEXITCODE
       - name: Orchestrator, native package parser and evidence guards
         run: python -m unittest discover -s tests -p 'platform_qa_test.py' -v
       - name: Export real PE64 packages and execute the native Windows duel
