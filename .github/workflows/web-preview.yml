@@ -354,6 +354,50 @@ jobs:
             work/production/resource-report/
           if-no-files-found: error
 
+  production-full-pool-coverage:
+    # A real additional sampler, included in this release-required workflow's
+    # conclusion. It neither replaces the starter matrix nor reuses old results.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    env:
+      LP_NUM_THREADS: '1'
+      # Leave time to report an interrupted attempt and upload its actual journal.
+      FULL_POOL_TIMEOUT: '1320'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The reporter verifies both the D3 core and exact executed sources.
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import actual project resources and audio autoloads
+        run: |
+          mkdir -p work/production
+          godot --headless --editor --import --path . --audio-driver Dummy --quit > work/production/full-pool-import.log 2>&1
+      - name: Complete 256 real full-pool games and 12 separate controls
+        run: bash tools/test_production_full_pool_coverage.sh
+      - name: Preserve raw full-pool attempts, frozen plan, journal and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-production-full-pool-coverage
+          path: |
+            work/production/full-pool-import.log
+            work/production/full-pool-coverage.json
+            work/production/full-pool-coverage-plan.json
+            work/production/full-pool-coverage-journal.jsonl
+            work/production/full-pool-coverage.log
+            work/production/full-pool-report/
+          if-no-files-found: error
+
   production-balance:
     runs-on: ubuntu-24.04
     timeout-minutes: 35

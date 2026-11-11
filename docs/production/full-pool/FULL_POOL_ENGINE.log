@@ -1,0 +1,335 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+FULL POOL CASE START: coverage-000 full-pool-houses-01/full-pool-stillwatch-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-001 full-pool-houses-01/full-pool-stillwatch-01 seed=1 first=hero
+FULL POOL CASE START: coverage-002 full-pool-houses-01/full-pool-stillwatch-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-003 full-pool-houses-01/full-pool-stillwatch-01 seed=4 first=hero
+FULL POOL: 4 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-004 full-pool-houses-01/full-pool-morph-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-005 full-pool-houses-01/full-pool-morph-04 seed=1 first=hero
+FULL POOL CASE START: coverage-006 full-pool-houses-01/full-pool-morph-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-007 full-pool-houses-01/full-pool-morph-04 seed=4 first=hero
+FULL POOL: 8 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-008 full-pool-houses-02/full-pool-stillwatch-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-009 full-pool-houses-02/full-pool-stillwatch-02 seed=1 first=hero
+FULL POOL CASE START: coverage-010 full-pool-houses-02/full-pool-stillwatch-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-011 full-pool-houses-02/full-pool-stillwatch-02 seed=4 first=hero
+FULL POOL: 12 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-012 full-pool-houses-02/full-pool-morph-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-013 full-pool-houses-02/full-pool-morph-05 seed=1 first=hero
+FULL POOL CASE START: coverage-014 full-pool-houses-02/full-pool-morph-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-015 full-pool-houses-02/full-pool-morph-05 seed=4 first=hero
+FULL POOL: 16 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-016 full-pool-houses-03/full-pool-stillwatch-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-017 full-pool-houses-03/full-pool-stillwatch-03 seed=1 first=hero
+FULL POOL CASE START: coverage-018 full-pool-houses-03/full-pool-stillwatch-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-019 full-pool-houses-03/full-pool-stillwatch-03 seed=4 first=hero
+FULL POOL: 20 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-020 full-pool-houses-03/full-pool-morph-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-021 full-pool-houses-03/full-pool-morph-06 seed=1 first=hero
+FULL POOL CASE START: coverage-022 full-pool-houses-03/full-pool-morph-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-023 full-pool-houses-03/full-pool-morph-06 seed=4 first=hero
+FULL POOL: 24 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-024 full-pool-houses-04/full-pool-stillwatch-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-025 full-pool-houses-04/full-pool-stillwatch-04 seed=1 first=hero
+FULL POOL CASE START: coverage-026 full-pool-houses-04/full-pool-stillwatch-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-027 full-pool-houses-04/full-pool-stillwatch-04 seed=4 first=hero
+FULL POOL: 28 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-028 full-pool-houses-04/full-pool-morph-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-029 full-pool-houses-04/full-pool-morph-07 seed=1 first=hero
+FULL POOL CASE START: coverage-030 full-pool-houses-04/full-pool-morph-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-031 full-pool-houses-04/full-pool-morph-07 seed=4 first=hero
+FULL POOL: 32 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-032 full-pool-houses-05/full-pool-stillwatch-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-033 full-pool-houses-05/full-pool-stillwatch-05 seed=1 first=hero
+FULL POOL CASE START: coverage-034 full-pool-houses-05/full-pool-stillwatch-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-035 full-pool-houses-05/full-pool-stillwatch-05 seed=4 first=hero
+FULL POOL: 36 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-036 full-pool-houses-05/full-pool-morph-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-037 full-pool-houses-05/full-pool-morph-08 seed=1 first=hero
+FULL POOL CASE START: coverage-038 full-pool-houses-05/full-pool-morph-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-039 full-pool-houses-05/full-pool-morph-08 seed=4 first=hero
+FULL POOL: 40 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-040 full-pool-houses-06/full-pool-stillwatch-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-041 full-pool-houses-06/full-pool-stillwatch-06 seed=1 first=hero
+FULL POOL CASE START: coverage-042 full-pool-houses-06/full-pool-stillwatch-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-043 full-pool-houses-06/full-pool-stillwatch-06 seed=4 first=hero
+FULL POOL: 44 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-044 full-pool-houses-06/full-pool-morph-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-045 full-pool-houses-06/full-pool-morph-01 seed=1 first=hero
+FULL POOL CASE START: coverage-046 full-pool-houses-06/full-pool-morph-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-047 full-pool-houses-06/full-pool-morph-01 seed=4 first=hero
+FULL POOL: 48 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-048 full-pool-houses-07/full-pool-stillwatch-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-049 full-pool-houses-07/full-pool-stillwatch-07 seed=1 first=hero
+FULL POOL CASE START: coverage-050 full-pool-houses-07/full-pool-stillwatch-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-051 full-pool-houses-07/full-pool-stillwatch-07 seed=4 first=hero
+FULL POOL: 52 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-052 full-pool-houses-07/full-pool-morph-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-053 full-pool-houses-07/full-pool-morph-02 seed=1 first=hero
+FULL POOL CASE START: coverage-054 full-pool-houses-07/full-pool-morph-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-055 full-pool-houses-07/full-pool-morph-02 seed=4 first=hero
+FULL POOL: 56 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-056 full-pool-houses-08/full-pool-stillwatch-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-057 full-pool-houses-08/full-pool-stillwatch-08 seed=1 first=hero
+FULL POOL CASE START: coverage-058 full-pool-houses-08/full-pool-stillwatch-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-059 full-pool-houses-08/full-pool-stillwatch-08 seed=4 first=hero
+FULL POOL: 60 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-060 full-pool-houses-08/full-pool-morph-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-061 full-pool-houses-08/full-pool-morph-03 seed=1 first=hero
+FULL POOL CASE START: coverage-062 full-pool-houses-08/full-pool-morph-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-063 full-pool-houses-08/full-pool-morph-03 seed=4 first=hero
+FULL POOL: 64 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-064 full-pool-stillwatch-01/full-pool-morph-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-065 full-pool-stillwatch-01/full-pool-morph-01 seed=1 first=hero
+FULL POOL CASE START: coverage-066 full-pool-stillwatch-01/full-pool-morph-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-067 full-pool-stillwatch-01/full-pool-morph-01 seed=4 first=hero
+FULL POOL: 68 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-068 full-pool-stillwatch-01/full-pool-ninth-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-069 full-pool-stillwatch-01/full-pool-ninth-04 seed=1 first=hero
+FULL POOL CASE START: coverage-070 full-pool-stillwatch-01/full-pool-ninth-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-071 full-pool-stillwatch-01/full-pool-ninth-04 seed=4 first=hero
+FULL POOL: 72 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-072 full-pool-stillwatch-02/full-pool-morph-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-073 full-pool-stillwatch-02/full-pool-morph-02 seed=1 first=hero
+FULL POOL CASE START: coverage-074 full-pool-stillwatch-02/full-pool-morph-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-075 full-pool-stillwatch-02/full-pool-morph-02 seed=4 first=hero
+FULL POOL: 76 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-076 full-pool-stillwatch-02/full-pool-ninth-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-077 full-pool-stillwatch-02/full-pool-ninth-05 seed=1 first=hero
+FULL POOL CASE START: coverage-078 full-pool-stillwatch-02/full-pool-ninth-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-079 full-pool-stillwatch-02/full-pool-ninth-05 seed=4 first=hero
+FULL POOL: 80 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-080 full-pool-stillwatch-03/full-pool-morph-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-081 full-pool-stillwatch-03/full-pool-morph-03 seed=1 first=hero
+FULL POOL CASE START: coverage-082 full-pool-stillwatch-03/full-pool-morph-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-083 full-pool-stillwatch-03/full-pool-morph-03 seed=4 first=hero
+FULL POOL: 84 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-084 full-pool-stillwatch-03/full-pool-ninth-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-085 full-pool-stillwatch-03/full-pool-ninth-06 seed=1 first=hero
+FULL POOL CASE START: coverage-086 full-pool-stillwatch-03/full-pool-ninth-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-087 full-pool-stillwatch-03/full-pool-ninth-06 seed=4 first=hero
+FULL POOL: 88 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-088 full-pool-stillwatch-04/full-pool-morph-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-089 full-pool-stillwatch-04/full-pool-morph-04 seed=1 first=hero
+FULL POOL CASE START: coverage-090 full-pool-stillwatch-04/full-pool-morph-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-091 full-pool-stillwatch-04/full-pool-morph-04 seed=4 first=hero
+FULL POOL: 92 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-092 full-pool-stillwatch-04/full-pool-ninth-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-093 full-pool-stillwatch-04/full-pool-ninth-07 seed=1 first=hero
+FULL POOL CASE START: coverage-094 full-pool-stillwatch-04/full-pool-ninth-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-095 full-pool-stillwatch-04/full-pool-ninth-07 seed=4 first=hero
+FULL POOL: 96 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-096 full-pool-stillwatch-05/full-pool-morph-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-097 full-pool-stillwatch-05/full-pool-morph-05 seed=1 first=hero
+FULL POOL CASE START: coverage-098 full-pool-stillwatch-05/full-pool-morph-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-099 full-pool-stillwatch-05/full-pool-morph-05 seed=4 first=hero
+FULL POOL: 100 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-100 full-pool-stillwatch-05/full-pool-ninth-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-101 full-pool-stillwatch-05/full-pool-ninth-08 seed=1 first=hero
+FULL POOL CASE START: coverage-102 full-pool-stillwatch-05/full-pool-ninth-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-103 full-pool-stillwatch-05/full-pool-ninth-08 seed=4 first=hero
+FULL POOL: 104 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-104 full-pool-stillwatch-06/full-pool-morph-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-105 full-pool-stillwatch-06/full-pool-morph-06 seed=1 first=hero
+FULL POOL CASE START: coverage-106 full-pool-stillwatch-06/full-pool-morph-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-107 full-pool-stillwatch-06/full-pool-morph-06 seed=4 first=hero
+FULL POOL: 108 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-108 full-pool-stillwatch-06/full-pool-ninth-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-109 full-pool-stillwatch-06/full-pool-ninth-01 seed=1 first=hero
+FULL POOL CASE START: coverage-110 full-pool-stillwatch-06/full-pool-ninth-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-111 full-pool-stillwatch-06/full-pool-ninth-01 seed=4 first=hero
+FULL POOL: 112 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-112 full-pool-stillwatch-07/full-pool-morph-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-113 full-pool-stillwatch-07/full-pool-morph-07 seed=1 first=hero
+FULL POOL CASE START: coverage-114 full-pool-stillwatch-07/full-pool-morph-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-115 full-pool-stillwatch-07/full-pool-morph-07 seed=4 first=hero
+FULL POOL: 116 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-116 full-pool-stillwatch-07/full-pool-ninth-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-117 full-pool-stillwatch-07/full-pool-ninth-02 seed=1 first=hero
+FULL POOL CASE START: coverage-118 full-pool-stillwatch-07/full-pool-ninth-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-119 full-pool-stillwatch-07/full-pool-ninth-02 seed=4 first=hero
+FULL POOL: 120 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-120 full-pool-stillwatch-08/full-pool-morph-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-121 full-pool-stillwatch-08/full-pool-morph-08 seed=1 first=hero
+FULL POOL CASE START: coverage-122 full-pool-stillwatch-08/full-pool-morph-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-123 full-pool-stillwatch-08/full-pool-morph-08 seed=4 first=hero
+FULL POOL: 124 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-124 full-pool-stillwatch-08/full-pool-ninth-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-125 full-pool-stillwatch-08/full-pool-ninth-03 seed=1 first=hero
+FULL POOL CASE START: coverage-126 full-pool-stillwatch-08/full-pool-ninth-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-127 full-pool-stillwatch-08/full-pool-ninth-03 seed=4 first=hero
+FULL POOL: 128 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-128 full-pool-morph-01/full-pool-ninth-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-129 full-pool-morph-01/full-pool-ninth-01 seed=1 first=hero
+FULL POOL CASE START: coverage-130 full-pool-morph-01/full-pool-ninth-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-131 full-pool-morph-01/full-pool-ninth-01 seed=4 first=hero
+FULL POOL: 132 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-132 full-pool-morph-01/full-pool-houses-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-133 full-pool-morph-01/full-pool-houses-04 seed=1 first=hero
+FULL POOL CASE START: coverage-134 full-pool-morph-01/full-pool-houses-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-135 full-pool-morph-01/full-pool-houses-04 seed=4 first=hero
+FULL POOL: 136 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-136 full-pool-morph-02/full-pool-ninth-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-137 full-pool-morph-02/full-pool-ninth-02 seed=1 first=hero
+FULL POOL CASE START: coverage-138 full-pool-morph-02/full-pool-ninth-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-139 full-pool-morph-02/full-pool-ninth-02 seed=4 first=hero
+FULL POOL: 140 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-140 full-pool-morph-02/full-pool-houses-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-141 full-pool-morph-02/full-pool-houses-05 seed=1 first=hero
+FULL POOL CASE START: coverage-142 full-pool-morph-02/full-pool-houses-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-143 full-pool-morph-02/full-pool-houses-05 seed=4 first=hero
+FULL POOL: 144 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-144 full-pool-morph-03/full-pool-ninth-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-145 full-pool-morph-03/full-pool-ninth-03 seed=1 first=hero
+FULL POOL CASE START: coverage-146 full-pool-morph-03/full-pool-ninth-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-147 full-pool-morph-03/full-pool-ninth-03 seed=4 first=hero
+FULL POOL: 148 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-148 full-pool-morph-03/full-pool-houses-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-149 full-pool-morph-03/full-pool-houses-06 seed=1 first=hero
+FULL POOL CASE START: coverage-150 full-pool-morph-03/full-pool-houses-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-151 full-pool-morph-03/full-pool-houses-06 seed=4 first=hero
+FULL POOL: 152 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-152 full-pool-morph-04/full-pool-ninth-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-153 full-pool-morph-04/full-pool-ninth-04 seed=1 first=hero
+FULL POOL CASE START: coverage-154 full-pool-morph-04/full-pool-ninth-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-155 full-pool-morph-04/full-pool-ninth-04 seed=4 first=hero
+FULL POOL: 156 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-156 full-pool-morph-04/full-pool-houses-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-157 full-pool-morph-04/full-pool-houses-07 seed=1 first=hero
+FULL POOL CASE START: coverage-158 full-pool-morph-04/full-pool-houses-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-159 full-pool-morph-04/full-pool-houses-07 seed=4 first=hero
+FULL POOL: 160 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-160 full-pool-morph-05/full-pool-ninth-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-161 full-pool-morph-05/full-pool-ninth-05 seed=1 first=hero
+FULL POOL CASE START: coverage-162 full-pool-morph-05/full-pool-ninth-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-163 full-pool-morph-05/full-pool-ninth-05 seed=4 first=hero
+FULL POOL: 164 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-164 full-pool-morph-05/full-pool-houses-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-165 full-pool-morph-05/full-pool-houses-08 seed=1 first=hero
+FULL POOL CASE START: coverage-166 full-pool-morph-05/full-pool-houses-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-167 full-pool-morph-05/full-pool-houses-08 seed=4 first=hero
+FULL POOL: 168 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-168 full-pool-morph-06/full-pool-ninth-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-169 full-pool-morph-06/full-pool-ninth-06 seed=1 first=hero
+FULL POOL CASE START: coverage-170 full-pool-morph-06/full-pool-ninth-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-171 full-pool-morph-06/full-pool-ninth-06 seed=4 first=hero
+FULL POOL: 172 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-172 full-pool-morph-06/full-pool-houses-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-173 full-pool-morph-06/full-pool-houses-01 seed=1 first=hero
+FULL POOL CASE START: coverage-174 full-pool-morph-06/full-pool-houses-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-175 full-pool-morph-06/full-pool-houses-01 seed=4 first=hero
+FULL POOL: 176 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-176 full-pool-morph-07/full-pool-ninth-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-177 full-pool-morph-07/full-pool-ninth-07 seed=1 first=hero
+FULL POOL CASE START: coverage-178 full-pool-morph-07/full-pool-ninth-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-179 full-pool-morph-07/full-pool-ninth-07 seed=4 first=hero
+FULL POOL: 180 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-180 full-pool-morph-07/full-pool-houses-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-181 full-pool-morph-07/full-pool-houses-02 seed=1 first=hero
+FULL POOL CASE START: coverage-182 full-pool-morph-07/full-pool-houses-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-183 full-pool-morph-07/full-pool-houses-02 seed=4 first=hero
+FULL POOL: 184 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-184 full-pool-morph-08/full-pool-ninth-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-185 full-pool-morph-08/full-pool-ninth-08 seed=1 first=hero
+FULL POOL CASE START: coverage-186 full-pool-morph-08/full-pool-ninth-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-187 full-pool-morph-08/full-pool-ninth-08 seed=4 first=hero
+FULL POOL: 188 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-188 full-pool-morph-08/full-pool-houses-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-189 full-pool-morph-08/full-pool-houses-03 seed=1 first=hero
+FULL POOL CASE START: coverage-190 full-pool-morph-08/full-pool-houses-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-191 full-pool-morph-08/full-pool-houses-03 seed=4 first=hero
+FULL POOL: 192 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-192 full-pool-ninth-01/full-pool-houses-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-193 full-pool-ninth-01/full-pool-houses-01 seed=1 first=hero
+FULL POOL CASE START: coverage-194 full-pool-ninth-01/full-pool-houses-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-195 full-pool-ninth-01/full-pool-houses-01 seed=4 first=hero
+FULL POOL: 196 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-196 full-pool-ninth-01/full-pool-stillwatch-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-197 full-pool-ninth-01/full-pool-stillwatch-04 seed=1 first=hero
+FULL POOL CASE START: coverage-198 full-pool-ninth-01/full-pool-stillwatch-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-199 full-pool-ninth-01/full-pool-stillwatch-04 seed=4 first=hero
+FULL POOL: 200 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-200 full-pool-ninth-02/full-pool-houses-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-201 full-pool-ninth-02/full-pool-houses-02 seed=1 first=hero
+FULL POOL CASE START: coverage-202 full-pool-ninth-02/full-pool-houses-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-203 full-pool-ninth-02/full-pool-houses-02 seed=4 first=hero
+FULL POOL: 204 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-204 full-pool-ninth-02/full-pool-stillwatch-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-205 full-pool-ninth-02/full-pool-stillwatch-05 seed=1 first=hero
+FULL POOL CASE START: coverage-206 full-pool-ninth-02/full-pool-stillwatch-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-207 full-pool-ninth-02/full-pool-stillwatch-05 seed=4 first=hero
+FULL POOL: 208 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-208 full-pool-ninth-03/full-pool-houses-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-209 full-pool-ninth-03/full-pool-houses-03 seed=1 first=hero
+FULL POOL CASE START: coverage-210 full-pool-ninth-03/full-pool-houses-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-211 full-pool-ninth-03/full-pool-houses-03 seed=4 first=hero
+FULL POOL: 212 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-212 full-pool-ninth-03/full-pool-stillwatch-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-213 full-pool-ninth-03/full-pool-stillwatch-06 seed=1 first=hero
+FULL POOL CASE START: coverage-214 full-pool-ninth-03/full-pool-stillwatch-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-215 full-pool-ninth-03/full-pool-stillwatch-06 seed=4 first=hero
+FULL POOL: 216 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-216 full-pool-ninth-04/full-pool-houses-04 seed=0 first=enemy
+FULL POOL CASE START: coverage-217 full-pool-ninth-04/full-pool-houses-04 seed=1 first=hero
+FULL POOL CASE START: coverage-218 full-pool-ninth-04/full-pool-houses-04 seed=2 first=enemy
+FULL POOL CASE START: coverage-219 full-pool-ninth-04/full-pool-houses-04 seed=4 first=hero
+FULL POOL: 220 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-220 full-pool-ninth-04/full-pool-stillwatch-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-221 full-pool-ninth-04/full-pool-stillwatch-07 seed=1 first=hero
+FULL POOL CASE START: coverage-222 full-pool-ninth-04/full-pool-stillwatch-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-223 full-pool-ninth-04/full-pool-stillwatch-07 seed=4 first=hero
+FULL POOL: 224 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-224 full-pool-ninth-05/full-pool-houses-05 seed=0 first=enemy
+FULL POOL CASE START: coverage-225 full-pool-ninth-05/full-pool-houses-05 seed=1 first=hero
+FULL POOL CASE START: coverage-226 full-pool-ninth-05/full-pool-houses-05 seed=2 first=enemy
+FULL POOL CASE START: coverage-227 full-pool-ninth-05/full-pool-houses-05 seed=4 first=hero
+FULL POOL: 228 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-228 full-pool-ninth-05/full-pool-stillwatch-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-229 full-pool-ninth-05/full-pool-stillwatch-08 seed=1 first=hero
+FULL POOL CASE START: coverage-230 full-pool-ninth-05/full-pool-stillwatch-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-231 full-pool-ninth-05/full-pool-stillwatch-08 seed=4 first=hero
+FULL POOL: 232 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-232 full-pool-ninth-06/full-pool-houses-06 seed=0 first=enemy
+FULL POOL CASE START: coverage-233 full-pool-ninth-06/full-pool-houses-06 seed=1 first=hero
+FULL POOL CASE START: coverage-234 full-pool-ninth-06/full-pool-houses-06 seed=2 first=enemy
+FULL POOL CASE START: coverage-235 full-pool-ninth-06/full-pool-houses-06 seed=4 first=hero
+FULL POOL: 236 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-236 full-pool-ninth-06/full-pool-stillwatch-01 seed=0 first=enemy
+FULL POOL CASE START: coverage-237 full-pool-ninth-06/full-pool-stillwatch-01 seed=1 first=hero
+FULL POOL CASE START: coverage-238 full-pool-ninth-06/full-pool-stillwatch-01 seed=2 first=enemy
+FULL POOL CASE START: coverage-239 full-pool-ninth-06/full-pool-stillwatch-01 seed=4 first=hero
+FULL POOL: 240 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-240 full-pool-ninth-07/full-pool-houses-07 seed=0 first=enemy
+FULL POOL CASE START: coverage-241 full-pool-ninth-07/full-pool-houses-07 seed=1 first=hero
+FULL POOL CASE START: coverage-242 full-pool-ninth-07/full-pool-houses-07 seed=2 first=enemy
+FULL POOL CASE START: coverage-243 full-pool-ninth-07/full-pool-houses-07 seed=4 first=hero
+FULL POOL: 244 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-244 full-pool-ninth-07/full-pool-stillwatch-02 seed=0 first=enemy
+FULL POOL CASE START: coverage-245 full-pool-ninth-07/full-pool-stillwatch-02 seed=1 first=hero
+FULL POOL CASE START: coverage-246 full-pool-ninth-07/full-pool-stillwatch-02 seed=2 first=enemy
+FULL POOL CASE START: coverage-247 full-pool-ninth-07/full-pool-stillwatch-02 seed=4 first=hero
+FULL POOL: 248 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-248 full-pool-ninth-08/full-pool-houses-08 seed=0 first=enemy
+FULL POOL CASE START: coverage-249 full-pool-ninth-08/full-pool-houses-08 seed=1 first=hero
+FULL POOL CASE START: coverage-250 full-pool-ninth-08/full-pool-houses-08 seed=2 first=enemy
+FULL POOL CASE START: coverage-251 full-pool-ninth-08/full-pool-houses-08 seed=4 first=hero
+FULL POOL: 252 actual matrix attempts; 0 failed checks
+FULL POOL CASE START: coverage-252 full-pool-ninth-08/full-pool-stillwatch-03 seed=0 first=enemy
+FULL POOL CASE START: coverage-253 full-pool-ninth-08/full-pool-stillwatch-03 seed=1 first=hero
+FULL POOL CASE START: coverage-254 full-pool-ninth-08/full-pool-stillwatch-03 seed=2 first=enemy
+FULL POOL CASE START: coverage-255 full-pool-ninth-08/full-pool-stillwatch-03 seed=4 first=hero
+FULL POOL: 256 actual matrix attempts; 0 failed checks
+FULL POOL CONTROL START: repeat coverage-000
+FULL POOL CONTROL START: repeat coverage-057
+FULL POOL CONTROL START: repeat coverage-064
+FULL POOL CONTROL START: repeat coverage-121
+FULL POOL CONTROL START: repeat coverage-128
+FULL POOL CONTROL START: repeat coverage-185
+FULL POOL CONTROL START: repeat coverage-192
+FULL POOL CONTROL START: repeat coverage-249
+FULL POOL CONTROL START: fresh_constructor coverage-002
+FULL POOL CONTROL START: fresh_constructor coverage-067
+FULL POOL CONTROL START: fresh_constructor coverage-130
+FULL POOL CONTROL START: fresh_constructor coverage-195
+FULL POOL COVERAGE: 1666 assertions; 0 failures; 256 actual matrix games + 12 controls

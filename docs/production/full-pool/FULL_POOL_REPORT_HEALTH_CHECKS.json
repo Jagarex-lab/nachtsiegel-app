@@ -1,0 +1,78 @@
+{
+  "scope": "HEALTH TEST COPIES ONLY. Deliberately mutated/truncated metadata from one actual completed run; these are neither new sampler parties nor observed engine bugs.",
+  "original_actual_source_hashes": {
+    "raw": "ced1294a2eb14b008bfb13ed5ae6a274e1d226c6776a25b42a241f6b3743c112",
+    "plan": "a1a5179af0b8d179bc4896392c0c08933c1bc4af42b8e3211b5550428ef07e06",
+    "journal": "c4be2b4d4ff2987d7e0d23be65937e8f7dc35fd5b0cc4e3f7e8996aa9c180b09",
+    "log": "2e0960f12d481d4fa9de771ad425beb5c3cbf84e0ed9d2f5fbb183052badc4c8",
+    "summary": "03179b1d2187e36cc895fe905e2547628d373e99e0c88911e91ef4b4d6ff3faf"
+  },
+  "niceness": 15,
+  "cpu_affinity": [
+    0
+  ],
+  "original_actual_artifacts_unchanged": true,
+  "tests": [
+    {
+      "test": "censor_metadata_copy",
+      "structural_validation_accepted_actual_shaped_failed_copy": true,
+      "passed": false,
+      "preserved_case_index": 1,
+      "case_count_retained": 256,
+      "failures": [
+        {
+          "record_type": "matrix",
+          "case_index": 1,
+          "case_id": "coverage-001",
+          "reasons": [
+            "censored"
+          ]
+        }
+      ]
+    },
+    {
+      "test": "error_metadata_copy",
+      "structural_validation_accepted_actual_shaped_failed_copy": true,
+      "passed": false,
+      "preserved_case_index": 1,
+      "case_count_retained": 256,
+      "failures": [
+        {
+          "record_type": "matrix",
+          "case_index": 1,
+          "case_id": "coverage-001",
+          "reasons": [
+            "engine_error: HEALTH_COPY_ONLY: deliberately injected metadata error; not an observed engine defect"
+          ]
+        }
+      ]
+    },
+    {
+      "test": "injected_exit1_copy",
+      "cli_exit": 1,
+      "report_status": "failed",
+      "matrix_cases_preserved": 256,
+      "only_injected_or_unknown_exit_status_failed": true,
+      "observed_engine_exit_argument": 1
+    },
+    {
+      "test": "unspecified_exit_copy",
+      "cli_exit": 1,
+      "report_status": "failed",
+      "matrix_cases_preserved": 256,
+      "only_injected_or_unknown_exit_status_failed": true,
+      "observed_engine_exit_argument": null
+    },
+    {
+      "test": "partial_journal_recovery_copy",
+      "cli_exit": 1,
+      "report_status": "failed",
+      "actual_finished_journal_rows_recovered": 3,
+      "not_completed_or_unrun_cases": 253,
+      "not_completed_or_unrun_controls": 12,
+      "source_guard_completed": false,
+      "no_missing_winner_or_draw_invented": true,
+      "scope": "Simulated partial metadata copy from existing actual artifacts; not an actually interrupted new run"
+    }
+  ]
+}
