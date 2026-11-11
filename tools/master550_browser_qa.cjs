@@ -253,7 +253,10 @@ async function runEngine(name){
   await action('filters');await action('reset_filters');await action('filters');await action('filter_species');await action('option_filter_species_human');
   const filtered=await q();check(filtered.library_total>0,'actualhumanfilterhasnonemptyresults');for(const id of filtered.library_visible_ids)check((by[id].species||[]).includes('human'),'speciesfilter usesactualequalrank assignments');
   await action('filters');await action('reset_filters');checks.push('550actualcards reached once byrealpagination;lastcardnamesearch;speciesfilter;bounded12cardcontrols');
-  const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));check(first,'actual collection card available');await action(first);
+  const inspectionState=await q(),firstId=inspectionState.library_visible_ids[0],first='card_'+firstId;
+  check(firstId&&inspectionState.actions[first],'first displayed collection card available');
+  rectCheck(inspectionState.action_visibility[first].visible_rect,'first displayed card visible touch region');
+  await action(first);
   for(const [width,height] of [[390,844],[844,390],[756,390],[390,844]]){
    if(page.viewportSize().width!==width||page.viewportSize().height!==height)await resize(width,height);
    check((await q()).modal,'inspector stays open across sizes');rectCheck((await q()).actions.modal_close.rect,'inspector close');await shot('inspector-'+width+'x'+height);
