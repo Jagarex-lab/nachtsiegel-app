@@ -15,6 +15,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  alpha03-integration:
+    # Part of this release-required workflow's complete conclusion: economy,
+    # campaign, real Godot-backed multiplayer and hosted application checks.
+    uses: ./.github/workflows/alpha03-integration-qa.yml
+    permissions:
+      contents: read
+
   production-audio:
     # The guarded manual publisher requires this workflow's complete conclusion,
     # including real exported-product audio and both browser engines.
@@ -31,6 +38,9 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Strict reversible-source tests read the public pre-hook baseline.
+          fetch-depth: 0
       - name: Install Godot and matching templates
         uses: chickensoft-games/setup-godot@v2
         with:
@@ -54,6 +64,21 @@ jobs:
           xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_master550.sh
           tools/test_master550_resources.sh
           xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_production.sh
+      - name: Render all five power identities and four card rarities
+        run: |
+          mkdir -p work/alpha03/visual-qa
+          xvfb-run -a -s '-screen 0 1600x1000x24' godot --path . --audio-driver Dummy --script tools/alpha03/render_card_qa.gd > work/alpha03/visual-qa/render.log 2>&1
+          python3 - <<'PYVISUAL'
+          import json,re
+          from pathlib import Path
+          p=Path('work/alpha03/visual-qa')
+          log=(p/'render.log').read_text()
+          assert not re.search(r'SCRIPT ERROR|^ERROR:|instances leaked|resources still in use',log,re.M),log
+          data=json.loads((p/'manifest.json').read_text())
+          assert len(data['cards'])==20 and all(c['title_fits'] and c['rules_fit'] for c in data['cards'])
+          assert len(list(p.glob('*.png')))==5
+          print(log)
+          PYVISUAL
       - name: Export archive regression build
         run: |
           mkdir -p work/build/archive-web
@@ -140,6 +165,7 @@ jobs:
             work/production-art/*.json
             work/production-art/*.jsonl
             work/production-storage/native.log
+            work/alpha03/visual-qa/
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png
@@ -200,6 +226,16 @@ jobs:
           MIGRATION_OLD_BUILD: work/production/before-web
           MIGRATION_NEW_BUILD: work/build/web
         run: node tools/production/browser_migration_qa.cjs
+      - name: Safari delayed-viewport fault regressions in the actual shell bridge
+        run: |
+          mkdir -p work/alpha03
+          node tools/alpha03_viewport_browser.cjs > work/alpha03/viewport-${{ matrix.engine }}.json
+      - name: Integrated mobile menu, real module navigation and repeated rotation
+        run: node tools/alpha03_browser_qa.cjs
+      - name: Actual exported economy onboarding, purchase, opening, reload and quota failure
+        env:
+          ECONOMY_WEB_ENGINES: ${{ matrix.engine }}
+        run: node --test tests/economy_actual_web.test.cjs
       - name: Master card system and battlefield opening browser regression
         run: node tools/master550_browser_qa.cjs
       - name: Legacy UI Android regression
@@ -241,6 +277,8 @@ jobs:
             work/alpha02/browser-results.json
             work/master550/browser/
             work/production-browser-migration/
+            work/alpha03/browser/
+            work/alpha03/viewport-*.json
           if-no-files-found: warn
 
   production-art-native-package:

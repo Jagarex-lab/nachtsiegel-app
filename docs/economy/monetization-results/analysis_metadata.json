@@ -1,0 +1,13 @@
+{
+  "status": "provisional_analysis_no_purchases_no_business_forecast",
+  "seed": 56112026,
+  "repetitions": 200,
+  "source_sha256": {
+    "tools/economy/model.py": "9c8ac24bd4008127a2152b4faf20cf4b407a31497e153e904481b42f89eadd83",
+    "tools/economy/monetization_collection.py": "c97489ba8f15ca1a3c79c831613e4ef8a8539ba549914487537a3c2242ce89c4",
+    "tools/economy/monetization_revenue.py": "2668207d2fac16c32c62933483e3af29b0688484c894803ec38b5eeeac7dd01b",
+    "tools/economy/simulate_monetization.py": "3c4b3d46897e04ceb6ce3673c90a180c071427b28b0fc0808f00074e67b71d2b"
+  },
+  "effective_analysis_config_sha256": "ad15a8e2a8f534f0a44fcb10d83d12d90fe5472d0fe8d919aa4aa649e1f610d8",
+  "runtime_modified": false
+}

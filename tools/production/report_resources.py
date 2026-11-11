@@ -14,6 +14,10 @@ import re
 import statistics
 import subprocess
 from pathlib import Path
+try:
+    from .source_compatibility import verify_executed_draw_controller, MODEL
+except ImportError:
+    from source_compatibility import verify_executed_draw_controller, MODEL
 
 ROOT = Path(__file__).resolve().parents[2]
 BASELINE = "tests/fixtures/production/resource_baseline.json"
@@ -126,7 +130,7 @@ def rejection_checks(report, baseline, catalog, hashes):
     return sorted(mutations)
 
 
-def render(report, records, digest, guard_names, baseline):
+def render(report, records, digest, guard_names, baseline, source_compatibility=None):
     default = records[CONDITIONS[0]["id"]]
     summaries = {}
     pairs = {}
@@ -140,7 +144,7 @@ def render(report, records, digest, guard_names, baseline):
             for b in sorted(STARTERS):
                 games = [g for g in rows if (g["hero"], g["enemy"]) == (a, b)]
                 pairs.setdefault(a + "/" + b, {})[id] = {"hero_wins": sum(g["winner"] == "hero" for g in games), "draws": sum(g["winner"] == "draw" for g in games), "enemy_wins": sum(g["winner"] == "enemy" for g in games), "mean_round": statistics.mean(g["round"] for g in games)}
-    compact = {"schema_version": 1, "raw_evidence_sha256": digest, "source_sha256": report["source_sha256"], "baseline_report_sha256": report["baseline_report_sha256"], "assertions": report["assertions"], "failures": 0, "matrix_games": 192, "additional_verification_games": 10, "pre_seam_default_comparisons": 64, "negative_evidence_guards": guard_names, "conditions": summaries, "directed_pairs": pairs}
+    compact = {"schema_version": 1, "raw_evidence_sha256": digest, "source_sha256": report["source_sha256"], "source_compatibility": source_compatibility or {}, "baseline_report_sha256": report["baseline_report_sha256"], "assertions": report["assertions"], "failures": 0, "matrix_games": 192, "additional_verification_games": 10, "pre_seam_default_comparisons": 64, "negative_evidence_guards": guard_names, "conditions": summaries, "directed_pairs": pairs}
     compact["baseline_source_commit"] = baseline["source_commit"]
     compact["baseline_fixture_sha256"] = report["source_sha256"][BASELINE]
     history_dir = ROOT / "docs/production/resource-history/pre-semantics-b328500"
@@ -221,6 +225,7 @@ def render(report, records, digest, guard_names, baseline):
     detail += ["", "Diese wenigen verbundenen Fälle belegen konkrete Verlaufsunterschiede, aber keinen allgemeinen Vorteil oder eine menschliche Balancewirkung des höheren Limits.", ""]
     at = lines.index("## Grenzen und Umsetzung")
     lines[at:at] = detail
+    lines += ["", "Explizite Modellquellen-Kompatibilität: `" + json.dumps(source_compatibility or {}, sort_keys=True) + "`. Die ursprüngliche Baseline bleibt unverändert; aktuelle Laufhashes werden nicht normalisiert. Alle 64 Standardfälle müssen weiterhin dieselben vollständigen Zustands- und Ereignisdigests belegen.", ""]
     return compact, "\n".join(lines)
 
 
@@ -237,13 +242,14 @@ def main():
     require((ROOT / BASELINE).read_bytes() == (ROOT / "docs/production/PRE_GETTER_STARTER_BASELINE.json").read_bytes(), "Active baseline differs from the explicit corrected pre-getter export")
     catalog = {c["id"]: c for c in json.loads((ROOT / "data/production/cards.json").read_text())["cards"]}
     hashes = {path: sha((ROOT / path).read_bytes()) for path in SOURCES}
+    compatibility = {MODEL: verify_executed_draw_controller(report["source_sha256"], (ROOT / MODEL).read_bytes())}
     records = validate(report, baseline, catalog, hashes)
     anchor = json.loads(subprocess.check_output(["git", "show", baseline["source_commit"] + ":docs/production/simulation-results.json"], cwd=ROOT))
     require(anchor["matrix_games"] == 848 and anchor["failures"] == 0 and anchor["raw_evidence_sha256"] == baseline["source_report_sha256"], "Baseline is not bound to the completed 848-game report")
     for path, digest in baseline["source_sha256"].items():
         require(sha(subprocess.check_output(["git", "show", baseline["source_commit"] + ":" + path], cwd=ROOT)) == digest, "Pre-seam source commit mismatch: " + path)
     guards = rejection_checks(report, baseline, catalog, hashes) if args.verify_rejections else []
-    summary, text = render(report, records, sha(raw), guards, baseline)
+    summary, text = render(report, records, sha(raw), guards, baseline, compatibility)
     outputs = {"RESOURCE_MODEL_GAMES.json": raw, "RESOURCE_MODEL_EXPERIMENT.json": (json.dumps(summary, ensure_ascii=False, indent=2) + "\n").encode(), "RESOURCE_MODEL_EXPERIMENT.md": text.encode()}
     if not args.check:
         args.output_dir.mkdir(parents=True, exist_ok=True)

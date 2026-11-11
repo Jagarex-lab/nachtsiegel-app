@@ -13,6 +13,10 @@ import hashlib
 import json
 import math
 from pathlib import Path
+try:
+    from .source_compatibility import verify_executed_draw_controller, MODEL
+except ImportError:
+    from source_compatibility import verify_executed_draw_controller, MODEL
 
 ROOT=Path(__file__).resolve().parents[2]
 
@@ -63,6 +67,7 @@ def aggregate(paths):
     assert paths,'No actual shard evidence supplied'
     loaded=[(p,json.loads(p.read_text())) for p in paths]
     first=loaded[0][1]
+    compatibility={MODEL:verify_executed_draw_controller(first['source_sha256'],(ROOT/MODEL).read_bytes())}
     n=int(first['shard_count']);per_first=int(first['seeds_per_first_side'])
     assert n>1,'Aggregation expects actual split runs'
     assert len(loaded)==n,f'Expected {n} successful shard files, got {len(loaded)}'
@@ -121,6 +126,7 @@ def aggregate(paths):
     summary=summarize(records)
     assert set(summary['card_uses'])<=valid_ids,'Unrecognized card in actual use evidence'
     report=dict(schema_version=1,profile=first['profile'],godot=first['godot'],quick=False,shard_index=0,shard_count=n,aggregated=True,shards=sorted(by_shard,key=lambda x:x['index']),seeds_per_first_side=per_first,expected_global_matrix_games=expected_global,expected_matrix_games=expected_global,matrix_games=len(records),strategy_matrix_games=sum(g['group']=='strategy' for g in records),starter_matrix_games=sum(g['group']=='starter' for g in records),additional_verification_games=verified,expected_verification_games=18,fresh_constructor_verification_games=fresh_verified,assertions=assertions,failures=0,measurement_notes=first['measurement_notes']+['Aggregate verifies every successful shard source binding, disjoint predeclared case sets, exact212 directed pair coverage,848 cases at default sampling, and balanced first sides; it generates no games.'],source_sha256=first['source_sha256'],source_changes_during_run=[],planned_cases=[planned[k] for k in sorted(planned)],games=records,summary=summary)
+    report['source_compatibility']=compatibility
     return report
 
 

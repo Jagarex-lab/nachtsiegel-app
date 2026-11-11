@@ -1,5 +1,7 @@
 # F2P-Wirtschaftssystem: technischer Architekturentwurf
 
+Aktueller ausführbarer Stand: PR #16 enthält den isolierten [Wirtschaftsprototyp](ECONOMY-DESIGN.md), [Sammlungssimulationen](SIMULATION-REPORT.md) und die ergänzende [Monetarisierungsanalyse](MONETIZATION-REPORT.md) mit drei Alternativen zur bisherigen Vergabe. Die folgenden Abschnitte dokumentieren den früheren Architekturentwurf; die Analyse aktiviert keine Echtgeldprodukte oder geänderten Live-Werte.
+
 Stand: 2026-11-09. **Vorschlag, ausschließlich Dokumentation. Kein wirtschaftliches Feature ist dadurch implementiert oder freigegeben.** Arbeitsbranch `architecture/f2p-economy-design`, Ausgangspunkt `develop` bei `b1f5ea59a4754bac19df31e279bff8a295cb6ea8`. PC und Mobile; Godot 4 bleibt Client.
 
 Dieser Entwurf ändert ausschließlich `docs/economy/`. Keine Regeln, Kartenwerte, Namen, Spielstände, Live-Version, Zahlungsintegration oder anderen Branches werden geändert. PR #1 und PR #2 bleiben getrennt und ungemergt. Zahlen in Beispielen sind technische Testparameter, keine beschlossene Produktbalance oder Verkaufspreise.

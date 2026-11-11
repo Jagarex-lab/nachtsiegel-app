@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "definitions": {
+    "daily_play": {
+      "period": "daily",
+      "event": "match_completed",
+      "target": 1,
+      "reward": "daily_play",
+      "optional": false
+    },
+    "daily_variety": {
+      "period": "daily",
+      "event": "cards_played",
+      "target": 10,
+      "reward": "daily_variety",
+      "optional": true
+    },
+    "weekly_play": {
+      "period": "weekly",
+      "event": "match_completed",
+      "target": 10,
+      "reward": "weekly_play",
+      "optional": false
+    }
+  },
+  "clock": "UTC period IDs supplied by trusted adapter; local clock is untrusted. No login streaks.",
+  "retention_periods": 14,
+  "event_allowlist": [
+    "match_completed",
+    "cards_played",
+    "campaign_completed",
+    "relic_used",
+    "resonance_generated",
+    "path_controlled"
+  ],
+  "reroll_policy": "Daily variety is optional; future authority may substitute without extra grant."
+}

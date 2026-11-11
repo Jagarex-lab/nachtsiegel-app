@@ -9,6 +9,8 @@ func _combat_hook(_trigger: String, _side: String, _lane: int, _unit: Dictionary
 func _attack_damage_hero(_source_side: String, _source_lane: int, target: Dictionary, amount: int) -> int: return _hero_damage(target, amount)
 func _resolve_delayed_damage(event: Dictionary) -> void:_lane_damage(_other(event.side),int(event.lane),int(event.power))
 func _has_haste(card: Dictionary) -> bool: return card.effect == "haste"
+# Explicit controller seam: offline enemy draw behavior is the default.
+func _automatic_draw_side(side: String) -> bool:return side=="enemy"
 func _init() -> void:catalog=AlphaCatalog.new()
 func summon_limit() -> int:return 0
 func energy_limit() -> int:return 8
@@ -106,7 +108,7 @@ func begin_turn(side: String) -> bool:
 	if state.winner!=null:return true
 	_phase_hook("on_turn_start",side)
 	_trace("begin",side)
-	if side=="enemy":
+	if _automatic_draw_side(side):
 		while p.hand.size()+mini(int(p.pendingDraw),p.deck.size())>6:_burn_reference(side,0)
 		_finish_draw_reference(side)
 	elif int(p.pendingDraw)==0:_finish_draw_reference(side)

@@ -1,0 +1,37 @@
+{
+  "error": "Error: chapter_cp01: could not scroll the rendered control into view",
+  "errors": [],
+  "state": {
+    "actions": {
+      "chapter_cp01": {
+        "disabled": false,
+        "rect": [
+          34,
+          817,
+          314,
+          52
+        ]
+      },
+      "chapter_cp02": {
+        "disabled": true,
+        "rect": [
+          34,
+          1139,
+          314,
+          52
+        ]
+      }
+    },
+    "compact": true,
+    "flags": {},
+    "logical_viewport": [
+      390,
+      844
+    ],
+    "save_error": "",
+    "scene_id": "",
+    "screen": "overview",
+    "title": "Die unbeschriebene Zeile",
+    "validation_errors": []
+  }
+}

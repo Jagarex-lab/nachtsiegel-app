@@ -1,0 +1,45 @@
+name: ORAFOLD isolated economy QA (no deployment)
+on:
+  pull_request:
+    branches: [develop]
+    paths:
+      - 'data/economy/**'
+      - 'scripts/economy/**'
+      - 'scenes/economy/**'
+      - 'tools/economy/**'
+      - 'tests/economy*'
+      - 'docs/economy/**'
+      - '.github/workflows/economy-qa.yml'
+permissions:
+  contents: read
+jobs:
+  economy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Configuration, atomic runtime, simulations and portrait UI
+        run: bash tools/economy/test.sh
+      - name: Native rendering and touch checks
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' godot --path . --audio-driver Dummy --script tests/economy_ui.gd
+      - name: Actual browser storage expressions, reload and quota failures
+        run: |
+          npm install --prefix work/qa-browser --no-save --package-lock=false playwright@1.65.0
+          work/qa-browser/node_modules/.bin/playwright install --with-deps chromium
+          CHROMIUM_BIN=$(NODE_PATH="$PWD/work/qa-browser/node_modules" node -e "console.log(require('playwright').chromium.executablePath())") NODE_PATH="$PWD/work/qa-browser/node_modules" node --test tests/economy_web_storage.test.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: economy-test-evidence
+          path: work/economy/

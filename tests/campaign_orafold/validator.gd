@@ -1,0 +1,92 @@
+extends SceneTree
+const Validator = preload("res://scripts/campaign_orafold/campaign_validator.gd")
+var assertions := 0
+var failures := 0
+func check(ok: bool, message: String) -> void:
+	assertions += 1
+	if not ok:
+		failures += 1
+		printerr("FAIL: ", message)
+func fixture() -> Dictionary:
+	return {"schema_version":1,"content_version":1,"default_campaign":"test","campaigns":{"test":{"id":"test","title_id":"title","status":"PROTOTYPE","source":"technical fixture","chapters":["chapter"]}},"chapters":{"chapter":{"id":"chapter","title_id":"title","summary_id":"text","status":"PROTOTYPE","source":"technical fixture","scenes":["intro","finish"],"entry_scene":"intro","requires":[],"replayable":true}},"scenes":{"intro":{"id":"intro","chapter_id":"chapter","title_id":"title","status":"PROTOTYPE","source":"technical fixture","dialogue":[{"speaker_id":"guide","text_id":"text"}],"decision_id":"decision"},"finish":{"id":"finish","chapter_id":"chapter","title_id":"title","status":"PROTOTYPE","source":"technical fixture","dialogue":[],"complete_chapter":true}},"characters":{"guide":{"id":"guide","name_id":"title","description_id":"text","status":"PROTOTYPE","source":"technical fixture","portrait":"","knowledge":[]},"eira":{"id":"eira","name_id":"title","description_id":"text","status":"OFFEN","source":"docs/LORE-BIBLE.md §2","protected":true,"portrait":"","knowledge":[{"id":"unknown","text_id":"text","status":"OFFEN","source":"docs/LORE-BIBLE.md §2","category":"player","conditions":[]}]}},"encounters":{},"decisions":{"decision":{"id":"decision","status":"PROTOTYPE","source":"technical fixture","choices":[{"id":"keep","text_id":"choice","next_scene":"finish","effects":[{"type":"set_flag","key":"kept","value":true},{"type":"reward","id":"info"}]},{"id":"leave","text_id":"choice","next_scene":"finish","effects":[{"type":"set_flag","key":"kept","value":false}]}]}},"rewards":{"info":{"id":"info","status":"PROTOTYPE","source":"technical fixture","type":"character_info","target":"unknown"}}}
+func languages() -> Dictionary: return {"de":{"title":"Titel","text":"Ein kurzer Test.","choice":"Auswahl"},"en":{"title":"Title","text":"A short test.","choice":"Choice"}}
+func rejected(data: Variant, needle: String, label: String, locales: Dictionary = {}) -> void:
+	var result: Dictionary = Validator.validate(data, languages() if locales.is_empty() else locales)
+	check(not result.ok, label + " rejected")
+	check(str(result.errors).contains(needle), label + " explains " + needle + " actual=" + str(result.errors))
+func _initialize() -> void:
+	check(Validator.validate(fixture(), languages()).ok, "Valid minimal campaign")
+	rejected(null, "expected dictionary", "Null bundle")
+	rejected([], "expected dictionary", "Array bundle")
+	var d: Dictionary = fixture(); d.schema_version = 99; rejected(d, "unsupported", "Unknown schema")
+	d = fixture(); d.content_version = "1"; rejected(d, "expected number", "Non numeric content version")
+	for collection in Validator.COLLECTIONS:
+		d = fixture(); d[collection] = []; rejected(d, "expected dictionary", "Malformed collection " + str(collection))
+		d = fixture(); d[collection]["bad"] = "text"; rejected(d, "expected dictionary", "Malformed record " + str(collection))
+	d = fixture(); d.default_campaign = "absent"; rejected(d, "missing campaign", "Missing default")
+	d = fixture(); d.scenes.intro.id = "typo"; rejected(d, "id/key mismatch", "Mismatched ID")
+	d = fixture(); d.scenes.intro.erase("status"); rejected(d, "lore status", "Unmarked story draft")
+	d = fixture(); d.scenes.intro.source = ""; rejected(d, "source required", "Unattributed draft")
+	d = fixture(); d.scenes.intro.status = "approved_by_ai"; rejected(d, "lore status", "Invalid status")
+	d = fixture(); d.campaigns.test.chapters = ["missing"]; rejected(d, "unknown reference", "Missing chapter")
+	d = fixture(); d.campaigns.test.chapters = ["chapter","chapter"]; rejected(d, "duplicate reference", "Duplicate chapter")
+	d = fixture(); d.chapters.chapter.scenes = []; rejected(d, "empty", "Empty chapter")
+	d = fixture(); d.chapters.chapter.scenes = "intro"; rejected(d, "expected array", "Malformed chapter scene list")
+	d = fixture(); d.chapters.chapter.entry_scene = "missing"; rejected(d, "entry_scene", "Missing chapter entry")
+	d = fixture(); d.chapters.chapter.entry_scene = "finish"; rejected(d, "unreachable", "Unreachable introduction")
+	d = fixture(); d.chapters.chapter.requires = ["chapter"]; rejected(d, "self prerequisite", "Self prerequisite")
+	d = fixture(); d.scenes.intro.chapter_id = "absent"; rejected(d, "chapter_id", "Missing owning chapter")
+	d = fixture(); d.chapters.chapter.scenes = ["intro"]; rejected(d, "omitted", "Unlisted scene")
+	d = fixture(); d.scenes.intro.dialogue = "text"; rejected(d, "expected array", "Malformed dialogue list")
+	d = fixture(); d.scenes.intro.dialogue = [true]; rejected(d, "expected object", "Malformed dialogue line")
+	d = fixture(); d.scenes.intro.dialogue[0].speaker_id = "absent"; rejected(d, "speaker_id", "Unknown character")
+	d = fixture(); d.scenes.intro.dialogue[0].erase("text_id"); rejected(d, "text_id", "Missing dialogue text")
+	d = fixture(); d.scenes.intro.background = "res://assets/campaign_orafold/does-not-exist.svg"; rejected(d, "missing asset", "Missing background")
+	d = fixture(); d.characters.guide.portrait = "../unsafe.svg"; rejected(d, "missing asset", "Non resource asset")
+	d = fixture(); d.scenes.intro.encounter_id = "absent"; rejected(d, "unknown reference", "Unknown encounter")
+	d = fixture(); d.scenes.intro.next_scene = "finish"; rejected(d, "exactly one", "Ambiguous scene exit")
+	d = fixture(); d.scenes.finish.erase("complete_chapter"); rejected(d, "exactly one", "Scene dead end")
+	d = fixture(); d.scenes.intro.erase("decision_id"); d.scenes.intro.next_scene = "intro"; rejected(d, "cycle", "Endless deterministic dialogue loop")
+	d = fixture(); d.decisions.decision.choices[0].next_scene = "intro"; d.decisions.decision.choices[1].next_scene = "intro"; rejected(d, "no route", "Closed decision loop")
+	d = fixture(); d.decisions.decision.choices = []; rejected(d, "choices required", "Empty decision")
+	d = fixture(); d.decisions.decision.choices[1].id = "keep"; rejected(d, "duplicate", "Duplicate choice IDs")
+	d = fixture(); d.decisions.decision.choices[0].conditions = [{"flag":"x","equals":true},{"flag":"x","equals":false}]; rejected(d, "contradictory", "Contradictory conditions")
+	d = fixture(); d.decisions.decision.choices[0].conditions = [{"eval":"arbitrary expression"}]; rejected(d, "unknown condition", "Unsupported condition")
+	d = fixture(); d.decisions.decision.choices[0].effects = [{"type":"set_flag","key":"x","value":[]}]; rejected(d, "invalid flag", "Non scalar flag")
+	d = fixture(); d.decisions.decision.choices[0].effects = [{"type":"set_flag","key":"x","value":true},{"type":"set_flag","key":"x","value":false}]; rejected(d, "contradictory", "Conflicting consequences")
+	d = fixture(); d.decisions.decision.choices[0].effects = [{"type":"arbitrary_engine_change"}]; rejected(d, "unknown consequence", "Unknown consequence")
+	d = fixture(); d.decisions.decision.choices[0].effects = [{"type":"relationship","character_id":"absent","delta":1}]; rejected(d, "unknown reference", "Unknown relationship character")
+	d = fixture(); d.characters.eira.protected = false; rejected(d, "protected", "Unprotected Eira")
+	d = fixture(); d.characters.eira.portrait = "res://assets/icon.svg"; rejected(d, "appearance", "Invented Eira appearance")
+	d = fixture(); d.characters.eira.knowledge[0].category = "canon"; rejected(d, "KANON", "Open knowledge mislabelled canon")
+	d = fixture(); d.characters.eira.knowledge = {}; rejected(d, "expected array", "Malformed knowledge")
+	d = fixture(); d.rewards.info.target = "absent"; rejected(d, "unknown character info", "Unknown info reward")
+	d = fixture(); d.rewards.info.type = "money_purchase"; rejected(d, "unknown reward type", "Unsupported reward")
+	var l: Dictionary = languages(); l.en.erase("choice"); rejected(fixture(), "locales.en: missing choice", "Missing English translation", l)
+	l = languages(); l.de.text = " "; rejected(fixture(), "locales.de: missing text", "Empty German translation", l)
+	l = languages(); l.en.text = 42; rejected(fixture(), "expected string", "Non string translation", l)
+	rejected(fixture(), "locales.en", "Missing second locale", {"de":languages().de})
+	d = fixture(); d.characters.eira.knowledge[0]["visibility"] = "public"; rejected(d, "cannot be public", "Protected info visibility")
+	d = fixture(); d.characters.guide.knowledge = [{"id":"hidden","text_id":"text","status":"PROTOTYPE","source":"fixture","category":"belief","visibility":"guess"}]; rejected(d, "unknown visibility", "Invalid knowledge visibility")
+	d = fixture(); d.chapters["other"] = d.chapters.chapter.duplicate(true); d.chapters.other.id = "other"; d.chapters.other.scenes = ["finish"]; d.chapters.other.entry_scene = "finish"; d.chapters.chapter.scenes = ["intro"]; d.scenes.finish.chapter_id = "other"; d.campaigns.test.chapters.append("other"); rejected(d, "cross-chapter", "Cross chapter choice transition")
+	d = fixture(); d.campaigns.test.erase("title_id"); rejected(d, "text id required", "Missing campaign title")
+	d = fixture(); d.characters.guide.erase("name_id"); rejected(d, "text id required", "Missing character name")
+	d = fixture(); d.rewards.info.payload = []; rejected(d, "payload", "Malformed reward payload")
+	d = fixture(); d.chapters.chapter.replayable = "true"; rejected(d, "boolean", "Malformed replayable flag")
+	d = fixture(); d.decisions.decision.choices[0].effects = [{"type":"set_flag","key":"x","value":INF}]; rejected(d, "invalid flag", "Non finite flag effect")
+	d = fixture(); d.characters.guide.knowledge = d.characters.eira.knowledge.duplicate(true); rejected(d, "globally duplicate", "Ambiguous global information unlock")
+	d = fixture(); d.chapters["other"] = d.chapters.chapter.duplicate(true); d.chapters.other.id = "other"; d.chapters.other.scenes = ["finish"]; d.chapters.other.entry_scene = "finish"; d.chapters.chapter.scenes = ["intro"]; d.scenes.finish.chapter_id = "other"; d.campaigns.test.chapters.append("other"); d.scenes.intro.erase("decision_id"); d.scenes.intro.next_scene = "finish"; rejected(d, "cross-chapter", "Cross chapter direct transition")
+	d.scenes.intro.erase("next_scene"); d.scenes.intro.encounter_id = "battle"; d.encounters["battle"] = {"id":"battle","status":"PROTOTYPE","source":"fixture","deck_profile":"houses","enemy_profile":"stillwatch","ai_profile":"practice","seed":1,"repeatable":true,"on_victory":"finish","on_defeat":"intro"}; rejected(d, "cross-chapter", "Cross chapter battle outcome")
+	d.scenes.intro.erase("encounter_id"); d.scenes.intro.complete_chapter = true; d.chapters.chapter.requires = ["other"]; d.chapters.other.requires = ["chapter"]; rejected(d, "cyclic prerequisites", "Indirect chapter prerequisite loop")
+	l = languages(); l.de["ui.extra"] = "Zusatz"; rejected(fixture(), "locales.en: missing ui.extra", "UI locale parity", l)
+	var source: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/campaign_orafold/prototype.json"))
+	var actual_locales: Dictionary = {}
+	for language in ["de","en"]: actual_locales[language] = JSON.parse_string(FileAccess.get_file_as_string("res://data/campaign_orafold/locales/" + language + ".json"))
+	var actual: Dictionary = Validator.validate(source, actual_locales)
+	check(actual.ok, "Production prototype bundle validates: " + str(actual.errors))
+	print("ORAFOLD VALIDATOR: %d assertions, %d failures; malformed data, references, loops, locale and editorial gates" % [assertions, failures])
+	# Autoloads become ready after SceneTree._initialize finishes.
+	call_deferred("_finish")
+
+func _finish() -> void:
+	root.get_node("GameAudio").request_quit(1 if failures else 0)

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "definitions": {
+    "onboarding": {
+      "gold": 300,
+      "xp": 100,
+      "boosters": {
+        "standard": 5
+      },
+      "cards": {},
+      "crafting": 1200,
+      "cosmetics": [],
+      "unlocks": []
+    },
+    "daily_play": {
+      "gold": 60,
+      "xp": 50,
+      "boosters": {},
+      "cards": {},
+      "crafting": 0,
+      "cosmetics": [],
+      "unlocks": []
+    },
+    "daily_variety": {
+      "gold": 40,
+      "xp": 50,
+      "boosters": {},
+      "cards": {},
+      "crafting": 0,
+      "cosmetics": [],
+      "unlocks": []
+    },
+    "weekly_play": {
+      "gold": 300,
+      "xp": 200,
+      "boosters": {
+        "standard": 2
+      },
+      "cards": {},
+      "crafting": 0,
+      "cosmetics": [],
+      "unlocks": []
+    },
+    "campaign_chapter": {
+      "gold": 150,
+      "xp": 100,
+      "boosters": {
+        "standard": 1
+      },
+      "cards": {},
+      "crafting": 0,
+      "cosmetics": [],
+      "unlocks": []
+    },
+    "challenge": {
+      "gold": 50,
+      "xp": 50,
+      "boosters": {},
+      "cards": {},
+      "crafting": 0,
+      "cosmetics": [],
+      "unlocks": []
+    },
+    "deck_upgrade_milestone": {
+      "gold": 50,
+      "xp": 50,
+      "boosters": {},
+      "cards": {},
+      "crafting": 400,
+      "cosmetics": [],
+      "unlocks": []
+    }
+  },
+  "campaign_chapter_limit": 5,
+  "idempotency": "Source ID is unique independently of transaction ID; claims never evicted in local prototype."
+}

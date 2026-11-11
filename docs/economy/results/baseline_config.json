@@ -1,0 +1,407 @@
+{
+  "progression": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "xp_curve": {
+      "base": 100,
+      "per_level": 25,
+      "max_level": 100
+    },
+    "level_reward": {
+      "gold": 50
+    },
+    "match": {
+      "xp": 40,
+      "gold": 10,
+      "daily_gold_cap": 100
+    },
+    "onboarding_reward": "onboarding",
+    "milestones": [
+      {
+        "level": 5,
+        "reward": "challenge"
+      },
+      {
+        "level": 10,
+        "reward": "challenge"
+      },
+      {
+        "level": 25,
+        "reward": "challenge"
+      },
+      {
+        "level": 50,
+        "reward": "challenge"
+      },
+      {
+        "level": 100,
+        "reward": "challenge"
+      }
+    ],
+    "level_formula": "XP required to advance level L to L+1 = base + per_level*(L-1); lifetime XP, max level cap."
+  },
+  "booster_pools": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "pools": {
+      "standard": {
+        "enabled": true,
+        "price_gold": 100,
+        "card_filter": {
+          "set": "core"
+        },
+        "display_name_de": "Standardbooster"
+      },
+      "power": {
+        "enabled": false,
+        "price_gold": 100,
+        "card_filter": {
+          "set": "core"
+        },
+        "display_name_de": "Machtbooster"
+      },
+      "expansion": {
+        "enabled": false,
+        "price_gold": 100,
+        "card_filter": {
+          "set": "expansion"
+        },
+        "display_name_de": "Erweiterungsbooster"
+      },
+      "event": {
+        "enabled": false,
+        "price_gold": 0,
+        "card_filter": {
+          "set": "event"
+        },
+        "display_name_de": "Eventbooster"
+      }
+    }
+  },
+  "scenarios": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "catalog": {
+      "card_count": 550,
+      "rarity_counts": {
+        "common": 250,
+        "rare": 160,
+        "epic": 100,
+        "legendary": 40
+      },
+      "powers": [
+        "houses",
+        "stillwatch",
+        "morph",
+        "ninth"
+      ],
+      "neutral_fraction": 0.2,
+      "status": "synthetic_economy_fixture_not_550_playable_cards"
+    },
+    "expansion": {
+      "day": 181,
+      "rarity_counts": {
+        "common": 50,
+        "rare": 32,
+        "epic": 20,
+        "legendary": 8
+      }
+    },
+    "checkpoints": [
+      1,
+      7,
+      30,
+      90,
+      180,
+      365
+    ],
+    "seed": 5502026,
+    "repetitions": 200,
+    "profiles": {
+      "A": {
+        "minutes_per_day": 20,
+        "purchased_boosters_per_30_days": 0
+      },
+      "B": {
+        "minutes_per_day": 45,
+        "purchased_boosters_per_30_days": 0
+      },
+      "C": {
+        "minutes_per_day": 90,
+        "purchased_boosters_per_30_days": 0
+      },
+      "D": {
+        "minutes_per_day": 45,
+        "purchased_boosters_per_30_days": 4
+      },
+      "E": {
+        "minutes_per_day": 180,
+        "purchased_boosters_per_30_days": 40
+      }
+    },
+    "purchase_note": "Exogenous booster grants only; no currency sale, real-money amount, price or purchase implementation.",
+    "models": {
+      "friendly": {
+        "gold_multiplier": 1.25,
+        "booster_price_gold": 100,
+        "craft_cost_multiplier": 0.8
+      },
+      "balanced": {
+        "gold_multiplier": 1.0,
+        "booster_price_gold": 100,
+        "craft_cost_multiplier": 1.0
+      },
+      "restrictive": {
+        "gold_multiplier": 0.75,
+        "booster_price_gold": 125,
+        "craft_cost_multiplier": 1.25
+      }
+    },
+    "session": {
+      "minutes_per_match": 10,
+      "daily_variety_matches": 2,
+      "weekly_qualifying_matches": 10,
+      "campaign_chapter_days": [
+        1,
+        3,
+        7,
+        14,
+        30
+      ]
+    },
+    "fairness_targets": {
+      "targeted_deck_epics": 2,
+      "targeted_deck_legendaries": 1,
+      "f2p_regular_target_days": 30,
+      "daily_login_streak_required": false
+    },
+    "spending_policy": "Spend available gold on standard boosters; craft missing target-deck cards before collection completion.",
+    "crafting_policy": "legendary_then_rare_then_epic",
+    "target_shape": "legacy_mixed_basket"
+  },
+  "currencies": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "currencies": {
+      "gold": {
+        "enabled": true,
+        "purchasable": false,
+        "transferable": false,
+        "initial_balance": 0,
+        "maximum_balance": 1000000000
+      },
+      "premium": {
+        "enabled": false,
+        "purchasable": false,
+        "transferable": false,
+        "initial_balance": 0,
+        "maximum_balance": 0
+      },
+      "crafting": {
+        "enabled": true,
+        "purchasable": false,
+        "transferable": false,
+        "initial_balance": 0,
+        "maximum_balance": 1000000000
+      }
+    },
+    "excluded_combat_resources": [
+      "resonance",
+      "energy"
+    ],
+    "premium_decision": "Not necessary for alpha; reserved disabled schema only."
+  },
+  "collection_rules": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "copy_limits": {
+      "common": 3,
+      "rare": 3,
+      "epic": 3,
+      "legendary": 1
+    },
+    "starters": {
+      "count": 4,
+      "cards_per_deck": 30,
+      "grant": "onboarding_all_four",
+      "binding": "bound",
+      "ownership_rule": "Maximum copy count of each shared card across decks, not sum.",
+      "source_adapter": "scripts/economy/catalog_adapter.gd"
+    },
+    "cosmetics": {
+      "separate_from_playable_ownership": true,
+      "duplicate_cosmetic_gold": 0
+    },
+    "trading": {
+      "enabled": false,
+      "local_ownership_trusted": false,
+      "authoritative_server_required": true,
+      "regular_cards_transfer_policy": "reserved_pending_product_decision",
+      "starter_transferable": false,
+      "crafted_transferable": false
+    }
+  },
+  "rewards": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "definitions": {
+      "onboarding": {
+        "gold": 300,
+        "xp": 100,
+        "boosters": {
+          "standard": 5
+        },
+        "cards": {},
+        "crafting": 1200,
+        "cosmetics": [],
+        "unlocks": []
+      },
+      "daily_play": {
+        "gold": 60,
+        "xp": 50,
+        "boosters": {},
+        "cards": {},
+        "crafting": 0,
+        "cosmetics": [],
+        "unlocks": []
+      },
+      "daily_variety": {
+        "gold": 40,
+        "xp": 50,
+        "boosters": {},
+        "cards": {},
+        "crafting": 0,
+        "cosmetics": [],
+        "unlocks": []
+      },
+      "weekly_play": {
+        "gold": 300,
+        "xp": 200,
+        "boosters": {
+          "standard": 2
+        },
+        "cards": {},
+        "crafting": 0,
+        "cosmetics": [],
+        "unlocks": []
+      },
+      "campaign_chapter": {
+        "gold": 150,
+        "xp": 100,
+        "boosters": {
+          "standard": 1
+        },
+        "cards": {},
+        "crafting": 0,
+        "cosmetics": [],
+        "unlocks": []
+      },
+      "challenge": {
+        "gold": 50,
+        "xp": 50,
+        "boosters": {},
+        "cards": {},
+        "crafting": 0,
+        "cosmetics": [],
+        "unlocks": []
+      }
+    },
+    "campaign_chapter_limit": 5,
+    "idempotency": "Source ID is unique independently of transaction ID; claims never evicted in local prototype."
+  },
+  "quests": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "definitions": {
+      "daily_play": {
+        "period": "daily",
+        "event": "match_completed",
+        "target": 1,
+        "reward": "daily_play",
+        "optional": false
+      },
+      "daily_variety": {
+        "period": "daily",
+        "event": "cards_played",
+        "target": 10,
+        "reward": "daily_variety",
+        "optional": true
+      },
+      "weekly_play": {
+        "period": "weekly",
+        "event": "match_completed",
+        "target": 10,
+        "reward": "weekly_play",
+        "optional": false
+      }
+    },
+    "clock": "UTC period IDs supplied by trusted adapter; local clock is untrusted. No login streaks.",
+    "retention_periods": 14,
+    "event_allowlist": [
+      "match_completed",
+      "cards_played",
+      "campaign_completed",
+      "relic_used",
+      "resonance_generated",
+      "path_controlled"
+    ],
+    "reroll_policy": "Daily variety is optional; future authority may substitute without extra grant."
+  },
+  "crafting": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "costs": {
+      "common": 40,
+      "rare": 100,
+      "epic": 400,
+      "legendary": 1200
+    },
+    "salvage": {
+      "common": 5,
+      "rare": 20,
+      "epic": 80,
+      "legendary": 240
+    },
+    "manual_requires_confirmation": true,
+    "manual_preserve_deck_copies": true,
+    "bound_starters_salvageable": false,
+    "crafting_output_bound": true,
+    "automatic_excess_salvage": true
+  },
+  "booster_rules": {
+    "schema_version": 1,
+    "status": "provisional_unapproved_alpha_test_parameters",
+    "cards_per_booster": 5,
+    "slots": [
+      {
+        "count": 4,
+        "rates": {
+          "common": 0.8,
+          "rare": 0.17,
+          "epic": 0.025,
+          "legendary": 0.005
+        }
+      },
+      {
+        "count": 1,
+        "rates": {
+          "common": 0.0,
+          "rare": 0.8,
+          "epic": 0.18,
+          "legendary": 0.02
+        }
+      }
+    ],
+    "pity": {
+      "epic": 5,
+      "legendary": 20
+    },
+    "pity_policy": "If no card of the minimum tier or higher occurred by the stated pack, upgrade final slot. Legendary takes priority and resets epic counter. Counters persist per booster pool; only standard is enabled.",
+    "duplicate_protection": [
+      "epic",
+      "legendary"
+    ],
+    "duplicate_protection_policy": "Uniform among cards below playable copy cap in the rolled rarity; if exhausted, roll full tier and salvage excess. No reroll to different rarity.",
+    "first_pack_guarantee": false
+  }
+}

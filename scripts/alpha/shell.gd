@@ -15,6 +15,9 @@ var audio_settings: VBoxContainer
 var audio_context := ""
 var audio_paused := false
 var session=Session.new()
+var services=preload("res://scripts/alpha/integrated_services.gd").new()
+var hosted_page: Control
+var hosted_name := ""
 var alpha_catalog=AlphaCatalog.new()
 var page := "lobby"
 var mode := "alpha"
@@ -97,6 +100,7 @@ func _ready() -> void:
 	if OS.has_feature("web"):
 		density=maxf(1,float(JavaScriptBridge.eval("window.devicePixelRatio||1")));qa_enabled=bool(JavaScriptBridge.eval("new URLSearchParams(location.search).get('qa')==='1'"))
 		JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.3';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.3')")
+	services.configure(session)
 	faction=session.profile.faction;difficulty=int(session.profile.difficulty)
 	if OS.has_feature("legacy_ui_qa"):mode="legacy";faction="start"
 	feedback=preload("res://scripts/alpha/feedback.gd").new();feedback.z_index=100;add_child(feedback)
@@ -182,11 +186,16 @@ func _render_now() -> void:
 	render_pending=false;render_version+=1
 	if not is_instance_valid(body):return
 	_layout()
+	if is_instance_valid(hosted_page):
+		outer_margin.visible=false
+		_sync_audio_context()
+		return
+	outer_margin.visible=true
 	restore_search_focus=actions.has("search") and is_instance_valid(actions.search) and actions.search.has_focus()
 	if restore_search_focus:search_caret=actions.search.caret_column
 	_clear()
 	_sync_audio_context()
-	if is_instance_valid(modal):modal.visible=not (page=="battle" and portrait)
+	if is_instance_valid(modal):modal.visible=not (page=="battle" and (portrait or layout.size.y<248))
 	if page=="lobby":lobby()
 	elif page=="decks":deck_selection()
 	elif page in ["builder","collection"]:builder()
@@ -196,23 +205,61 @@ func _render_now() -> void:
 		else:battle()
 	queue_redraw()
 func lobby() -> void:
-	var center=CenterContainer.new();center.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(center)
-	var panel=VBoxContainer.new();panel.custom_minimum_size.x=minf(layout.size.x-24,440);panel.add_theme_constant_override("separation",10 if portrait else 4);center.add_child(panel)
+	var content=scroll()
+	var center=CenterContainer.new();center.size_flags_horizontal=Control.SIZE_EXPAND_FILL;content.add_child(center)
+	var panel=VBoxContainer.new();panel.custom_minimum_size.x=minf(layout.size.x-24,520);panel.add_theme_constant_override("separation",8 if portrait else 4);center.add_child(panel)
 	text("O R A F O L D",panel,32 if portrait else 26).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	text("ALPHA 0.3 · KATALOGVORSCHAU",panel,13).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	text("ALPHA 0.3 · LOKALER TESTMODUS",panel,13).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	text("Dein Deck · "+alpha_catalog.source.powers.get(faction,"Testprofil"),panel,16).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
-	var play=button("start","SPIELEN  →",choose_match,panel)
+	var play=button("start","SPIELEN GEGEN KI  →",choose_match,panel)
 	play.custom_minimum_size.y=58 if portrait else 48
 	play.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
-	button("builder","DECKBUILDER",func():open_cards(false),panel)
-	button("collection","SAMMLUNG",func():open_cards(true),panel)
-	button("settings","EINSTELLUNGEN",func():page="settings";render(),panel)
-	text("30 Karten · 30 Leben · gegen KI",panel,13).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	var grid=GridContainer.new();grid.columns=1 if portrait else 2;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",4);panel.add_child(grid)
+	button("campaign","KAMPAGNE · ENTWURF",func():open_feature("campaign"),grid)
+	button("builder","DECKBUILDER",func():open_cards(false),grid)
+	button("collection","SAMMLUNG · 550 KARTEN",func():open_cards(true),grid)
+	button("economy","BOOSTER & FORTSCHRITT",func():open_feature("economy"),grid)
+	button("online","ONLINE · EIGENER TESTSERVER",func():open_feature("online"),grid)
+	button("settings","EINSTELLUNGEN",func():page="settings";render(),grid)
+	text("30 Karten · 30 Leben · vier freie Starterdecks",panel,13).horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	var art_counts=CardView.ART.inventory_counts()
 	var art_caption="%d individuelle Illustrationen" % int(art_counts.get("final",0))
 	if int(art_counts.get("missing",550))>0:art_caption+=" · %d Konzeptplatzhalter" % int(art_counts.missing)
-	text(art_caption+" · Fortschritt lokal",body,12)
-	if not session.get("profile_issues")==null and not session.profile_issues.is_empty():text("Lokale Daten: Wiederherstellungshinweise in Einstellungen.",body,12)
+	text(art_caption+" · Spielstände und Bestände nur lokal",content,12)
+	text("Alle Karten im Alpha-Test frei spielbar. Sammelfortschritt ist separat; keine Echtgeldkäufe.",content,12)
+	if not session.profile_issues.is_empty():text("Lokale Daten: Wiederherstellungshinweise in Einstellungen.",content,12)
+
+func open_feature(feature: String) -> void:
+	if is_instance_valid(hosted_page):return
+	close_modal()
+	var paths={"campaign":"res://scenes/campaign_orafold/campaign_overview.tscn","economy":"res://scenes/economy/alpha550_panel.tscn","online":"res://scenes/online/online_lobby.tscn"}
+	if not paths.has(feature):return
+	hosted_page=load(paths[feature]).instantiate()
+	hosted_name=feature
+	if feature=="campaign":
+		hosted_page.configure_host(session,services.reward_campaign)
+		hosted_page.exit_requested.connect(close_feature)
+	elif feature=="economy":
+		hosted_page.configure(services.local_economy())
+		hosted_page.back_requested.connect(close_feature)
+	else:hosted_page.back_requested.connect(close_feature)
+	page=feature
+	hosted_page.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	layout.add_child(hosted_page)
+	render()
+
+func close_feature() -> void:
+	if is_instance_valid(hosted_page):
+		# The exit signal can run inside Button.pressed. Keep its sender in the
+		# tree until Godot finishes dispatching the current input event.
+		hosted_page.hide()
+		hosted_page.queue_free()
+	hosted_page=null;hosted_name="";page="lobby"
+	# Campaign presentation owns its music; discard the old menu cache.
+	audio_context=""
+	set_audio_paused(false)
+	render()
+
 func show_profile_issues() -> void:
 	show_modal("LOKALE DATEN",func(box):
 		for issue in session.profile_issues:text(str(issue),box,14)
@@ -277,6 +324,7 @@ func start_battle() -> void:
 	var seed_value=int(session.profile.last_seed)+1
 	var enemy=alpha_catalog.deck(["houses","stillwatch","morph","ninth"][(seed_value%4)]) if mode=="alpha" else []
 	if not session.start_match(mode,alpha_catalog.deck(faction) if mode=="alpha" and match_use_starter else current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
+	services.begin_duel()
 	last_primary_ms=-1000
 	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];opening_hand_signature="";message="Wähle deine Starthand. Danach legst du den Ursprung fest.";render()
 func _update_primary_readiness() -> void:
@@ -305,7 +353,9 @@ func act(command: String, args: Array) -> void:
 	if not reply.ok:_audio_event("ui.error")
 	_sync_audio_context()
 	if technical_failure:show_engine_error()
-	elif session.model.state.winner!=null:result_dialog()
+	elif session.model.state.winner!=null:
+		services.reward_completed_duel()
+		result_dialog()
 func battle() -> void:
 	var m=session.model;var s: Dictionary=m.state
 	var top=row()
@@ -651,6 +701,7 @@ func result_dialog() -> void:
 	var s: Dictionary=session.model.state
 	show_modal("SIEG" if s.winner=="hero" else "UNENTSCHIEDEN" if s.winner=="draw" else "NIEDERLAGE",func(box):
 		text("Regulärer Spielabschluss. Alle weiteren Kampfaktionen sind gesperrt.",box,20)
+		if not services.last_reward.is_empty():text("Lokaler Fortschritt verbucht." if services.last_reward.get("ok",false) else "Fortschritt konnte nicht gespeichert werden; der Kampfabschluss bleibt gültig.",box,14)
 		text("Konvergenz" if session.model.events[-1].kind=="convergence_win" else "Helden-/Kontrollentscheidung · siehe Protokoll",box)
 		button("result_restart","NEUE PARTIE",func():close_modal();start_battle(),box)
 		button("result_menu","ZUM MENÜ",func():close_modal();page="lobby";render(),box)
@@ -759,6 +810,7 @@ func library_panel(parent: Node, desktop: bool) -> void:
 		var tile=VBoxContainer.new();tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_child(tile)
 		var v=CardView.new();v.card=c;v.library=true;v.color=S.color(c);v.custom_minimum_size=Vector2(0,176);v.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.add_child(v);actions["card_"+c.id]=v
 		_bind_press(v,func():inspect(c) if collection_only or not can_add(c) else add_card(c))
+		if services.economy!=null and collection_mode=="alpha":text("Gesammelt: %d · Alpha frei spielbar" % services.economy.owned_count(c.id),tile,12)
 		var controls=row(tile)
 		button("detail_"+c.id,"Details",func():inspect(c),controls)
 		if not collection_only:button("add_"+c.id,"+  %d/%d" % [deck.count(c.id),1 if c.rarity=="legendary" else 3],func():add_card(c),controls,not can_add(c))
@@ -814,8 +866,17 @@ func _qa_clip_rect(control: Control) -> Rect2:
 	return bounds
 func _qa_css_rect(rect: Rect2) -> Array:
 	return [rect.position.x/density,rect.position.y/density,rect.size.x/density,rect.size.y/density]
+func _hosted_qa(node: Node, output: Array) -> void:
+	if node is BaseButton and node.is_visible_in_tree():
+		output.append({"id":str(node.get_meta("qa_id",node.name)),"text":str(node.text) if node is Button else "","rect":_qa_css_rect(node.get_global_rect()),"disabled":node.disabled})
+	for child in node.get_children():_hosted_qa(child,output)
+
 func publish_qa() -> void:
 	var state={"page":page,"mode":mode,"actions":{},"action_visibility":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"search_text":filter_text,"font_msdf":S.font.multichannel_signed_distance_field,"library_total":library_total,"library_page":library_page,"library_pages":library_page_count,"library_visible_ids":library_visible_ids.duplicate()}
+	state.hosted_page=hosted_name
+	state.hosted_actions=[]
+	if is_instance_valid(hosted_page):_hosted_qa(hosted_page,state.hosted_actions)
+	if services.economy!=null:state.economy_ready=services.economy.ready
 	state.audio=get_node("/root/GameAudio").snapshot()
 	state.audio_paused=audio_paused
 	state.audio_controls={}
@@ -909,25 +970,22 @@ func replay_step(data: Dictionary, step: int) -> void:
 
 func _layout() -> void:
 	var insets: Dictionary={}
-	var visible_height=INF
-	var visible_top=0.0
-	if OS.has_feature("web"):
-		var value=JSON.parse_string(str(JavaScriptBridge.eval("JSON.stringify(window.nachtsiegelInsets?window.nachtsiegelInsets():{})")))
-		if value is Dictionary:insets=value
-	if OS.has_feature("web"):
-		var ratio=JavaScriptBridge.eval("(()=>{const c=document.querySelector('canvas');return c.width/Math.max(1,c.getBoundingClientRect().width)})()")
-		if ratio!=null:density=maxf(.5,float(ratio))
-		visible_height=float(JavaScriptBridge.eval("window.visualViewport?window.visualViewport.height:window.innerHeight"))
-		visible_top=maxf(0,float(JavaScriptBridge.eval("window.visualViewport?window.visualViewport.offsetTop:0")))
-	if not OS.has_feature("web") and OS.has_feature("mobile"):
-		var metrics=preload("res://scripts/production/mobile_metrics.gd")
-		density=metrics.native_density(DisplayServer.screen_get_scale(),DisplayServer.screen_get_dpi(),true)
-		insets=metrics.safe_insets(size,Rect2(DisplayServer.get_display_safe_area()),Vector2(DisplayServer.window_get_position()),density)
-	var left=float(insets.get("left",0));var right=float(insets.get("right",0));var top=float(insets.get("top",0));var bottom=float(insets.get("bottom",0))
-	layout.position=Vector2(left,top+visible_top)*density;layout.scale=Vector2.ONE*density
-	layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(160,minf(size.y/density-visible_top,visible_height)-top-bottom))
-	# A keyboard reduces usable height, not device orientation.
 	var next_portrait=size.y>size.x
+	var metrics=preload("res://scripts/production/mobile_metrics.gd")
+	if OS.has_feature("web"):
+		# Read one atomic CSS snapshot. Neither screen.orientation nor the Godot
+		# backing buffer is an authority on Safari's current layout orientation.
+		var value=JSON.parse_string(str(JavaScriptBridge.eval("JSON.stringify(window.orafoldViewportMetrics?window.orafoldViewportMetrics():{})")))
+		var fitted=metrics.web_layout(size,value if value is Dictionary else {})
+		layout.position=fitted.position;layout.scale=fitted.scale;layout.size=fitted.size
+		density=maxf(.5,float(fitted.scale.x));next_portrait=fitted.portrait
+	else:
+		if OS.has_feature("mobile"):
+			density=metrics.native_density(DisplayServer.screen_get_scale(),DisplayServer.screen_get_dpi(),true)
+			insets=metrics.safe_insets(size,Rect2(DisplayServer.get_display_safe_area()),Vector2(DisplayServer.window_get_position()),density)
+		var left=float(insets.get("left",0));var right=float(insets.get("right",0));var top=float(insets.get("top",0));var bottom=float(insets.get("bottom",0))
+		layout.position=Vector2(left,top)*density;layout.scale=Vector2.ONE*density
+		layout.size=Vector2(maxf(320,size.x/density-left-right),maxf(160,size.y/density-top-bottom))
 	if OS.has_feature("web") and page=="battle" and next_portrait!=portrait:rotation_block_until=Time.get_ticks_msec()+180
 	portrait=next_portrait
 	compact=layout.size.y<380
@@ -1029,7 +1087,7 @@ func rotation_page() -> void:
 		var top=row();text("MEHR PLATZ FÜR FÜNF PFADE",top,18)
 		button("rotate_menu","Sicher zum Menü",confirm_menu,top).size_flags_horizontal=Control.SIZE_SHRINK_END
 		var box=scroll()
-		text("Blende die Browserleisten kurz aus oder vergrößere das Fenster. Unter 248 nutzbaren Pixeln würden Karten und Touchflächen zu klein. Dein Spielzustand bleibt erhalten.",box,16)
+		text("Schließe die Tastatur, setze den Seitenzoom zurück oder blende die Browserleisten kurz aus. Am Desktop: Fenster vergrößern. Unter 248 nutzbaren Pixeln würden Karten und Touchflächen zu klein. Dein Spielzustand bleibt erhalten.",box,16)
 		return
 	var center=CenterContainer.new();center.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(center)
 	var box=VBoxContainer.new();box.custom_minimum_size.x=minf(330,layout.size.x-24);box.add_theme_constant_override("separation",16);center.add_child(box)

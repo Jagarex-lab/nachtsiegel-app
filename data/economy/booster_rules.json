@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "status": "provisional_unapproved_alpha_test_parameters",
+  "cards_per_booster": 5,
+  "slots": [
+    {
+      "count": 4,
+      "rates": {
+        "common": 0.8,
+        "rare": 0.17,
+        "epic": 0.025,
+        "legendary": 0.005
+      }
+    },
+    {
+      "count": 1,
+      "rates": {
+        "common": 0.0,
+        "rare": 0.8,
+        "epic": 0.18,
+        "legendary": 0.02
+      }
+    }
+  ],
+  "pity": {
+    "epic": 5,
+    "legendary": 20
+  },
+  "pity_policy": "If no card of the minimum tier or higher occurred by the stated pack, upgrade final slot. Legendary takes priority and resets epic counter. Counters persist per booster pool; only standard is enabled.",
+  "duplicate_protection": [
+    "epic",
+    "legendary"
+  ],
+  "duplicate_protection_policy": "Uniform among cards below playable copy cap in the rolled rarity; if exhausted, roll full tier and salvage excess. No reroll to different rarity.",
+  "first_pack_guarantee": false
+}
