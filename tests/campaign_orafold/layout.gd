@@ -68,7 +68,8 @@ func _run() -> void:
 	for suffix in ["", ".bak", ".tmp"]:
 		if FileAccess.file_exists(path + suffix): DirAccess.remove_absolute(path + suffix)
 	print("ORAFOLD LAYOUT: %d assertions, %d failures; 80 viewport/locale/scale/view combinations plus decisions and scrolling" % [assertions, failures])
-	quit(1 if failures else 0)
+	# Exercise the product shutdown; asynchronous audio is released before exit.
+	root.get_node("GameAudio").request_quit(1 if failures else 0)
 func _geometry(label: String, viewport_size: Vector2i) -> void:
 	check(ui.size.distance_to(Vector2(viewport_size)) < 2, label + " uses real viewport")
 	check(ui.body.size.x > 0 and ui.body.size.y >= 90, label + " usable scroll region")

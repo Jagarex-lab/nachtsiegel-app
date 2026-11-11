@@ -85,4 +85,8 @@ func _initialize() -> void:
 	var actual: Dictionary = Validator.validate(source, actual_locales)
 	check(actual.ok, "Production prototype bundle validates: " + str(actual.errors))
 	print("ORAFOLD VALIDATOR: %d assertions, %d failures; malformed data, references, loops, locale and editorial gates" % [assertions, failures])
-	quit(1 if failures else 0)
+	# Autoloads become ready after SceneTree._initialize finishes.
+	call_deferred("_finish")
+
+func _finish() -> void:
+	root.get_node("GameAudio").request_quit(1 if failures else 0)

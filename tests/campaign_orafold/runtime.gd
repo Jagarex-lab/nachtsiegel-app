@@ -36,7 +36,11 @@ func _initialize() -> void:
 		for suffix in ["", ".bak", ".tmp"]:
 			if FileAccess.file_exists(path + suffix): DirAccess.remove_absolute(path + suffix)
 	print("ORAFOLD RUNTIME: %d assertions, %d failures; decision matrix, durable battle routes, migration, replay and rewards" % [assertions, failures])
-	quit(1 if failures else 0)
+	# Autoloads become ready after SceneTree._initialize finishes.
+	call_deferred("_finish")
+
+func _finish() -> void:
+	root.get_node("GameAudio").request_quit(1 if failures else 0)
 func _flow(approach: String, ending: String) -> void:
 	var path := path_for(approach + "_" + ending)
 	var m = Manager.new("res://data/campaign_orafold/prototype.json", path)

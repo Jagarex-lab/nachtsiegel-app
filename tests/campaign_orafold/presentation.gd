@@ -102,7 +102,8 @@ func _run() -> void:
 	for suffix in ["", ".bak", ".tmp"]:
 		if FileAccess.file_exists(path + suffix): DirAccess.remove_absolute(path + suffix)
 	print("ORAFOLD PRESENTATION: %d assertions, %d failures; immediate locale redraw, battle navigation, stale tokens and surrender return" % [assertions, failures])
-	quit(1 if failures else 0)
+	# Exercise the product shutdown; asynchronous audio is released before exit.
+	root.get_node("GameAudio").request_quit(1 if failures else 0)
 func _header_text() -> String:
 	var parts: Array = []
 	_collect_text(ui.header, parts)
