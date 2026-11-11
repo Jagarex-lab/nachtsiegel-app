@@ -199,6 +199,87 @@
       "web_sha256": "46584e8360f5bb0c57f5456e87c9d00a1a1eb28683268fe56280c45b8a1a984f",
       "width": 1448
     },
+    "oa-ninth-c02": {
+      "bytes": 348058,
+      "height": 1087,
+      "relative_url": "art/full/cace39b8698283763a1fc228461de7d8ec16c1e5084c6b7aa5c181cf44b0db43.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-c02.png",
+      "source_sha256": "e41d2071962cb15df0b84077f200b39ea6ae185e19c33f05660bb38ef07eb317",
+      "web_sha256": "cace39b8698283763a1fc228461de7d8ec16c1e5084c6b7aa5c181cf44b0db43",
+      "width": 1447
+    },
+    "oa-ninth-c03": {
+      "bytes": 317384,
+      "height": 1086,
+      "relative_url": "art/full/64d3e0797bbbade2b0a35fddfde1ad117a38ba1af0776012092172640024b600.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-c03.png",
+      "source_sha256": "a4dffe1166aa387466faa7553400c2daef24ec144b84b7f040fdc7f2e49e2c11",
+      "web_sha256": "64d3e0797bbbade2b0a35fddfde1ad117a38ba1af0776012092172640024b600",
+      "width": 1448
+    },
+    "oa-ninth-c04": {
+      "bytes": 364444,
+      "height": 1087,
+      "relative_url": "art/full/a200e6564e2b312e06fe26b73fdbd873fb6e18c0bf4bba7022d58899778986b6.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-c04.png",
+      "source_sha256": "c0dc98b965ff8c3ecbb746b73a1e8d589370fe4fe59c16f90a44e08e634e0f59",
+      "web_sha256": "a200e6564e2b312e06fe26b73fdbd873fb6e18c0bf4bba7022d58899778986b6",
+      "width": 1447
+    },
+    "oa-ninth-c05": {
+      "bytes": 345752,
+      "height": 1086,
+      "relative_url": "art/full/c442bd2f8760a9b5a03da23f282129639d2ab6eb4ab69b6eb0ad86869c952616.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-c05.png",
+      "source_sha256": "518e6e03c2eb4ceb869c0bffb62180c446c5d048b5cb48849a263f7439abe4b9",
+      "web_sha256": "c442bd2f8760a9b5a03da23f282129639d2ab6eb4ab69b6eb0ad86869c952616",
+      "width": 1448
+    },
+    "oa-ninth-c06": {
+      "bytes": 307838,
+      "height": 1087,
+      "relative_url": "art/full/13acdf954697bb45bc23ebbfcab2a6faf9b95d152b1757702f3713dbbd2d6a4a.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-c06.png",
+      "source_sha256": "784b24134a03e888430988534eaff84074c0cd963c3e8a676a9ab53a59ed5fc4",
+      "web_sha256": "13acdf954697bb45bc23ebbfcab2a6faf9b95d152b1757702f3713dbbd2d6a4a",
+      "width": 1447
+    },
+    "oa-ninth-c07": {
+      "bytes": 367488,
+      "height": 1086,
+      "relative_url": "art/full/a475fbdbc80c46a3360240a1a2c8e191c7ddcd9270ecc9074707de82393db082.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-c07.png",
+      "source_sha256": "a81f193abc1404a60adc888111f262d54e372fac820d9966a159c88f43c3fd55",
+      "web_sha256": "a475fbdbc80c46a3360240a1a2c8e191c7ddcd9270ecc9074707de82393db082",
+      "width": 1448
+    },
+    "oa-ninth-e01": {
+      "bytes": 279806,
+      "height": 1086,
+      "relative_url": "art/full/bedf58cf78935264fca649dcfc5670c016c21e1a1bf9bbbbe1b85bb7e05f2c9e.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-e01.png",
+      "source_sha256": "bac53646ae1e7cd1be154e320a9945191ccdea92ef2e0c2c87aa0a4d4cfdd646",
+      "web_sha256": "bedf58cf78935264fca649dcfc5670c016c21e1a1bf9bbbbe1b85bb7e05f2c9e",
+      "width": 1448
+    },
+    "oa-ninth-e02": {
+      "bytes": 325792,
+      "height": 1086,
+      "relative_url": "art/full/be0d3bba4a8a1b4a9582b0c8629d6d2d94abe7dddd5b4a5c55f8c46dd164314a.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-e02.png",
+      "source_sha256": "4c2dd390402703b21589e55ce1be33d8ff67d1f1e920f646b90a80dbdf72b16c",
+      "web_sha256": "be0d3bba4a8a1b4a9582b0c8629d6d2d94abe7dddd5b4a5c55f8c46dd164314a",
+      "width": 1448
+    },
+    "oa-ninth-r01": {
+      "bytes": 319818,
+      "height": 1086,
+      "relative_url": "art/full/e32e3b9890f31b66d099729a6fa132f7f798e705cbd757ef742f36db17371e64.webp",
+      "source_asset_path": "res://assets/cards/originals/oa-ninth-r01.png",
+      "source_sha256": "8619671b6347bf0eff4e63842cce4812c193d7d83e48e833fb8143462b38d952",
+      "web_sha256": "e32e3b9890f31b66d099729a6fa132f7f798e705cbd757ef742f36db17371e64",
+      "width": 1448
+    },
     "oa-stillwatch-c01": {
       "bytes": 450794,
       "height": 1086,
@@ -2107,6 +2188,168 @@
       "web_sha256": "ecac59b338c73e0437e1019d11308bdb44646055523405093ae23c615e34ff76",
       "width": 1448
     },
+    "of-ninth-001": {
+      "bytes": 457652,
+      "height": 1087,
+      "relative_url": "art/full/bb76c9bfb28779fb57af3cd42b8f829ebf0716c1b7d5b6578f8ec5137b3c0117.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-001.png",
+      "source_sha256": "a1c4db060cb284407a5cf1daec003e298dcfd39ac0db327ca4db363e06be8ba5",
+      "web_sha256": "bb76c9bfb28779fb57af3cd42b8f829ebf0716c1b7d5b6578f8ec5137b3c0117",
+      "width": 1447
+    },
+    "of-ninth-002": {
+      "bytes": 354788,
+      "height": 1086,
+      "relative_url": "art/full/c8b3cfb33180c84b13c9b28db8724bb589e86b379c85b0614580a828f42b3c58.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-002.png",
+      "source_sha256": "f4098e754caa5ff0402879f6b3e874e15893b6c9fae20f53ae4b56f80eea3175",
+      "web_sha256": "c8b3cfb33180c84b13c9b28db8724bb589e86b379c85b0614580a828f42b3c58",
+      "width": 1448
+    },
+    "of-ninth-003": {
+      "bytes": 345890,
+      "height": 1086,
+      "relative_url": "art/full/9f98cb09f0a39832c0849433ae3f71254b2d0a2275db937b902bd8e6437b02fc.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-003.png",
+      "source_sha256": "d3c9d747563eb815cd55ffde22e76d70897773f729eacafe2d4887cd8dc5460a",
+      "web_sha256": "9f98cb09f0a39832c0849433ae3f71254b2d0a2275db937b902bd8e6437b02fc",
+      "width": 1448
+    },
+    "of-ninth-004": {
+      "bytes": 326338,
+      "height": 1086,
+      "relative_url": "art/full/3869b6c4a180e9caf027651f3b5d0e06a14136360077dd333ee05ce11d24c693.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-004.png",
+      "source_sha256": "588195ce7e414722b9e370ce9e0e9c2fa4b6f5d08d3d39bc705491ecf89d6430",
+      "web_sha256": "3869b6c4a180e9caf027651f3b5d0e06a14136360077dd333ee05ce11d24c693",
+      "width": 1448
+    },
+    "of-ninth-005": {
+      "bytes": 241940,
+      "height": 1086,
+      "relative_url": "art/full/b5b6cd9819955ba95998ce792736a621a7643229458adc53f184636abc5cc445.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-005.png",
+      "source_sha256": "7f94a5fb6a2258d071101da5e7082220bee012fafc1487b0077d8794a6866899",
+      "web_sha256": "b5b6cd9819955ba95998ce792736a621a7643229458adc53f184636abc5cc445",
+      "width": 1448
+    },
+    "of-ninth-006": {
+      "bytes": 315800,
+      "height": 1086,
+      "relative_url": "art/full/b6a7745794dfdfffea36c551f6ae03c825a90c1ad0f43a119c70ec9100a8fa5b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-006.png",
+      "source_sha256": "8e41588c4d4624fae7eb3d62ffc9f5dac1c10d2ec5a4c29d8071e4581fc56bb0",
+      "web_sha256": "b6a7745794dfdfffea36c551f6ae03c825a90c1ad0f43a119c70ec9100a8fa5b",
+      "width": 1448
+    },
+    "of-ninth-007": {
+      "bytes": 265344,
+      "height": 1086,
+      "relative_url": "art/full/5dc60790f7b98a808f41c355ae5c6ab3674a9c0fc81637b84032513de63590a7.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-007.png",
+      "source_sha256": "8dbd896fc66b4ecd01f6b1355e067a04a02fa4065ec80a61d39061db3ee1425a",
+      "web_sha256": "5dc60790f7b98a808f41c355ae5c6ab3674a9c0fc81637b84032513de63590a7",
+      "width": 1448
+    },
+    "of-ninth-008": {
+      "bytes": 319826,
+      "height": 1086,
+      "relative_url": "art/full/33dfadee52bbfd79e463d45c7f80b4e87a16f4902bc6a2cb40b3ccaaf42edcc2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-008.png",
+      "source_sha256": "4461275bb54706a0928f71cec520602f2c39385b91a4175206ca44fcd6b2f470",
+      "web_sha256": "33dfadee52bbfd79e463d45c7f80b4e87a16f4902bc6a2cb40b3ccaaf42edcc2",
+      "width": 1448
+    },
+    "of-ninth-009": {
+      "bytes": 326096,
+      "height": 1086,
+      "relative_url": "art/full/c241d0de44c2f3ee1d6deda6b0574fabff3a1fa235bce7180c00422962a0e479.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-009.png",
+      "source_sha256": "8ea0f9109cee856ef3521c0c345b161592788fbe7cebadd90f460c1b079bce39",
+      "web_sha256": "c241d0de44c2f3ee1d6deda6b0574fabff3a1fa235bce7180c00422962a0e479",
+      "width": 1448
+    },
+    "of-ninth-010": {
+      "bytes": 362152,
+      "height": 1087,
+      "relative_url": "art/full/7b6ec9c9059a381bac5e1b6fa7bac23d97b37bcc96ba933086c79464015aea59.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-010.png",
+      "source_sha256": "c3674429d6a758573d2e3b8446365b995a490e29990df73eebda114d75e5b132",
+      "web_sha256": "7b6ec9c9059a381bac5e1b6fa7bac23d97b37bcc96ba933086c79464015aea59",
+      "width": 1447
+    },
+    "of-ninth-011": {
+      "bytes": 394168,
+      "height": 1086,
+      "relative_url": "art/full/919263d6e3153de59243667243482760bbe9f50bacd6a2b96d961992c1ed4794.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-011.png",
+      "source_sha256": "08b991e2237fb42a307c13f15d82e3f28535642b32606c1fd482f3dac09d3d87",
+      "web_sha256": "919263d6e3153de59243667243482760bbe9f50bacd6a2b96d961992c1ed4794",
+      "width": 1448
+    },
+    "of-ninth-012": {
+      "bytes": 301132,
+      "height": 1087,
+      "relative_url": "art/full/bc87df86ba2e8981cb35a888ef548b6f677bc7c0d406fcdbb9c003b0f619c9b1.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-012.png",
+      "source_sha256": "476a9c4c1e6aa4ce9790cef8b1afdc91d26d3acdd3ae4f82dd0f4299293fc7c7",
+      "web_sha256": "bc87df86ba2e8981cb35a888ef548b6f677bc7c0d406fcdbb9c003b0f619c9b1",
+      "width": 1447
+    },
+    "of-ninth-013": {
+      "bytes": 344554,
+      "height": 1086,
+      "relative_url": "art/full/3b4cf973663ff94b5be69d46cd686cf6b90005a31580e7b7ecdbb332f0ce1488.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-013.png",
+      "source_sha256": "6bc81bd1852022422cde01da567593a88709e7caba7050dc6eab8930a215a65d",
+      "web_sha256": "3b4cf973663ff94b5be69d46cd686cf6b90005a31580e7b7ecdbb332f0ce1488",
+      "width": 1448
+    },
+    "of-ninth-014": {
+      "bytes": 248514,
+      "height": 1086,
+      "relative_url": "art/full/11dab1b4a1733023d2d38d896252112ed2e5bb9e69eb6602dd1952ea96fd70c2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-014.png",
+      "source_sha256": "aaa504657db30e3b3df832fcc34f4462f9a2df5dd7bd69410aaaeb6d6e1dc934",
+      "web_sha256": "11dab1b4a1733023d2d38d896252112ed2e5bb9e69eb6602dd1952ea96fd70c2",
+      "width": 1448
+    },
+    "of-ninth-015": {
+      "bytes": 301962,
+      "height": 1086,
+      "relative_url": "art/full/f18190b23da8e3ed83bf9b3504ebfbcd8d7a7560b06bc9ffb91f16fb58fca60a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-015.png",
+      "source_sha256": "cc3fd582b4f018e3b8ab38c7d23a516e2a8da7221cea01054b44439d123787e1",
+      "web_sha256": "f18190b23da8e3ed83bf9b3504ebfbcd8d7a7560b06bc9ffb91f16fb58fca60a",
+      "width": 1448
+    },
+    "of-ninth-016": {
+      "bytes": 360650,
+      "height": 1086,
+      "relative_url": "art/full/ecaee2c87eae9f86574e87a666d901d4ec3b18414fc2832966688cdb46e42f10.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-016.png",
+      "source_sha256": "1ffe998aabcd347cae49688ae6ea886621b8a46f2a3ca6b2cdd9afaaf90897ce",
+      "web_sha256": "ecaee2c87eae9f86574e87a666d901d4ec3b18414fc2832966688cdb46e42f10",
+      "width": 1448
+    },
+    "of-ninth-017": {
+      "bytes": 588852,
+      "height": 1087,
+      "relative_url": "art/full/edbc3d371a2b1bffda6b8df4fbd3f930fe122d8cf8b6ba04d18ad5fcfa1d7146.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-017.png",
+      "source_sha256": "8cfaf7457db1a321c2756ad34981b8246ec15f4860de49ca6ff7599a2647c17f",
+      "web_sha256": "edbc3d371a2b1bffda6b8df4fbd3f930fe122d8cf8b6ba04d18ad5fcfa1d7146",
+      "width": 1447
+    },
+    "of-ninth-018": {
+      "bytes": 203586,
+      "height": 1086,
+      "relative_url": "art/full/44097f7e9458d39c147e24350b888c592a972c4ac8f1465d6270e2ff16b8b644.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-018.png",
+      "source_sha256": "7386b32c5050b992bf8339a217e5dc777cae2703fcfca3dae4981b86f2103a25",
+      "web_sha256": "44097f7e9458d39c147e24350b888c592a972c4ac8f1465d6270e2ff16b8b644",
+      "width": 1448
+    },
     "of-ninth-019": {
       "bytes": 193604,
       "height": 1086,
@@ -2116,6 +2359,681 @@
       "web_sha256": "d49ca6bf5b2fd527b2f691399408bb9eee5fee813becf881d1ccb4c78958cadd",
       "width": 1448
     },
+    "of-ninth-020": {
+      "bytes": 368468,
+      "height": 1086,
+      "relative_url": "art/full/a2f5f47184dc9fd5ec6ae541564983e2d9ad880b251c6cf257e6058346784af3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-020.png",
+      "source_sha256": "0c61c57dbd57e9932350afc3f06855d4aad7213295fb179f05e077107f6363a4",
+      "web_sha256": "a2f5f47184dc9fd5ec6ae541564983e2d9ad880b251c6cf257e6058346784af3",
+      "width": 1448
+    },
+    "of-ninth-021": {
+      "bytes": 447368,
+      "height": 1087,
+      "relative_url": "art/full/613686c3eab37f31920dd2542550009414f42d8fe3334ca9b50d6796fbd45aa2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-021.png",
+      "source_sha256": "af8dd71d5ee3a608959d48403ab5ec59f3f0670e44a0bdbf6b2022cf1d044803",
+      "web_sha256": "613686c3eab37f31920dd2542550009414f42d8fe3334ca9b50d6796fbd45aa2",
+      "width": 1447
+    },
+    "of-ninth-022": {
+      "bytes": 379832,
+      "height": 1086,
+      "relative_url": "art/full/8f71e4af2d8dc689d47e3aa06477070bc0d9f98daad0e218d154fce2f4665b65.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-022.png",
+      "source_sha256": "3263064ea116c8e366a07708f61f15d98efcdf1818f429fa2d7e891af6f38c49",
+      "web_sha256": "8f71e4af2d8dc689d47e3aa06477070bc0d9f98daad0e218d154fce2f4665b65",
+      "width": 1448
+    },
+    "of-ninth-023": {
+      "bytes": 311962,
+      "height": 1086,
+      "relative_url": "art/full/17fad737e3d2e81d16dd366919d98b4e036f44cf20b5164930e381c53b17a999.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-023.png",
+      "source_sha256": "bc19f1c327693a4295f0969bbe30bf6ebe2902e9e09bd0d3b61b770ef5e81d77",
+      "web_sha256": "17fad737e3d2e81d16dd366919d98b4e036f44cf20b5164930e381c53b17a999",
+      "width": 1448
+    },
+    "of-ninth-024": {
+      "bytes": 350078,
+      "height": 1086,
+      "relative_url": "art/full/184dec1ff77264b186f9c1d26f3bd87d874b4654b5d6a95124b486b33c984ec7.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-024.png",
+      "source_sha256": "dc43a88f806c6a380959ab24182e42959536644ea7f67046fc8e5966e97340a8",
+      "web_sha256": "184dec1ff77264b186f9c1d26f3bd87d874b4654b5d6a95124b486b33c984ec7",
+      "width": 1448
+    },
+    "of-ninth-025": {
+      "bytes": 360126,
+      "height": 1086,
+      "relative_url": "art/full/9ca9da698dd775ddcc65c4cad8e568b1a8661e667b80307d65315b8d1f4d9463.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-025.png",
+      "source_sha256": "158b218cb7abf8add377a93ebf76fbc3529791bec796d319c6b3fc61b7e73656",
+      "web_sha256": "9ca9da698dd775ddcc65c4cad8e568b1a8661e667b80307d65315b8d1f4d9463",
+      "width": 1448
+    },
+    "of-ninth-026": {
+      "bytes": 322806,
+      "height": 1086,
+      "relative_url": "art/full/0d18cad0de30a2a0b157ce046ca4b37b4492ea88305038ace4e715f91a2620e8.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-026.png",
+      "source_sha256": "abb4a1c99cd27f70f580f5b0e0af627a4d3f2b30412f59b014b374564dc86376",
+      "web_sha256": "0d18cad0de30a2a0b157ce046ca4b37b4492ea88305038ace4e715f91a2620e8",
+      "width": 1448
+    },
+    "of-ninth-027": {
+      "bytes": 421252,
+      "height": 1086,
+      "relative_url": "art/full/1eda2650972f216d92393c3da9cbee28e0d44fb5c3895e9997930200b68d2d9c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-027.png",
+      "source_sha256": "ca4f6875959892e36f06e6f0e5469e0ef1bf39911e6872e4cc72eb524d8450ad",
+      "web_sha256": "1eda2650972f216d92393c3da9cbee28e0d44fb5c3895e9997930200b68d2d9c",
+      "width": 1448
+    },
+    "of-ninth-028": {
+      "bytes": 275062,
+      "height": 1086,
+      "relative_url": "art/full/90c19612e95897fc8451f847ef9ed155b2c5d560bfaaf5adcb323c4ca155bb0f.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-028.png",
+      "source_sha256": "047d2f61ae2574e2d6e677afbe357602195cc551afb3bd959a71941f863c85b3",
+      "web_sha256": "90c19612e95897fc8451f847ef9ed155b2c5d560bfaaf5adcb323c4ca155bb0f",
+      "width": 1448
+    },
+    "of-ninth-029": {
+      "bytes": 286468,
+      "height": 1086,
+      "relative_url": "art/full/dab73afd1ed01aadd0327e2f6fa68af41860ab64ac77ccb380c4c70a484e77ed.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-029.png",
+      "source_sha256": "9df90980c58ca7c27cc62ec0492df94185c4e55ad7aea9b5e0b5ea3a65691e16",
+      "web_sha256": "dab73afd1ed01aadd0327e2f6fa68af41860ab64ac77ccb380c4c70a484e77ed",
+      "width": 1448
+    },
+    "of-ninth-030": {
+      "bytes": 339280,
+      "height": 1086,
+      "relative_url": "art/full/7feb26253e3fe6d28e54691145e3dbb74b73d53c2dcc80593750406d0ecb185d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-030.png",
+      "source_sha256": "3f61aea04b0caa8a27641a58a89236203ea663df3441204523a3d8826b8656ec",
+      "web_sha256": "7feb26253e3fe6d28e54691145e3dbb74b73d53c2dcc80593750406d0ecb185d",
+      "width": 1448
+    },
+    "of-ninth-031": {
+      "bytes": 339226,
+      "height": 1086,
+      "relative_url": "art/full/a398078fa7f62183d707769fbc3074575e22695a95989c3dc98571b9f21ade4f.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-031.png",
+      "source_sha256": "08401461174368e30f293b1b05179b0eb83edadf5416fdf9df3db03e5225d18f",
+      "web_sha256": "a398078fa7f62183d707769fbc3074575e22695a95989c3dc98571b9f21ade4f",
+      "width": 1448
+    },
+    "of-ninth-032": {
+      "bytes": 359630,
+      "height": 1086,
+      "relative_url": "art/full/3b141009888276b293e5b3a76fe70b05bb323e9c4832972720d8bd7b54e2a008.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-032.png",
+      "source_sha256": "ec7df77747361cb9b5502fdd2e239d924bbe74634325213e6a4a490aae0143be",
+      "web_sha256": "3b141009888276b293e5b3a76fe70b05bb323e9c4832972720d8bd7b54e2a008",
+      "width": 1448
+    },
+    "of-ninth-033": {
+      "bytes": 305588,
+      "height": 1086,
+      "relative_url": "art/full/57c84162cc01b30d64268f1ee05cb94b93e7b4d7cf6f5111df210c2a46cb3350.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-033.png",
+      "source_sha256": "72906ace284bf48c1e85282739a04264272ae5dcade7c4512b8be3121c6c55ca",
+      "web_sha256": "57c84162cc01b30d64268f1ee05cb94b93e7b4d7cf6f5111df210c2a46cb3350",
+      "width": 1448
+    },
+    "of-ninth-034": {
+      "bytes": 459350,
+      "height": 1086,
+      "relative_url": "art/full/cec13cf84b0e1ec033ae51da1c311bb29fe0fe42837554b074cd232f2e6ebe3c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-034.png",
+      "source_sha256": "39dd9776db6ae0c013650f00a7c8f15a0961fe4fd7ed6c0622f2385c52f4ab2e",
+      "web_sha256": "cec13cf84b0e1ec033ae51da1c311bb29fe0fe42837554b074cd232f2e6ebe3c",
+      "width": 1448
+    },
+    "of-ninth-035": {
+      "bytes": 365402,
+      "height": 1086,
+      "relative_url": "art/full/860068fad7fdb2509c9e00ce1380f6e74aa05a9c5d86f95035ae6b8b1031c6b1.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-035.png",
+      "source_sha256": "0559ddd8de91391451b276443b0022c850c4c89d625040032f02486d8ea8937f",
+      "web_sha256": "860068fad7fdb2509c9e00ce1380f6e74aa05a9c5d86f95035ae6b8b1031c6b1",
+      "width": 1448
+    },
+    "of-ninth-036": {
+      "bytes": 384770,
+      "height": 1086,
+      "relative_url": "art/full/57131fc8f9b489cc153aa7c672664cf3131bc0c368f8f474b6a5cf367be47af5.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-036.png",
+      "source_sha256": "5e9f15b13dea5a57672e2499fd8212942d563b62d41395425e96267704860413",
+      "web_sha256": "57131fc8f9b489cc153aa7c672664cf3131bc0c368f8f474b6a5cf367be47af5",
+      "width": 1448
+    },
+    "of-ninth-037": {
+      "bytes": 315668,
+      "height": 1086,
+      "relative_url": "art/full/7ba18fbe4857721ab7850aac04d9676068f9d9d328d80365adee79e0169abd4d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-037.png",
+      "source_sha256": "f03972daaf0fb6a74c8eeedb7e57948f9174dbf65144bd3f3f90ab17c8c7ab17",
+      "web_sha256": "7ba18fbe4857721ab7850aac04d9676068f9d9d328d80365adee79e0169abd4d",
+      "width": 1448
+    },
+    "of-ninth-038": {
+      "bytes": 371016,
+      "height": 1087,
+      "relative_url": "art/full/ffc4b82d6ba62fde82bf4c28e0a4adef5fdddbed8aff61d6ac4dcf1ab4799014.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-038.png",
+      "source_sha256": "9c722ef39ee40c9d32d1ad7a52ac753bd2a74b2bcbda9bec4c6b21c4477f5a23",
+      "web_sha256": "ffc4b82d6ba62fde82bf4c28e0a4adef5fdddbed8aff61d6ac4dcf1ab4799014",
+      "width": 1447
+    },
+    "of-ninth-039": {
+      "bytes": 257510,
+      "height": 1086,
+      "relative_url": "art/full/7861d5499eec6f7fa0409334e352164f7f295714f8a9aedc5e9bb3d3f1a87f46.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-039.png",
+      "source_sha256": "894f4c880564866333efb782662fec6a67ebf7ca05855f02b7c764d551590dbf",
+      "web_sha256": "7861d5499eec6f7fa0409334e352164f7f295714f8a9aedc5e9bb3d3f1a87f46",
+      "width": 1448
+    },
+    "of-ninth-040": {
+      "bytes": 433604,
+      "height": 1086,
+      "relative_url": "art/full/c3ed832501fa396df3caa28e54edc085eff521d064268e94a18890444e907d9d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-040.png",
+      "source_sha256": "5b517fdae8613280ff0e121fc9e5906e613b50d3e4fc60eba71af1ecd2d33a66",
+      "web_sha256": "c3ed832501fa396df3caa28e54edc085eff521d064268e94a18890444e907d9d",
+      "width": 1448
+    },
+    "of-ninth-041": {
+      "bytes": 385402,
+      "height": 1087,
+      "relative_url": "art/full/a6b4ca19d7645f384c1e39ef6e1125448b8752ef9116e15d4b6122dacfa1736d.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-041.png",
+      "source_sha256": "60572121ae3bb9db972e96f6a28c3b3fd7ec77928a9b662d81d883bbae046e9e",
+      "web_sha256": "a6b4ca19d7645f384c1e39ef6e1125448b8752ef9116e15d4b6122dacfa1736d",
+      "width": 1447
+    },
+    "of-ninth-042": {
+      "bytes": 336464,
+      "height": 1086,
+      "relative_url": "art/full/140c034937421aa6b90ba22e21678d9bb1dfad475200867187c1fb94bad8e043.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-042.png",
+      "source_sha256": "8434ba3af914d2da43dfc7d1a04e54136d5d4b6d48cedb0f177d4d5ce9f00ae6",
+      "web_sha256": "140c034937421aa6b90ba22e21678d9bb1dfad475200867187c1fb94bad8e043",
+      "width": 1448
+    },
+    "of-ninth-043": {
+      "bytes": 394344,
+      "height": 1086,
+      "relative_url": "art/full/6ce6e9f07dfe7b75e1d07c45eaec578cd8c5a783eb8047013cfaa24131dad7c9.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-043.png",
+      "source_sha256": "e94959e5936dce0c4c1f372e5312d1c9615bd11f831c1defe6926969a221c940",
+      "web_sha256": "6ce6e9f07dfe7b75e1d07c45eaec578cd8c5a783eb8047013cfaa24131dad7c9",
+      "width": 1448
+    },
+    "of-ninth-044": {
+      "bytes": 265930,
+      "height": 1086,
+      "relative_url": "art/full/cd671b11f1a39fe73679544522f7a11bd2ae05a1eee480eccabf762ab102e233.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-044.png",
+      "source_sha256": "0b50307e76b917787c6e32b114e4276578aad3c889fa895e824456325992e9e0",
+      "web_sha256": "cd671b11f1a39fe73679544522f7a11bd2ae05a1eee480eccabf762ab102e233",
+      "width": 1449
+    },
+    "of-ninth-045": {
+      "bytes": 269396,
+      "height": 1086,
+      "relative_url": "art/full/bd9cef01d5dea753e560c1477874dc28b039be4f625683d1b71c36fd1b03242f.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-045.png",
+      "source_sha256": "a2511724364d1c54d35f989c49f606f587c1110b3ff5cc44b0fcf2b21eaec447",
+      "web_sha256": "bd9cef01d5dea753e560c1477874dc28b039be4f625683d1b71c36fd1b03242f",
+      "width": 1448
+    },
+    "of-ninth-046": {
+      "bytes": 290956,
+      "height": 1086,
+      "relative_url": "art/full/9047da7992b7c08a0de4d132d2b394ece11eabd0d707b32f2d2b78cb1c7539b6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-046.png",
+      "source_sha256": "b83ed9d7042aa1d9447eb227e54453cd8809a45e608bf4683175ee5be850a9ab",
+      "web_sha256": "9047da7992b7c08a0de4d132d2b394ece11eabd0d707b32f2d2b78cb1c7539b6",
+      "width": 1448
+    },
+    "of-ninth-047": {
+      "bytes": 369028,
+      "height": 1086,
+      "relative_url": "art/full/75b207fdc8aef3651b18f9198aa8a34d66baaa39ed3a665afab2b3f247344ae0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-047.png",
+      "source_sha256": "2e4b1df08c3c3c01357ca1a0298fa671c6ae9037561826e039ab8853d9aae117",
+      "web_sha256": "75b207fdc8aef3651b18f9198aa8a34d66baaa39ed3a665afab2b3f247344ae0",
+      "width": 1448
+    },
+    "of-ninth-048": {
+      "bytes": 361378,
+      "height": 1086,
+      "relative_url": "art/full/4fd3326a94153b6447e044e413d81b000fc2c3b28cfecda9deae749627ee900e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-048.png",
+      "source_sha256": "4126249a88aafdd0bdf3eec83a5a57a3fc81b71a3f1b7df76e1dfa64e40bdaee",
+      "web_sha256": "4fd3326a94153b6447e044e413d81b000fc2c3b28cfecda9deae749627ee900e",
+      "width": 1448
+    },
+    "of-ninth-049": {
+      "bytes": 223940,
+      "height": 1086,
+      "relative_url": "art/full/20442b9bac2b966473c46c3a3900f91b2de90faad7d25d8ee1b3d491525942c6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-049.png",
+      "source_sha256": "35247411ac412753d23a83c55b911428127a6550cd4c2828830d5085d3fb42e8",
+      "web_sha256": "20442b9bac2b966473c46c3a3900f91b2de90faad7d25d8ee1b3d491525942c6",
+      "width": 1448
+    },
+    "of-ninth-050": {
+      "bytes": 329822,
+      "height": 1086,
+      "relative_url": "art/full/700de0f0b50e75e9a5e3707cada776ea1a0ed181ba4e9653577734e55c671aca.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-050.png",
+      "source_sha256": "4d6ec460a7a57f1b64cf20271756aa5ed7764835cff895513c1689cf281e6cc8",
+      "web_sha256": "700de0f0b50e75e9a5e3707cada776ea1a0ed181ba4e9653577734e55c671aca",
+      "width": 1448
+    },
+    "of-ninth-051": {
+      "bytes": 359866,
+      "height": 1086,
+      "relative_url": "art/full/dfde28011742afbe80accd7627b56a6da5e67c35f720db66138ee380a3e78e37.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-051.png",
+      "source_sha256": "b3a7f0ea01acdbd0adfcf0c58a56f977ce2a473d3dd3cc265aa52177c5d69401",
+      "web_sha256": "dfde28011742afbe80accd7627b56a6da5e67c35f720db66138ee380a3e78e37",
+      "width": 1448
+    },
+    "of-ninth-052": {
+      "bytes": 429588,
+      "height": 1086,
+      "relative_url": "art/full/5557543764c4198b0222ea5a4c9b5b820d221241f61b71fb6995d80ab3fafc0f.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-052.png",
+      "source_sha256": "b79f5ed9ccd3f89ed09c545c6b14fcdbe8a624b10b81f43f336dd77774cd138f",
+      "web_sha256": "5557543764c4198b0222ea5a4c9b5b820d221241f61b71fb6995d80ab3fafc0f",
+      "width": 1448
+    },
+    "of-ninth-053": {
+      "bytes": 496488,
+      "height": 1086,
+      "relative_url": "art/full/17656609f372183c735316a91a02305e2aa05fdadcf93b68388f4ed1119370a4.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-053.png",
+      "source_sha256": "afafc21f776eeed89902af9f823cc0d345e4c310b7824a886c37b31a2bf63aab",
+      "web_sha256": "17656609f372183c735316a91a02305e2aa05fdadcf93b68388f4ed1119370a4",
+      "width": 1448
+    },
+    "of-ninth-054": {
+      "bytes": 358618,
+      "height": 1086,
+      "relative_url": "art/full/aaf220f7202233583a8fdb9771008e32f5e516366118413a5273e1e579264b8e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-054.png",
+      "source_sha256": "7d60769f95dec351e781e289d3275b91895b4d48d18ee5766b784161e82e1952",
+      "web_sha256": "aaf220f7202233583a8fdb9771008e32f5e516366118413a5273e1e579264b8e",
+      "width": 1448
+    },
+    "of-ninth-055": {
+      "bytes": 341976,
+      "height": 1086,
+      "relative_url": "art/full/4c917f333704b9e947195a22f5cab79a9e319717414a4367d4804425405fb7e0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-055.png",
+      "source_sha256": "33d675267bc0f88c88484d8cca0e3ba8a61e08a374b983b672ef771bf64f64d1",
+      "web_sha256": "4c917f333704b9e947195a22f5cab79a9e319717414a4367d4804425405fb7e0",
+      "width": 1448
+    },
+    "of-ninth-056": {
+      "bytes": 473264,
+      "height": 1087,
+      "relative_url": "art/full/bccfa2986fbfb553c149e2b3161223c98560d827ce34666d05dd549faf2c48ab.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-056.png",
+      "source_sha256": "6eeca9a9ec19803832c30bb5a34a8e01b32baae50d2860c1c87fa485180bba5b",
+      "web_sha256": "bccfa2986fbfb553c149e2b3161223c98560d827ce34666d05dd549faf2c48ab",
+      "width": 1447
+    },
+    "of-ninth-057": {
+      "bytes": 309530,
+      "height": 1086,
+      "relative_url": "art/full/22f9fd37931b443408478102532d77e32bc6f07dec4906d0a0075bc88128e310.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-057.png",
+      "source_sha256": "719fab333378775ae764866e27a2935634070d413aa0db66b10ab7e9833a9446",
+      "web_sha256": "22f9fd37931b443408478102532d77e32bc6f07dec4906d0a0075bc88128e310",
+      "width": 1448
+    },
+    "of-ninth-058": {
+      "bytes": 384068,
+      "height": 1086,
+      "relative_url": "art/full/245799cec154dceafb1a4d207795c0b2b39f7f997ff2cf1d7c4be4251ea1fd76.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-058.png",
+      "source_sha256": "5f175208e6575902c07cc88ae02c421f77e3e300f782fdf283ee366fe4eadc11",
+      "web_sha256": "245799cec154dceafb1a4d207795c0b2b39f7f997ff2cf1d7c4be4251ea1fd76",
+      "width": 1448
+    },
+    "of-ninth-059": {
+      "bytes": 281788,
+      "height": 1086,
+      "relative_url": "art/full/5eed68a3e456ebb0daf047b3c2570f5a5f940f70abf56f3200fb7c1c5f75b65b.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-059.png",
+      "source_sha256": "d2d066d0016ef39a49761514ad401260cf6693a3db4cb60c2dfe40a32a910c83",
+      "web_sha256": "5eed68a3e456ebb0daf047b3c2570f5a5f940f70abf56f3200fb7c1c5f75b65b",
+      "width": 1448
+    },
+    "of-ninth-060": {
+      "bytes": 358412,
+      "height": 1086,
+      "relative_url": "art/full/89abf609bb3082ce8c0f06e6d4b2ab1c5737f6eda3cca91e65b8e7f843a7f87c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-060.png",
+      "source_sha256": "f0ebcd745bbe37b18a5b110e46d172dd5fbdefb0378adf522b49d30566bb956d",
+      "web_sha256": "89abf609bb3082ce8c0f06e6d4b2ab1c5737f6eda3cca91e65b8e7f843a7f87c",
+      "width": 1448
+    },
+    "of-ninth-061": {
+      "bytes": 424042,
+      "height": 1086,
+      "relative_url": "art/full/efdf152affc27888b8d795c20cf713161f631eeae8a7f69e99defb29ce237b5a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-061.png",
+      "source_sha256": "4d5e357c2c8fe57db684328a0be07130bd3d6360800f2e30529a36e0e773dd54",
+      "web_sha256": "efdf152affc27888b8d795c20cf713161f631eeae8a7f69e99defb29ce237b5a",
+      "width": 1448
+    },
+    "of-ninth-062": {
+      "bytes": 280990,
+      "height": 1086,
+      "relative_url": "art/full/9fb69f8c7384d9602ebce0ef10fb45ed492a29ebdac375cd0ffa29423bde4ed7.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-062.png",
+      "source_sha256": "3fb85879f493fee39ce2dd6a735ff3d8d7ae4ea874b945cf594503a427f052e0",
+      "web_sha256": "9fb69f8c7384d9602ebce0ef10fb45ed492a29ebdac375cd0ffa29423bde4ed7",
+      "width": 1448
+    },
+    "of-ninth-063": {
+      "bytes": 403034,
+      "height": 1086,
+      "relative_url": "art/full/3d90a13f25caffdf9dfc07a7b0073294823e61f6bc36a9dde6cfeee853db5355.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-063.png",
+      "source_sha256": "abcd3ebce9b39fca5ab444e872eefc73a2dbae8ec830337571ebd9b270676ca6",
+      "web_sha256": "3d90a13f25caffdf9dfc07a7b0073294823e61f6bc36a9dde6cfeee853db5355",
+      "width": 1448
+    },
+    "of-ninth-064": {
+      "bytes": 332066,
+      "height": 1086,
+      "relative_url": "art/full/2587dfc5fe64d63520634cd57278c2d272632d161e27c4129f9115a17306a341.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-064.png",
+      "source_sha256": "a33c3d283e1b25460af6eef4a73fe5444ee0e1880f9337e5b61cbe2aa8a7a902",
+      "web_sha256": "2587dfc5fe64d63520634cd57278c2d272632d161e27c4129f9115a17306a341",
+      "width": 1448
+    },
+    "of-ninth-065": {
+      "bytes": 298808,
+      "height": 1086,
+      "relative_url": "art/full/bebb4d3460e179356829d40743e66ccf16a34e50143cb1740e2896d783d1f6d0.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-065.png",
+      "source_sha256": "ab4219c177d41787f6a8e3827dece62f26bbd5e73fd8b4a857cde98fac88f6af",
+      "web_sha256": "bebb4d3460e179356829d40743e66ccf16a34e50143cb1740e2896d783d1f6d0",
+      "width": 1448
+    },
+    "of-ninth-066": {
+      "bytes": 245630,
+      "height": 1086,
+      "relative_url": "art/full/47d49c398d3a3b8997f03876f747f3498b41594c04d62d5eff01e114320d41bc.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-066.png",
+      "source_sha256": "fc900957c5cf92c9167af9f4647d7fc780be1ffe00226f00fa183f97646bf67c",
+      "web_sha256": "47d49c398d3a3b8997f03876f747f3498b41594c04d62d5eff01e114320d41bc",
+      "width": 1448
+    },
+    "of-ninth-067": {
+      "bytes": 385476,
+      "height": 1086,
+      "relative_url": "art/full/c43597d3ed315e297eb393f0b67cb8f0a4be2dd5e1ecbc7d9d4d700f5f051107.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-067.png",
+      "source_sha256": "e9e9eab346f665529a7d0a04217e40765667f3cb040ebb156a164d1342c75ad6",
+      "web_sha256": "c43597d3ed315e297eb393f0b67cb8f0a4be2dd5e1ecbc7d9d4d700f5f051107",
+      "width": 1448
+    },
+    "of-ninth-068": {
+      "bytes": 407470,
+      "height": 1086,
+      "relative_url": "art/full/fbd260dbd35e16cd3f0ca00828b47e379c3def49f45b0e4754b483cf420ad406.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-068.png",
+      "source_sha256": "e9af1b167b166f5199665c49fa92c407c38e3c75ff20d8b65ff446c78f19b522",
+      "web_sha256": "fbd260dbd35e16cd3f0ca00828b47e379c3def49f45b0e4754b483cf420ad406",
+      "width": 1448
+    },
+    "of-ninth-069": {
+      "bytes": 312140,
+      "height": 1086,
+      "relative_url": "art/full/63809942094b78d1b0af7dc621231043387a54c1dd024df4fa0d07b6346d0e65.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-069.png",
+      "source_sha256": "eae44a8424cca59a931908861db664820ce90316f14cb38e2708f92d9bd315de",
+      "web_sha256": "63809942094b78d1b0af7dc621231043387a54c1dd024df4fa0d07b6346d0e65",
+      "width": 1448
+    },
+    "of-ninth-070": {
+      "bytes": 417970,
+      "height": 1086,
+      "relative_url": "art/full/ecf92be116549c384dda56e5b4735c36df8731d29b7259765302de583991eb04.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-070.png",
+      "source_sha256": "8c6f476b63af58e34e3ca449d92ff2adf04a02c5dafbd2ac7e48c59e2a515bde",
+      "web_sha256": "ecf92be116549c384dda56e5b4735c36df8731d29b7259765302de583991eb04",
+      "width": 1448
+    },
+    "of-ninth-071": {
+      "bytes": 322508,
+      "height": 1086,
+      "relative_url": "art/full/ab9ec4174170801d7fd854b26bef2356ee14cac8c7811a669f15aef93c332745.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-071.png",
+      "source_sha256": "3303f0fa7ecc4034d22c5d439b6fbca583821e06c2688be76733f523ddcd53b8",
+      "web_sha256": "ab9ec4174170801d7fd854b26bef2356ee14cac8c7811a669f15aef93c332745",
+      "width": 1448
+    },
+    "of-ninth-072": {
+      "bytes": 358388,
+      "height": 1086,
+      "relative_url": "art/full/a42397b0b6abc2aa962e77cf3d1573da5b39fb06526a73d69d3bdbe9b7142f6e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-072.png",
+      "source_sha256": "e7b882245ee0e15cd4469d30aee42b8195a03772532204d21c817d079805f738",
+      "web_sha256": "a42397b0b6abc2aa962e77cf3d1573da5b39fb06526a73d69d3bdbe9b7142f6e",
+      "width": 1448
+    },
+    "of-ninth-073": {
+      "bytes": 355050,
+      "height": 1086,
+      "relative_url": "art/full/e3d3d40f68be3d754ce4c025880a1835a6bc6d3d472b9e43452183ff1555d500.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-073.png",
+      "source_sha256": "de26dc0a3d4c2bd1177ecf97d73449cd479acc4e3ecd9b0b3745f5091d73d548",
+      "web_sha256": "e3d3d40f68be3d754ce4c025880a1835a6bc6d3d472b9e43452183ff1555d500",
+      "width": 1448
+    },
+    "of-ninth-074": {
+      "bytes": 426242,
+      "height": 1086,
+      "relative_url": "art/full/3ce66461c1688ca36192025ad10d390e207849dc70e32abe58f0d3e8b8aa8721.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-074.png",
+      "source_sha256": "71d479951b873f3b757af88dfc58a79151aea46eacf1c6a28f03095ed0633f1a",
+      "web_sha256": "3ce66461c1688ca36192025ad10d390e207849dc70e32abe58f0d3e8b8aa8721",
+      "width": 1448
+    },
+    "of-ninth-075": {
+      "bytes": 348302,
+      "height": 1086,
+      "relative_url": "art/full/8054986b02ac28b986b360f136079c67105da7d89563f7671f7a24ff5e238bde.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-075.png",
+      "source_sha256": "3a4bde994de0848bcb160f52b15f2c7552b8b4b66b986782ec7bbc8f3da43a89",
+      "web_sha256": "8054986b02ac28b986b360f136079c67105da7d89563f7671f7a24ff5e238bde",
+      "width": 1448
+    },
+    "of-ninth-076": {
+      "bytes": 451962,
+      "height": 1086,
+      "relative_url": "art/full/a12776cb522177c764950af62a7f2e6469f53d56f12962b4926a4a437a6701d5.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-076.png",
+      "source_sha256": "c609b6239b2df15dc7af7c076ee8014d6f81b04eb19647460730149558dbad8d",
+      "web_sha256": "a12776cb522177c764950af62a7f2e6469f53d56f12962b4926a4a437a6701d5",
+      "width": 1448
+    },
+    "of-ninth-077": {
+      "bytes": 331560,
+      "height": 1086,
+      "relative_url": "art/full/8cf895cc73801c63ff2a988e7b3e6027d10f56926ed3bb7bb36b98c3839279b8.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-077.png",
+      "source_sha256": "bb576f02df4165648abacaf9ba4e10798633dc48a751dd0cc340aff673de504e",
+      "web_sha256": "8cf895cc73801c63ff2a988e7b3e6027d10f56926ed3bb7bb36b98c3839279b8",
+      "width": 1448
+    },
+    "of-ninth-078": {
+      "bytes": 324072,
+      "height": 1086,
+      "relative_url": "art/full/33e4be439103f8458534df82ae92ca6c9e06810793ca3b84b4d05e4834974b5f.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-078.png",
+      "source_sha256": "cb4f9b8d385c776fabd1a54b2ff4870fac1d3e11f7cea386ef10cc7355367e58",
+      "web_sha256": "33e4be439103f8458534df82ae92ca6c9e06810793ca3b84b4d05e4834974b5f",
+      "width": 1448
+    },
+    "of-ninth-079": {
+      "bytes": 401714,
+      "height": 1086,
+      "relative_url": "art/full/941f7f106dd03309f9649c4f6b88164801233a340072bb42545abf2fa3c3c917.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-079.png",
+      "source_sha256": "5e36f283312abcc8b782a77819805d74ca55a11e79b15df9b92b2deb4716dfaf",
+      "web_sha256": "941f7f106dd03309f9649c4f6b88164801233a340072bb42545abf2fa3c3c917",
+      "width": 1448
+    },
+    "of-ninth-080": {
+      "bytes": 390482,
+      "height": 1086,
+      "relative_url": "art/full/93452b1dfc55d1b84e729a78dccfa168aaac2e445ab945605b697d1af97d83ab.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-080.png",
+      "source_sha256": "a2aa20217821635fbf19346298f807c2ffec80b8772b5680267af005ad014b4a",
+      "web_sha256": "93452b1dfc55d1b84e729a78dccfa168aaac2e445ab945605b697d1af97d83ab",
+      "width": 1448
+    },
+    "of-ninth-081": {
+      "bytes": 298094,
+      "height": 1086,
+      "relative_url": "art/full/41d60f927479df85679c7829738a114224a2f15128f89a32eb0eca3160da5bf5.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-081.png",
+      "source_sha256": "b2c07b613e752638cc8066b3d20c2f7125a252eaf50b16f98ba3c0f4b1fd0dcd",
+      "web_sha256": "41d60f927479df85679c7829738a114224a2f15128f89a32eb0eca3160da5bf5",
+      "width": 1448
+    },
+    "of-ninth-082": {
+      "bytes": 401612,
+      "height": 1086,
+      "relative_url": "art/full/bd3e12e25be9fae6f19af9ead32b17c188a06fb1e4125ec734f4e5a6bdd96544.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-082.png",
+      "source_sha256": "134df538c9f6f0b1272d911fb01f3c8362e8312d12c5642db23255222c819fed",
+      "web_sha256": "bd3e12e25be9fae6f19af9ead32b17c188a06fb1e4125ec734f4e5a6bdd96544",
+      "width": 1448
+    },
+    "of-ninth-083": {
+      "bytes": 407070,
+      "height": 1086,
+      "relative_url": "art/full/e7b6e8520360143be993cec034c9ac4b6eecd1142c6d0578ba984a2e4b42ec61.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-083.png",
+      "source_sha256": "7dd4e7ed0545493ea4811746b02023e8c58b5e601f045a047339d60a0c94990a",
+      "web_sha256": "e7b6e8520360143be993cec034c9ac4b6eecd1142c6d0578ba984a2e4b42ec61",
+      "width": 1448
+    },
+    "of-ninth-084": {
+      "bytes": 378020,
+      "height": 1086,
+      "relative_url": "art/full/891b44f37fe9a32123851da1ff2f72f5e5de250cc83f0a9ca3351d02bf468d5e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-084.png",
+      "source_sha256": "5220f8179ca9c9100ceb71080b88bd998f1829b30dbd17725561b25c8658ef65",
+      "web_sha256": "891b44f37fe9a32123851da1ff2f72f5e5de250cc83f0a9ca3351d02bf468d5e",
+      "width": 1448
+    },
+    "of-ninth-085": {
+      "bytes": 390200,
+      "height": 1086,
+      "relative_url": "art/full/ff77b5302d21c3de99cca30535794c30c28a19d495536672f01d690d375e5d34.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-085.png",
+      "source_sha256": "6cc5b07c016e1c8aac7208c9a900d58ff3f933f91209be16bfbe738d5570e77f",
+      "web_sha256": "ff77b5302d21c3de99cca30535794c30c28a19d495536672f01d690d375e5d34",
+      "width": 1448
+    },
+    "of-ninth-086": {
+      "bytes": 308366,
+      "height": 1086,
+      "relative_url": "art/full/d8b3bf8211803b922919e8059e2a845e984643da88f5b43368ba77a194e00556.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-086.png",
+      "source_sha256": "9dea01959e26c8b45a4ddd01d0f15e4d5d274e58084601498fc2d2e7f036cccd",
+      "web_sha256": "d8b3bf8211803b922919e8059e2a845e984643da88f5b43368ba77a194e00556",
+      "width": 1448
+    },
+    "of-ninth-087": {
+      "bytes": 424532,
+      "height": 1086,
+      "relative_url": "art/full/90b69b0c731ea87e1a85a98f929db308d50d034fdb85179f3aff0445b89534e9.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-087.png",
+      "source_sha256": "c74e409a3a70ca082f04aa8e067f6631ea99fcd09facb3639cc45b6d46a78ece",
+      "web_sha256": "90b69b0c731ea87e1a85a98f929db308d50d034fdb85179f3aff0445b89534e9",
+      "width": 1448
+    },
+    "of-ninth-088": {
+      "bytes": 299752,
+      "height": 1086,
+      "relative_url": "art/full/d557d659862257c2dcbf38b7b35d5aa685e33fd7cf12443d45febb2d8dfb941a.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-088.png",
+      "source_sha256": "6d3949fdfa0b0c75d3a70687370a9d582ad313a5e1cf7e7f2de6fd454b22c307",
+      "web_sha256": "d557d659862257c2dcbf38b7b35d5aa685e33fd7cf12443d45febb2d8dfb941a",
+      "width": 1448
+    },
+    "of-ninth-089": {
+      "bytes": 308202,
+      "height": 1086,
+      "relative_url": "art/full/b1636db28192740d72dc33b83d8bbe2037ec2375b2637c67479a577698c19531.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-089.png",
+      "source_sha256": "738c9694fa06d8ebfd7feac0cf0755fc9162b82cee8a2972f6813dd6eada606e",
+      "web_sha256": "b1636db28192740d72dc33b83d8bbe2037ec2375b2637c67479a577698c19531",
+      "width": 1448
+    },
+    "of-ninth-090": {
+      "bytes": 284692,
+      "height": 1086,
+      "relative_url": "art/full/8ca442c711559a182316c944827d860cb3e85baba6801b8ee1dbc2b54887cda4.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-090.png",
+      "source_sha256": "54b042f9055231885449149a55ed43a20bb32880fbcbd99ab892e6f4aeeb9a90",
+      "web_sha256": "8ca442c711559a182316c944827d860cb3e85baba6801b8ee1dbc2b54887cda4",
+      "width": 1448
+    },
+    "of-ninth-091": {
+      "bytes": 348912,
+      "height": 1086,
+      "relative_url": "art/full/b8bbc40a581b1407125d64a40b66bc09bab979808a14def7186a0488ef6ed31c.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-091.png",
+      "source_sha256": "1173268780f7e976fa0c1b6538557f41f03d228e43bf9b1e504303aa5d7512d5",
+      "web_sha256": "b8bbc40a581b1407125d64a40b66bc09bab979808a14def7186a0488ef6ed31c",
+      "width": 1448
+    },
+    "of-ninth-092": {
+      "bytes": 235004,
+      "height": 1086,
+      "relative_url": "art/full/9cd54768365209fbe88bb5d8b3514b478f186c769a325cc13f997b8c880613f2.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-092.png",
+      "source_sha256": "28a269eb47a9071ccfd78f4a8f13959cf6c1c0d66588c3b4c0205e743ee8208c",
+      "web_sha256": "9cd54768365209fbe88bb5d8b3514b478f186c769a325cc13f997b8c880613f2",
+      "width": 1448
+    },
+    "of-ninth-093": {
+      "bytes": 256656,
+      "height": 1086,
+      "relative_url": "art/full/32de6b9aced33235e580fc4edaf4956735300254136234c483803b1062169d53.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-093.png",
+      "source_sha256": "f3edb09b7d426c507ca54c213e4183e99217b10ce2eeddf6010ec4cb2a7377fa",
+      "web_sha256": "32de6b9aced33235e580fc4edaf4956735300254136234c483803b1062169d53",
+      "width": 1448
+    },
+    "of-ninth-094": {
+      "bytes": 299890,
+      "height": 1086,
+      "relative_url": "art/full/c9bec50f1aeab4423cf84af5063e750a049677f204923f5cf0afe632533bbdcb.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-094.png",
+      "source_sha256": "44ba4fec697bff2667628f7029cbd1cec185c3b5df1b0508c9ce542618325d2f",
+      "web_sha256": "c9bec50f1aeab4423cf84af5063e750a049677f204923f5cf0afe632533bbdcb",
+      "width": 1448
+    },
     "of-ninth-095": {
       "bytes": 263176,
       "height": 1086,
@@ -2123,6 +3041,51 @@
       "source_asset_path": "res://assets/cards/originals/of-ninth-095.png",
       "source_sha256": "acbe5bb70ba75eed43b378bbae83a83ac48bdb165b420f20ed5314d2b4cc9eae",
       "web_sha256": "7fa45ef667e823c1abe6e21f96d1fda03b7543a599351227409b8233aed00e20",
+      "width": 1448
+    },
+    "of-ninth-096": {
+      "bytes": 295850,
+      "height": 1086,
+      "relative_url": "art/full/f9254d4dcacf122f47b506abb8ff42bec36b6e10dcfab98f31720b817391c9d3.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-096.png",
+      "source_sha256": "4b59e958a745db069ed8c4068da8b35d246aaa03e77dd62ad65bec092fe6b317",
+      "web_sha256": "f9254d4dcacf122f47b506abb8ff42bec36b6e10dcfab98f31720b817391c9d3",
+      "width": 1448
+    },
+    "of-ninth-097": {
+      "bytes": 259228,
+      "height": 1087,
+      "relative_url": "art/full/f2b23ebab6585a30050b7ba475b804f6649e6a28113d41f3907829d62f381ca6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-097.png",
+      "source_sha256": "68f067b0cfd643dcd1a2201983e4ba29a2a68f6b3f4e5c382d5fe2962c656845",
+      "web_sha256": "f2b23ebab6585a30050b7ba475b804f6649e6a28113d41f3907829d62f381ca6",
+      "width": 1447
+    },
+    "of-ninth-098": {
+      "bytes": 336212,
+      "height": 1086,
+      "relative_url": "art/full/3965d707a194cfdcc8115c02f4bb5c0bb1923a92b769a9f213d5c47a974fefb6.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-098.png",
+      "source_sha256": "862e3335ac564e71738fd06c2033fd191efdd132fb080e0481afe1ecdd3e5bdf",
+      "web_sha256": "3965d707a194cfdcc8115c02f4bb5c0bb1923a92b769a9f213d5c47a974fefb6",
+      "width": 1448
+    },
+    "of-ninth-099": {
+      "bytes": 204774,
+      "height": 1086,
+      "relative_url": "art/full/b71f1b6dbece07b8f0ee3c740956edfe7c9ad0cc8d77aa5fb9f5effa6a5b365e.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-099.png",
+      "source_sha256": "00ca65cafa6a70b860a1666ca09daffca57c4e9f6f5e35e8c938045396975b8a",
+      "web_sha256": "b71f1b6dbece07b8f0ee3c740956edfe7c9ad0cc8d77aa5fb9f5effa6a5b365e",
+      "width": 1448
+    },
+    "of-ninth-100": {
+      "bytes": 270744,
+      "height": 1086,
+      "relative_url": "art/full/02189fd3326a5fd8f430a301350fde96d1920eaea61cffa0f94f2e09d8d87b82.webp",
+      "source_asset_path": "res://assets/cards/originals/of-ninth-100.png",
+      "source_sha256": "3f8e886c428c427678cfef9af5b13f0365943bcdd862ea2b347c29ff47ad8a56",
+      "web_sha256": "02189fd3326a5fd8f430a301350fde96d1920eaea61cffa0f94f2e09d8d87b82",
       "width": 1448
     },
     "of-stillwatch-001": {
@@ -3026,7 +3989,7 @@
       "width": 1448
     }
   },
-  "full_asset_count": 336,
+  "full_asset_count": 443,
   "individual_original_count_added": 0,
   "profile": "orafold-web-art-v1",
   "quality": 0.9,
