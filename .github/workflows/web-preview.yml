@@ -15,6 +15,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  native-platforms:
+    # Part of this workflow's conclusion: a failed native build cannot be
+    # hidden behind a green release-candidate run. No publication happens here.
+    uses: ./.github/workflows/native-platform-qa.yml
+
   test-and-export:
     runs-on: ubuntu-24.04
     # Native regression suites and three exports; browser engines run separately.
