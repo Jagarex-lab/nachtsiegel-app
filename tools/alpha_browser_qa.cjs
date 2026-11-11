@@ -290,7 +290,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
      await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
      if(sequenceEnabled){
       gameplay.replay.verified_through_actual_ui=true;
-      await action('result_menu');await action('settings');await action('last_replay');await action('replay_next');
+      await action('menu');await action('confirm_menu');await action('settings');await action('last_replay');await action('replay_next');
       assert((await state()).modal&&(await state()).actions.replay_previous?.disabled===false,'the actual stored replay viewer opens and advances');
       await sequenceFrame('replay',{viewer_step:1,total_commands:gameplay.replay.command_count,replay_file:gameplay.replay.file,replay_sha256:gameplay.replay.sha256,note:'The modal reconstructs replay prefix1; live_session_battle remains the completed original session and is not the displayed prefix.'});
       await action('modal_close');await action('settings_back');await opening(productionTemplate.power,productionTemplate.cards);
