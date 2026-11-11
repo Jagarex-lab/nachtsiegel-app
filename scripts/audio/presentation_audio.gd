@@ -11,15 +11,14 @@ func reset() -> void:
 	last_state = {}
 	music_result = ""
 
-func _context(event: Dictionary, state: Dictionary, catalog) -> Dictionary:
+func _context(event: Dictionary, catalog) -> Dictionary:
 	var id := str(event.get("card_id", ""))
 	if id.is_empty() and event.get("pendingDeath") is Dictionary:
 		id = str(event.pendingDeath.get("card", ""))
-	var side := str(event.get("side", ""))
-	var lane := int(event.get("lane", event.get("to", -1)))
-	if id.is_empty() and state.has(side) and lane >= 0 and lane < 5:
-		var unit: Variant = state[side].lanes[lane]
-		if unit is Dictionary: id = str(unit.id)
+	# A post-resolution lane can already contain a replacement creature.
+	# Without an explicit card identity, do not invent an attack faction.
+	if id.is_empty() and str(event.get("order","")) in ["houses","stillwatch","morph","ninth","neutral"]:
+		return {"faction":str(event.order),"rarity":"common","intensity":0.6}
 	var card: Dictionary = catalog.card(id) if catalog != null and not id.is_empty() else {}
 	return {"faction":str(card.get("faction",card.get("order","neutral"))), "rarity":str(card.get("rarity","common")), "intensity":0.6}
 
@@ -32,7 +31,7 @@ func collect(events: Array, previous: Dictionary, catalog = null) -> Array:
 		var now: Dictionary = event.get("state",{})
 		if now.is_empty(): continue
 		var kind := str(event.get("kind",""))
-		var context := _context(event, now, catalog)
+		var context := _context(event, catalog)
 		# The production attack log differs from archived unit_hit/hero_hit logs.
 		var semantic: String = {"attack":"creature.attack", "unit_hit":"creature.attack", "hero_hit":"creature.attack", "summon":"creature.summon", "death":"creature.defeated", "recall":"creature.return", "shift":"combat.path_change", "tactical_move":"combat.path_change", "generic_move":"combat.path_change", "generic_return":"card.return", "recover":"card.return", "burn":"card.discard", "generic_discard":"card.discard", "recycle":"card.shuffle", "relic_installed":"card.play.relic", "relic_activated":"relic.activate", "event":"card.play.impulse", "impulse_armed":"card.play.impulse", "impulse_triggered":"combat.reaction", "reaction":"combat.reaction", "burst":"resonance.unleash", "convergence_declared":"convergence.prepare", "convergence_win":"convergence.complete", "convergence_failed":"convergence.interrupt"}.get(kind, "")
 		if not semantic.is_empty(): sounds.append({"event":semantic,"context":context})

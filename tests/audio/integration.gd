@@ -29,6 +29,9 @@ func run() -> void:
 	for i in 1000:audio.cue("hit")
 	check(audio.voices.size()==16 and audio.get_child_count()==nodes and audio.history.size()<=64,"Archive stress stays bounded without a second player pool")
 	audio.stop_all()
+	audio.quitting=true
+	check(not audio.play_event("card.draw") and not audio.set_music("menu") and not audio.set_ambience("ambience.rift"),"shutdown rejects deferred UI sound/music/ambience without restarting streams")
+	audio.quitting=false
 	var app=Shell.new();root.add_child(app);await settle()
 	for dimensions in [Vector2i(320,568),Vector2i(390,844),Vector2i(844,390)]:
 		root.size=dimensions;app.page="settings";app.render();await settle()

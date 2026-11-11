@@ -18,6 +18,18 @@ func _ready() -> void:
 	get_tree().auto_accept_quit = false
 	get_tree().root.close_requested.connect(request_quit)
 
+func play_event(event_name: String, context: Dictionary = {}) -> bool:
+	return false if quitting else super.play_event(event_name,context)
+
+func set_music(context: String, fade_seconds: float = 1.5) -> bool:
+	return false if quitting else super.set_music(context,fade_seconds)
+
+func set_ambience(clip_id: String, fade_seconds: float = 0.75) -> bool:
+	return false if quitting else super.set_ambience(clip_id,fade_seconds)
+
+func unlock_audio() -> void:
+	if not quitting: super.unlock_audio()
+
 func apply(values: Dictionary) -> void:
 	for channel in {"Music":"music", "SFX":"sfx", "UI":"ui"}:
 		var value: Variant = values.get(channel)
