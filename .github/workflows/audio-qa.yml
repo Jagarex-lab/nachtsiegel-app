@@ -54,6 +54,19 @@ jobs:
           godot --headless --path work/audio/fixture --export-debug 'Audio Web QA'
           godot --headless --path work/audio/fixture --export-debug 'Audio Linux QA'
           work/audio/fixture/build/audio-qa.x86_64 --headless --audio-driver Dummy -- --audio-fixture-native | tee work/audio/native-export-test.log
+      - name: Actual native product runtime with streaming audio
+        run: |
+          mkdir -p work/audio/product-native work/audio/native-empty
+          godot --headless --path . --export-debug 'Linux Runtime QA' work/audio/product-native/orafold-audio-runtime-qa.x86_64 > work/audio/product-native-export.log 2>&1
+          audio_native_binary="$PWD/work/audio/product-native/orafold-audio-runtime-qa.x86_64"
+          (cd work/audio/native-empty && timeout 300 "$audio_native_binary" --headless --audio-driver Dummy) | tee work/audio/product-native-runtime.log
+          if rg -n '(^ERROR:|^SCRIPT ERROR:|ObjectDB instances leaked|resources still in use)' work/audio/product-native-runtime.log; then exit 1; fi
+          python3 - <<'PYQA'
+          import json
+          from pathlib import Path
+          rows = [json.loads(line) for line in Path('work/audio/product-native-runtime.log').read_text().splitlines() if line.startswith('{')]
+          assert len(rows) == 1 and rows[0]['suite'] == 'production_native_exported' and rows[0]['failures'] == 0 and rows[0]['assertions'] >= 24, rows
+          PYQA
       - name: Isolated browser dependencies
         run: |
           npm install --prefix work/audio/browser-tools --no-save --package-lock=false playwright@1.62.1

@@ -21,6 +21,9 @@ func run() -> void:
 	check(audio.snapshot().pool_size==16 and audio.get_child_count()==18,"actual native single mixer has bounded16effect voices and streaming children")
 	check(FileAccess.file_exists("res://data/audio/asset_manifest.json") and FileAccess.file_exists("res://assets/audio/ORAFOLD-LICENSES.md"),"audio provenance and redistribution notice packaged")
 	check(audio.play_event("card.draw"),"actual native packaged draw stream plays")
+	check(audio.set_music("menu",0.02) and audio.set_ambience("ambience.rift",0.02),"native packaged streaming music and ambience start")
+	await get_tree().create_timer(0.10).timeout
+	check(audio.snapshot().music.playing==1 and audio._ambience.playing,"actual native streaming transports active before shutdown exercise")
 	check(audio.set_volume("ui",0.27),"native independent UI gain accepted")
 	var saved_audio=ConfigFile.new()
 	check(saved_audio.load(audio.settings_path)==OK and is_equal_approx(float(saved_audio.get_value("audio","ui",-1)),0.27),"native executable persists actual audio ConfigFile")
