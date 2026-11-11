@@ -1,26 +1,43 @@
 'use strict';
-const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict');
+const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
 const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards,...JSON.parse(fs.readFileSync('data/legacy/cards.json','utf8')).cards],by=Object.fromEntries(cards.map(c=>[c.id,c]));
 (async()=>{
  const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
  const legacyOnly=process.env.QA_LEGACY_ONLY==='1';
- fs.rmSync('work/alpha/browser-results.json',{force:true});
+ const recordGameplay=process.env.QA_GAMEPLAY_SEQUENCE==='1',sha256=value=>crypto.createHash('sha256').update(value).digest('hex');
+ let sequenceArtifact=null;
+ if(recordGameplay){
+  assert(!legacyOnly,'the gameplay sequence requires the full production catalog');
+  assert(/^[0-9a-f]{40}$/.test(process.env.EXPECTED_COMMIT||''),'the gameplay sequence requires an exact source commit');
+  assert(process.env.QA_ARTIFACT_MANIFEST,'the gameplay sequence requires QA_ARTIFACT_MANIFEST');
+  const manifest=fs.readFileSync(process.env.QA_ARTIFACT_MANIFEST);
+  sequenceArtifact={path:path.resolve(process.env.QA_ARTIFACT_MANIFEST),sha256:sha256(manifest),manifest:JSON.parse(manifest)};
+  assert.equal(sequenceArtifact.manifest.commit||sequenceArtifact.manifest.source_commit,process.env.EXPECTED_COMMIT,'the artifact manifest must name the same exact source commit');
+  const files=sequenceArtifact.manifest.files;
+  assert(files&&typeof files==='object'&&files['index.html']&&files['build-info.json'],'the artifact manifest requires actual exported file hashes');
+  assert.equal(Object.keys(files).filter(file=>file.endsWith('.pck')).length,1,'the artifact manifest requires one exported PCK');
+  assert.equal(Object.keys(files).filter(file=>file.endsWith('.wasm')).length,1,'the artifact manifest requires one exported WASM');
+  for(const [file,hash]of Object.entries(files))assert(!file.startsWith('/')&&!file.split('/').includes('..')&&/^[0-9a-f]{64}$/.test(hash),'the artifact manifest requires safe relative paths and SHA256 hashes');
+ }
  const results=[],profiles={chromium:[{name:'desktop',viewport:{width:1280,height:720},hasTouch:true},{name:'desktop-wide',viewport:{width:1600,height:900},hasTouch:true},{...devices['Pixel 7'],name:'android',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['Pixel 7'],name:'android-bars',viewport:{width:844,height:320},deviceScaleFactor:2,insets:{left:44,right:44,top:0,bottom:21}}],webkit:[{...devices['iPhone 13'],name:'iphone',viewport:{width:844,height:390},deviceScaleFactor:3},{...devices['iPhone 13 Pro Max'],name:'iphone-wide',viewport:{width:915,height:412},deviceScaleFactor:1},{...devices['iPhone 13'],name:'iphone-bars',viewport:{width:844,height:320},deviceScaleFactor:1,reducedMotion:'reduce',insets:{left:44,right:44,top:0,bottom:21}}]};
  const selectedEngines=(process.env.QA_ENGINES||'chromium,webkit').split(',');
  for(const engine of selectedEngines)assert(profiles[engine],'unsupported browser engine '+engine);
  if(process.env.QA_PROFILES)for(const requested of process.env.QA_PROFILES.split(','))assert(selectedEngines.some(engine=>profiles[engine].some(profile=>profile.name===requested)),'unsupported profile '+requested);
+ if(recordGameplay)assert(selectedEngines.includes('chromium')&&(!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes('desktop')),'the gameplay sequence requires the Chromium desktop profile');
+ fs.rmSync('work/alpha/browser-results.json',{force:true});
  for(const engine of selectedEngines){
   for(const profile of profiles[engine].filter(p=>!process.env.QA_PROFILES||process.env.QA_PROFILES.split(',').includes(p.name))){
   const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,...(process.env.QA_PROXY?{proxy:{server:process.env.QA_PROXY,bypass:"localhost,127.0.0.1"}}:{}),...(engine==='chromium'?{channel:'chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
-   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot';const relicActivations=[],toolbarTests=[],actionTrace=[];
+   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot',gameplay=null;const relicActivations=[],toolbarTests=[],actionTrace=[];
+   const sequenceEnabled=recordGameplay&&engine==='chromium'&&name==='desktop',sequenceDir=path.resolve(process.env.QA_GAMEPLAY_OUTPUT||'work/alpha/gameplay-sequence');
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
    const state=()=>page.evaluate(()=>window.orafoldQA);const progress=setInterval(async()=>{try{const q=await state();fs.writeFileSync(`work/alpha/browser-progress-${engine}-${name}.json`,JSON.stringify({engine,name,page:q?.page,modal:q?.modal,message:q?.message,commands:q?.command_count,battle:q?.battle},null,2));}catch{}},5000);progress.unref();
    const wait=fn=>page.waitForFunction(fn,undefined,{timeout:90000});
-   const tap=async r=>{await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
+   const tap=async r=>{if(gameplay?.recording){const q=await state();gameplay.inputs.push({kind:'touch',point:[r[0]+r[2]/2,r[1]+r[3]/2],rect:r,seed:q.battle?.seed,command_count:q.command_count,selected:q.selected,phase:q.battle?.hero.phase,action:lastAction});}await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);};
    const encloses=(outer,inner)=>outer&&inner&&inner[0]>=outer[0]-.1&&inner[1]>=outer[1]-.1&&inner[0]+inner[2]<=outer[0]+outer[2]+.1&&inner[1]+inner[3]<=outer[1]+outer[3]+.1;
    const viewportRect=()=>[0,0,page.viewportSize().width,page.viewportSize().height];
    const touchRect=(current,id)=>id.startsWith('card_')&&current.action_visibility?.[id]?current.action_visibility[id].visible_rect:current.actions[id].rect;
@@ -60,7 +77,7 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end});
     await page.waitForTimeout(180);
    }
-   const action=async id=>{
+   const action=async (id,{render=true}={})=>{
     lastAction=id;if(id==='convergence'&&!(await state()).actions[id])await action('actions');
     await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});
     let previous=await state();lastAction=id;
@@ -72,28 +89,50 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
     assert(fullVisible(previous,id),id+' requires a visible44CSS card region or a fully visible button');
     const hit=touchRect(previous,id);assert(hit[2]>=43.9&&hit[3]>=43.9,id+' actual touch region remains44CSS');
     actionTrace.push({id,kind:'tap',rect:previous.actions[id].rect,hit_rect:hit,visibility:previous.action_visibility?.[id]||null});
-    await tap(hit);await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});
+    await tap(hit);if(render)await page.waitForFunction(v=>{const q=window.orafoldQA;return q.render_version>v.render_version||q.modal_version!==v.modal_version;},previous,{timeout:90000});
    };
    const capture=engine==='chromium'?await context.newCDPSession(page):null;
+   const deadline=async (promise,message,ms)=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(message)),ms);})]).finally(()=>clearTimeout(timer));};
    const shot=async tag=>{
     // QA render_version is updated while rebuilding Controls, before the
     // browser compositor necessarily has that canvas frame. Match the other
     // native-viewport harnesses and wait for paint before requesting readback.
-    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    await deadline(page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))),'Screenshot paint timed out after15s',15000);
     await page.waitForTimeout(180);
     let buffer;
     if(capture){
      const viewport=page.viewportSize();let expiry;
      const response=await Promise.race([capture.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:opts.deviceScaleFactor||1}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
      buffer=Buffer.from(response.data,'base64');
-    }else buffer=await page.screenshot();
+    }else buffer=await page.screenshot({timeout:30000});
     assert.equal(buffer.readUInt32BE(16),page.viewportSize().width*(opts.deviceScaleFactor||1),'native screenshot width');
     assert.equal(buffer.readUInt32BE(20),page.viewportSize().height*(opts.deviceScaleFactor||1),'native screenshot height');
     assert(buffer.length>20000,'nonempty rendered screenshot');
     fs.writeFileSync(`work/alpha/${engine}-${name}-${tag}.png`,buffer);
     return buffer;
    };
-   async function opening(customPower=null,expectedCards=null){await action('start');if(!legacyOnly){if(customPower)await action('custom_'+customPower);await action('deck_play');if(expectedCards){const hero=(await state()).battle.hero;assert.deepEqual([...hero.hand,...hero.deck].sort(),[...expectedCards].sort(),'actual new match contains the exact saved production template');}}if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);}
+   const saveSequence=()=>{if(gameplay)fs.writeFileSync(path.join(sequenceDir,'sequence.json'),JSON.stringify(gameplay,null,2));};
+   async function sequenceFrame(stage,evidence={}){
+    assert(gameplay?.recording,'a sequence frame must belong to the recorded real duel');
+    await wait(()=>{const b=window.orafoldQA?.battle;return b&&(b.stage!=='battle'||b.active==='hero'||b.winner);});
+    const before=await state(),tag=`gameplay-${String(gameplay.frames.length+1).padStart(2,'0')}-${stage}`,buffer=await shot(tag),after=await state();
+    assert.equal(after.command_count,before.command_count,'screenshot does not cross a gameplay command');
+    assert.deepEqual(after.battle,before.battle,'screenshot captures a stable actual battle state');
+    const file=path.join(sequenceDir,tag+'.png');fs.writeFileSync(file,buffer);
+    gameplay.frames.push({stage,file:path.basename(file),sha256:sha256(buffer),bytes:buffer.length,seed:after.battle.seed,command_count:after.command_count,round:after.battle.round,winner:after.battle.winner,page:after.page,modal:after.modal,message:after.message,render_version:after.render_version,input_count:gameplay.inputs.length,evidence,live_session_battle:after.battle});saveSequence();
+   }
+   async function opening(customPower=null,expectedCards=null,recordOpening=false){
+    await action('start');
+    if(!legacyOnly){
+     if(customPower)await action('custom_'+customPower);await action('deck_play');
+     if(expectedCards){const hero=(await state()).battle.hero;assert.deepEqual([...hero.hand,...hero.deck].sort(),[...expectedCards].sort(),'actual new match contains the exact saved production template');}
+     if(recordOpening){gameplay.seed=(await state()).battle.seed;await sequenceFrame('mulligan');}
+    }
+    if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}
+    await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');
+    if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);
+    if(recordOpening)await sequenceFrame('opening');
+   }
    async function toolbarViewportChecks(){
     // Obtain six real cards by drawing, or by holding the first hand for one
     // legal turn. No HP, cards, phase, seed or model state is injected.
@@ -153,17 +192,32 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       const ready=q.controlled_lanes||[];
       if(q.mode==='alpha'&&b.round>=11&&ready.length>=3){
        await action('convergence');for(const i of ready.slice(0,3)){const previous=await state();await tap(previous.board['hero'+i]);await page.waitForFunction(v=>window.orafoldQA.render_version>v,previous.render_version);}const previous=await state();await action('convergence');await page.waitForFunction(n=>window.orafoldQA.command_count>n,previous.command_count);
-      }else await action('end');return;
+      }else{
+       const attackers=Object.entries(q.board_details||{}).filter(([id,unit])=>id.startsWith('hero')&&unit.ready&&unit.attack>0);
+       const before=q.command_count;await action('end');
+       if(gameplay?.recording&&!gameplay.frames.some(frame=>frame.stage==='attack-resolution')&&attackers.length){
+        await sequenceFrame('attack-resolution',{actual_command:'endTurn',command_before:before,ready_attackers:attackers});
+       }
+      }return;
      }
      await page.waitForFunction(()=>window.orafoldQA.hand.map(c=>c.id).join()===window.orafoldQA.battle.hero.hand.join());q=await state();await tap(q.hand[choice.i].rect);
      await page.waitForFunction(i=>window.orafoldQA.selected===i,choice.i);const before=(await state()).command_count;
      await tap(choice.relic?(await state()).actions.relic_slot.rect:(await state()).board[choice.side+choice.lane]);
      await page.waitForFunction(n=>window.orafoldQA.command_count>n||window.orafoldQA.battle.winner,before,{timeout:90000});
+     if(gameplay?.recording&&!gameplay.frames.some(frame=>frame.stage==='first-play'))await sequenceFrame('first-play',{card:q.hand[choice.i].id,command_before:before,lane:choice.lane,side:choice.side,relic:choice.relic});
     }
     throw Error('UI action loop made no turn progress');
    }
    try{
     if(process.env.EXPECTED_COMMIT){const r=await page.request.get(new URL('build-info.json',url).href);assert(r.ok());testedBuildInfo=await r.json();assert.equal(testedBuildInfo.commit,process.env.EXPECTED_COMMIT);}
+    if(sequenceEnabled){
+     sequenceArtifact.served_verified_files=[];
+     for(const [file,expected]of Object.entries(sequenceArtifact.manifest.files).filter(([file])=>['index.html','build-info.json'].includes(file)||file.endsWith('.pck')||file.endsWith('.wasm'))){
+      const response=await page.request.get(new URL(file,url).href,{timeout:90000});assert(response.ok(),'actual served artifact '+file);
+      const bytes=await response.body(),actual=sha256(bytes);assert.equal(actual,expected,'actual served bytes match artifact manifest: '+file);
+      sequenceArtifact.served_verified_files.push({file,sha256:actual,bytes:bytes.length});await response.dispose();
+     }
+    }
     await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');assert((await page.title()).includes('ORAFOLD'));
     console.log('LOBBY',engine,name);let menu=await state();
     for(const key of ['start','builder','collection','settings'])assert(menu.actions[key],key);
@@ -210,15 +264,52 @@ const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8'))
       assert(loaded.deck_ids.some(id=>id.startsWith('of-')),'fullbrowsergame uses actual genericproductioncards');
       await action('save_deck');await action('builder_back');
      }
-     await opening(productionTemplate?.power,productionTemplate?.cards);
-     let turns=0;while(!(await state()).battle.winner&&turns++<160){const q=await state();console.log('UI DUEL',engine,name,'turn',q.battle.round,'HP',q.battle.hero.hp,q.battle.enemy.hp,'commands',q.command_count);await playTurn();}
-     q=await state();assert(q.battle.winner,'complete UI duel');if(profileTemplate==='prod-relic')assert(relicActivations.some(value=>value.generic),'Reliktstrategie must exercise at least one real generic activation through UI');await shot('result');await action('result_log');await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
+     if(sequenceEnabled){
+      fs.mkdirSync(sequenceDir,{recursive:true});assert(!fs.existsSync(path.join(sequenceDir,'sequence.json')),'preserve the previous gameplay sequence; choose a new QA_GAMEPLAY_OUTPUT');
+      gameplay={status:'running',recording:true,source_commit:process.env.EXPECTED_COMMIT,build_info:testedBuildInfo,artifact:sequenceArtifact,engine,browser_version:browser.version(),playwright:require('playwright/package.json').version,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,production_catalog_sha256:sha256(fs.readFileSync('data/production/cards.json')),art_manifest_sha256:sha256(fs.readFileSync('data/production/art_manifest.json')),strategy_template:profileTemplate,deck:productionTemplate.cards,seed:null,frames:[],inputs:[],replay:null};saveSequence();
+     }
+     await opening(productionTemplate?.power,productionTemplate?.cards,sequenceEnabled);
+     let turns=0;while(!(await state()).battle.winner&&turns++<160){
+      const q=await state();console.log('UI DUEL',engine,name,'turn',q.battle.round,'HP',q.battle.hero.hp,q.battle.enemy.hp,'commands',q.command_count);await playTurn();
+      const current=await state();
+      if(gameplay?.recording&&!current.battle.winner&&current.battle.round>=7&&gameplay.frames.some(frame=>frame.stage==='attack-resolution')&&!gameplay.frames.some(frame=>frame.stage==='midgame'))await sequenceFrame('midgame');
+     }
+     q=await state();assert(q.battle.winner,'complete UI duel');if(profileTemplate==='prod-relic')assert(relicActivations.some(value=>value.generic),'Reliktstrategie must exercise at least one real generic activation through UI');await shot('result');
+     if(sequenceEnabled)await sequenceFrame('result');
+     await action('result_log');
+     if(sequenceEnabled){
+      const [download]=await Promise.all([page.waitForEvent('download',{timeout:30000}),action('export_replay',{render:false})]);
+      assert.equal(download.suggestedFilename(),'orafold-replay.json');const replayFile=path.join(sequenceDir,'orafold-replay.json');await download.saveAs(replayFile);
+      const bytes=fs.readFileSync(replayFile),replay=JSON.parse(bytes);assert.equal(replay.format,'ORAFOLD-LOCAL-REPLAY');assert.equal(replay.version,2);assert.equal(replay.setup.seed,gameplay.seed);assert.equal(replay.setup.rules_profile,'production-550-v1');
+      assert.deepEqual([...replay.setup.deck].sort(),[...productionTemplate.cards].sort());assert.equal(replay.commands.length,q.command_count);assert.equal(replay.winner,q.battle.winner);
+      const firstPlay=gameplay.frames.find(frame=>frame.stage==='first-play'),attack=gameplay.frames.find(frame=>frame.stage==='attack-resolution');
+      assert(firstPlay&&attack,'sequence requires an actual card play and a real end-turn with ready attackers');
+      assert.equal(replay.commands[firstPlay.evidence.command_before].name,'play');assert.equal(replay.commands[attack.evidence.command_before].name,'endTurn');
+      gameplay.replay={file:path.basename(replayFile),sha256:sha256(bytes),bytes:bytes.length,seed:replay.setup.seed,command_count:replay.commands.length,event_sha256:replay.event_sha256,final:replay.final,winner:replay.winner,verified_through_actual_ui:false};saveSequence();
+     }
+     await action('verify_replay');await wait(()=>window.orafoldQA.message==='Replay identisch.');
+     if(sequenceEnabled){
+      gameplay.replay.verified_through_actual_ui=true;
+      await action('result_menu');await action('settings');await action('last_replay');await action('replay_next');
+      assert((await state()).modal&&(await state()).actions.replay_previous?.disabled===false,'the actual stored replay viewer opens and advances');
+      await sequenceFrame('replay',{viewer_step:1,total_commands:gameplay.replay.command_count,replay_file:gameplay.replay.file,replay_sha256:gameplay.replay.sha256,note:'The modal reconstructs replay prefix1; live_session_battle remains the completed original session and is not the displayed prefix.'});
+      await action('modal_close');await action('settings_back');await opening(productionTemplate.power,productionTemplate.cards);
+     }
+     const beforeRestart=sequenceEnabled?await state():null;
      await action('restart');await action('confirm_restart');await wait(()=>!window.orafoldQA.battle.winner);await shot('restart');
+     if(sequenceEnabled){
+      const restarted=await state();assert.notEqual(restarted.battle.seed,beforeRestart.battle.seed,'actual Neu confirmation replaces the immediately preceding match');assert.equal(restarted.battle.stage,'mulligan');assert.equal(restarted.command_count,0);
+      assert.deepEqual([...restarted.battle.hero.hand,...restarted.battle.hero.deck].sort(),[...productionTemplate.cards].sort(),'the confirmed restart retains the exact saved production deck');
+      await sequenceFrame('restart',{path:'new match from lobby, then actual Neu / Neu starten confirmation',previous_seed:beforeRestart.battle.seed,previous_command_count:beforeRestart.command_count});gameplay.restart_seed=restarted.battle.seed;
+      assert.deepEqual(gameplay.frames.map(frame=>frame.stage),['mulligan','opening','first-play','attack-resolution','midgame','result','replay','restart'],'all eight chronological stages must be present');
+      assert(gameplay.frames.slice(0,-1).every(frame=>frame.seed===gameplay.seed),'the original duel and replay share the same actual seed');
+      gameplay.recording=false;gameplay.status='passed';gameplay.action_trace=actionTrace;saveSequence();
+     }
     }
-    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
+    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,gameplay_sequence:gameplay?{status:gameplay.status,manifest:path.join(sequenceDir,"sequence.json"),seed:gameplay.seed,restart_seed:gameplay.restart_seed,frames:gameplay.frames.length,replay_sha256:gameplay.replay.sha256}:null,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
     fs.writeFileSync(`work/alpha/browser-result-${engine}-${name}.json`,JSON.stringify(result,null,2));
     console.log('ALPHA BROWSER PASS:',engine,name);
-   }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,diagnostic},null,2));throw error;}
+   }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);if(gameplay){gameplay.status='failed';gameplay.error=String(error);gameplay.action_trace=actionTrace;saveSequence();}await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,diagnostic},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}
   }finally{await browser.close();}
   }

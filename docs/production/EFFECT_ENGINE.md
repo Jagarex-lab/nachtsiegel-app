@@ -49,7 +49,7 @@ catalog uses this implemented subset; unsupported promises must not be authored.
 | `on_play` | After payment/removal and creature/relic placement; before arrival effect |
 | `on_summon` | Actual native summon FIFO event, including effect summons; never an extra `on_play` |
 | `on_attack` | Before an attack, followed by attacker UID/liveness validation |
-| `on_defend` | Before incoming unit/hero damage; attacker is revalidated afterward |
+| `on_defend` | An actual creature defending its path, before incoming damage; attacker is revalidated afterward |
 | `on_deal_damage` | Actual positive HP damage caused by the source creature/effect |
 | `on_take_damage` | Actual positive HP loss; absorbed shield/block alone does not count |
 | `on_kill` | After the defeated unit is removed and its native death queue runs |
@@ -69,6 +69,13 @@ its own side's corresponding actions while it remains installed. Arrival follows
 instance removed before arrival receives no surviving arrival trigger. New source
 instances receive new UIDs; replacement copies cannot inherit queued abilities.
 Haste is consulted by actual attack readiness and convergence control.
+
+An empty opposing path targets the hero and does not count as an own creature
+defending or taking damage. Delayed creature damage retains its scheduled path
+and original owner/card/UID, including after its creator leaves; replacement
+copies cannot inherit personal damage triggers. The reviewed corrections and
+their reproduced before/after cases are in
+[KERNEL_SEMANTICS_REVIEW.md](KERNEL_SEMANTICS_REVIEW.md).
 
 Simultaneous watchers publish left-to-right, then the relic, then armed impulses.
 Abilities on a card publish in definition order. Native death/summon events keep

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "completed_at_utc": "2026-11-11T01:45:28.746133+00:00",
+  "base_commit": "ba1b3f56c334145c739b03927582310e4384c38e",
+  "runtime_cardview_sha256": "ce6c659c5227fc4d3601a84f2d0848f5d2dc5ba5cc9d1e09d5c55dd817856af8",
+  "source_catalog_sha256": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+  "frozen_source_files_verified_unchanged": 10,
+  "protected_shell_model_catalog_equal_to_base": true,
+  "tests": [
+    {
+      "suite": "production_board_portrait",
+      "assertions": 11516,
+      "failures": 0,
+      "test_source_sha256": "a422304c8ac4e9b9144159e3dd3ef532879f1472d633ff4425fcf2cd3b33d54e",
+      "log_sha256": "414b84ee5a2b2ecec8f0a541b4a02682f00026ae2119b791d81b1d6fa859b551"
+    },
+    {
+      "suite": "production_desktop_hand",
+      "assertions": 180,
+      "failures": 0,
+      "test_source_sha256": "0273472a57da79da4221c0f7f8ce91b19b210a7d8795be38a9ccefc091732647",
+      "log_sha256": "026662987cf1be0c7f0f75e2e1001e8b5189bd418a2fa1b1efb3489954943c00"
+    },
+    {
+      "suite": "production_ui",
+      "assertions": 5507,
+      "failures": 0,
+      "test_source_sha256": "80aa2ae50e38240cc2aedb0f9dc9c4cfa3b49f021430744cc3f9b2bab09b890a",
+      "log_sha256": "da96134a105fffe5aedffe89148a60cab6af2a8251248401cbcf62d029c6872e"
+    },
+    {
+      "suite": "production_short_landscape",
+      "assertions": 409,
+      "failures": 0,
+      "test_source_sha256": "2096ab8a6ded8434c9ea24654e62a6259052735db48e56d8b791ed70dfa90c57",
+      "log_sha256": "50c152cd18d18d6772b142202ba1281db5e4eb29d50703edbc622700f90dc94e"
+    },
+    {
+      "suite": "production_card_text_layout",
+      "assertions": 2201,
+      "failures": 0,
+      "test_source_sha256": "e8b526110acf8576f2095bb3e54028260ef0671512a480a18c18f801fe6cdba8",
+      "log_sha256": "0c6645b9d588878f51f10601ae0eb0f7c1e9eedfacbd12fc86f1348b3fa091c1"
+    },
+    {
+      "suite": "master550_opening_ui",
+      "assertions": 4382,
+      "failures": 0,
+      "test_source_sha256": "859c742109b60c127a35ffcde06928d8f925a08bd03a364b8fa40f838ef43a77",
+      "log_sha256": "cee36adca44a131859e5a4267f55f972dfd44d1317d86a19d3ceb614608fee74"
+    }
+  ],
+  "visually_reviewed_native_images": [
+    {
+      "file": "work/production/cardview-polish/after-arranged-full-board-844x390.png",
+      "sha256": "f46d3f56e91ab7c19a3b0c1f74d74cdd82d43b7d7b0ffa67924e40f822023775"
+    },
+    {
+      "file": "work/production/cardview-polish/after-arranged-full-board-1600x900.png",
+      "sha256": "5e857b2172a806c37f037e6212f7d453a2eeb43bc04e0a8df2310d98be5bb913"
+    },
+    {
+      "file": "work/production/cardview-polish/after-battle-six-hand-ten-units-844x248.png",
+      "sha256": "fe10a58da3a7564ed09e1aaa73a3f16b2ab72155601b97740cca51b557d1f87e"
+    },
+    {
+      "file": "work/production/cardview-polish/after-compact-name-oa-stillwatch-c07.png",
+      "sha256": "6847821121a013a4fb852282ba17e67fc4688a294d91feb6f7f1006af476dd35"
+    },
+    {
+      "file": "work/production/cardview-polish/after-compact-name-of-morph-064.png",
+      "sha256": "2680b1567e8ce21c91a7378eb7d974c325b6c909660aa2ac92eed781705d61af"
+    },
+    {
+      "file": "work/production/cardview-polish/after-compact-name-of-neutral-056.png",
+      "sha256": "d6fd7be7303ec07bd62638ee674dd7b254cc29c905f1951f7ee15e1ba1d72208"
+    }
+  ],
+  "scope": "Native CardView presentation only. All357 actual creature names measured at three tall and three normal compact sizes; all550 actual hand names and master text/contours checked. Arranged full boards are layout fixtures, not additional games. No browser, export, physical-device or publication claim.",
+  "limits": "Normal/new labels use at least10px, prefer whole words at11/12 where they fit. Existing <72px tier retains its8/9px fallback and S/B compression. Three-line word wrapping falls back to complete two-line grapheme wrapping, never smaller than10px.",
+  "prior_extended_failure": {
+    "log": "work/production/cardview-polish/production_board_portrait-expanded-failed.log",
+    "failures": 25,
+    "resolution": "Floor fractional text budgets, verify actual glyph widths, two-line grapheme fallback when word wrapping cannot fit at10px."
+  }
+}

@@ -38,7 +38,16 @@ surface, with an opaque complete-name header and diagonal value/status footer.
 The former 66px image strip left most of a 310×340 slot empty. Current attack/life,
 separate shield/block, readiness and origin/convergence/buff markers stay visible.
 All 357 actual creature names/value glyphs are measured at three tall sizes;
-five real native framebuffers separately prove the new drawing.
+three normal compact sizes are also measured. Eight native sample framebuffers
+separately check the drawing, including the three formerly overflowing names.
+
+Occupied fields retain visible path numbers 1–5 and a static inner light/shadow
+frame. Normal compact fields spell out shield and block across the existing footer;
+readiness remains separate. Name fitting prefers complete words at 11/12 pixels,
+uses at least 10, floors fractional width budgets and checks actual glyph extents.
+When word wrapping still needs three lines at 10 pixels, a two-line grapheme fallback
+keeps the entire name. The existing under-72px tier retains its 8/9px fallback and
+compressed S/B column. No hit area, container layout or battle rule changed.
 
 On usable heights of 620 pixels or more, battle hand cards are 144 pixels tall
 (160 on the taller desktop), and opening cards 160. Small-phone hand heights,
@@ -93,9 +102,14 @@ DISPLAY=:99 LP_NUM_THREADS=2 godot --path . --audio-driver Dummy --script tests/
 DISPLAY=:99 LP_NUM_THREADS=2 godot --path . --audio-driver Dummy --script tests/master550_opening_ui.gd
 ```
 
-The new local tall-board suite passed 8,583 assertions / 0 failures; the desktop-hand
-suite 180 / 0; the complete paginated production UI 5,012 / 0, with clean script/font/
-texture teardown. A former duplicate direct Alpha/Production catalog preload
+The final native CardView freeze on 2026-11-11 passed: compact/tall names 11,516,
+desktop hand 180, paginated UI 5,507, short landscape 409, all 550 original master
+text/contours 2,201 and real opening touch/drag 4,382; all with zero failures and
+clean script/font/texture teardown. Ten source hashes remained unchanged across
+the run. Exact source/log/image hashes and scope are recorded in
+[`CARDVIEW_POLISH_2026_11_11.json`](evidence/CARDVIEW_POLISH_2026_11_11.json).
+The expanded compact-name check first found 25 failures; those checks remain and
+pass after the width/wrapping correction. A former duplicate direct Alpha/Production catalog preload
 retained eight script/font resources in CI. The fixture now uses the actual
 production catalog and the existing audio owner's orderly shutdown, retaining
 all assertions and keeping synthetic layout records explicitly separate.
