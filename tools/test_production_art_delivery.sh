@@ -6,6 +6,15 @@ mkdir -p work/production-art work/xdg/{data,config,cache}
 touch work/.gdignore
 export XDG_DATA_HOME="$PWD/work/xdg/data" XDG_CONFIG_HOME="$PWD/work/xdg/config" XDG_CACHE_HOME="$PWD/work/xdg/cache"
 export LP_NUM_THREADS="${LP_NUM_THREADS:-2}"
+# Each standalone suite needs both groups: the strict fixture eagerly validates
+# full and preview bodies. --ensure-cache preserves committed metadata; the
+# surrounding source --check gates remain separate and unchanged.
+python3 - <<'PYCACHE'
+import os
+from pathlib import Path
+from tools.production.art_delivery_test_server import ensure_caches
+ensure_caches(Path.cwd(), Path('work/production-art/delivery-http'), os.environ.get('GODOT_BIN','godot'), os.environ.get('GODOT_CACHE_TIMEOUT','600s'))
+PYCACHE
 art_ready_file="$(mktemp "$PWD/work/production-art/.http-ready.XXXXXX")"
 rm "$art_ready_file"
 art_server_pid=""
@@ -16,19 +25,27 @@ cleanup_art_http() {
 trap cleanup_art_http EXIT
 python3 tools/production/art_delivery_test_server.py --root "$PWD" --ready-file "$art_ready_file" --log-file "$PWD/work/production-art/delivery-http-server.jsonl" > work/production-art/delivery-http-server.log 2>&1 &
 art_server_pid="$!"
-art_base_url="$(python3 - "$art_ready_file" "$art_server_pid" <<'PY'
-import json,os,sys,time
-from pathlib import Path
-ready=Path(sys.argv[1])
-for _ in range(100):
-    if ready.is_file():
-        print(json.loads(ready.read_text())['url']);break
-    os.kill(int(sys.argv[2]),0)
-    time.sleep(.05)
-else: raise RuntimeError('Actual local HTTP fixture failed to become ready')
-PY
-)"
-timeout "${GODOT_TEST_TIMEOUT:-120s}" "${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tests/production_art_delivery.gd -- "$art_base_url" > work/production-art/delivery-http.log 2>&1
+art_wait_status=0
+art_base_url="$(python3 tools/production/art_delivery_test_server.py --root "$PWD" --ready-file "$art_ready_file" --log-file "$PWD/work/production-art/delivery-http-server.jsonl" --wait-pid "$art_server_pid" --ready-timeout "${ART_HTTP_READY_TIMEOUT:-60}")" || art_wait_status=$?
+if (( art_wait_status != 0 )); then
+  # Reap the actual child and expose its original failure, rather than ending
+  # at a secondary os.kill/JSON error with the server traceback hidden.
+  art_terminate_status=0
+  if kill -0 "$art_server_pid" 2>/dev/null; then kill "$art_server_pid" 2>/dev/null || art_terminate_status=$?; fi
+  art_server_status=0
+  wait "$art_server_pid" || art_server_status=$?
+  art_server_pid=""
+  printf 'HTTP fixture readiness failed: waiter exit=%s; actual server exit=%s; terminate exit=%s\n' "$art_wait_status" "$art_server_status" "$art_terminate_status" >&2
+  cat work/production-art/delivery-http-server.log >&2
+  exit "$art_wait_status"
+fi
+art_test_status=0
+timeout "${GODOT_TEST_TIMEOUT:-120s}" "${GODOT_BIN:-godot}" --headless --path . --audio-driver Dummy --script tests/production_art_delivery.gd -- "$art_base_url" > work/production-art/delivery-http.log 2>&1 || art_test_status=$?
+if (( art_test_status != 0 )); then
+  printf 'Actual Godot HTTP suite failed: exit=%s\n' "$art_test_status" >&2
+  cat work/production-art/delivery-http.log work/production-art/delivery-http-server.log >&2
+  exit "$art_test_status"
+fi
 python3 - <<'PY'
 from collections import Counter
 import json,re

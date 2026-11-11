@@ -136,6 +136,9 @@ jobs:
             work/alpha02/*.png
             work/master550/
             work/production/
+            work/production-art/*.log
+            work/production-art/*.json
+            work/production-art/*.jsonl
             work/production-storage/native.log
             work/ux/*.png
             work/ux/*.json
