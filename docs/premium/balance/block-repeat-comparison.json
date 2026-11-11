@@ -1,0 +1,19 @@
+{
+  "format": "ORAFOLD-BLOCK-REPEAT-COMPARISON",
+  "version": 1,
+  "first_actual_games": 232,
+  "second_actual_games": 232,
+  "first_raw_sha256": "035d1b48688511eb67930c59fa96ada8588c9dd5978f9e34b444bee26fe97862",
+  "second_raw_sha256": "e3e7087758c71bd7766872866903b16881bddf1d78b7f04249ed3069cbd68795",
+  "matrix_cases_compared": 224,
+  "fresh_controls_compared": 8,
+  "compared_fields": [
+    "winner",
+    "event_sha256",
+    "final_state_sha256",
+    "rng_state",
+    "rng_calls"
+  ],
+  "divergences": 0,
+  "note": "Two actual executions of the same fixed224matrix+8control configuration. They are not464independent strategy games. The committed final source manifest belongs to the second execution."
+}

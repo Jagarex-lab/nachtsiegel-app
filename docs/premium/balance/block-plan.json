@@ -1,0 +1,1166 @@
+{
+  "cases": [
+    {
+      "first": "hero",
+      "index": 0,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202611111,
+      "seed_block": 0,
+      "seed_search_start": 202611110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 1,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202611610,
+      "seed_block": 0,
+      "seed_search_start": 202611610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 2,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202612110,
+      "seed_block": 1,
+      "seed_search_start": 202612110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 3,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202612610,
+      "seed_block": 1,
+      "seed_search_start": 202612610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 4,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202621114,
+      "seed_block": 0,
+      "seed_search_start": 202621110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 5,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202621610,
+      "seed_block": 0,
+      "seed_search_start": 202621610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 6,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202622112,
+      "seed_block": 1,
+      "seed_search_start": 202622110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 7,
+      "opponent": "prod-aggro",
+      "pilot": false,
+      "seed": 202622612,
+      "seed_block": 1,
+      "seed_search_start": 202622610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 8,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202711111,
+      "seed_block": 0,
+      "seed_search_start": 202711110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 9,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202711611,
+      "seed_block": 0,
+      "seed_search_start": 202711610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 10,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202712111,
+      "seed_block": 1,
+      "seed_search_start": 202712110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 11,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202712611,
+      "seed_block": 1,
+      "seed_search_start": 202712610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 12,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202721110,
+      "seed_block": 0,
+      "seed_search_start": 202721110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 13,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202721610,
+      "seed_block": 0,
+      "seed_search_start": 202721610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 14,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202722111,
+      "seed_block": 1,
+      "seed_search_start": 202722110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 15,
+      "opponent": "prod-midrange",
+      "pilot": false,
+      "seed": 202722611,
+      "seed_block": 1,
+      "seed_search_start": 202722610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 16,
+      "opponent": "prod-control",
+      "pilot": true,
+      "seed": 202811110,
+      "seed_block": 0,
+      "seed_search_start": 202811110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 17,
+      "opponent": "prod-control",
+      "pilot": true,
+      "seed": 202811610,
+      "seed_block": 0,
+      "seed_search_start": 202811610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 18,
+      "opponent": "prod-control",
+      "pilot": false,
+      "seed": 202812110,
+      "seed_block": 1,
+      "seed_search_start": 202812110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 19,
+      "opponent": "prod-control",
+      "pilot": false,
+      "seed": 202812611,
+      "seed_block": 1,
+      "seed_search_start": 202812610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 20,
+      "opponent": "prod-control",
+      "pilot": true,
+      "seed": 202821110,
+      "seed_block": 0,
+      "seed_search_start": 202821110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 21,
+      "opponent": "prod-control",
+      "pilot": true,
+      "seed": 202821610,
+      "seed_block": 0,
+      "seed_search_start": 202821610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 22,
+      "opponent": "prod-control",
+      "pilot": false,
+      "seed": 202822110,
+      "seed_block": 1,
+      "seed_search_start": 202822110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 23,
+      "opponent": "prod-control",
+      "pilot": false,
+      "seed": 202822610,
+      "seed_block": 1,
+      "seed_search_start": 202822610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 24,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202911110,
+      "seed_block": 0,
+      "seed_search_start": 202911110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 25,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202911610,
+      "seed_block": 0,
+      "seed_search_start": 202911610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 26,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202912110,
+      "seed_block": 1,
+      "seed_search_start": 202912110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 27,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202912610,
+      "seed_block": 1,
+      "seed_search_start": 202912610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 28,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202921112,
+      "seed_block": 0,
+      "seed_search_start": 202921110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 29,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202921610,
+      "seed_block": 0,
+      "seed_search_start": 202921610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 30,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202922110,
+      "seed_block": 1,
+      "seed_search_start": 202922110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 31,
+      "opponent": "prod-shield",
+      "pilot": false,
+      "seed": 202922610,
+      "seed_block": 1,
+      "seed_search_start": 202922610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 32,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203011111,
+      "seed_block": 0,
+      "seed_search_start": 203011110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 33,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203011615,
+      "seed_block": 0,
+      "seed_search_start": 203011610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 34,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203012112,
+      "seed_block": 1,
+      "seed_search_start": 203012110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 35,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203012612,
+      "seed_block": 1,
+      "seed_search_start": 203012610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 36,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203021114,
+      "seed_block": 0,
+      "seed_search_start": 203021110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 37,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203021611,
+      "seed_block": 0,
+      "seed_search_start": 203021610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 38,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203022112,
+      "seed_block": 1,
+      "seed_search_start": 203022110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 39,
+      "opponent": "prod-block",
+      "pilot": false,
+      "seed": 203022613,
+      "seed_block": 1,
+      "seed_search_start": 203022610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 40,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203111111,
+      "seed_block": 0,
+      "seed_search_start": 203111110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 41,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203111611,
+      "seed_block": 0,
+      "seed_search_start": 203111610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 42,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203112111,
+      "seed_block": 1,
+      "seed_search_start": 203112110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 43,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203112615,
+      "seed_block": 1,
+      "seed_search_start": 203112610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 44,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203121110,
+      "seed_block": 0,
+      "seed_search_start": 203121110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 45,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203121611,
+      "seed_block": 0,
+      "seed_search_start": 203121610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 46,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203122111,
+      "seed_block": 1,
+      "seed_search_start": 203122110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 47,
+      "opponent": "prod-recurrence",
+      "pilot": false,
+      "seed": 203122611,
+      "seed_block": 1,
+      "seed_search_start": 203122610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 48,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203211110,
+      "seed_block": 0,
+      "seed_search_start": 203211110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 49,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203211610,
+      "seed_block": 0,
+      "seed_search_start": 203211610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 50,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203212111,
+      "seed_block": 1,
+      "seed_search_start": 203212110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 51,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203212611,
+      "seed_block": 1,
+      "seed_search_start": 203212610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 52,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203221110,
+      "seed_block": 0,
+      "seed_search_start": 203221110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 53,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203221610,
+      "seed_block": 0,
+      "seed_search_start": 203221610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 54,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203222110,
+      "seed_block": 1,
+      "seed_search_start": 203222110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 55,
+      "opponent": "prod-resonance",
+      "pilot": false,
+      "seed": 203222610,
+      "seed_block": 1,
+      "seed_search_start": 203222610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 56,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203311110,
+      "seed_block": 0,
+      "seed_search_start": 203311110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 57,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203311610,
+      "seed_block": 0,
+      "seed_search_start": 203311610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 58,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203312110,
+      "seed_block": 1,
+      "seed_search_start": 203312110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 59,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203312610,
+      "seed_block": 1,
+      "seed_search_start": 203312610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 60,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203321110,
+      "seed_block": 0,
+      "seed_search_start": 203321110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 61,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203321610,
+      "seed_block": 0,
+      "seed_search_start": 203321610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 62,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203322110,
+      "seed_block": 1,
+      "seed_search_start": 203322110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 63,
+      "opponent": "prod-movement",
+      "pilot": false,
+      "seed": 203322610,
+      "seed_block": 1,
+      "seed_search_start": 203322610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 64,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203411112,
+      "seed_block": 0,
+      "seed_search_start": 203411110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 65,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203411612,
+      "seed_block": 0,
+      "seed_search_start": 203411610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 66,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203412110,
+      "seed_block": 1,
+      "seed_search_start": 203412110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 67,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203412610,
+      "seed_block": 1,
+      "seed_search_start": 203412610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 68,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203421111,
+      "seed_block": 0,
+      "seed_search_start": 203421110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 69,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203421612,
+      "seed_block": 0,
+      "seed_search_start": 203421610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 70,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203422112,
+      "seed_block": 1,
+      "seed_search_start": 203422110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 71,
+      "opponent": "prod-species",
+      "pilot": false,
+      "seed": 203422610,
+      "seed_block": 1,
+      "seed_search_start": 203422610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 72,
+      "opponent": "prod-relic",
+      "pilot": true,
+      "seed": 203511111,
+      "seed_block": 0,
+      "seed_search_start": 203511110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 73,
+      "opponent": "prod-relic",
+      "pilot": true,
+      "seed": 203511611,
+      "seed_block": 0,
+      "seed_search_start": 203511610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 74,
+      "opponent": "prod-relic",
+      "pilot": false,
+      "seed": 203512111,
+      "seed_block": 1,
+      "seed_search_start": 203512110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 75,
+      "opponent": "prod-relic",
+      "pilot": false,
+      "seed": 203512612,
+      "seed_block": 1,
+      "seed_search_start": 203512610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 76,
+      "opponent": "prod-relic",
+      "pilot": true,
+      "seed": 203521110,
+      "seed_block": 0,
+      "seed_search_start": 203521110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 77,
+      "opponent": "prod-relic",
+      "pilot": true,
+      "seed": 203521611,
+      "seed_block": 0,
+      "seed_search_start": 203521610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 78,
+      "opponent": "prod-relic",
+      "pilot": false,
+      "seed": 203522111,
+      "seed_block": 1,
+      "seed_search_start": 203522110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 79,
+      "opponent": "prod-relic",
+      "pilot": false,
+      "seed": 203522610,
+      "seed_block": 1,
+      "seed_search_start": 203522610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 80,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203611110,
+      "seed_block": 0,
+      "seed_search_start": 203611110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 81,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203611610,
+      "seed_block": 0,
+      "seed_search_start": 203611610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 82,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203612111,
+      "seed_block": 1,
+      "seed_search_start": 203612110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 83,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203612611,
+      "seed_block": 1,
+      "seed_search_start": 203612610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 84,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203621110,
+      "seed_block": 0,
+      "seed_search_start": 203621110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 85,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203621610,
+      "seed_block": 0,
+      "seed_search_start": 203621610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 86,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203622110,
+      "seed_block": 1,
+      "seed_search_start": 203622110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 87,
+      "opponent": "prod-impulse",
+      "pilot": false,
+      "seed": 203622611,
+      "seed_block": 1,
+      "seed_search_start": 203622610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 88,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203711110,
+      "seed_block": 0,
+      "seed_search_start": 203711110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 89,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203711610,
+      "seed_block": 0,
+      "seed_search_start": 203711610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 90,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203712110,
+      "seed_block": 1,
+      "seed_search_start": 203712110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 91,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203712610,
+      "seed_block": 1,
+      "seed_search_start": 203712610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 92,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203721110,
+      "seed_block": 0,
+      "seed_search_start": 203721110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 93,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203721610,
+      "seed_block": 0,
+      "seed_search_start": 203721610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 94,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203722110,
+      "seed_block": 1,
+      "seed_search_start": 203722110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 95,
+      "opponent": "prod-convergence",
+      "pilot": false,
+      "seed": 203722610,
+      "seed_block": 1,
+      "seed_search_start": 203722610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 96,
+      "opponent": "prod-time",
+      "pilot": true,
+      "seed": 203811112,
+      "seed_block": 0,
+      "seed_search_start": 203811110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 97,
+      "opponent": "prod-time",
+      "pilot": true,
+      "seed": 203811610,
+      "seed_block": 0,
+      "seed_search_start": 203811610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 98,
+      "opponent": "prod-time",
+      "pilot": false,
+      "seed": 203812110,
+      "seed_block": 1,
+      "seed_search_start": 203812110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 99,
+      "opponent": "prod-time",
+      "pilot": false,
+      "seed": 203812610,
+      "seed_block": 1,
+      "seed_search_start": 203812610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 100,
+      "opponent": "prod-time",
+      "pilot": true,
+      "seed": 203821111,
+      "seed_block": 0,
+      "seed_search_start": 203821110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 101,
+      "opponent": "prod-time",
+      "pilot": true,
+      "seed": 203821612,
+      "seed_block": 0,
+      "seed_search_start": 203821610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 102,
+      "opponent": "prod-time",
+      "pilot": false,
+      "seed": 203822112,
+      "seed_block": 1,
+      "seed_search_start": 203822110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 103,
+      "opponent": "prod-time",
+      "pilot": false,
+      "seed": 203822610,
+      "seed_block": 1,
+      "seed_search_start": 203822610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 104,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203911111,
+      "seed_block": 0,
+      "seed_search_start": 203911110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 105,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203911611,
+      "seed_block": 0,
+      "seed_search_start": 203911610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 106,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203912110,
+      "seed_block": 1,
+      "seed_search_start": 203912110,
+      "tested_side": "hero"
+    },
+    {
+      "first": "enemy",
+      "index": 107,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203912618,
+      "seed_block": 1,
+      "seed_search_start": 203912610,
+      "tested_side": "hero"
+    },
+    {
+      "first": "hero",
+      "index": 108,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203921111,
+      "seed_block": 0,
+      "seed_search_start": 203921110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 109,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203921611,
+      "seed_block": 0,
+      "seed_search_start": 203921610,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "hero",
+      "index": 110,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203922111,
+      "seed_block": 1,
+      "seed_search_start": 203922110,
+      "tested_side": "enemy"
+    },
+    {
+      "first": "enemy",
+      "index": 111,
+      "opponent": "prod-resource",
+      "pilot": false,
+      "seed": 203922611,
+      "seed_block": 1,
+      "seed_search_start": 203922610,
+      "tested_side": "enemy"
+    }
+  ],
+  "expected_fresh_repeat_games": 8,
+  "expected_matrix_games": 224,
+  "format": "ORAFOLD-BLOCK-DECK-PLAN",
+  "notes": "All cases selected using only opening coin before the first completed game. The pilot is a fixed12-pair subset; no candidate modification is allowed after it.",
+  "promotion_criteria": {
+    "all_games_completed_no_errors_no_action_limits": true,
+    "full_state_event_rng_verification_games": 8.0,
+    "maximum_paired_sign_p_one_sided": 0.05,
+    "minimum_additional_wins": 12.0,
+    "no_lower_wins_in_either_board_role": true
+  },
+  "repeat_cases_both_variants": [
+    0,
+    28,
+    56,
+    84
+  ],
+  "source_hashes": {
+    "data/alpha/cards.json": "0e5fcc20589961c5bdca662642870bc9abfc483b0ef2aebfbbf88be2876355ef",
+    "data/card_system/alpha_species.json": "e064020b50ba8584999eb7e2e8aa6f601ec41719e89cace249b0d689e3f7e531",
+    "data/card_system/registry.json": "0d4731ff5dead611844cbb68db1b0b8fd65a712245375f5244c546aa3dcbfc54",
+    "data/production/cards.json": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+    "data/production/starters.json": "79dbb5705c4f82f77ae5bd52ec4842e79b8dc47ede218acd3dc6bcccec848f52",
+    "data/production/test_decks.json": "465649453f64bc36bb2775d2476eafae1508c5c4d4a310b7ab264822c090d26b",
+    "scripts/alpha/catalog.gd": "fc8fbdb5822a0ae9a23f114227d90a8f67dfa27e8aaf0e72b7ca402163eb9374",
+    "scripts/alpha/model.gd": "9e41cab7589c3a05ab1ede8375075018672142c9afdd90873a72efaaf0c5d089",
+    "scripts/card_system/production_effects.gd": "e33d48710b4a2e1b0c24ddb55b8ac584fb51a9ea2149f5274fa294a71ebb7484",
+    "scripts/card_system/production_model.gd": "11b384202d75ab490df16bda95d93cd611be62241afce9d626e3883b8ab25ca5",
+    "scripts/card_system/registry.gd": "3d9dd99e032bd12c3dafce0535051cf354d99698048dee3ca7bf852ce7cc65da",
+    "scripts/card_system/runtime.gd": "ca2be2fc49f1a18748b3b887610655acdccac134cef6664ffe003cb93adbc8ad",
+    "scripts/card_system/trigger_model.gd": "ea1e5c0f441d14f0a051a6d859fcd7e66c3a5a1978af3d5a05cd8bf8fde5deee",
+    "scripts/legacy/battle_engine.gd": "7a3bfaea53d7aa0bacb3aa380a4bca0770f64c238f267b34020874ab8ace3698",
+    "scripts/legacy/rng.gd": "7b3bf48f8e66d51ff24ec5fdfefffbaac8847efee171407be498b34f47847abf",
+    "scripts/production/ai_policy.gd": "52ba7a1e78cbdb224a28822b5120254b55421e3e8db3f6de804121588571f2c4",
+    "scripts/production/catalog.gd": "7d7f8e158ddfbfb1365efee0ef504f023013fea70507bed402cbe3fff137ffe8",
+    "tests/premium_block_balance.gd": "8aa8967243d3f1cd6dadee015b110e8a39905ede643652b39ae9dab8b6ecccc2",
+    "tests/production_simulations.gd": "54fdd86fb2b11e52cceb5d5f6767a6e74508acd0cc595bfea628a06204a514ff",
+    "tools/premium/block_deck_proposal.json": "2eaf1759cdbbe7d31447876e980fabac5d71cd37cb707039e8be6500371d3757",
+    "tools/premium/block_reference_baseline.json": "0e35b231be3ac4420ca9ab257ad0146ba2dd248b578555ff44a7f28e6cc18bd0",
+    "tools/production/build_test_decks.py": "abd3902a9c09dc3ac21a200c51e9251236c03fcb847258b5c8d9c6f9d6ebcbd3"
+  },
+  "version": 1
+}
