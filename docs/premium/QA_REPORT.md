@@ -16,7 +16,7 @@ Lauf ändert weder ihre ursprüngliche Quelle noch das Ergebnis eines Fehlversuc
 | Prüfung | Tatsächlicher Stand |
 | --- | --- |
 | Native Vorher-Aufnahmen | 9 echte Godot-Aufnahmen des Ausgangsstands erstellt; fünf Querformatgrößen, Inspektion sowie Menü/Starter/Deckbuilder im Hochformat |
-| Browser-Vertragsprüfungen | 33 Node-Vertragsprüfungen bestanden, 0 Fehler, 0 übersprungen; Browser, öffentliche Dateiintegrität, PWA und Worker; keine Spielbarkeit allein daraus behauptet |
+| Browser-Vertragsprüfungen | 36 Node-Vertragsprüfungen bestanden, 0 Fehler, 0 übersprungen; Browser, öffentliche Dateiintegrität, PWA und Worker; keine Spielbarkeit allein daraus behauptet |
 | Inaktive Release-Vorbereitung | 31 Python-Tests und 7 Node-HTTP-Testgruppen bestanden; aktiver Publisher und Guard byteidentisch |
 | Unveränderter Kartenkatalog | 550 Definitionen, 110 je Zugehörigkeit, 357 Wesen/133 Impulse/60 Relikte; 0 Validierungsfehler/Warnungen |
 | Illustrationsdateien | Vollständiger Manifest-/Prüfsummenlauf: 550 individuelle Dateien, 0 fehlende, 0 verwaiste; keine neue kommerzielle Rechtsfreigabe behauptet |
@@ -193,6 +193,72 @@ den alten fehlerhaften Pfad und prüft die korrekt getrennten Pfade. Der erwarte
 Fehler für ein nicht vorhandenes signiertes Repository bleibt dabei ein Fehler;
 die Prüfung schaltet weder Paket- noch Signaturkontrollen ab. Dies bestätigt das
 Mirrorformat, nicht bereits die Erreichbarkeit der echten Ubuntu-Server.
+
+## Abschließende Hinweistexte und vollständige Syntaxprüfung
+
+Die letzte Sichtung korrigiert sechs tatsächliche Textprobleme in der Shell:
+Fortsetzen wird nicht mehr pauschal verneint und Speicherung nicht garantiert;
+Speicherfehler können mehrere ungesicherte Spielzüge betreffen. Der KI-Modus
+benötigt kein Konto, während vorhandene Online-Anmeldung und Gold-Booster nicht
+mehr durch „Keine Konten oder Käufe“ verneint werden. Echtgeldkäufe bleiben
+inaktiv. Ergebnisfenster verwenden klare Spielersprache und einen neutralen
+Protokollhinweis statt einer unbelegten „Kontrollentscheidung“. Befehle,
+Spielregeln, Schaltflächen und Reaktionstiming bleiben unverändert.
+
+Die zusätzliche Einzelprüfung aller 214 GDScripts fand außerdem einen bereits im
+Ausgangsstand vorhandenen Typinferenzfehler in `scripts/ritual_board.gd`. Die
+aktuell nicht referenzierte Archivkomponente war weiterhin im Paket enthalten.
+Eine explizite `Vector2`-Deklaration behebt den Parserfehler ohne Änderung der
+Berechnung. Der Fehler wurde an einer Kopie des ursprünglichen Git-Blobs
+reproduziert; die korrigierte Datei kompiliert. Alle 214 damaligen GDScripts kompilieren nach der Korrektur; 213 sind sauber. Bei `authority_model.gd` bleiben zwei Catalog-GDScriptressourcen beim Prozessende erhalten. Das ist auch im Ausgangsstand und bei einer tatsächlichen Öffnungssequenz nachgewiesen, also kein rein compilerbezogener Hinweis. 24 erstellte/freigegebene Modelle bestehen 228 Prüfungen mit unverändert 1.687 Objekten, 174 Ressourcen und 0 verwaisten Knoten in jeder Probe. Es wurde kein fortschreitender Modellverlust beobachtet. Diese bestehende begrenzte Shutdown-Retention bleibt als bekannte Einschränkung offen; die Engine wurde dafür nicht verändert.
+
+Die zwei vollständigen lokalen Browserpartien gehören weiterhin ausdrücklich
+zum Export `8bfb5e2b`; sie werden wegen dieser letzten Hinweistexte und der
+Archivtypisierung nicht in einen anderen Quellstand umbenannt. Der anschließende
+GitHub-Lauf muss den neuen exakten Kandidaten erneut exportieren und prüfen.
+
+## Tatsächliche WebKit-Scrollfehler und Korrektur
+
+Die vollständige CI auf `5ed407c` bestand alle nativen Prüfungen und fünf
+separate System-Workflows. Ihre drei Browserfehler bleiben ausdrücklich Fehler:
+Eine schnelle Wischfolge öffnete vor dem abschließenden Tap eine falsche
+Sammlungskarte; in kurzen Einstellungen oszillierte der Prüfer mit zu großen
+festen Wischstrecken über das gesuchte Ziel. Zwei neue WebKit-Kontexte des alten
+Exports reproduzierten die falsche Inspektion **nach Pan 2 und vor jedem Tap**.
+Ein dritter Kontext erreichte wegen Starttimeout keinen vergleichbaren Zustand
+und wird nicht als bestanden gezählt. Rohdaten/Prüfsummen:
+`work/premium-mobile/scroll-diagnostic-8bfb/receipt.json`.
+
+Die neue Oberfläche bestätigt Aktionen in Scrollbereichen erst nach dem
+ursprünglichen Eingabepaket. Zeiger-/Tastaturabsicht, Bewegung, Abbruch,
+Scrollposition, Fokus und Seiten-/Fensteridentität müssen stimmen. Jede Absicht
+wird einmalig verbraucht. Karten und Schaltflächen lassen echte Wischbewegungen
+an ihren Scrollbereich weiterreichen; eine Karte mit `MOUSE_FILTER_STOP` hatte
+diesen Weg zuvor blockiert. Es gibt keine zusätzliche Zeitverzögerung und keinen
+Test- oder Programmsignal-Bypass. Die bisherigen Handkarten bleiben unter ihrem
+getrennten Eingabeschutz.
+
+Der neue Gestentest besteht **46 Prüfungen, 0 Fehler**, einschließlich normaler
+Touch-/Maus-Taps, kleiner Fingerbewegung, echter Bewegung auf Karten,
+mehrerer Finger, Abbruch, Tastatur, doppelter GUI-Ereignisse und frischer
+nachfolgender Eingaben. Die Hand-/Primär-/Bibliotheks-/Selektorprüfungen bleiben
+erhalten. Fünf bisherige Fixture-Treiber verwenden jetzt tatsächliche
+Input-Ereignisse statt direkten `pressed.emit()`-Aufrufen. Die native
+Produktions-UI besteht 5.507 Prüfungen. Die Anwendungsintegration besteht
+37 Prüfungen; sie wartet auf die tatsächlich aktive Kampagnenmusik und den
+natürlichen Wechsel zurück zur Menümusik (beobachtet 1.891 ms) statt auf eine
+unbelegte feste Zahl an Bildern. Keine Audioimplementierung wurde geändert.
+
+Beide Browserprüfer verwenden passende Reststrecken statt fixer 147-Pixel-Pans
+und prüfen nach jeder Geste Seiten-/Modalidentität. Die schnelle zweifache
+Wischfolge ist eine eigene tatsächliche Browserregression. Ein unerwarteter
+Inspector wird sofort als Fehler gemeldet; es wird nicht durch ihn hindurch
+getippt oder eine andere Karte als vermeintlich bestanden ausgewählt. Alle
+44-Pixel-/Sichtbarkeitsanforderungen bleiben bestehen.
+
+Der anschließende neue Webexport und seine frische vollständige CI sind für die
+endgültige Abnahme erforderlich. Frühere 375 lokale Checks und zwei vollständige
+Partien bleiben korrekt an `8bfb5e2b` gebunden und werden nicht umetikettiert.
 
 ## Nachgewiesene Ausgangsprobleme
 

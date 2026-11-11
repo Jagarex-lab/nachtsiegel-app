@@ -1,4 +1,5 @@
 extends SceneTree
+const Touch=preload("res://tests/premium_input_driver.gd")
 const Geometry=preload("res://scripts/premium/library_geometry.gd")
 const Shell=preload("res://scripts/alpha/shell.gd")
 class LibraryShell extends Shell:
@@ -57,13 +58,13 @@ func run() -> void:
 		# scrolling even where a full-height card cannot fit in one viewport.
 		app.filter_text="";app.collection_only=false;app.deck=[];app.render();await settle()
 		var add_id: String=app.library_visible_ids[0]
-		app.actions["card_"+add_id].pressed.emit();await settle()
+		await Touch.tap(self,app.actions["card_"+add_id]);await settle()
 		check(app.deck.count(add_id)==1,"tap card still adds one legal copy")
 		var details: Control=app.actions["detail_"+add_id]
 		app.library_scroll.ensure_control_visible(details);await settle()
 		var detail_clip=details.get_global_rect().intersection(app._qa_clip_rect(details))
 		check(detail_clip.size.x>=44 and detail_clip.size.y>=44,"details reachable with actual44px clipped target after scrolling")
-		app.actions["detail_"+add_id].pressed.emit();await settle()
+		await Touch.tap(self,app.actions["detail_"+add_id]);await settle()
 		check(is_instance_valid(app.modal),"separate details action opens actual inspector")
 		app.close_modal();app.queue_free();await settle()
 	# One live library must shrink after a previous wide layout. Fresh instances

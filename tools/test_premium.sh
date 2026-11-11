@@ -36,7 +36,7 @@ assert not re.search(r'SCRIPT ERROR|^ERROR:|^FAIL:|instances leaked|resources st
 assert re.search(sys.argv[2], text), 'Missing actual successful completion: ' + sys.argv[1]
 PYLOG
 }
-for suite in premium_card_frames premium_face_art_observation premium_battle_layout premium_battle_geometry premium_battle_text premium_drag_cancel premium_primary_input premium_arena_geometry; do
+for suite in premium_card_frames premium_face_art_observation premium_battle_layout premium_battle_geometry premium_battle_text premium_drag_cancel premium_primary_input premium_scroll_input premium_arena_geometry; do
   premium_run "$suite" '[1-9][0-9]* (assertions|checks), 0 failures' "$premium_godot" --headless --path . --audio-driver Dummy --script "tests/$suite.gd"
 done
 for suite in test_duel_checkpoint test_library_geometry; do

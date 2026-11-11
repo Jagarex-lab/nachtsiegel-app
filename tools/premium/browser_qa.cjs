@@ -7,7 +7,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const {performance}=require('node:perf_hooks');
-const {encloses,clearTouchPoint,scrollGesture,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
+const {encloses,clearTouchPoint,scrollGesture,assertPanContext,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
 const output=path.resolve(process.env.PREMIUM_BROWSER_OUTPUT||'work/premium-mobile/browser');
 const expectedCommit=process.env.EXPECTED_COMMIT;
 assert(/^[0-9a-f]{40}$/.test(expectedCommit||''),'EXPECTED_COMMIT must name the exact exported candidate');
@@ -55,30 +55,64 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
     check(encloses([0,0,page.viewportSize().width,page.viewportSize().height],rect),label+' stays inside viewport');
     await page.touchscreen.tap(point[0],point[1]);
    }
-   async function action(id){
-    lastAction=id;
-    if(['log','restart','convergence'].includes(id)&&!(await q()).actions[id])await action('actions');
-    await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled;},id);
-    for(let tries=0;tries<20;tries++){
-     const current=await q(),a=current.actions[id],v=current.action_visibility?.[id];
-     const clip=v?.clip_rect||[0,0,page.viewportSize().width,page.viewportSize().height];
-     const hit=id.startsWith('card_')&&v?v.visible_rect:a.rect;
-     if(encloses(clip,hit)&&encloses([0,0,page.viewportSize().width,page.viewportSize().height],hit)&&hit[2]>=43.9&&hit[3]>=43.9)break;
-     const gesture=scrollGesture(current,id);
+   async function canvasPan(gesture,{steps=6,stepDelay=35}={}){
      if(cdp){
       await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...gesture.from,id:0,radiusX:2,radiusY:2,force:1}]});
-      for(let step=1;step<=6;step++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:gesture.from.x,y:gesture.from.y+(gesture.to.y-gesture.from.y)*step/6,id:0,radiusX:2,radiusY:2,force:1}]});await page.waitForTimeout(35);}
+      for(let step=1;step<=steps;step++){await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:gesture.from.x,y:gesture.from.y+(gesture.to.y-gesture.from.y)*step/steps,id:0,radiusX:2,radiusY:2,force:1}]});if(stepDelay)await page.waitForTimeout(stepDelay);}
       await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
      }else{
       // Mobile WebKit exposes tap but no wheel or protocol touchMove. Trusted
       // browser pointer pan reaches Godot's configured touch emulation. It is
       // real canvas input, never DOM scrolling or a ScrollContainer mutation.
       await page.mouse.move(gesture.from.x,gesture.from.y);await page.mouse.down();
-      for(let step=1;step<=6;step++){await page.mouse.move(gesture.from.x,gesture.from.y+(gesture.to.y-gesture.from.y)*step/6);await page.waitForTimeout(35);}
+      for(let step=1;step<=steps;step++){await page.mouse.move(gesture.from.x,gesture.from.y+(gesture.to.y-gesture.from.y)*step/steps);if(stepDelay)await page.waitForTimeout(stepDelay);}
       await page.mouse.up();
      }
-     (report.scroll_gestures||=[]).push({action:id,driver:cdp?'CDP primary touch':'trusted browser pointer with Godot touch emulation',...gesture});
+   }
+   async function rapidLibraryScroll(id){
+    // Regression for a real WebKit failure: a fast pan ended over a moving
+    // library Button and opened an unrelated inspector before any final tap.
+    // Both swipes remain genuine browser input; no scroll/property injection.
+    const baseline=await q(),clip=baseline.action_visibility[id].clip_rect;
+    for(let index=0;index<2;index++){
+     const before=await q(),gesture=index===0?scrollGesture(before,id):{
+      clip,from:{x:clip[0]+clip[2]*.75,y:clip[1]+clip[3]-46},
+      to:{x:clip[0]+clip[2]*.75,y:clip[1]+clip[3]-206}
+     };
+     lastAction='rapid-library-scroll-'+(index+1);await canvasPan(gesture,{steps:1,stepDelay:0});await page.waitForTimeout(180);
+     const after=await q(),context=s=>({page:s.page,modal:s.modal,modal_version:s.modal_version,render_version:s.render_version,inspection_id:s.inspection?.id});
+     (report.scroll_gestures||=[]).push({action:id,purpose:'fast-library-pan-regression',driver:cdp?'CDP primary touch':'trusted browser pointer with Godot touch emulation',...gesture,before:context(before),after:context(after),target_before:before.actions[id]?.rect,target_after:after.actions[id]?.rect});
+     assertPanContext(before,after,id);
+     check(after.library_total===550,'fast library pan '+(index+1)+' preserves the actual550-card collection');
+     check(!after.modal&&!after.inspection,'fast library pan '+(index+1)+' does not accidentally inspect a card');
+     assert.deepEqual(after.deck_ids,baseline.deck_ids,'library panning does not alter the saved deck');
+    }
+   }
+   async function action(id){
+    lastAction=id;
+    if(['log','restart','convergence'].includes(id)&&!(await q()).actions[id])await action('actions');
+    await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled;},id);
+    const actionContext=await q();
+    for(let tries=0;tries<20;tries++){
+     const current=await q(),a=current.actions[id],v=current.action_visibility?.[id];
+     assertPanContext(actionContext,current,id);
+     const clip=v?.clip_rect||[0,0,page.viewportSize().width,page.viewportSize().height];
+     const hit=id.startsWith('card_')&&v?v.visible_rect:a.rect;
+     if(encloses(clip,hit)&&encloses([0,0,page.viewportSize().width,page.viewportSize().height],hit)&&hit[2]>=43.9&&hit[3]>=43.9)break;
+     lastAction='scroll:'+id;const gesture=scrollGesture(current,id);
+     await canvasPan(gesture);
      await page.waitForTimeout(180);
+     const afterPan=await q(),context=s=>({page:s.page,modal:s.modal,modal_version:s.modal_version,render_version:s.render_version,inspection_id:s.inspection?.id});
+     (report.scroll_gestures||=[]).push({action:id,driver:cdp?'CDP primary touch':'trusted browser pointer with Godot touch emulation',...gesture,before:context(current),after:context(afterPan),target_before:current.actions[id]?.rect,target_after:afterPan.actions[id]?.rect});
+     assertPanContext(current,afterPan,id);
+     // Wait for genuinely new canvas reports and settled content before
+     // computing the next gesture from its current clip/position.
+     const stable=await page.waitForFunction(sample=>{
+      const c=window.orafoldQA;if(!c||c===sample.previous)return false;sample.previous=c;
+      if(c.page!==sample.context.page||Boolean(c.modal)!==Boolean(sample.context.modal)||c.modal_version!==sample.context.modal_version||c.inspection?.id!==sample.context.inspection_id)throw new Error('Scroll changed page or dialog before the next gesture: '+sample.id);
+      const r=c.actions[sample.id]?.rect;if(!r)return false;
+      sample.count=sample.last&&r.every((n,i)=>Math.abs(n-sample.last[i])<1)?sample.count+1:1;sample.last=[...r];return sample.count>=3;
+     },{id,context:context(current),previous:null,last:null,count:0});await stable.dispose();
      check(tries<19,id+' becomes reachable through real scroll input');
     }
     // Compare three newly published observations; geometry movement must settle
@@ -92,6 +126,7 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
      return sample.count>=3?{rect:r,render:current.render_version,modal:current.modal_version}:false;
     },{id,previous:null,last:null,count:0});
     let settled;try{settled=await ready.jsonValue();}finally{await ready.dispose();}
+    assertPanContext(actionContext,await q(),id);lastAction=id;
     const before=performance.now();await tapRect(settled.rect,id);
     await page.waitForFunction(s=>{const c=window.orafoldQA;return c&&(c.render_version>s.render||c.modal_version!==s.modal);},settled);
     report.touch_samples.push({action:id,elapsed_ms:Math.round(performance.now()-before),meaning:'real touch to next published UI/model frame; includes host/test overhead'});
@@ -140,7 +175,7 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
    await action('collection');await wait(()=>window.orafoldQA?.library_total===550);
    check((await q()).library_total===550,'all550 active cards are available in the actual collection');
    const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));
-   check(first&&by[first.slice(5)],'the collection exposes actual production card IDs');await action(first);
+   check(first&&by[first.slice(5)],'the collection exposes actual production card IDs');await rapidLibraryScroll(first);await action(first);
    const detail=await q();check(detail.inspection?.title===by[first.slice(5)].name,'the inspector displays the complete actual name');
    await inspectorArt();await shot('collection-inspection-portrait');await action('modal_close');await action('builder_back');
    await action('builder');check((await q()).deck_size===30,'builder loads an existing valid30-card deck');await shot('deckbuilder-portrait');

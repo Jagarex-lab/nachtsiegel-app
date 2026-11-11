@@ -37,6 +37,13 @@ var opening_hand_signature := ""
 var hand_drag: Dictionary={}
 var hand_tap_epoch := 0
 var hand_press_epoch := 0
+var scroll_tap_epoch := 0
+var scroll_press_epoch := -1
+var scroll_pointer: Dictionary={}
+var scroll_pointers: Dictionary={}
+var scroll_accept_input := false
+var scroll_accept_epoch := 0
+var scroll_accept_used := -1
 var drag_ghost: Control
 var deck: Array=[]
 var collection_mode := "alpha"
@@ -177,13 +184,22 @@ func text(value: String, parent: Node=null, fs: int=14) -> Label:
 	var label=Label.new();label.text=value;label.add_theme_font_size_override("font_size",fs);label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;parent.add_child(label);return label
 func button(id: String, caption: String, callback: Callable, parent: Node=null, disabled_value: bool=false) -> Button:
 	if parent==null:parent=body
-	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;_bind_press(b,callback);parent.add_child(b);actions[id]=b;return b
+	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;_bind_press(b,callback);parent.add_child(b)
+	if not _scroll_press_context(b).is_empty():b.mouse_filter=Control.MOUSE_FILTER_PASS
+	actions[id]=b;return b
 func _bind_press(control: BaseButton, callback: Callable) -> void:
+	# A card/button must pass original touch drags to its ScrollContainer;
+	# activation remains guarded separately, including synthesized GUI releases.
+	if not _scroll_press_context(control).is_empty():control.mouse_filter=Control.MOUSE_FILTER_PASS
 	# Godot Web also reports canceled ordinary taps as releases. Let BaseButton
 	# reset its held state, but never dispatch its action after DOM cancellation.
-	var press={"version":0,"hand_epoch":0}
+	var press={"version":0,"hand_epoch":0,"scroll_epoch":-1,"scrolls":[],"keyboard":false,"key_epoch":-1,"render":0,"modal":0,"page":""}
 	control.mouse_entered.connect(func():_audio_event("card.hover" if control is CardView else "ui.hover"))
-	control.button_down.connect(func():press.version=_web_drag_cancel_version();press.hand_epoch=hand_tap_epoch)
+	control.button_down.connect(func():
+		press.version=_web_drag_cancel_version();press.hand_epoch=hand_tap_epoch
+		press.scroll_epoch=scroll_tap_epoch;press.scrolls=_scroll_press_context(control)
+		press.keyboard=scroll_accept_input and control.has_focus();press.key_epoch=scroll_accept_epoch;press.render=render_version;press.modal=modal_version;press.page=page
+	)
 	control.pressed.connect(func():
 		# A long portrait can still contain the release point after a drag. Godot
 		# can dispatch a synthesized GUI release after the owned gesture ends;
@@ -193,6 +209,12 @@ func _bind_press(control: BaseButton, callback: Callable) -> void:
 			# carries its canceled flag. Validate after that input packet, without
 			# a timer/cooldown and without blocking the GUI's button-state reset.
 			if session.model!=null:_dispatch_hand_press.call_deferred(weakref(control),callback,int(press.hand_epoch),int(press.version),weakref(session.model),session.commands.size())
+			return
+		if not _scroll_press_context(control).is_empty():
+			# ScrollContainer and Web touch emulation can release a tall button
+			# while its content is still moving under the pointer. Decide after
+			# the original release/cancel packet, never through a time debounce.
+			_dispatch_scroll_press.call_deferred(weakref(control),callback,press.duplicate(true))
 			return
 		if not OS.has_feature("web") or int(press.version)==_web_drag_cancel_version():
 			if not control is CardView:_audio_event("ui.confirm")
@@ -207,6 +229,54 @@ func _dispatch_hand_press(control_ref: WeakRef, callback: Callable, captured_epo
 	var index=hand_views.find(control)
 	if session.model==null or index<0 or index>=session.model.state.hero.hand.size() or str(control.card.id)!=str(session.model.state.hero.hand[index]):return
 	callback.call()
+func _scroll_press_context(control: Control) -> Array:
+	var result: Array=[]
+	var parent=control.get_parent()
+	while parent!=null:
+		if parent is ScrollContainer:result.append({"owner":weakref(parent),"horizontal":parent.scroll_horizontal,"vertical":parent.scroll_vertical})
+		parent=parent.get_parent()
+	return result
+func _dispatch_scroll_press(control_ref: WeakRef, callback: Callable, press: Dictionary) -> void:
+	var control=control_ref.get_ref()
+	if control==null or not control.is_inside_tree() or control.is_queued_for_deletion() or control.disabled:return
+	if render_pending or str(press.page)!=page or int(press.render)!=render_version or int(press.modal)!=modal_version:return
+	if OS.has_feature("web") and int(press.version)!=_web_drag_cancel_version():return
+	if bool(press.keyboard):
+		if not control.has_focus() or int(press.key_epoch)!=scroll_accept_epoch or scroll_accept_used==scroll_accept_epoch:return
+	else:
+		if int(press.scroll_epoch)!=scroll_tap_epoch or scroll_press_epoch!=scroll_tap_epoch or not scroll_pointers.is_empty():return
+		if press.scrolls.is_empty():return
+		for item in press.scrolls:
+			var owner=item.owner.get_ref()
+			if owner==null or not owner.is_inside_tree() or not owner.is_ancestor_of(control):return
+			if owner.scroll_horizontal!=int(item.horizontal) or owner.scroll_vertical!=int(item.vertical):return
+	# Even a callback that leaves the view unchanged (e.g. fullscreen) owns
+	# exactly one original intent. A later genuine down can immediately rearm.
+	if bool(press.keyboard):scroll_accept_used=scroll_accept_epoch
+	else:scroll_press_epoch=-1
+	if not control is CardView:_audio_event("ui.confirm")
+	callback.call()
+func _invalidate_scroll_press() -> void:
+	if not scroll_pointer.is_empty() and not bool(scroll_pointer.get("invalid",false)):
+		scroll_pointer.invalid=true;scroll_tap_epoch+=1
+func _scroll_pointer_down(at: Vector2, pointer: int) -> void:
+	scroll_accept_input=false;scroll_accept_epoch+=1
+	# A new original down can recover a missing release; synthesized downs are
+	# excluded by _input and cannot rearm a held pointer over a moving card.
+	if scroll_pointers.has(pointer):
+		_invalidate_scroll_press();scroll_pointers.erase(pointer);scroll_pointer.clear()
+	scroll_pointers[pointer]=true
+	if scroll_pointers.size()>1:_invalidate_scroll_press();return
+	scroll_pointer={"pointer":pointer,"start":at,"viewport":get_viewport_rect().size,"invalid":false}
+	scroll_press_epoch=scroll_tap_epoch
+func _scroll_pointer_move(at: Vector2, pointer: int) -> void:
+	if scroll_pointer.is_empty() or pointer!=int(scroll_pointer.pointer):return
+	if at.distance_to(scroll_pointer.start)>=8*density or scroll_pointer.viewport!=get_viewport_rect().size:_invalidate_scroll_press()
+func _scroll_pointer_release(at: Vector2, pointer: int, canceled: bool=false) -> void:
+	_scroll_pointer_move(at,pointer)
+	if canceled:_invalidate_scroll_press()
+	scroll_pointers.erase(pointer)
+	if scroll_pointers.is_empty():scroll_pointer.clear()
 func dropdown(id: String, items: Array, current: String, callback: Callable, parent: Node) -> Button:
 	var labels={"all":"Alle","creature":"Wesen","event":"Impuls","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral","cost_asc":"Energie aufsteigend","cost_desc":"Energie absteigend","name_asc":"Name A–Z"}
 	labels.merge(LibraryFilter.species_labels())
@@ -334,7 +404,7 @@ func settings_page() -> void:
 			else:show_app_mode_help(),app_buttons)
 		button("app_install","Installation / App-Modus",show_app_mode_help,app_buttons)
 		if not str(app.get("status","")).is_empty():text(str(app.status),box,14)
-	text("Eine laufende KI-Partie wird nach jedem Zug lokal für die Wiederaufnahme gesichert. Rotation und App-Wechsel ändern keine Spielregeln.",box,14)
+	text("ORAFOLD versucht, laufende KI-Partien lokal zu sichern. Fortsetzen setzt eine erfolgreiche Sicherung voraus. Bei Speicherproblemen erscheint ein Hinweis. Rotation und App-Wechsel ändern keine Spielregeln.",box,14)
 	if not duel_checkpoint.issue.is_empty():text(duel_checkpoint.issue,box,14)
 	if mode=="alpha":
 		var power_row: HBoxContainer
@@ -348,7 +418,7 @@ func settings_page() -> void:
 	dropdown("difficulty",["Normal","Einfach","Taktisch"],"Einfach" if difficulty==1 else "Taktisch" if difficulty==5 else "Normal",func(v):difficulty={"Normal":2,"Einfach":1,"Taktisch":5}[v];save_preferences();render(),options)
 	button("motion","Bewegung: "+("reduziert" if session.profile.reduced_motion else "normal"),func():session.profile.reduced_motion=not session.profile.reduced_motion;save_preferences();render(),options)
 	if FileAccess.file_exists("user://orafold_last_replay.json"):button("last_replay","LETZTES REPLAY ÖFFNEN",load_last_replay,box)
-	text("Deckwahl, Schwierigkeit und Bewegung werden lokal gespeichert. Keine Konten oder Käufe.",box,14)
+	text("Deckwahl, Schwierigkeit und Bewegung werden lokal gespeichert, sofern der Speicher verfügbar ist. Für den KI-Modus ist kein Konto nötig. Keine Echtgeldkäufe.",box,14)
 	audio_settings=AudioSettings.new()
 	audio_settings.name="AlphaSettings"
 	audio_settings.bind_manager(get_node("/root/GameAudio"))
@@ -802,7 +872,7 @@ func show_actions() -> void:
 		button("restart","Neue Partie",func():show_modal("Neue Partie?",func(confirm):button("confirm_restart","Neu starten",func():close_modal();start_battle(),confirm)),navigation)
 		text("Energie %d · Resonanz %d/15" % [p.energy,p.resonance],box,22)
 		text("Nachziehstapel %d · Ablage %d · Hand %d/6" % [p.deck.size(),p.discard.size(),p.hand.size()],box,14)
-		if not _duel_save_issue().is_empty():text("Fortsetzen noch nicht gesichert: "+_duel_save_issue()+" Die Partie bleibt spielbar. Ein Seitenneustart kann den letzten Zug verlieren.",box,14).add_theme_color_override("font_color",T.WARNING)
+		if not _duel_save_issue().is_empty():text("Fortsetzen noch nicht gesichert: "+_duel_save_issue()+" Die Partie bleibt spielbar. Nicht gesicherte Spielzüge können beim Neuladen verloren gehen.",box,14).add_theme_color_override("font_color",T.WARNING)
 		if not armed_impulses().is_empty():button("armed_impulses","Bereite Reaktionen · %d" % armed_impulses().size(),show_armed_impulses,box)
 		button("resource_help","Energie, Resonanz und Schlüsselwörter erklärt",resource_help,box)
 		if mode=="alpha":button("convergence","Konvergenz · drei unbestrittene bereite Pfade",func():close_modal();convergence_action(),box,not usable or pending or int(session.model.state.round)<11)
@@ -922,16 +992,16 @@ func show_engine_error() -> void:
 func result_dialog() -> void:
 	var s: Dictionary=session.model.state
 	show_modal("SIEG" if s.winner=="hero" else "UNENTSCHIEDEN" if s.winner=="draw" else "NIEDERLAGE",func(box):
-		text("Regulärer Spielabschluss. Alle weiteren Kampfaktionen sind gesperrt.",box,20)
+		text("Die Partie ist beendet. Starte eine neue Partie oder sieh dir das Protokoll an.",box,20)
 		if not services.last_reward.is_empty():text("Lokaler Fortschritt verbucht." if services.last_reward.get("ok",false) else "Fortschritt konnte nicht gespeichert werden; der Kampfabschluss bleibt gültig.",box,14)
-		text("Konvergenz" if session.model.events[-1].kind=="convergence_win" else "Helden-/Kontrollentscheidung · siehe Protokoll",box)
+		text("Konvergenz abgeschlossen." if session.model.events[-1].kind=="convergence_win" else "Den Spielverlauf findest du im Protokoll.",box)
 		button("result_restart","NEUE PARTIE",func():close_modal();start_battle(),box)
 		button("result_menu","ZUM MENÜ",func():close_modal();page="lobby";render(),box)
 		button("result_log","PROTOKOLL",show_log,box)
 	)
 func confirm_menu() -> void:
 	show_modal("Partie verlassen?",func(box):
-		text("Laufende Partien werden nicht fortgesetzt. Gespeicherte Decks bleiben erhalten.",box)
+		text("Nur erfolgreich gesicherte Partien lassen sich fortsetzen. Nicht gespeicherte Spielzüge können verloren gehen. Gespeicherte Decks bleiben erhalten.",box)
 		button("confirm_menu","Zum Hauptmenü",func():close_modal();page="lobby";render(),box)
 	)
 	set_audio_paused(true)
@@ -1459,6 +1529,7 @@ func _cancel_hand_drag(redraw: bool=false) -> void:
 	if redraw:render.call_deferred()
 func _notification(what: int) -> void:
 	if what in [NOTIFICATION_WM_WINDOW_FOCUS_OUT,NOTIFICATION_APPLICATION_PAUSED]:
+		_invalidate_scroll_press();scroll_pointers.clear();scroll_pointer.clear();scroll_press_epoch=-1;scroll_accept_input=false;scroll_accept_epoch+=1
 		_cancel_hand_drag(true)
 		_checkpoint_duel()
 func _input(event: InputEvent) -> void:
@@ -1468,14 +1539,26 @@ func _input(event: InputEvent) -> void:
 	# original pointer owns a gesture; synthesized events keep ordinary taps working.
 	if event.device==-1:return
 	if event is InputEventScreenTouch:
+		if event.pressed:_scroll_pointer_down(event.position,event.index)
+		else:_scroll_pointer_release(event.position,event.index,event.canceled)
 		if event.pressed:_drag_press(event.position,event.index)
 		else:_drag_release(event.position,event.index,event.canceled)
-	elif event is InputEventScreenDrag:_drag_move(event.position,event.index)
+	elif event is InputEventScreenDrag:
+		_scroll_pointer_move(event.position,event.index);_drag_move(event.position,event.index)
 	elif event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
+		if event.pressed:_scroll_pointer_down(event.position,-2)
+		else:_scroll_pointer_release(event.position,-2)
 		if event.pressed:_drag_press(event.position,-2)
 		else:_drag_release(event.position,-2)
-	elif event is InputEventMouseMotion and event.button_mask&MOUSE_BUTTON_MASK_LEFT:_drag_move(event.position,-2)
-	elif event is InputEventKey and event.pressed:hand_press_epoch=hand_tap_epoch
+	elif event is InputEventMouseMotion and event.button_mask&MOUSE_BUTTON_MASK_LEFT:
+		_scroll_pointer_move(event.position,-2);_drag_move(event.position,-2)
+	elif event is InputEventKey or event is InputEventJoypadButton or event is InputEventAction:
+		if event.is_action("ui_accept"):
+			if not event.is_pressed():scroll_accept_input=false
+			elif not (event is InputEventKey and event.echo):
+				if not scroll_accept_input:scroll_accept_epoch+=1
+				scroll_accept_input=true
+		if event is InputEventKey and event.pressed:hand_press_epoch=hand_tap_epoch
 
 func battle_heading(s: Dictionary) -> String:
 	if mode=="alpha" and s.stage!="battle":return {"mulligan":"STARTHAND WÄHLEN","origins":"URSPRUNG WÄHLEN","second":"ZWEITE MÖGLICHKEIT"}.get(s.stage,"VORBEREITUNG")

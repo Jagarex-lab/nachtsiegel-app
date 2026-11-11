@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict');
-const {clearTouchPoint,scrollGesture,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('../../tools/premium/browser_contract.cjs');
+const {clearTouchPoint,scrollGesture,assertPanContext,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('../../tools/premium/browser_contract.cjs');
 function fixture(){
  const board={};for(const [side,y]of [['enemy',48],['hero',140]])for(let lane=0;lane<5;lane++)board[side+lane]=[10+lane*164,y,156,84];
  const actions={};for(const [id,x,y,w]of [['menu',0,0,44],['actions',650,330,90],['end',650,230,180],['inspect',740,330,90]])actions[id]={rect:[x,y,w,44],disabled:false};
@@ -17,6 +17,22 @@ test('mobile scroll gestures use real unoccupied canvas space in the correct dir
  q.actions.card.rect[1]=-300;const up=scrollGesture(q,'card');assert(up.to.y>up.from.y);
  q.actions.card.rect=[-50,120,44,44];assert.throws(()=>scrollGesture(q,'card'),/horizontal clipping/);
  q.actions.cover={rect:[0,100,390,600]};q.action_visibility.cover={clip_rect:[0,100,390,600]};q.actions.card.rect=[10,1000,180,250];assert.throws(()=>scrollGesture(q,'card'),/outside action buttons/);
+});
+test('short settings panels use the remaining clipped distance instead of oscillating by147px',()=>{
+ const q={actions:{faction_morph:{rect:[48,332,367,44]}},action_visibility:{faction_morph:{clip_rect:[48,50,748,245]}}};
+ const gesture=scrollGesture(q,'faction_morph'),distance=gesture.from.y-gesture.to.y;
+ assert(distance>81&&distance<120,'the actual81px overflow is exposed without a147px overshoot');
+ q.actions.faction_morph.rect[1]=40;
+ const correction=scrollGesture(q,'faction_morph');assert(correction.to.y-correction.from.y<40,'a small reverse correction cannot overshoot the other edge');
+});
+test('partly visible library portraits need44px while ordinary actions need their full button',()=>{
+ const q={actions:{card_actual:{rect:[8,280,179,250]}},action_visibility:{card_actual:{clip_rect:[8,50,374,245]}}};
+ const small=scrollGesture(q,'card_actual');assert(small.from.y-small.to.y<60,'oversized portrait is exposed through a modest real pan');
+});
+test('scrolling may never silently open a wrong inspector or switch a dialog or page',()=>{
+ const before={page:'collection',modal:false,modal_version:0},same={...before};assertPanContext(before,same,'card_actual');
+ for(const after of [{...same,modal:true,modal_version:2,inspection:{id:'wrong'}},{...same,page:'settings'},{...same,modal_version:1},{...same,inspection:{id:'wrong'}}])assert.throws(()=>assertPanContext(before,after,'card_actual'),/scrolling/);
+ const modal={page:'settings',modal:true,modal_version:3};assertPanContext(modal,{...modal},'difficulty');assert.throws(()=>assertPanContext(modal,{...modal,modal:false},'difficulty'),/scrolling/);
 });
 test('permanent log buttons fail the deliberately compact battle composition',()=>{const q=fixture();q.actions.log={rect:[44,0,70,44]};assert.throws(()=>battleGeometry(q,[0,0,844,390]),/secondary log/);});
 test('missing sixth card and clipped primary action fail',()=>{const q=fixture();q.hand.pop();assert.throws(()=>battleGeometry(q,[0,0,844,390],{requireSix:true}),/six cards/);q.actions.end.rect[0]=800;assert.throws(()=>battleGeometry(q,[0,0,844,390]),/inside the usable viewport/);});

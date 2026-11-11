@@ -35,8 +35,22 @@ function scrollGesture(q,id){
  for(const y of ys){for(const fraction of [.75,.25,.5]){const x=clip[0]+clip[2]*fraction;if(!buttons.some(r=>x>=r[0]&&x<=r[0]+r[2]&&y>=r[1]&&y<=r[1]+r[3])){from={x,y};break;}}if(from)break;}
  assert(from,'scroll gesture starts on a real surface outside action buttons');
  const room=down?from.y-(clip[1]+8):clip[1]+clip[3]-8-from.y;
- const distance=Math.min(160,clip[3]*.6,room);assert(distance>10,'scroll gesture exceeds the actual deadzone');
+ // Move only the remaining clipped distance, plus the real scroll deadzone.
+ // A fixed viewport fraction can send a44px button past both edges of a
+ // short settings panel forever. Oversized library cards need an exposed
+ //44px region; ordinary buttons must fit completely inside the clip.
+ const card=id.startsWith('card_'),margin=8,deadzone=10;
+ const required=down
+  ? (card?target[1]+44:target[1]+target[3])-(clip[1]+clip[3])+margin
+  : clip[1]+margin-(card?target[1]+target[3]-44:target[1]);
+ const distance=Math.min(160,clip[3]*.6,room,Math.max(deadzone+1,required+deadzone));assert(distance>10,'scroll gesture exceeds the actual deadzone');
  return {clip,from,to:{x:from.x,y:from.y+(down?-distance:distance)}};
+}
+function assertPanContext(before,after,id){
+ assert.equal(after.page,before.page,id+' scrolling must preserve the current page');
+ assert.equal(Boolean(after.modal),Boolean(before.modal),id+' scrolling must not open or close a dialog');
+ assert.equal(after.modal_version,before.modal_version,id+' scrolling must preserve the current dialog identity');
+ assert.equal(after.inspection?.id,before.inspection?.id,id+' scrolling must not inspect a different card');
 }
 function battleGeometry(q,viewport,{minimumHandAspect=.57,maximumHandAspect=.90,requireSix=false}={}){
  assert(q?.page==='battle'&&q.battle,'a real battle is displayed');
@@ -98,4 +112,4 @@ function playability(q){
  }
  return {available:q.hand.filter(card=>card.playable).length,unavailable:q.hand.filter(card=>!card.playable).length};
 }
-module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,scrollGesture,battleGeometry,artReady,fullArtReady,premiumArt,playability};
+module.exports={rect,encloses,overlap,touchRect,clearTouchPoint,scrollGesture,assertPanContext,battleGeometry,artReady,fullArtReady,premiumArt,playability};

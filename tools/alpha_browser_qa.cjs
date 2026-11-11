@@ -1,5 +1,6 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
+const {scrollGesture,assertPanContext}=require('./premium/browser_contract.cjs');
 const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards,...JSON.parse(fs.readFileSync('data/legacy/cards.json','utf8')).cards],by=Object.fromEntries(cards.map(c=>[c.id,c]));
 function allVisibleCompactReady({expected,count}){
  const rows=(window.orafoldQA?.battle_art||[]).filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
@@ -54,20 +55,21 @@ function allVisibleCompactReady({expected,count}){
     const height=Math.max(160,Math.min(m.pixelsHeight/q.density-top,m.visibleHeight)-(safe.top||0)-(safe.bottom||0));
     return Math.abs(m.cssWidth-viewport.width)<1&&Math.abs(m.cssHeight-viewport.height)<1&&Math.abs(m.pixelsWidth/m.cssWidth-q.density)<.02&&Math.abs(q.layout_size[0]-width)<1&&Math.abs(q.layout_size[1]-height)<1;
    },page.viewportSize(),{timeout:90000});
-   const stableTarget=async target=>{
+   const stableTarget=async (target,expectedContext=null)=>{
     const handle=await page.waitForFunction(sample=>{
      const q=window.orafoldQA;if(!q||q===sample.previous)return false;sample.previous=q;
+     if(sample.context&&(q.page!==sample.context.page||Boolean(q.modal)!==Boolean(sample.context.modal)||q.modal_version!==sample.context.modal_version||q.inspection?.id!==sample.context.inspection_id))throw new Error('Scroll/input target context changed before touch');
      const t=sample.target,a=t.action?q.actions[t.action]:null;
      const rect=t.action?(t.action.startsWith('card_')&&q.action_visibility?.[t.action]?q.action_visibility[t.action].visible_rect:a?.rect):t.board?q.board[t.board]:q.hand[t.hand]?.id===t.card_id?q.hand[t.hand].rect:null;
      if(!rect||a?.disabled){sample.count=0;return false;}
      sample.count=sample.last&&rect.every((n,i)=>Math.abs(n-sample.last[i])<=1)?sample.count+1:1;sample.last=[...rect];
      return sample.count>=3?{rect,action_rect:a?.rect,visibility:t.action?q.action_visibility?.[t.action]:null,samples:sample.count}:false;
-    },{target,previous:null,last:null,count:0},{timeout:90000});
+    },{target,context:expectedContext?{page:expectedContext.page,modal:expectedContext.modal,modal_version:expectedContext.modal_version,inspection_id:expectedContext.inspection?.id}:null,previous:null,last:null,count:0},{timeout:90000});
     try{return await handle.jsonValue();}finally{await handle.dispose();}
    };
-   const tap=async (r,target=null)=>{
+   const tap=async (r,target=null,expectedContext=null)=>{
     if(!target){const q=await state(),same=value=>value&&value.every((n,i)=>Math.abs(n-r[i])<.1),id=Object.keys(q.actions).find(id=>same(touchRect(q,id))||same(q.actions[id].rect)),board=Object.keys(q.board).find(id=>same(q.board[id])),hand=q.hand.findIndex(card=>same(card.rect));target=id?{action:id}:board?{board}:hand>=0?{hand,card_id:q.hand[hand].id}:null;assert(target,'touch has an actual tracked UI target');}
-    const settled=await stableTarget(target);r=settled.rect;const q=await state();settled.render_version=q.render_version;settled.modal_version=q.modal_version;
+    const settled=await stableTarget(target,expectedContext);r=settled.rect;const q=await state();settled.render_version=q.render_version;settled.modal_version=q.modal_version;
     if(target.action)assert(fullVisible(q,target.action),target.action+' stays fully touch-visible after kinetic scrolling settles');
     if(gameplay?.recording)gameplay.inputs.push({kind:'touch',point:[r[0]+r[2]/2,r[1]+r[3]/2],rect:r,target,seed:q.battle?.seed,command_count:q.command_count,selected:q.selected,phase:q.battle?.hero.phase,action:lastAction});
     actionTrace.push({kind:'stable_touch',target,rect:r,fresh_qa_samples:settled.samples});await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);return settled;
@@ -84,19 +86,7 @@ function allVisibleCompactReady({expected,count}){
     return encloses(viewportRect(),a.rect)&&encloses(visibility.clip_rect,a.rect)&&encloses(visibility.visible_rect,a.rect)&&visibility.visible_rect[2]>=43.9&&visibility.visible_rect[3]>=43.9;
    };
    async function panTowards(current,id){
-    const clip=current.action_visibility[id].clip_rect,r=current.actions[id].rect;
-    assert(clip[2]>=43.9&&clip[3]>=43.9,id+' scroll region can expose44CSS');
-    const down=r[1]+r[3]>clip[1]+clip[3]+.1,up=r[1]<clip[1]-.1;
-    assert(down||up,id+' horizontal clipping cannot be repaired by vertical pan');
-    const sameClip=value=>value&&value.every((n,i)=>Math.abs(n-clip[i])<.1);
-    const buttons=Object.entries(current.actions).filter(([key])=>sameClip(current.action_visibility[key]?.clip_rect)).map(([,value])=>value.rect);
-    const ys=[down?clip[1]+clip[3]-24:clip[1]+24,clip[1]+clip[3]*.5,...buttons.flatMap(value=>[value[1]-2,value[1]+value[3]+2])].filter(y=>y>=clip[1]+8&&y<=clip[1]+clip[3]-8).sort((a,b)=>down?b-a:a-b);
-    let point=null;
-    for(const y of ys){for(const fraction of [.75,.25,.5]){const x=clip[0]+clip[2]*fraction;if(!buttons.some(value=>x>=value[0]&&x<=value[0]+value[2]&&y>=value[1]&&y<=value[1]+value[3])){point={x,y};break;}}if(point)break;}
-    assert(point,id+' has a real scroll surface outside action buttons');
-    const available=down?point.y-(clip[1]+8):clip[1]+clip[3]-8-point.y;
-    const distance=Math.min(160,clip[3]*.6,available);assert(distance>10,id+' pan exceeds real scroll deadzone');
-    const end={x:point.x,y:point.y+(down?-distance:distance)};
+    const gesture=scrollGesture(current,id),clip=gesture.clip,point=gesture.from,end=gesture.to;
     if(capture){
      await capture.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...point,id:0,radiusX:2,radiusY:2,force:1}]});
      for(let step=1;step<=6;step++){await capture.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:point.x,y:point.y+(end.y-point.y)*step/6,id:0,radiusX:2,radiusY:2,force:1}]});await page.waitForTimeout(35);}
@@ -108,8 +98,10 @@ function allVisibleCompactReady({expected,count}){
      for(let step=1;step<=6;step++){await page.mouse.move(point.x,point.y+(end.y-point.y)*step/6);await page.waitForTimeout(35);}
      await page.mouse.up();
     }
-    actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end});
     await page.waitForTimeout(180);
+    const after=await state(),context=s=>({page:s.page,modal:s.modal,modal_version:s.modal_version,render_version:s.render_version,inspection_id:s.inspection?.id});
+    actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end,before:context(current),after:context(after),target_before:current.actions[id]?.rect,target_after:after.actions[id]?.rect});
+    assertPanContext(current,after,id);
    }
    const action=async (id,{render=true}={})=>{
     lastAction=id;
@@ -118,16 +110,17 @@ function allVisibleCompactReady({expected,count}){
     // invoking any model/UI callback from JavaScript.
     if(['convergence','log','restart'].includes(id)&&!(await state()).actions[id])await action('actions');
     await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});
-    let previous=await state();lastAction=id;
+    let previous=await state();const actionContext=previous;lastAction=id;
     if(legacyOnly&&!previous.action_visibility){
      for(let tries=0;tries<8&&!fullVisible(previous,id);tries++){
       const r=previous.actions[id].rect,v=page.viewportSize();await page.mouse.move(Math.max(1,Math.min(v.width-1,r[0]+r[2]/2)),v.height*.6);await page.mouse.wheel(0,r[1]<0?-v.height*.55:v.height*.55);await page.waitForTimeout(140);previous=await state();
      }
-    }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);await stableTarget({action:id});previous=await state();}
+    }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);await stableTarget({action:id},actionContext);previous=await state();}
+    assertPanContext(actionContext,previous,id);
     assert(fullVisible(previous,id),id+' requires a visible44CSS card region or a fully visible button');
     const hit=touchRect(previous,id);assert(hit[2]>=43.9&&hit[3]>=43.9,id+' actual touch region remains44CSS');
     const destination={builder:'builder',collection:'collection',settings:'settings',start:legacyOnly?'battle':'decks',deck_play:'battle',builder_back:'lobby',settings_back:'lobby',decks_back:'lobby',confirm_menu:'lobby',result_menu:'lobby'}[id];
-    const settled=await tap(hit,{action:id});actionTrace.push({id,kind:'tap',rect:settled.action_rect,hit_rect:settled.rect,visibility:settled.visibility});if(render)await page.waitForFunction(({previous,destination})=>{const q=window.orafoldQA;return(q.render_version>previous.render_version||q.modal_version!==previous.modal_version)&&(!destination||q.page===destination);},{previous:settled,destination},{timeout:90000});
+    const settled=await tap(hit,{action:id},actionContext);actionTrace.push({id,kind:'tap',rect:settled.action_rect,hit_rect:settled.rect,visibility:settled.visibility});if(render)await page.waitForFunction(({previous,destination})=>{const q=window.orafoldQA;return(q.render_version>previous.render_version||q.modal_version!==previous.modal_version)&&(!destination||q.page===destination);},{previous:settled,destination},{timeout:90000});
    };
    const capture=engine==='chromium'?await context.newCDPSession(page):null;
    const deadline=async (promise,message,ms)=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(message)),ms);})]).finally(()=>clearTimeout(timer));};

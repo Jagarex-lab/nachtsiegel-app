@@ -78,3 +78,63 @@ und Ereignissen, später zulässige Eingaben, Replay und den Neustart. Eine
 gesondert markierte angeordnete Auswahl-Fixture prüft den Wechsel von
 „Pfadwechsel auslassen“ zu „Zug beenden“; sie wird nicht als ausgespielte Partie
 oder Replay-Nachweis gezählt. Die Kampfregeln werden nicht geändert.
+
+## Scrollen darf keine Karte auswählen
+
+Die abschließende WebKit-Prüfung reproduzierte auf dem vorherigen Export einen
+weiteren echten Eingabefehler: Nach zwei schnellen Wischbewegungen erschien
+bereits eine fremde Karteninspektion, bevor der beabsichtigte Kartentap erfolgte.
+Die Browser-Negativbelege enthalten unveränderte Beobachtungen vor und nach
+jedem Flick; es wurde kein Spielzustand eingesetzt.
+
+Scrollbare Schaltflächen werden nun erst nach dem vollständigen Eingabepaket
+aktiviert. Ein vom ursprünglichen Zeigerstart bewachter Eingabe-Epochenschlüssel
+unterscheidet echte neue Taps von nachträglichen GUI-Press-Signalen während einer
+Bewegung. Bewegung ab acht CSS-Pixeln, Abbruch, mehrere Finger, geänderte
+Scrollpositionen oder ein inzwischen erneuerter Control-Baum verhindern die
+Aktivierung. Tastaturaktionen behalten ihren eigenen fokussierten Eingabeweg.
+Es gibt keine zeitliche Sperre nach dem Scrollen.
+
+Karten und normale Schaltflächen innerhalb eines Scrollbereichs verwenden
+`MOUSE_FILTER_PASS`, damit auch ein Wischen direkt auf der Illustration den
+Scrollbereich erreicht. Spielfeld, Handkarten und Audioregler werden dadurch
+nicht umgestellt. Der native Eingabetest fordert ausdrücklich, dass ein solcher
+160-Pixel-Wisch tatsächlich scrollt und weder Inspektion noch Kartenhinzufügen
+auslöst. Ein anschließender echter Tap, ein Drei-Pixel-Wackler, Mausklick sowie
+Leertaste und Enter müssen weiterhin sofort funktionieren.
+
+`tests/premium_scroll_input.gd` bestand **46 Assertions ohne Fehler**. Enthalten
+sind reale Touch-/Maus-Eingaben und klar markierte adversariale GUI-Signalfolgen;
+die Signalfolgen werden nicht als physische Geräteprüfung ausgegeben. Die
+vorhandenen 94 Handgesten-, 16 Primäraktions-, 258 Bibliotheks- und 23
+Auswahl-Assertions bestanden zusätzlich unverändert. Betroffene UI-Testtreiber
+verwenden nun echte `InputEventScreenTouch`-Eingaben mit gemessener geclippter
+Touchfläche statt eines programmatischen `pressed.emit()`-Kurzschlusses. Es gibt
+keine Freistellung des Produktcodes für Testaufrufe.
+
+Auch unverändert bleibende Ansichten verbrauchen jeden ursprünglichen Tap genau
+einmal. Doppelte GUI-Signale können dadurch beispielsweise einen Vollbildschalter
+nicht erneut aktivieren. Fokussierte Tastaturaktionen besitzen einen eigenen
+einmaligen Eingabeschlüssel; ein nachfolgender Zeigerstart entwertet alte
+Tastatur-Signale. Die zusätzlichen Proben verwenden ausdrücklich einen
+unveränderten UI-Zähler, damit ein zufälliger Ansichtswechsel diese Fehler nicht
+verdecken kann. Der nächste echte Tap beziehungsweise Tastendruck bleibt sofort
+verfügbar.
+
+Die ursprüngliche native Zwischenprüfung meldete zunächst korrekt, dass Karten
+mit `MOUSE_FILTER_STOP` nicht von der Illustration aus gescrollt werden konnten.
+Eine weitere Zwischenprüfung enthielt einen Fehler im neuen Testtreiber: Ein
+Drei-Pixel-Wackler wurde fälschlich mit einer relativen 20-Pixel-Vertikalbewegung
+gesendet. Der Treiber wurde auf die tatsächliche Positionsdifferenz korrigiert;
+die Anforderung an den ersten gültigen Tap wurde beibehalten. Beide ursprünglichen
+Logs bleiben im QA-Artefakt erhalten.
+
+Der zusätzlich ausgeführte echte native Anwendungstest machte eine vorhandene
+asynchrone Testannahme sichtbar: Acht Frames reichen nicht zuverlässig aus, um
+einen bereits laufenden Musikübergang abzuschließen. Der Test wartet jetzt
+innerhalb von höchstens fünf Sekunden auf den tatsächlichen Kampagnenkontext und
+nach dem Verlassen auf den vollständig abgeschlossenen Menüübergang. Beide
+Kontextanforderungen bleiben ausdrückliche Assertions. Der native Lauf bestand
+**37 Assertions ohne Fehler**; der protokollierte natürliche Übergang dauerte
+1891 Millisekunden, ohne Pausierung oder erzwungene Audioänderung. Der produktive
+Audiocode wurde nicht geändert.
