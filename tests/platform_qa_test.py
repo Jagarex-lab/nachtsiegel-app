@@ -3,6 +3,7 @@
 Actual executable startup and full-duel evidence is required separately by the
 platform CI jobs. These tests make malformed, incomplete and stale reports fail.
 """
+import configparser
 import hashlib
 import importlib.util
 import io
@@ -62,6 +63,27 @@ def synthetic_pck(files, version=3, engine=(4, 6, 3), flags=2, entry_flags=0, en
         header = struct.pack('<4s5IQ', b'GDPC', version, *engine, flags, file_base) + b'\0' * 64
         content = header + directory + payload
     return content + struct.pack('<Q4s', len(content), b'GDPC')
+
+
+class ExportPresetConfiguration(unittest.TestCase):
+    def test_every_platform_excludes_editor_addon_and_checkout_sources(self):
+        config = configparser.ConfigParser(interpolation=None)
+        config.read('export_presets.cfg')
+        presets = [name for name in config.sections() if name.startswith('preset.') and name.count('.') == 1]
+        self.assertTrue(presets, 'actual export presets must exist')
+        for name in presets:
+            preset = config[name]
+            with self.subTest(preset=preset['name']):
+                excluded = set(preset['exclude_filter'].strip('"').split(','))
+                self.assertTrue({'addons/orafold_art_delivery/*', 'work/*', 'tests/*', 'docs/*',
+                                 'tools/*', 'node_modules/*', '.git/*'} <= excluded)
+                self.assertEqual(preset['export_filter'], '"all_resources"')
+                # Web streams original art externally; native packages retain it.
+                self.assertEqual('assets/cards/originals/*' in excluded, preset['platform'] == '"Web"')
+                included = set(preset['include_filter'].strip('"').split(','))
+                self.assertTrue({'data/production/*.json', 'data/card_system/*.json',
+                                 'assets/fonts/*LICENSE*', 'assets/fonts/*OFL*.txt',
+                                 'LICENSE-NOTICE.md'} <= included)
 
 
 class PlatformEvidence(unittest.TestCase):
