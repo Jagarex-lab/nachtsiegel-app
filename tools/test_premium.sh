@@ -13,8 +13,8 @@ export XDG_CONFIG_HOME="$PWD/work/premium-mobile/native-xdg/config"
 export XDG_CACHE_HOME="$PWD/work/premium-mobile/native-xdg/cache"
 export LP_NUM_THREADS="${LP_NUM_THREADS:-1}"
 premium_godot="${GODOT_BIN:-godot}"
-for source in tools/premium/browser_contract.cjs tools/premium/browser_qa.cjs tools/alpha_browser_qa.cjs tools/release/public_integrity.cjs tools/release/public_probe.cjs; do node --check "$source"; done
-node --test tests/premium/browser_contract.test.cjs tests/release/public_integrity.test.cjs tools/premium/test_pwa.cjs tools/premium/test_worker.cjs
+for source in tools/premium/browser_contract.cjs tools/premium/campaign_header_contract.cjs tools/premium/campaign_header_browser_qa.cjs tools/premium/browser_qa.cjs tools/alpha_browser_qa.cjs tools/release/public_integrity.cjs tools/release/public_probe.cjs; do node --check "$source"; done
+node --test tests/premium/browser_contract.test.cjs tests/premium/campaign_header_contract.test.cjs tests/release/public_integrity.test.cjs tools/premium/test_pwa.cjs tools/premium/test_worker.cjs
 python3 -m unittest discover -s tools/premium -p test_stage_pwa.py -v
 python3 -Werror::ResourceWarning -m unittest discover -s tests/release -v
 premium_run() {

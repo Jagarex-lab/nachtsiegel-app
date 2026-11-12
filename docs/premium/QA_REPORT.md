@@ -755,3 +755,47 @@ Export und ohne Wiederholungsakzeptanz aus: Jeder erste Fehler beendet den Job.
 Separate kleine JSON-/Log-Artefakte und begrenzte Fehlerauszüge machen die
 Diagnose unabhängig vom großen Binärartefakt zugänglich. Ein endgültiger grüner
 Lauf oder eine Fehlerbehebung des späteren Kandidaten wird hier nicht vorweggenommen.
+
+### Erste verpflichtende Header-CI: gemischte Beobachtungsstände
+
+Auf `151021bc54db80272ce490fe45029958466ec89e` bestand der zusätzliche gehostete
+WebKit-Weg mit 79 Prüfungen. Der anschließende Header-Treiber blieb dagegen nach
+28 Prüfungen fehlgeschlagen: Beim Zurückdrehen erwartete er den sichtbaren
+44-Pixel-Schalter „Charaktere“. Die Kampagnenbeobachtung meldete bereits
+`logical_viewport=[390,844]` und `compact=true`; der gleichzeitig gelesene
+Shell-Kanal enthielt noch `layout_size=[844,390]`, `portrait=false` und dessen
+altes Querformat-Rechteck `[342,60,157,52]`. Das vollständige Fehlerdokument liegt
+im Artefakt unter `premium-mobile/browser-webkit/campaign-header/webkit-results.json`
+(Job `130875319044`, Lauf `43122291958`). Die beiden vorherigen PNGs bleiben
+erhalten; eine Aufnahme des zurückgedrehten Hochformats wurde nicht erreicht.
+
+Shell-Viewportabfrage, Shell-QA und Kampagnen-QA veröffentlichen unabhängig mit
+0,2-, 0,1- beziehungsweise 0,15-Sekunden-Intervallen. Der damalige Treiber wartete
+auf den neuen Kampagnenstand und das Canvas, prüfte danach aber noch alte
+Shell-Geometrie. Dieser konkrete Fehlerbeleg bestätigt keine dauerhaft falsche
+Produktgeometrie und macht den fehlgeschlagenen CI-Lauf nicht erfolgreich.
+
+Die laufende reine Treiberkorrektur verlangt beide passenden logischen Größen,
+alle tatsächlich sichtbaren mindestens 44-Pixel-Ziele, die erwartete Zeilenzahl
+und zwei frische übereinstimmende Veröffentlichungspaare. Sie gibt exakt den
+geprüften lesenden Snapshot zurück. Die bisherigen 60-Sekunden-Aktionsfristen,
+das Sechs-Minuten-Gesamtlimit sowie DPR-, Speicher- und Endprüfungen bleiben
+erhalten. Gegenproben für das reale fehlerhafte Paar, ungültige Geometrie und
+veraltete Paare werden ergänzt. Zum Zeitpunkt dieses Eintrags stehen die neuen
+tatsächlichen Header-Läufe und die neue vollständige CI noch aus. Die früheren
+lokalen f65-/f670-Nachweise behalten ausschließlich ihren dokumentierten Umfang;
+es wird weder eine neue Produktkorrektur noch eine Veröffentlichung behauptet.
+
+
+Lokaler Abschluss dieser Treiberkorrektur: **57 Node-Testgruppen ohne Fehler**
+(einschließlich aller bisherigen Gruppen und neun neuen Gegenproben) und
+**40 tatsächliche Headerprüfungen je Browser**, zusammen 80/0 mit vier nativen
+DPR-2-Aufnahmen. Geprüft wurde weiterhin der unveränderte Spiel-Export
+`f670d41ff5a8ded5820157e3ab92e8ebe640feb0`; der neue Treiber ist separat durch
+seinen Hash belegt. Jede Drehphase erreichte zwei unterschiedliche passende
+Veröffentlichungspaare. Das Rezept liegt lokal unter
+`work/premium-mobile/additional-ui/header-coherent-f670/RECEIPT.json`, SHA256
+`9d41ec7ad06929308fdce36fd0dfdb60137c0d7a2baa2adecd45bb9fa9c7c129`.
+Der ursprüngliche 151-CI-Fehler bleibt fehlgeschlagen. Die vollständige neue CI
+wird erst nach dem nächsten Feature-Push auf dessen tatsächlichem SHA geprüft;
+dieser lokale Nachweis ist weder ein Deployment noch eine physische Geräteabnahme.

@@ -7,6 +7,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const {chromium,webkit,devices} = require('playwright');
 const {nativeCapture,nativeGeometry} = require('./native_capture_contract.cjs');
+const {campaignHeaderReady} = require('./campaign_header_contract.cjs');
 const expected = process.env.EXPECTED_COMMIT;
 assert(/^[a-f0-9]{40}$/.test(expected||''),'Exact exported commit is required');
 const root=path.resolve(__dirname,'../..');
@@ -34,8 +35,10 @@ for(const engine of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
   const wait=async(fn,arg,timeout=60000)=>{const h=await page.waitForFunction(fn,arg,{timeout});await h.dispose();};
   const geometry=()=>page.evaluate(()=>{const c=document.querySelector('canvas'),r=c?.getBoundingClientRect();return {dpr:devicePixelRatio,inner:[innerWidth,innerHeight],body_width:document.body.getBoundingClientRect().width,canvas:c?{backing:[c.width,c.height],css:[r.x,r.y,r.width,r.height]}:null};});
   async function layout(label,size,rows){
-   await wait(({size,nav})=>{const q=window.orafoldQA,c=window.orafoldCampaignQA;if(q?.hosted_page!=='campaign'||c?.screen!=='overview'||!c.logical_viewport||c.logical_viewport.some((v,i)=>Math.abs(v-[size.width,size.height][i])>.1))return false;const canvas=document.querySelector('canvas'),r=canvas?.getBoundingClientRect();if(!r||Math.abs(r.width-size.width)>1||Math.abs(r.height-size.height)>1||Math.abs(canvas.width-size.width*2)>1||Math.abs(canvas.height-size.height*2)>1)return false;return nav.every(text=>q.hosted_actions?.some(a=>a.text===text&&!a.disabled));},{size,nav});
-   const state=await read(),controls=nav.map(text=>{const a=state.q.hosted_actions.find(a=>a.text===text);return {text,rect:a.rect,disabled:a.disabled};});
+   const matched=await page.waitForFunction(campaignHeaderReady,{size,nav,rows},{timeout:60000});
+   let state;try{state=await matched.jsonValue();}finally{await matched.dispose();}
+   check(state.readiness.matching_pairs===2,label+' two distinct coherent Shell/Campaign publications');
+   const controls=nav.map(text=>{const a=state.q.hosted_actions.find(a=>a.text===text);return {text,rect:a.rect,disabled:a.disabled};});
    check(state.c.logical_viewport[0]===size.width&&state.c.logical_viewport[1]===size.height,label+' logical viewport equals actual CSS dimensions');
    check(state.c.compact===(size.width<720),label+' compact mode uses logical width');
    for(const a of controls)check(inside(a.rect,size),label+' visible44CSS nav: '+a.text);
@@ -43,7 +46,7 @@ for(const engine of (process.env.QA_ENGINES||'chromium,webkit').split(',')){
    check(ys.length===rows,label+' actual navigation has '+rows+' rows');
    check(state.c.validation_errors.length===0&&!state.c.save_error,label+' prototype validates with no save error');
    const metrics=await geometry();nativeGeometry(metrics,size,2);check(true,label+' nativeDPR2 and both canvas backing axes preserved');
-   report.rotations.push({label,viewport:size,logical_viewport:state.c.logical_viewport,compact:state.c.compact,navigation:controls,rows:ys.length,metrics,screen:state.c.screen,flags:state.c.flags,campaign_store_sha256:hash(state.campaign_store||''),economy_store_sha256:hash(JSON.stringify(state.economies))});save();return state;
+   report.rotations.push({label,viewport:size,logical_viewport:state.c.logical_viewport,compact:state.c.compact,navigation:controls,rows:ys.length,readiness:state.readiness,shell_portrait:state.q.portrait,metrics,screen:state.c.screen,flags:state.c.flags,campaign_store_sha256:hash(state.campaign_store||''),economy_store_sha256:hash(JSON.stringify(state.economies))});save();return state;
   }
   async function shot(tag){const png=await nativeCapture(page,{factor:2,timeout:45000,receipts:report.native_captures,tag});const file=path.join(output,engine+'-'+tag+'.png');fs.writeFileSync(file,png);report.screenshots.push({tag,file,bytes:png.length,sha256:hash(png)});save();}
   await page.goto(url.href,{waitUntil:'domcontentloaded',timeout:45000});await wait(()=>window.orafoldQA?.page==='lobby',null,90000);
