@@ -1,4 +1,5 @@
 extends SceneTree
+const Touch=preload("res://tests/premium_input_driver.gd")
 const Shell=preload("res://scripts/alpha/shell.gd")
 const Session=preload("res://scripts/alpha/session.gd")
 const Services=preload("res://scripts/alpha/integrated_services.gd")
@@ -22,7 +23,7 @@ func run() -> void:
 	for id in ["start","campaign","builder","collection","economy","online","settings"]:
 		check(app.actions.has(id),"main navigation has real action "+id)
 		if app.actions.has(id):check(app.actions[id].size.y>=44,"44px main touch target "+id)
-	app.actions.economy.pressed.emit();await settle()
+	await Touch.tap(self,app.actions.economy);await settle()
 	check(app.page=="economy" and is_instance_valid(app.hosted_page),"main menu opens actual economy scene")
 	check(app.services.economy.ready and app.services.economy.catalog.size()==550,"economy uses actual550")
 	var economy=app.hosted_page
@@ -40,9 +41,26 @@ func run() -> void:
 	var checkpoint=JSON.stringify(manager.state.data,"",true)
 	root.size=Vector2i(390,844);app.render();await settle()
 	check(app.hosted_page.manager==manager and JSON.stringify(manager.state.data,"",true)==checkpoint,"campaign panel/checkpoint survives host resize")
+	var audio=root.get_node("GameAudio")
+	# Real music crossfades coalesce requests. A frame count is not a deadline:
+	# fast headless execution previously exited before campaign ever started.
+	var campaign_deadline=Time.get_ticks_msec()+5000
+	while audio.snapshot().music.context!="campaign" and Time.get_ticks_msec()<campaign_deadline:await process_frame
+	check(audio.snapshot().music.context=="campaign","campaign music actually becomes current before returning")
+	var campaign_music: Dictionary=audio.snapshot().music
 	app.hosted_page.exit_requested.emit();await settle()
 	check(app.page=="lobby","campaign exit signal returns to main menu")
+	var return_started=Time.get_ticks_msec()
+	var return_initial: Dictionary=audio.snapshot()
+	var music_deadline=return_started+5000
+	while Time.get_ticks_msec()<music_deadline:
+		var music: Dictionary=audio.snapshot().music
+		if music.context=="menu" and music.pending_context.is_empty() and not music.transitioning:break
+		await process_frame
+	var restored: Dictionary=audio.snapshot()
+	print(JSON.stringify({"suite":"campaign_menu_music_transition","shell_sha256":FileAccess.get_sha256("res://scripts/alpha/shell.gd"),"campaign":campaign_music,"initial":return_initial.music,"final":restored.music,"elapsed_ms":Time.get_ticks_msec()-return_started,"suspension_reasons":restored.suspension_reasons}))
 	check(root.get_node("GameAudio").snapshot().music.context=="menu","campaign exit restores actual menu music")
+	check(restored.music.pending_context.is_empty() and not restored.music.transitioning and Time.get_ticks_msec()<=music_deadline,"requested menu crossfade naturally completes within five seconds")
 	app.open_feature("online");await settle()
 	check(app.page=="online" and is_instance_valid(app.hosted_page),"actual online connection panel opens")
 	app.hosted_page.back_requested.emit();await settle()

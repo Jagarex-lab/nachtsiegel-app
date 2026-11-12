@@ -70,12 +70,17 @@ jobs:
             work/alpha02/*.json
             work/alpha02/*.png
             work/master550/
+            work/production/*.log
+            work/production/*.json
             work/legacy/*.log
             work/*final.log
   browser:
     needs: alpha-playable
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    # Preserve every existing desktop/mobile profile and complete duel.
+    # Software rendering plus three Chromium matches needs a full budget;
+    # per-action and match limits are unchanged.
+    timeout-minutes: 75
     strategy:
       fail-fast: false
       matrix:
@@ -94,8 +99,10 @@ jobs:
           path: work/alpha
       - name: Browser runtime on a fresh runner per engine
         run: |
-          npm install --prefix work/qa-browser --no-save --package-lock=false playwright@1.65.0
-          work/qa-browser/node_modules/.bin/playwright install --with-deps ${{ matrix.engine }}
+          set -o pipefail
+          mkdir -p "work/alpha"
+          npm install --prefix work/qa-browser --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/alpha/browser-install-${{ matrix.engine }}.log"
+          python3 tools/ci/install_dependencies.py --log work/alpha/browser-install-${{ matrix.engine }}.log playwright work/qa-browser/node_modules/.bin/playwright ${{ matrix.engine }}
       - name: Archive then Alpha actual touch tests
         env:
           NODE_PATH: ${{ github.workspace }}/work/qa-browser/node_modules

@@ -3,13 +3,16 @@
 Actual executable startup and full-duel evidence is required separately by the
 platform CI jobs. These tests make malformed, incomplete and stale reports fail.
 """
+import ast
 import configparser
+from contextlib import redirect_stderr
 import hashlib
 import importlib.util
 import io
 import json
 import os
 from pathlib import Path
+import re
 import struct
 import subprocess
 import sys
@@ -66,6 +69,55 @@ def synthetic_pck(files, version=3, engine=(4, 6, 3), flags=2, entry_flags=0, en
 
 
 class ExportPresetConfiguration(unittest.TestCase):
+    def test_actual_native_duel_command_keeps_verbose_and_strict_deadline(self):
+        # Source/command contract only: this does not claim native execution.
+        module = ast.parse(Path('tools/platform_qa.py').read_text())
+        runner = next(node for node in module.body if isinstance(node, ast.ClassDef) and node.name == 'Runner')
+        native_duels = next(node for node in runner.body if isinstance(node, ast.FunctionDef) and node.name == 'native_duels')
+        commands = [node for node in ast.walk(native_duels) if isinstance(node, ast.Call)
+                    and isinstance(node.func, ast.Attribute) and node.func.attr == 'run'
+                    and len(node.args) > 1 and isinstance(node.args[1], ast.List)
+                    and any(isinstance(arg, ast.Constant) and arg.value == '--audio-driver' for arg in node.args[1].elts)]
+        self.assertEqual(len(commands), 1)
+        command = commands[0]
+        self.assertEqual([ast.literal_eval(arg) for arg in command.args[1].elts[1:]],
+                         ['--headless', '--verbose', '--audio-driver', 'Dummy'])
+        self.assertEqual(ast.unparse(command.args[1].elts[0]), 'str(executable)')
+        self.assertEqual(ast.unparse(command.args[2]), 'self.isolated')
+        self.assertEqual({item.arg: ast.literal_eval(item.value) for item in command.keywords}, {'timeout': 300})
+
+    def test_native_jobs_upload_small_always_evidence_without_removing_binaries(self):
+        workflow = Path('.github/workflows/native-platform-qa.yml').read_text()
+        parts = re.split(r'(?m)^  ([a-z-]+):\s*$', workflow)
+        jobs = dict(zip(parts[1::2], parts[2::2]))
+        self.assertEqual(set(jobs), {'linux-android', 'windows'})
+        expected = {'work/production/platforms/results.json',
+                    'work/production/platforms/run-*/*.json',
+                    'work/production/platforms/run-*/*.log'}
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            files = ['work/production/platforms/results.json',
+                     'work/production/platforms/run-example/runtime.log',
+                     'work/production/platforms/run-example/inventory.json',
+                     'work/production/platforms/run-example/game.exe',
+                     'work/production/platforms/run-example/game.x86_64',
+                     'work/production/platforms/run-example/game.apk',
+                     'work/production/platforms/run-example/godot.dll']
+            for name in files:
+                path = root / name;path.parent.mkdir(parents=True, exist_ok=True);path.write_text('artifact selection fixture')
+            for platform, body in jobs.items():
+                with self.subTest(platform=platform):
+                    small = body.split('- name: Preserve small native diagnostic evidence without binaries\n', 1)[1].split('\n      - ', 1)[0]
+                    self.assertIn('if: always()', small)
+                    self.assertIn(f'name: orafold-{platform}-evidence-${{{{ github.sha }}}}', small)
+                    paths = small.split('          path: |\n', 1)[1].split('          if-no-files-found:', 1)[0]
+                    patterns = {line.strip() for line in paths.splitlines() if line.strip()}
+                    self.assertEqual(patterns, expected)
+                    selected = {path.relative_to(root).as_posix() for pattern in patterns for path in root.glob(pattern)}
+                    self.assertEqual(selected, set(files[:3]), 'small artifact must exclude all real executable/ABI payloads')
+                    self.assertIn(f'name: orafold-{platform}-debug-${{{{ github.sha }}}}', body)
+                    self.assertIn('*.exe' if platform == 'windows' else '*.apk', body)
+
     def test_every_platform_excludes_editor_addon_and_checkout_sources(self):
         config = configparser.ConfigParser(interpolation=None)
         config.read('export_presets.cfg')
@@ -176,6 +228,134 @@ class PlatformEvidence(unittest.TestCase):
         for error in ['SCRIPT ERROR: broken', 'ERROR: lost resource', 'FAIL: mismatch', 'instances leaked at exit', 'resources still in use']:
             with self.subTest(error=error), self.assertRaises(ValueError):p.clean_log(self.log('Godot Engine v4.6.3\n' + error))
         with self.assertRaises(ValueError):p.clean_log(self.log('Godot Engine v4.5.1\n'))
+
+    def test_exit_zero_runtime_still_rejects_errors_and_prints_the_actual_log_context(self):
+        runner = self.runner_fixture()
+        command = [sys.executable, '-c', 'print("Godot Engine v4.6.3\\nERROR: exact-native-cause\\n   at: shutdown_fixture (scene/main/node.cpp:123)")']
+        log = runner.run('exit-zero-error-fixture', command)
+        self.assertEqual(runner.report['commands'][0]['exit_code'], 0)
+        original = log.read_bytes();output = io.StringIO()
+        with redirect_stderr(output), self.assertRaisesRegex(ValueError, 'Native runtime contains errors/leaks'):
+            p.smoke_summary(log)
+        self.assertIn('NATIVE FAILURE LOG', output.getvalue())
+        self.assertIn('ERROR: exact-native-cause', output.getvalue())
+        self.assertIn('node.cpp:123', output.getvalue())
+        self.assertEqual(log.read_bytes(), original, 'the original failure evidence remains untouched')
+        self.assertNotEqual(runner.report['status'], 'passed')
+
+    def test_failure_excerpt_finds_late_errors_strips_ansi_and_bounds_output(self):
+        text = 'ordinary progress\n' * 5000 + '\x1b[31mSCRIPT ERROR: late actual failure\x1b[0m\n   at: actual_script.gd:41\n' + 'continuing progress\n' * 500
+        excerpt = p.diagnostic_excerpt(text)
+        self.assertIn('5001: SCRIPT ERROR: late actual failure', excerpt)
+        self.assertIn('actual_script.gd:41', excerpt)
+        self.assertNotIn('\x1b', excerpt)
+        self.assertLessEqual(len(excerpt), 6000)
+        self.assertLessEqual(len(excerpt.splitlines()), 40)
+        huge = p.diagnostic_excerpt('ERROR: ' + 'x' * 100000)
+        self.assertLessEqual(len(huge), 6000)
+        self.assertIn('excerpt truncated', huge)
+        many = p.diagnostic_excerpt(('ERROR: repetitive\ncontext\n' * 1000), max_lines=8, max_chars=200)
+        self.assertLessEqual(len(many.splitlines()), 8)
+        self.assertLessEqual(len(many), 200)
+
+    def test_every_existing_strict_error_and_leak_still_fails_with_visible_evidence(self):
+        for marker in ['SCRIPT ERROR: actual', 'ERROR: actual', 'FAIL: actual',
+                       'WARNING: ObjectDB instances leaked at exit', 'resources still in use']:
+            with self.subTest(marker=marker):
+                output = io.StringIO()
+                with redirect_stderr(output), self.assertRaises(ValueError):
+                    p.smoke_summary(self.log('Godot Engine v4.6.3\n' + marker))
+                self.assertIn(marker, output.getvalue())
+
+    def test_diagnostic_print_does_not_dump_environment_or_change_success_logs(self):
+        output = io.StringIO()
+        with mock.patch.dict(os.environ, {'NATIVE_QA_PRIVATE_TEST_TOKEN':'not-for-diagnostic-output'}), redirect_stderr(output):
+            p.print_log_diagnostic(self.log('ERROR: native failure\ncontext'))
+        self.assertNotIn('not-for-diagnostic-output', output.getvalue())
+        self.assertNotIn('NATIVE_QA_PRIVATE_TEST_TOKEN', output.getvalue())
+        output = io.StringIO()
+        with redirect_stderr(output):
+            self.assertEqual(p.clean_log(self.log('Godot Engine v4.6.3\nordinary successful output')), 'Godot Engine v4.6.3\nordinary successful output')
+        self.assertEqual(output.getvalue(), '')
+
+    def test_failed_actual_subprocess_preserves_exit_failure_and_prints_its_log(self):
+        runner = self.runner_fixture();output = io.StringIO()
+        with redirect_stderr(output), self.assertRaisesRegex(ValueError, 'failed with exit7'):
+            runner.run('nonzero-fixture', [sys.executable, '-c', 'import sys;print("ERROR: actual child failure");sys.exit(7)'])
+        self.assertEqual(runner.report['commands'][0]['exit_code'], 7)
+        self.assertIn('actual child failure', output.getvalue())
+        self.assertTrue((runner.stage / 'nonzero-fixture.log').is_file())
+        self.assertNotEqual(runner.report['status'], 'passed')
+
+    def native_run_fixture(self, leak_on=None, changed=None):
+        # Orchestration/parser fixtures run real independent Python children,
+        # never claim that the fixture output is actual Godot native evidence.
+        runner = self.runner_fixture()
+        runner.isolated = self.root / 'isolated';runner.isolated.mkdir()
+        executable = runner.stage / 'fixture-native-console.exe'
+        original_run = runner.run;calls = []
+        summary = {'suite':'production_native_exported','assertions':29,'failures':0,
+                   'main_menu_verified':True,'winner':'hero','round':25,'catalog_fingerprint':'a'*64}
+        def run_fixture(name, command, cwd, timeout):
+            calls.append((name, command, cwd, timeout))
+            row = summary | (changed if len(calls) == 2 and changed else {})
+            text = 'Godot Engine v4.6.3\n' + json.dumps(row) + '\n'
+            if len(calls) == leak_on:
+                text += 'WARNING: ObjectDB instances leaked at exit\nERROR: 3 resources still in use at exit\n'
+            return original_run(name, [sys.executable, '-c', 'import sys;sys.stdout.write(' + repr(text) + ')'], cwd, timeout)
+        runner.run = run_fixture
+        return runner, executable, calls, summary
+
+    def test_eight_independent_runs_keep_original_first_log_and_source_bound_rows(self):
+        runner, executable, calls, summary = self.native_run_fixture()
+        first_log = runner.native_duels(executable, 'orafold-runtime-qa')
+        expected_names = ['orafold-runtime-qa-runtime'] + [f'orafold-runtime-qa-runtime-pass-{i:02d}' for i in range(2, 9)]
+        self.assertEqual([call[0] for call in calls], expected_names)
+        self.assertEqual(first_log, runner.stage / 'orafold-runtime-qa-runtime.log')
+        self.assertEqual(runner.report['native_exported_duel'], summary)
+        self.assertTrue(runner.report['main_menu_verified'])
+        for index, (call, evidence) in enumerate(zip(calls, runner.report['native_teardown_runs']), 1):
+            self.assertEqual(call[1], [str(executable), '--headless', '--verbose', '--audio-driver', 'Dummy'])
+            self.assertEqual(call[2:], (runner.isolated, 300))
+            self.assertEqual(evidence['pass'], index)
+            self.assertEqual(evidence['status'], 'passed')
+            self.assertEqual(evidence['summary'], summary)
+            self.assertEqual(evidence['commit'], runner.report['commit'])
+            self.assertEqual(evidence['source_report_field'], 'source_sha256')
+            self.assertEqual(evidence['executable'], str(executable.relative_to(self.root)))
+            self.assertTrue((self.root / evidence['log']).is_file())
+        self.assertEqual(len(runner.report['commands']), 8)
+        self.assertTrue(all(row['exit_code'] == 0 for row in runner.report['commands']))
+        self.assertNotEqual(runner.report['status'], 'passed', 'only full source-bound finish can pass the build')
+
+    def test_midpass_exit_zero_leak_aborts_before_any_later_pass(self):
+        runner, executable, calls, summary = self.native_run_fixture(leak_on=4)
+        output = io.StringIO()
+        with redirect_stderr(output), self.assertRaisesRegex(ValueError, 'Native runtime contains errors/leaks'):
+            runner.native_duels(executable, 'orafold-runtime-qa')
+        self.assertEqual(len(calls), 4, 'a later clean run must never mask an earlier leak')
+        self.assertEqual([row['status'] for row in runner.report['native_teardown_runs']], ['passed'] * 3 + ['failed'])
+        self.assertEqual(runner.report['commands'][-1]['exit_code'], 0)
+        self.assertIn('3 resources still in use', output.getvalue())
+        self.assertTrue((runner.stage / 'orafold-runtime-qa-runtime-pass-04.log').is_file())
+        self.assertFalse((runner.stage / 'orafold-runtime-qa-runtime-pass-05.log').exists())
+        retained = json.loads((runner.output / 'results.json').read_text())
+        self.assertEqual(retained['native_teardown_runs'][-1]['status'], 'failed')
+        self.assertEqual(retained['native_exported_duel'], summary)
+        self.assertNotEqual(retained['status'], 'passed')
+
+    def test_catalog_winner_or_round_drift_aborts_independent_fixed_seed_runs(self):
+        original_root = self.root
+        for field, value in [('catalog_fingerprint', 'b' * 64), ('winner', 'enemy'), ('round', 26)]:
+            with self.subTest(field=field):
+                self.root = original_root / field;self.root.mkdir()
+                runner, executable, calls, _ = self.native_run_fixture(changed={field:value})
+                with redirect_stderr(io.StringIO()), self.assertRaisesRegex(ValueError, 'Fixed-seed native outcome changed'):
+                    runner.native_duels(executable, 'orafold-runtime-qa')
+                self.assertEqual(len(calls), 2)
+                self.assertEqual(runner.report['native_teardown_runs'][-1]['status'], 'failed')
+                self.assertEqual(runner.report['native_teardown_runs'][-1]['summary'][field], value)
+                self.assertNotEqual(runner.report['status'], 'passed')
 
     def runner_fixture(self, keep=False):
         # Reporting/cleanup fixture, no fake native command runner.

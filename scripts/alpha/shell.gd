@@ -10,12 +10,17 @@ const ArtQualityLabel=preload("res://scripts/production/art_quality_label.gd")
 const LibraryFilter=preload("res://scripts/card_system/library_filter.gd")
 const PresentationAudio=preload("res://scripts/audio/presentation_audio.gd")
 const AudioSettings=preload("res://scripts/audio/audio_settings_panel.gd")
+const BattleLayout=preload("res://scripts/premium/battle_layout.gd")
+const ArenaStage=preload("res://scripts/premium/arena_stage.gd")
 var audio_events=PresentationAudio.new()
 var audio_settings: VBoxContainer
 var audio_context := ""
 var audio_paused := false
 var session=Session.new()
 var services=preload("res://scripts/alpha/integrated_services.gd").new()
+var duel_checkpoint=preload("res://scripts/premium/duel_checkpoint.gd").new()
+var app_mode_version := -1
+var checkpoint_poll := 0.0
 var hosted_page: Control
 var hosted_name := ""
 var alpha_catalog=AlphaCatalog.new()
@@ -30,6 +35,15 @@ var convergence_lanes: Array=[]
 var mulligan_indices: Array=[]
 var opening_hand_signature := ""
 var hand_drag: Dictionary={}
+var hand_tap_epoch := 0
+var hand_press_epoch := 0
+var scroll_tap_epoch := 0
+var scroll_press_epoch := -1
+var scroll_pointer: Dictionary={}
+var scroll_pointers: Dictionary={}
+var scroll_accept_input := false
+var scroll_accept_epoch := 0
+var scroll_accept_used := -1
 var drag_ghost: Control
 var deck: Array=[]
 var collection_mode := "alpha"
@@ -65,10 +79,22 @@ var body: VBoxContainer
 var modal: Control
 var inspector_rules: Label
 var inspector_title: Label
+var inspector_face: Control
 var inspector_card_id := ""
+var log_page := 0
 var actions: Dictionary={}
 var hand_views: Array=[]
 var board_views: Dictionary={}
+var hero_badges: Dictionary={}
+var battle_surface: Control
+var battle_board_host: Control
+var battle_hand_host: Control
+var battle_dock: VBoxContainer
+var battle_header: HBoxContainer
+var battle_stage: Control
+var battle_geometry: Dictionary={}
+var arena_mode := "spatial"
+var arena_projection_active := false
 var status: Label
 var pulse := 0.0
 var qa_elapsed := 0.0
@@ -77,6 +103,7 @@ var viewport_version := -1
 var first_frame := true
 var render_pending := false
 var last_primary_ms := -1000
+var last_primary_frame := -1
 var primary_ref: WeakRef
 var rotation_block_until := 0
 var render_version := 0
@@ -101,11 +128,20 @@ func _ready() -> void:
 		density=maxf(1,float(JavaScriptBridge.eval("window.devicePixelRatio||1")));qa_enabled=bool(JavaScriptBridge.eval("new URLSearchParams(location.search).get('qa')==='1'"))
 		JavaScriptBridge.eval("document.title='ORAFOLD · Alpha 0.3';document.querySelector('canvas')?.setAttribute('aria-label','ORAFOLD Alpha 0.3')")
 	services.configure(session)
+	duel_checkpoint.load_checkpoint()
 	faction=session.profile.faction;difficulty=int(session.profile.difficulty)
 	if OS.has_feature("legacy_ui_qa"):mode="legacy";faction="start"
 	feedback=preload("res://scripts/alpha/feedback.gd").new();feedback.z_index=100;add_child(feedback)
 	render()
 func _process(delta: float) -> void:
+	checkpoint_poll+=delta
+	if checkpoint_poll>=.2:
+		checkpoint_poll=0;_checkpoint_duel()
+		if OS.has_feature("web"):
+			var app_version=int(_web_app_state().get("version",0))
+			if app_version!=app_mode_version:
+				app_mode_version=app_version
+				if page=="settings":render()
 	_update_primary_readiness()
 	if not hand_drag.is_empty() and Time.get_ticks_msec()-int(hand_drag.updated)>8000:_cancel_hand_drag(true)
 	if first_frame:
@@ -129,11 +165,6 @@ func _process(delta: float) -> void:
 			qa_elapsed=0;publish_qa()
 func _draw() -> void:
 	if page!="battle":return
-	var w=size.x;var h=size.y
-	for i in 5:
-		var x=w*(.08+.84*(i+.5)/5)
-		draw_line(Vector2(w/2,h*.15),Vector2(x,h*.72),Color(.25,.65,.82,.16),2,true)
-		draw_circle(Vector2(x,h*.48),8,Color(.6,.8,.9,.22))
 	if pulse>0 and not session.profile.reduced_motion:draw_rect(Rect2(Vector2.ZERO,size),Color(.4,.8,1,pulse*.15),false,5)
 func _clear() -> void:
 	_cancel_hand_drag()
@@ -144,7 +175,7 @@ func _clear() -> void:
 	if is_instance_valid(modal):
 		for key in actions:
 			if is_instance_valid(actions[key]) and modal.is_ancestor_of(actions[key]):retained[key]=actions[key]
-	actions=retained;hand_views.clear();board_views.clear()
+	actions=retained;hand_views.clear();board_views.clear();hero_badges.clear()
 func row(parent: Node=null) -> HBoxContainer:
 	if parent==null:parent=body
 	var box=HBoxContainer.new();box.add_theme_constant_override("separation",5);parent.add_child(box);return box
@@ -153,18 +184,99 @@ func text(value: String, parent: Node=null, fs: int=14) -> Label:
 	var label=Label.new();label.text=value;label.add_theme_font_size_override("font_size",fs);label.size_flags_horizontal=Control.SIZE_EXPAND_FILL;label.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART;parent.add_child(label);return label
 func button(id: String, caption: String, callback: Callable, parent: Node=null, disabled_value: bool=false) -> Button:
 	if parent==null:parent=body
-	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;_bind_press(b,callback);parent.add_child(b);actions[id]=b;return b
+	var b=Button.new();b.text=caption;b.custom_minimum_size=Vector2(44,44);b.size_flags_horizontal=Control.SIZE_EXPAND_FILL;b.disabled=disabled_value;_bind_press(b,callback);parent.add_child(b)
+	if not _scroll_press_context(b).is_empty():b.mouse_filter=Control.MOUSE_FILTER_PASS
+	actions[id]=b;return b
 func _bind_press(control: BaseButton, callback: Callable) -> void:
+	# A card/button must pass original touch drags to its ScrollContainer;
+	# activation remains guarded separately, including synthesized GUI releases.
+	if not _scroll_press_context(control).is_empty():control.mouse_filter=Control.MOUSE_FILTER_PASS
 	# Godot Web also reports canceled ordinary taps as releases. Let BaseButton
 	# reset its held state, but never dispatch its action after DOM cancellation.
-	var press={"version":0}
+	var press={"version":0,"hand_epoch":0,"scroll_epoch":-1,"scrolls":[],"keyboard":false,"key_epoch":-1,"render":0,"modal":0,"page":""}
 	control.mouse_entered.connect(func():_audio_event("card.hover" if control is CardView else "ui.hover"))
-	control.button_down.connect(func():press.version=_web_drag_cancel_version())
+	control.button_down.connect(func():
+		press.version=_web_drag_cancel_version();press.hand_epoch=hand_tap_epoch
+		press.scroll_epoch=scroll_tap_epoch;press.scrolls=_scroll_press_context(control)
+		press.keyboard=scroll_accept_input and control.has_focus();press.key_epoch=scroll_accept_epoch;press.render=render_version;press.modal=modal_version;press.page=page
+	)
 	control.pressed.connect(func():
+		# A long portrait can still contain the release point after a drag. Godot
+		# can dispatch a synthesized GUI release after the owned gesture ends;
+		# it must never turn that drag into a second hand tap or an inspector.
+		if control is CardView and control.get("display_role")=="hand":
+			# Godot may deliver emulated mouse-up BEFORE the original touch-up
+			# carries its canceled flag. Validate after that input packet, without
+			# a timer/cooldown and without blocking the GUI's button-state reset.
+			if session.model!=null:_dispatch_hand_press.call_deferred(weakref(control),callback,int(press.hand_epoch),int(press.version),weakref(session.model),session.commands.size())
+			return
+		if not _scroll_press_context(control).is_empty():
+			# ScrollContainer and Web touch emulation can release a tall button
+			# while its content is still moving under the pointer. Decide after
+			# the original release/cancel packet, never through a time debounce.
+			_dispatch_scroll_press.call_deferred(weakref(control),callback,press.duplicate(true))
+			return
 		if not OS.has_feature("web") or int(press.version)==_web_drag_cancel_version():
 			if not control is CardView:_audio_event("ui.confirm")
 			callback.call()
 	)
+func _dispatch_hand_press(control_ref: WeakRef, callback: Callable, captured_epoch: int, cancel_version: int, model_ref: WeakRef, command_count: int) -> void:
+	var control=control_ref.get_ref()
+	if control==null or not control.is_inside_tree() or control.is_queued_for_deletion() or is_instance_valid(modal):return
+	if captured_epoch!=hand_tap_epoch or hand_press_epoch!=hand_tap_epoch:return
+	if OS.has_feature("web") and cancel_version!=_web_drag_cancel_version():return
+	if session.model!=model_ref.get_ref() or session.commands.size()!=command_count:return
+	var index=hand_views.find(control)
+	if session.model==null or index<0 or index>=session.model.state.hero.hand.size() or str(control.card.id)!=str(session.model.state.hero.hand[index]):return
+	callback.call()
+func _scroll_press_context(control: Control) -> Array:
+	var result: Array=[]
+	var parent=control.get_parent()
+	while parent!=null:
+		if parent is ScrollContainer:result.append({"owner":weakref(parent),"horizontal":parent.scroll_horizontal,"vertical":parent.scroll_vertical})
+		parent=parent.get_parent()
+	return result
+func _dispatch_scroll_press(control_ref: WeakRef, callback: Callable, press: Dictionary) -> void:
+	var control=control_ref.get_ref()
+	if control==null or not control.is_inside_tree() or control.is_queued_for_deletion() or control.disabled:return
+	if render_pending or str(press.page)!=page or int(press.render)!=render_version or int(press.modal)!=modal_version:return
+	if OS.has_feature("web") and int(press.version)!=_web_drag_cancel_version():return
+	if bool(press.keyboard):
+		if not control.has_focus() or int(press.key_epoch)!=scroll_accept_epoch or scroll_accept_used==scroll_accept_epoch:return
+	else:
+		if int(press.scroll_epoch)!=scroll_tap_epoch or scroll_press_epoch!=scroll_tap_epoch or not scroll_pointers.is_empty():return
+		if press.scrolls.is_empty():return
+		for item in press.scrolls:
+			var owner=item.owner.get_ref()
+			if owner==null or not owner.is_inside_tree() or not owner.is_ancestor_of(control):return
+			if owner.scroll_horizontal!=int(item.horizontal) or owner.scroll_vertical!=int(item.vertical):return
+	# Even a callback that leaves the view unchanged (e.g. fullscreen) owns
+	# exactly one original intent. A later genuine down can immediately rearm.
+	if bool(press.keyboard):scroll_accept_used=scroll_accept_epoch
+	else:scroll_press_epoch=-1
+	if not control is CardView:_audio_event("ui.confirm")
+	callback.call()
+func _invalidate_scroll_press() -> void:
+	if not scroll_pointer.is_empty() and not bool(scroll_pointer.get("invalid",false)):
+		scroll_pointer.invalid=true;scroll_tap_epoch+=1
+func _scroll_pointer_down(at: Vector2, pointer: int) -> void:
+	scroll_accept_input=false;scroll_accept_epoch+=1
+	# A new original down can recover a missing release; synthesized downs are
+	# excluded by _input and cannot rearm a held pointer over a moving card.
+	if scroll_pointers.has(pointer):
+		_invalidate_scroll_press();scroll_pointers.erase(pointer);scroll_pointer.clear()
+	scroll_pointers[pointer]=true
+	if scroll_pointers.size()>1:_invalidate_scroll_press();return
+	scroll_pointer={"pointer":pointer,"start":at,"viewport":get_viewport_rect().size,"invalid":false}
+	scroll_press_epoch=scroll_tap_epoch
+func _scroll_pointer_move(at: Vector2, pointer: int) -> void:
+	if scroll_pointer.is_empty() or pointer!=int(scroll_pointer.pointer):return
+	if at.distance_to(scroll_pointer.start)>=8*density or scroll_pointer.viewport!=get_viewport_rect().size:_invalidate_scroll_press()
+func _scroll_pointer_release(at: Vector2, pointer: int, canceled: bool=false) -> void:
+	_scroll_pointer_move(at,pointer)
+	if canceled:_invalidate_scroll_press()
+	scroll_pointers.erase(pointer)
+	if scroll_pointers.is_empty():scroll_pointer.clear()
 func dropdown(id: String, items: Array, current: String, callback: Callable, parent: Node) -> Button:
 	var labels={"all":"Alle","creature":"Wesen","event":"Impuls","relic":"Relikt","common":"Gewöhnlich","rare":"Selten","epic":"Episch","legendary":"Legendär","houses":"Zwölf Häuser","stillwatch":"Stillwacht","morph":"Vielgestalt","ninth":"Neunte Stunde","neutral":"Neutral","cost_asc":"Energie aufsteigend","cost_desc":"Energie absteigend","name_asc":"Name A–Z"}
 	labels.merge(LibraryFilter.species_labels())
@@ -214,6 +326,8 @@ func lobby() -> void:
 	var play=button("start","SPIELEN GEGEN KI  →",choose_match,panel)
 	play.custom_minimum_size.y=58 if portrait else 48
 	play.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
+	if duel_checkpoint.available:button("resume_duel","PARTIE FORTSETZEN",resume_duel,panel)
+	elif not duel_checkpoint.issue.is_empty():text(duel_checkpoint.issue,panel,12)
 	var grid=GridContainer.new();grid.columns=1 if portrait else 2;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",4);panel.add_child(grid)
 	button("campaign","KAMPAGNE · ENTWURF",func():open_feature("campaign"),grid)
 	button("builder","DECKBUILDER",func():open_cards(false),grid)
@@ -279,6 +393,19 @@ func settings_page() -> void:
 	text("Starterdeck / gespeichertes Deck",box,18)
 	if not session.profile_issues.is_empty():button("profile_recovery","Hinweise zur Wiederherstellung lokaler Daten",show_profile_issues,box)
 	button("game_guide","Spielregeln und Touch-Bedienung",show_game_guide,box)
+	if OS.has_feature("web"):
+		var app=_web_app_state()
+		var app_label="Web-App aktiv" if app.get("standalone",false) else "Im Browser"
+		text("APP-MODUS · "+app_label,box,18)
+		var app_buttons=VBoxContainer.new() if portrait else HBoxContainer.new()
+		app_buttons.size_flags_horizontal=Control.SIZE_EXPAND_FILL;box.add_child(app_buttons)
+		button("app_fullscreen","Vollbild beenden" if app.get("fullscreen",false) else "Vollbild" if app.get("fullscreenSupported",false) else "App-Modus",func():
+			if _web_app_state().get("fullscreenSupported",false):JavaScriptBridge.eval("window.orafoldApp?.toggleFullscreen()")
+			else:show_app_mode_help(),app_buttons)
+		button("app_install","Installation / App-Modus",show_app_mode_help,app_buttons)
+		if not str(app.get("status","")).is_empty():text(str(app.status),box,14)
+	text("ORAFOLD versucht, laufende KI-Partien lokal zu sichern. Fortsetzen setzt eine erfolgreiche Sicherung voraus. Bei Speicherproblemen erscheint ein Hinweis. Rotation und App-Wechsel ändern keine Spielregeln.",box,14)
+	if not duel_checkpoint.issue.is_empty():text(duel_checkpoint.issue,box,14)
 	if mode=="alpha":
 		var power_row: HBoxContainer
 		var power_index=0
@@ -286,12 +413,12 @@ func settings_page() -> void:
 			if power_index%2==0:power_row=row(box)
 			power_index+=1
 			var b=button("faction_"+power,("● " if faction==power else "○ ")+alpha_catalog.source.powers[power],func():faction=power;save_preferences();render(),power_row)
-			b.modulate=S.POWER_COLORS[power]
+			b.add_theme_color_override("font_color",S.POWER_TEXT_COLORS[power])
 	var options=row(box)
 	dropdown("difficulty",["Normal","Einfach","Taktisch"],"Einfach" if difficulty==1 else "Taktisch" if difficulty==5 else "Normal",func(v):difficulty={"Normal":2,"Einfach":1,"Taktisch":5}[v];save_preferences();render(),options)
 	button("motion","Bewegung: "+("reduziert" if session.profile.reduced_motion else "normal"),func():session.profile.reduced_motion=not session.profile.reduced_motion;save_preferences();render(),options)
 	if FileAccess.file_exists("user://orafold_last_replay.json"):button("last_replay","LETZTES REPLAY ÖFFNEN",load_last_replay,box)
-	text("Deckwahl, Schwierigkeit und Bewegung werden lokal gespeichert. Keine Konten oder Käufe.",box,14)
+	text("Deckwahl, Schwierigkeit und Bewegung werden lokal gespeichert, sofern der Speicher verfügbar ist. Für den KI-Modus ist kein Konto nötig. Keine Echtgeldkäufe.",box,14)
 	audio_settings=AudioSettings.new()
 	audio_settings.name="AlphaSettings"
 	audio_settings.bind_manager(get_node("/root/GameAudio"))
@@ -300,6 +427,31 @@ func settings_page() -> void:
 		actions["audio_"+channel]=audio_settings.sliders[channel]
 	actions["audio_mute"]=audio_settings.mute_toggle
 	actions["audio_reduced"]=audio_settings.reduced_toggle
+func _web_app_state() -> Dictionary:
+	if not OS.has_feature("web"):return {}
+	var value: Variant=JavaScriptBridge.eval("JSON.stringify(window.orafoldApp?.state()||{})")
+	var parsed: Variant=JSON.parse_string(value) if value is String else null
+	return parsed if parsed is Dictionary else {}
+func show_app_mode_help() -> void:
+	var app=_web_app_state()
+	show_modal("ORAFOLD ALS APP",func(box):
+		text("iPhone / iPad: Öffne ORAFOLD in Safari. Tippe auf Teilen und dann auf Zum Home-Bildschirm. Aktiviere Als Web-App öffnen, wenn Safari diese Option zeigt. Starte anschließend über das ORAFOLD-Symbol.",box,16)
+		text("Die installierte Web-App nutzt ihren eigenen App-Bereich. Für das Laden des Spiels und der Illustrationen ist eine Internetverbindung erforderlich. Speichere und öffne deine Partie möglichst immer im selben Browser beziehungsweise App-Modus.",box,14)
+		text("Im Kampf drehst du das Gerät ins Querformat. Menüs und Deckbuilder sind auch im Hochformat bedienbar. Safari-Webseiten lassen sich auf iPhone nicht zuverlässig per Spielschaltfläche in echtes Vollbild zwingen.",box,14)
+		if app.get("standalone",false):text("ORAFOLD läuft bereits als installierte Web-App.",box,16)
+		elif app.get("installAvailable",false):button("app_install_confirm","ORAFOLD INSTALLIEREN",func():JavaScriptBridge.eval("window.orafoldApp?.install()"),box)
+	)
+func _checkpoint_duel() -> void:
+	if session.model==null or is_instance_valid(hosted_page) or page!="battle":return
+	duel_checkpoint.capture(session,{"faction":faction,"difficulty":difficulty})
+func resume_duel() -> void:
+	var restored: Dictionary=duel_checkpoint.restore_into(session)
+	if not restored.get("ok",false):message=str(restored.get("error","Wiederaufnahme nicht möglich."));render();return
+	var config: Dictionary=restored.get("ui",{})
+	if config.get("faction") in alpha_catalog.deck_ids():faction=config.faction
+	difficulty=int(session.setup.difficulty);mode="alpha";services.begin_duel()
+	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];opening_hand_signature=""
+	audio_events.reset();set_audio_paused(false);message="Partie wieder aufgenommen. Wähle deine nächste Aktion.";render()
 func show_game_guide() -> void:
 	show_modal("ORAFOLD · ERSTE PARTIE",func(box):
 		text("1 · Wähle eine Macht und ein gültiges 30-Karten-Deck. Beide Helden beginnen mit 30 Leben, die Starthand enthält 5 Karten.",box,16)
@@ -326,21 +478,23 @@ func start_battle() -> void:
 	if not session.start_match(mode,alpha_catalog.deck(faction) if mode=="alpha" and match_use_starter else current_deck(),seed_value,difficulty,enemy):message="Ungültiges Deck.";render();return
 	services.begin_duel()
 	last_primary_ms=-1000
+	last_primary_frame=-1
 	page="battle";selected=-1;source_lane=-1;action_mode="";convergence_lanes=[];mulligan_indices=[];opening_hand_signature="";message="Wähle deine Starthand. Danach legst du den Ursprung fest.";render()
+	_checkpoint_duel()
 func _update_primary_readiness() -> void:
 	if primary_ref==null:return
 	var primary=primary_ref.get_ref()
 	if primary==null:return
 	# SceneTreeTimer can consume the previous slow frame's delta immediately.
 	# Readiness and command rejection must use the same monotonic clock.
-	primary.disabled=bool(primary.get_meta("rule_blocked",true)) or Time.get_ticks_msec()-last_primary_ms<180
+	primary.disabled=bool(primary.get_meta("rule_blocked",true)) or Engine.get_process_frames()==last_primary_frame or Time.get_ticks_msec()-last_primary_ms<180
 func act(command: String, args: Array) -> void:
-	var primary_command=command in ["endTurn","finishDraw","burn","converge"]
-	if primary_command and Time.get_ticks_msec()-last_primary_ms<180:return
+	var primary_command=command in ["endTurn","finishDraw","burn","converge","skipShift"]
+	if primary_command and (Engine.get_process_frames()==last_primary_frame or Time.get_ticks_msec()-last_primary_ms<180):return
 	var event_offset: int=session.model.events.size()
 	var before=session.model.snapshot()
 	var reply=session.command(command,args)
-	if primary_command:last_primary_ms=Time.get_ticks_msec()
+	if primary_command:last_primary_ms=Time.get_ticks_msec();last_primary_frame=Engine.get_process_frames()
 	var names={"play":"Karte ausgespielt.","endTurn":"Angriffe und KI-Zug abgeschlossen.","finishDraw":"Nachziehphase abgeschlossen.","burn":"Karte abgelegt. Bestätige anschließend das Nachziehen.","mulligan":"Austausch abgeschlossen.","origin":"Ursprünge aufgedeckt.","openingDone":"Der Kampf beginnt.","secondOrigin":"Zweiter Ursprung gewählt.","secondCard":"Handkarte ausgetauscht.","converge":"Konvergenz am Zugende geprüft.","activateRelic":"Relikt aktiviert.","burst":"Entfesselung ausgeführt.","recover":"Karte zurückgeholt.","tacticalMove":"Kreatur verschoben.","fortify":"Pfadwacht ausgeführt.","moveCreature":"Positionswechsel abgeschlossen.","skipShift":"Positionswechsel übersprungen.","chooseStrikeTarget":"Ankunftsschlag ausgeführt."}
 	var technical_failure=not reply.ok and bool(reply.get("accepted",false))
 	message="Partie angehalten: "+str(session.model.state.get("error","Effektauflösung fehlgeschlagen.")) if technical_failure else names.get(command,"Aktion ausgeführt.") if reply.ok else "Bedingungen fehlen: Energie, Resonanz, gültiges Ziel oder eine noch offene Auswahl prüfen."
@@ -352,80 +506,210 @@ func act(command: String, args: Array) -> void:
 	render()
 	if not reply.ok:_audio_event("ui.error")
 	_sync_audio_context()
+	_checkpoint_duel()
 	if technical_failure:show_engine_error()
 	elif session.model.state.winner!=null:
 		services.reward_completed_duel()
 		result_dialog()
 func battle() -> void:
-	var m=session.model;var s: Dictionary=m.state
-	var top=row()
-	button("menu","Menü",confirm_menu,top).size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
-	var center=VBoxContainer.new();center.size_flags_horizontal=Control.SIZE_EXPAND_FILL;center.add_theme_constant_override("separation",1);top.add_child(center)
-	var heading=battle_heading(s)
-	if short_landscape and mode=="alpha" and s.stage!="battle":
-		heading={"mulligan":"STARTHAND · Karten zum Tauschen antippen","origins":"URSPRUNG · Eigenen Pfad antippen","second":"ZWEITE MÖGLICHKEIT · Karte oder Ursprung ändern"}.get(s.stage,heading)
-	text(heading,center,13 if short_landscape else 14)
-	if mode=="alpha" and s.stage!="battle":
-		text("DU %d LP  ·  KI %d LP  ·  FÜNF PFADE" % [s.hero.hp,s.enemy.hp],center,13)
-		button("log","Protokoll",show_log,top).size_flags_horizontal=Control.SIZE_SHRINK_END
-		opening();return
-	var stats=row(center)
-	var own_caption=("DU %d LP · S%d B%d" if short_landscape else "DU %d LP · Schild %d · Block %d") % [s.hero.hp,s.hero.ward,s.hero.block]
-	var own_stats=text(own_caption,stats,12 if short_landscape else 13)
-	own_stats.tooltip_text="Dein Held: %d Leben, %d Schild, %d Block. S = Schild, B = Block; Mehr / Ressourcen erklärt beide Werte." % [s.hero.hp,s.hero.ward,s.hero.block]
-	var res=text("Energie %d / Resonanz %d" % [s.hero.energy,s.hero.resonance],stats,12 if short_landscape else 13);res.add_theme_color_override("font_color",T.ENERGY)
-	var enemy_caption=("KI %d LP · S%d B%d" if short_landscape else "KI %d LP · Schild %d · Block %d") % [s.enemy.hp,s.enemy.ward,s.enemy.block]
-	var enemy_stats=text(enemy_caption,stats,12 if short_landscape else 13)
-	enemy_stats.tooltip_text="Gegnerischer Held: %d Leben, %d Schild, %d Block. S = Schild, B = Block." % [s.enemy.hp,s.enemy.ward,s.enemy.block]
-	if mode=="alpha":
-		_relic_slot(top)
-		if not armed_impulses().is_empty():button("armed_impulses","REAKTIV\n%d" % armed_impulses().size(),show_armed_impulses,top).size_flags_horizontal=Control.SIZE_SHRINK_END
-	button("log","Protokoll",show_log,top).size_flags_horizontal=Control.SIZE_SHRINK_END
-	button("restart","Neu",func():show_modal("Neue Partie?",func(box):button("confirm_restart","Neu starten",func():close_modal();start_battle(),box)),top).size_flags_horizontal=Control.SIZE_SHRINK_END
-	_battle_board()
-	var hand_height=hand_height_for_viewport()
-	var hand=row();hand.custom_minimum_size.y=hand_height
+	var s: Dictionary=session.model.state
+	battle_surface=Control.new();battle_surface.name="PremiumBattle";battle_surface.size_flags_horizontal=Control.SIZE_EXPAND_FILL;battle_surface.size_flags_vertical=Control.SIZE_EXPAND_FILL;body.add_child(battle_surface)
+	battle_surface.resized.connect(_fit_battle)
+	var glass=Panel.new();glass.name="HudGlass";glass.mouse_filter=Control.MOUSE_FILTER_IGNORE;glass.add_theme_stylebox_override("panel",T.panel(Color("43516a"),Color("0b1422")));battle_surface.add_child(glass)
+	battle_header=row(battle_surface);battle_header.add_theme_constant_override("separation",8)
+	var menu_button=button("menu","≡",confirm_menu,battle_header);menu_button.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN;menu_button.custom_minimum_size.x=44;menu_button.tooltip_text="Partie und Hauptmenü"
+	_battle_hero_badge(battle_header,"DU",s.hero,T.PLAYER)
+	var heading=VBoxContainer.new();heading.size_flags_horizontal=Control.SIZE_EXPAND_FILL;heading.add_theme_constant_override("separation",0);battle_header.add_child(heading)
+	var turn=text(_turn_caption(s),heading,15);turn.add_theme_color_override("font_color",T.GOLD if s.active=="hero" else T.FOE);turn.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
+	var phase=text(_phase_caption(s),heading,11);phase.add_theme_color_override("font_color",T.MUTED);phase.tooltip_text=battle_heading(s)
+	var resource_caption=("Energie %d / 8" if mode=="alpha" else "Energie %d") % s.hero.energy
+	var resource=button("resources",resource_caption+"\nResonanz %d / 15" % s.hero.resonance,resource_help,battle_header);resource.custom_minimum_size.x=140;resource.size_flags_horizontal=Control.SIZE_SHRINK_END;resource.add_theme_font_size_override("font_size",13);resource.add_theme_color_override("font_color",T.ENERGY);resource.tooltip_text="Energie bezahlt Karten. Resonanz bleibt gespeichert und bezahlt besondere Eingriffe. Antippen: Erklärung."
+	if mode=="alpha" and s.stage=="battle":_relic_slot(battle_header)
+	_battle_hero_badge(battle_header,"KI",s.enemy,T.FOE)
+	battle_board_host=Control.new();battle_board_host.name="FivePaths";battle_surface.add_child(battle_board_host)
+	battle_stage=null
+	battle_stage=ArenaStage.new();battle_stage.set("mode",arena_mode);battle_stage.set("origins",s.get("origins",{}));battle_board_host.add_child(battle_stage)
+	if mode=="alpha" and s.stage=="battle":
+		var controlled={"hero":[],"enemy":[]}
+		for side in ["hero","enemy"]:
+			for lane in 5:
+				if session.model.controlled(side,lane):controlled[side].append(lane)
+		battle_stage.set("controlled",controlled)
+	battle_hand_host=Control.new();battle_hand_host.name="IllustratedHand";battle_surface.add_child(battle_hand_host)
+	var dock_glass=Panel.new();dock_glass.name="DockGlass";dock_glass.mouse_filter=Control.MOUSE_FILTER_IGNORE;dock_glass.add_theme_stylebox_override("panel",T.panel(Color("43516a"),Color("0b1422")));battle_surface.add_child(dock_glass)
+	battle_dock=VBoxContainer.new();battle_dock.name="ActionDock";battle_dock.add_theme_constant_override("separation",3);battle_surface.add_child(battle_dock)
+	if mode=="alpha" and s.stage!="battle":opening()
+	else:
+		_battle_board()
+		_build_hand(false)
+		_combat_dock()
+	if arena_mode=="three_d":
+		var projected: Array=[]
+		for side in ["enemy","hero"]:
+			for lane in 5:
+				var view=board_views[side+str(lane)]
+				projected.append({"side":side,"lane":lane,"card":view.card,"unit":view.unit,"target":view.target,"invalid_target":view.invalid_target,"selected":view.selected,"combat_ready":view.combat_ready,"attack_penalty":view.attack_penalty,"convergence":view.convergence,"broken_convergence":view.broken_convergence,"reduced_motion":bool(session.profile.reduced_motion)})
+		battle_stage.configure(projected)
+	_fit_battle()
+	call_deferred("_fit_battle")
+
+func select_presentation_variant(value: String) -> bool:
+	# Used by the runnable comparison scenes, never a rules/profile switch.
+	if value not in ["flat","spatial","three_d"]:return false
+	_cancel_hand_drag(true);arena_mode=value;render();return true
+
+func _battle_hero_badge(parent: Node, title: String, player: Dictionary, hue: Color) -> void:
+	var badge=VBoxContainer.new();badge.custom_minimum_size.x=110;badge.add_theme_constant_override("separation",0);parent.add_child(badge)
+	hero_badges["hero" if title=="DU" else "enemy"]=badge
+	var life=text("%s · %d LP" % [title,player.hp],badge,18);life.add_theme_color_override("font_color",hue)
+	var defense=text("Schild %d · Block %d" % [player.ward,player.block],badge,11);defense.add_theme_color_override("font_color",T.TEXT)
+	badge.tooltip_text="%s: %d Leben, %d Schild, %d Block. Schaden verbraucht zuerst Block, dann Schild, dann Leben." % [title,player.hp,player.ward,player.block]
+	if player.get("relic")!=null:badge.tooltip_text+="\nRelikt: "+str(session.card(player.relic.id).name)
+
+func _turn_caption(s: Dictionary) -> String:
+	if mode=="alpha" and s.stage!="battle":return {"mulligan":"DEINE STARTHAND","origins":"DEIN URSPRUNG","second":"ZWEITE MÖGLICHKEIT"}.get(s.stage,"VORBEREITUNG")
+	if not str(s.get("error","")).is_empty():return "PARTIE ANGEHALTEN"
+	if s.winner!=null:return "PARTIE BEENDET"
+	return ("DEIN ZUG" if s.active=="hero" else "KI AM ZUG")+" · "+str(floori(float(s.round-1)/2)+1)
+
+func _phase_caption(s: Dictionary) -> String:
+	if mode=="alpha" and s.stage!="battle":return {"mulligan":"1 / 3 · Austauschen oder behalten","origins":"2 / 3 · Einen eigenen Pfad wählen","second":"3 / 3 · Optionaler Startausgleich"}.get(s.stage,"")
+	if s.hero.pendingTarget!=null:return "Ankunft · Gegnerisches Ziel wählen"
+	if s.hero.pendingShift!=null:return "Pfadwechsel · Markiertes Ziel wählen"
+	if action_mode=="converge":return "Konvergenz · Drei freie Pfade binden"
+	return {"draw":"NACHZIEHEN","main":"AKTIONEN · Angriffe am Zugende","attack":"ANGRIFFE","end":"ZUGENDE"}.get(s.hero.phase,"VORBEREITUNG")
+
+func _fit_battle() -> void:
+	if not is_instance_valid(battle_surface) or page!="battle":return
+	var available=battle_surface.size
+	if available.x<100 or available.y<100:
+		var margin=4.0 if compact else 8.0
+		available=layout.size-Vector2(margin*2,margin*2)
+	battle_geometry=BattleLayout.measure(available,hand_views.size(),selected)
+	var header: Rect2=battle_geometry.header;var board: Rect2=battle_geometry.board
+	battle_header.position=header.position;battle_header.size=header.size
+	var glass=battle_surface.get_node_or_null("HudGlass")
+	if glass!=null:glass.position=header.position;glass.size=header.size
+	battle_board_host.position=board.position;battle_board_host.size=board.size
+	if is_instance_valid(battle_stage):battle_stage.position=Vector2.ZERO;battle_stage.size=board.size
+	var projected_slots: Dictionary={}
+	arena_projection_active=arena_mode=="three_d"
+	if arena_projection_active:
+		var occupied: Array=[]
+		for side in ["enemy","hero"]:
+			for lane in 5:
+				var slot: Rect2=battle_stage.projected_card_rect(side,lane)
+				if slot.size.x<44 or slot.size.y<44 or not Rect2(Vector2.ZERO,board.size).grow(.1).encloses(slot):arena_projection_active=false
+				for previous in occupied:
+					if slot.intersects(previous):arena_projection_active=false
+				occupied.append(slot);projected_slots[side+str(lane)]=slot
+	for key in board_views:
+		var view=board_views[key]
+		var side="hero" if str(key).begins_with("hero") else "enemy"
+		var slot=projected_slots[key] if arena_projection_active else ArenaStage.slot_rect(side,view.lane,Rect2(Vector2.ZERO,board.size),arena_mode)
+		view.position=slot.position;view.size=slot.size
+		# The developer-only3D variant draws the same faces on actual meshes.
+		# Upright transparent controls provide their exact projected hit bounds.
+		view.self_modulate.a=0.0 if arena_projection_active else 1.0
+	var rail: Rect2=battle_geometry.hand
+	battle_hand_host.position=rail.position;battle_hand_host.size=rail.size
+	for index in hand_views.size():
+		var view=hand_views[index]
+		var tile=BattleLayout.hand_rect(battle_geometry,index,hand_views.size(),selected==index)
+		view.position=tile.position-rail.position;view.size=tile.size;view.z_index=4 if selected==index else 1
+	var dock: Rect2=battle_geometry.dock
+	var dock_glass=battle_surface.get_node_or_null("DockGlass")
+	if dock_glass!=null:dock_glass.position=dock.position;dock_glass.size=dock.size
+	if is_instance_valid(status):status.visible=dock.size.y>=120
+	battle_dock.position=dock.position+Vector2(4,0);battle_dock.size=dock.size-Vector2(8,0)
+
+func _build_hand(preparing: bool=false) -> void:
+	var s: Dictionary=session.model.state
+	var signature=JSON.stringify(s.hero.hand)
+	var animate=preparing and signature!=opening_hand_signature and not session.profile.reduced_motion
+	if preparing:opening_hand_signature=signature
 	for index in s.hero.hand.size():
-		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card);view.selected=selected==index
-		view.title_maximum_size=11 if short_landscape else 12;view.title_available_height=float(hand_height-29) if short_landscape else -1.0
-		view.custom_minimum_size=Vector2(44,hand_height);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
-		view.size_flags_stretch_ratio=1.4 if selected==index else 1.0
-		_bind_press(view,func():_hand_click(index));hand.add_child(view);hand_views.append(view)
-	var bar=row()
+		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card);view.set("display_role","hand");view.set("reduced_motion",bool(session.profile.reduced_motion));view.selected=selected==index or preparing and s.stage=="mulligan" and mulligan_indices.has(index)
+		var availability=_card_availability(index)
+		view.set("availability_shown",not preparing);view.set("playable",bool(availability.playable));view.set("unavailable_reason",str(availability.reason))
+		view.custom_minimum_size=Vector2(44,44)
+		view.tooltip_text=view.card.name+"\n"+str(view.card.get("description",""))+"\n"+("Ausspielbar · leuchtendes Ziel wählen" if availability.playable else str(availability.reason))+"\nAntippen: auswählen · nochmals antippen oder Details: ganze Karte"
+		_bind_press(view,func():_opening_hand_click(index) if preparing else _hand_click(index));battle_hand_host.add_child(view);hand_views.append(view)
+		if preparing and s.stage=="mulligan":
+			actions["mulligan_"+str(index)]=view
+			if mulligan_indices.has(index):
+				var ribbon=PanelContainer.new();ribbon.mouse_filter=Control.MOUSE_FILTER_IGNORE;ribbon.add_theme_stylebox_override("panel",T.panel(T.GOLD,Color("172532")));view.add_child(ribbon)
+				ribbon.anchor_left=.05;ribbon.anchor_right=.95;ribbon.anchor_top=.40;ribbon.anchor_bottom=.57
+				var mark=Label.new();mark.text="↻ TAUSCH";mark.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;mark.add_theme_font_size_override("font_size",11);mark.add_theme_color_override("font_color",T.GOLD);mark.mouse_filter=Control.MOUSE_FILTER_IGNORE;ribbon.add_child(mark)
+		elif preparing and s.stage=="second":actions["second_card_"+str(index)]=view
+		if animate:
+			view.modulate.a=.35
+			var deal=view.create_tween();deal.tween_property(view,"modulate:a",1.0,.16).set_delay(index*.025)
+
+func _card_availability(index: int) -> Dictionary:
+	var s: Dictionary=session.model.state;var p: Dictionary=s.hero
+	if mode=="alpha" and s.stage!="battle":return {"playable":false,"reason":"Vorbereitung · Karte lesen oder zum Tauschen markieren"}
+	if s.winner!=null or not str(s.get("error","")).is_empty():return {"playable":false,"reason":"Diese Partie ist beendet oder angehalten"}
+	if s.active!="hero":return {"playable":false,"reason":"Die KI ist am Zug"}
+	if p.pendingTarget!=null or p.pendingShift!=null:return {"playable":false,"reason":"Löse zuerst die markierte Zielauswahl"}
+	if p.phase!="main":return {"playable":false,"reason":"Bestätige zuerst das Nachziehen"}
+	var c=session.card(p.hand[index])
+	if int(c.cost)>int(p.energy):return {"playable":false,"reason":"Es fehlen %d Energie" % (int(c.cost)-int(p.energy))}
+	if int(c.get("resonance_cost",0))>int(p.resonance):return {"playable":false,"reason":"Es fehlt Resonanz"}
+	for lane in 5:
+		if session.model.play_support("hero",index,lane).is_empty():return {"playable":true,"reason":"Ausspielbar"}
+	return {"playable":false,"reason":"Kein gültiges Ziel · Details erklärt die Bedingungen"}
+
+func _dock_context(caption: String) -> void:
+	status=text(caption,battle_dock,12);status.size_flags_vertical=Control.SIZE_EXPAND_FILL;status.vertical_alignment=VERTICAL_ALIGNMENT_CENTER;status.max_lines_visible=2;status.tooltip_text=caption
+	status.add_theme_color_override("font_color",T.GOLD if selected>=0 else T.TEXT)
+
+func _dock_tools(preparing: bool=false) -> void:
+	var tools=row(battle_dock)
+	button("inspect","Details",func():if selected>=0:inspect(session.card(session.model.state.hero.hand[selected])),tools,selected<0).add_theme_font_size_override("font_size",12)
+	var more=button("actions","Mehr …"+(" !" if not _duel_save_issue().is_empty() else ""),show_actions,tools);more.add_theme_font_size_override("font_size",12)
+	if not _duel_save_issue().is_empty():more.add_theme_color_override("font_color",T.WARNING);more.tooltip_text="Die laufende Partie konnte zuletzt nicht lokal gesichert werden. Mehr zeigt den Grund."
+	if not preparing and (selected>=0 or not action_mode.is_empty()):
+		var cancel=button("cancel_selection","×",cancel_selection,tools);cancel.size_flags_horizontal=Control.SIZE_SHRINK_END;cancel.tooltip_text="Auswahl aufheben"
+
+func _combat_dock() -> void:
+	var s: Dictionary=session.model.state
 	var overflow: bool=s.hero.phase=="draw" and s.hero.hand.size()+mini(int(s.hero.pendingDraw),s.hero.deck.size())>6
-	var picking=selected>=0 and s.hero.phase=="main"
-	var caption="KONVERGENZ ERKLÄREN %d/3" % convergence_lanes.size() if action_mode=="converge" else "ZIEL FÜR ANKUNFT WÄHLEN" if s.hero.pendingTarget!=null else "POSITION WÄHLEN" if s.hero.pendingShift!=null else "GÜLTIGES ZIEL ANTIPPEN" if picking else "KARTE VERBRENNEN" if overflow else "KARTEN NACHZIEHEN" if s.hero.phase=="draw" else "ZUG BEENDEN  →"
-	var blocked=not str(s.get("error","")).is_empty() or s.winner!=null or s.active!="hero" or overflow and selected<0 or s.hero.pendingTarget!=null or s.hero.pendingShift!=null or picking or action_mode=="converge" and convergence_lanes.size()!=3
-	var primary=button("end",caption,func():convergence_action() if action_mode=="converge" else act("burn",["hero",selected]) if overflow else act("finishDraw",["hero"]) if s.hero.phase=="draw" else act("endTurn",["hero"]),bar,blocked)
-	primary.set_meta("rule_blocked",blocked)
-	primary_ref=weakref(primary)
-	_update_primary_readiness()
-	primary.size_flags_stretch_ratio=3;primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
-	button("actions","Mehr / Ressourcen",show_actions,bar,s.winner!=null).size_flags_horizontal=Control.SIZE_SHRINK_END
-	button("inspect","Details",func():if selected>=0:inspect(session.card(s.hero.hand[selected])),bar,selected<0).size_flags_horizontal=Control.SIZE_SHRINK_END
-	if selected>=0 or not action_mode.is_empty():button("cancel_selection","Abbrechen",cancel_selection,bar).size_flags_horizontal=Control.SIZE_SHRINK_END
+	var pending_shift=s.hero.pendingShift!=null
+	var picking=selected>=0 and s.hero.phase=="main" and not pending_shift
+	var context=phase_message()
+	if selected>=0:
+		var chosen=session.card(s.hero.hand[selected])
+		context=str(chosen.name)+(" · zum Verbrennen gewählt" if overflow else " · markiertes Ziel antippen")
+		if not overflow:
+			var availability=_card_availability(selected)
+			if not availability.playable:context=str(availability.reason)
+	elif s.hero.pendingTarget==null and s.hero.pendingShift==null and action_mode.is_empty():context="Handkarte wählen · Details durch erneutes Antippen" if s.hero.phase=="main" else "Ziehe deine Karten, dann beginnt die Aktionsphase."
+	if mode=="alpha" and s.enemy.get("convergence")!=null and selected<0 and action_mode.is_empty():context="KI-Konvergenz: markierten Gegenpfad bestreiten!" if not s.enemy.convergence.broken else "KI-Konvergenz unterbrochen."
+	if message.begins_with("Ungültiges Ziel"):context=message
+	_dock_context(context)
+	_dock_tools()
+	var caption="WECHSEL AUSLASSEN" if pending_shift else "KONVERGENZ %d / 3" % convergence_lanes.size() if action_mode=="converge" else "ZIEL WÄHLEN" if s.hero.pendingTarget!=null or picking else "KARTE VERBRENNEN" if overflow else "NACHZIEHEN  →" if s.hero.phase=="draw" else "ZUG BEENDEN  →"
+	if s.active!="hero":caption="KI AM ZUG"
+	var blocked=not str(s.get("error","")).is_empty() or s.winner!=null or s.active!="hero" or overflow and selected<0 or s.hero.pendingTarget!=null or picking or action_mode=="converge" and convergence_lanes.size()!=3
+	var primary=button("end",caption,func():act("skipShift",["hero"]) if pending_shift else convergence_action() if action_mode=="converge" else act("burn",["hero",selected]) if overflow else act("finishDraw",["hero"]) if s.hero.phase=="draw" else act("endTurn",["hero"]),battle_dock,blocked)
+	primary.size_flags_vertical=Control.SIZE_EXPAND_FILL
+	primary.add_theme_font_size_override("font_size",14);primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("463422")));primary.set_meta("rule_blocked",blocked);primary_ref=weakref(primary);_update_primary_readiness()
 	if action_mode=="converge":actions.convergence=primary
-	if s.hero.pendingShift!=null:button("skip","Überspringen",func():act("skipShift",["hero"]),bar).size_flags_horizontal=Control.SIZE_SHRINK_END
-	status=null
-	if not short_landscape:
-		status=text(phase_message(),body,12);status.max_lines_visible=1
+	if pending_shift:actions.skip=primary
+
 func _battle_board(preparing: bool=false) -> void:
-	# The opening and combat share these exact lane controls and state data.
+	# The opening and combat use these exact ten upright lane hit rectangles.
 	var m=session.model;var s: Dictionary=m.state
-	var board=VBoxContainer.new();board.size_flags_vertical=Control.SIZE_EXPAND_FILL;board.add_theme_constant_override("separation",1 if short_landscape else 3);body.add_child(board)
 	for side in ["enemy","hero"]:
-		var line=row(board);line.size_flags_vertical=Control.SIZE_EXPAND_FILL
 		for lane in 5:
-			var u: Variant=s[side].lanes[lane];var view=CardView.new();view.lane=lane;view.owner_label="KI" if side=="enemy" else "DU";view.color=T.FOE if side=="enemy" else T.PLAYER
+			var u: Variant=s[side].lanes[lane];var view=CardView.new();view.lane=lane;view.owner_label="KI" if side=="enemy" else "DU";view.color=T.FOE if side=="enemy" else T.PLAYER;view.set("display_role","board");view.set("reduced_motion",bool(session.profile.reduced_motion))
 			if u!=null:view.card=session.card(u.id);view.unit=u;view.combat_ready=m.can_fight(side,lane) if mode=="alpha" else int(u.stun)==0 and (not u.summoned or view.card.effect=="haste")
-			view.attack_penalty=int(s[side].get("weak",0))
-			view.origin=mode=="alpha" and s.origins[side]==lane
-			view.custom_minimum_size=Vector2(44,44);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
+			view.attack_penalty=int(s[side].get("weak",0));view.origin=mode=="alpha" and s.origins[side]==lane;view.custom_minimum_size=Vector2(44,44)
 			view.selected=convergence_lanes.has(lane) and side=="hero" or source_lane==lane and side=="hero"
 			if u!=null:view.tooltip_text="%s · Angriff %d · Leben %d · Schild %d · Block %d · Stasis %d\n%s" % [view.card.name,view.current_attack(),int(u.hp),int(u.get("ward",0)),int(u.get("block",0)),int(u.get("stun",0)),"Angriffsbereit" if view.combat_ready else "Noch nicht angriffsbereit"]
 			if preparing:
-				view.target=side=="hero" and (s.stage=="origins" or s.stage=="second" and not s.second_path)
-				view.disabled=not view.target
+				view.target=side=="hero" and (s.stage=="origins" or s.stage=="second" and not s.second_path);view.disabled=not view.target
 				view.tooltip_text="Ursprung auf Pfad %d wählen" % (lane+1) if view.target else "Dein Pfad %d" % (lane+1) if side=="hero" else "Gegnerischer Pfad %d" % (lane+1)
 				if side=="hero" and s.stage in ["origins","second"]:actions[("origin_" if s.stage=="origins" else "second_origin_")+str(lane)]=view
 				_bind_press(view,func():_opening_lane_click(side,lane))
@@ -433,7 +717,7 @@ func _battle_board(preparing: bool=false) -> void:
 				view.target=target_allowed(side,lane);view.invalid_target=selected>=0 and not view.target and s.hero.phase=="main"
 				if mode=="alpha" and s[side].convergence!=null and s[side].convergence.lanes.has(lane):view.convergence=not s[side].convergence.broken;view.broken_convergence=bool(s[side].convergence.broken)
 				_bind_press(view,func():field_click(side,lane))
-			line.add_child(view);board_views[side+str(lane)]=view
+			battle_board_host.add_child(view);board_views[side+str(lane)]=view
 func armed_impulses() -> Array:
 	if session.model!=null and session.model.has_method("armed_impulses"):return session.model.armed_impulses("hero")
 	return []
@@ -454,7 +738,7 @@ func _relic_slot(parent: Node) -> void:
 		if chosen and allowed:act("play",["hero",selected,0])
 		elif p.relic!=null:inspect(session.card(p.relic.id))
 	,parent,not allowed and p.relic==null)
-	slot.size_flags_horizontal=Control.SIZE_SHRINK_END;slot.custom_minimum_size.x=88
+	slot.size_flags_horizontal=Control.SIZE_SHRINK_END;slot.custom_minimum_size.x=68;slot.add_theme_font_size_override("font_size",10)
 	slot.tooltip_text="Ein Relikt aktiv. Ein neues Relikt ersetzt das vorige; das vorige wird abgelegt."+("\n"+session.card(p.relic.id).name if p.relic!=null else "")
 	if allowed:slot.add_theme_stylebox_override("normal",T.panel(T.SUCCESS,T.SURFACE_RAISED))
 func phase_message() -> String:
@@ -462,7 +746,7 @@ func phase_message() -> String:
 	var p: Dictionary=session.model.state.hero
 	if p.pendingTarget!=null:return "Ankunftsschlag: tippe eine gegnerische Kreatur an."
 	if p.phase=="draw":return "Nachziehen: bei Handüberlauf zuerst eine Karte auswählen und verbrennen. Sonst Nachziehen bestätigen."
-	if p.pendingShift!=null:return "Positionswechsel: tippe einen Nachbarn der Quelle, dann ein freies eigenes Feld an."
+	if p.pendingShift!=null:return "Pfadwechsel: Nachbarwesen, dann freies Ziel wählen." if source_lane<0 else "Nun ein freies Nachbarfeld antippen."
 	if action_mode=="converge":return "Wähle drei kampffähige unbestrittene Pfade, dann Erklären."
 	if mode=="alpha" and session.model.state.enemy.convergence!=null and selected<0:return "KI-Konvergenz unterbrochen." if session.model.state.enemy.convergence.broken else "KI-Konvergenz: einen markierten Pfad bestreiten oder eine gebundene Kreatur ausschalten."
 	return message
@@ -529,57 +813,33 @@ func field_click(side: String, lane: int) -> void:
 		return
 	if selected>=0:
 		if target_allowed(side,lane):act("play",["hero",selected,lane])
-		else:message="Ungültiges Ziel. Karte oder Aktion prüfen.";render()
+		else:_audio_event("ui.error");message="Ungültiges Ziel · Leuchtenden Pfad wählen.";render()
 	elif m.state[side].lanes[lane]!=null:
 		var detail: Dictionary=m.state[side].lanes[lane].duplicate(true)
 		detail.display_attack=maxi(0,int(detail.atk)-int(m.state[side].get("weak",0)))
 		detail.attack_penalty=int(m.state[side].get("weak",0))
 		inspect(session.card(detail.id),detail)
-func hand_height_for_viewport(preparing: bool=false) -> int:
-	if short_landscape:return 60
-	if compact:return 80 if preparing else 66
-	# Desktop/tablet space can show actual artwork instead of an 80px ribbon.
-	# Phone layouts keep their established board and touch budgets unchanged.
-	if layout.size.y>=620:return 160 if preparing or layout.size.y>=800 else 144
-	return 112 if preparing else 80
+func hand_height_for_viewport(_preparing: bool=false) -> int:
+	var margin=4.0 if compact else 8.0
+	return floori(BattleLayout.measure(layout.size-Vector2(margin*2,margin*2),6).card_size.y)
 func opening() -> void:
 	var s: Dictionary=session.model.state
-	var instructions={"mulligan":"1 / 3 · Tippe Karten zum Tauschen an. Details zeigt den vollständigen Kartentext.","origins":"2 / 3 · "+("Du beginnst. " if s.coin=="hero" else "Die KI beginnt. ")+"Wähle deinen Ursprung auf einem leuchtenden eigenen Pfad.","second":"3 / 3 · Zweite Möglichkeit: optional einmal Ursprung ändern und einmal eine Handkarte tauschen."}
-	if not short_landscape:text(instructions.get(s.stage,"Vorbereitung"),body,13)
 	_battle_board(true)
-	var hand_height=hand_height_for_viewport(true)
-	var hand=row();hand.custom_minimum_size.y=hand_height
-	var signature=JSON.stringify(s.hero.hand)
-	var animate=signature!=opening_hand_signature and not session.profile.reduced_motion
-	opening_hand_signature=signature
-	for index in s.hero.hand.size():
-		var view=CardView.new();view.card=session.card(s.hero.hand[index]);view.color=S.color(view.card)
-		view.selected=mulligan_indices.has(index) if s.stage=="mulligan" else selected==index
-		view.title_maximum_size=11 if short_landscape else 12;view.title_available_height=float(hand_height-29) if short_landscape else -1.0
-		view.custom_minimum_size=Vector2(44,hand_height);view.size_flags_horizontal=Control.SIZE_EXPAND_FILL;view.size_flags_vertical=Control.SIZE_EXPAND_FILL
-		view.tooltip_text=view.card.name+"\n"+str(view.card.get("description",""))
-		_bind_press(view,func():_opening_hand_click(index));hand.add_child(view);hand_views.append(view)
-		if s.stage=="mulligan":
-			actions["mulligan_"+str(index)]=view
-			if mulligan_indices.has(index):
-				var ribbon=PanelContainer.new();ribbon.mouse_filter=Control.MOUSE_FILTER_IGNORE;ribbon.add_theme_stylebox_override("panel",T.panel(T.GOLD,T.SURFACE));view.add_child(ribbon)
-				ribbon.anchor_left=.04;ribbon.anchor_right=.96;ribbon.anchor_top=.42;ribbon.anchor_bottom=.68
-				var mark=Label.new();mark.text="↻ TAUSCHEN";mark.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;mark.vertical_alignment=VERTICAL_ALIGNMENT_CENTER;mark.add_theme_font_size_override("font_size",12);mark.add_theme_color_override("font_color",T.GOLD);mark.mouse_filter=Control.MOUSE_FILTER_IGNORE;ribbon.add_child(mark)
-		elif s.stage=="second":actions["second_card_"+str(index)]=view
-		if animate:
-			view.modulate.a=.35
-			var deal=view.create_tween();deal.tween_property(view,"modulate:a",1.0,.16).set_delay(index*.025)
-	var bar=row()
+	_build_hand(true)
+	var instructions={"mulligan":"Antippen: tauschen.\nDetails: Karte lesen.","origins":("Du beginnst · " if s.coin=="hero" else "KI beginnt · ")+"Ursprung: erstes Wesen erhält 1 Schild.","second":"Optional: Ursprung ändern + eine Handkarte tauschen."}
+	_dock_context(instructions.get(s.stage,"Vorbereitung"))
+	_dock_tools(true)
 	if s.stage=="mulligan":
-		var primary=button("mulligan_done","%d KARTE(N) TAUSCHEN  →" % mulligan_indices.size() if not mulligan_indices.is_empty() else "HAND BEHALTEN  →",func():act("mulligan",[mulligan_indices]),bar)
-		primary.size_flags_stretch_ratio=3;primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
+		var primary=button("mulligan_done","%d TAUSCHEN  →" % mulligan_indices.size() if not mulligan_indices.is_empty() else "HAND BEHALTEN  →",func():act("mulligan",[mulligan_indices]),battle_dock)
+		primary.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		primary.add_theme_font_size_override("font_size",14);primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("463422")))
 	elif s.stage=="origins":
-		text("URSPRUNG: Eigener Pfad 1–5 · erste eigene Beschwörung dort erhält 1 Schild.",bar,13)
+		var hint=text("URSPRUNG · PFAD 1–5",battle_dock,13);hint.custom_minimum_size.y=44;hint.vertical_alignment=VERTICAL_ALIGNMENT_CENTER;hint.add_theme_color_override("font_color",T.ENERGY)
 	else:
-		var primary=button("opening_done","KAMPF BEGINNEN  →",func():act("openingDone",[]),bar)
-		primary.size_flags_stretch_ratio=2;primary.add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("403623")))
-		button("second_exchange","KARTE TAUSCHEN" if not s.second_card else "KARTE GETAUSCHT ✓",func():act("secondCard",[selected]),bar,s.second_card or selected<0)
-	button("inspect","KARTENDETAILS",func():if selected>=0:inspect(session.card(s.hero.hand[selected])),bar,selected<0).size_flags_horizontal=Control.SIZE_SHRINK_END
+		var row_actions=row(battle_dock)
+		row_actions.size_flags_vertical=Control.SIZE_EXPAND_FILL
+		button("second_exchange","TAUSCHEN" if not s.second_card else "GETAUSCHT ✓",func():act("secondCard",[selected]),row_actions,s.second_card or selected<0).add_theme_font_size_override("font_size",11)
+		button("opening_done","KAMPF  →",func():act("openingDone",[]),row_actions).add_theme_stylebox_override("normal",T.panel(T.GOLD,Color("463422")))
 func _opening_lane_click(side: String, lane: int) -> void:
 	var s: Dictionary=session.model.state
 	if side!="hero":return
@@ -607,7 +867,20 @@ func show_actions() -> void:
 		for to in [lane-1,lane+1]:
 			if to>=0 and to<5 and p.lanes[to]==null:moves=true
 	show_modal("RESSOURCEN / SONDERAKTIONEN",func(box):
+		var navigation=row(box)
+		button("log","Protokoll / Replay",show_log,navigation)
+		button("restart","Neue Partie",func():show_modal("Neue Partie?",func(confirm):button("confirm_restart","Neu starten",func():close_modal();start_battle(),confirm)),navigation)
 		text("Energie %d · Resonanz %d/15" % [p.energy,p.resonance],box,22)
+		text("Nachziehstapel %d · Ablage %d · Hand %d/6" % [p.deck.size(),p.discard.size(),p.hand.size()],box,14)
+		if mode=="alpha":
+			var enemy_relic: Variant=session.model.state.enemy.relic
+			if enemy_relic!=null:
+				var enemy_card: Dictionary=session.card(str(enemy_relic.id))
+				text("Gegnerisches Relikt: "+str(enemy_card.name),box,16)
+				button("enemy_relic_details","Relikt des Gegners ansehen",func():inspect(enemy_card,{},"enemy"),box)
+			else:text("Gegnerisches Relikt: keines",box,14)
+		if not _duel_save_issue().is_empty():text("Fortsetzen noch nicht gesichert: "+_duel_save_issue()+" Die Partie bleibt spielbar. Nicht gesicherte Spielzüge können beim Neuladen verloren gehen.",box,14).add_theme_color_override("font_color",T.WARNING)
+		if not armed_impulses().is_empty():button("armed_impulses","Bereite Reaktionen · %d" % armed_impulses().size(),show_armed_impulses,box)
 		button("resource_help","Energie, Resonanz und Schlüsselwörter erklärt",resource_help,box)
 		if mode=="alpha":button("convergence","Konvergenz · drei unbestrittene bereite Pfade",func():close_modal();convergence_action(),box,not usable or pending or int(session.model.state.round)<11)
 		button("recover",res_caption("Rückholung",5),func():close_modal();act("recover",["hero"]),box,not usable or p.cycled or p.resonance<5 or p.hand.size()>=6 or p.discard.is_empty())
@@ -623,6 +896,14 @@ func show_actions() -> void:
 			if mode=="alpha":text(S.burst_description(order)+" n = eigene Kreaturen dieser Macht.",box,14)
 			button("burst_"+order,str(alpha_catalog.source.powers.get(order,order.to_upper()))+" entfesseln\n15 benötigt · verbraucht 8 Resonanz",func():close_modal();act("burst",["hero",order]),box,not usable or int(p.resonance)<15 or p.burstUsed or matching==0)
 	)
+func _duel_save_issue() -> String:
+	# The PWA controller owns persistence. This view reads an optional issue;
+	# opening/closing a sheet must never retry a write or request a render loop.
+	for property in get_property_list():
+		if property.name=="duel_checkpoint":
+			var checkpoint=get("duel_checkpoint")
+			return str(checkpoint.get("issue")) if checkpoint!=null else ""
+	return ""
 func res_caption(title: String, cost: int) -> String:
 	var have=int(session.model.state.hero.resonance)
 	return "%s · %d Resonanz%s" % [title,cost," (fehlen %d)" % (cost-have) if have<cost else ""]
@@ -637,7 +918,7 @@ func show_modal(title: String, content: Callable) -> void:
 	modal_version+=1
 	close_modal()
 	if is_instance_valid(feedback):feedback.jobs.clear()
-	modal=PanelContainer.new();modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);modal.add_theme_stylebox_override("panel",T.panel(T.GOLD,Color(.025,.04,.065,.98)));layout.add_child(modal)
+	modal=PanelContainer.new();modal.z_index=200;modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);modal.add_theme_stylebox_override("panel",T.panel(T.GOLD,Color("08111c")));layout.add_child(modal)
 	var margin=MarginContainer.new();margin.add_theme_constant_override("margin_left",16);margin.add_theme_constant_override("margin_right",16);margin.add_theme_constant_override("margin_top",8);margin.add_theme_constant_override("margin_bottom",8);modal.add_child(margin)
 	var box=VBoxContainer.new();margin.add_child(box)
 	var top=row(box);text(title,top,18);button("modal_close","ZURÜCK",close_modal,top).size_flags_horizontal=Control.SIZE_SHRINK_END
@@ -646,46 +927,64 @@ func close_modal() -> void:
 	set_audio_paused(false)
 	modal_version+=1
 	if is_instance_valid(modal):modal.hide();modal.queue_free()
-	modal=null;inspector_rules=null;inspector_title=null;inspector_card_id=""
-func inspect(c: Dictionary, current: Dictionary={}) -> void:
+	modal=null;inspector_rules=null;inspector_title=null;inspector_face=null;inspector_card_id=""
+func inspect(c: Dictionary, current: Dictionary={}, relic_owner: String="hero") -> void:
 	_audio_event("card.enlarge",{"faction":c.get("faction",c.get("order","neutral")),"rarity":c.get("rarity","common")})
-	show_modal(str(c.get("name",c.id)),func(box):
-		if portrait or layout.size.y>=560:
-			# This wrapper has no horizontal minimum derived from the card. An open
-			# inspector can therefore shrink after rotation rather than clipping it.
-			var center=Control.new();center.mouse_filter=Control.MOUSE_FILTER_IGNORE;center.size_flags_horizontal=Control.SIZE_EXPAND_FILL;box.add_child(center)
-			var full_card=FullCardFace.new();full_card.card=c;center.add_child(full_card)
-			var resize_face=func():
-				var width=minf(374,maxf(160,center.size.x));var height=width*88.0/63.0
-				full_card.size=Vector2(width,height);full_card.position=Vector2((center.size.x-width)/2,0);center.custom_minimum_size.y=height
-			center.resized.connect(resize_face);resize_face.call()
-		else:
-			var center=CenterContainer.new();box.add_child(center)
-			var portrait_card=CardView.new();portrait_card.card=c;portrait_card.art_profile="full";portrait_card.color=S.color(c);portrait_card.library=true;portrait_card.custom_minimum_size=Vector2(240,140);center.add_child(portrait_card)
-		inspector_card_id=str(c.id);inspector_title=text(str(c.name),box,24)
-		text("%s · %s · %s · %s" % [alpha_catalog.source.powers.get(c.get("faction","neutral"),c.get("order","")),S.KINDS.get(c.kind,c.kind),S.RARITIES.get(c.rarity,c.rarity),"Energie %d" % c.cost],box,16)
+	show_modal(("Gegnerisches Relikt · " if relic_owner=="enemy" else "")+str(c.get("name",c.id)),func(box):
+		# Every orientation gets the canonical portrait face. The adjacent readable
+		# rules column reflows below it on portrait rotation without closing or
+		# rebuilding the inspected card, selection or model.
+		var composition=BoxContainer.new();composition.add_theme_constant_override("separation",18);composition.size_flags_horizontal=Control.SIZE_EXPAND_FILL;box.add_child(composition)
+		var portrait_wrap=Control.new();portrait_wrap.mouse_filter=Control.MOUSE_FILTER_IGNORE;composition.add_child(portrait_wrap)
+		var full_card=FullCardFace.new();full_card.card=c;full_card.set("reduced_motion",bool(session.profile.reduced_motion));portrait_wrap.add_child(full_card)
+		inspector_face=full_card
+		var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",8);composition.add_child(details)
+		var fit=func():
+			var vertical=composition.size.x<620
+			composition.vertical=vertical
+			var width=minf(374,maxf(140,composition.size.x)) if vertical else clampf((layout.size.y-100)*63.0/88.0,106,294)
+			var height=width*88.0/63.0
+			portrait_wrap.custom_minimum_size=Vector2(0 if vertical else width,height)
+			full_card.size=Vector2(width,height);full_card.position=Vector2(maxf(0,(portrait_wrap.size.x-width)/2.0),0)
+		composition.resized.connect(fit);portrait_wrap.resized.connect(fit);fit.call()
+		inspector_card_id=str(c.id);inspector_title=text(str(c.name),details,24)
+		# The fixed44px top return is the single dismiss/return-to-target action.
+		# Retain the semantic inspector action for input and accessibility tests.
+		actions.inspect_target=actions.modal_close
+		text("%s · %s · %s" % [alpha_catalog.source.powers.get(c.get("faction","neutral"),c.get("order","")),S.KINDS.get(c.kind,c.kind),S.RARITIES.get(c.rarity,c.rarity)],details,15)
+		var resonance=int(c.get("resonance_cost",0))
+		text("Energie %d%s" % [c.cost," · Resonanz %d" % resonance if resonance>0 else ""],details,16).add_theme_color_override("font_color",T.ENERGY)
 		if c.kind=="creature":
-			text("Angriff %d  /  Leben %d" % [current.get("display_attack",current.get("atk",c.atk)),current.get("hp",c.hp)],box,22)
+			text("Angriff %d  /  Leben %d" % [current.get("display_attack",current.get("atk",c.atk)),current.get("hp",c.hp)],details,22)
 			var species: Array=[]
 			var labels=LibraryFilter.species_labels()
 			for species_id in c.get("species",[]):species.append(str(labels.get(species_id,species_id)))
-			if not species.is_empty():text("Wesensarten: "+" · ".join(species),box,16)
-		if not current.is_empty():text("Wesenschild %d · Block %d · Stasis %d · Zusätzliche Angriffe %d" % [current.get("ward",0),current.get("block",0),current.get("stun",0),current.get("extra_attacks",0)],box,16)
-		if int(current.get("attack_penalty",0))>0:text("Aktuelle Schwächung: −%d Angriff in der nächsten eigenen Angriffsphase." % int(current.attack_penalty),box,14)
-		inspector_rules=text(str(c.get("description","")),box,18)
-		text("SCHLÜSSELWÖRTER",box,14);text(S.card_keywords(c),box,14)
-		var art_note=ArtQualityLabel.new();art_note.card=c;box.add_child(art_note)
-		if c.kind=="event" and c.effect=="redirect":text("Voraussetzung: Ein eigener verzögerter Treffer wartet bereits. Neunte-Stunde-Karten wie Vorgemerkter Einschlag bereiten ihn vor.",box,14)
-		if page=="battle" and mode=="alpha" and c.kind=="relic" and session.model.state.hero.relic!=null and session.model.state.hero.relic.id==c.id:
-			button("inspect_relic_activate","RELIKT AKTIVIEREN · "+relic_cost_caption(),func():close_modal();act("activateRelic",["hero"]),box,not relic_can_activate())
-		button("inspect_target","ZUR ZIELWAHL" if page=="battle" else "SCHLIESSEN",close_modal,box)
+			if not species.is_empty():text("Wesensarten: "+" · ".join(species),details,15)
+		if not current.is_empty():text("Wesenschild %d · Block %d · Stasis %d · Zusätzliche Angriffe %d" % [current.get("ward",0),current.get("block",0),current.get("stun",0),current.get("extra_attacks",0)],details,15)
+		if int(current.get("attack_penalty",0))>0:text("Aktuelle Schwächung: −%d Angriff in der nächsten eigenen Angriffsphase." % int(current.attack_penalty),details,14)
+		inspector_rules=text(str(c.get("description","")),details,18)
+		text("SCHLÜSSELWÖRTER",details,14);text(S.card_keywords(c),details,14)
+		var art_note=ArtQualityLabel.new();art_note.card=c;details.add_child(art_note)
+		if c.kind=="event" and c.effect=="redirect":text("Voraussetzung: Ein eigener verzögerter Treffer wartet bereits. Neunte-Stunde-Karten wie Vorgemerkter Einschlag bereiten ihn vor.",details,14)
+		if page=="battle" and mode=="alpha" and relic_owner=="hero" and c.kind=="relic" and session.model.state.hero.relic!=null and session.model.state.hero.relic.id==c.id:
+			button("inspect_relic_activate","RELIKT AKTIVIEREN · "+relic_cost_caption(),func():close_modal();act("activateRelic",["hero"]),details,not relic_can_activate())
 	)
-func show_log() -> void:
+func show_log(requested_page: int=0) -> void:
+	var event_count: int=session.model.events.size()
+	var pages=maxi(1,ceili(event_count/60.0))
+	log_page=clampi(requested_page,0,pages-1)
 	show_modal("KAMPFPROTOKOLL / REPLAY",func(box):
-		button("export_replay","Replay speichern / herunterladen",func():message="Replay gespeichert." if session.export_replay() else "Speichern fehlgeschlagen.",box)
-		button("verify_replay","Replay deterministisch prüfen",func():var result=Session.replay(session.audit());message="Replay identisch." if result.ok else "Replay abweichend.";close_modal();render(),box)
+		var replay_actions=row(box)
+		button("export_replay","Replay speichern",func():message="Replay gespeichert." if session.export_replay() else "Speichern fehlgeschlagen.",replay_actions)
+		button("verify_replay","Replay prüfen",func():var result=Session.replay(session.audit());message="Replay identisch." if result.ok else "Replay abweichend.";close_modal();render(),replay_actions)
+		var navigation=row(box)
+		button("log_older","Älter",func():show_log(log_page+1),navigation,log_page>=pages-1)
+		text("%d Ereignisse · Seite %d / %d" % [event_count,log_page+1,pages],navigation,13)
+		button("log_newer","Neuer",func():show_log(log_page-1),navigation,log_page==0)
 		var names={"hero_hit":"Direkter Heldenangriff","unit_hit":"Kreaturenangriff","attack":"Angriff","death":"Kreaturentod","summon":"Beschwörung","effect":"Fähigkeit","reaction":"Ordensreaktion","begin":"Zugbeginn","recycle":"Kartenkreislauf","fatigue":"Erschöpfung","result":"Spielabschluss","convergence_win":"Konvergenz vollendet","convergence_declared":"Konvergenz angekündigt","convergence_failed":"Konvergenz unterbrochen"}
-		for i in session.model.events.size():
+		# All events remain available. A long deterministic chain must not create
+		# thousands of permanent Label nodes just to inspect its latest result.
+		for i in range(maxi(0,event_count-(log_page+1)*60),maxi(0,event_count-log_page*60)):
 			var e: Dictionary=session.model.events[i]
 			text("%03d  %s · %s · LP %d:%d · Energie %d:%d" % [i,{"hero":"DU","enemy":"KI","system":"SYSTEM"}.get(e.side,e.side),names.get(e.kind,str(e.kind).replace("_"," ")),e.state.hero.hp,e.state.enemy.hp,e.state.hero.energy,e.state.enemy.energy],box,13)
 	)
@@ -700,16 +999,16 @@ func show_engine_error() -> void:
 func result_dialog() -> void:
 	var s: Dictionary=session.model.state
 	show_modal("SIEG" if s.winner=="hero" else "UNENTSCHIEDEN" if s.winner=="draw" else "NIEDERLAGE",func(box):
-		text("Regulärer Spielabschluss. Alle weiteren Kampfaktionen sind gesperrt.",box,20)
+		text("Die Partie ist beendet. Starte eine neue Partie oder sieh dir das Protokoll an.",box,20)
 		if not services.last_reward.is_empty():text("Lokaler Fortschritt verbucht." if services.last_reward.get("ok",false) else "Fortschritt konnte nicht gespeichert werden; der Kampfabschluss bleibt gültig.",box,14)
-		text("Konvergenz" if session.model.events[-1].kind=="convergence_win" else "Helden-/Kontrollentscheidung · siehe Protokoll",box)
+		text("Konvergenz abgeschlossen." if session.model.events[-1].kind=="convergence_win" else "Den Spielverlauf findest du im Protokoll.",box)
 		button("result_restart","NEUE PARTIE",func():close_modal();start_battle(),box)
 		button("result_menu","ZUM MENÜ",func():close_modal();page="lobby";render(),box)
 		button("result_log","PROTOKOLL",show_log,box)
 	)
 func confirm_menu() -> void:
 	show_modal("Partie verlassen?",func(box):
-		text("Laufende Partien werden nicht fortgesetzt. Gespeicherte Decks bleiben erhalten.",box)
+		text("Nur erfolgreich gesicherte Partien lassen sich fortsetzen. Nicht gespeicherte Spielzüge können verloren gehen. Gespeicherte Decks bleiben erhalten.",box)
 		button("confirm_menu","Zum Hauptmenü",func():close_modal();page="lobby";render(),box)
 	)
 	set_audio_paused(true)
@@ -803,17 +1102,41 @@ func library_panel(parent: Node, desktop: bool) -> void:
 	if not query.ok:
 		text("Filter konnte nicht angewendet werden: "+str(query.error),pane);return
 	var window=library_window(query.cards,desktop)
-	var sc=ScrollContainer.new();library_scroll=sc;sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.size_flags_horizontal=Control.SIZE_EXPAND_FILL;sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED;sc.scroll_deadzone=10;pane.add_child(sc)
+	var sc=ScrollContainer.new();library_scroll=sc;sc.size_flags_vertical=Control.SIZE_EXPAND_FILL;sc.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+	# DISABLED propagates the old fitted grid minimum into the scroll pane.
+	# After a wide-to-narrow rotation that prevents sc from ever shrinking, so
+	# the measured width feeds itself back and moves controls offscreen. The
+	# hidden scroll axis lets the parent constrain sc; fit_cards then sizes the
+	# grid to that actual width. Settled content has no horizontal overflow.
+	sc.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_SHOW_NEVER;sc.scroll_deadzone=10;pane.add_child(sc)
 	sc.set_deferred("scroll_vertical",library_scroll_position)
-	var grid=GridContainer.new();grid.columns=3 if desktop else 2 if layout.size.x<700 else 4;grid.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",10);sc.add_child(grid)
+	# A short search result retains the same portrait-card width as a full page;
+	# shrinking the grid prevents one result stretching across the whole pane.
+	var grid=GridContainer.new();grid.columns=1;grid.size_flags_horizontal=Control.SIZE_SHRINK_BEGIN;grid.add_theme_constant_override("h_separation",8);grid.add_theme_constant_override("v_separation",10);sc.add_child(grid)
+	var card_tiles: Array=[]
+	var card_views: Array=[]
 	for c: Dictionary in window.cards:
-		var tile=VBoxContainer.new();tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;grid.add_child(tile)
-		var v=CardView.new();v.card=c;v.library=true;v.color=S.color(c);v.custom_minimum_size=Vector2(0,176);v.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.add_child(v);actions["card_"+c.id]=v
+		var tile=VBoxContainer.new();tile.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.custom_minimum_size.x=156;grid.add_child(tile);card_tiles.append(tile)
+		var v=CardView.new();v.card=c;v.library=true;v.color=S.color(c);v.custom_minimum_size=Vector2(156,218);v.size_flags_horizontal=Control.SIZE_EXPAND_FILL;tile.add_child(v);card_views.append(v);actions["card_"+c.id]=v
 		_bind_press(v,func():inspect(c) if collection_only or not can_add(c) else add_card(c))
 		if services.economy!=null and collection_mode=="alpha":text("Gesammelt: %d · Alpha frei spielbar" % services.economy.owned_count(c.id),tile,12)
 		var controls=row(tile)
 		button("detail_"+c.id,"Details",func():inspect(c),controls)
 		if not collection_only:button("add_"+c.id,"+  %d/%d" % [deck.count(c.id),1 if c.rarity=="legendary" else 3],func():add_card(c),controls,not can_add(c))
+	var fit_cards=func():
+		if not is_instance_valid(sc) or not is_instance_valid(grid) or sc.size.x<=0:return
+		# Reserve the themed scrollbar even on a short result page. This keeps
+		# widths stable when the next result needs vertical scrolling.
+		var usable=maxf(44,sc.size.x-sc.get_v_scroll_bar().get_combined_minimum_size().x)
+		var fitted=preload("res://scripts/premium/library_geometry.gd").fit(usable,desktop)
+		grid.columns=int(fitted.columns)
+		for index in card_views.size():
+			card_tiles[index].custom_minimum_size.x=float(fitted.card_width)
+			card_views[index].custom_minimum_size=Vector2(float(fitted.card_width),float(fitted.card_height))
+	# Layout is asynchronous: measure the real assigned pane after Containers
+	# settle, then repeat only when that pane actually changes its dimensions.
+	sc.resized.connect(fit_cards)
+	fit_cards.call_deferred()
 	if window.total==0:text("Keine Karten für diese Filter. Suche oder Filter ändern.",pane)
 	elif window.pages>1:
 		var pager=row(pane)
@@ -866,6 +1189,15 @@ func _qa_clip_rect(control: Control) -> Rect2:
 	return bounds
 func _qa_css_rect(rect: Rect2) -> Array:
 	return [rect.position.x/density,rect.position.y/density,rect.size.x/density,rect.size.y/density]
+func _qa_art_report(view: Control) -> Dictionary:
+	var report: Dictionary=view.art_report()
+	for field in ["illustration_rect","frame_rect"]:
+		if report.get(field) is Array and report[field].size()==4:
+			var value: Array=report[field]
+			var local=Rect2(float(value[0]),float(value[1]),float(value[2]),float(value[3]))
+			report[field]=_qa_css_rect(view.get_global_transform()*local)
+	report.coordinate_space="css"
+	return report
 func _hosted_qa(node: Node, output: Array) -> void:
 	if node is BaseButton and node.is_visible_in_tree():
 		output.append({"id":str(node.get_meta("qa_id",node.name)),"text":str(node.text) if node is Button else "","rect":_qa_css_rect(node.get_global_rect()),"disabled":node.disabled})
@@ -874,6 +1206,14 @@ func _hosted_qa(node: Node, output: Array) -> void:
 func publish_qa() -> void:
 	var state={"page":page,"mode":mode,"actions":{},"action_visibility":{},"hand":[],"board":{},"modal":is_instance_valid(modal),"message":message,"profile_wins":session.profile.wins,"deck_size":deck.size(),"selected":selected,"action_mode":action_mode,"render_version":render_version,"modal_version":modal_version,"portrait":portrait,"density":density,"layout_size":[layout.size.x,layout.size.y],"deck_ids":deck.duplicate(),"power":faction,"deck_tab":deck_tab,"search_text":filter_text,"font_msdf":S.font.multichannel_signed_distance_field,"library_total":library_total,"library_page":library_page,"library_pages":library_page_count,"library_visible_ids":library_visible_ids.duplicate()}
 	state.hosted_page=hosted_name
+	state.arena_mode=arena_mode
+	state.arena_projection_active=arena_projection_active
+	state.battle_regions={}
+	if page=="battle" and is_instance_valid(battle_surface):
+		for region in ["header","board","hand","dock"]:
+			if battle_geometry.has(region):
+				var local: Rect2=battle_geometry[region]
+				state.battle_regions[region]=_qa_css_rect(Rect2(battle_surface.global_position+local.position*density,local.size*density))
 	state.hosted_actions=[]
 	if is_instance_valid(hosted_page):_hosted_qa(hosted_page,state.hosted_actions)
 	if services.economy!=null:state.economy_ready=services.economy.ready
@@ -887,12 +1227,15 @@ func publish_qa() -> void:
 	if is_instance_valid(inspector_rules) and is_instance_valid(modal):
 		var r=inspector_rules.get_global_rect()
 		state.inspection={"id":inspector_card_id,"title":inspector_title.text,"rules":inspector_rules.text,"rules_font_size":inspector_rules.get_theme_font_size("font_size"),"rules_rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]}
-		var art=CardView.ART.resolve({"id":inspector_card_id},"full",null,false)
-		state.inspection.art={"preview_only":art.preview_only,"state":art.delivery_state,"pixels":[art.texture.get_width(),art.texture.get_height()] if art.texture!=null else [],"asset":art.asset_path}
+		if is_instance_valid(inspector_face):state.inspection.card_rect=_qa_css_rect(inspector_face.get_global_rect());state.inspection.card_aspect=inspector_face.size.x/inspector_face.size.y
+		# Observe the face that actually painted the inspector, not a newer cache
+		# entry that may not have reached that Control's framebuffer yet.
+		state.inspection.art=inspector_face.art_report() if is_instance_valid(inspector_face) and inspector_face.has_method("art_report") else {"state":"unbound","preview_only":true,"pixels":[]}
 	state.library_art={}
 	for card_id in library_visible_ids:
-		var compact_art=CardView.ART.resolve({"id":card_id},"compact",null,false)
-		state.library_art[card_id]={"state":compact_art.delivery_state,"pixels":[compact_art.texture.get_width(),compact_art.texture.get_height()] if compact_art.texture!=null else [],"pending":compact_art.preview_pending}
+		var library_view=actions.get("card_"+str(card_id))
+		var observed=library_view.art_report() if is_instance_valid(library_view) and library_view.has_method("art_report") else {}
+		state.library_art[card_id]={"state":observed.get("delivery_state","unbound"),"pixels":observed.get("pixels",[]),"pending":observed.get("pending",true)}
 	var art_service=get_tree().root.get_node_or_null("ArtDelivery")
 	if art_service!=null:state.art_delivery=art_service.metrics();state.art_cache=CardView.ART.stats()
 	state.opening_marks=mulligan_indices.duplicate();state.drag={"active":bool(hand_drag.get("active",false)),"targets":hand_drag.get("targets",{}).keys()}
@@ -904,10 +1247,11 @@ func publish_qa() -> void:
 			state.action_visibility[key]={"clip_rect":_qa_css_rect(clip),"visible_rect":_qa_css_rect(r.intersection(clip))}
 	state.battle_art=[]
 	for b in hand_views:
-		var report=b.art_report();report.zone="hand";state.battle_art.append(report)
-		var r=b.get_global_rect();state.hand.append({"id":b.card.id,"name":b.card.name,"rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]})
+		var report=_qa_art_report(b);report.zone="hand";state.battle_art.append(report)
+		var r=b.get_global_rect();var availability=_card_availability(hand_views.find(b));state.hand.append({"id":b.card.id,"name":b.card.name,"selected":selected==hand_views.find(b),"availability_shown":bool(b.get("availability_shown")),"playable":bool(availability.playable),"unavailable_reason":str(availability.reason) if not availability.playable else "","rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]})
+		if selected==hand_views.find(b):state.selected_card_rect=_qa_css_rect(r)
 	for key in board_views:
-		var report=board_views[key].art_report();report.zone="board";report.slot=key;state.battle_art.append(report)
+		var report=_qa_art_report(board_views[key]);report.zone="board";report.slot=key;state.battle_art.append(report)
 		var r=board_views[key].get_global_rect();state.board[key]=[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]
 	if session.model!=null:
 		state.battle=session.model.snapshot();state.command_count=session.commands.size()
@@ -930,6 +1274,7 @@ func publish_qa() -> void:
 func _hand_click(index: int) -> void:
 	if index<0 or index>=session.model.state.hero.hand.size():return
 	var c=session.card(session.model.state.hero.hand[index])
+	if session.model.state.hero.pendingTarget!=null or session.model.state.hero.pendingShift!=null:inspect(c);return
 	if selected==index:inspect(c)
 	else:_audio_event("card.select");selected=index;source_lane=-1;action_mode="";message=c.name+" · leuchtendes Ziel wählen. Nochmals tippen: Details.";render()
 func _toggle_mulligan(index: int) -> void:
@@ -1001,18 +1346,18 @@ func _feedback_events(events: Array, previous: Dictionary) -> void:
 		var target_side: String=session.model._other(side) if e.kind in ["attack","hero_hit","unit_hit","strike_hit"] else side
 		var lane: int=int(e.get("lane",e.get("to",0)))
 		if e.get("pendingDeath") is Dictionary:lane=int(e.pendingDeath.get("lane",0))
-		var target=Vector2(size.x*(.28 if target_side=="hero" else .78),70*density)
+		var target=hero_badges[target_side].get_global_rect().get_center() if hero_badges.has(target_side) else Vector2(size.x*(.28 if target_side=="hero" else .78),70*density)
 		if board_views.has(target_side+str(lane)) and e.kind!="hero_hit" and not e.get("hero_target",false):target=board_views[target_side+str(lane)].get_global_rect().get_center()
 		var origin=Vector2(size.x*.5,size.y-70*density)
 		if board_views.has(side+str(int(e.get("from",lane)))):origin=board_views[side+str(int(e.get("from",lane)))].get_global_rect().get_center()
 		if e.kind in ["attack","hero_hit","unit_hit","strike_hit","summon","death","recall","shift","draw_finished","effect_draw","convergence_declared","convergence_win","event","tactical_move"]:
-			if e.kind in ["draw_finished","effect_draw"]:target=Vector2(size.x*.5,size.y-80*density)
+			if e.kind in ["draw_finished","effect_draw"]:target=battle_hand_host.get_global_rect().get_center() if is_instance_valid(battle_hand_host) else Vector2(size.x*.5,size.y-80*density)
 			feedback.emit(e.kind,origin,target,T.FOE if side=="enemy" else T.PLAYER,"×" if e.kind=="death" else "")
 		for who in ["hero","enemy"]:
 			var hp_loss=maxi(0,int(previous[who].hp)-int(e.state[who].hp))
 			var shield_absorb=maxi(0,int(previous[who].ward)-int(e.state[who].ward))
 			var block_absorb=maxi(0,int(previous[who].block)-int(e.state[who].block))
-			var point=Vector2(size.x*(.28 if who=="hero" else .78),70*density)
+			var point=hero_badges[who].get_global_rect().get_center() if hero_badges.has(who) else Vector2(size.x*(.28 if who=="hero" else .78),70*density)
 			var healed=maxi(0,int(e.state[who].hp)-int(previous[who].hp))
 			if healed>0:feedback.emit("heal",point,point,T.SUCCESS,"+"+str(healed))
 			if hp_loss>0:feedback.emit("damage",point,point,T.DANGER,"−"+str(hp_loss))
@@ -1055,7 +1400,7 @@ func deck_selection() -> void:
 		var frame=PanelContainer.new();frame.mouse_filter=Control.MOUSE_FILTER_PASS;frame.size_flags_horizontal=Control.SIZE_EXPAND_FILL;frame.add_theme_stylebox_override("panel",T.panel(S.POWER_COLORS[power],Color("15212d")));grid.add_child(frame)
 		var box=VBoxContainer.new();frame.add_child(box)
 		var heading=row(box);_portrait(heading,{"houses":4,"stillwatch":5,"morph":1,"ninth":3}[power],48)
-		text(S.SYMBOLS[power]+"  "+cat.source.powers[power],heading,22).add_theme_color_override("font_color",S.POWER_COLORS[power])
+		text(S.SYMBOLS[power]+"  "+cat.source.powers[power],heading,22).add_theme_color_override("font_color",S.POWER_TEXT_COLORS[power])
 		text(S.STYLES[power]+"\n"+S.DIFFICULTY[power],box,14)
 		var choices=row(box)
 		button("preview_"+power,"Eigenes ansehen" if faction==power and not match_use_starter else "Starter ansehen",func():preview_deck(power,not(faction==power and not match_use_starter)),choices)
@@ -1127,6 +1472,9 @@ func _drag_press(at: Vector2, pointer: int) -> void:
 	if not hand_drag.is_empty():
 		if pointer!=int(hand_drag.pointer):get_viewport().set_input_as_handled()
 		return
+	# Arm from the original input event, never from a synthesized button_down
+	# emitted while Godot transfers a held pointer across a resize/rebuilt hand.
+	hand_press_epoch=hand_tap_epoch
 	if page!="battle" or mode!="alpha" or portrait or is_instance_valid(modal) or session.model==null:return
 	var s: Dictionary=session.model.state;var p: Dictionary=s.hero
 	if s.stage!="battle" or not str(s.get("error","")).is_empty() or s.winner!=null or s.active!="hero" or p.phase!="main" or p.pendingTarget!=null or p.pendingShift!=null or not action_mode.is_empty():return
@@ -1143,6 +1491,7 @@ func _drag_move(at: Vector2, pointer: int) -> void:
 		if at.distance_to(hand_drag.start)<12*density:return
 		var p: Dictionary=session.model.state.hero;var index=int(hand_drag.index)
 		if index>=p.hand.size() or p.hand[index]!=hand_drag.id:_cancel_hand_drag();return
+		hand_tap_epoch+=1
 		hand_drag.active=true;hand_drag.digest=Session.digest(session.model.snapshot());selected=index;source_lane=-1
 		var card=session.card(hand_drag.id)
 		for key in board_views:
@@ -1153,17 +1502,19 @@ func _drag_move(at: Vector2, pointer: int) -> void:
 		if card.kind=="relic" and session.model.play_support("hero",index,0).is_empty() and actions.has("relic_slot"):
 			hand_drag.targets.relic_slot=true;actions.relic_slot.disabled=false;actions.relic_slot.add_theme_stylebox_override("normal",T.panel(T.SUCCESS,T.SURFACE_RAISED))
 		for i in hand_views.size():hand_views[i].selected=i==index;hand_views[i].queue_redraw()
-		drag_ghost=CardView.new();drag_ghost.card=card;drag_ghost.color=S.color(card);drag_ghost.selected=true;drag_ghost.mouse_filter=Control.MOUSE_FILTER_IGNORE;drag_ghost.size=Vector2(130,112);drag_ghost.modulate.a=.88;drag_ghost.z_index=110;layout.add_child(drag_ghost)
-	if is_instance_valid(drag_ghost):drag_ghost.position=layout.get_global_transform().affine_inverse()*at-Vector2(65,104)
+		drag_ghost=CardView.new();drag_ghost.card=card;drag_ghost.color=S.color(card);drag_ghost.set("display_role","hand");drag_ghost.set("reduced_motion",bool(session.profile.reduced_motion));drag_ghost.selected=true;drag_ghost.mouse_filter=Control.MOUSE_FILTER_IGNORE;drag_ghost.size=Vector2(100,100*88.0/63.0);drag_ghost.modulate.a=.94;drag_ghost.z_index=110;layout.add_child(drag_ghost)
+	if is_instance_valid(drag_ghost):drag_ghost.position=layout.get_global_transform().affine_inverse()*at-Vector2(50,130)
 	get_viewport().set_input_as_handled()
 func _drag_release(at: Vector2, pointer: int, canceled: bool=false) -> void:
+	if canceled and hand_drag.is_empty():hand_tap_epoch+=1
 	if hand_drag.is_empty() or pointer!=int(hand_drag.pointer):return
 	# DOM touchcancel becomes an ordinary release in Godot's Web adapter. The
 	# capture-phase version is read here synchronously, before any play command.
 	if canceled or _web_drag_cancel_version()!=int(hand_drag.web_cancel):
-		get_viewport().set_input_as_handled();_cancel_hand_drag(true);return
+		# The epoch blocks the card action, while GUI still receives the release
+		# to clear its held-button/mouse-focus state before the next real tap.
+		_cancel_hand_drag(true);return
 	if not hand_drag.active:hand_drag.clear();return # Original tap-to-select still receives the release.
-	get_viewport().set_input_as_handled()
 	var index=int(hand_drag.index);var p: Dictionary=session.model.state.hero;var lane := -1
 	var valid=not canceled and hand_drag.viewport==get_viewport_rect().size and index<p.hand.size() and p.hand[index]==hand_drag.id and Session.digest(session.model.snapshot())==hand_drag.digest
 	if valid:
@@ -1173,17 +1524,21 @@ func _drag_release(at: Vector2, pointer: int, canceled: bool=false) -> void:
 			elif board_views.has(key) and board_views[key].get_global_rect().has_point(at):lane=int(board_views[key].lane);break
 	_cancel_hand_drag()
 	if valid and lane>=0:act("play",["hero",index,lane])
-	else:message="Karte nicht ausgespielt. Wähle ein gültiges Ziel oder tippe die Karte an.";render()
+	else:message="Karte nicht ausgespielt. Wähle ein gültiges Ziel oder tippe die Karte an.";render.call_deferred()
 func _cancel_hand_drag(redraw: bool=false) -> void:
 	if hand_drag.is_empty():return
 	var was_active=bool(hand_drag.active)
+	hand_tap_epoch+=1
 	if was_active:selected=int(hand_drag.previous)
 	hand_drag.clear()
 	if is_instance_valid(drag_ghost):drag_ghost.hide();drag_ghost.queue_free()
 	drag_ghost=null
-	if redraw and was_active:render()
+	if redraw:render.call_deferred()
 func _notification(what: int) -> void:
-	if what==NOTIFICATION_WM_WINDOW_FOCUS_OUT:_cancel_hand_drag(true)
+	if what in [NOTIFICATION_WM_WINDOW_FOCUS_OUT,NOTIFICATION_APPLICATION_PAUSED]:
+		_invalidate_scroll_press();scroll_pointers.clear();scroll_pointer.clear();scroll_press_epoch=-1;scroll_accept_input=false;scroll_accept_epoch+=1
+		_cancel_hand_drag(true)
+		_checkpoint_duel()
 func _input(event: InputEvent) -> void:
 	if OS.has_feature("web") and Time.get_ticks_msec()<rotation_block_until and event is InputEventScreenTouch:
 		get_viewport().set_input_as_handled();return
@@ -1191,13 +1546,26 @@ func _input(event: InputEvent) -> void:
 	# original pointer owns a gesture; synthesized events keep ordinary taps working.
 	if event.device==-1:return
 	if event is InputEventScreenTouch:
+		if event.pressed:_scroll_pointer_down(event.position,event.index)
+		else:_scroll_pointer_release(event.position,event.index,event.canceled)
 		if event.pressed:_drag_press(event.position,event.index)
 		else:_drag_release(event.position,event.index,event.canceled)
-	elif event is InputEventScreenDrag:_drag_move(event.position,event.index)
+	elif event is InputEventScreenDrag:
+		_scroll_pointer_move(event.position,event.index);_drag_move(event.position,event.index)
 	elif event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
+		if event.pressed:_scroll_pointer_down(event.position,-2)
+		else:_scroll_pointer_release(event.position,-2)
 		if event.pressed:_drag_press(event.position,-2)
 		else:_drag_release(event.position,-2)
-	elif event is InputEventMouseMotion and event.button_mask&MOUSE_BUTTON_MASK_LEFT:_drag_move(event.position,-2)
+	elif event is InputEventMouseMotion and event.button_mask&MOUSE_BUTTON_MASK_LEFT:
+		_scroll_pointer_move(event.position,-2);_drag_move(event.position,-2)
+	elif event is InputEventKey or event is InputEventJoypadButton or event is InputEventAction:
+		if event.is_action("ui_accept"):
+			if not event.is_pressed():scroll_accept_input=false
+			elif not (event is InputEventKey and event.echo):
+				if not scroll_accept_input:scroll_accept_epoch+=1
+				scroll_accept_input=true
+		if event is InputEventKey and event.pressed:hand_press_epoch=hand_tap_epoch
 
 func battle_heading(s: Dictionary) -> String:
 	if mode=="alpha" and s.stage!="battle":return {"mulligan":"STARTHAND WÄHLEN","origins":"URSPRUNG WÄHLEN","second":"ZWEITE MÖGLICHKEIT"}.get(s.stage,"VORBEREITUNG")
@@ -1229,4 +1597,5 @@ func _sync_audio_context() -> void:
 	if wanted in ["victory","defeat"]:_audio_event("battle."+wanted)
 
 func _exit_tree() -> void:
+	_checkpoint_duel()
 	set_audio_paused(false)

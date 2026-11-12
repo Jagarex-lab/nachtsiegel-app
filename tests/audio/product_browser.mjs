@@ -6,9 +6,12 @@ import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 const require=createRequire(import.meta.url);
 const {chromium,webkit}=require('playwright');
+const {freshPcmReady,silencePcmReady}=require('./pcm_readiness.cjs');
+const {audioTargetVisible}=require('./product_geometry.cjs');
 const profile=process.env.AUDIO_QA_PROFILE||'chromium';
 const url=process.env.AUDIO_PRODUCT_URL||'http://127.0.0.1:8766';
 const evidence={profile,url,scope:'Actual exported product in browser; no physical device or human listening claim.',checks:[],errors:[],graphicsDiagnostics:[]};
+evidence.focus=process.env.AUDIO_QA_FOCUS||'full';
 evidence.checks.push = function (...items) {console.error(items.join("; "));return Array.prototype.push.apply(this,items)};
 evidence.harnessSha256=createHash('sha256').update(await readFile(new URL(import.meta.url))).digest('hex');
 evidence.playwrightVersion=require('playwright/package.json').version;
@@ -118,6 +121,10 @@ try {
   page=await context.newPage();
   page.on('pageerror',e=>evidence.errors.push(e.message));
   page.on('console',m=>{
+    if(m.type()==='debug'&&m.text().startsWith('ORAFOLD_PCM_BASELINE ')){
+      try{const report=JSON.parse(m.text().slice('ORAFOLD_PCM_BASELINE '.length));(evidence.silenceBaselineProgress||=[]).push(report);console.error('Actual PCM baseline '+JSON.stringify(report));}catch(error){evidence.errors.push('PCM baseline diagnostic failed: '+String(error));}
+      return;
+    }
     if(m.type()!=='error'||m.text().includes('favicon.ico'))return;
     if(m.text().includes('glBlitFramebuffer: Read and write color attachments cannot be the same image.'))evidence.graphicsDiagnostics.push(m.text());
     else evidence.errors.push(m.text());
@@ -130,12 +137,17 @@ try {
     let s=await state();assert(s.actions[key],`Missing actual action ${key}`);
     for(let attempt=0;attempt<12;attempt++){
       const r=s.actions[key].rect;const v=page.viewportSize();
-      const visible=s.action_visibility?.[key]?.visible_rect||r;
-      const fixed=["settings_back","menu","modal_close"].includes(key);
-      if(visible[2]>=Math.min(44,r[2])&&visible[3]>=Math.min(44,r[3])&&r[1]>=(fixed?0:55)&&r[1]+r[3]<=v.height-10)break;
-      await page.mouse.move(v.width/2,v.height/2);await page.mouse.wheel(0,r[1]<55?-240:240);await settle();s=await state();
+      if(audioTargetVisible(s,key,v))break;
+      const clip=s.action_visibility?.[key]?.clip_rect;
+      if(!clip||r[1]>=clip[1]&&r[1]+r[3]<=clip[1]+clip[3])break;
+      // This desktop test uses a real wheel only when the actual ancestor
+      // clips vertically. Hover its scrollbar, not an editable gain slider.
+      await page.mouse.move(Math.min(v.width-1,clip[0]+clip[2]-2),Math.max(1,Math.min(v.height-1,clip[1]+clip[3]/2)));
+      await page.mouse.wheel(0,r[1]<clip[1]?-240:240);await settle();s=await state();
     }
-    const r=s.action_visibility?.[key]?.visible_rect||s.actions[key].rect;assert(r[2]>0&&r[3]>0,`Clipped ${key}`);assert(!s.actions[key].disabled,`Disabled ${key}`);
+    const r=s.actions[key].rect;
+    (evidence.touchTargets||=[]).push({key,rect:r,visibility:s.action_visibility?.[key],disabled:s.actions[key].disabled,stage:s.battle?.stage,phase:s.battle?.hero?.phase});
+    assert(audioTargetVisible(s,key,page.viewportSize()),`Clipped or smaller than44px ${key}: ${JSON.stringify(evidence.touchTargets.at(-1))}`);assert(!s.actions[key].disabled,`Disabled ${key}`);
     await page.mouse.click(r[0]+r[2]/2,r[1]+r[3]/2);await settle();
   }
   async function volume(channel,value){
@@ -153,14 +165,7 @@ try {
   async function capture(action,duration=2500){
     if(action){
       const since=await page.evaluate(()=>window.__audioQAProbe().contexts.map(context=>context.current_time));
-      await page.waitForFunction(since=>{
-        const probe=window.__audioQAProbe();
-        return probe.contexts.every((context,index)=>{
-          if(context.state!=='running'||context.destination_sources===0)return true;
-          const blocks=probe.meterMessages.filter(message=>message.context===index&&message.generation===context.generation&&message.at>Math.max(since[index]+0.1,context.epoch+0.1)).slice(-8);
-          return blocks.length>=6&&blocks.at(-1).at-blocks[0].at>=0.2&&blocks.every(block=>block.maxRms<1e-7);
-        });
-      },since,{timeout:10000});
+      await page.waitForFunction(silencePcmReady,{since,last:0},{timeout:10000});
     }
     const signal=page.evaluate(({ms,waitForClick})=>new Promise((resolve,reject)=>{
       function start(){
@@ -176,7 +181,14 @@ try {
           const positive=meter.filter(message=>message.maxRms>0.000001);
           const peak=Math.max(0,...meter.map(message=>message.peak)),maxRms=Math.max(0,...meter.map(message=>message.maxRms));
           const positiveSpan=positive.length?positive.at(-1).at-positive[0].at:0;
-          if(performance.now()-started>=ms)resolve({peak,maxRms,positiveSpan,samples:n,meterBlocks:meter.length,nonzeroMeterBlocks:positive.length,meterErrors:p.meterErrors,routing:p.routing,contexts:p.contexts,analyserDiagnostic:{peak:p.peak,rms:p.rms},audio:window.orafoldQA?.audio});
+          if(performance.now()-started>=ms){
+            const windowMeta={requested_wall_ms:ms,started_performance_ms:started,finished_performance_ms:performance.now(),elapsed_wall_ms:performance.now()-started,contexts:p.contexts.map((current,index)=>{
+              const observed=meter.filter(block=>block.context===index),baseContext=base.contexts[index];
+              const targetEnd=baseContext?baseContext.current_time+ms/1000:null;
+              return {context:index,base:baseContext,end:current,cutoff:cutoffs[index],target_audio_end:targetEnd,first_fresh_block:observed[0]?.at??null,last_fresh_block:observed.at(-1)?.at??null,fresh_blocks:observed.length,blocks_after_target_end:targetEnd===null?null:observed.filter(block=>block.at>targetEnd).length};
+            })};
+            resolve({peak,maxRms,positiveSpan,samples:n,meterBlocks:meter.length,nonzeroMeterBlocks:positive.length,meterErrors:p.meterErrors,routing:p.routing,contexts:p.contexts,window_meta:windowMeta,analyserDiagnostic:{peak:p.peak,rms:p.rms},audio:window.orafoldQA?.audio});
+          }
           else setTimeout(tick,25);
         }tick();
       }
@@ -188,12 +200,49 @@ try {
         window.addEventListener('mouseup',onClick,true);
       }else start();
     }),{ms:duration,waitForClick:!!action});
-    if(action)await action();
-    const measurement=await signal;
+    // Attach both handlers immediately: a rejected action or the unchanged
+    // trusted-release deadline must reach the outer diagnostic/cleanup path,
+    // even while the other branch is still pending.
+    const [measurement]=await Promise.all([signal,Promise.resolve().then(()=>action?.())]);
     assert.equal(measurement.meterErrors.length,0,JSON.stringify(measurement.meterErrors));
     const graphSilent=measurement.contexts.every(context=>context.state!=='running'||context.destination_sources===0);
     assert(measurement.meterBlocks>0||graphSilent,'Missing fresh PCM measurement from an active destination graph');
     return measurement;
+  }
+  async function freshAudibleAfter(action,timeout,label){
+    const snapshot=()=>page.evaluate(()=>window.__audioQAProbe().contexts.map(context=>({current_time:context.current_time,generation:context.generation,epoch:context.epoch})));
+    const before=await snapshot();
+    if(action)await action();
+    // Retain the actual pre-action cutoff, but require audio after the action
+    // has finished as well. Earlier opening/click tails cannot prove readiness.
+    const cutoffs=await snapshot();
+    for(let i=0;i<cutoffs.length;i++)if(before[i])cutoffs[i].current_time=Math.max(cutoffs[i].current_time,before[i].current_time);
+    const handle=await page.waitForFunction(freshPcmReady,{before,cutoffs},{timeout});
+    let result;try{result=await handle.jsonValue();}finally{await handle.dispose();}
+    (evidence.freshPcmReadiness||=[]).push({label,timeout,before_action:result.before_action,cutoffs:result.cutoffs,quiescent_cutoffs:result.quiescent_cutoffs,observations:result.observations});
+    return result.probe;
+  }
+  async function isolateOpeningMusicThroughMenu(){
+    // Establish this measurement precondition through actual product controls.
+    // Finite opening effects can outlive the model transition on a starved
+    // software renderer; their PCM must not be misidentified as battle music.
+    await page.waitForFunction(()=>{
+      const q=window.orafoldQA;
+      return q?.page==='battle'&&!q.modal&&q.battle?.stage==='battle'&&q.battle.active==='hero'&&q.actions?.end&&!q.actions.end.disabled;
+    },null,{timeout:30000});
+    const before=await state();
+    await tap('menu');const paused=await state();
+    assert(paused.audio_paused&&paused.audio.suspended,'Normal menu pauses the real mixer during opening-music setup');
+    assert.deepEqual(paused.battle,before.battle,'Opening-music setup pauses only presentation, not the battle');
+    assert.equal(paused.command_count,before.command_count,'Opening-music setup issues no battle command');
+    const silence=await capture();assert(silence.maxRms<1e-7,'Opening-music setup must produce actual paused silence');
+    await tap('modal_close');await page.mouse.move(1,1);
+    const after=await state();
+    assert(!after.audio_paused&&!after.audio.suspended,'Normal close resumes the mixer during opening-music setup');
+    assert.deepEqual(after.battle,before.battle,'Opening-music setup preserves every observed battle field');
+    assert.equal(after.command_count,before.command_count,'Opening-music setup leaves the command journal unchanged');
+    assert.deepEqual(after.audio.settings,before.audio.settings,'Opening-music setup changes no gain, mute or intensity setting');
+    (evidence.openingMusicIsolation||=[]).push({scope:'Actual menu pause/resume establishes isolated music; not a battle command or direct mixer mutation.',before_battle:before.battle,after_battle:after.battle,commands_before:before.command_count,commands_after:after.command_count,settings_before:before.audio.settings,settings_after:after.audio.settings,paused_pcm:silence,rng_scope:'This browser channel exposes full battle snapshots and command counts, not a separate RNG-state observer.'});
   }
   async function settings(){if((await state()).page!=='settings')await tap('settings');await tap('settings_audio')}
   await load();
@@ -201,8 +250,8 @@ try {
   assert.equal(evidence.initial.unlocked,false);assert.equal(evidence.initial.pool_size,16);assert.equal(evidence.initial.music.players,2);
   assert.equal(evidence.initial.cached_streams,153);
   evidence.checks.push('Packaged52events153effectassets and single bounded owner; locked before gesture');
-  await tap('settings');await page.waitForFunction(()=>window.orafoldQA.audio.unlocked);
-  evidence.firstMixedSignal=await (await page.waitForFunction(()=>{const probe=window.__audioQAProbe();return probe.rms>0.000001?probe:false},null,{timeout:15000})).jsonValue();
+  evidence.firstMixedSignal=await freshAudibleAfter(()=>tap('settings'),15000,'initial menu unlock');
+  await page.waitForFunction(()=>window.orafoldQA.audio.unlocked);
   await page.waitForFunction(()=>window.orafoldQA.audio.music.playing>0&&!window.orafoldQA.audio.music.transitioning,null,{timeout:15000});
   evidence.afterGesture=(await state()).audio;
   evidence.audibleMenu=await capture();assert(evidence.audibleMenu.maxRms>0.000001);
@@ -212,16 +261,16 @@ try {
   assert(evidence.audibleMenu.positiveSpan>=1,"Menu music did not span one second of fresh positive PCM blocks");
   if(process.env.AUDIO_QA_FOCUS==='resume'){
     await settings();await volume('sfx',0);await volume('ui',0);await volume('ambience',0);
-    await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
-    let opening=await state();if(opening.battle.stage==='origins')await tap('origin_0');
-    opening=await state();if(opening.battle.stage==='second')await tap('opening_done');
+    await freshAudibleAfter(async()=>{
+      await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
+      let opening=await state();if(opening.battle.stage==='origins')await tap('origin_0');
+      opening=await state();if(opening.battle.stage==='second')await tap('opening_done');
+    },15000,'focused duel opening');
     evidence.duelBeforePause=(await state()).audio;
-    await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
     evidence.audibleBeforePause=await capture();assert(evidence.audibleBeforePause.maxRms>0.000001);
     for(let repeat=0;repeat<2;repeat++){
       await tap('menu');const paused=await capture();evidence[`paused${repeat}`]=paused;assert(paused.maxRms<1e-7);assert.equal((await state()).audio.suspended,true);
-      await tap('modal_close');evidence.resumeState=(await state()).audio;
-      await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:15000});
+      await freshAudibleAfter(async()=>{await tap('modal_close');evidence.resumeState=(await state()).audio;},15000,'focused duel resume '+repeat);
       evidence[`audibleResume${repeat}`]=await capture();assert(evidence[`audibleResume${repeat}`].maxRms>0.000001);assert(evidence[`audibleResume${repeat}`].positiveSpan>=1,"Resumed music did not persist across fresh PCM blocks for one second");
     }
     evidence.checks.push('Two actual audible duel pause/resume cycles restore stream transport');
@@ -229,7 +278,7 @@ try {
   }else{
   await settings();
   await volume('master',0);evidence.masterZero=await capture();assert(evidence.masterZero.maxRms<1e-7,'Master zero did not silence actual output');
-  await volume('master',1);await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
+  await freshAudibleAfter(()=>volume('master',1),10000,'master restored');
   await volume('music',0);evidence.musicZero=await capture();assert(evidence.musicZero.maxRms<1e-7,'Music zero did not silence isolated menu music');
   await volume('sfx',0);await volume('ui',1);
   evidence.uiWithEffectsZero=await capture(()=>tap('settings_back'));
@@ -258,15 +307,16 @@ try {
   await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.orafoldQA?.audio?.events===52,null,{timeout:90000});
   evidence.afterReload=(await state()).audio.settings;assert.deepEqual(evidence.afterReload,evidence.beforeReload);
   evidence.checks.push('Actual menu pause/resume, master checkbox and immediate reload preserve all gains/mute/reduced intensity');
-  await settings();await tap('audio_mute');
-  await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
-  await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
-  s=await state();if(s.battle.stage==='origins')await tap('origin_0');
-  s=await state();if(s.battle.stage==='second')await tap('opening_done');
-  await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
+  await settings();await freshAudibleAfter(()=>tap('audio_mute'),10000,'mute disabled after reload');
+  await freshAudibleAfter(async()=>{
+    await tap('settings_back');await tap('start');await tap('deck_play');await tap('mulligan_done');
+    s=await state();if(s.battle.stage==='origins')await tap('origin_0');
+    s=await state();if(s.battle.stage==='second')await tap('opening_done');
+    await isolateOpeningMusicThroughMenu();
+  },10000,'duel opening after reload');
   evidence.audibleBeforePause=await capture();
   await tap('menu');evidence.audibleMusicPaused=await capture();assert(evidence.audibleMusicPaused.maxRms<1e-7);
-  await tap('modal_close');evidence.resumeState=(await state()).audio;await page.waitForFunction(()=>window.__audioQAProbe().rms>0.000001,null,{timeout:10000});
+  await freshAudibleAfter(async()=>{await tap('modal_close');evidence.resumeState=(await state()).audio;},10000,'audible duel resumed');
   evidence.audibleAfterResume=await capture();assert(evidence.audibleAfterResume.positiveSpan>=1,"Resumed music did not persist across fresh PCM blocks for one second");
   await tap('menu');await tap('confirm_menu');await settings();
   evidence.checks.push('Actual audible battle music becomes zero during menu pause and resumes audibly');

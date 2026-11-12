@@ -13,12 +13,14 @@ const PREFIX = `orafold-${SHA.slice(0, 12)}`;
 
 function fixture(mode) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'orafold-staging-test-'));
-  for (const dir of ['tools/production', 'data/production', 'bin', 'work/alpha/web', 'work/art-delivery-cache']) fs.mkdirSync(path.join(root, dir), {recursive: true});
+  for (const dir of ['tools/production', 'tools/premium', 'web/pwa', 'data/production', 'bin', 'work/alpha/web', 'work/art-delivery-cache']) fs.mkdirSync(path.join(root, dir), {recursive: true});
   fs.copyFileSync(path.join(REPO, 'tools/build_alpha.sh'), path.join(root, 'tools/build_alpha.sh'));
   fs.copyFileSync(path.join(REPO, 'tools/test_production_art_package.sh'), path.join(root, 'tools/test_production_art_package.sh'));
   fs.copyFileSync(path.join(REPO, 'tools/production/art_export_inventory.gd'), path.join(root, 'tools/production/art_export_inventory.gd'));
   fs.copyFileSync(path.join(REPO, 'tools/alpha02_pack_inventory.gd'), path.join(root, 'tools/alpha02_pack_inventory.gd'));
   fs.copyFileSync(path.join(REPO, 'tools/production/stage_art_delivery.py'), path.join(root, 'tools/production/stage_art_delivery.py'));
+  fs.copyFileSync(path.join(REPO, 'tools/premium/stage_pwa.py'), path.join(root, 'tools/premium/stage_pwa.py'));
+  fs.copyFileSync(path.join(REPO, 'web/pwa/service-worker.js'), path.join(root, 'web/pwa/service-worker.js'));
   const artBody = Buffer.from('explicitly simulated encoded art for filesystem staging unit test');
   const artSha = require('node:crypto').createHash('sha256').update(artBody).digest('hex');
   fs.writeFileSync(path.join(root, 'work/art-delivery-cache', artSha + '.webp'), artBody);
@@ -38,7 +40,8 @@ const fs=require('node:fs'),path=require('node:path');
 const args=process.argv.slice(2);
 if(args.includes('--export-debug')) {
  const target=args.at(-1), stem=target.slice(0,-5);
- fs.writeFileSync(target,'simulated index referring to '+path.basename(stem));
+ const marker=process.env.STAGING_TEST_MODE==='pwa-marker-failure'?'':'<!-- ORAFOLD_PWA_HEAD: generated for a complete Alpha export only. -->';
+ fs.writeFileSync(target,'<html><head>'+marker+'</head><body>simulated index referring to '+path.basename(stem)+'</body></html>');
  for(const extension of ['pck','wasm','js']) {
   if(process.env.STAGING_TEST_MODE==='missing-file' && extension==='wasm')continue;
   fs.writeFileSync(stem+'.'+extension,'explicitly simulated '+extension);
@@ -67,7 +70,7 @@ process.exit(9);
   return {root, result, original};
 }
 
-for (const mode of ['export-failure', 'pack-failure', 'art-pack-failure', 'missing-file', 'art-preparation-failure', 'rename-failure']) test(`failed staging preserves complete previous directory: ${mode}`, () => {
+for (const mode of ['export-failure', 'pack-failure', 'art-pack-failure', 'missing-file', 'art-preparation-failure', 'pwa-marker-failure', 'rename-failure']) test(`failed staging preserves complete previous directory: ${mode}`, () => {
   const {root, result, original} = fixture(mode);
   try {
     assert.notEqual(result.status, 0, result.stdout + result.stderr);
@@ -83,7 +86,7 @@ test('successful staging replaces history with only the verified candidate', () 
   try {
     assert.equal(result.status, 0, result.stdout + result.stderr);
     const web = path.join(root, 'work/alpha/web');
-    assert.deepEqual(fs.readdirSync(web).sort(), ['art', 'art-delivery.json', 'build-info.json', 'index.html', ...['js', 'pck', 'wasm'].map(ext => `${PREFIX}.${ext}`)].sort());
+    assert.deepEqual(fs.readdirSync(web).sort(), ['art', 'art-delivery.json', 'build-info.json', 'index.html', 'manifest.webmanifest', 'app-icon-192.png', 'app-icon-512.png', 'apple-touch-icon.png', `orafold-worker-${SHA.slice(0,12)}.js`, ...['js', 'pck', 'wasm'].map(ext => `${PREFIX}.${ext}`)].sort());
     const delivery = JSON.parse(fs.readFileSync(path.join(web, 'art-delivery.json'), 'utf8'));
     const art = delivery.entries['unit-fixture'];
     assert.equal(fs.statSync(path.join(web, art.relative_url)).size, art.bytes);
@@ -91,6 +94,14 @@ test('successful staging replaces history with only the verified candidate', () 
     const info = JSON.parse(fs.readFileSync(path.join(web, 'build-info.json'), 'utf8'));
     assert.equal(info.commit, SHA);
     assert.equal(info.channel, 'isolated-unit-test');
+    assert.equal(info.pwa.offline_game, false);
+    const manifest=JSON.parse(fs.readFileSync(path.join(web,'manifest.webmanifest'),'utf8'));
+    assert.equal(manifest.display,'standalone');
+    assert.equal(manifest.start_url,'./');
+    assert.equal(manifest.scope,'./');
+    assert.match(fs.readFileSync(path.join(web,'index.html'),'utf8'),/\.\/manifest\.webmanifest/);
+    assert(!fs.readFileSync(path.join(web,'index.html'),'utf8').includes('ORAFOLD_PWA_HEAD'));
+    assert.match(fs.readFileSync(path.join(web,info.pwa.worker),'utf8'),new RegExp(SHA));
     assert.deepEqual(fs.readdirSync(path.join(root, 'work/alpha')).filter(name => name.startsWith('.web-')), []);
   } finally { fs.rmSync(root, {recursive: true, force: true}); }
 });

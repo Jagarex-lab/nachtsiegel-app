@@ -62,14 +62,61 @@ func _run() -> void:
 	check(ui.main.size.y > ui.body.size.y, "Long dialogue history scrolls vertically")
 	ui.body.scroll_vertical = 100000; await settle()
 	check(ui.body.scroll_vertical > 0, "History can reach content below fold")
+	ui.queue_free(); await settle()
+	await _embedded_retina_layout()
 	var writer := FileAccess.open("res://work/campaign_orafold/layout-results.json", FileAccess.WRITE)
 	writer.store_string(JSON.stringify(metrics, "  ")); writer.close()
-	ui.queue_free(); await settle()
 	for suffix in ["", ".bak", ".tmp"]:
 		if FileAccess.file_exists(path + suffix): DirAccess.remove_absolute(path + suffix)
-	print("ORAFOLD LAYOUT: %d assertions, %d failures; 80 viewport/locale/scale/view combinations plus decisions and scrolling" % [assertions, failures])
+	print("ORAFOLD LAYOUT: %d assertions, %d failures; 80 standalone combinations plus embedded DPR2 portrait/landscape, decisions and scrolling" % [assertions, failures])
 	# Exercise the product shutdown; asynchronous audio is released before exit.
 	root.get_node("GameAudio").request_quit(1 if failures else 0)
+func _embedded_retina_layout() -> void:
+	# A real390x844 host Control inside a780x1688 backing viewport reproduces
+	# Shell's Retina embedding. Changing only a compact flag would miss the bug.
+	var host := Control.new()
+	host.scale = Vector2(2,2)
+	host.size = Vector2(390,844)
+	root.size = Vector2i(780,1688)
+	root.add_child(host)
+	var embedded = Overview.instantiate()
+	embedded.configure_host()
+	host.add_child(embedded)
+	await settle()
+	var save_path := "user://campaign_embedded_layout_test.json"
+	for suffix in ["", ".bak", ".tmp"]:
+		if FileAccess.file_exists(save_path + suffix): DirAccess.remove_absolute(save_path + suffix)
+	embedded.manager = Manager.new("res://data/campaign_orafold/prototype.json", save_path)
+	check(embedded.manager.load_campaign(), "embedded fixture loads actual campaign")
+	embedded.manager.changed.connect(embedded._manager_changed)
+	check(embedded.manager.set_setting("text_scale",1.0), "embedded fixture uses explicit normal text scale")
+	for dimensions in [Vector2i(390,844),Vector2i(844,390)]:
+		root.size = dimensions * 2
+		host.size = dimensions
+		await settle()
+		embedded.open_overview();await settle()
+		check(embedded.size.distance_to(Vector2(dimensions))<1, "embedded uses actual logical host dimensions "+str(dimensions))
+		check(embedded.get_viewport_rect().size.distance_to(Vector2(dimensions*2))<1, "test really has a doubled backing viewport")
+		check(embedded.compact==(dimensions.x<720), "responsive mode follows logical host width")
+		var navigation: HFlowContainer
+		for child in embedded.header.get_children():
+			if child is HFlowContainer:navigation=child;break
+		check(navigation!=null and navigation.get_child_count()==5, "all five real navigation actions remain available")
+		var rows: Dictionary={}
+		for button in navigation.get_children():
+			var logical_rect: Rect2=embedded.get_global_transform().affine_inverse()*button.get_global_rect()
+			check(button.size.x>=44 and button.size.y>=44, "navigation retains44logical-pixel touch targets")
+			check(Rect2(Vector2.ZERO,Vector2(dimensions)).grow(.1).encloses(logical_rect), "navigation is inside the logical surface, not merely inside backing pixels")
+			check(button.custom_minimum_size.x<=dimensions.x/2.0+.1, "navigation minimum width never uses doubled device pixels")
+			rows[roundi(button.position.y*10)]=true
+		check(rows.size()==(3 if dimensions.x<720 else 1), "portrait uses three compact rows; landscape uses one navigation row")
+		check(embedded.header.size.y<250 and embedded.body.size.y>=90, "header leaves a usable narrative scrolling area")
+		var title: Label=embedded.main.get_child(1)
+		check(title.get_theme_font_size("font_size")==29, "portrait and short landscape use the existing29px logical title style")
+		metrics.append({"embedded":true,"viewport":[dimensions.x*2,dimensions.y*2],"logical_size":[dimensions.x,dimensions.y],"navigation_rows":rows.size(),"header_height":embedded.header.size.y,"scroll_height":embedded.body.size.y,"title_font_size":title.get_theme_font_size("font_size")})
+	host.queue_free();await settle()
+	for suffix in ["", ".bak", ".tmp"]:
+		if FileAccess.file_exists(save_path + suffix): DirAccess.remove_absolute(save_path + suffix)
 func _geometry(label: String, viewport_size: Vector2i) -> void:
 	check(ui.size.distance_to(Vector2(viewport_size)) < 2, label + " uses real viewport")
 	check(ui.body.size.x > 0 and ui.body.size.y >= 90, label + " usable scroll region")
