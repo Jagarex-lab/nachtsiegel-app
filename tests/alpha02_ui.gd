@@ -30,7 +30,11 @@ func _initialize():call_deferred("run")
 func run():
  app=Shell.new();root.add_child(app);await settle()
  check(Style.font.multichannel_signed_distance_field,"Alpha-only scalable MSDF font")
- for color in Style.POWER_COLORS.values():check(Tokens.contrast(color,Tokens.SURFACE)>=4.5,"power labels meet 4.5 contrast")
+ for color in Style.POWER_TEXT_COLORS.values():
+  for surface in [Tokens.SURFACE,Tokens.SURFACE_RAISED,Color("15212d")]:check(Tokens.contrast(color,surface)>=4.5,"actual power label colours meet 4.5 contrast on each real surface")
+ for power in Style.POWER_COLORS:
+  var expected={"houses":"B9824A","stillwatch":"58A9CF","morph":"5B9E68","ninth":"9867BE","neutral":"8B98A5"}
+  check(Style.POWER_COLORS[power]==Color(expected[power]),"material pigments retain exact approved identity")
  for raw in Catalog.new().all_cards():
   var view=Card.new();view.card=raw
   for width in [80,100,140]:
@@ -76,7 +80,12 @@ func run():
   app.page="lobby";app.render();await settle();await tap(app.actions.builder)
   root.size=dimensions;await settle()
   check(visible_bounds(app.actions.save_deck),"portrait save always within viewport")
-  if not app.actions.has("builder_power_houses"):await tap(app.actions.builder_power)
+  if not app.actions.has("builder_power_houses"):
+   check(visible_bounds(app.actions.builder_power),"power picker stays inside portrait after repeated rotation")
+   await tap(app.actions.builder_power)
+   check(app.actions.has("builder_power_houses"),"actual power picker tap opens reachable choices")
+   if not app.actions.has("builder_power_houses"):
+    app.queue_free();await settle();root.get_node("GameAudio").request_quit(1);return
   await tap(app.actions.builder_power_houses)
   app.deck=Catalog.new().deck("houses");app.render();await settle()
   await tap(app.actions.deck_tab)
@@ -129,9 +138,9 @@ func run():
   root.size=dimensions;await settle()
   for view in app.board_views.values():
    if view.unit.is_empty():continue
-   var paragraph=view.title_paragraph(view.size.x-54,11)
-   check(paragraph.get_size().y+4<=view.size.y-19,"compact name does not overlap stats strip")
-   check(paragraph.get_line_count()<=2,"compact creature full name fits two lines")
+   var geometry=view.layout_report()
+   check(geometry.role=="board" and geometry.outer.encloses(geometry.stats),"compact board keeps readable values inside its frame")
+   check(geometry.title.size.y==0 or geometry.title.end.y<=geometry.stats.position.y,"optional compact name never overlaps stats; full name is available by tapping")
   await shot("battle-compact" if dimensions.y==320 else "battle-browser-height")
  app.page="builder";app.open_cards(false);root.size=Vector2i(1280,720);await settle();await shot("deckbuilder-desktop")
  app.queue_free();await settle()

@@ -56,7 +56,7 @@ func run() -> void:
 		if app.session.model.state.stage=="second":await tap(app.actions.opening_done)
 		check(app.session.model.state.stage=="battle","opening completes")
 		if app.session.model.state.hero.phase=="draw":await tap(app.actions.end)
-		for key in ["end","actions","inspect","menu","log"]:
+		for key in ["end","actions","inspect","menu"]:
 			var b=app.actions[key];var r=b.get_global_rect()
 			check(r.size.y>=44 and r.size.x>=44,"touch target "+key+str(dimensions))
 			check(Rect2(Vector2.ZERO,Vector2(dimensions)).encloses(r),"action in viewport "+key+str(dimensions))
@@ -74,6 +74,7 @@ func run() -> void:
 				if c.kind=="relic":await tap(app.actions.relic_slot)
 				else:await tap(app.board_views[app.card_target_side(c)+str(targets[0])])
 				check(app.session.model.snapshot()!=before,"touch card play changes authoritative state");break
+		await tap(app.actions.actions);check(app.actions.has("log") and app.actions.has("restart"),"secondary log and restart remain reachable through More")
 		await tap(app.actions.log);check(is_instance_valid(app.modal),"combat log opens")
 		await snapshot("log-%dx%d" % [dimensions.x,dimensions.y]);await tap(app.actions.modal_close)
 		app.session.model.state.winner="hero";app.result_dialog();await settle()

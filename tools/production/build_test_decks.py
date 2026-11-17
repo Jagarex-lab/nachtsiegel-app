@@ -16,7 +16,7 @@ CONFIGS = [
     dict(id="prod-midrange", name="Erinnerte Stärke", strategy="midrange", power="houses", kinds=(22,6,2), effects=["modify_attack","heal_target","return_card","summon_card"], text="Eine gestaffelte Kostenkurve verbindet widerstandsfähige Wesen mit Wiederkehr und Rekonstruktion."),
     dict(id="prod-control", name="Die ruhende Linie", strategy="control", power="stillwatch", kinds=(17,10,3), effects=["stun_unit","weaken_unit","deal_damage","delay_damage"], text="Stasis und Schwächung begrenzen gegnerische Angriffe; gezielter Schaden öffnet Gegenpfade."),
     dict(id="prod-shield", name="Kristallene Schwelle", strategy="shield", power="stillwatch", kinds=(21,6,3), effects=["grant_shield","ward","relic_ward","heal_target"], text="Schild schützt Wesen und Held über mehrere Züge. Pfadkontrolle bleibt für den Sieg erforderlich."),
-    dict(id="prod-block", name="Ein gehaltener Augenblick", strategy="block", power="stillwatch", kinds=(21,7,2), effects=["grant_block","guard","weaken_unit","stun_unit"], text="Block absorbiert Schaden nach den Kampfregeln; schwächere gegnerische Angriffe erleichtern die Stabilisierung."),
+    dict(id="prod-block", name="Ein gehaltener Augenblick", strategy="block", power="stillwatch", kinds=(21,7,2), effects=["grant_block","guard","weaken_unit","stun_unit"], text="Frühe Wesen sichern Pfade. Block und Schwächung stabilisieren die Verteidigung; Resonanz und Angriffswachstum eröffnen den Gegenangriff."),
     dict(id="prod-recurrence", name="Die offene Rückkehr", strategy="recurrence", power="houses", kinds=(21,6,3), effects=["return_card","recall","harvest","draw_cards"], text="Karten aus dem Ablagestapel kehren zurück. Neue Wesen müssen weiterhin Pfad- und Beschwörungsregeln erfüllen."),
     dict(id="prod-resonance", name="Nachhall der Eingriffe", strategy="resonance", power="ninth", kinds=(19,8,3), effects=["gain_resonance","weave","harvest","relic_res"], text="Resonanzaufbau versorgt besondere Fähigkeiten und Entfesselung; Energie bleibt die Ausspielressource."),
     dict(id="prod-movement", name="Wandernde Schneisen", strategy="movement", power="morph", kinds=(22,6,2), effects=["move_unit","shift","displace","surge"], text="Positionswechsel schaffen freie Gegenpfade oder unterbrechen die gegnerische Pfadkontrolle."),
@@ -29,10 +29,33 @@ CONFIGS = [
 ]
 
 
-# Selected from 240 actual same-seed/same-first deck-composition games.
+# The five earlier compositions were selected from 240 actual paired games.
+# Block adds one fixed eight-copy package:112 paired cases/224 real games plus
+# eight exact fresh-constructor controls. See docs/premium/BALANCE.md.
 # Evidence and unmodified before lists: docs/production/DECK_COMPOSITION_EXPERIMENT.json.
 # Existing cards only; strongest time reference and visible starters stay intact.
-MEASURED_COMPOSITIONS = {'prod-relic': {'of-houses-001': 3,
+MEASURED_COMPOSITIONS = {'prod-block': {'oa-neutral-c01': 2,
+'of-neutral-073': 1,
+'oa-neutral-c09': 2,
+'oa-stillwatch-c02': 1,
+'of-neutral-025': 2,
+'of-neutral-049': 2,
+'of-stillwatch-002': 1,
+'of-stillwatch-019': 2,
+'of-stillwatch-049': 2,
+'of-stillwatch-080': 2,
+'of-stillwatch-020': 1,
+'of-stillwatch-026': 1,
+'of-stillwatch-086': 1,
+'of-stillwatch-015': 1,
+'of-stillwatch-021': 2,
+'of-neutral-087': 1,
+'of-neutral-016': 1,
+'of-stillwatch-097': 2,
+'oa-stillwatch-c07': 1,
+'of-stillwatch-017': 1,
+'of-stillwatch-023': 1},
+ 'prod-relic': {'of-houses-001': 3,
                 'oa-neutral-c01': 2,
                 'of-neutral-049': 3,
                 'of-houses-062': 3,

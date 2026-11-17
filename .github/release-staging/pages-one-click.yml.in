@@ -1,0 +1,103 @@
+# INACTIVE PROPOSAL. GitHub does not load .yml.in files outside workflows/.
+# Replace pages-release.yml only in a separately, explicitly approved PR.
+name: Reviewed one-click production Pages release
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: nachtsiegel-pages-release
+  cancel-in-progress: false
+jobs:
+  preflight:
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+      pages: read
+    outputs:
+      commit: ${{ steps.candidate.outputs.commit }}
+      candidate: ${{ steps.candidate.outputs.candidate }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Discover exact develop commit, complete QA and immutable artifact
+        id: candidate
+        run: python3 tools/release/candidate.py select
+        env:
+          GH_TOKEN: ${{ github.token }}
+  publish:
+    needs: preflight
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && needs.preflight.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    env:
+      RELEASE_CANDIDATE: ${{ needs.preflight.outputs.candidate }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.commit }}
+          persist-credentials: false
+      - name: Recheck exact commit and complete QA after active environment gates
+        run: python3 tools/release/candidate.py recheck
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Verify ZIP digest and extract the tested Web export, without rebuilding
+        run: python3 tools/release/candidate.py download
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+        with:
+          path: work/release-web
+      - name: Final stale-commit and QA-attempt check immediately before publication
+        run: python3 tools/release/candidate.py recheck
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Publish only the explicitly dispatched and rechecked candidate
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+  verify-public:
+    needs: [preflight, publish]
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && needs.publish.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      RELEASE_CANDIDATE: ${{ needs.preflight.outputs.candidate }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - name: Install the existing pinned browser test runtime
+        run: |
+          npm install --prefix work/release-browser --no-save --package-lock=false playwright@1.65.0
+          work/release-browser/node_modules/.bin/playwright install --with-deps chromium webkit
+      - name: Verify actual live commit, provenance, resources and main menu
+        run: node tools/release/public_probe.cjs
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/release-browser/node_modules
+      - name: Preserve public verification and exact published provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: orafold-live-release-${{ needs.preflight.outputs.commit }}
+          path: work/release-public/
+          if-no-files-found: error

@@ -8,6 +8,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const http=require('node:http');
 const crypto=require('node:crypto');
+const {nativeCapture}=require('../premium/native_capture_contract.cjs');
 const ROOT=path.resolve(__dirname,'../..');
 const OUTPUT=path.resolve(ROOT,process.env.MIGRATION_OUTPUT||'work/production-browser-migration');
 const OLD=path.resolve(ROOT,process.env.MIGRATION_OLD_BUILD||'work/production/before-web');
@@ -121,7 +122,7 @@ async function run(engineName,baseURL,expectedCommit){
  const browser=await (engineName==='webkit'?webkit:chromium).launch({headless:true,...(engineName==='chromium'?{channel:'chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
  let context,page,cdp,oldTab,lastStep='launch',assertions=0;
  const oldTabErrors=[];
- const errors=[],steps=[],shots=[];let quotaProof=null,idbfsAfterStale=null;
+ const errors=[],steps=[],shots=[],captureMetrics=[];let quotaProof=null,idbfsAfterStale=null;
  const check=(value,label)=>{assertions++;assert(value,label);};
  const equal=(actual,expected,label)=>{assertions++;assert.deepEqual(actual,expected,label);};
  const inside=(rect,viewport)=>rect&&rect[0]>=-.1&&rect[1]>=-.1&&rect[0]+rect[2]<=viewport.width+1&&rect[1]+rect[3]<=viewport.height+1;
@@ -134,10 +135,8 @@ async function run(engineName,baseURL,expectedCommit){
   const q=()=>page.evaluate(()=>window.orafoldQA);
   const wait=(predicate,arg)=>page.waitForFunction(predicate,arg,{timeout:TIMEOUT});
   async function shot(tag){
-   const filename=engineName+'-'+tag+'.png',viewport=page.viewportSize(),factor=engineName==='webkit'?3:1;let buffer;
-   if(cdp){
-    let timer;const result=await Promise.race([cdp.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:factor}}),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Native migration screenshot timeout')),45000);})]).finally(()=>clearTimeout(timer));buffer=Buffer.from(result.data,'base64');
-   }else buffer=await page.screenshot({timeout:45000});
+   const filename=engineName+'-'+tag+'.png',viewport=page.viewportSize(),factor=engineName==='webkit'?3:1;
+   const buffer=await nativeCapture(page,{factor,timeout:45000,receipts:captureMetrics,tag});
    equal(buffer.readUInt32BE(16),viewport.width*factor,'native screenshot width '+tag);equal(buffer.readUInt32BE(20),viewport.height*factor,'native screenshot height '+tag);
    check(buffer.length>20000,'actual rendered screenshot '+tag);fs.writeFileSync(path.join(OUTPUT,filename),buffer);shots.push({file:filename,bytes:buffer.length,sha256:sha256(buffer)});
   }
@@ -243,10 +242,10 @@ async function run(engineName,baseURL,expectedCommit){
   equal(state.battle.hero.hand.length,5,'five opening cards');equal(state.battle.hero.hp,30,'hero starts30HP');equal(state.battle.enemy.hp,30,'enemy starts30HP');equal(state.battle.level,5,'real match uses migrated difficulty');equal(state.battle.production.profile,'production-550-v1','real match uses production engine');
   const initial=state.battle;await page.setViewportSize({width:844,height:390});await wait(()=>window.orafoldQA.actions.mulligan_done);state=await q();equal(state.battle,initial,'rotation preserves complete new opening state');equal(Object.keys(state.board).length,10,'migrated match mulligan uses actual five paired paths');await shot('new-migrated-battlefield');
   equal(errors,[],'zero browser console or page errors');
-  return {engine:engineName,browser_version:browser.version(),playwright:require('playwright/package.json').version,assertions,errors,old_runtime_commit:oldInfo.commit,old_runtime_note:'Retained 2b8ea627 build; git diff of scripts/data/assets/project/export_presets against live fde508e is empty. The actual artifact remains correctly labelled 2b8ea627.',new_commit:newInfo.commit,origin:new URL(baseURL).origin,application_path:new URL(baseURL).pathname,old_profile_database:persisted.profile.database,old_profile_key:persisted.profile.key,old_profile_sha256:oldRawSha,old_profile_wins:oldProfile.wins,edited_deck:edited,production_edited_deck:productionEdited,production_added_id:newCard.id,stale_old_tab_tested:true,stale_tab_booted_before_v2:true,idbfs_after_stale_write:idbfsAfterStale,quota_failure_test:quotaProof,removed_id:removed,added_id:replacement.id,checks:['actual old UI deck edit/save','readonly IndexedDB proves real v1 bytes','same origin/context navigation without state injection','stable IDs/order, wins, nondefaultdifficulty5 and reduced motion preserved','isolated v2 disk migration and exact v1 backup; old source untouched','actual stale old-tab whole-filesystem v1 write cannot erase independent new-card v2 deck or settings','real quota failure preserves primary, backup and in-memory deck slots','new page reload and collection550','actual migrated custom-deck match and rotation-preserved battlefield mulligan'],real_device_test:false,shots,steps};
+  return {engine:engineName,browser_version:browser.version(),playwright:require('playwright/package.json').version,assertions,errors,old_runtime_commit:oldInfo.commit,old_runtime_note:'Retained 2b8ea627 build; git diff of scripts/data/assets/project/export_presets against live fde508e is empty. The actual artifact remains correctly labelled 2b8ea627.',new_commit:newInfo.commit,origin:new URL(baseURL).origin,application_path:new URL(baseURL).pathname,old_profile_database:persisted.profile.database,old_profile_key:persisted.profile.key,old_profile_sha256:oldRawSha,old_profile_wins:oldProfile.wins,edited_deck:edited,production_edited_deck:productionEdited,production_added_id:newCard.id,stale_old_tab_tested:true,stale_tab_booted_before_v2:true,idbfs_after_stale_write:idbfsAfterStale,quota_failure_test:quotaProof,removed_id:removed,added_id:replacement.id,checks:['actual old UI deck edit/save','readonly IndexedDB proves real v1 bytes','same origin/context navigation without state injection','stable IDs/order, wins, nondefaultdifficulty5 and reduced motion preserved','isolated v2 disk migration and exact v1 backup; old source untouched','actual stale old-tab whole-filesystem v1 write cannot erase independent new-card v2 deck or settings','real quota failure preserves primary, backup and in-memory deck slots','new page reload and collection550','actual migrated custom-deck match and rotation-preserved battlefield mulligan'],real_device_test:false,shots,native_captures:captureMetrics,steps};
  }catch(error){
   let diagnostic=null;try{diagnostic=page?await Promise.race([page.evaluate(()=>window.orafoldQA).catch(()=>null),new Promise(resolve=>setTimeout(()=>resolve(null),5000))]):null;}catch{}
-  fs.writeFileSync(path.join(OUTPUT,engineName+'-error.json'),JSON.stringify({engine:engineName,step:lastStep,error:String(error),errors,diagnostic,assertions},null,2));
+  fs.writeFileSync(path.join(OUTPUT,engineName+'-error.json'),JSON.stringify({engine:engineName,step:lastStep,error:String(error),errors,diagnostic,native_captures:captureMetrics,assertions},null,2));
   throw error;
  }finally{if(page)try{await page.evaluate(key=>localStorage.removeItem(key),QUOTA_PADDING);}catch{}if(oldTab)await oldTab.close();if(context)await context.close();await browser.close();}
 }

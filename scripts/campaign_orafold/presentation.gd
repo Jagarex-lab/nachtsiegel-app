@@ -153,8 +153,12 @@ func _build_shell() -> void:
 	layout.add_child(footer)
 	_viewport_changed()
 
+func _logical_dimensions() -> Vector2:
+	# Embedded Controls already use logical host units; the viewport may be Retina pixels.
+	return size if _embedded else get_viewport_rect().size
+
 func _viewport_changed() -> void:
-	var dimensions := size if _embedded else get_viewport_rect().size
+	var dimensions := _logical_dimensions()
 	compact = dimensions.x < 720
 	var margin = 12 if dimensions.y < 500 else (16 if compact else 36)
 	for side in ["left", "right", "top", "bottom"]:
@@ -245,7 +249,7 @@ func _header() -> void:
 	header.add_child(navigation)
 	for entry in [["ui.overview", open_overview], ["ui.history", open_history], ["ui.characters", open_characters], ["ui.settings", open_settings], ["ui.main_menu", request_exit]]:
 		var button = _button(_t(entry[0]), entry[1])
-		button.custom_minimum_size.x = 132 if not compact else maxf(100, (get_viewport_rect().size.x - 40) / 2.0)
+		button.custom_minimum_size.x = 132 if not compact else maxf(100, (_logical_dimensions().x - 40) / 2.0)
 		button.add_theme_font_size_override("font_size", int(14 * _scale()))
 		navigation.add_child(button)
 	var line = HSeparator.new()
@@ -293,7 +297,7 @@ func _set_background(path: String) -> void:
 
 func _page_title(kicker: String, title: String, summary: String = "") -> void:
 	main.add_child(_label(kicker.to_upper(), 12, COPPER))
-	main.add_child(_label(title, 29 if compact or get_viewport_rect().size.y < 500 else 43, INK, true))
+	main.add_child(_label(title, 29 if compact or _logical_dimensions().y < 500 else 43, INK, true))
 	if not summary.is_empty():
 		main.add_child(_label(summary, 18, MUTED))
 
@@ -646,7 +650,8 @@ func _publish_qa() -> void:
 	var controls: Dictionary = {}
 	_qa_controls(self, controls)
 	var campaign: Dictionary = manager.content.get("campaigns",{}).get(manager.state.data.campaign_id,{})
-	var payload = {"screen":screen,"title":_t(campaign.get("title_id","ui.prototype")),"scene_id":manager.state.data.active.get("scene_id",""),"flags":manager.state.data.flags,"actions":controls,"save_error":manager.last_error,"validation_errors":manager.validation.get("errors",[]),"logical_viewport":[get_viewport_rect().size.x,get_viewport_rect().size.y],"compact":compact}
+	var dimensions := _logical_dimensions()
+	var payload = {"screen":screen,"title":_t(campaign.get("title_id","ui.prototype")),"scene_id":manager.state.data.active.get("scene_id",""),"flags":manager.state.data.flags,"actions":controls,"save_error":manager.last_error,"validation_errors":manager.validation.get("errors",[]),"logical_viewport":[dimensions.x,dimensions.y],"compact":compact}
 	JavaScriptBridge.eval("window.orafoldCampaignQA="+JSON.stringify(payload))
 
 func _qa_controls(node: Node, output: Dictionary) -> void:

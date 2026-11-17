@@ -1,0 +1,2234 @@
+{
+  "schema": 1,
+  "source_commit": "16d0d248b030d9fa6c7fcdf73edf90f616e21980",
+  "tracked_worktree_dirty": false,
+  "all_render_sources_match_commit": true,
+  "source_file_sha256": {
+    "scripts/premium/arena_stage.gd": "95ac755b72b27662ea79d4cb43a826eb06aaf666a9b189023642d7bd4f24a760",
+    "scripts/premium/arena_comparison.gd": "e6eb3123dbe50907cc33a39dfaa7d03bbfcc3fe76d259b68c260dec8cdd29df9",
+    "scripts/alpha/card_view.gd": "5cfac14db22957b2d6cf4f77c43e066791e7183a663527e528a8e371850ce587",
+    "scripts/alpha/style.gd": "1ecbcbf80f6d7340175ec803a9d9cfcb5591bacc66b6a83149fbbae097aa4f0a",
+    "scripts/card_system/card_face.gd": "c2fbd3c8ef90628b48e9ee559ea07b48dadf4cf175c25a3bbb6d4a39b4e63062",
+    "scripts/premium/card_frames.gd": "651f4f6fadb31e352750723cf5a4fde176c0adda544e07065fcb5671c270265d",
+    "scenes/premium/arena_comparison.tscn": "f2d5773389fce997b7838a2d8b120edde366d4f42d9a2d4806ffa41fab99e17f",
+    "data/production/art_manifest.json": "f0262446069e23e27b1f2bf2815eca144cf21ca23583e50413c3c495c7948687",
+    "data/production/cards.json": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7"
+  },
+  "physical_device": false,
+  "qualification": "Native Linux framebuffer. Wall timings and RSS are environment observations, not physical iPhone/Android GPU benchmarks. GPU timestamp is unavailable through this harness.",
+  "reports": [
+    {
+      "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+      "all_visible_art_bound_since_ready_ms": 1490.683,
+      "art_cache": {
+        "cache_byte_limit": 33554432,
+        "cache_entry_limit": 48,
+        "estimated_retained_bytes": 16779947,
+        "hits": 0,
+        "loads": 16,
+        "profiles": {
+          "compact": 16,
+          "full": 0
+        },
+        "retained_textures": 16,
+        "thumbnail_builds": 0
+      },
+      "card_face_subviewports": 0,
+      "card_surface_px2": 153029.599609375,
+      "card_textures_frozen": false,
+      "draw_calls_last": 926,
+      "driver": "gl_compatibility",
+      "first_draw_since_ready_ms": 2282.819,
+      "fixture_board_ids": [
+        "oa-ninth-c01",
+        "oa-ninth-c05",
+        "oa-ninth-c06",
+        "oa-neutral-c05",
+        "oa-neutral-c01",
+        "oa-houses-c01",
+        "oa-houses-c05",
+        "oa-houses-c06",
+        "oa-neutral-c02",
+        "oa-neutral-c03"
+      ],
+      "fixture_hand_ids": [
+        "oa-houses-c02",
+        "oa-houses-c07",
+        "of-houses-051",
+        "oa-neutral-c04",
+        "oa-houses-e01",
+        "oa-houses-r01"
+      ],
+      "fixture_projection_sha256": "a35e87a5a3fab6a484e02c5c41f44c5067d55d3d6e07912cc98f1af6b75ae957",
+      "frame_wall_ms_p50": 133.333333333333,
+      "frame_wall_ms_p95": 142.656666666667,
+      "framebuffer": {
+        "lit_samples": 185,
+        "luminance_variance": 0.0532444340108882,
+        "not_blank": true,
+        "samples": 384
+      },
+      "frames": 12,
+      "godot": "4.6.3-stable (official)",
+      "godot_process_ms_p50": 729.145,
+      "gpu_timer": "unavailable: compatibility renderer exposes no per-stage GPU timestamp here",
+      "mesh_count": 0,
+      "minimum_card_dimension": 97.0999984741211,
+      "mode": "flat",
+      "perspective_affects_production_hitboxes": false,
+      "physical_device": false,
+      "process_rss_kib_linux": -1,
+      "real_3d_camera": false,
+      "screenshot_error": 0,
+      "size": [
+        820.0,
+        208.199996948242
+      ],
+      "slots": [
+        {
+          "lane": 0,
+          "rect": [
+            0.0,
+            0.0,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 1,
+          "rect": [
+            165.600006103516,
+            0.0,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 2,
+          "rect": [
+            331.200012207031,
+            0.0,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 3,
+          "rect": [
+            496.799987792969,
+            0.0,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 4,
+          "rect": [
+            662.400024414062,
+            0.0,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 0,
+          "rect": [
+            0.0,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 1,
+          "rect": [
+            165.600006103516,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 2,
+          "rect": [
+            331.200012207031,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 3,
+          "rect": [
+            496.799987792969,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 4,
+          "rect": [
+            662.400024414062,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        }
+      ],
+      "startup_to_capture_ms": 9531.968,
+      "video_memory_monitor_bytes": 31362231.0,
+      "viewport": [
+        844.0,
+        390.0
+      ],
+      "visible_art_area_px2": 73703.7889828762,
+      "visible_art_measured_count": 10,
+      "visible_card_art": [
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.600006103516,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806695259937
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            147.5126953125,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003913105023
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c06",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            147.5126953125,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            385
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003913105023
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600036621094,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            147.512725830078,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003909917768
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.599975585938,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.599975585938,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806698452163
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.600006103516,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806695259937
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            147.5126953125,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003913105023
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c06",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            147.5126953125,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003913105023
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c02",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600036621094,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.600036621094,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806692067713
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c03",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.599975585938,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.599975585938,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806698452163
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c02",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            76.4818115234375,
+            110.799987792969
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.429977842973814
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c07",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818267822266,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            7.79602003097534,
+            7.79602003097534,
+            70.8897857666016,
+            105.207946777344
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "legendary",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.351995088390572
+        },
+        {
+          "availability_shown": false,
+          "card_id": "of-houses-051",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            6.79286193847656,
+            6.79286193847656,
+            72.8960876464844,
+            107.214263916016
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "epic",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.385698907263816
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c04",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            76.4818115234375,
+            110.799987792969
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.429977842973814
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-e01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.7897047996521,
+            5.7897047996521,
+            74.9024047851562,
+            109.220581054688
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.414402759426623
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-r01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.7897047996521,
+            5.7897047996521,
+            74.9024047851562,
+            109.220581054688
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.414402759426623
+        }
+      ],
+      "warmup_frames": 12,
+      "screenshot_sha256": "367f9b7efb77ecc75fa51870bc70cbf27c3d18f6093ccf2281fdd176a512e4b3",
+      "minimum_touch_44_pass": true,
+      "process_rss_peak_kib_sampled": 250236,
+      "process_rss_sampling_interval_ms": 100
+    },
+    {
+      "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+      "all_visible_art_bound_since_ready_ms": 2105.13,
+      "art_cache": {
+        "cache_byte_limit": 33554432,
+        "cache_entry_limit": 48,
+        "estimated_retained_bytes": 16779947,
+        "hits": 0,
+        "loads": 16,
+        "profiles": {
+          "compact": 16,
+          "full": 0
+        },
+        "retained_textures": 16,
+        "thumbnail_builds": 0
+      },
+      "card_face_subviewports": 0,
+      "card_surface_px2": 149048.49609375,
+      "card_textures_frozen": false,
+      "draw_calls_last": 937,
+      "driver": "gl_compatibility",
+      "first_draw_since_ready_ms": 2477.013,
+      "fixture_board_ids": [
+        "oa-ninth-c01",
+        "oa-ninth-c05",
+        "oa-ninth-c06",
+        "oa-neutral-c05",
+        "oa-neutral-c01",
+        "oa-houses-c01",
+        "oa-houses-c05",
+        "oa-houses-c06",
+        "oa-neutral-c02",
+        "oa-neutral-c03"
+      ],
+      "fixture_hand_ids": [
+        "oa-houses-c02",
+        "oa-houses-c07",
+        "of-houses-051",
+        "oa-neutral-c04",
+        "oa-houses-e01",
+        "oa-houses-r01"
+      ],
+      "fixture_projection_sha256": "a35e87a5a3fab6a484e02c5c41f44c5067d55d3d6e07912cc98f1af6b75ae957",
+      "frame_wall_ms_p50": 123.119333333333,
+      "frame_wall_ms_p95": 137.761,
+      "framebuffer": {
+        "lit_samples": 189,
+        "luminance_variance": 0.0558447465956549,
+        "not_blank": true,
+        "samples": 384
+      },
+      "frames": 12,
+      "godot": "4.6.3-stable (official)",
+      "godot_process_ms_p50": 238.549,
+      "gpu_timer": "unavailable: compatibility renderer exposes no per-stage GPU timestamp here",
+      "mesh_count": 0,
+      "minimum_card_dimension": 97.0999984741211,
+      "mode": "spatial",
+      "perspective_affects_production_hitboxes": false,
+      "physical_device": false,
+      "process_rss_kib_linux": -1,
+      "real_3d_camera": false,
+      "screenshot_error": 0,
+      "size": [
+        820.0,
+        208.199996948242
+      ],
+      "slots": [
+        {
+          "lane": 0,
+          "rect": [
+            20.5,
+            0.0,
+            149.399993896484,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 1,
+          "rect": [
+            177.899993896484,
+            0.0,
+            149.399993896484,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 2,
+          "rect": [
+            335.299987792969,
+            0.0,
+            149.399993896484,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 3,
+          "rect": [
+            492.700012207031,
+            0.0,
+            149.399993896484,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 4,
+          "rect": [
+            650.099975585938,
+            0.0,
+            149.399993896484,
+            97.0999984741211
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 0,
+          "rect": [
+            0.0,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 1,
+          "rect": [
+            165.600006103516,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 2,
+          "rect": [
+            331.200012207031,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 3,
+          "rect": [
+            496.799987792969,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 4,
+          "rect": [
+            662.400024414062,
+            111.099998474121,
+            157.600006103516,
+            97.0999984741211
+          ],
+          "side": "hero"
+        }
+      ],
+      "startup_to_capture_ms": 6210.826,
+      "video_memory_monitor_bytes": 31368447.0,
+      "viewport": [
+        844.0,
+        390.0
+      ],
+      "visible_art_area_px2": 71736.7388006726,
+      "visible_art_measured_count": 10,
+      "visible_card_art": [
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            145.399993896484,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            139.399993896484,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806685041258
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            145.399993896484,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            139.312683105469,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003902305898
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c06",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            145.399993896484,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            139.312683105469,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            385
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003902305898
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            145.399963378906,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            139.312652587891,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003905672901
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            145.400024414062,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            139.400024414062,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806681669006
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.600006103516,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806695259937
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            147.5126953125,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003913105023
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c06",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600006103516,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.04365396499634,
+            5.04365396499634,
+            147.5126953125,
+            87.0126953125
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515003913105023
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c02",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.600036621094,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.600036621094,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806692067713
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c03",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            153.599975585938,
+            93.1000061035156
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            147.599975585938,
+            87.1000061035156
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.515806698452163
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c02",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            76.4818115234375,
+            110.799987792969
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.429977842973814
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c07",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818267822266,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            7.79602003097534,
+            7.79602003097534,
+            70.8897857666016,
+            105.207946777344
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "legendary",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.351995088390572
+        },
+        {
+          "availability_shown": false,
+          "card_id": "of-houses-051",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            6.79286193847656,
+            6.79286193847656,
+            72.8960876464844,
+            107.214263916016
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "epic",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.385698907263816
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c04",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            76.4818115234375,
+            110.799987792969
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.429977842973814
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-e01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.7897047996521,
+            5.7897047996521,
+            74.9024047851562,
+            109.220581054688
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.414402759426623
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-r01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.7897047996521,
+            5.7897047996521,
+            74.9024047851562,
+            109.220581054688
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.414402759426623
+        }
+      ],
+      "warmup_frames": 12,
+      "screenshot_sha256": "8572cc5ffcf350e30507b7ba3c689e8968bf367b32a7d75410f1503a23f78e16",
+      "minimum_touch_44_pass": true,
+      "process_rss_peak_kib_sampled": 265308,
+      "process_rss_sampling_interval_ms": 100
+    },
+    {
+      "adapter": "llvmpipe (LLVM 19.1.7, 256 bits)",
+      "all_visible_art_bound_since_ready_ms": 1118.606,
+      "art_cache": {
+        "cache_byte_limit": 33554432,
+        "cache_entry_limit": 48,
+        "estimated_retained_bytes": 16779947,
+        "hits": 0,
+        "loads": 16,
+        "profiles": {
+          "compact": 16,
+          "full": 0
+        },
+        "retained_textures": 16,
+        "thumbnail_builds": 0
+      },
+      "card_face_subviewports": 10,
+      "card_surface_px2": 102142.408203125,
+      "card_textures_frozen": true,
+      "draw_calls_last": 463,
+      "driver": "gl_compatibility",
+      "first_draw_since_ready_ms": 2179.161,
+      "fixture_board_ids": [
+        "oa-ninth-c01",
+        "oa-ninth-c05",
+        "oa-ninth-c06",
+        "oa-neutral-c05",
+        "oa-neutral-c01",
+        "oa-houses-c01",
+        "oa-houses-c05",
+        "oa-houses-c06",
+        "oa-neutral-c02",
+        "oa-neutral-c03"
+      ],
+      "fixture_hand_ids": [
+        "oa-houses-c02",
+        "oa-houses-c07",
+        "of-houses-051",
+        "oa-neutral-c04",
+        "oa-houses-e01",
+        "oa-houses-r01"
+      ],
+      "fixture_projection_sha256": "a35e87a5a3fab6a484e02c5c41f44c5067d55d3d6e07912cc98f1af6b75ae957",
+      "frame_wall_ms_p50": 120.284666666667,
+      "frame_wall_ms_p95": 133.333333333333,
+      "framebuffer": {
+        "lit_samples": 170,
+        "luminance_variance": 0.0355710491183023,
+        "not_blank": true,
+        "samples": 384
+      },
+      "frames": 12,
+      "godot": "4.6.3-stable (official)",
+      "godot_process_ms_p50": 129.485,
+      "gpu_timer": "unavailable: compatibility renderer exposes no per-stage GPU timestamp here",
+      "mesh_count": 26,
+      "minimum_card_dimension": 66.6321258544922,
+      "mode": "three_d",
+      "perspective_affects_production_hitboxes": false,
+      "physical_device": false,
+      "process_rss_kib_linux": -1,
+      "real_3d_camera": true,
+      "screenshot_error": 0,
+      "size": [
+        820.0,
+        208.199996948242
+      ],
+      "slots": [
+        {
+          "lane": 0,
+          "rect": [
+            84.3356475830078,
+            7.84936046600342,
+            124.935195922852,
+            66.6321258544922
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 1,
+          "rect": [
+            215.934036254883,
+            7.84936046600342,
+            124.935165405273,
+            66.6321258544922
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 2,
+          "rect": [
+            347.532409667969,
+            7.84936046600342,
+            124.935180664062,
+            66.6321258544922
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 3,
+          "rect": [
+            479.130798339844,
+            7.84936046600342,
+            124.935180664062,
+            66.6321258544922
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 4,
+          "rect": [
+            610.729187011719,
+            7.84936046600342,
+            124.935180664062,
+            66.6321258544922
+          ],
+          "side": "enemy"
+        },
+        {
+          "lane": 0,
+          "rect": [
+            17.3127899169922,
+            125.799957275391,
+            150.64729309082,
+            80.3451995849609
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 1,
+          "rect": [
+            175.994583129883,
+            125.799957275391,
+            150.647262573242,
+            80.3451995849609
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 2,
+          "rect": [
+            334.676361083984,
+            125.799957275391,
+            150.647277832031,
+            80.3451995849609
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 3,
+          "rect": [
+            493.358154296875,
+            125.799957275391,
+            150.647277832031,
+            80.3451995849609
+          ],
+          "side": "hero"
+        },
+        {
+          "lane": 4,
+          "rect": [
+            652.039916992188,
+            125.799957275391,
+            150.647277832031,
+            80.3451995849609
+          ],
+          "side": "hero"
+        }
+      ],
+      "startup_to_capture_ms": 5370.075,
+      "video_memory_monitor_bytes": 35688183.0,
+      "viewport": [
+        844.0,
+        390.0
+      ],
+      "visible_art_area_px2": 37969.5578498335,
+      "visible_art_measured_count": 10,
+      "visible_card_art": [
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            121.0,
+            63.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            115.0,
+            57.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.353269841269841
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            121.0,
+            63.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            115.0,
+            57.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.353269841269841
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-ninth-c06",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            121.0,
+            63.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            115.0,
+            57.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            385
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.353269841269841
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            121.0,
+            63.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            115.0,
+            57.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.353269841269841
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            121.0,
+            63.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            115.0,
+            57.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.353269841269841
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            147.0,
+            76.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            141.0,
+            70.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.439263157894737
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c05",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            147.0,
+            76.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            141.0,
+            70.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.439263157894737
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c06",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            147.0,
+            76.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            141.0,
+            70.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.439263157894737
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c02",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            147.0,
+            76.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            141.0,
+            70.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.439263157894737
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c03",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "board",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            147.0,
+            76.0
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            141.0,
+            70.0
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.439263157894737
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c02",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            76.4818115234375,
+            110.799987792969
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.429977842973814
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-c07",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818267822266,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            7.79602003097534,
+            7.79602003097534,
+            70.8897857666016,
+            105.207946777344
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "legendary",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.351995088390572
+        },
+        {
+          "availability_shown": false,
+          "card_id": "of-houses-051",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            6.79286193847656,
+            6.79286193847656,
+            72.8960876464844,
+            107.214263916016
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "epic",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.385698907263816
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-neutral-c04",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.0,
+            5.0,
+            76.4818115234375,
+            110.799987792969
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "common",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.429977842973814
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-e01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.7897047996521,
+            5.7897047996521,
+            74.9024047851562,
+            109.220581054688
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.414402759426623
+        },
+        {
+          "availability_shown": false,
+          "card_id": "oa-houses-r01",
+          "coordinate_space": "local",
+          "delivery_state": "ready",
+          "display_role": "hand",
+          "frame_concept": "folded",
+          "frame_rect": [
+            2.0,
+            2.0,
+            82.4818115234375,
+            116.799987792969
+          ],
+          "illustration_rect": [
+            5.7897047996521,
+            5.7897047996521,
+            74.9024047851562,
+            109.220581054688
+          ],
+          "pending": false,
+          "pixels": [
+            512,
+            384
+          ],
+          "playable": false,
+          "profile": "compact",
+          "rarity": "rare",
+          "status": "final",
+          "title_fits": true,
+          "title_font_size": 10,
+          "unavailable_reason": "",
+          "visible": true,
+          "visible_art_fraction": 0.414402759426623
+        }
+      ],
+      "warmup_frames": 12,
+      "screenshot_sha256": "65d33ed6f17cd4b23cb3028809a1b8e7cfb5611c841538710c078a50cca59bdb",
+      "minimum_touch_44_pass": true,
+      "process_rss_peak_kib_sampled": 250028,
+      "process_rss_sampling_interval_ms": 100
+    }
+  ],
+  "lossless_documentation_previews": [
+    {
+      "mode": "flat",
+      "preview": "arena-flat-844x390.webp",
+      "preview_sha256": "cb60b757529d7754c76f199692e3d6e8bd8ca05638b09abed18160a95ef34c90",
+      "raw_png_sha256": "367f9b7efb77ecc75fa51870bc70cbf27c3d18f6093ccf2281fdd176a512e4b3",
+      "decoded_rgba_sha256": "51f06e9e1e2d1ab7549e6050e03dc408026c004e76f2a4337fdb6d7c81e9ba47",
+      "pixel_identical_lossless": true
+    },
+    {
+      "mode": "spatial",
+      "preview": "arena-spatial-844x390.webp",
+      "preview_sha256": "59f93a828eefddec484763bf44496e7bcc1d1df792888edc08d37ac4e47780bb",
+      "raw_png_sha256": "8572cc5ffcf350e30507b7ba3c689e8968bf367b32a7d75410f1503a23f78e16",
+      "decoded_rgba_sha256": "31fc8cc6f0938e0d6a427f99a80eba28b1391547f951c30910b953908f0f323d",
+      "pixel_identical_lossless": true
+    },
+    {
+      "mode": "three_d",
+      "preview": "arena-three_d-844x390.webp",
+      "preview_sha256": "6e0a37b13d12c2e1b314301120336ba5b0d91a87e4b41f1847702582031cd1cb",
+      "raw_png_sha256": "65d33ed6f17cd4b23cb3028809a1b8e7cfb5611c841538710c078a50cca59bdb",
+      "decoded_rgba_sha256": "d7fcc8ed4300ecce9867b22bcecd6810c45df693da08758d7325e92f6a6ea075",
+      "pixel_identical_lossless": true
+    }
+  ]
+}

@@ -34,8 +34,10 @@ jobs:
 
   test-and-export:
     runs-on: ubuntu-24.04
-    # Native regression suites and three exports; browser engines run separately.
-    timeout-minutes: 45
+    # Existing native regressions/exports plus all550 painted faces and nine
+    # actual spatial comparisons. Preserve each individual600s failure bound;
+    # reserve20 additional minutes for the new software-rendered evidence.
+    timeout-minutes: 65
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,8 +55,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install rendered contrast checker
-        run: python3 -m pip install 'Pillow>=11,<14'
+      - name: Install rendered contrast and release-contract checkers
+        run: |
+          python3 -m pip install 'Pillow>=11,<14' 'PyYAML==6.0.3'
+          python3 -m unittest discover -s tests/ci -v
       - name: Rules, real GUI input, landscape layout and render tests
         run: xvfb-run -a -s '-screen 0 1600x1000x24' tools/test.sh
       - name: Complete pinned Legacy and new Alpha regressions
@@ -79,6 +83,8 @@ jobs:
           assert len(list(p.glob('*.png')))==5
           print(log)
           PYVISUAL
+      - name: Premium mobile contracts and actual Godot frame arena comparisons
+        run: xvfb-run -a -s '-screen 0 1600x1200x24' tools/test_premium.sh
       - name: Export archive regression build
         run: |
           mkdir -p work/build/archive-web
@@ -166,6 +172,7 @@ jobs:
             work/production-art/*.jsonl
             work/production-storage/native.log
             work/alpha03/visual-qa/
+            work/premium-mobile/
             work/ux/*.png
             work/ux/*.json
             work/experience/*.png
@@ -179,7 +186,10 @@ jobs:
     runs-on: ubuntu-24.04
     # Full archive/Alpha/mobile/Master suites per engine, with WebGL startup and
     # reloads; independent workers remove the former sequential-engine deadline.
-    timeout-minutes: 45
+    # Preserve every existing desktop/mobile profile and complete duel.
+    # Software rendering plus three Chromium matches needs a full budget;
+    # per-action and match limits are unchanged.
+    timeout-minutes: 75
     strategy:
       fail-fast: false
       matrix:
@@ -203,8 +213,10 @@ jobs:
           path: work
       - name: Install isolated browser runtime
         run: |
-          npm install --no-save --package-lock=false playwright@1.65.0
-          npx playwright install --with-deps ${{ matrix.engine }}
+          set -o pipefail
+          mkdir -p "work/alpha"
+          npm install --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/alpha/browser-install-${{ matrix.engine }}.log"
+          python3 tools/ci/install_dependencies.py --log work/alpha/browser-install-${{ matrix.engine }}.log playwright node_modules/.bin/playwright ${{ matrix.engine }}
       - name: Serve the three tested builds
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/archive-web > work/http.log 2>&1 &
@@ -266,6 +278,7 @@ jobs:
             work/browser-results.json
             work/http.log
             work/alpha/http.log
+            work/alpha/browser-install-*.log
             work/alpha/legacy-http.log
             work/alpha/legacy-browser.log
             work/alpha/legacy-browser-results.json
@@ -280,6 +293,66 @@ jobs:
             work/alpha03/browser/
             work/alpha03/viewport-*.json
           if-no-files-found: warn
+
+  premium-browser:
+    # The existing complete browser/duel jobs remain intact. The new presentation
+    # and PWA checks get their own worker and exact tested candidate.
+    needs: test-and-export
+    runs-on: ubuntu-24.04
+    # Layout plus a full mobile duel/replay/restart and bounded installation;
+    # retain all per-action failure limits, including Retina WebKit.
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        engine: [chromium, webkit]
+    permissions:
+      contents: read
+    env:
+      EXPECTED_COMMIT: ${{ github.sha }}
+      QA_ENGINES: ${{ matrix.engine }}
+      GAME_URL: http://127.0.0.1:8790/nachtsiegel-app/
+      PREMIUM_BROWSER_OUTPUT: work/premium-mobile/browser-${{ matrix.engine }}
+      LP_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: nachtsiegel-arena-qa
+          path: work
+      - name: Install isolated pinned browser runtime
+        run: |
+          set -o pipefail
+          mkdir -p "work/premium-mobile/browser-${{ matrix.engine }}"
+          npm install --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/premium-mobile/browser-${{ matrix.engine }}/dependency-install.log"
+          python3 tools/ci/install_dependencies.py --log work/premium-mobile/browser-${{ matrix.engine }}/dependency-install.log playwright node_modules/.bin/playwright ${{ matrix.engine }}
+      - name: Serve the candidate under the actual repository subpath
+        run: |
+          mkdir -p work/premium-site
+          ln -s "$PWD/work/build/web" work/premium-site/nachtsiegel-app
+          python3 -m http.server 8790 --bind 127.0.0.1 --directory work/premium-site > work/premium-http.log 2>&1 &
+          python3 tools/wait_http.py http://127.0.0.1:8790/nachtsiegel-app/build-info.json
+      - name: Real touch, five landscape sizes, portrait menus, inspection, PWA and verified resume
+        run: node tools/premium/browser_qa.cjs
+      - name: Real production booster transactions, campaign opening and saved reload
+        run: node tools/premium/hosted_browser_qa.cjs
+      - name: Campaign logical Retina dimensions and repeated header rotation
+        run: node tools/premium/campaign_header_browser_qa.cjs
+      - name: Preserve actual premium browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-premium-browser-${{ matrix.engine }}
+          path: |
+            work/premium-mobile/browser-${{ matrix.engine }}/
+            work/premium-http.log
+          if-no-files-found: error
 
   production-art-native-package:
     runs-on: ubuntu-24.04
@@ -341,8 +414,10 @@ jobs:
           path: work
       - name: Install isolated image-delivery browser runtime
         run: |
-          npm install --no-save --package-lock=false playwright@1.65.0
-          npx playwright install --with-deps ${{ matrix.engine }}
+          set -o pipefail
+          mkdir -p "work/production-art/browser-${{ matrix.engine }}"
+          npm install --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/production-art/browser-${{ matrix.engine }}/dependency-install.log"
+          python3 tools/ci/install_dependencies.py --log work/production-art/browser-${{ matrix.engine }}/dependency-install.log playwright node_modules/.bin/playwright ${{ matrix.engine }}
       - name: Actual compact/full HTTP, failed bodies and cancellation
         run: xvfb-run -a -s '-screen 0 1600x1200x24' node tools/production/browser_art_delivery_qa.cjs
       - name: Preserve actual image-delivery browser evidence
@@ -390,6 +465,42 @@ jobs:
             work/production/resource-models.log
             work/production/resource-models.json
             work/production/resource-report/
+          if-no-files-found: error
+
+  premium-block-balance:
+    # Reproduce the adopted eight-copy deck correction; original opponents and
+    # paired starts are frozen. Does not replace the complete 848-game matrix.
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions:
+      contents: read
+    env:
+      LP_NUM_THREADS: '1'
+      BLOCK_EXPERIMENT_TIMEOUT: '1320'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.6.3
+          use-dotnet: false
+          include-templates: false
+      - name: Import the actual unchanged production kernel and assets
+        run: |
+          mkdir -p work/premium-balance
+          godot --headless --editor --import --path . --audio-driver Dummy --quit > work/premium-balance/import.log 2>&1
+      - name: Reproduce 224 actual paired games, eight controls and negative evidence guards
+        run: bash tools/test_premium_block_balance.sh
+      - name: Preserve the actual fixed plan, raw results and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-premium-block-balance
+          path: work/premium-balance/
           if-no-files-found: error
 
   production-full-pool-coverage:

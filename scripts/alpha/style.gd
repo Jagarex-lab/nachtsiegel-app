@@ -1,7 +1,11 @@
 extends RefCounted
 ## Alpha-only visual language. Original game data and archive UI are untouched.
 const T=preload("res://scripts/ui_tokens.gd")
-const POWER_COLORS={"houses":Color("d59b7f"),"stillwatch":Color("a9dfef"),"morph":Color("81d4ad"),"ninth":Color("c5b7ef"),"neutral":Color("bdc9d8")}
+const POWER_COLORS={"houses":Color("B9824A"),"stillwatch":Color("58A9CF"),"morph":Color("5B9E68"),"ninth":Color("9867BE"),"neutral":Color("8B98A5")}
+# Material pigments stay exact; small interface labels need their own contrast
+# against both surface tiers. Amethyst's material pigment alone is only 3.69:1
+# on the raised surface, so it must not double as a text colour.
+const POWER_TEXT_COLORS={"houses":Color("B9824A"),"stillwatch":Color("58A9CF"),"morph":Color("5B9E68"),"ninth":Color("B58BD8"),"neutral":Color("8B98A5")}
 const SYMBOLS={"houses":"Ⅻ","stillwatch":"◇","morph":"❧","ninth":"Ⅸ","neutral":"○"}
 const STYLES={"houses":"Erinnerung · Wiederherstellung","stillwatch":"Schutz · Verzögerung","morph":"Anpassung · Positionswechsel","ninth":"Kausalität · Vorhersage"}
 const DIFFICULTY={"houses":"Zugänglich · 1/3","stillwatch":"Bedacht · 2/3","morph":"Flexibel · 2/3","ninth":"Anspruchsvoll · 3/3"}

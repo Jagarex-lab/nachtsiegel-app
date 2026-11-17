@@ -39,6 +39,16 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'platform_qa_test.py' -v
       - name: Export Linux, run the actual exported duel, and verify Android APK
         run: tools/build_platform_qa.sh --platform linux-android
+      - name: Preserve small native diagnostic evidence without binaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-linux-android-evidence-${{ github.sha }}
+          path: |
+            work/production/platforms/results.json
+            work/production/platforms/run-*/*.json
+            work/production/platforms/run-*/*.log
+          if-no-files-found: warn
       - name: Preserve actual platform binaries and evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -91,6 +101,16 @@ jobs:
         run: python -m unittest discover -s tests -p 'platform_qa_test.py' -v
       - name: Export real PE64 packages and execute the native Windows duel
         run: python tools/platform_qa.py --platform windows
+      - name: Preserve small native diagnostic evidence without binaries
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: orafold-windows-evidence-${{ github.sha }}
+          path: |
+            work/production/platforms/results.json
+            work/production/platforms/run-*/*.json
+            work/production/platforms/run-*/*.log
+          if-no-files-found: warn
       - name: Preserve actual Windows executables and evidence
         if: always()
         uses: actions/upload-artifact@v4

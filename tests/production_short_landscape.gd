@@ -3,6 +3,9 @@ extends SceneTree
 ## arranged for rendering only. It is not counted as a played duel or legal
 ## transition. The browser companion reaches six cards via actual turn commands.
 const Shell=preload("res://scripts/alpha/shell.gd")
+class PresentationShell extends Shell:
+	# Arranged layout states are not replayable games and must not be saved.
+	func _checkpoint_duel() -> void:pass
 const Session=preload("res://scripts/alpha/session.gd")
 var app
 var safe_host: Control
@@ -62,7 +65,7 @@ func controls(label: String,safe: Rect2) -> void:
 	check(not app.actions.has("rotate_menu"),label+" usable landscape is not blocked by orientation guard")
 	check(app.short_landscape,label+" production short tier selected")
 	check(app.board_views.size()==10 and app.hand_views.size()==6,label+" ten units and all six real hand cards rendered")
-	for id in ["menu","end","actions","inspect","log","restart"]:
+	for id in ["menu","end","actions","inspect"]:
 		check(app.actions.has(id),label+" primary/secondary action exists "+id)
 		if app.actions.has(id):in_safe(app.actions[id],safe,label+" "+id)
 	for key in app.board_views:
@@ -71,9 +74,10 @@ func controls(label: String,safe: Rect2) -> void:
 		check(marks.shield==2 and marks.block==3,label+" shield and block remain separate "+str(key))
 	for view in app.hand_views:
 		in_safe(view,safe,label+" hand "+view.card.id)
-		var title=view.title_paragraph(view.size.x-16)
-		check(title.get_line_count()<=2 and 5+title.get_size().y<=view.size.y-24+.1,label+" full card name stays above stat band "+view.card.id)
-		check(view.stat_layout(view.size.x-45).fits,label+" complete stats/type fit "+view.card.id)
+		var face=view.layout_report()
+		check(face.role=="hand" and is_equal_approx(view.size.x/view.size.y,63.0/88.0),label+" genuine portrait hand, not a text strip "+view.card.id)
+		check(face.outer.encloses(face.stats) and face.stats.size.y>=16,label+" separate bounded value/type footer "+view.card.id)
+		check(face.title.end.y<=face.stats.position.y+.1,label+" name zone never overlaps current values "+view.card.id)
 func lifecycle_checks() -> void:
 	# Repeated real UI transitions, with the labelled layout state held fixed.
 	# Warm once before comparing native resource counts; no font-cache clearing.
@@ -97,7 +101,7 @@ func lifecycle_checks() -> void:
 func run() -> void:
 	DirAccess.make_dir_recursive_absolute(OUT)
 	safe_host=Control.new();root.add_child(safe_host);safe_host.size=Vector2(root.size)
-	app=Shell.new();safe_host.add_child(app);await settle()
+	app=PresentationShell.new();safe_host.add_child(app);await settle()
 	for item in [{"height":270,"bottom":21},{"height":249,"bottom":0},{"height":248,"bottom":0}]:
 		await geometry(Vector2i(844,int(item.height)),float(item.bottom));app.page="lobby";app.render();await settle();app.start_battle();await settle()
 		var safe=Rect2(44,0,756,float(item.height)-float(item.bottom))
@@ -110,6 +114,11 @@ func run() -> void:
 		await fixture_battle()
 		var before=Session.digest(app.session.model.snapshot());var count=app.session.commands.size()
 		controls("844x"+str(item.height),safe)
+		await tap(app.actions.actions)
+		for id in ["log","restart"]:
+			check(app.actions.has(id),"secondary control reachable through More: "+id)
+			in_safe(app.actions[id],safe,"More "+id)
+		await tap(app.actions.modal_close)
 		await tap(app.hand_views[0]);await settle();check(app.selected==0,"actual short-hand touch selects card")
 		await tap(app.actions.inspect);check(is_instance_valid(app.modal),"actual short inspector opens");in_safe(app.actions.modal_close,safe,"short inspector close");await tap(app.actions.modal_close)
 		await tap(app.actions.menu);check(is_instance_valid(app.modal),"actual safe menu opens through touch");in_safe(app.actions.modal_close,safe,"short menu close");await tap(app.actions.modal_close)

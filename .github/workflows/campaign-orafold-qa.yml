@@ -44,8 +44,10 @@ jobs:
         run: tools/build_campaign_orafold.sh
       - name: Chromium runtime
         run: |
-          npm install --prefix work/campaign-browser --no-save --package-lock=false playwright@1.65.0
-          work/campaign-browser/node_modules/.bin/playwright install --with-deps chromium
+          set -o pipefail
+          mkdir -p "work/campaign_orafold"
+          npm install --prefix work/campaign-browser --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/campaign_orafold/browser-install.log"
+          python3 tools/ci/install_dependencies.py --log work/campaign_orafold/browser-install.log playwright work/campaign-browser/node_modules/.bin/playwright chromium
       - name: Desktop and portrait Web touch smoke
         env:
           NODE_PATH: ${{ github.workspace }}/work/campaign-browser/node_modules

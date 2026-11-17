@@ -1,4 +1,5 @@
 extends SceneTree
+const Touch=preload("res://tests/premium_input_driver.gd")
 ## Bounded 550-entry UI fixture, plus permanent unit-status/feedback contracts.
 ## Fixture records are deliberately not claimed as playable production cards.
 const Shell=preload("res://scripts/alpha/shell.gd")
@@ -50,7 +51,7 @@ func paging_checks() -> void:
 		app.filter_text="UI Prüfmotiv 549";app.render();await settle()
 		check(app.library_page==0 and tiles(app)==["ui-fixture-549"],"filtering resets tofirstpage andfinds last entry")
 		check(not app.actions.has("library_next") and app.library_total==1,"single-result search hides redundant paging")
-		app.actions["detail_ui-fixture-549"].pressed.emit();await settle()
+		await Touch.tap(self,app.actions["detail_ui-fixture-549"]);await settle()
 		check(is_instance_valid(app.modal),"last-page card opens actual inspector")
 		app.close_modal();app.queue_free();await settle()
 		print("PRODUCTION UI fixture pages complete ",dimensions)

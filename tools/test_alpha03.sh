@@ -83,6 +83,8 @@ trap cleanup EXIT
 
 node -e "const [major,minor]=process.versions.node.split('.').map(Number); if(major!==24||minor<13)throw Error('Online integration requires Node >=24.13 <25')"
 "$GODOT_BIN" --version | python3 -c 'import sys; version=sys.stdin.read().strip(); assert version.startswith("4.6.3."), version; print(version)'
+run_checked online-runner-contract 'Ran [1-9][0-9]* tests? in [^\n]+\n\nOK$' \
+  timeout 30s python3 tests/alpha03_runner_contract_test.py
 
 # Only import can be reused from an already prepared immutable CI/local cache.
 # No test suite can be skipped by this runner.
@@ -111,8 +113,14 @@ run_checked online-schema-pinned '' git diff --exit-code -- shared/schemas/clien
 online_started=1
 run_checked online-server '^# pass [1-9][0-9]*$' \
   env NODE_OPTIONS="${NODE_OPTIONS:+$NODE_OPTIONS }--test-reporter=tap" timeout 1500s npm --prefix server test
-run_checked online-demo-fixture '' timeout 180s npm --prefix server run demo
+# The short fixture checks transport only. `demo` aliases the full production
+# duel and can legitimately exceed180s as its cryptorandom match seed varies.
+run_checked online-demo-fixture '' timeout 180s npm --prefix server run demo:transport
+run_checked online-demo-fixture-parser 'ONLINE TRANSPORT FIXTURE: completed; simulation-only' \
+  timeout 30s python3 tools/alpha03/check_online_demo.py transport work/alpha03/online-demo-fixture.log
 run_checked online-production-duel '"simulation": false' timeout 900s npm --prefix server run demo:duel
+run_checked online-production-duel-parser 'ONLINE PRODUCTION DUEL: completed; actual Godot rules' \
+  timeout 30s python3 tools/alpha03/check_online_demo.py production work/alpha03/online-production-duel.log
 run_checked online-security-audit '' timeout 180s npm --prefix server audit --omit=dev --audit-level=high
 run_checked online-client 'ONLINE CLIENT: [1-9][0-9]* assertions, 0 failures' \
   timeout 180s "$GODOT_BIN" --headless --path . --audio-driver Dummy --script tests/online_client.gd

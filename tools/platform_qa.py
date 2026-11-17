@@ -28,6 +28,36 @@ REQUIRED = ("data/production/cards.json", "data/production/starters.json", "data
 FORBIDDEN = ("tests/", "tools/", "work/", "docs/", "node_modules/", ".git/", "addons/orafold_art_delivery/")
 
 
+def diagnostic_excerpt(text: str, max_lines: int = 40, max_chars: int = 6000) -> str:
+    """Bounded original log context, never environment or process credentials."""
+    lines = ANSI.sub("", text).splitlines()
+    matches = [index for index, line in enumerate(lines) if FAILURES.search(line)]
+    selected = set()
+    for index in matches[:4]:
+        selected.update(range(max(0, index - 1), min(len(lines), index + 6)))
+    if not selected:
+        selected.update(range(max(0, len(lines) - 12), len(lines)))
+    rows = [f"{index + 1}: {lines[index]}" for index in sorted(selected)]
+    if len(matches) > 4:
+        rows.append(f"[{len(matches) - 4} additional failure markers; full log retained]")
+    excerpt = "\n".join(rows[:max_lines])
+    if len(excerpt) > max_chars:
+        marker = "\n[excerpt truncated; full log retained]"
+        excerpt = excerpt[:max(0, max_chars - len(marker))] + marker[:max_chars]
+    return excerpt
+
+
+def print_log_diagnostic(path: Path, text: str | None = None) -> None:
+    try:
+        if text is None:
+            text = path.read_text(encoding="utf-8", errors="replace")
+        excerpt = diagnostic_excerpt(text)
+    except OSError as error:
+        excerpt = "Unable to read retained log: " + type(error).__name__
+    print("NATIVE FAILURE LOG (bounded excerpt): " + str(path), file=sys.stderr)
+    print(excerpt or "[log is empty]", file=sys.stderr)
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -173,8 +203,10 @@ def inspect_apk(path: Path, root: Path = ROOT) -> dict:
 def clean_log(path: Path) -> str:
     text = ANSI.sub("", path.read_text(encoding="utf-8", errors="replace"))
     if FAILURES.search(text):
+        print_log_diagnostic(path, text)
         raise ValueError("Native runtime contains errors/leaks: " + str(path))
     if "Godot Engine v4.6.3" not in text:
+        print_log_diagnostic(path, text)
         raise ValueError("Native startup did not identify the actual4.6.3 engine")
     return text
 
@@ -190,9 +222,11 @@ def smoke_summary(path: Path) -> dict:
             if row.get("suite") == "production_native_exported":
                 rows.append(row)
     if len(rows) != 1:
+        print_log_diagnostic(path)
         raise ValueError("Expected one real native smoke summary")
     row = rows[0]
     if not isinstance(row.get("assertions"), int) or row["assertions"] < 12 or row.get("failures") != 0 or row.get("main_menu_verified") is not True or row.get("winner") not in ("hero", "enemy", "draw") or not isinstance(row.get("round"), int) or row["round"] < 1 or not re.fullmatch("[0-9a-f]{64}", row.get("catalog_fingerprint", "")):
+        print_log_diagnostic(path)
         raise ValueError("Incomplete/failed actual native duel")
     return row
 
@@ -255,10 +289,12 @@ class Runner:
         except subprocess.TimeoutExpired:
             self.report["commands"].append({"name": name, "timed_out": True, "seconds": round(time.monotonic() - started, 3), "log": str(log.relative_to(self.root))})
             self.write()
+            print_log_diagnostic(log)
             raise
         self.report["commands"].append({"name": name, "exit_code": completed.returncode, "seconds": round(time.monotonic() - started, 3), "log": str(log.relative_to(self.root))})
         self.write()
         if completed.returncode:
+            print_log_diagnostic(log)
             raise ValueError(f"Actual command {name} failed with exit{completed.returncode}; see{log}")
         return log
 
@@ -282,6 +318,38 @@ class Runner:
             for artifact in relatives:
                 artifact.unlink()
 
+    def native_duels(self, executable: Path, name: str) -> Path:
+        # Independent starts expose rare teardown leaks. This is not a retry:
+        # every run must pass, and the first failure aborts the entire build.
+        expected = None
+        self.report["native_teardown_runs"] = []
+        for index in range(8):
+            run_name = name + "-runtime" + (f"-pass-{index + 1:02d}" if index else "")
+            evidence = {"pass": index + 1, "status": "running", "commit": self.report["commit"],
+                        "source_report_field": "source_sha256", "executable": str(executable.relative_to(self.root)),
+                        "log": str((self.stage / (run_name + ".log")).relative_to(self.root))}
+            self.report["native_teardown_runs"].append(evidence)
+            self.write()
+            try:
+                log = self.run(run_name, [str(executable), "--headless", "--verbose", "--audio-driver", "Dummy"], self.isolated, timeout=300)
+                summary = smoke_summary(log)
+                evidence["summary"] = summary
+                outcome = (summary["catalog_fingerprint"], summary["winner"], summary["round"])
+                if expected is not None and outcome != expected:
+                    print_log_diagnostic(log)
+                    raise ValueError("Fixed-seed native outcome changed between independent executions")
+                expected = outcome
+                evidence["status"] = "passed"
+                if index == 0:
+                    self.report["native_exported_duel"] = summary
+                    self.report["main_menu_verified"] = True
+                self.write()
+            except Exception as error:
+                evidence.update(status="failed", error=str(error))
+                self.write()
+                raise
+        return self.stage / (name + "-runtime.log")
+
     def desktop(self, platform: str):
         if (platform == "windows" and os.name != "nt") or (platform == "linux" and not sys.platform.startswith("linux")):
             raise ValueError("Actual Windows runtime evidence requires a Windows runner; no Linux/Wine substitution")
@@ -298,9 +366,7 @@ class Runner:
                 executable = path.with_suffix(".console.exe") if platform == "windows" else path
                 if not executable.is_file():
                     raise ValueError("Missing actual debug console wrapper")
-                log = self.run(name + "-runtime", [str(executable), "--headless", "--audio-driver", "Dummy"], self.isolated, timeout=300)
-                self.report["native_exported_duel"] = smoke_summary(log)
-                self.report["main_menu_verified"] = True
+                log = self.native_duels(executable, name)
                 inventory.update(runtime_executed=True, runtime_host=sys.platform, runtime_log=str(log.relative_to(self.root)))
             else:
                 # --quit-after forces an engine exit and bypasses the real

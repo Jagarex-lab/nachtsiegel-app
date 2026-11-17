@@ -1,4 +1,5 @@
 extends SceneTree
+const Touch=preload("res://tests/premium_input_driver.gd")
 ## Curated real-card templates: data contracts, full games, and actual shell.
 const Catalog = preload("res://scripts/alpha/catalog.gd")
 const Model = preload("res://scripts/alpha/model.gd")
@@ -168,7 +169,7 @@ func shell_checks(entries: Array) -> void:
 		root.size = dimensions
 		app.close_modal();app.open_cards(false);await settle()
 		check(app.actions.has("strategy_templates") and bounded(app.actions.strategy_templates), "visible44px template button " + str(dimensions))
-		app.actions.strategy_templates.pressed.emit();await settle()
+		await Touch.tap(self,app.actions.strategy_templates);await settle()
 		check(is_instance_valid(app.modal) and bounded(app.actions.modal_close), "template modal has a visible dismissal " + str(dimensions))
 		for entry in entries:
 			var action := "template_" + str(entry.id)
@@ -183,7 +184,7 @@ func shell_checks(entries: Array) -> void:
 			if sc != null:sc.ensure_control_visible(target)
 			await settle()
 			check(bounded(target), "scrolled template action is visible44px " + action + str(dimensions))
-			target.pressed.emit();await settle()
+			await Touch.tap(self,target);await settle()
 			check(app.deck == entry.cards and app.faction == entry.power and app.deck_tab == "deck", "template loads exact original IDs and selected power " + action + str(dimensions))
 			check(app.deck_check().ok and not app.actions.save_deck.disabled, "loaded template passes actual deckbuilder validation " + action)
 			check(app.session.profile.decks == fixture_saved, "loading template leaves all previously saved decks unchanged " + action)

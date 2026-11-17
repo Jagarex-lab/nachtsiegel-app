@@ -1,0 +1,98 @@
+[
+  {
+    "preview": "battle-before.webp",
+    "preview_sha256": "6a346a124c7e8e4518611a2e8202412b40789cc1f0f7fdf8194473b73426f4a1",
+    "source_png": "work/premium-mobile/before/battle-844x390.png",
+    "source_png_sha256": "b2a95306b6a68b0d9cf2fea0bcba2e4959c1b352d815fcb7697059e2e26b242e",
+    "dimensions": [
+      844,
+      390
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 89418
+  },
+  {
+    "preview": "battle-after.webp",
+    "preview_sha256": "aa1b7edb78f470ff647535502123457610120908016dec37f67729780faaa1ab",
+    "source_png": "work/premium-mobile/after/battle-844x390.png",
+    "source_png_sha256": "2009dc69d8f2539587e3f8566d0b8467d81f0a2bac4675cecb65da8c5e69a9df",
+    "dimensions": [
+      844,
+      390
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 100106
+  },
+  {
+    "preview": "inspection-before.webp",
+    "preview_sha256": "ddb1732ecb4d936f42d911712ee51fe2cef20d4c6dd2871cd79a48d1218e07e8",
+    "source_png": "work/premium-mobile/before/inspection-844x390.png",
+    "source_png_sha256": "96627686b5a61fd8f47c0e3c7fa06095dcff2c7b525688cda18d3ccea0853dd7",
+    "dimensions": [
+      844,
+      390
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 41372
+  },
+  {
+    "preview": "inspection-after.webp",
+    "preview_sha256": "325702363aadc6b1b66bc5a074bb6169fb8810f767419edd245b5cbf693bef68",
+    "source_png": "work/premium-mobile/after/inspection-844x390.png",
+    "source_png_sha256": "c000ce3a65820af755a23910b36d51b218e91900d614f1376f436592d6e5ee8f",
+    "dimensions": [
+      844,
+      390
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 60932
+  },
+  {
+    "preview": "deckbuilder-before.webp",
+    "preview_sha256": "d7b4f61e3a74e7b7c7b8456c70ace72ed7a274cbc9a82ee97d25533da5cebe4d",
+    "source_png": "work/premium-mobile/before/deckbuilder-390x844.png",
+    "source_png_sha256": "d24d6f250929a3271964385b4146e92b0e800e66e56b1e3e4b14599c82f49602",
+    "dimensions": [
+      390,
+      844
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 66952
+  },
+  {
+    "preview": "deckbuilder-after.webp",
+    "preview_sha256": "c9a229074f7d3ab160bfdea06a6f75823785c13247e6a51de727bfc8192e9941",
+    "source_png": "work/premium-mobile/after/deckbuilder-390x844.png",
+    "source_png_sha256": "590d75c4cdf260fce05e2b9d3b4a6239237259cae3eba4f7913b9e3a2a5f7499",
+    "dimensions": [
+      390,
+      844
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 71354
+  },
+  {
+    "preview": "card-concepts-folded.webp",
+    "preview_sha256": "fcda200eb43ffb0b4ea71191052becb75b0150ab5b005a547d94317c45a356f6",
+    "source_png": "work/premium-mobile/cards/folded.png",
+    "source_png_sha256": "4241687ddb3e43788417229fd0931318dd742dc0c886c7b63aba31dbcd0d6e97",
+    "dimensions": [
+      1280,
+      900
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 204928
+  },
+  {
+    "preview": "card-rarity-study.webp",
+    "preview_sha256": "ff2e60eea118cc04393efe240e131f576d20ae87ef82c8eae7b70dcd4ffe65f9",
+    "source_png": "work/premium-mobile/cards/rarity-closeup.png",
+    "source_png_sha256": "1c0c58cefcf1c727fdb355350a6330d0e97201df65dce591653cecac143b36a4",
+    "dimensions": [
+      1000,
+      690
+    ],
+    "encoding": "WebP quality92; original unchanged PNG retained in QA artifacts",
+    "bytes": 101484
+  }
+]

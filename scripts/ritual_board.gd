@@ -24,7 +24,7 @@ func _draw() -> void:
 		draw_arc(c,min(w*0.35,h*0.62)+i*12.0,0,TAU,100,Color(0.64,0.43,0.24,0.16),1.3,true)
 	for i in 16:
 		var a := float(i)*TAU/16.0
-		var p := c+Vector2(cos(a),sin(a))*min(w*0.33,h*0.57)
+		var p: Vector2 = c+Vector2(cos(a),sin(a))*min(w*0.33,h*0.57)
 		draw_circle(p,2.1,Color("#866b50"))
 	# Five continuous engraved lanes; the slots float above these paths.
 	var left := w*0.088

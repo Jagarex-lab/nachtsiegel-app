@@ -18,6 +18,83 @@ func write_json(target: String, value: Variant) -> void:
 	var file := FileAccess.open(target, FileAccess.WRITE)
 	file.store_string(JSON.stringify(value))
 	file.close()
+func ui_settle() -> void:
+	for frame in 6: await process_frame
+func ui_touch(at: Vector2, pressed: bool) -> void:
+	var event := InputEventScreenTouch.new()
+	event.index = 0; event.position = at; event.pressed = pressed
+	Input.parse_input_event(event)
+	await ui_settle()
+func ui_pan(from: Vector2, to: Vector2) -> void:
+	await ui_touch(from, true)
+	var previous := from
+	for step in range(1, 5):
+		var at := from.lerp(to, float(step) / 4.0)
+		var event := InputEventScreenDrag.new()
+		event.index = 0; event.position = at; event.relative = at - previous
+		previous = at; Input.parse_input_event(event)
+		await ui_settle()
+	# A stationary finger ends the scroll without adding fling momentum.
+	await create_timer(0.25).timeout
+	await ui_touch(to, false)
+func ui_panels(node: Node) -> Array:
+	var result: Array = []
+	if node is PanelContainer: result.append(node)
+	for child in node.get_children(): result.append_array(ui_panels(child))
+	return result
+func actual_panel_touch() -> void:
+	var ui_path := "user://economy_alpha550_touch_test.json"
+	clean(ui_path)
+	var economy := Facade.new(ui_path)
+	check(economy.configure_profile({"decks":{}}).ok, "touch case uses ordinary production onboarding")
+	check(economy.catalog.size() == 550, "touch case uses actual550, no synthetic fixture cards")
+	root.size = Vector2i(390, 844)
+	var ui := EconomyPanel.new()
+	ui.configure(economy); root.add_child(ui); await ui_settle()
+	var surfaces := ui_panels(ui)
+	check(surfaces.size() == 6, "all six actual economy information panels exist")
+	for surface in surfaces:
+		check(surface.mouse_filter == Control.MOUSE_FILTER_PASS, "decorative economy panel passes touch to its scroll parent")
+	var before := JSON.stringify(economy.manager.state, "", true)
+	var start := Vector2(366, 796)
+	check(surfaces.any(func(surface): return surface.get_global_rect().has_point(start)), "regression pan starts on an actual panel, not the narrow margin")
+	await ui_pan(start, start + Vector2(0, -160))
+	check(ui._scroll.scroll_vertical > 0, "real touch can scroll directly from an information panel")
+	check(JSON.stringify(economy.manager.state, "", true) == before, "panel pan preserves complete balances, collection, RNG and receipts")
+	# Reset only this UI fixture's scroll position; no economy state is arranged.
+	ui._scroll.scroll_vertical = 0; await ui_settle()
+	await ui_pan(Vector2(6, 796), Vector2(6, 636))
+	check(ui._scroll.scroll_vertical > 0, "original neutral margin remains a working scroll surface")
+	check(JSON.stringify(economy.manager.state, "", true) == before, "margin pan cannot change economy state")
+	for key in ["buy", "open"]:
+		var control: Control = ui.actions[key]
+		var rect := control.get_global_rect()
+		var visible := Rect2(0, 0, 390, 844).encloses(rect) and rect.size.x >= 44 and rect.size.y >= 44
+		check(visible, "fast-pan financial target is actually visible and44px: " + key)
+		if not visible: continue
+		var at := rect.get_center()
+		var pressed := InputEventScreenTouch.new()
+		pressed.index = 0; pressed.position = at; pressed.pressed = true
+		Input.parse_input_event(pressed)
+		var move := InputEventScreenDrag.new()
+		move.index = 0; move.position = at + Vector2(0, -80); move.relative = Vector2(0, -80)
+		Input.parse_input_event(move); Input.flush_buffered_events()
+		var released := InputEventScreenTouch.new()
+		released.index = 0; released.position = move.position; released.pressed = false
+		Input.parse_input_event(released); Input.flush_buffered_events(); await ui_settle()
+		check(JSON.stringify(economy.manager.state, "", true) == before, "fast original pointer pan/release cannot purchase or open: " + key)
+	var target: Rect2 = ui.actions.buy.get_global_rect()
+	var visible: bool = Rect2(0, 0, 390, 844).encloses(target) and target.size.x >= 44 and target.size.y >= 44
+	check(visible, "intentional purchase uses an actually visible44px target")
+	var sequence_before := int(economy.manager.state.sequence)
+	var gold_before := int(economy.manager.state.wallet.gold)
+	var packs_before := int(economy.manager.state.boosters.standard)
+	if visible:
+		await ui_touch(target.get_center(), true); await ui_touch(target.get_center(), false)
+	check(int(economy.manager.state.sequence) == sequence_before + 1, "one intentional tap commits one transaction")
+	check(int(economy.manager.state.wallet.gold) == gold_before - 100 and int(economy.manager.state.boosters.standard) == packs_before + 1, "intentional purchase preserves the existing100Gold cost and one-pack output")
+	surfaces.clear(); ui.queue_free(); await ui_settle(); ui = null; economy = null
+	clean(ui_path)
 func _initialize() -> void: call_deferred("run")
 func run() -> void:
 	clean(path)
@@ -134,6 +211,7 @@ func run() -> void:
 		check(panel.actions.has("open") and panel.actions.has("craft"), "responsive panel controls")
 		check(panel.actions.open.custom_minimum_size.y >= 44, "touch target")
 	panel.queue_free()
+	await actual_panel_touch()
 	# Corruption recovery preserves bad bytes and a valid last-good backup.
 	var file := FileAccess.open(path, FileAccess.WRITE)
 	file.store_string("broken-primary")

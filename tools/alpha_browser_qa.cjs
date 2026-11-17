@@ -1,5 +1,7 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
+const {scrollGesture,assertPanContext,settleHeldPan}=require('./premium/browser_contract.cjs');
+const {nativeCapture}=require('./premium/native_capture_contract.cjs');
 const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards,...JSON.parse(fs.readFileSync('data/legacy/cards.json','utf8')).cards],by=Object.fromEntries(cards.map(c=>[c.id,c]));
 function allVisibleCompactReady({expected,count}){
  const rows=(window.orafoldQA?.battle_art||[]).filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
@@ -12,6 +14,7 @@ function allVisibleCompactReady({expected,count}){
  const legacyOnly=process.env.QA_LEGACY_ONLY==='1';
  const compactEntries=legacyOnly?[]:Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries);
  const compactGeometry=Object.fromEntries(compactEntries.map(([id,entry])=>[id,[entry.width,entry.height]]));
+ const fullGeometry=legacyOnly?{}:Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_delivery.json','utf8')).entries).map(([id,entry])=>[id,[entry.width,entry.height]]));
  const externalCompact=Object.fromEntries(compactEntries.filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
  const recordGameplay=process.env.QA_GAMEPLAY_SEQUENCE==='1',sha256=value=>crypto.createHash('sha256').update(value).digest('hex');
  let sequenceArtifact=null;
@@ -40,7 +43,7 @@ function allVisibleCompactReady({expected,count}){
   try{
    console.log('BROWSER RUNTIME',engine,browser.version(),require('playwright/package.json').version);
    const {name,insets,...opts}=profile,context=await browser.newContext(opts),page=await context.newPage(),errors=[];
-   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot',gameplay=null;const relicActivations=[],toolbarTests=[],actionTrace=[],battleArtChecks=[];
+   let inspectedCard=null,profileTemplate=null,testedBuildInfo=null,lastAction='boot',gameplay=null;const relicActivations=[],toolbarTests=[],actionTrace=[],battleArtChecks=[],captureMetrics=[];
    const sequenceEnabled=recordGameplay&&engine==='chromium'&&name==='desktop',sequenceDir=path.resolve(process.env.QA_GAMEPLAY_OUTPUT||'work/alpha/gameplay-sequence');
    page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
    if(insets)await page.addInitScript(v=>Object.defineProperty(window,'nachtsiegelInsets',{configurable:true,get:()=>()=>v,set:()=>{}}),insets);
@@ -53,20 +56,21 @@ function allVisibleCompactReady({expected,count}){
     const height=Math.max(160,Math.min(m.pixelsHeight/q.density-top,m.visibleHeight)-(safe.top||0)-(safe.bottom||0));
     return Math.abs(m.cssWidth-viewport.width)<1&&Math.abs(m.cssHeight-viewport.height)<1&&Math.abs(m.pixelsWidth/m.cssWidth-q.density)<.02&&Math.abs(q.layout_size[0]-width)<1&&Math.abs(q.layout_size[1]-height)<1;
    },page.viewportSize(),{timeout:90000});
-   const stableTarget=async target=>{
+   const stableTarget=async (target,expectedContext=null)=>{
     const handle=await page.waitForFunction(sample=>{
      const q=window.orafoldQA;if(!q||q===sample.previous)return false;sample.previous=q;
+     if(sample.context&&(q.page!==sample.context.page||Boolean(q.modal)!==Boolean(sample.context.modal)||q.modal_version!==sample.context.modal_version||q.inspection?.id!==sample.context.inspection_id))throw new Error('Scroll/input target context changed before touch');
      const t=sample.target,a=t.action?q.actions[t.action]:null;
      const rect=t.action?(t.action.startsWith('card_')&&q.action_visibility?.[t.action]?q.action_visibility[t.action].visible_rect:a?.rect):t.board?q.board[t.board]:q.hand[t.hand]?.id===t.card_id?q.hand[t.hand].rect:null;
      if(!rect||a?.disabled){sample.count=0;return false;}
      sample.count=sample.last&&rect.every((n,i)=>Math.abs(n-sample.last[i])<=1)?sample.count+1:1;sample.last=[...rect];
      return sample.count>=3?{rect,action_rect:a?.rect,visibility:t.action?q.action_visibility?.[t.action]:null,samples:sample.count}:false;
-    },{target,previous:null,last:null,count:0},{timeout:90000});
+    },{target,context:expectedContext?{page:expectedContext.page,modal:expectedContext.modal,modal_version:expectedContext.modal_version,inspection_id:expectedContext.inspection?.id}:null,previous:null,last:null,count:0},{timeout:90000});
     try{return await handle.jsonValue();}finally{await handle.dispose();}
    };
-   const tap=async (r,target=null)=>{
+   const tap=async (r,target=null,expectedContext=null)=>{
     if(!target){const q=await state(),same=value=>value&&value.every((n,i)=>Math.abs(n-r[i])<.1),id=Object.keys(q.actions).find(id=>same(touchRect(q,id))||same(q.actions[id].rect)),board=Object.keys(q.board).find(id=>same(q.board[id])),hand=q.hand.findIndex(card=>same(card.rect));target=id?{action:id}:board?{board}:hand>=0?{hand,card_id:q.hand[hand].id}:null;assert(target,'touch has an actual tracked UI target');}
-    const settled=await stableTarget(target);r=settled.rect;const q=await state();settled.render_version=q.render_version;settled.modal_version=q.modal_version;
+    const settled=await stableTarget(target,expectedContext);r=settled.rect;const q=await state();settled.render_version=q.render_version;settled.modal_version=q.modal_version;
     if(target.action)assert(fullVisible(q,target.action),target.action+' stays fully touch-visible after kinetic scrolling settles');
     if(gameplay?.recording)gameplay.inputs.push({kind:'touch',point:[r[0]+r[2]/2,r[1]+r[3]/2],rect:r,target,seed:q.battle?.seed,command_count:q.command_count,selected:q.selected,phase:q.battle?.hero.phase,action:lastAction});
     actionTrace.push({kind:'stable_touch',target,rect:r,fresh_qa_samples:settled.samples});await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);await page.waitForTimeout(90);return settled;
@@ -83,46 +87,46 @@ function allVisibleCompactReady({expected,count}){
     return encloses(viewportRect(),a.rect)&&encloses(visibility.clip_rect,a.rect)&&encloses(visibility.visible_rect,a.rect)&&visibility.visible_rect[2]>=43.9&&visibility.visible_rect[3]>=43.9;
    };
    async function panTowards(current,id){
-    const clip=current.action_visibility[id].clip_rect,r=current.actions[id].rect;
-    assert(clip[2]>=43.9&&clip[3]>=43.9,id+' scroll region can expose44CSS');
-    const down=r[1]+r[3]>clip[1]+clip[3]+.1,up=r[1]<clip[1]-.1;
-    assert(down||up,id+' horizontal clipping cannot be repaired by vertical pan');
-    const sameClip=value=>value&&value.every((n,i)=>Math.abs(n-clip[i])<.1);
-    const buttons=Object.entries(current.actions).filter(([key])=>sameClip(current.action_visibility[key]?.clip_rect)).map(([,value])=>value.rect);
-    const ys=[down?clip[1]+clip[3]-24:clip[1]+24,clip[1]+clip[3]*.5,...buttons.flatMap(value=>[value[1]-2,value[1]+value[3]+2])].filter(y=>y>=clip[1]+8&&y<=clip[1]+clip[3]-8).sort((a,b)=>down?b-a:a-b);
-    let point=null;
-    for(const y of ys){for(const fraction of [.75,.25,.5]){const x=clip[0]+clip[2]*fraction;if(!buttons.some(value=>x>=value[0]&&x<=value[0]+value[2]&&y>=value[1]&&y<=value[1]+value[3])){point={x,y};break;}}if(point)break;}
-    assert(point,id+' has a real scroll surface outside action buttons');
-    const available=down?point.y-(clip[1]+8):clip[1]+clip[3]-8-point.y;
-    const distance=Math.min(160,clip[3]*.6,available);assert(distance>10,id+' pan exceeds real scroll deadzone');
-    const end={x:point.x,y:point.y+(down?-distance:distance)};
+    const gesture=scrollGesture(current,id),clip=gesture.clip,point=gesture.from,end=gesture.to;
+    let quiet;
     if(capture){
      await capture.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{...point,id:0,radiusX:2,radiusY:2,force:1}]});
+     try{
      for(let step=1;step<=6;step++){await capture.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:point.x,y:point.y+(end.y-point.y)*step/6,id:0,radiusX:2,radiusY:2,force:1}]});await page.waitForTimeout(35);}
-     await capture.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+     quiet=await settleHeldPan(page,id,current);
+     }finally{await capture.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});}
     }else{
      // WebKit's public protocol provides tap only. Trusted browser mouse pan
      // reaches Godot's configured touch emulation; no DOM event/model hook.
      await page.mouse.move(point.x,point.y);await page.mouse.down();
+     try{
      for(let step=1;step<=6;step++){await page.mouse.move(point.x,point.y+(end.y-point.y)*step/6);await page.waitForTimeout(35);}
-     await page.mouse.up();
+     quiet=await settleHeldPan(page,id,current);
+     }finally{await page.mouse.up();}
     }
-    actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end});
     await page.waitForTimeout(180);
+    const after=await state(),context=s=>({page:s.page,modal:s.modal,modal_version:s.modal_version,render_version:s.render_version,inspection_id:s.inspection?.id});
+    actionTrace.push({id,kind:'pan',driver:capture?'CDP primary touch':'browser mouse with Godot touch emulation',clip_rect:clip,from:point,to:end,quiet_before_release:quiet,before:context(current),after:context(after),target_before:current.actions[id]?.rect,target_after:after.actions[id]?.rect});
+    assertPanContext(current,after,id);
    }
    const action=async (id,{render=true}={})=>{
-    lastAction=id;if(id==='convergence'&&!(await state()).actions[id])await action('actions');
+    lastAction=id;
+    // Secondary actions live in the actual More sheet in the premium arena.
+    // Open that visible sheet rather than requiring permanent debug buttons or
+    // invoking any model/UI callback from JavaScript.
+    if(['convergence','log','restart'].includes(id)&&!(await state()).actions[id])await action('actions');
     await page.waitForFunction(id=>{const a=window.orafoldQA?.actions?.[id];return a&&!a.disabled&&a.rect[2]>=43.9&&a.rect[3]>=43.9;},id,{timeout:90000});
-    let previous=await state();lastAction=id;
+    let previous=await state();const actionContext=previous;lastAction=id;
     if(legacyOnly&&!previous.action_visibility){
      for(let tries=0;tries<8&&!fullVisible(previous,id);tries++){
       const r=previous.actions[id].rect,v=page.viewportSize();await page.mouse.move(Math.max(1,Math.min(v.width-1,r[0]+r[2]/2)),v.height*.6);await page.mouse.wheel(0,r[1]<0?-v.height*.55:v.height*.55);await page.waitForTimeout(140);previous=await state();
      }
-    }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);await stableTarget({action:id});previous=await state();}
+    }else for(let tries=0;tries<24&&!fullVisible(previous,id);tries++){await panTowards(previous,id);await stableTarget({action:id},actionContext);previous=await state();}
+    assertPanContext(actionContext,previous,id);
     assert(fullVisible(previous,id),id+' requires a visible44CSS card region or a fully visible button');
     const hit=touchRect(previous,id);assert(hit[2]>=43.9&&hit[3]>=43.9,id+' actual touch region remains44CSS');
     const destination={builder:'builder',collection:'collection',settings:'settings',start:legacyOnly?'battle':'decks',deck_play:'battle',builder_back:'lobby',settings_back:'lobby',decks_back:'lobby',confirm_menu:'lobby',result_menu:'lobby'}[id];
-    const settled=await tap(hit,{action:id});actionTrace.push({id,kind:'tap',rect:settled.action_rect,hit_rect:settled.rect,visibility:settled.visibility});if(render)await page.waitForFunction(({previous,destination})=>{const q=window.orafoldQA;return(q.render_version>previous.render_version||q.modal_version!==previous.modal_version)&&(!destination||q.page===destination);},{previous:settled,destination},{timeout:90000});
+    const settled=await tap(hit,{action:id},actionContext);actionTrace.push({id,kind:'tap',rect:settled.action_rect,hit_rect:settled.rect,visibility:settled.visibility});if(render)await page.waitForFunction(({previous,destination})=>{const q=window.orafoldQA;return(q.render_version>previous.render_version||q.modal_version!==previous.modal_version)&&(!destination||q.page===destination);},{previous:settled,destination},{timeout:90000});
    };
    const capture=engine==='chromium'?await context.newCDPSession(page):null;
    const deadline=async (promise,message,ms)=>{let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(message)),ms);})]).finally(()=>clearTimeout(timer));};
@@ -132,12 +136,7 @@ function allVisibleCompactReady({expected,count}){
     // native-viewport harnesses and wait for paint before requesting readback.
     await deadline(page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)))),'Screenshot paint timed out after15s',15000);
     await page.waitForTimeout(180);
-    let buffer;
-    if(capture){
-     const viewport=page.viewportSize();let expiry;
-     const response=await Promise.race([capture.send('Page.captureScreenshot',{format:'png',fromSurface:true,captureBeyondViewport:true,clip:{x:0,y:0,width:viewport.width,height:viewport.height,scale:opts.deviceScaleFactor||1}}),new Promise((_,reject)=>{expiry=setTimeout(()=>reject(new Error('CDP capture timed out after 30s')),30000)})]).finally(()=>clearTimeout(expiry));
-     buffer=Buffer.from(response.data,'base64');
-    }else buffer=await page.screenshot({timeout:30000});
+    const buffer=await nativeCapture(page,{factor:opts.deviceScaleFactor||1,timeout:30000,receipts:captureMetrics,tag});
     assert.equal(buffer.readUInt32BE(16),page.viewportSize().width*(opts.deviceScaleFactor||1),'native screenshot width');
     assert.equal(buffer.readUInt32BE(20),page.viewportSize().height*(opts.deviceScaleFactor||1),'native screenshot height');
     assert(buffer.length>20000,'nonempty rendered screenshot');
@@ -177,12 +176,14 @@ function allVisibleCompactReady({expected,count}){
      if(customPower)await action('custom_'+customPower);await action('deck_play');
      if(expectedCards){const hero=(await state()).battle.hero;assert.deepEqual([...hero.hand,...hero.deck].sort(),[...expectedCards].sort(),'actual new match contains the exact saved production template');}
      await checkBattleArt('mulligan');
+     await checkAllVisibleArt();
      if(recordOpening){gameplay.seed=(await state()).battle.seed;await sequenceFrame('mulligan');}
     }
     if(legacyOnly){await wait(()=>window.orafoldQA.board.hero0);return;}
     await action('mulligan_done');await action('origin_2');await wait(()=>window.orafoldQA?.battle?.stage!=='origins');
     if((await state()).battle.stage==='second')await action('opening_done');await wait(()=>window.orafoldQA?.battle?.stage==='battle'&&window.orafoldQA.board.hero0);
     await checkBattleArt('battle');
+    await checkAllVisibleArt();
     if(recordOpening)await sequenceFrame('opening');
    }
    async function toolbarViewportChecks(){
@@ -299,6 +300,7 @@ function allVisibleCompactReady({expected,count}){
      assert.deepEqual(detail.deck_ids,collection.deck_ids,'read-only collection inspection preserves the deck');
      assert.equal(detail.page,'collection','inspection stays in the collection');
      assert(inside(detail.actions.modal_close.rect)&&detail.actions.modal_close.rect[2]>=43.9&&detail.actions.modal_close.rect[3]>=43.9,'inspector close is visible >=44CSS');
+     await page.waitForFunction(expected=>{const i=window.orafoldQA.inspection,a=i?.art,size=expected[i?.id];return Boolean(size&&a?.state==='ready'&&a.status==='final'&&a.profile==='full'&&a.visible===true&&a.draw_count>0&&a.card_id===i.id&&a.requested_card_id===i.id&&a.preview_only===false&&a.pixels?.[0]===size[0]&&a.pixels?.[1]===size[1]);},fullGeometry,{timeout:90000});
      await shot('collection-inspection');await action('modal_close');
      const closed=await state();assert(!closed.modal&&closed.page==='collection','closing inspection restores collection');
      assert.deepEqual(closed.deck_ids,collection.deck_ids,'closing inspection preserves the deck');
@@ -307,8 +309,9 @@ function allVisibleCompactReady({expected,count}){
     await action('builder_back');
     if(!legacyOnly){await action('settings');const power={desktop:'houses','desktop-wide':'stillwatch',android:'ninth',iphone:'morph','android-bars':'houses','iphone-wide':'stillwatch','iphone-bars':'morph'}[name];await action('faction_'+power);await action('settings_back');}
     await opening();let q=await state();assert.equal(q.battle.hero.maxHp,legacyOnly?35:30);if(!legacyOnly)assert.equal(q.battle.enemy.maxHp,30);
-    for(const key of (legacyOnly?['end','actions','inspect','menu','log']:['end','actions','inspect','menu','log'])){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
+    for(const key of ['end','actions','inspect','menu']){const r=q.actions[key].rect;assert(r[2]>=43.9&&r[3]>=43.9,`${key}:44CSS`);assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,`${key}:bounds`);}
     for(const r of Object.values(q.board))assert(r[2]>=43.9&&r[3]>=43.9&&r[0]>=0&&r[1]>=0&&r[0]+r[2]<=opts.viewport.width+1&&r[1]+r[3]<=opts.viewport.height+1,'board safe bounds');
+    const beforeLog=q.battle;await action('log');assert((await state()).modal&&(await state()).actions.verify_replay,'the secondary combat log is genuinely reachable through touch');await action('modal_close');assert.deepEqual((await state()).battle,beforeLog,'opening and closing the combat log preserves the complete battle');
     await shot('battle');if(!legacyOnly&&['desktop','iphone'].includes(name))await toolbarViewportChecks();await playTurn();
     if(!legacyOnly&&!(await state()).battle.winner)await checkAllVisibleArt();await shot('after-turn');
     if((await state()).battle.winner){await action('result_menu');}else{await action('menu');await action('confirm_menu');}
@@ -366,10 +369,10 @@ function allVisibleCompactReady({expected,count}){
       gameplay.recording=false;gameplay.status='passed';gameplay.action_trace=actionTrace;saveSequence();
      }
     }
-    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,bound_battle_art_checks:battleArtChecks,gameplay_sequence:gameplay?{status:gameplay.status,manifest:path.join(sequenceDir,"sequence.json"),seed:gameplay.seed,restart_seed:gameplay.restart_seed,frames:gameplay.frames.length,replay_sha256:gameplay.replay.sha256}:null,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
+    assert.equal(errors.length,0,errors.join('\n'));const result={engine,profile:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,build_info:testedBuildInfo,viewport:opts.viewport,dpr:opts.deviceScaleFactor||1,errors,inspected_card:inspectedCard,strategy_template:profileTemplate,relic_activations:relicActivations,toolbar_viewport_tests:toolbarTests,bound_battle_art_checks:battleArtChecks,native_captures:captureMetrics,gameplay_sequence:gameplay?{status:gameplay.status,manifest:path.join(sequenceDir,"sequence.json"),seed:gameplay.seed,restart_seed:gameplay.restart_seed,frames:gameplay.frames.length,replay_sha256:gameplay.replay.sha256}:null,action_trace:actionTrace,checks:'real touch, menu, collection, visible inspector, settings, opening, ancestor-clipped44CSS bounds and actual pointer pan, saved deck reload; full games verify exact production template in actual match; relic activation uses actual enabled UI control',full_duel:['desktop','desktop-wide','android','iphone'].includes(name)?(legacyOnly?'legacy':'alpha'):null};results.push(result);
     fs.writeFileSync(`work/alpha/browser-result-${engine}-${name}.json`,JSON.stringify(result,null,2));
     console.log('ALPHA BROWSER PASS:',engine,name);
-   }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);if(gameplay){gameplay.status='failed';gameplay.error=String(error);gameplay.action_trace=actionTrace;saveSequence();}await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,diagnostic},null,2));throw error;}
+   }catch(error){const diagnostic=await page.evaluate(()=>({status:document.querySelector('#status')?.textContent,qa:window.orafoldQA})).catch(()=>null);if(gameplay){gameplay.status='failed';gameplay.error=String(error);gameplay.action_trace=actionTrace;saveSequence();}await shot('failure').catch(()=>{});fs.writeFileSync('work/alpha/browser-errors.json',JSON.stringify({engine,name,last_action:lastAction,errors,action_trace:actionTrace,native_captures:captureMetrics,diagnostic},null,2));throw error;}
    finally{clearInterval(progress);await context.close();}
   }finally{await browser.close();}
   }
