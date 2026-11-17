@@ -26,8 +26,18 @@ def privileged(command):
     subprocess.run(prefix+command,check=True,timeout=30)
 
 
-def dependency_failure(text):
-    return bool(re.search(r'Installation process exited with code:\s*100|Failed to install (?:browser )?dependencies|^E: (?:Failed to fetch|Unable to fetch)|Temporary failure resolving[^\n]*ubuntu\.com',text,re.I|re.M))
+def dependency_failure(text, status=None):
+    if re.search(r'Installation process exited with code:\s*100|Failed to install (?:browser )?dependencies|^E: (?:Failed to fetch|Unable to fetch)|Temporary failure resolving[^\n]*ubuntu\.com',text,re.I|re.M):
+        return True
+    # A stopped APT transfer may never print its normal E: diagnostic. Retry
+    # only when our own deadline fired and the last actual subprocess output
+    # still identifies an Ubuntu APT download. Earlier successful APT output
+    # must not turn a later browser-CDN or unrelated timeout into a mirror retry.
+    if status!=124:return False
+    lines=[line.strip() for line in text.splitlines() if line.strip()]
+    if not lines or not re.fullmatch(r'CI dependency attempt exceeded [0-9.]+s; no success was inferred\.',lines[-1]):return False
+    lines.pop()
+    return bool(lines and re.match(r'^(?:Get|Ign):\d+ https?://(?:[a-z0-9-]+\.)*ubuntu\.com/ubuntu(?:/| )',lines[-1],re.I))
 
 
 def execute(commands, timeout, root_command=privileged):
@@ -92,7 +102,7 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
                 status,text=execute(commands,timeout,root_command);emit(text)
                 if status==0:emit('Dependency installation succeeded.');return 0
                 emit(f'Attempt1 failed with exit{status}.')
-                if not dependency_failure(text):emit('Not an Ubuntu dependency-download failure; no mirror changes or retry.');return status
+                if not dependency_failure(text,status):emit('Not an Ubuntu dependency-download failure; no mirror changes or retry.');return status
                 if not ubuntu or not mirror.is_file() or mirror.is_symlink():
                     emit('Supported regular Ubuntu mirrorlist unavailable; original failure remains.');return status
                 backup=temporary/'original-mirrors.txt'

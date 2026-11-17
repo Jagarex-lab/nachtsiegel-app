@@ -98,6 +98,47 @@ sys.exit(status)
         self.assertEqual(self.run_installer(),1);self.assertEqual(len(self.rows()),1)
         self.assert_restored()
 
+    def test_real_ubuntu_transfer_timeout_gets_one_bounded_official_fallback(self):
+        # Terminal subprocess lines from Main44202171157/job134458772372:
+        # the300second deadline stopped APT before it could emit an E: error.
+        stalled='''Installing dependencies...
+Get:9 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgbm1 amd64 25.2.8-0ubuntu0.24.04.5 [34.2 kB]
+Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 mesa-libgallium amd64 25.2.8-0ubuntu0.24.04.5 [10.8 MB]
+CI dependency attempt exceeded 300s; no success was inferred.
+'''
+        calls=[]
+        def execute(commands,timeout,root_command):
+            calls.append({'timeout':timeout,'mirror':self.mirror.read_text(),'commands':commands})
+            return (124,stalled) if len(calls)==1 else (0,'Dependencies and browser installed.\n')
+        with patch.object(deps,'execute',side_effect=execute):
+            self.assertEqual(self.run_installer(),0)
+        self.assertEqual(len(calls),2)
+        self.assertEqual([call['timeout'] for call in calls],[300,300])
+        self.assertEqual([call['mirror'] for call in calls],[self.original.decode(),deps.OFFICIAL_MIRRORS])
+        self.assertEqual(calls[0]['commands'],calls[1]['commands'])
+        self.assert_restored()
+
+    def test_ubuntu_transfer_timeout_is_not_inferred_from_old_or_unrelated_output(self):
+        apt='Get:10 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble-updates/main amd64 mesa-libgallium amd64 25.2.8 [10.8 MB]\n'
+        timeout='CI dependency attempt exceeded 300s; no success was inferred.\n'
+        for text,status in [(apt+timeout,1),(apt,124),('fake installer waiting\n'+timeout,124),
+                            (apt+'Downloading Chromium from https://cdn.playwright.dev/\n'+timeout,124),
+                            (apt+'Fetched32.1MB\n'+timeout,124),
+                            ('Get:10 https://ubuntu.com.evil.invalid/ubuntu noble Packages\n'+timeout,124)]:
+            with self.subTest(text=text,status=status):
+                self.assertFalse(deps.dependency_failure(text,status))
+                with patch.object(deps,'execute',return_value=(status,text)) as execute:
+                    self.assertEqual(self.run_installer(),status)
+                    self.assertEqual(execute.call_count,1)
+                self.assert_restored()
+
+    def test_persistent_ubuntu_download_timeout_stays_failed_after_exactly_two_attempts(self):
+        text='Get:1 https://archive.ubuntu.com/ubuntu noble/main amd64 package amd64 1.0 [10 MB]\nCI dependency attempt exceeded 300s; no success was inferred.\n'
+        with patch.object(deps,'execute',return_value=(124,text)) as execute:
+            self.assertEqual(self.run_installer(),124)
+            self.assertEqual(execute.call_count,2)
+        self.assertIn('CI remains failed',self.log.read_text());self.assert_restored()
+
     def test_unsupported_or_symlink_mirror_is_not_replaced(self):
         os.environ['FAKE_CODES']='[1,0]'
         self.mirror.unlink();other=self.root/'other-mirror';other.write_bytes(self.original);self.mirror.symlink_to(other)
@@ -188,11 +229,27 @@ sys.exit(status)
             self.assertEqual(commands[1][-4:],['apt-get','install','-y','ffmpeg'])
         self.assert_restored()
 
+    def test_real_ffmpeg_package_transfer_timeout_gets_the_same_one_official_fallback(self):
+        # Main44202171157/audio job134458772680 timed out in apt install,
+        # after apt update succeeded. APT mode must use the same narrow rule.
+        text='Get:20 http://us-east-2.ec2.archive.ubuntu.com/ubuntu noble/universe amd64 libsvtav1enc1d1 amd64 1.7.0+dfsg-2build1 [2425 kB]\nCI dependency attempt exceeded 300s; no success was inferred.\n'
+        calls=[]
+        def execute(commands,timeout,root_command):
+            calls.append((commands,timeout,self.mirror.read_text()))
+            return (124,text) if len(calls)==1 else (0,'ffmpeg installed\n')
+        with patch.object(deps,'execute',side_effect=execute):
+            self.assertEqual(deps.install('apt',['ffmpeg'],self.log,apt_root=self.apt,os_release=self.os,root_command=self.local_root),0)
+        self.assertEqual(len(calls),2)
+        self.assertEqual(calls[0][0],calls[1][0])
+        self.assertEqual([call[1] for call in calls],[300,300])
+        self.assertEqual([call[2] for call in calls],[self.original.decode(),deps.OFFICIAL_MIRRORS])
+        self.assert_restored()
+
     def test_actual_workflow_bootstrap_failure_is_not_hidden_by_tee(self):
-        checked=0
+        checked=[]
         for path in (ROOT/'.github/workflows').glob('*.yml'):
             workflow=yaml.load(path.read_text(),Loader=yaml.BaseLoader)
-            for job in workflow['jobs'].values():
+            for job_id,job in workflow['jobs'].items():
                 for step in job.get('steps',[]):
                     script=step.get('run','')
                     if 'npm install ' not in script or 'install_dependencies.py' not in script:continue
@@ -202,13 +259,18 @@ sys.exit(status)
                     script=re.sub(r'\$\{\{\s*matrix\.engine\s*\}\}','chromium',script)
                     script=re.sub(r'npm install [^\n]*?(?= 2>&1 \| tee)',"python3 -c 'import sys;sys.exit(42)'",script)
                     script=re.sub(r'^.*python3 tools/ci/install_dependencies\.py.*$', 'touch FAILED_BOOTSTRAP_WAS_IGNORED',script,flags=re.M)
-                    folder=self.root/f'workflow-{checked}';folder.mkdir()
+                    folder=self.root/f'workflow-{len(checked)}';folder.mkdir()
                     outcome=subprocess.run(['bash','-e','-c',script],cwd=folder,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
                     with self.subTest(workflow=path.name):
                         self.assertEqual(outcome.returncode,42,outcome.stdout)
                         self.assertFalse((folder/'FAILED_BOOTSTRAP_WAS_IGNORED').exists())
-                    checked+=1
-        self.assertEqual(checked,8,'all eight existing browser installation flows stay covered')
+                    checked.append((path.name,job_id))
+        self.assertCountEqual(checked,[
+            ('pages-release.yml','verify-public'),('alpha-qa.yml','browser'),
+            ('campaign-orafold-qa.yml','isolated-campaign'),('alpha03-integration-qa.yml','integrated-modules'),
+            ('web-preview.yml','browser'),('web-preview.yml','premium-browser'),
+            ('web-preview.yml','production-art-browser'),('economy-qa.yml','economy'),('audio-qa.yml','audio')
+        ],'all nine concrete browser installation flows, including the public release probe, stay covered')
 
 
 if __name__=='__main__':unittest.main()
