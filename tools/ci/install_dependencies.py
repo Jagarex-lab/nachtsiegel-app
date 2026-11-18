@@ -2,7 +2,8 @@
 """Bounded CI dependency setup using official Ubuntu HTTPS mirrors on GitHub.
 
 GitHub Actions Ubuntu runners with a regular mirrorlist use official HTTPS on
-the first attempt; other environments retain normal mirrors first. System
+the first attempt. Supported Ubuntu24.04 sources are isolated from unrelated
+runner feeds during system setup; other environments retain normal sources. System
 dependencies and browser download each have their own bounded deadline.
 Playwright's public install-deps then
 install commands retain the same dependencies and host validation as --with-deps;
@@ -23,6 +24,57 @@ import time
 # the URI and produces HTTP400 once DNS succeeds; keep this actual APT-tested.
 OFFICIAL_MIRRORS="https://archive.ubuntu.com/ubuntu\tpriority:1\nhttps://security.ubuntu.com/ubuntu\tpriority:2\n"
 APT_LIMITS='Acquire::Retries "2";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\nAPT::Update::Error-Mode "any";\n'
+UBUNTU_KEYRING=Path('/usr/share/keyrings/ubuntu-archive-keyring.gpg')
+
+
+def ubuntu_source_configuration(apt_root, os_release):
+    """Scope CI APT to the runner's existing signed Ubuntu24.04 sources.
+
+    Accept only the standard deb822 layout. Unknown source options must fail
+    before excluding other feeds; APT still verifies the original Signed-By
+    keyring, release metadata and package signatures normally.
+    """
+    def unsupported(reason):raise RuntimeError('Unsupported GitHub Actions Ubuntu APT sources: '+reason)
+    release=dict(line.split('=',1) for line in os_release.read_text().splitlines() if '=' in line and not line.startswith('#'))
+    if release.get('VERSION_ID','').strip('"')!='24.04' or release.get('VERSION_CODENAME','').strip('"')!='noble':
+        unsupported('expected Ubuntu24.04/noble.')
+    source=apt_root/'sources.list.d'/'ubuntu.sources'
+    if source.parent.is_symlink() or source.is_symlink() or not source.is_file():unsupported('regular ubuntu.sources required.')
+    disabled_parts=apt_root/'-'
+    if disabled_parts.exists() or disabled_parts.is_symlink():unsupported('disabled sourceparts path must be absent.')
+    if UBUNTU_KEYRING.parent.is_symlink() or UBUNTU_KEYRING.is_symlink() or not UBUNTU_KEYRING.is_file():unsupported('regular Ubuntu archive keyring required.')
+    if source.stat().st_mode&0o022 or UBUNTU_KEYRING.stat().st_mode&0o022:unsupported('source/keyring must not be group/world writable.')
+    stanzas=[];fields={}
+    for line in source.read_text().splitlines()+['']:
+        if not line.strip():
+            if fields:stanzas.append(fields);fields={}
+            continue
+        if line.lstrip().startswith('#'):continue
+        match=re.fullmatch(r'([A-Za-z][A-Za-z-]*):[ \t]*(\S.*)',line)
+        if not match or match[1].lower() in fields:unsupported('malformed, continued or duplicate deb822 field.')
+        fields[match[1].lower()]=match[2].strip()
+    required={'types','uris','suites','components','signed-by'}
+    suites=set();official={'https://archive.ubuntu.com/ubuntu','https://archive.ubuntu.com/ubuntu/','https://security.ubuntu.com/ubuntu','https://security.ubuntu.com/ubuntu/'}
+    mirror=apt_root/'apt-mirrors.txt';mirror_uri='mirror+file:'+str(mirror)
+    if not stanzas:unsupported('empty ubuntu.sources.')
+    for fields in stanzas:
+        if not required<=fields.keys() or fields.keys()-required-{'architectures','enabled'}:unsupported('unexpected or missing deb822 fields.')
+        if fields['types']!='deb' or fields.get('enabled','yes')!='yes':unsupported('active binary package sources required.')
+        if 'architectures' in fields and (not fields['architectures'].split() or set(fields['architectures'].split())-{'amd64','arm64'}):unsupported('unsupported source architecture.')
+        if fields['signed-by']!=str(UBUNTU_KEYRING):unsupported('Ubuntu archive Signed-By keyring required.')
+        selected=set(fields['suites'].split())
+        if not selected or selected-{'noble','noble-updates','noble-backports','noble-security'}:unsupported('suite does not match noble.')
+        suites.update(selected)
+        if set(fields['components'].split())!={'main','restricted','universe','multiverse'}:unsupported('standard Ubuntu components required.')
+        for uri in fields['uris'].split():
+            if uri==mirror_uri:
+                if mirror.is_symlink() or not mirror.is_file():unsupported('regular Ubuntu mirrorlist required.')
+            elif uri not in official:unsupported('official Ubuntu HTTPS URI or standard mirrorlist required.')
+    if not {'noble','noble-updates','noble-security'}<=suites:unsupported('base, updates and security suites required.')
+    # The source path is installed into APT syntax, so reject quoting/control
+    # characters even in a nonstandard test/workspace apt_root.
+    if any(character in str(source) for character in '"\\\r\n'):unsupported('unsupported source path.')
+    return f'Dir::Etc::sourcelist "{source}";\nDir::Etc::sourceparts "{disabled_parts}";\n'
 
 
 def privileged(command):
@@ -100,11 +152,14 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
             with tempfile.TemporaryDirectory(prefix='orafold-ci-deps-') as folder:
                 temporary=Path(folder);owned_configuration=False;changed_mirror=False
                 try:
+                    source_configuration=ubuntu_source_configuration(apt_root,os_release) if github_actions and ubuntu else ''
+                    if source_configuration and not configuration.parent.is_dir():raise RuntimeError('APT configuration directory required for Ubuntu source isolation.')
                     if ubuntu and configuration.parent.is_dir():
                         if configuration.exists() or configuration.is_symlink():raise RuntimeError('Refusing to overwrite an existing installer configuration.')
-                        source=temporary/'limits.conf';source.write_text(APT_LIMITS)
+                        source=temporary/'limits.conf';source.write_text(APT_LIMITS+source_configuration)
                         owned_configuration=True
                         root_command(['install','-m','0644',str(source),str(configuration)])
+                        if source_configuration:emit('System APT sources: validated signed Ubuntu24.04 ubuntu.sources only; unrelated runner feeds temporarily excluded without editing their files. TLS, signatures and update errors remain enforced.')
                     supported_mirror=ubuntu and mirror.is_file() and not mirror.is_symlink()
                     official_first=github_actions and supported_mirror
                     def select_official_mirrors():
