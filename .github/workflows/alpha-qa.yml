@@ -12,7 +12,9 @@ concurrency:
 jobs:
   alpha-playable:
     runs-on: ubuntu-24.04
-    timeout-minutes: 45
+    # The full native/export batch exceeded 45m while suites still progressed.
+    # Keep every inner test limit; allow hosted-runner timing variation.
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@v4
         with:
