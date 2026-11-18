@@ -292,3 +292,38 @@ These results belong only to the audited, already published 6c99dfc baseline: al
 The new maintenance PR/head, its eventual merge SHA, fresh exact-head CI, fresh post-merge 29 jobs and fresh publication/public verification are **pending** in this snapshot. The merge SHA cannot be known inside the commit whose content determines it. After the actual merge, the maintenance PR final comment must link that exact merge SHA, its seven QA suite runs / 29 jobs, publisher run/artifact and successful public verification; the live [release-evidence.json](https://jagarex-lab.github.io/nachtsiegel-app/release-evidence.json) and [build-info.json](https://jagarex-lab.github.io/nachtsiegel-app/build-info.json) are authoritative public provenance. This avoids an endless self-referential source-update cycle. Do not replace this pending statement with an invented SHA or reuse old QA for a new head.
 
 All 550 cards/illustrations and premium frames, illustrated 2.5D arena and experimental 3D option, campaign/economy, audio, AI/deckbuilder, replay, PWA/touch/mobile behavior and automatic publication are preserved. There are no gameplay, lore, economy, rights-clearance or production image changes in this consolidation. Existing physical-device, commercial rights and listening acceptance limits remain explicit.
+
+
+## Nachtrag: zusätzliche Lebenszyklusprüfung der Kampagnen-Präsentation
+
+Der zweite Folge-Head `2b65e552206f8210e4464bac55004a882c5276f5`
+wird ebenfalls nicht gemergt. Die authentifizierte Quellen-/Keyring-Auswahl,
+APT-Wiederherstellung und Browserinstallation bestanden nun auf dem echten
+GitHub-Runner. Danach meldete der tatsächliche integrierte
+[Job 134852161496](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44318867224/job/134852161496)
+beim Präsentationstest trotz 32 erfolgreichen Assertions ein ObjectDB-Leck
+und zwei noch verwendete Ressourcen. Der strikte Guard hat die Suite korrekt
+abgebrochen; folgende Online-/Hosted-Prüfungen liefen dort nicht.
+[Originalarchiv und maschinenlesbarer Nachweis](history/ci-183192/presentation-failure.json)
+erhalten den Fehler samt SHA256.
+
+Die separate Untersuchung verwendet den exakten Kandidatenbaum und geprüfte
+Abhängigkeiten. Der unveränderte lokale Test ließ sich ohne Leck beenden; die
+konkreten zwei CI-Ressourcentypen waren im nicht-verbose CI-Protokoll nicht
+benannt und werden nicht erfunden. Eine neue deterministische Prüfung fand
+jedoch eine echte Test-Lebenszykluslücke: Nach Freigabe der UI sind ihr aktueller
+Adapter, Session und Modell bereits frei, während die lokale Testvariable
+`abandoned` den absichtlich verlassenen Adapter bis zum Shutdown hält.
+Mit allen 32 ursprünglichen und vier zusätzlichen Prüfungen scheitert genau
+diese letzte Ownership-Prüfung vor der Korrektur (36 Assertions, ein Fehler).
+
+Die eng begrenzte Korrektur gibt ausschließlich diese test-eigene Referenz vor
+dem echten Audio-Shutdown frei. Keine Produktreferenz wird künstlich gelöscht;
+Runtime, Regeln, Leak-Guards und die ursprünglichen 32 Tests bleiben unverändert.
+Fünf lokale Wiederholungen bestanden mit 36/0 Assertions ohne Runtime-/Leak-
+Meldungen (ein verbose und vier unveränderte nicht-verbose Befehle). Das
+unabhängige Review prüft die eng begrenzte Teständerung. Die vollständige
+frische exakte Head-/Merge-QA bleibt erforderlich; deren Ergebnisse
+werden erst nach ihrer tatsächlichen Ausführung im
+[Abschlusskommentar von PR #34](https://github.com/Jagarex-lab/nachtsiegel-app/pull/34#issuecomment-6979959291)
+als eigene Nachweise verlinkt. Alte fehlgeschlagene Heads bleiben Fehler.
