@@ -1,0 +1,18 @@
+{
+  "source_commit": "183192f9974837a67876a86fa7194506e6be93cc",
+  "run_id": 44309750137,
+  "job_id": 134820510983,
+  "step": "Install the existing storage-expression browser runtime",
+  "artifact_id": 14429612247,
+  "sha256": "df6bebc47d3d3ff59bcc52fc76fe5116677f36b238a7a0bd60fa87a3856d4424",
+  "size": 1048,
+  "members": [
+    "alpha03/browser-install.log"
+  ],
+  "conclusion": "failure",
+  "failed_before_browser_install_and_assertions": true,
+  "cause": "Two HTTP429 Microsoft APT InRelease responses despite successful official Ubuntu updates",
+  "followup_issue": 33,
+  "published_at_failure": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+  "tests_not_counted_as_passed": true
+}

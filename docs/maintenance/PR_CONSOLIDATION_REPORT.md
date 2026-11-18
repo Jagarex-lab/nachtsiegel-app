@@ -37,6 +37,84 @@ sowie [Build-Nachweis](https://jagarex-lab.github.io/nachtsiegel-app/build-info.
 So wird kein eigener zukünftiger Commit-Hash vorweggenommen und keine alte QA
 auf einen neuen Commit übertragen.
 
+## Fortschreibung: Wartungsmerge und zusätzlicher CI-Provisionierungsblocker
+
+PR [#32](https://github.com/Jagarex-lab/nachtsiegel-app/pull/32) wurde nach
+**26/26 erfolgreichen Head-Jobs** regulär als
+`183192f9974837a67876a86fa7194506e6be93cc` integriert. Der tatsächliche
+Merge-Baum `c94b4ece5f396e920de0af999f1e55268fb80efe` entspricht exakt dem
+geprüften Kandidaten; Issue #31 ist damit als completed geschlossen. Die
+ursprünglichen sieben PRs bleiben abgeschlossen. Die Art-Korrektur ist
+integriert; ihre Bilder, Karten, Rechte und Spielregeln bleiben unverändert.
+
+Die anschließende frische QA auf **183192** fand einen neuen, unabhängigen
+Einrichtungsfehler: [Main-Job134820510983](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44309750137/job/134820510983)
+scheiterte vor Browserinstallation und integrierten Assertions an zwei
+HTTP429-Antworten einer vorinstallierten Microsoft-APT-Quelle. Offizielle
+Ubuntu-Indizes wurden erfolgreich geladen. Dieser Lauf bleibt **fehlgeschlagen**;
+eine teilweise erfolgreiche Suite ist keine Releasefreigabe.
+Der konkrete Blocker ist in [Issue #33](https://github.com/Jagarex-lab/nachtsiegel-app/issues/33)
+gesichert; das unveränderte [Fehlarchiv](history/ci-183192/README.md) ist samt
+GitHub-Artefakt-SHA256 konserviert. Die automatische Sperre hat eine
+Veröffentlichung korrekt verhindert.
+
+Dieses kleine Folgepaket begrenzt ausschließlich die Systemabhängigkeitsphase
+unter unterstütztem GitHub Ubuntu24.04 auf vorhandene, streng geprüfte,
+offizielle signierte Ubuntu-Quellen. Fremde Quellen und Schlüssel bleiben
+unangetastet. Temporäre Auswahl und Spiegelkonfiguration werden vor
+Browserinstallation und auf Fehlerpfaden wiederhergestellt. TLS, GPG,
+strikte APT-Fehler, Paket- und Browser-Hostprüfung, Deadlines und maximal
+zwei Systemversuche bleiben erhalten. Unsichere oder unbekannte
+Konfiguration wird sichtbar zurückgewiesen; lokale Nicht-GHA-Abläufe bleiben
+erhalten. Eine echte, netzwerkfreie APT-URI-Aufzählung prüft, dass die
+Microsoft-Quelle während der Systemphase ausgeschlossen und vor der
+Browserphase wieder vorhanden ist.
+
+Der erste Folge-Head `5364d119e90c3f7fdd38fc9ea9b8319b3903a70e`
+wurde nicht gemergt: Seine neue Rechteannahme scheiterte in allen zehn Browser-Installationsjobs vor APT.
+Der abgeschlossene Head hatte 16 erfolgreiche und 10 fehlgeschlagene Jobs.
+Die lokale Fixture bildete das echte Runner-Image noch nicht ab.
+Der [unveränderte Nachweis](history/ci-183192/first-repair.json) erhält Fehler,
+Job-IDs und beide Originalarchive. Das exakte offizielle
+[Image-Skript](https://github.com/actions/runner-images/blob/fb099341ddaf44a428fb17495341cb7c2300faf2/images/ubuntu/scripts/build/configure-system.sh#L12)
+setzt `/usr/share` rekursiv auf 777; der bereitgestellte Ubuntu-Keyring ist
+dadurch beschreibbar. Diese Fehlversuche sind keine bestandenen Tests.
+
+Die korrigierte Variante authentifiziert die einmal gelesenen Keyring-Bytes
+mit SHA256 `80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31`
+aus dem unabhängig verifizierten offiziellen Noble-Paket. Nur dieses bekannte
+Material und die streng geprüfte Quelle werden als root-eigene Snapshots mit Modus0644
+verwendet; Signed-By verweist ausschließlich auf die geprüfte Kopie.
+Originalbytes und Rechte bleiben unangetastet. Unbekannte Schlüssel,
+Source-Injektionen, Symlinks und Kollisionen bleiben Fehler; alle Kopien
+werden vor Browserinstallation und auf Fehlerpfaden entfernt.
+
+[Vendor-/Signaturnachweis](history/ci-183192/ubuntu-keyring-provenance.json)
+enthält Paket-URLs und Prüfsummen, das genaue Runner-Image sowie die
+erfolgreiche tatsächliche gpgv-Prüfung aktueller Noble-, Updates- und
+Security-InRelease-Dateien mit Fingerprint
+`F6ECB3762474EDA9D21B7022871920D1991BC93C`. Die jeweiligen Packages.xz-Hashes
+stimmen mit der signierten Release-Metadatenkette überein. Der aktuelle
+Noble-Paketstand ist damit bestätigt; kein Ubuntu-26-Keyring, kein fremder
+Trust und kein Netzwerk-Bootstrap zur Laufzeit werden eingeführt.
+
+Lokal bestanden **50 CI-Vertragstests** einschließlich aller bisherigen 35,
+**50 Release-Python-Tests** und **88 Node-Vertragstests**. Unabhängiges Review,
+Syntax und Diffprüfung bestanden. Diese lokalen Ergebnisse ersetzen keine
+frische GitHub-QA auf dem endgültigen Folge-Head oder dessen Merge.
+
+**Stand dieses Nachtrags vor seiner eigenen Integration:** develop183192;
+öffentlich weiterhin der vollständig geprüfte Ausgangscommit6c99dfc.
+Ein neuer gesicherter CI-Blocker befindet sich in Korrektur; kein ursprünglicher
+PR ist wieder offen. Der endgültige Ersatz-PR ist über Issue #33 verknüpft.
+Nach seinem regulären Merge müssen alle sieben Suiten mit29Pflichtjobs auf
+dem neuen exakten Commit bestehen. Erst danach darf der unveränderte
+automatische Publisher veröffentlichen und die öffentliche Version prüfen.
+Endgültige Commit-, QA- und Live-Nachweise werden in der
+[Abschlussprüfung von PR #34](https://github.com/Jagarex-lab/nachtsiegel-app/pull/34#issuecomment-6979959291)
+sowie den öffentlichen Provenienz-JSONs festgehalten; keine
+veralteten Run-IDs und keine erfundenen zukünftigen Merge-SHAs.
+
 ## Technischer Detailnachweis
 
 Seven old open PRs were audited against published develop `6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f` (tree `8c84f6ed60213fbde77cb775319347b63af17dab`). Five are **C — already integrated**; two are **D — superseded**. **No old PR was merged or repaired.** The useful missing art-review guard is adapted in one small maintenance PR together with this report and historical preservation; it is not a new master task.
@@ -214,3 +292,153 @@ These results belong only to the audited, already published 6c99dfc baseline: al
 The new maintenance PR/head, its eventual merge SHA, fresh exact-head CI, fresh post-merge 29 jobs and fresh publication/public verification are **pending** in this snapshot. The merge SHA cannot be known inside the commit whose content determines it. After the actual merge, the maintenance PR final comment must link that exact merge SHA, its seven QA suite runs / 29 jobs, publisher run/artifact and successful public verification; the live [release-evidence.json](https://jagarex-lab.github.io/nachtsiegel-app/release-evidence.json) and [build-info.json](https://jagarex-lab.github.io/nachtsiegel-app/build-info.json) are authoritative public provenance. This avoids an endless self-referential source-update cycle. Do not replace this pending statement with an invented SHA or reuse old QA for a new head.
 
 All 550 cards/illustrations and premium frames, illustrated 2.5D arena and experimental 3D option, campaign/economy, audio, AI/deckbuilder, replay, PWA/touch/mobile behavior and automatic publication are preserved. There are no gameplay, lore, economy, rights-clearance or production image changes in this consolidation. Existing physical-device, commercial rights and listening acceptance limits remain explicit.
+
+
+## Nachtrag: zusätzliche Lebenszyklusprüfung der Kampagnen-Präsentation
+
+Der zweite Folge-Head `2b65e552206f8210e4464bac55004a882c5276f5`
+wird ebenfalls nicht gemergt. Die authentifizierte Quellen-/Keyring-Auswahl,
+APT-Wiederherstellung und Browserinstallation bestanden nun auf dem echten
+GitHub-Runner. Danach meldete der tatsächliche integrierte
+[Job 134852161496](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44318867224/job/134852161496)
+beim Präsentationstest trotz 32 erfolgreichen Assertions ein ObjectDB-Leck
+und zwei noch verwendete Ressourcen. Der strikte Guard hat die Suite korrekt
+abgebrochen; folgende Online-/Hosted-Prüfungen liefen dort nicht.
+[Originalarchiv und maschinenlesbarer Nachweis](history/ci-183192/presentation-failure.json)
+erhalten den Fehler samt SHA256.
+
+Die separate Untersuchung verwendet den exakten Kandidatenbaum und geprüfte
+Abhängigkeiten. Der unveränderte lokale Test ließ sich ohne Leck beenden; die
+konkreten zwei CI-Ressourcentypen waren im nicht-verbose CI-Protokoll nicht
+benannt und werden nicht erfunden. Eine neue deterministische Prüfung fand
+jedoch eine echte Test-Lebenszykluslücke: Nach Freigabe der UI sind ihr aktueller
+Adapter, Session und Modell bereits frei, während die lokale Testvariable
+`abandoned` den absichtlich verlassenen Adapter bis zum Shutdown hält.
+Mit allen 32 ursprünglichen und vier zusätzlichen Prüfungen scheitert genau
+diese letzte Ownership-Prüfung vor der Korrektur (36 Assertions, ein Fehler).
+
+Die eng begrenzte Korrektur gibt ausschließlich diese test-eigene Referenz vor
+dem echten Audio-Shutdown frei. Keine Produktreferenz wird künstlich gelöscht;
+Runtime, Regeln, Leak-Guards und die ursprünglichen 32 Tests bleiben unverändert.
+Fünf lokale Wiederholungen bestanden mit 36/0 Assertions ohne Runtime-/Leak-
+Meldungen (ein verbose und vier unveränderte nicht-verbose Befehle). Das
+unabhängige Review prüft die eng begrenzte Teständerung. Die vollständige
+frische exakte Head-/Merge-QA bleibt erforderlich; deren Ergebnisse
+werden erst nach ihrer tatsächlichen Ausführung im
+[Abschlusskommentar von PR #34](https://github.com/Jagarex-lab/nachtsiegel-app/pull/34#issuecomment-6979959291)
+als eigene Nachweise verlinkt. Alte fehlgeschlagene Heads bleiben Fehler.
+
+
+## Nachtrag: dokumentierte Ubuntu-Quellenvarianten im separaten Kampagnenlauf
+
+Der Head `af6f74eb2dbb4111a730b2f92074546b05c510ed` bleibt ebenfalls
+ungemergt. Die integrierten Module bestanden nun tatsächlich vollständig:
+Präsentation 36/0 ohne Leck, echtes Online-Produktduell, Hosted-Anwendung
+37/0 und Match-Belohnungen 102/0. Die zusätzlich wegen des Testpfads gestartete
+eigenständige Kampagnen-Suite bestand ihre nativen Tests ebenfalls, scheiterte
+aber in [Job 134866753544](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44323018819/job/134866753544)
+vor APT am gemeinsamen URI-Guard. Sie verwendete das andere offizielle
+Image `ubuntu24/20261111.127.1`; der genaue zurückgewiesene URI wurde vom
+bisherigen Guard nicht ausgegeben. Seine öffentlichen Image-Refs liefern404.
+Eine konkrete historische URI wird deshalb nicht als nachgewiesen behauptet.
+
+Der [vollständige erhaltene Job-Log und Quellenbeleg](history/ci-183192/campaign-source-variant.json)
+verweist auf zwei immutable offizielle runner-images-Korrekturen: Cloud-Init
+kann kanonische HTTP-Ubuntu-Adressen mit/ohne End-Slash hinterlassen; die
+spätere AWS-Unterstützung behandelt zusätzlich exakt
+`http://us-east-2.ec2.archive.ubuntu.com/ubuntu`. Der Installer normalisiert
+ausschließlich die acht so dokumentierten Literale (archive, security, Azure,
+dieser EC2-Host; je mit/ohne Slash) im geschützten Snapshot auf die bereits
+erlaubten offiziellen archive-/security-HTTPS-Endpunkte. Kein HTTP- oder
+Cloud-Host wird dabei kontaktiert; Originalquellen bleiben unverändert.
+
+53 lokale CI-Vertragstests bestehen. Eine echte netzwerkfreie APT-Aufzählung
+beweist EC2-Eingabe → ausschließlich offizielles HTTPS während der
+Systemphase → Originalquellen nach Wiederherstellung. Unbekannte Hosts, andere
+Regionen, Zugangsdaten, Ports, Parameter und Host-Suffixtricks bleiben Fehler.
+Diagnosen begrenzen Scheme/Host und geben einen Hash aus, niemals Userinfo,
+Pfad, Query, Fragment oder rohe Parserfehler. TLS/GPG, Schlüssel-Pin, strikte
+APT-Fehler, Hostprüfung, Cleanup, Deadlines und Versuchsgrenzen bleiben aktiv.
+
+Dieser weitere kleine Installer-/Testfix benötigt erneut vollständige frische
+PR-QA (jetzt fünf Suiten/27 Pflichtjobs, einschließlich der eigenständigen
+Kampagne) und anschließend sieben Suiten/29 Jobs auf dem tatsächlichen Merge.
+Kein fehlgeschlagener oder abgebrochener alter Head liefert die Freigabe.
+
+
+## Nachtrag: einheitliche Audio-/Browser-Testwerkzeuge
+
+Auf demselben nicht gemergten Head af6 scheiterte zusätzlich die reale
+[Audio-Produktprobe](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44323018870/job/134866986702):
+Chromium bestand alle acht Prüfungen; WebKit bestand sechs einschließlich
+echter PCM-/Settings-/Quota-Recovery-Prüfungen, stürzte aber beim dritten
+vollständigen Produktladen für den Future-Version99-Spiegeltest ab.
+`page.evaluate: Target crashed` ist ein echter fehlgeschlagener Test.
+OOM oder konkrete Allokationsursache wurden nicht ausgegeben und werden
+nicht behauptet. Das [unveränderte Originalartefakt und seine Prüfsummen](history/ci-183192/audio-probe-failure.json)
+bleiben erhalten.
+
+Nachweisbare Werkzeugabweichung: Die Audio-Suite verwendete als einzige
+Playwright1.62.1, während die acht anderen npm-Browserinstallationen1.65.0
+verwenden (neun Installationen in sieben bestehenden Workflows insgesamt).
+Die einzige Workflowänderung dieses Wartungspakets gleicht genau diese eine
+Versionszeile in `audio-qa.yml` an. Eine neue stdlib-Prüfung liest alle aktiven
+Installationspfade und verlangt exakte, einheitliche Pins; sie scheiterte vor
+der Korrektur am echten Drift und besteht danach. Keine Audioassertion, kein
+Reload, keine Lifecycle-/Timing-Annahme, Berechtigung oder Freigabesperre
+wird verändert. Der Publisher bleibt unverändert und allein zuständig.
+
+Unabhängiges Review genehmigte die eng begrenzte Korrektur. Lokal bestanden
+anschließend vollständig **54 CI-,50 Release-Python- und88 Node-Vertragstests**.
+Anfängliche Auslassungen der sparsamen lokalen Arbeitskopie (fehlende
+committete Staging-/Shell-/Mirror-Testdateien) sind im maschinenlesbaren
+Nachweis samt begrenzten Fehl-/Teilresultaten erfasst; nach unveränderter
+Materialisierung bestanden alle vollständigen Suiten. Kein Test wurde dafür
+geändert oder entfernt. Das lokale WebKit-Probeexperiment hatte fehlende
+Systembibliotheken und wird nicht als bestandene Produktprüfung gezählt.
+
+Die Versionsangleichung beweist allein keine Ursache des alten Absturzes.
+Erst die neue vollständige gehostete Chromium-/WebKit-QA mit unveränderter
+Audio-Probe, dann die frischen Merge-Prüfungen und öffentliche Verifikation
+können den endgültigen Kandidaten freigeben. Die endgültigen Nachweise
+stehen nach tatsächlicher Ausführung im stabil verlinkten PR-Abschlusskommentar.
+
+
+## Nachtrag: nichtvisuelle API-Identitätsprüfung ohne Paint-Abhängigkeit
+
+Ein weiterer echter Fehler desselben af6-Heads war der kontrollierte
+[WebKit-Pollingtest](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44323018870/job/134881337627),
+vor allen eigentlichen Spiel-Journeys. Ein Blatt lief nach500ms aus, sieben
+andere bestanden; Nodes zwei Fehler zählen dieses Blatt plus seine Elternsuite.
+Der erste Kontrollfall benötigte auf dem Runner11,768s; beide realen
+Produkt-Readiness-Positivfälle bestanden mit979/969ms. Ein konkreter
+Scheduling-Trace des ursprünglichen Timeouts liegt nicht vor.
+[Originalartefakt, exakter Fehlerauszug und Prüfsummen](history/ci-183192/polling-probe-failure.json)
+trennen diese Fakten von der anschließenden kontrollierten Ursachenprobe.
+Das kleine GitHub-Artefakt enthält ausschließlich Installationslogs; der
+eigentliche Fehler steht im gesondert exakt erhaltenen stdout-Auszug.
+
+Die reine Argument-Identitätsprüfung wartete bislang auf Animationsframes,
+obwohl sie kein Rendering untersucht. Die enge Testkorrektur bestätigt zuerst
+das vollständig bereite about:blank-Dokument im echten Main-World-Kontext
+und verwendet ausschließlich für dieses Blatt20ms-Intervallpolling. Die
+ursprüngliche500ms-Frist bleibt unverändert. Alle Assertions, der30s-Gesamtrahmen,
+die250ms-Asynckontrolle, alle vier400ms-Negativkontrollen und beide realen
+Produkt-Positivfälle mit Standard-RAF/4000ms bleiben unverändert.
+
+Die tatsächliche kontrollierte Chromium-Probe zeigte: Bei absichtlich
+angehaltenem RAF scheitert die alte Variante mit echtem Timeout nach502ms;
+die neue liefert3 nach43ms, während das Node-Argument0 bleibt. Das beweist
+die entfernte sachfremde Paint-Abhängigkeit, nicht den exakten ursprünglichen
+CI-Schedulingverlauf. Die vollständige Chromium-Suite bestand9/9 (acht
+Blätter plus Elternsuite); ein unabhängiges Review genehmigte die Änderung.
+Lokale finale Verträge auf dem kombinierten Kandidaten:54CI-,50Release-
+Python- und88Node-Tests erfolgreich.
+
+Eine zusätzlich versuchte lokale WebKit-Einrichtung blieb an der unveränderten
+Host-Prüfung für lokal extrahierte Bibliotheken stehen. Signierte Vendor-Herkunft
+und tatsächliches Laden wurden geprüft, aber kein Hostcheck deaktiviert,
+kein SDK gepatcht, kein alternativer Executable-Pfad zur Umgehung gewählt und
+keine globale Konfiguration verändert. Es wird kein lokaler WebKit-Erfolg
+behauptet. Erforderlich bleiben alle frischen fünf PR-Suiten/27 Jobs, dann
+sieben Merge-Suiten/29 Jobs, automatischer Publisher und öffentliche Browserabnahme.

@@ -87,10 +87,15 @@ for (const engine of engines) {
 
       await t.test('the actual API preserves one mutable browser argument across synchronous polls',async t=>{
         const page = await fixturePage(browser,t), sample = {polls:0};
+        // This is an argument-identity contract, not a paint-rate benchmark.
+        // Finish main-world setup before its unchanged 500ms deadline and use
+        // timer polling. The two report-shape cases below still exercise the
+        // production callback with the real default animation-frame polling.
+        assert.equal(await page.evaluate(()=>document.readyState),'complete');
         const handle = await page.waitForFunction(state=>{
           state.polls++;
           return state.polls>=3 ? state.polls : false;
-        },sample,{timeout:500});
+        },sample,{polling:20,timeout:500});
         try {
           assert.equal(await handle.jsonValue(),3);
           assert.deepEqual(sample,{polls:0},'Playwright cloned the argument instead of mutating Node state');

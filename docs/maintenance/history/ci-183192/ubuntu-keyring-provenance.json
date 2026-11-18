@@ -1,0 +1,83 @@
+{
+  "checked_utc": "2026-11-18T13:44:34.366388+00:00",
+  "image": {
+    "tag": "ubuntu24/20261111.370",
+    "version": "20261111.370.1",
+    "commit": "fb099341ddaf44a428fb17495341cb7c2300faf2",
+    "writable_share_evidence": "https://github.com/actions/runner-images/blob/fb099341ddaf44a428fb17495341cb7c2300faf2/images/ubuntu/scripts/build/configure-system.sh#L12"
+  },
+  "keyring_package": {
+    "version": "2023.11.28.1",
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/u/ubuntu-keyring/ubuntu-keyring_2023.11.28.1_all.deb",
+    "sha256": "36de43b15853ccae0028e9a767613770c704833f82586f28eb262f0311adb8a8",
+    "metadata_url": "https://packages.ubuntu.com/noble/all/ubuntu-keyring/download"
+  },
+  "keyring": {
+    "path": "usr/share/keyrings/ubuntu-archive-keyring.gpg",
+    "bytes": 3607,
+    "sha256": "80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31"
+  },
+  "author_time_gpgv": {
+    "url": "https://archive.ubuntu.com/ubuntu/pool/main/g/gnupg2/gpgv_2.4.4-2ubuntu17.6_amd64.deb",
+    "sha256": "c8810069e98cd343c4c5c64b3ef5a0bb1f526419cff3266cd99ed4c87ad99868",
+    "metadata_url": "https://packages.ubuntu.com/noble/amd64/gpgv/download",
+    "temporary_dependency": {
+      "package": "libassuan0_2.5.6-1build1_amd64.deb",
+      "sha256": "59c6ee6aa6fffb5d181f37373baec18c26791f5d1c907ceeb62163460b11daf2",
+      "metadata_url": "https://packages.ubuntu.com/noble/amd64/libassuan0/download",
+      "scope": "author-time temporary directory only; no installed packages or CI runtime changes"
+    }
+  },
+  "signed_suites": [
+    {
+      "suite": "noble",
+      "inrelease_url": "https://archive.ubuntu.com/ubuntu/dists/noble/InRelease",
+      "inrelease_sha256": "cdb2f31d809f589719a53c6ad15f255b27569c4059542ada282aaa21b8e164b0",
+      "inrelease_date": "Thu, 25 Apr 2024 15:10:33 UTC",
+      "gpgv_exit": 0,
+      "valid_signature_fingerprints": [
+        "F6ECB3762474EDA9D21B7022871920D1991BC93C"
+      ],
+      "index_url": "https://archive.ubuntu.com/ubuntu/dists/noble/main/binary-amd64/Packages.xz",
+      "index_sha256": "2a6a199e1031a5c279cb346646d594993f35b1c03dd4a82aaa0323980dd92451",
+      "index_bytes": 1401160,
+      "ubuntu_keyring_packages": [
+        {
+          "Package": "ubuntu-keyring",
+          "Version": "2023.11.28.1",
+          "Architecture": "all",
+          "Filename": "pool/main/u/ubuntu-keyring/ubuntu-keyring_2023.11.28.1_all.deb",
+          "SHA256": "36de43b15853ccae0028e9a767613770c704833f82586f28eb262f0311adb8a8"
+        }
+      ]
+    },
+    {
+      "suite": "noble-updates",
+      "inrelease_url": "https://archive.ubuntu.com/ubuntu/dists/noble-updates/InRelease",
+      "inrelease_sha256": "b6bfe2d0f1e5d36ee48d949d4029f149ec3f69d1e78a1ed626f57e1e08fcaaa6",
+      "inrelease_date": "Wed, 18 Nov 2026 13:04:47 UTC",
+      "gpgv_exit": 0,
+      "valid_signature_fingerprints": [
+        "F6ECB3762474EDA9D21B7022871920D1991BC93C"
+      ],
+      "index_url": "https://archive.ubuntu.com/ubuntu/dists/noble-updates/main/binary-amd64/Packages.xz",
+      "index_sha256": "255b8cf4b02fa3849a757351f4ed707c48c5b7db4f2dc0d2137dac7c9e834c60",
+      "index_bytes": 1455396,
+      "ubuntu_keyring_packages": []
+    },
+    {
+      "suite": "noble-security",
+      "inrelease_url": "https://security.ubuntu.com/ubuntu/dists/noble-security/InRelease",
+      "inrelease_sha256": "65a6f9c5cf5b8d887e45c2a638b19bedd86e9d3630afee8b3a7b46ea5803dc22",
+      "inrelease_date": "Wed, 18 Nov 2026  4:12:08 UTC",
+      "gpgv_exit": 0,
+      "valid_signature_fingerprints": [
+        "F6ECB3762474EDA9D21B7022871920D1991BC93C"
+      ],
+      "index_url": "https://security.ubuntu.com/ubuntu/dists/noble-security/main/binary-amd64/Packages.xz",
+      "index_sha256": "5cf126584f01244e671b0ecf349108d30a6f8de986097d0ac96a6b46976d5edb",
+      "index_bytes": 1195844,
+      "ubuntu_keyring_packages": []
+    }
+  ]
+}

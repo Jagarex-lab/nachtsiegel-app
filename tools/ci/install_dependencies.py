@@ -2,7 +2,8 @@
 """Bounded CI dependency setup using official Ubuntu HTTPS mirrors on GitHub.
 
 GitHub Actions Ubuntu runners with a regular mirrorlist use official HTTPS on
-the first attempt; other environments retain normal mirrors first. System
+the first attempt. Supported Ubuntu24.04 sources are isolated from unrelated
+runner feeds during system setup; other environments retain normal sources. System
 dependencies and browser download each have their own bounded deadline.
 Playwright's public install-deps then
 install commands retain the same dependencies and host validation as --with-deps;
@@ -11,18 +12,114 @@ before browser download. No repository setting, publisher or credential changes.
 """
 from __future__ import annotations
 import argparse
+import hashlib
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import sys
 import tempfile
 import time
+from urllib.parse import urlsplit
 
 # apt-transport-mirror requires a TAB before metadata. A space becomes part of
 # the URI and produces HTTP400 once DNS succeeds; keep this actual APT-tested.
 OFFICIAL_MIRRORS="https://archive.ubuntu.com/ubuntu\tpriority:1\nhttps://security.ubuntu.com/ubuntu\tpriority:2\n"
 APT_LIMITS='Acquire::Retries "2";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\nAPT::Update::Error-Mode "any";\n'
+UBUNTU_KEYRING=Path('/usr/share/keyrings/ubuntu-archive-keyring.gpg')
+# Noble ubuntu-keyring2023.11.28.1 (also build1) contains these exact bytes.
+# Official package SHA256:36de43b15853ccae0028e9a767613770c704833f82586f28eb262f0311adb8a8.
+# https://packages.ubuntu.com/noble/all/ubuntu-keyring/download
+UBUNTU_KEYRING_SHA256='80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31'
+# Documented runner-image/cloud-init literals only; APT never fetches these
+# HTTP/cloud hosts. Snapshot URIs use the existing official HTTPS destinations.
+# runner-images commits9b75b60f5c2a8a890a1c0bf4c169ff50bf96b4be and
+# f2f91839f985dcbde42542557c72de8d0c2970a6.
+LEGACY_UBUNTU_HTTPS={
+    f'http://{host}/ubuntu{slash}':f'https://{target}/ubuntu{slash}'
+    for host,target in [('archive.ubuntu.com','archive.ubuntu.com'),('security.ubuntu.com','security.ubuntu.com'),('azure.archive.ubuntu.com','archive.ubuntu.com'),('us-east-2.ec2.archive.ubuntu.com','archive.ubuntu.com')]
+    for slash in ('','/')
+}
+
+
+def ubuntu_source_configuration(apt_root, os_release):
+    """Validate one read of CI source/key bytes for private APT snapshots.
+
+    Accept only the standard deb822 layout. Unknown source options must fail
+    before excluding other feeds. Runner images make /usr/share writable, so
+    accept only the independently pinned Noble vendor keyring bytes. APT uses
+    root-owned snapshots and still verifies release signatures/package integrity.
+    """
+    def unsupported(reason):raise RuntimeError('Unsupported GitHub Actions Ubuntu APT sources: '+reason)
+    def rejected_uri(uri):
+        # Unknown APT URLs may contain credentials or tokens. Never emit their
+        # userinfo, path, query, fragment or raw text, including parse errors.
+        try:
+            parsed=urlsplit(uri);scheme=parsed.scheme;host=parsed.hostname or '(none)'
+        except ValueError:scheme='invalid';host='invalid'
+        scheme=scheme if re.fullmatch(r'[a-z][a-z0-9+.-]{0,19}',scheme) else 'redacted'
+        host=host[:64] if host=='(none)' or re.fullmatch(r'[a-zA-Z0-9.-]+',host) else 'redacted'
+        unsupported(f'official Ubuntu HTTPS URI or standard mirrorlist required (scheme {scheme}, host {host}, URI sha256 {hashlib.sha256(uri.encode()).hexdigest()}).')
+    release=dict(line.split('=',1) for line in os_release.read_text().splitlines() if '=' in line and not line.startswith('#'))
+    if release.get('VERSION_ID','').strip('"')!='24.04' or release.get('VERSION_CODENAME','').strip('"')!='noble':
+        unsupported('expected Ubuntu24.04/noble.')
+    source=apt_root/'sources.list.d'/'ubuntu.sources'
+    def read_regular(path, label):
+        if path.parent.is_symlink() or path.is_symlink() or not path.is_file():unsupported('regular '+label+' required: '+str(path))
+        try:
+            with os.fdopen(os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK),'rb') as stream:
+                info=os.fstat(stream.fileno())
+                if not stat.S_ISREG(info.st_mode):unsupported('regular '+label+' required: '+str(path))
+                content=stream.read(65537)
+        except OSError:unsupported('unable to read regular '+label+': '+str(path))
+        if len(content)>65536:unsupported(label+' exceeds the supported snapshot size: '+str(path))
+        return content,info
+    source_bytes,_=read_regular(source,'ubuntu.sources')
+    source_text=source_bytes.decode('utf-8')
+    disabled_parts=apt_root/'-'
+    if disabled_parts.exists() or disabled_parts.is_symlink():unsupported('disabled sourceparts path must be absent.')
+    source_snapshot=apt_root/'.orafold-ci-ubuntu.sources';key_snapshot=apt_root/'.orafold-ci-ubuntu-keyring.gpg'
+    for snapshot in (source_snapshot,key_snapshot):
+        if snapshot.exists() or snapshot.is_symlink():unsupported('refusing to overwrite snapshot: '+str(snapshot))
+    key_bytes,key_info=read_regular(UBUNTU_KEYRING,'Ubuntu archive keyring')
+    digest=hashlib.sha256(key_bytes).hexdigest()
+    if digest!=UBUNTU_KEYRING_SHA256:
+        unsupported(f'Ubuntu archive keyring digest mismatch: {UBUNTU_KEYRING} (mode {stat.S_IMODE(key_info.st_mode):04o}, uid {key_info.st_uid}, size {key_info.st_size}, sha256 {digest}).')
+    stanzas=[];fields={}
+    for line in source_text.splitlines()+['']:
+        if not line.strip():
+            if fields:stanzas.append(fields);fields={}
+            continue
+        if line.lstrip().startswith('#'):continue
+        match=re.fullmatch(r'([A-Za-z][A-Za-z-]*):[ \t]*(\S.*)',line)
+        if not match or match[1].lower() in fields:unsupported('malformed, continued or duplicate deb822 field.')
+        fields[match[1].lower()]=match[2].strip()
+    required={'types','uris','suites','components','signed-by'}
+    suites=set();official={'https://archive.ubuntu.com/ubuntu','https://archive.ubuntu.com/ubuntu/','https://security.ubuntu.com/ubuntu','https://security.ubuntu.com/ubuntu/'}
+    mirror=apt_root/'apt-mirrors.txt';mirror_uri='mirror+file:'+str(mirror)
+    if not stanzas:unsupported('empty ubuntu.sources.')
+    for fields in stanzas:
+        if not required<=fields.keys() or fields.keys()-required-{'architectures','enabled'}:unsupported('unexpected or missing deb822 fields.')
+        if fields['types']!='deb' or fields.get('enabled','yes')!='yes':unsupported('active binary package sources required.')
+        if 'architectures' in fields and (not fields['architectures'].split() or set(fields['architectures'].split())-{'amd64','arm64'}):unsupported('unsupported source architecture.')
+        if fields['signed-by']!=str(UBUNTU_KEYRING):unsupported('Ubuntu archive Signed-By keyring required.')
+        selected=set(fields['suites'].split())
+        if not selected or selected-{'noble','noble-updates','noble-backports','noble-security'}:unsupported('suite does not match noble.')
+        suites.update(selected)
+        if set(fields['components'].split())!={'main','restricted','universe','multiverse'}:unsupported('standard Ubuntu components required.')
+        for uri in fields['uris'].split():
+            if uri==mirror_uri:
+                if mirror.is_symlink() or not mirror.is_file():unsupported('regular Ubuntu mirrorlist required.')
+            elif LEGACY_UBUNTU_HTTPS.get(uri,uri) not in official:rejected_uri(uri)
+    if not {'noble','noble-updates','noble-security'}<=suites:unsupported('base, updates and security suites required.')
+    # The source path is installed into APT syntax, so reject quoting/control
+    # characters even in a nonstandard test/workspace apt_root.
+    if any(character in str(source_snapshot) for character in '"\\\r\n'):unsupported('unsupported source path.')
+    snapshot_text=re.sub(r'^(signed-by:[ \t]*)[^\r\n]*',lambda match:match[1]+str(key_snapshot),source_text,flags=re.I|re.M)
+    snapshot_text=re.sub(r'^(uris:[ \t]*)([^\r\n]*)',lambda match:match[1]+re.sub(r'\S+',lambda token:LEGACY_UBUNTU_HTTPS.get(token[0],token[0]),match[2]),snapshot_text,flags=re.I|re.M)
+    configuration=f'Dir::Etc::sourcelist "{source_snapshot}";\nDir::Etc::sourceparts "{disabled_parts}";\n'
+    return snapshot_text,key_bytes,configuration
 
 
 def privileged(command):
@@ -98,13 +195,22 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
         configuration=apt_root/'apt.conf.d'/f'99-orafold-playwright-{os.getpid()}.conf'
         def system_dependencies():
             with tempfile.TemporaryDirectory(prefix='orafold-ci-deps-') as folder:
-                temporary=Path(folder);owned_configuration=False;changed_mirror=False
+                temporary=Path(folder);owned_configuration=False;changed_mirror=False;owned_snapshots=[]
                 try:
+                    source_configuration=''
+                    if github_actions and ubuntu:
+                        source_text,key_bytes,source_configuration=ubuntu_source_configuration(apt_root,os_release)
+                        for name,content in [('.orafold-ci-ubuntu-keyring.gpg',key_bytes),('.orafold-ci-ubuntu.sources',source_text.encode('utf-8'))]:
+                            source=temporary/name;source.write_bytes(content);snapshot=apt_root/name
+                            owned_snapshots.append(snapshot)
+                            root_command(['install','-m','0644',str(source),str(snapshot)])
+                    if source_configuration and not configuration.parent.is_dir():raise RuntimeError('APT configuration directory required for Ubuntu source isolation.')
                     if ubuntu and configuration.parent.is_dir():
                         if configuration.exists() or configuration.is_symlink():raise RuntimeError('Refusing to overwrite an existing installer configuration.')
-                        source=temporary/'limits.conf';source.write_text(APT_LIMITS)
+                        source=temporary/'limits.conf';source.write_text(APT_LIMITS+source_configuration)
                         owned_configuration=True
                         root_command(['install','-m','0644',str(source),str(configuration)])
+                        if source_configuration:emit('System APT sources: validated Ubuntu24.04 source snapshot with pinned vendor keyring snapshot; both root-owned0644. Unrelated runner feeds temporarily excluded without editing original files. TLS, signatures and update errors remain enforced.')
                     supported_mirror=ubuntu and mirror.is_file() and not mirror.is_symlink()
                     official_first=github_actions and supported_mirror
                     def select_official_mirrors():
@@ -140,6 +246,9 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
                     if owned_configuration:
                         try:root_command(['rm','-f','--',str(configuration)])
                         except Exception as error:cleanup_errors.append('temporary configuration removal: '+type(error).__name__)
+                    for snapshot in reversed(owned_snapshots):
+                        try:root_command(['rm','-f','--',str(snapshot)])
+                        except Exception as error:cleanup_errors.append('snapshot removal: '+str(snapshot)+': '+type(error).__name__)
                     if cleanup_errors:
                         emit('Installer cleanup failed: '+', '.join(cleanup_errors))
                         raise RuntimeError('Dependency setup configuration could not be restored.')
