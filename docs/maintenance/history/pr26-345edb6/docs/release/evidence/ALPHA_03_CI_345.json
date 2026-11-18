@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "observed_utc": "2026-11-11T07:56:50.827608+00:00",
+  "repository": "Jagarex-lab/nachtsiegel-app",
+  "develop_sha": "345edb6e683d4359b8141ef228683c0855773ac2",
+  "main_qa": {
+    "id": 42978378329,
+    "head_sha": "345edb6e683d4359b8141ef228683c0855773ac2",
+    "head_branch": "develop",
+    "event": "push",
+    "path": ".github/workflows/web-preview.yml",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42978378329"
+  },
+  "release_safety": {
+    "id": 42978378260,
+    "head_sha": "345edb6e683d4359b8141ef228683c0855773ac2",
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42978378260"
+  },
+  "expected_main_jobs": 16,
+  "all_main_jobs_success": true,
+  "tested_artifact": {
+    "id": 13837861450,
+    "name": "nachtsiegel-arena-qa",
+    "size_in_bytes": 511275323,
+    "digest": "sha256:103dd77c173387652f1b9002c08718c36a132003cc026fdca71ecef56c638b6e",
+    "expired": false,
+    "created_at": "2026-11-11T07:39:28Z",
+    "expires_at": "2027-02-09T07:17:12Z",
+    "workflow_head_sha": "345edb6e683d4359b8141ef228683c0855773ac2",
+    "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42978378329/artifacts/13837861450"
+  },
+  "release_ready": true,
+  "published_by_this_task": false,
+  "manual_workflow_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/workflows/pages-release.yml",
+  "manual_inputs": {
+    "branch": "develop",
+    "commit": "345edb6e683d4359b8141ef228683c0855773ac2",
+    "qa_run_id": "42978378329",
+    "confirmation": "PUBLISH 345edb6e683d4359b8141ef228683c0855773ac2"
+  },
+  "pages_url": "https://jagarex-lab.github.io/nachtsiegel-app/",
+  "scope": "Only exact-develop CI monitoring/read-only evidence. No workflow dispatch, ref/code changes or production publication.",
+  "native_regression_export_success": true,
+  "current_develop_head_confirmed": "345edb6e683d4359b8141ef228683c0855773ac2",
+  "jobs": [
+    {
+      "id": 130382711175,
+      "name": "production-resources",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711449,
+      "name": "production-full-pool-coverage",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711472,
+      "name": "production-balance (2)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711474,
+      "name": "production-balance (3)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711489,
+      "name": "production-balance (1)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711529,
+      "name": "production-art-native-package",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711549,
+      "name": "native-platforms / windows",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711599,
+      "name": "production-audio / audio",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711627,
+      "name": "native-platforms / linux-android",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711639,
+      "name": "production-balance (0)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130382711720,
+      "name": "test-and-export",
+      "conclusion": "success"
+    },
+    {
+      "id": 130384771047,
+      "name": "production-balance-aggregate",
+      "conclusion": "success"
+    },
+    {
+      "id": 130391442129,
+      "name": "browser (chromium)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130391442158,
+      "name": "production-art-browser (chromium)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130391442174,
+      "name": "browser (webkit)",
+      "conclusion": "success"
+    },
+    {
+      "id": 130391442653,
+      "name": "production-art-browser (webkit)",
+      "conclusion": "success"
+    }
+  ],
+  "release_ready_scope": "Ready for the already-authorized manual Pages publisher and its live fail-closed preflight; no dispatch or publication is claimed.",
+  "manual_release_still_required": true,
+  "preflight_dispatched_by_this_task": false
+}

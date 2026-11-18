@@ -1,10 +1,13 @@
 """Checks real illustration inventory/provenance, plus corrupt input rejection."""
 import copy
+import hashlib
 import importlib.util
 import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -12,6 +15,164 @@ ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location("art_manifest", ROOT / "tools/production/art_manifest.py")
 ART = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(ART)
+
+
+class ReviewedBriefBinding(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(dir=ROOT / "work")
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        self.data = self.root / "data/production"
+        self.data.mkdir(parents=True)
+        self.card_id = "oa-houses-c01"
+        self.card = next(c for c in ART.load(ROOT / "data/production/cards.json")["cards"] if c["id"] == self.card_id)
+        self.brief = next(b for b in ART.load(ROOT / "data/production/art_briefs.json")["cards"] if b["id"] == self.card_id)
+        self.source = ART.load(ROOT / "data/production/art_sources.json")["entries"][self.card_id]
+        target = self.root / self.source["asset_path"].removeprefix("res://")
+        target.parent.mkdir(parents=True)
+        os.link(ROOT / self.source["asset_path"].removeprefix("res://"), target)
+        self.write_inputs()
+
+    def write_inputs(self):
+        for name, value in [("cards.json", {"cards": [self.card]}),
+                            ("art_briefs.json", {"cards": [self.brief]}),
+                            ("art_sources.json", {"entries": {self.card_id: self.source}})]:
+            (self.data / name).write_text(ART.serialized(value), encoding="utf-8")
+
+    def test_canonical_json_keeps_unicode_text_and_ignores_object_order(self):
+        digest = ART.brief_sha256(self.card, self.brief)
+        reordered = dict(reversed(list(self.brief.items())))
+        escaped = json.loads(json.dumps(reordered, ensure_ascii=True, indent=7))
+        self.assertEqual(digest, ART.brief_sha256(dict(reversed(list(self.card.items()))), escaped))
+        changed = copy.deepcopy(self.brief); changed["brief_de"] += " Ein grünes Licht."
+        self.assertNotEqual(digest, ART.brief_sha256(self.card, changed))
+        changed_card = copy.deepcopy(self.card); changed_card["cost"] += 1
+        self.assertEqual(digest, ART.brief_sha256(changed_card, self.brief))
+        changed_card["species"] = ["human", "spirit"]
+        other_order = copy.deepcopy(changed_card); other_order["species"].reverse()
+        self.assertNotEqual(ART.brief_sha256(changed_card, self.brief), ART.brief_sha256(other_order, self.brief))
+
+    def test_brief_and_visual_identity_edits_invalidate_existing_approval(self):
+        original_card, original_brief = copy.deepcopy(self.card), copy.deepcopy(self.brief)
+        for key, value in [("brief_de", "A different scene and action."), ("subject", "Another subject"),
+                           ("crop_ratio", "1:1"), ("species", ["spirit"])]:
+            with self.subTest(brief_field=key):
+                self.brief = copy.deepcopy(original_brief); self.brief[key] = value
+                self.write_inputs()
+                with self.assertRaisesRegex(ValueError, "Stale reviewed art brief"):
+                    ART.build(self.root)
+        self.brief = original_brief
+        for key, value in [("name", "Another name"), ("faction", "stillwatch"),
+                           ("kind", "relic"), ("species", ["spirit"])]:
+            with self.subTest(card_field=key):
+                self.card = copy.deepcopy(original_card); self.card[key] = value
+                self.write_inputs()
+                with self.assertRaisesRegex(ValueError, "Stale reviewed art brief"):
+                    ART.build(self.root)
+
+    def test_missing_malformed_wrong_card_and_digest_bindings_rejected(self):
+        original = copy.deepcopy(self.source)
+        binding = original["reviewed_brief"]
+        variants = [None, {}, [], {**binding, "schema_version": True}, {**binding, "schema_version": 2},
+                    {**binding, "card_id": "another-card"}, {**binding, "sha256": "0" * 64},
+                    {**binding, "sha256": "A" * 64}, {**binding, "sha256": 123},
+                    {**binding, "sha256": "short"}, {**binding, "unexpected": True}]
+        for changed in variants:
+            with self.subTest(binding=changed):
+                self.source = copy.deepcopy(original); self.source["reviewed_brief"] = changed
+                self.write_inputs()
+                with self.assertRaisesRegex(ValueError, "reviewed art brief binding"):
+                    ART.build(self.root)
+        self.source = copy.deepcopy(original); del self.source["reviewed_brief"]
+        self.write_inputs()
+        with self.assertRaisesRegex(ValueError, "Missing reviewed art brief binding"):
+            ART.build(self.root)
+
+    def test_unapproved_concept_can_omit_binding_but_cannot_claim_stale_review(self):
+        self.source.update(status="concept", production_review="pending")
+        del self.source["reviewed_brief"]
+        self.write_inputs()
+        manifest, _ = ART.build(self.root)
+        self.assertEqual(manifest["entries"][self.card_id]["status"], "concept")
+        self.assertEqual(manifest["final_individual_count"], 0)
+        self.source["production_review"] = "approved"; self.write_inputs()
+        with self.assertRaisesRegex(ValueError, "Missing reviewed art brief binding"):
+            ART.build(self.root)
+        self.source["production_review"] = "pending"
+        self.source["reviewed_brief"] = {"schema_version": 1, "card_id": self.card_id, "sha256": "0" * 64}
+        self.write_inputs()
+        with self.assertRaisesRegex(ValueError, "Stale reviewed art brief binding"):
+            ART.build(self.root)
+
+    def test_source_identity_and_existing_provenance_checks_remain_required(self):
+        original = copy.deepcopy(self.source)
+        for key, value in [("card_id", "another-card"), ("sha256", "0" * 64), ("reference_sources", ["unidentified"])]:
+            with self.subTest(source_field=key):
+                self.source = copy.deepcopy(original); self.source[key] = value
+                self.write_inputs()
+                with self.assertRaises(ValueError): ART.build(self.root)
+
+    def test_explicit_current_binding_restores_only_preexisting_visual_approval(self):
+        self.brief["brief_de"] += " A changed scene after an explicit review."
+        self.source["reviewed_brief"]["sha256"] = ART.brief_sha256(self.card, self.brief)
+        self.write_inputs()
+        manifest, _ = ART.build(self.root)
+        self.assertEqual(manifest["final_individual_count"], 1)
+        self.assertEqual(manifest["commercially_cleared_count"], 0)
+        self.assertFalse(manifest["entries"][self.card_id]["commercially_cleared"])
+
+    def test_cli_check_never_refreshes_a_stale_approval(self):
+        manifest, _ = ART.build(self.root)
+        manifest_path = self.data / "art_manifest.json"
+        manifest_path.write_text(ART.serialized(manifest), encoding="utf-8")
+        script = self.root / "tools/production/art_manifest.py"
+        script.parent.mkdir(parents=True)
+        shutil.copyfile(ROOT / "tools/production/art_manifest.py", script)
+        self.brief["brief_de"] += " A different scene."
+        self.write_inputs()
+        before_sources = (self.data / "art_sources.json").read_bytes()
+        before_manifest = manifest_path.read_bytes()
+        reply = subprocess.run([sys.executable, str(script), "--check"], capture_output=True, text=True)
+        self.assertEqual(reply.returncode, 1)
+        self.assertIn("Stale reviewed art brief", reply.stderr)
+        self.assertEqual((self.data / "art_sources.json").read_bytes(), before_sources)
+        self.assertEqual(manifest_path.read_bytes(), before_manifest)
+        reply = subprocess.run([sys.executable, str(script), "--check", "--initialize-brief-baseline"], capture_output=True, text=True)
+        self.assertEqual(reply.returncode, 2)
+        self.assertEqual((self.data / "art_sources.json").read_bytes(), before_sources)
+
+    def test_baseline_migration_pins_all_inputs_and_cannot_be_repeated(self):
+        sources = ART.load(ROOT / "data/production/art_sources.json")
+        baseline = sources.pop("brief_binding_baseline")
+        self.assertFalse(baseline["new_visual_review"])
+        self.assertFalse(baseline["commercial_clearance"])
+        self.assertEqual(baseline["source_commit"], ART.BRIEF_BASELINE_COMMIT)
+        for source in sources["entries"].values(): del source["reviewed_brief"]
+        source_path = self.data / "art_sources.json"
+        source_path.write_text(ART.serialized(sources), encoding="utf-8")
+        for name in ["cards.json", "art_briefs.json"]:
+            shutil.copyfile(ROOT / "data/production" / name, self.data / name)
+        for relative, expected in ART.BRIEF_BASELINE_BLOBS.items():
+            path = self.root / relative
+            original = path.read_bytes()
+            self.assertEqual(hashlib.sha1(b"blob " + str(len(original)).encode("ascii") + b"\0" + original).hexdigest(), expected)
+            path.write_bytes(original + b" ")
+            before = source_path.read_bytes()
+            with self.assertRaisesRegex(ValueError, "Pinned brief baseline input differs"):
+                ART.initialize_brief_baseline(self.root)
+            self.assertEqual(source_path.read_bytes(), before)
+            path.write_bytes(original)
+        ART.initialize_brief_baseline(self.root)
+        migrated = ART.load(source_path)
+        self.assertEqual(migrated["brief_binding_baseline"], baseline)
+        self.assertEqual(len(migrated["entries"]), 550)
+        for card_id, source in migrated["entries"].items():
+            self.assertEqual(source.pop("reviewed_brief")["card_id"], card_id)
+        self.assertEqual(migrated["entries"], sources["entries"])
+        before = source_path.read_bytes()
+        with self.assertRaisesRegex(ValueError, "initialization cannot refresh approval"):
+            ART.initialize_brief_baseline(self.root)
+        self.assertEqual(source_path.read_bytes(), before)
 
 
 class ProductionArtManifest(unittest.TestCase):
@@ -34,6 +195,8 @@ class ProductionArtManifest(unittest.TestCase):
                 self.assertEqual(entry["status"], "final")
                 self.assertEqual(entry["production_review"], "approved")
         self.assertEqual(len({b["card_id"] for b in briefs["entries"]}), 550)
+        self.assertEqual(ART.serialized(manifest), (ROOT / "data/production/art_manifest.json").read_text(encoding="utf-8"))
+        self.assertFalse(any("reviewed_brief" in row for row in manifest["entries"].values()))
 
     def test_real_originals_native_and_unique(self):
         source = ART.load(ROOT / "data/production/art_sources.json")

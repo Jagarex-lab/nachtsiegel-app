@@ -1,0 +1,45 @@
+{
+  "driver": "/workspace/orafold-art-production/tools/alpha_browser_qa.cjs",
+  "sha256": "97e9b2bdb72b9a917d17203ecbb604f6f00d7f1de063515427a74e67fd8eec41",
+  "scope": "Prepared only; public test not yet run",
+  "physical_device": false,
+  "verified_source_commit": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+  "source_files": [
+    {
+      "path": "tools/alpha_browser_qa.cjs",
+      "git_blob": "62fd5ce4329bc113d835ecabb951513e9c16f35d"
+    },
+    {
+      "path": "tools/premium/browser_contract.cjs",
+      "git_blob": "6918ee9cbaf4af9c95ee318ac8b61c776da4afc4"
+    },
+    {
+      "path": "tools/premium/native_capture_contract.cjs",
+      "git_blob": "e317e2b9ed485d776e3eecfe226a5ed33e0be6c2"
+    },
+    {
+      "path": "data/production/cards.json",
+      "git_blob": "3ad4863e10c0c3144e98f09650a728020952736f"
+    },
+    {
+      "path": "data/production/art_preview_delivery.json",
+      "git_blob": "0ef2a358e1bdb9871e796e71c63c1615e763d9ee"
+    },
+    {
+      "path": "data/production/art_delivery.json",
+      "git_blob": "22d10b5bbcfcb6e527e63d929ce18743b7913af0"
+    },
+    {
+      "path": "data/production/test_decks.json",
+      "git_blob": "6aad50605bad5fb52de56601d886d8231f3b468e"
+    },
+    {
+      "path": "data/legacy/cards.json",
+      "git_blob": "111bb1fe92b7161487649374e41bc70488969ce0"
+    }
+  ],
+  "initial_verified_source_commit": "8f5a0899b4f6a01c8b5173f467c3b00ac3d2f5ee",
+  "verified_tree": "8c84f6ed60213fbde77cb775319347b63af17dab",
+  "verification": "All8actualfileblobs match currenttree; actualmerge API tree independently verified inpr30-merge-proof.json",
+  "reverified_at": "2026-11-18T05:36:55.347954+00:00"
+}

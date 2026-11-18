@@ -1,0 +1,75 @@
+{
+  "created_at_utc": "2026-11-18T10:53:32.534412+00:00",
+  "scope": "Only exact historical evidence; no production asset activation; all listed copies SHA-256 validated",
+  "files": [
+    {
+      "file": "history/pr26-345edb6/docs/release/ALPHA_03_RELEASE_READY.md",
+      "bytes": 5791,
+      "sha256": "f0b817191236b61205b137ac686dfc59a6c1801c97cfe87db1df137f1ffa6365",
+      "git_blob": "535aeaebe1348cfb35df372c9c29147751db4929",
+      "original_source_url": "https://github.com/Jagarex-lab/nachtsiegel-app/blob/56a11cfc047d6a44c4cea66a38fc991350d5bcd2/docs/release/ALPHA_03_RELEASE_READY.md"
+    },
+    {
+      "file": "history/pr26-345edb6/docs/release/evidence/ALPHA_03_CI_345.json",
+      "bytes": 4092,
+      "sha256": "8e0e35044bf63db06a5d17cfd926b44daee9b26d88ccffac622e56e855d09345",
+      "git_blob": "49239238c487a896ec58b208dd8379f75093582b",
+      "original_source_url": "https://github.com/Jagarex-lab/nachtsiegel-app/blob/56a11cfc047d6a44c4cea66a38fc991350d5bcd2/docs/release/evidence/ALPHA_03_CI_345.json"
+    },
+    {
+      "file": "history/native-ada9/native-original-ada9-failure-evidence.zip",
+      "bytes": 262491,
+      "sha256": "95877df888e4b5a129a5bada8fa8032b06e7809623809acb93dff905ffec9bfc",
+      "git_blob": "3afc3f3bd9bcb3eb36538532b2d718d0a7392984"
+    },
+    {
+      "file": "history/native-ada9/native-original-ada9-failure-evidence-inventory.json",
+      "bytes": 1692,
+      "sha256": "edc67e48024f9b54607927e162aeeeb18a6e3372636683fc3950a89bba652479",
+      "git_blob": "f64bb792b53496083eeef81060c9da1cbd8113bf"
+    },
+    {
+      "file": "history/pr15-pilots/art-assets.json",
+      "bytes": 14899,
+      "sha256": "1227eb96f37b4ba5f411eb54a1ab75e1a21bc6acfc699a5521cfe51f1380904a",
+      "git_blob": "88e99da9acf586692bdf7aaeccc364e2eed323b6",
+      "original_source_url": "https://github.com/Jagarex-lab/nachtsiegel-app/blob/868481419104a62bd044dae5a856357422614edb/data/production/art-assets.json"
+    },
+    {
+      "file": "history/baseline-public-6c99/final-public-proof.json",
+      "bytes": 769,
+      "sha256": "add9e0222d6269eff739f7cc4b72b374b82c0e8d78138022904d9d47dd8d188d",
+      "git_blob": "a79105e31465780ee4bc4d97432bca8af4cf19c7"
+    },
+    {
+      "file": "history/baseline-public-6c99/driver-provenance.json",
+      "bytes": 1652,
+      "sha256": "04b6cd6d27aaeabfbf8cea2d521b00f2f794d803a3e04d123c7d0a7dc16a57c1",
+      "git_blob": "633a7db48bcb357711416e595beaf6c02be3d996"
+    },
+    {
+      "file": "history/baseline-public-6c99/browser-result-chromium-android.json",
+      "bytes": 387456,
+      "sha256": "87dc2789cae650b6c7c4f6613568394b955704b5171328092817fb7d4f1ff73b",
+      "git_blob": "1d6e7be081cdfe9e9fbad532fe07332553d2b5af"
+    },
+    {
+      "file": "history/baseline-public-6c99/chromium-android-battle.png",
+      "bytes": 218346,
+      "sha256": "be49f310e4985a8b498b0b47de00842466ae544debace352bfac7ba6d4e39a64",
+      "git_blob": "0c767e225ca02044be86639277b9e910fb183f16"
+    },
+    {
+      "file": "history/baseline-public-6c99/chromium-android-result.png",
+      "bytes": 31563,
+      "sha256": "e6b8d2a0d3fbd7f13ebaa0b0a209de1a229a27d146ba4b85b7765e0ebe714bbe",
+      "git_blob": "e12ea330245dc6a2e31aa18ebbfdacb77630feec"
+    },
+    {
+      "file": "history/baseline-public-6c99/chromium-android-restart.png",
+      "bytes": 201053,
+      "sha256": "32e7986815535e2232549f1450d0f8af82230745823a32af3f3337734276fa0c",
+      "git_blob": "3ebc975db639a69cb0427a74c2f8cc5d93a216f2"
+    }
+  ]
+}

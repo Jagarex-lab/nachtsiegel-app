@@ -1,0 +1,27 @@
+{
+  "verified_at": "2026-11-18T06:43:52.423822+00:00",
+  "commit": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+  "public_url": "https://jagarex-lab.github.io/nachtsiegel-app/",
+  "publisher_run": 44250211904,
+  "fresh_merge_qa_jobs": 29,
+  "public_engines": [
+    "chromium",
+    "webkit"
+  ],
+  "extra_public_profile": {
+    "engine": "chromium",
+    "browser": "158.0.8127.18",
+    "playwright": "1.65.0",
+    "viewport": {
+      "width": 915,
+      "height": 412
+    },
+    "full_duel": true,
+    "replay": true,
+    "restart": true,
+    "errors": 0,
+    "physical_device": false
+  },
+  "temporary_ca_restored_independently_verified": true,
+  "scope": "Actual published URL; firsttwo localnetwork/CA failures retained separately; no source/test/timebound changes"
+}
