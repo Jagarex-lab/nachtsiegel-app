@@ -62,6 +62,14 @@ Konfiguration wird vor dem Browserdownload vollständig zurückgesetzt. Der
 Browserdownload einschließlich der normalen Hostprüfung erhält genau einen
 eigenen Versuch. Ein CDN-Fehler löst keinen APT-Spiegelwechsel aus.
 
+In GitHub Actions auf Ubuntu mit regulärer Standard-Spiegelliste werden die
+offiziellen HTTPS-Archive bereits vor dem ersten Systemversuch ausgewählt.
+Außerhalb dieser CI-Umgebung bleibt die ursprüngliche Auswahl mit dem
+begrenzten offiziellen Fallback erhalten. Signaturen, TLS, die 300-Sekunden-
+Grenzen und die vollständige Rücksetzung vor dem Browserdownload bleiben
+unverändert. Auch ein nicht erfolgreicher Paket-Konfigurationstrigger wird
+weiterhin als Fehler behandelt, nicht als fertige Installation.
+
 Grund ist der tatsächliche fehlgeschlagene
 [Bild-Browserjob 134476925062](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44204333910/job/134476925062):
 Die Systempakete benötigten rund vier Minuten; der anschließende Chrome-Download
@@ -70,6 +78,14 @@ der Fertigstellung beendet. Die Bildtests liefen nicht und dieser Versuch
 bleibt fehlgeschlagen. Die getrennten Installationsphasen ändern keine
 Spiel-, Touch-, Audio- oder Browser-Testzeitgrenzen und ersetzen keine
 fehlgeschlagene QA durch einen Erfolg.
+
+Der spätere [CI-Job 134565476520](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44231456766/job/134565476520)
+bestätigte die Ursache der verbliebenen Installationsschwankung: Der regionale
+HTTP-Spiegel lieferte 32,1 MB in 4:15 Minuten; danach lief die Paketkonfiguration
+in die unveränderte Grenze. Die Bildtests starteten nicht. Die offizielle
+HTTPS-Auswahl im ersten CI-Versuch beseitigt diese zusätzliche regionale
+Downloadstufe, ohne Spieltests zu überspringen oder Fristen zu verlängern.
+Dieser alte Fehlversuch bleibt dokumentiert und wird nicht als Erfolg gezählt.
 
 Zwei weitere fehlgeschlagene WebKit-Läufe auf `60baaaa` bleiben ebenfalls als
 Fehlversuche erhalten. Im Kampagnenjob `134494300084` war die tatsächliche
