@@ -12,9 +12,11 @@ before browser download. No repository setting, publisher or credential changes.
 """
 from __future__ import annotations
 import argparse
+import hashlib
 import os
 from pathlib import Path
 import re
+import stat
 import subprocess
 import sys
 import tempfile
@@ -25,27 +27,48 @@ import time
 OFFICIAL_MIRRORS="https://archive.ubuntu.com/ubuntu\tpriority:1\nhttps://security.ubuntu.com/ubuntu\tpriority:2\n"
 APT_LIMITS='Acquire::Retries "2";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\nAPT::Update::Error-Mode "any";\n'
 UBUNTU_KEYRING=Path('/usr/share/keyrings/ubuntu-archive-keyring.gpg')
+# Noble ubuntu-keyring2023.11.28.1 (also build1) contains these exact bytes.
+# Official package SHA256:36de43b15853ccae0028e9a767613770c704833f82586f28eb262f0311adb8a8.
+# https://packages.ubuntu.com/noble/all/ubuntu-keyring/download
+UBUNTU_KEYRING_SHA256='80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31'
 
 
 def ubuntu_source_configuration(apt_root, os_release):
-    """Scope CI APT to the runner's existing signed Ubuntu24.04 sources.
+    """Validate one read of CI source/key bytes for private APT snapshots.
 
     Accept only the standard deb822 layout. Unknown source options must fail
-    before excluding other feeds; APT still verifies the original Signed-By
-    keyring, release metadata and package signatures normally.
+    before excluding other feeds. Runner images make /usr/share writable, so
+    accept only the independently pinned Noble vendor keyring bytes. APT uses
+    root-owned snapshots and still verifies release signatures/package integrity.
     """
     def unsupported(reason):raise RuntimeError('Unsupported GitHub Actions Ubuntu APT sources: '+reason)
     release=dict(line.split('=',1) for line in os_release.read_text().splitlines() if '=' in line and not line.startswith('#'))
     if release.get('VERSION_ID','').strip('"')!='24.04' or release.get('VERSION_CODENAME','').strip('"')!='noble':
         unsupported('expected Ubuntu24.04/noble.')
     source=apt_root/'sources.list.d'/'ubuntu.sources'
-    if source.parent.is_symlink() or source.is_symlink() or not source.is_file():unsupported('regular ubuntu.sources required.')
+    def read_regular(path, label):
+        if path.parent.is_symlink() or path.is_symlink() or not path.is_file():unsupported('regular '+label+' required: '+str(path))
+        try:
+            with os.fdopen(os.open(path,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK),'rb') as stream:
+                info=os.fstat(stream.fileno())
+                if not stat.S_ISREG(info.st_mode):unsupported('regular '+label+' required: '+str(path))
+                content=stream.read(65537)
+        except OSError:unsupported('unable to read regular '+label+': '+str(path))
+        if len(content)>65536:unsupported(label+' exceeds the supported snapshot size: '+str(path))
+        return content,info
+    source_bytes,_=read_regular(source,'ubuntu.sources')
+    source_text=source_bytes.decode('utf-8')
     disabled_parts=apt_root/'-'
     if disabled_parts.exists() or disabled_parts.is_symlink():unsupported('disabled sourceparts path must be absent.')
-    if UBUNTU_KEYRING.parent.is_symlink() or UBUNTU_KEYRING.is_symlink() or not UBUNTU_KEYRING.is_file():unsupported('regular Ubuntu archive keyring required.')
-    if source.stat().st_mode&0o022 or UBUNTU_KEYRING.stat().st_mode&0o022:unsupported('source/keyring must not be group/world writable.')
+    source_snapshot=apt_root/'.orafold-ci-ubuntu.sources';key_snapshot=apt_root/'.orafold-ci-ubuntu-keyring.gpg'
+    for snapshot in (source_snapshot,key_snapshot):
+        if snapshot.exists() or snapshot.is_symlink():unsupported('refusing to overwrite snapshot: '+str(snapshot))
+    key_bytes,key_info=read_regular(UBUNTU_KEYRING,'Ubuntu archive keyring')
+    digest=hashlib.sha256(key_bytes).hexdigest()
+    if digest!=UBUNTU_KEYRING_SHA256:
+        unsupported(f'Ubuntu archive keyring digest mismatch: {UBUNTU_KEYRING} (mode {stat.S_IMODE(key_info.st_mode):04o}, uid {key_info.st_uid}, size {key_info.st_size}, sha256 {digest}).')
     stanzas=[];fields={}
-    for line in source.read_text().splitlines()+['']:
+    for line in source_text.splitlines()+['']:
         if not line.strip():
             if fields:stanzas.append(fields);fields={}
             continue
@@ -73,8 +96,10 @@ def ubuntu_source_configuration(apt_root, os_release):
     if not {'noble','noble-updates','noble-security'}<=suites:unsupported('base, updates and security suites required.')
     # The source path is installed into APT syntax, so reject quoting/control
     # characters even in a nonstandard test/workspace apt_root.
-    if any(character in str(source) for character in '"\\\r\n'):unsupported('unsupported source path.')
-    return f'Dir::Etc::sourcelist "{source}";\nDir::Etc::sourceparts "{disabled_parts}";\n'
+    if any(character in str(source_snapshot) for character in '"\\\r\n'):unsupported('unsupported source path.')
+    snapshot_text=re.sub(r'^(signed-by:[ \t]*)[^\r\n]*',lambda match:match[1]+str(key_snapshot),source_text,flags=re.I|re.M)
+    configuration=f'Dir::Etc::sourcelist "{source_snapshot}";\nDir::Etc::sourceparts "{disabled_parts}";\n'
+    return snapshot_text,key_bytes,configuration
 
 
 def privileged(command):
@@ -150,16 +175,22 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
         configuration=apt_root/'apt.conf.d'/f'99-orafold-playwright-{os.getpid()}.conf'
         def system_dependencies():
             with tempfile.TemporaryDirectory(prefix='orafold-ci-deps-') as folder:
-                temporary=Path(folder);owned_configuration=False;changed_mirror=False
+                temporary=Path(folder);owned_configuration=False;changed_mirror=False;owned_snapshots=[]
                 try:
-                    source_configuration=ubuntu_source_configuration(apt_root,os_release) if github_actions and ubuntu else ''
+                    source_configuration=''
+                    if github_actions and ubuntu:
+                        source_text,key_bytes,source_configuration=ubuntu_source_configuration(apt_root,os_release)
+                        for name,content in [('.orafold-ci-ubuntu-keyring.gpg',key_bytes),('.orafold-ci-ubuntu.sources',source_text.encode('utf-8'))]:
+                            source=temporary/name;source.write_bytes(content);snapshot=apt_root/name
+                            owned_snapshots.append(snapshot)
+                            root_command(['install','-m','0644',str(source),str(snapshot)])
                     if source_configuration and not configuration.parent.is_dir():raise RuntimeError('APT configuration directory required for Ubuntu source isolation.')
                     if ubuntu and configuration.parent.is_dir():
                         if configuration.exists() or configuration.is_symlink():raise RuntimeError('Refusing to overwrite an existing installer configuration.')
                         source=temporary/'limits.conf';source.write_text(APT_LIMITS+source_configuration)
                         owned_configuration=True
                         root_command(['install','-m','0644',str(source),str(configuration)])
-                        if source_configuration:emit('System APT sources: validated signed Ubuntu24.04 ubuntu.sources only; unrelated runner feeds temporarily excluded without editing their files. TLS, signatures and update errors remain enforced.')
+                        if source_configuration:emit('System APT sources: validated Ubuntu24.04 source snapshot with pinned vendor keyring snapshot; both root-owned0644. Unrelated runner feeds temporarily excluded without editing original files. TLS, signatures and update errors remain enforced.')
                     supported_mirror=ubuntu and mirror.is_file() and not mirror.is_symlink()
                     official_first=github_actions and supported_mirror
                     def select_official_mirrors():
@@ -195,6 +226,9 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
                     if owned_configuration:
                         try:root_command(['rm','-f','--',str(configuration)])
                         except Exception as error:cleanup_errors.append('temporary configuration removal: '+type(error).__name__)
+                    for snapshot in reversed(owned_snapshots):
+                        try:root_command(['rm','-f','--',str(snapshot)])
+                        except Exception as error:cleanup_errors.append('snapshot removal: '+str(snapshot)+': '+type(error).__name__)
                     if cleanup_errors:
                         emit('Installer cleanup failed: '+', '.join(cleanup_errors))
                         raise RuntimeError('Dependency setup configuration could not be restored.')

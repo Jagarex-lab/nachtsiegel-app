@@ -1,4 +1,5 @@
 import importlib.util
+import hashlib
 import json
 import os
 import re
@@ -24,23 +25,29 @@ class DependencyInstaller(unittest.TestCase):
         self.mirror=self.apt/'apt-mirrors.txt';self.original=b'http://azure.archive.ubuntu.com/ubuntu priority:1\n'
         self.mirror.write_bytes(self.original);self.mirror.chmod(0o640)
         self.os=self.root/'os-release';self.os.write_text('ID=ubuntu\nVERSION_ID="24.04"\nVERSION_CODENAME=noble\n')
-        self.keyring=self.root/'ubuntu-archive-keyring.gpg';self.keyring.write_bytes(b'fixture keyring; no network signature verification performed')
+        self.keyring=self.root/'ubuntu-archive-keyring.gpg';self.keyring.write_bytes(b'fixture keyring; no network signature verification performed');self.keyring.chmod(0o777)
         self.keyring_original=self.keyring.read_bytes();self.keyring_before=self.keyring.stat()
         self.keyring_patch=patch.object(deps,'UBUNTU_KEYRING',self.keyring);self.keyring_patch.start();self.addCleanup(self.keyring_patch.stop)
+        self.keyring_hash_patch=patch.object(deps,'UBUNTU_KEYRING_SHA256',hashlib.sha256(self.keyring_original).hexdigest());self.keyring_hash_patch.start();self.addCleanup(self.keyring_hash_patch.stop)
         (self.apt/'sources.list.d').mkdir();self.sources=self.apt/'sources.list.d'/'ubuntu.sources'
         self.sources.write_text(f'Types: deb\nURIs: mirror+file:{self.mirror}\nSuites: noble noble-updates noble-backports noble-security\nComponents: main restricted universe multiverse\nSigned-By: {self.keyring}\n')
         self.source_original=self.sources.read_bytes();self.source_before=self.sources.stat()
         self.thirdparty=self.apt/'sources.list.d'/'microsoft-prod.list'
         self.thirdparty.write_text('deb [arch=amd64] https://packages.microsoft.com/ubuntu/24.04/prod noble main\n');self.thirdparty.chmod(0o640)
         self.thirdparty_original=self.thirdparty.read_bytes();self.thirdparty_before=self.thirdparty.stat()
-        self.scoped_configuration=deps.APT_LIMITS+deps.ubuntu_source_configuration(self.apt,self.os)
+        self.source_snapshot=self.apt/'.orafold-ci-ubuntu.sources';self.key_snapshot=self.apt/'.orafold-ci-ubuntu-keyring.gpg'
+        self.scoped_configuration=deps.APT_LIMITS+deps.ubuntu_source_configuration(self.apt,self.os)[2]
         self.cli=self.root/'playwright';self.calls=self.root/'calls.jsonl';self.log=self.root/'install.log'
         self.cli.write_text("""#!/usr/bin/env python3
-import json,os,pathlib,sys,time,subprocess,signal,stat
+import json,os,pathlib,sys,time,subprocess,signal,stat,hashlib
 root=pathlib.Path(os.environ['FAKE_APT_ROOT']);calls=pathlib.Path(os.environ['FAKE_CALLS'])
 rows=calls.read_text().splitlines() if calls.exists() else []
 entry={'arguments':sys.argv[1:],'mirror':(root/'apt-mirrors.txt').read_text() if (root/'apt-mirrors.txt').exists() else None,'configs':[p.read_text() for p in (root/'apt.conf.d').glob('*')]}
 entry['sources']={p.name:p.read_text() for p in (root/'sources.list.d').glob('*')}
+entry['snapshots']={}
+for path in root.glob('.orafold-ci-*'):
+ info=path.stat();content=path.read_bytes()
+ entry['snapshots'][path.name]={'uid':info.st_uid,'mode':stat.S_IMODE(info.st_mode),'sha256':hashlib.sha256(content).hexdigest(),'source':content.decode() if path.suffix=='.sources' else None}
 if os.environ.get('FAKE_APT_PRINT_CONFIG'):
  result=subprocess.run(['/usr/bin/apt-get','update','--print-uris'],env={**os.environ,'APT_CONFIG':os.environ['FAKE_APT_PRINT_CONFIG']},stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=10)
  entry['apt_status']=result.returncode;entry['apt_uris']=result.stdout
@@ -86,6 +93,7 @@ sys.exit(status)
         after=self.mirror.stat()
         self.assertEqual((after.st_uid,after.st_gid,stat.S_IMODE(after.st_mode)),(self.before.st_uid,self.before.st_gid,stat.S_IMODE(self.before.st_mode)))
         self.assertEqual(list((self.apt/'apt.conf.d').iterdir()),[])
+        self.assertFalse(self.source_snapshot.exists());self.assertFalse(self.key_snapshot.exists())
         for path,content,before in [(self.sources,self.source_original,self.source_before),(self.thirdparty,self.thirdparty_original,self.thirdparty_before),(self.keyring,self.keyring_original,self.keyring_before)]:
             self.assertEqual(path.read_bytes(),content)
             after=path.stat();self.assertEqual((after.st_uid,after.st_gid,stat.S_IMODE(after.st_mode)),(before.st_uid,before.st_gid,stat.S_IMODE(before.st_mode)))
@@ -113,11 +121,16 @@ sys.exit(status)
         self.assertEqual(rows[0]['mirror'],deps.OFFICIAL_MIRRORS)
         self.assertEqual(rows[0]['mirror'].splitlines(),['https://archive.ubuntu.com/ubuntu\tpriority:1','https://security.ubuntu.com/ubuntu\tpriority:2'])
         self.assertEqual(rows[0]['configs'],[self.scoped_configuration])
+        self.assertEqual(set(rows[0]['snapshots']),{self.source_snapshot.name,self.key_snapshot.name})
+        self.assertTrue(all(info['mode']==0o644 and info['uid']==os.geteuid() for info in rows[0]['snapshots'].values()),'local_root maps privileged installation to the current test user')
+        self.assertEqual(rows[0]['snapshots'][self.key_snapshot.name]['sha256'],hashlib.sha256(self.keyring_original).hexdigest())
+        self.assertIn('Signed-By: '+str(self.key_snapshot),rows[0]['snapshots'][self.source_snapshot.name]['source'])
         self.assertTrue(rows[0]['configs'][0].startswith('Acquire::Retries "2";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\nAPT::Update::Error-Mode "any";\n'))
         self.assertEqual(rows[1]['arguments'],['install','chromium','webkit'])
         self.assertEqual(rows[1]['mirror'],self.original.decode())
         self.assertEqual(rows[1]['mirror_metadata'],[self.before.st_uid,self.before.st_gid,stat.S_IMODE(self.before.st_mode)])
         self.assertEqual(rows[1]['configs'],[])
+        self.assertEqual(rows[1]['snapshots'],{})
         self.assertIn('Attempt1: official Ubuntu archive/security HTTPS mirrors',self.log.read_text())
         self.assertIn('GitHub Actions Ubuntu regular mirrorlist avoids slow runner HTTP mirrors',self.log.read_text())
         self.assert_restored()
@@ -249,6 +262,7 @@ sys.exit(status)
 
     def test_github_actions_source_validation_rejects_unsafe_or_incomplete_deb822(self):
         os.environ['GITHUB_ACTIONS']='true'
+        self.sources.chmod(0o777)
         original=self.source_original.decode()
         bad_sources={
             'third-party URI':original.replace('mirror+file:'+str(self.mirror),'https://packages.microsoft.com/ubuntu/24.04/prod'),
@@ -283,24 +297,23 @@ sys.exit(status)
                 self.assertEqual(self.mirror.read_bytes(),self.original);self.assertEqual(self.thirdparty.read_bytes(),self.thirdparty_original)
                 self.assertEqual(list((self.apt/'apt.conf.d').iterdir()),[])
 
-    def test_github_actions_source_or_keyring_must_be_regular_unwritable_and_present(self):
+    def test_github_actions_source_or_keyring_must_be_regular_and_present(self):
         os.environ['GITHUB_ACTIONS']='true'
         for path in (self.sources,self.keyring):
             content=path.read_bytes()
-            for kind in ('missing','symlink','directory','writable'):
+            for kind in ('missing','symlink','directory'):
                 with self.subTest(path=path.name,kind=kind):
                     path.unlink()
                     if kind=='symlink':
                         target=self.root/'foreign-file';target.write_bytes(content);path.symlink_to(target)
                     elif kind=='directory':path.mkdir()
-                    elif kind=='writable':path.write_bytes(content);path.chmod(0o666)
                     with self.assertRaisesRegex(RuntimeError,'Unsupported GitHub Actions Ubuntu APT sources'):
                         self.run_installer()
                     self.assertFalse(self.calls.exists());self.assertEqual(self.mirror.read_bytes(),self.original)
                     self.assertEqual(self.thirdparty.read_bytes(),self.thirdparty_original);self.assertEqual(list((self.apt/'apt.conf.d').iterdir()),[])
                     if kind=='directory':path.rmdir()
                     else:path.unlink(missing_ok=True)
-                    path.write_bytes(content);path.chmod(0o644)
+                    path.write_bytes(content);path.chmod(0o777 if path==self.keyring else 0o644)
 
     def test_github_actions_unsupported_ubuntu_release_fails_before_source_isolation(self):
         os.environ['GITHUB_ACTIONS']='true'
@@ -324,7 +337,7 @@ sys.exit(status)
     def test_github_actions_source_scope_cleanup_failure_prevents_browser(self):
         os.environ['GITHUB_ACTIONS']='true'
         def failed_removal(command):
-            if command[:3]==['rm','-f','--']:raise OSError('test temporary configuration removal refused')
+            if command[:3]==['rm','-f','--'] and command[-1].endswith('.conf'):raise OSError('test temporary configuration removal refused')
             self.local_root(command)
         with self.assertRaisesRegex(RuntimeError,'could not be restored'):
             deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=failed_removal)
@@ -349,10 +362,86 @@ sys.exit(status)
         os.environ['GITHUB_ACTIONS']='true'
         base=self.source_original.decode().replace(' noble-security','')+'Architectures: amd64\nEnabled: yes\n'
         security=self.source_original.decode().replace('mirror+file:'+str(self.mirror),'https://security.ubuntu.com/ubuntu/').replace('noble noble-updates noble-backports noble-security','noble-security')
-        self.sources.write_text('# Standard Ubuntu deb822 sources\n'+base+'\n'+security);self.source_original=self.sources.read_bytes()
+        self.sources.write_bytes(('# Standard Ubuntu deb822 sources\n'+base+'\n'+security).replace('Signed-By:','sIgNeD-bY:').replace('\n','\r\n').encode());self.source_original=self.sources.read_bytes()
         self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),2)
         self.assertEqual(rows[0]['configs'],[self.scoped_configuration]);self.assertEqual(rows[1]['configs'],[])
+        self.assertEqual(rows[0]['snapshots'][self.source_snapshot.name]['source'],self.source_original.decode().replace(str(self.keyring),str(self.key_snapshot)))
         self.assert_restored()
+
+    def test_github_actions_writable_source_uses_protected_snapshots_without_changing_inputs(self):
+        os.environ['GITHUB_ACTIONS']='true';self.sources.chmod(0o777);self.source_before=self.sources.stat()
+        self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),2)
+        self.assertTrue(all(info['mode']==0o644 for info in rows[0]['snapshots'].values()))
+        self.assertEqual(rows[1]['snapshots'],{})
+        self.assertEqual(stat.S_IMODE(self.sources.stat().st_mode),0o777)
+        self.assertEqual(stat.S_IMODE(self.keyring.stat().st_mode),0o777);self.assert_restored()
+
+    def test_github_actions_unknown_key_bytes_fail_with_path_mode_uid_size_and_digest(self):
+        os.environ['GITHUB_ACTIONS']='true';foreign=b'unrecognized keyring bytes'
+        self.keyring.write_bytes(foreign);self.keyring_original=foreign
+        for mode in (0o777,0o644):
+            with self.subTest(mode=mode):
+                self.keyring.chmod(mode);self.keyring_before=self.keyring.stat()
+                with self.assertRaisesRegex(RuntimeError,'Ubuntu archive keyring digest mismatch') as failure:
+                    self.run_installer()
+                message=str(failure.exception)
+                for detail in (str(self.keyring),f'mode {mode:04o}',f'uid {os.geteuid()}',f'size {len(foreign)}','sha256 '+hashlib.sha256(foreign).hexdigest()):self.assertIn(detail,message)
+                self.assertNotIn(foreign.decode(),message);self.assertFalse(self.calls.exists());self.assert_restored()
+
+    def test_github_actions_reads_inputs_once_and_origin_mutation_cannot_change_selected_snapshots(self):
+        os.environ['GITHUB_ACTIONS']='true';expected_source=self.source_original.decode().replace('Signed-By: '+str(self.keyring),'Signed-By: '+str(self.key_snapshot))
+        expected_digest=hashlib.sha256(self.keyring_original).hexdigest();mutated=False
+        def mutate_after_validation(command):
+            nonlocal mutated
+            if not mutated and command[0]=='install' and command[-1]==str(self.key_snapshot):
+                mutated=True
+                self.sources.write_text(self.sources.read_text().replace('mirror+file:'+str(self.mirror),'https://unrelated.invalid/ubuntu'))
+                self.keyring.write_bytes(b'keyring changed after validation')
+                self.source_original=self.sources.read_bytes();self.keyring_original=self.keyring.read_bytes()
+            self.local_root(command)
+        with patch.object(deps.os,'open',wraps=deps.os.open) as opened:
+            self.assertEqual(deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=mutate_after_validation),0)
+        self.assertEqual(sum(call.args[0]==self.sources for call in opened.call_args_list),1)
+        self.assertEqual(sum(call.args[0]==self.keyring for call in opened.call_args_list),1)
+        rows=self.rows();self.assertTrue(mutated);self.assertEqual(len(rows),2)
+        self.assertEqual(rows[0]['snapshots'][self.source_snapshot.name]['source'],expected_source)
+        self.assertEqual(rows[0]['snapshots'][self.key_snapshot.name]['sha256'],expected_digest)
+        self.assertEqual(rows[1]['snapshots'],{});self.assert_restored()
+
+    def test_github_actions_snapshot_collision_or_symlink_is_not_overwritten(self):
+        os.environ['GITHUB_ACTIONS']='true'
+        for snapshot in (self.source_snapshot,self.key_snapshot):
+            for kind in ('file','symlink'):
+                with self.subTest(path=snapshot.name,kind=kind):
+                    target=self.root/'preexisting-snapshot';target.write_bytes(b'preexisting snapshot')
+                    if kind=='symlink':snapshot.symlink_to(target)
+                    else:snapshot.write_bytes(target.read_bytes());snapshot.chmod(0o600)
+                    with self.assertRaisesRegex(RuntimeError,'refusing to overwrite snapshot'):
+                        self.run_installer()
+                    self.assertEqual(snapshot.read_bytes(),b'preexisting snapshot')
+                    self.assertEqual(snapshot.is_symlink(),kind=='symlink');self.assertFalse(self.calls.exists())
+                    snapshot.unlink();self.assert_restored()
+
+    def test_github_actions_partial_snapshot_or_config_install_failure_cleans_up(self):
+        os.environ['GITHUB_ACTIONS']='true';configuration=self.apt/'apt.conf.d'/f'99-orafold-playwright-{os.getpid()}.conf'
+        for failed_path in (self.key_snapshot,self.source_snapshot,configuration):
+            with self.subTest(path=failed_path.name):
+                def interrupted_install(command):
+                    self.local_root(command)
+                    if command[0]=='install' and command[-1]==str(failed_path):raise OSError('controlled partial install failure')
+                with self.assertRaisesRegex(OSError,'controlled partial install failure'):
+                    deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=interrupted_install)
+                self.assertFalse(self.calls.exists());self.assert_restored()
+
+    def test_github_actions_snapshot_cleanup_failure_is_fatal_before_browser(self):
+        os.environ['GITHUB_ACTIONS']='true'
+        def interrupted_removal(command):
+            if command[:3]==['rm','-f','--'] and command[-1]==str(self.source_snapshot):raise OSError('controlled snapshot removal failure')
+            self.local_root(command)
+        with self.assertRaisesRegex(RuntimeError,'could not be restored'):
+            deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=interrupted_removal)
+        self.assertEqual(len(self.rows()),1);self.assertIn('snapshot removal',self.log.read_text())
+        self.assertTrue(self.source_snapshot.is_file());self.source_snapshot.unlink();self.assert_restored()
 
     def test_local_install_keeps_unrecognized_sources_and_third_party_feeds_unchanged(self):
         self.sources.write_text('unrecognized local source configuration\n');self.source_original=self.sources.read_bytes()
