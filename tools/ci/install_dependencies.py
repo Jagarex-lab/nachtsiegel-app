@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Bounded CI dependency setup with one official Ubuntu mirror fallback.
 
-Normal mirrors are always tried first. Neither GPG/TLS verification nor
-Playwright's --with-deps/host validation is disabled. No repository setting,
-publisher or credential is changed. All temporary APT configuration is restored.
+Normal mirrors are always tried first. System dependencies and browser download
+each have their own bounded deadline. Playwright's public install-deps then
+install commands retain the same dependencies and host validation as --with-deps;
+neither GPG/TLS nor host checks are disabled. Temporary APT settings are restored
+before browser download. No repository setting, publisher or credential changes.
 """
 from __future__ import annotations
 import argparse
@@ -79,7 +81,8 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
         if mode=='playwright':
             if len(arguments)<2 or not Path(arguments[0]).is_file() or any(browser not in ('chromium','webkit','firefox') for browser in arguments[1:]):
                 emit('Invalid Playwright binary or browser selection.');return 2
-            commands=[[arguments[0],'install','--with-deps',*arguments[1:]]]
+            commands=[[arguments[0],'install-deps',*arguments[1:]]]
+            browser_commands=[[arguments[0],'install',*arguments[1:]]]
         elif mode=='apt':
             if not arguments or any(not re.fullmatch(r'[a-z0-9][a-z0-9+.-]*',package) for package in arguments):
                 emit('Invalid APT package selection.');return 2
@@ -90,41 +93,54 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
         ubuntu=os_release.is_file() and any(line.strip() in ('ID=ubuntu','ID="ubuntu"') for line in os_release.read_text().splitlines())
         mirror=apt_root/'apt-mirrors.txt'
         configuration=apt_root/'apt.conf.d'/f'99-orafold-playwright-{os.getpid()}.conf'
-        with tempfile.TemporaryDirectory(prefix='orafold-ci-deps-') as folder:
-            temporary=Path(folder);owned_configuration=False;changed_mirror=False
-            try:
-                if ubuntu and configuration.parent.is_dir():
-                    if configuration.exists() or configuration.is_symlink():raise RuntimeError('Refusing to overwrite an existing installer configuration.')
-                    source=temporary/'limits.conf';source.write_text(APT_LIMITS)
-                    owned_configuration=True
-                    root_command(['install','-m','0644',str(source),str(configuration)])
-                emit('Attempt1: original mirror configuration; required dependencies remain enabled.')
-                status,text=execute(commands,timeout,root_command);emit(text)
-                if status==0:emit('Dependency installation succeeded.');return 0
-                emit(f'Attempt1 failed with exit{status}.')
-                if not dependency_failure(text,status):emit('Not an Ubuntu dependency-download failure; no mirror changes or retry.');return status
-                if not ubuntu or not mirror.is_file() or mirror.is_symlink():
-                    emit('Supported regular Ubuntu mirrorlist unavailable; original failure remains.');return status
-                backup=temporary/'original-mirrors.txt'
-                root_command(['cp','-p',str(mirror),str(backup)])
-                official=temporary/'official-mirrors.txt';official.write_text(OFFICIAL_MIRRORS)
-                changed_mirror=True
-                root_command(['cp',str(official),str(mirror)])
-                emit('Attempt2: official Ubuntu archive/security HTTPS mirrors; signatures, TLS and dependency validation unchanged.')
-                status,text=execute(commands,timeout,root_command);emit(text)
-                emit('Dependency installation succeeded after the official fallback.' if status==0 else f'Official fallback failed with exit{status}; CI remains failed.')
-                return status
-            finally:
-                cleanup_errors=[]
-                if changed_mirror:
-                    try:root_command(['cp','-p',str(temporary/'original-mirrors.txt'),str(mirror)])
-                    except Exception as error:cleanup_errors.append('mirror restoration: '+type(error).__name__)
-                if owned_configuration:
-                    try:root_command(['rm','-f','--',str(configuration)])
-                    except Exception as error:cleanup_errors.append('temporary configuration removal: '+type(error).__name__)
-                if cleanup_errors:
-                    emit('Installer cleanup failed: '+', '.join(cleanup_errors))
-                    raise RuntimeError('Dependency setup configuration could not be restored.')
+        def system_dependencies():
+            with tempfile.TemporaryDirectory(prefix='orafold-ci-deps-') as folder:
+                temporary=Path(folder);owned_configuration=False;changed_mirror=False
+                try:
+                    if ubuntu and configuration.parent.is_dir():
+                        if configuration.exists() or configuration.is_symlink():raise RuntimeError('Refusing to overwrite an existing installer configuration.')
+                        source=temporary/'limits.conf';source.write_text(APT_LIMITS)
+                        owned_configuration=True
+                        root_command(['install','-m','0644',str(source),str(configuration)])
+                    emit('Attempt1: original mirror configuration; required dependencies remain enabled.')
+                    status,text=execute(commands,timeout,root_command);emit(text)
+                    if status==0:emit('Dependency installation succeeded.');return 0
+                    emit(f'Attempt1 failed with exit{status}.')
+                    if not dependency_failure(text,status):emit('Not an Ubuntu dependency-download failure; no mirror changes or retry.');return status
+                    if not ubuntu or not mirror.is_file() or mirror.is_symlink():
+                        emit('Supported regular Ubuntu mirrorlist unavailable; original failure remains.');return status
+                    backup=temporary/'original-mirrors.txt'
+                    root_command(['cp','-p',str(mirror),str(backup)])
+                    official=temporary/'official-mirrors.txt';official.write_text(OFFICIAL_MIRRORS)
+                    changed_mirror=True
+                    root_command(['cp',str(official),str(mirror)])
+                    emit('Attempt2: official Ubuntu archive/security HTTPS mirrors; signatures, TLS and dependency validation unchanged.')
+                    status,text=execute(commands,timeout,root_command);emit(text)
+                    emit('Dependency installation succeeded after the official fallback.' if status==0 else f'Official fallback failed with exit{status}; CI remains failed.')
+                    return status
+                finally:
+                    cleanup_errors=[]
+                    if changed_mirror:
+                        try:root_command(['cp','-p',str(temporary/'original-mirrors.txt'),str(mirror)])
+                        except Exception as error:cleanup_errors.append('mirror restoration: '+type(error).__name__)
+                    if owned_configuration:
+                        try:root_command(['rm','-f','--',str(configuration)])
+                        except Exception as error:cleanup_errors.append('temporary configuration removal: '+type(error).__name__)
+                    if cleanup_errors:
+                        emit('Installer cleanup failed: '+', '.join(cleanup_errors))
+                        raise RuntimeError('Dependency setup configuration could not be restored.')
+        emit(f'System dependency phase: at most two attempts, each bounded to {timeout:g}s.')
+        status=system_dependencies()
+        if status or mode=='apt':return status
+        # Pinned Playwright1.65 uses the same installDeps/registry.install/host
+        # validation path for --with-deps. Split its public commands so a slow
+        # successful APT phase cannot consume the browser download/unpack time.
+        # Do not put this phase in the APT retry scope: CDN/validation errors
+        # must fail once, with no mirror changes or success inferred at100%.
+        emit(f'Browser download and host validation phase: one attempt bounded to {timeout:g}s; APT configuration already restored.')
+        status,text=execute(browser_commands,timeout,root_command);emit(text)
+        emit('Browser installation completed; normal Playwright host validation remains enabled.' if status==0 else f'Browser installation failed with exit{status}; CI remains failed.')
+        return status
 
 
 def main():

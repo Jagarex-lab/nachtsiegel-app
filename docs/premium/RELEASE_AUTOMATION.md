@@ -54,6 +54,23 @@ Ein Owner- oder autorisierter GitHub-App-Merge muss die normalen Push-Ereignisse
 
 ## Lokale Prüfung und Rollback
 
+Die CI-Provisionierung trennt Playwrights `install-deps` und `install` in zwei
+eigene, begrenzte Phasen. Jede Phase besitzt standardmäßig 300 Sekunden. Nur
+die Systemabhängigkeiten dürfen bei einem nachgewiesenen APT-Downloadfehler
+einmal mit den offiziellen Ubuntu-Spiegeln wiederholt werden; deren temporäre
+Konfiguration wird vor dem Browserdownload vollständig zurückgesetzt. Der
+Browserdownload einschließlich der normalen Hostprüfung erhält genau einen
+eigenen Versuch. Ein CDN-Fehler löst keinen APT-Spiegelwechsel aus.
+
+Grund ist der tatsächliche fehlgeschlagene
+[Bild-Browserjob 134476925062](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44204333910/job/134476925062):
+Die Systempakete benötigten rund vier Minuten; der anschließende Chrome-Download
+erreichte 100 Prozent, wurde aber von der gemeinsamen 300-Sekunden-Grenze vor
+der Fertigstellung beendet. Die Bildtests liefen nicht und dieser Versuch
+bleibt fehlgeschlagen. Die getrennten Installationsphasen ändern keine
+Spiel-, Touch-, Audio- oder Browser-Testzeitgrenzen und ersetzen keine
+fehlgeschlagene QA durch einen Erfolg.
+
 ```sh
 python3 -W error::ResourceWarning -m unittest discover -s tests/release -v
 python3 -m unittest discover -s tests/ci -v

@@ -32,7 +32,7 @@ rows=calls.read_text().splitlines() if calls.exists() else []
 entry={'arguments':sys.argv[1:],'mirror':(root/'apt-mirrors.txt').read_text() if (root/'apt-mirrors.txt').exists() else None,'configs':[p.read_text() for p in (root/'apt.conf.d').glob('*')]}
 with calls.open('a') as output:output.write(json.dumps(entry)+'\\n')
 codes=json.loads(os.environ.get('FAKE_CODES','[0]'));status=codes[min(len(rows),len(codes)-1)]
-if os.environ.get('FAKE_SLEEP'):print('fake installer waiting',flush=True);time.sleep(3)
+if os.environ.get('FAKE_SLEEP') or os.environ.get('FAKE_SLEEP_STAGE')==sys.argv[1]:print('fake installer waiting',flush=True);time.sleep(3)
 if os.environ.get('FAKE_CHILD'):
  child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)'])
  def terminate(signum,frame):child.wait(timeout=2);sys.exit(143)
@@ -69,10 +69,13 @@ sys.exit(status)
         self.assertEqual(list((self.apt/'apt.conf.d').iterdir()),[])
 
     def test_success_uses_original_mirrors_once_and_keeps_required_dependencies(self):
-        self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),1)
+        self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),2)
         self.assertEqual(rows[0]['mirror'],self.original.decode())
-        self.assertEqual(rows[0]['arguments'],['install','--with-deps','chromium','webkit'])
+        self.assertEqual(rows[0]['arguments'],['install-deps','chromium','webkit'])
         self.assertEqual(rows[0]['configs'],[deps.APT_LIMITS])
+        self.assertEqual(rows[1]['arguments'],['install','chromium','webkit'])
+        self.assertEqual(rows[1]['mirror'],self.original.decode())
+        self.assertEqual(rows[1]['configs'],[],'APT configuration is restored before browser download')
         self.assert_restored()
 
     def test_existing_npm_bootstrap_diagnostics_are_preserved(self):
@@ -83,19 +86,25 @@ sys.exit(status)
 
     def test_actual_dependency_failure_gets_one_official_fallback_and_restores(self):
         os.environ['FAKE_CODES']='[1,0]'
-        self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),2)
+        self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),3)
         self.assertEqual(rows[0]['mirror'],self.original.decode());self.assertEqual(rows[1]['mirror'],deps.OFFICIAL_MIRRORS)
-        self.assertTrue(all(row['arguments']==['install','--with-deps','chromium','webkit'] for row in rows))
+        self.assertTrue(all(row['arguments']==['install-deps','chromium','webkit'] for row in rows[:2]))
+        self.assertEqual(rows[2]['arguments'],['install','chromium','webkit'])
+        self.assertEqual(rows[2]['mirror'],self.original.decode())
+        self.assertEqual(rows[2]['configs'],[],'retry cleanup precedes browser download')
         self.assert_restored()
 
     def test_persistent_failure_stays_failed_without_third_attempt(self):
         os.environ['FAKE_CODES']='[1,7]'
         self.assertEqual(self.run_installer(),7);self.assertEqual(len(self.rows()),2)
+        self.assertTrue(all(row['arguments'][0]=='install-deps' for row in self.rows()),'failed system dependencies prevent browser download')
         self.assertIn('CI remains failed',self.log.read_text());self.assert_restored()
 
     def test_browser_cdn_error_does_not_rewrite_dependency_mirrors(self):
-        os.environ.update(FAKE_CODES='[1,0]',FAKE_ERROR='Failed to download Chromium: CDN returned503')
-        self.assertEqual(self.run_installer(),1);self.assertEqual(len(self.rows()),1)
+        os.environ.update(FAKE_CODES='[0,1,0]',FAKE_ERROR='Failed to download Chromium: CDN returned503')
+        self.assertEqual(self.run_installer(),1);rows=self.rows();self.assertEqual(len(rows),2)
+        self.assertTrue(all(row['mirror']==self.original.decode() for row in rows))
+        self.assertEqual(rows[1]['configs'],[])
         self.assert_restored()
 
     def test_real_ubuntu_transfer_timeout_gets_one_bounded_official_fallback(self):
@@ -112,10 +121,67 @@ CI dependency attempt exceeded 300s; no success was inferred.
             return (124,stalled) if len(calls)==1 else (0,'Dependencies and browser installed.\n')
         with patch.object(deps,'execute',side_effect=execute):
             self.assertEqual(self.run_installer(),0)
-        self.assertEqual(len(calls),2)
-        self.assertEqual([call['timeout'] for call in calls],[300,300])
-        self.assertEqual([call['mirror'] for call in calls],[self.original.decode(),deps.OFFICIAL_MIRRORS])
+        self.assertEqual(len(calls),3)
+        self.assertEqual([call['timeout'] for call in calls],[300,300,300])
+        self.assertEqual([call['mirror'] for call in calls],[self.original.decode(),deps.OFFICIAL_MIRRORS,self.original.decode()])
         self.assertEqual(calls[0]['commands'],calls[1]['commands'])
+        self.assertEqual(calls[2]['commands'],[[str(self.cli),'install','chromium','webkit']])
+        self.assert_restored()
+
+    def test_slow_successful_system_phase_does_not_consume_browser_deadline(self):
+        # Main44204333910/job134476925062: APT completed, then Chrome's197.8MiB
+        # reached100%, but the old shared deadline killed download/unpacking.
+        # A controlled clock exercises execute's actual deadline arithmetic;
+        # no network, sleeps, or assumption about fixture startup speed.
+        clock=[0.0];timeouts=[];commands=[]
+        def popen(command,**kwargs):
+            commands.append(command)
+            process=Mock();process.returncode=0
+            def communicate(timeout):
+                timeouts.append(timeout)
+                clock[0]+=299.0
+                return ('system dependencies installed' if command[1]=='install-deps' else 'browser downloaded, unpacked and host validation reached','')
+            process.communicate.side_effect=communicate
+            return process
+        with patch.object(deps.time,'monotonic',side_effect=lambda:clock[0]),patch.object(deps.subprocess,'Popen',side_effect=popen):
+            # This test examines Popen deadline logic, not temporary cp/install;
+            # cleanup paths are executed by the real-process cases above.
+            self.assertEqual(deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=lambda command:None),0)
+        self.assertEqual(commands,[[str(self.cli),'install-deps','chromium'],[str(self.cli),'install','chromium']])
+        self.assertEqual(timeouts,[300,300])
+        self.assertEqual(clock[0],598)
+
+    def test_browser_timeout_at_100_percent_is_not_success_or_an_apt_retry(self):
+        text='Downloading Chrome for Testing158.0.8127.18 (197.8MiB)\n100% of197.8MiB\nCI dependency attempt exceeded 300s; no success was inferred.\n'
+        with patch.object(deps,'execute',side_effect=[(0,'System dependencies installed\n'),(124,text)]) as execute:
+            self.assertEqual(self.run_installer(),124)
+        self.assertEqual(execute.call_count,2)
+        self.assertIn('Browser installation failed with exit124; CI remains failed',self.log.read_text())
+        self.assertNotIn('Attempt2:',self.log.read_text());self.assert_restored()
+
+    def test_browser_stage_failure_never_reenters_system_dependency_retry(self):
+        os.environ.update(FAKE_CODES='[0,100,0]',FAKE_ERROR='Failed to install browser dependencies')
+        self.assertEqual(self.run_installer(),100)
+        rows=self.rows();self.assertEqual(len(rows),2)
+        self.assertTrue(all(row['mirror']==self.original.decode() for row in rows))
+        self.assertEqual(rows[1]['configs'],[])
+        self.assertNotIn('Attempt2:',self.log.read_text());self.assert_restored()
+
+    def test_browser_stage_has_its_own_actual_process_deadline(self):
+        os.environ['FAKE_SLEEP_STAGE']='install'
+        real_execute=deps.execute;calls=[]
+        def execute(commands,timeout,root_command):
+            calls.append((commands,timeout))
+            # Don't make unrelated system-fixture startup speed a prerequisite
+            # for testing the real browser process cancellation. Other cases
+            # execute both actual phases; this one isolates the second stage.
+            if len(calls)==1:return 0,'system phase completed\n'
+            self.assert_restored()
+            return real_execute(commands,timeout,root_command)
+        with patch.object(deps,'execute',side_effect=execute):
+            self.assertEqual(self.run_installer(timeout=.1),124)
+        self.assertEqual(calls,[([[str(self.cli),'install-deps','chromium','webkit']],.1),([[str(self.cli),'install','chromium','webkit']],.1)])
+        self.assertIn('Browser installation failed with exit124',self.log.read_text())
         self.assert_restored()
 
     def test_ubuntu_transfer_timeout_is_not_inferred_from_old_or_unrelated_output(self):
@@ -214,6 +280,7 @@ CI dependency attempt exceeded 300s; no success was inferred.
         with self.assertRaises(RuntimeError):
             deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=failed_restore)
         self.assertIn('cleanup failed',self.log.read_text())
+        self.assertTrue(all(row['arguments'][0]=='install-deps' for row in self.rows()),'failed cleanup prevents browser download')
         self.assertEqual(list((self.apt/'apt.conf.d').iterdir()),[])
 
     def test_ffmpeg_mode_still_runs_real_apt_update_and_install(self):
