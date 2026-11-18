@@ -21,6 +21,7 @@ import subprocess
 import sys
 import tempfile
 import time
+from urllib.parse import urlsplit
 
 # apt-transport-mirror requires a TAB before metadata. A space becomes part of
 # the URI and produces HTTP400 once DNS succeeds; keep this actual APT-tested.
@@ -31,6 +32,15 @@ UBUNTU_KEYRING=Path('/usr/share/keyrings/ubuntu-archive-keyring.gpg')
 # Official package SHA256:36de43b15853ccae0028e9a767613770c704833f82586f28eb262f0311adb8a8.
 # https://packages.ubuntu.com/noble/all/ubuntu-keyring/download
 UBUNTU_KEYRING_SHA256='80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31'
+# Documented runner-image/cloud-init literals only; APT never fetches these
+# HTTP/cloud hosts. Snapshot URIs use the existing official HTTPS destinations.
+# runner-images commits9b75b60f5c2a8a890a1c0bf4c169ff50bf96b4be and
+# f2f91839f985dcbde42542557c72de8d0c2970a6.
+LEGACY_UBUNTU_HTTPS={
+    f'http://{host}/ubuntu{slash}':f'https://{target}/ubuntu{slash}'
+    for host,target in [('archive.ubuntu.com','archive.ubuntu.com'),('security.ubuntu.com','security.ubuntu.com'),('azure.archive.ubuntu.com','archive.ubuntu.com'),('us-east-2.ec2.archive.ubuntu.com','archive.ubuntu.com')]
+    for slash in ('','/')
+}
 
 
 def ubuntu_source_configuration(apt_root, os_release):
@@ -42,6 +52,15 @@ def ubuntu_source_configuration(apt_root, os_release):
     root-owned snapshots and still verifies release signatures/package integrity.
     """
     def unsupported(reason):raise RuntimeError('Unsupported GitHub Actions Ubuntu APT sources: '+reason)
+    def rejected_uri(uri):
+        # Unknown APT URLs may contain credentials or tokens. Never emit their
+        # userinfo, path, query, fragment or raw text, including parse errors.
+        try:
+            parsed=urlsplit(uri);scheme=parsed.scheme;host=parsed.hostname or '(none)'
+        except ValueError:scheme='invalid';host='invalid'
+        scheme=scheme if re.fullmatch(r'[a-z][a-z0-9+.-]{0,19}',scheme) else 'redacted'
+        host=host[:64] if host=='(none)' or re.fullmatch(r'[a-zA-Z0-9.-]+',host) else 'redacted'
+        unsupported(f'official Ubuntu HTTPS URI or standard mirrorlist required (scheme {scheme}, host {host}, URI sha256 {hashlib.sha256(uri.encode()).hexdigest()}).')
     release=dict(line.split('=',1) for line in os_release.read_text().splitlines() if '=' in line and not line.startswith('#'))
     if release.get('VERSION_ID','').strip('"')!='24.04' or release.get('VERSION_CODENAME','').strip('"')!='noble':
         unsupported('expected Ubuntu24.04/noble.')
@@ -92,12 +111,13 @@ def ubuntu_source_configuration(apt_root, os_release):
         for uri in fields['uris'].split():
             if uri==mirror_uri:
                 if mirror.is_symlink() or not mirror.is_file():unsupported('regular Ubuntu mirrorlist required.')
-            elif uri not in official:unsupported('official Ubuntu HTTPS URI or standard mirrorlist required.')
+            elif LEGACY_UBUNTU_HTTPS.get(uri,uri) not in official:rejected_uri(uri)
     if not {'noble','noble-updates','noble-security'}<=suites:unsupported('base, updates and security suites required.')
     # The source path is installed into APT syntax, so reject quoting/control
     # characters even in a nonstandard test/workspace apt_root.
     if any(character in str(source_snapshot) for character in '"\\\r\n'):unsupported('unsupported source path.')
     snapshot_text=re.sub(r'^(signed-by:[ \t]*)[^\r\n]*',lambda match:match[1]+str(key_snapshot),source_text,flags=re.I|re.M)
+    snapshot_text=re.sub(r'^(uris:[ \t]*)([^\r\n]*)',lambda match:match[1]+re.sub(r'\S+',lambda token:LEGACY_UBUNTU_HTTPS.get(token[0],token[0]),match[2]),snapshot_text,flags=re.I|re.M)
     configuration=f'Dir::Etc::sourcelist "{source_snapshot}";\nDir::Etc::sourceparts "{disabled_parts}";\n'
     return snapshot_text,key_bytes,configuration
 

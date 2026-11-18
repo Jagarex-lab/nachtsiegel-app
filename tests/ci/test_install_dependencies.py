@@ -245,17 +245,19 @@ sys.exit(status)
         # preinstalled Microsoft feed returned429 and apt update failed100.
         # Real APT --print-uris enumerates both phases' source configuration
         # without fetching metadata/packages or touching system APT state.
-        self.sources.write_bytes(self.source_original.replace(('mirror+file:'+str(self.mirror)).encode(),b'https://archive.ubuntu.com/ubuntu/'))
+        self.sources.write_bytes(self.source_original.replace(('mirror+file:'+str(self.mirror)).encode(),b'http://us-east-2.ec2.archive.ubuntu.com/ubuntu/'))
         self.source_original=self.sources.read_bytes()
         lists=self.root/'lists';(lists/'partial').mkdir(parents=True)
         config=self.root/'apt-parser.conf'
         config.write_text(f'Dir::Etc "{self.apt}";\nDir::Etc::parts "{self.apt}/apt.conf.d";\nDir::Etc::main "-";\nDir::State::lists "{lists}";\nDebug::NoLocking "true";\n')
         os.environ.update(GITHUB_ACTIONS='true',FAKE_APT_PRINT_CONFIG=str(config))
         self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),2)
-        for row in rows:
+        for index,row in enumerate(rows):
             self.assertEqual(row['apt_status'],0,row['apt_uris'])
-            self.assertIn('https://archive.ubuntu.com/ubuntu/dists/noble/InRelease',row['apt_uris'])
+            expected='https://archive.ubuntu.com/ubuntu/' if index==0 else 'http://us-east-2.ec2.archive.ubuntu.com/ubuntu/'
+            self.assertIn(expected+'dists/noble/InRelease',row['apt_uris'])
             self.assertEqual(row['sources'],{'ubuntu.sources':self.source_original.decode(),'microsoft-prod.list':self.thirdparty_original.decode()})
+        self.assertNotIn('http://',rows[0]['apt_uris']);self.assertNotIn('ec2.archive.ubuntu.com',rows[0]['apt_uris'])
         self.assertNotIn('packages.microsoft.com',rows[0]['apt_uris'])
         self.assertIn('packages.microsoft.com/ubuntu/24.04/prod/dists/noble/InRelease',rows[1]['apt_uris'])
         self.assertEqual(rows[1]['configs'],[]);self.assert_restored()
@@ -266,7 +268,12 @@ sys.exit(status)
         original=self.source_original.decode()
         bad_sources={
             'third-party URI':original.replace('mirror+file:'+str(self.mirror),'https://packages.microsoft.com/ubuntu/24.04/prod'),
-            'HTTP URI':original.replace('mirror+file:'+str(self.mirror),'http://archive.ubuntu.com/ubuntu'),
+            'undocumented HTTP host':original.replace('mirror+file:'+str(self.mirror),'http://private.archive.ubuntu.com/ubuntu'),
+            'legacy URI userinfo':original.replace('mirror+file:'+str(self.mirror),'http://user:secret@azure.archive.ubuntu.com/ubuntu/'),
+            'legacy URI port':original.replace('mirror+file:'+str(self.mirror),'http://archive.ubuntu.com:80/ubuntu'),
+            'legacy URI query':original.replace('mirror+file:'+str(self.mirror),'http://archive.ubuntu.com/ubuntu?token=secret'),
+            'legacy URI fragment':original.replace('mirror+file:'+str(self.mirror),'http://security.ubuntu.com/ubuntu/#secret'),
+            'undocumented EC2 region':original.replace('mirror+file:'+str(self.mirror),'http://us-east-1.ec2.archive.ubuntu.com/ubuntu'),
             'host suffix':original.replace('mirror+file:'+str(self.mirror),'https://archive.ubuntu.com.evil.invalid/ubuntu'),
             'URI userinfo':original.replace('mirror+file:'+str(self.mirror),'https://user@archive.ubuntu.com/ubuntu'),
             'URI query':original.replace('mirror+file:'+str(self.mirror),'https://archive.ubuntu.com/ubuntu?trusted=yes'),
@@ -442,6 +449,42 @@ sys.exit(status)
             deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=interrupted_removal)
         self.assertEqual(len(self.rows()),1);self.assertIn('snapshot removal',self.log.read_text())
         self.assertTrue(self.source_snapshot.is_file());self.source_snapshot.unlink();self.assert_restored()
+
+    def test_documented_legacy_http_sources_only_reach_official_https_snapshots(self):
+        os.environ['GITHUB_ACTIONS']='true';original=self.source_original.decode()
+        for host,target in [('archive.ubuntu.com','archive.ubuntu.com'),('security.ubuntu.com','security.ubuntu.com'),('azure.archive.ubuntu.com','archive.ubuntu.com'),('us-east-2.ec2.archive.ubuntu.com','archive.ubuntu.com')]:
+            for slash in ('','/'):
+                with self.subTest(host=host,slash=slash):
+                    self.calls.unlink(missing_ok=True);legacy=f'http://{host}/ubuntu{slash}';canonical=f'https://{target}/ubuntu{slash}'
+                    self.sources.write_text(original.replace('mirror+file:'+str(self.mirror),legacy));self.source_original=self.sources.read_bytes()
+                    self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),2)
+                    selected=rows[0]['snapshots'][self.source_snapshot.name]['source']
+                    self.assertIn('URIs: '+canonical,selected);self.assertNotIn('http://',selected)
+                    self.assertEqual(selected,self.source_original.decode().replace(legacy,canonical).replace(str(self.keyring),str(self.key_snapshot)))
+                    self.assertEqual(rows[1]['snapshots'],{});self.assert_restored()
+
+    def test_legacy_uri_normalization_preserves_other_source_bytes_and_multiple_uri_spacing(self):
+        os.environ['GITHUB_ACTIONS']='true'
+        uris='http://azure.archive.ubuntu.com/ubuntu/\t  http://security.ubuntu.com/ubuntu'
+        content=self.source_original.decode().replace('URIs: mirror+file:'+str(self.mirror),'uRiS: '+uris+'  ').replace('\n','\r\n')
+        self.sources.write_bytes(content.encode());self.source_original=self.sources.read_bytes()
+        self.assertEqual(self.run_installer(),0);selected=self.rows()[0]['snapshots'][self.source_snapshot.name]['source']
+        self.assertEqual(selected,content.replace('http://azure.archive.ubuntu.com/ubuntu/','https://archive.ubuntu.com/ubuntu/').replace('http://security.ubuntu.com/ubuntu','https://security.ubuntu.com/ubuntu').replace(str(self.keyring),str(self.key_snapshot)))
+        self.assert_restored()
+
+    def test_unknown_uri_diagnostics_are_bounded_and_hide_credentials_query_path_and_fragment(self):
+        os.environ['GITHUB_ACTIONS']='true';original=self.source_original.decode()
+        for uri in ('https://person:privatePassword@packages.example.invalid/privatePath?token=privateQuery#privateFragment',
+                    'https://person:'+('privatePassword'*500)+'@packages.example.invalid/privatePath?token=privateQuery',
+                    'https://[privatePassword/privatePath?token=privateQuery'):
+            with self.subTest(uri_hash=hashlib.sha256(uri.encode()).hexdigest()):
+                self.sources.write_text(original.replace('mirror+file:'+str(self.mirror),uri));self.source_original=self.sources.read_bytes()
+                with self.assertRaisesRegex(RuntimeError,'official Ubuntu HTTPS URI or standard mirrorlist required') as failure:
+                    self.run_installer()
+                diagnostic=str(failure.exception);self.assertLess(len(diagnostic),400)
+                self.assertIn('URI sha256 '+hashlib.sha256(uri.encode()).hexdigest(),diagnostic)
+                for secret in ('person','privatePassword','privatePath','privateQuery','privateFragment'):self.assertNotIn(secret,diagnostic)
+                self.assertFalse(self.calls.exists());self.assert_restored()
 
     def test_local_install_keeps_unrecognized_sources_and_third_party_feeds_unchanged(self):
         self.sources.write_text('unrecognized local source configuration\n');self.source_original=self.sources.read_bytes()
