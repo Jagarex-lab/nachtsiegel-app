@@ -2,6 +2,14 @@
 
 ## Ergebnis für den Projektinhaber
 
+**Aktueller Nachtrag vor Integration des letzten Wartungs-PRs:** develop119ceb,
+öffentlich6c99. Die drei zusätzlich erforderlichen Wartungs-PRs sind in der
+Tabelle separat erfasst; die ursprünglichen sieben bleiben C5/D2 abgeschlossen.
+Der endgültige aktuelle Merge-, QA- und Live-Nachweis steht nach tatsächlicher
+Ausführung im [Abschlusskommentar von PR #35](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35#issuecomment-6985608488)
+sowie den unten verlinkten öffentlichen Provenienzdateien. Dieser datierte
+Quellstand behauptet keinen zukünftigen eigenen Commit-Hash oder Release.
+
 Alle **sieben ursprünglich offenen PRs** wurden geprüft und mit begründetem
 Abschlusskommentar **ohne zusätzlichen Merge geschlossen**: fünf bereits
 integriert, zwei durch die heutige Produktion abgelöst. **38 Branches** und
@@ -17,6 +25,10 @@ historische Bilder, Herkunft, Lizenzen und Prüfnachweise bleiben erhalten.
 | [#14](https://github.com/Jagarex-lab/nachtsiegel-app/pull/14) | Audio und 163 Originalclips | C – BEREITS INTEGRIERT | Alle drei Patches übernommen;369/380 Dateien identisch, elf verbessert. | Alter Head 12/13; historischer WebKit-Builderfehler bleibt dokumentiert. Aktueller Stand 6c99 separat grün. | Geschlossen, neuere Audioverbesserungen erhalten. |
 | [#15](https://github.com/Jagarex-lab/nachtsiegel-app/pull/15) | Konzept-/Art-Vorbereitung | D – ÜBERHOLT | Alte Pipeline ersetzt; kleine fehlende Brief-Prüfung gezielt in bestehende Pipeline portiert, Issue #31. | Alter Head 10/10; Ersatz lokal 38 Tests plus 550-Bild-Prüfung. Neue vollständige QA erforderlich. | Geschlossen; Piloten und alternative Entwürfe gesichert. |
 | [#26](https://github.com/Jagarex-lab/nachtsiegel-app/pull/26) | Alter manueller Release-Nachweis | D – ÜBERHOLT | Automatischer Release ersetzt die damaligen Eingaben; einzigartige Nachweise historisch archiviert. | Alter Head 22/22; keine Freigabe späterer Commits daraus abgeleitet. | Geschlossen; kein alter Publisher aktiviert. |
+
+| [#32](https://github.com/Jagarex-lab/nachtsiegel-app/pull/32) | Bericht/Archive und fehlende Brief-Bindung | A – MERGEN | Eigenständige Guard-Lücke aus #15 adaptiert, ohne alte Pipeline zu übernehmen. | Head26/26 erfolgreich; frische183192-QA durch fremde APT429 blockiert, nicht veröffentlicht. | Regulär als183192 integriert; Folgekorrekturen in #34. |
+| [#34](https://github.com/Jagarex-lab/nachtsiegel-app/pull/34) | CI-Quellen, Browser-Versionen, Test-Lebenszyklen | B – REPARIEREN UND MERGEN | Konkrete vier Fehlerklassen gezielt mit Quellen-/SDK-/Testkorrekturen behoben. | Finaler Head c45:27/27 erfolgreich; frischer Merge119ceb:26 erfolgreiche Einträge, Alpha-Nativ45m abgebrochen, Browser übersprungen; keine Releasefreigabe. | Regulär als119ceb integriert; Restkapazität in #35 gesichert. |
+| [#35](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35) | Vollständige native Alpha-Suite im endlichen Jobrahmen | B – REPARIEREN UND MERGEN | GitHub-Annotation beweist äußeres45m-Limit; gleicher Baum benötigte nach letztem Marker weitere12,91m. Nur äußerer Job75m, alle Tests/inneren Fristen unverändert. | Lokale54/50/88-Verträge und unabhängiges Workflowreview erfolgreich; eigene frische Head-/Merge-QA erforderlich. | Draft zum Zeitpunkt dieses Quellstands; endgültiger Status und Release im [Abschlussnachweis](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35#issuecomment-6985608488). |
 
 **Zählweise:** ursprünglich offen 7; ursprüngliche PRs neu gemergt 0;
 ursprüngliche PRs repariert/rebased 0; redundant geschlossen 5; als abgelöst
@@ -442,3 +454,49 @@ kein SDK gepatcht, kein alternativer Executable-Pfad zur Umgehung gewählt und
 keine globale Konfiguration verändert. Es wird kein lokaler WebKit-Erfolg
 behauptet. Erforderlich bleiben alle frischen fünf PR-Suiten/27 Jobs, dann
 sieben Merge-Suiten/29 Jobs, automatischer Publisher und öffentliche Browserabnahme.
+
+
+## Nachtrag: frische Merge-QA scheitert am äußeren nativen Zeitrahmen
+
+PR #34 wurde erst nach eigenständiger roher API-Prüfung aller27 erfolgreichen
+Head-Jobs auf c45 regulär als `119ceb09c4e6344a70e1dab38e9833a93c38e2aa`
+integriert. Baum b94 entspricht exakt dem geprüften Kandidaten; Eltern sind
+183192 und c45. Danach liefen alle sieben neuen develop-Suiten auf exakt119ceb.
+Main20/20 und die fünf separaten Suiten bestanden; Alpha wurde im nativen Job
+[134937011046](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44342790300/job/134937011046)
+am äußeren45-Minuten-Limit beendet. Insgesamt26 erfolgreiche Jobeinträge sind
+keine29er-Freigabe: der native Job ist cancelled und die unexpandierte
+Browser-Abhängigkeit skipped.119ceb wurde nicht veröffentlicht.
+
+Die [Originalannotation und der vollständige erhaltene Log](history/ci-119ceb-native-timeout/incident.json)
+beweisen `The job has exceeded the maximum execution time of 45m0s`.
+Einrichtungen/Import kosteten rund12Minuten; der letzte Selector-Marker23/0 lag
+64Sekunden vor Abbruch. Weitere vorherige Marker: Board11516/0 und Desktop235/0.
+Die laufende nächste Suite erreichte ihre eigene600s-Frist nicht. Im
+vollständig erfolgreichen Lauf des identischen Inhaltsbaums (c45,23Minuten)
+blieben nach diesem Marker noch12,91Minuten für native UI, Storage, Art,
+Archiv, Sicherheitsprüfungen und drei Exporte. Diese ausstehenden Arbeiten
+werden weder übersprungen noch aus älteren Nachweisen als bestanden übernommen.
+
+Der notwendige kleine Folge-PR #35 startet direkt vom tatsächlichen119ceb und
+ändert ausschließlich den äußeren nativen Orchestrierungsrahmen45→75 Minuten,
+plus zwei erläuternde Kommentare. Vollständiger YAML-Semantikvergleich und
+unabhängiges Review bestätigen alle anderen Befehle, Schritte, Jobs,
+Prozess-/Aktions-/Matchfristen, Browserbudgets, Assertions, Leak-Guards,
+Permissions und den unveränderten einzigen Publisher. Alle29 Pflichtjobs
+bleiben verpflichtend.75Minuten sind endlicher Ausführungsraum, keine
+behauptete erfolgreiche Prüfung und keine geänderte Produkt-Performance-SLA.
+
+Lokal54CI-,50Release-Python- und88Node-Verträge erfolgreich. Der native
+Komplettablauf muss auf dem endgültigen neuen PR-Head tatsächlich fertiglaufen;
+danach bleibt erneut vollständige frische QA auf dem wirklichen Folge-Merge
+notwendig. Keine partielle Wiederholung und kein alter QA-Run ersetzt sie.
+Issue #33 wurde für den präzise belegten Folgeblocker wieder geöffnet; die
+ursprünglichen sieben PR-Abschlüsse sowie die Integrationen #32/#34 bleiben
+nachvollziehbar erhalten. Die Originalquellbranches werden nicht gelöscht.
+
+Der tatsächlich ausgeführte automatische [Preflight44354187198](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44354187198)
+wies119ceb ausdrücklich mit `Denied: QA not successful: .github/workflows/alpha-qa.yml`
+zurück. Publish und öffentliche Verifikation wurden deshalb übersprungen.
+Das ist der gesicherte Beleg der aktiven Sperre; keine Veröffentlichung aus
+den26 erfolgreichen Teilresultaten wird behauptet.
