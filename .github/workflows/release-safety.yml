@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
       - run: python3 -m pip install 'PyYAML==6.0.3'
       - run: python3 -m unittest discover -s tests/release -v
       - run: python3 -m unittest discover -s tests/ci -v
+      - run: node --test tests/release/public_integrity.test.cjs

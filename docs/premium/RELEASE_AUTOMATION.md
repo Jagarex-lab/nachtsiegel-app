@@ -1,73 +1,104 @@
-# Vorbereiteter Ein-Klick-Release — ausdrücklich noch inaktiv
+# Freigegebene automatische Alpha-Veröffentlichung
 
-## Lieferstatus
+Die ausdrückliche Owner-Freigabe aktiviert den automatischen Alpha-Publisher in `.github/workflows/pages-release.yml` und ersetzt die bisherige manuelle Freigabesperre. Die stehende Freigabe erlaubt reguläre Merges beauftragter, owner-freigegebener Codex-PRs ohne weitere Rückfrage, sobald alle erforderlichen Checks am aktuellen erwarteten Head grün sind. GitHub-Schutzregeln gelten unverändert. Vor einer kommerziellen Veröffentlichung ist eine erneute Policyprüfung erforderlich.
 
-Implementiert ist ein vollständiger Vorschlag für einen manuellen **Run workflow** ohne SHA-, Run-ID- oder Bestätigungstextfelder. Er veröffentlicht ausschließlich das bereits vollständig getestete Web-Artefakt des beim Start festgehaltenen aktuellen `develop`-Commits. Es entsteht kein neuer Spielbuild während der Veröffentlichung.
+## Automatischer Ablauf
 
-Der neue Ablauf ist **nicht aktiviert**: `.github/release-staging/pages-one-click.yml.in` liegt außerhalb des GitHub-Workflowverzeichnisses und besitzt keine ausführbare `.yml`-Endung. Der produktive Workflow und sein bisheriger Guard bleiben byteidentisch:
+Ein regulärer Merge nach `develop` startet die vollständige Post-Merge-QA. Der Publisher reagiert auf erfolgreiche abgeschlossene `push`-Läufe der sieben freigegebenen Suiten. Der Preflight prüft vor jedem privilegierten Schritt das eigene Repository, den Defaultbranch `develop`, den tatsächlichen Trigger-Run und den aktuellen Quellcommit. Eine erfolgreiche einzelne Suite reicht nicht: Alle sieben jüngsten passenden Suiten müssen denselben aktuellen `develop`-SHA vollständig bestanden haben.
 
-| Aktive Datei | SHA256 |
-| --- | --- |
-| `.github/workflows/pages-release.yml` | `cac935fa33f36c39d31acaf7133595bf94954886e3f8312d0b7e84f18bb0a2dd` |
-| `tools/release/guard.py` | `008496e6298dd7c23ea4c80516ebbb08b7faa1a8dce6ca60b829f5fba430a45a` |
+| Suite | Pflichtjobs |
+| --- | ---: |
+| Main — `NACHTSIEGEL CI (no deployment)` | 20 |
+| Alpha — `ORAFOLD isolated Alpha QA (no deployment)` | 4 |
+| Safety — `Release safety (no deployment)` | 1 |
+| Legacy — `Legacy P01-P07 (no deployment)` | 1 |
+| Economy — `ORAFOLD isolated economy QA (no deployment)` | 1 |
+| Campaign — `ORAFOLD campaign QA (no deployment)` | 1 |
+| Online — `ORAFOLD online authority integration QA (no deployment)` | 1 |
 
-Damit wird die ausdrückliche Anweisung eingehalten: „Die bestehende manuelle Freigabesperre darf erst nach ausdrücklicher Nutzerfreigabe umgestellt werden.“ Weder ein Merge dieses Pakets noch ein Push, Tag oder PR startet eine Veröffentlichung. Es wurden keine Repository-, Branch-, Pages- oder Environment-Einstellungen geändert. Es wurde kein Deployment gestartet.
+Damit sind 29 benannte Jobs verpflichtend; zusätzliche vorhandene Jobs müssen ebenfalls erfolgreich sein. Main umfasst unter anderem beide Browserengines, Premium-/PWA-Browser, native Plattformen, Audio, Systemintegration, Paket-/Illustrationsprüfungen, Ressourcen, vollständigen Kartenpool, Balance-Shards und deren Aggregation. Umbenennungen oder Erweiterungen des Vertrags müssen nachvollziehbar mit dem Publisher getestet werden.
 
-## Konkreter vorbereiteter Ablauf
+`candidate.py select` liefert bei einer legitim noch fehlenden oder laufenden Suite `ready=false`. Der Workflow endet dann ohne Veröffentlichung; ein späterer erfolgreicher Suiteabschluss kann erneut auswählen. Fehlerhafte API-Antworten, falsche Identitäten und Integritätsfehler werden nicht als Erfolg behandelt. Ein neuerer fehlgeschlagener oder laufender QA-Versuch darf nicht durch einen älteren grünen Lauf verdeckt werden. Der Kandidat bindet Commit, sämtliche Run-IDs und Versuche sowie die unveränderliche Artefaktidentität.
 
-1. Einen geprüften Feature-PR regulär integrieren. GitHub setzt die aktiven Merge- und Branchschutzregeln durch.
-2. Die vollständige Main-CI und Release Safety laufen **erneut auf dem tatsächlichen neuen Develop-Commit**. Alte PR-/Merge-/QA-Nachweise werden nicht übernommen.
-3. Nach gesonderter Aktivierungsfreigabe startet der Owner den neuen Workflow auf `develop` mit **Run workflow**. Keine weiteren Eingaben sind nötig. Der Klick bleibt die ausdrückliche Veröffentlichungsentscheidung für den privaten Alpha-Betrieb.
-4. `candidate.py select` hält den Dispatch-SHA fest und liest den aktuellen Develop-HEAD. Er verlangt die jüngsten passenden Main- und Release-Safety-Läufe desselben Commits aus demselben Repository. PR-/Fork-/Tag-Läufe sind unzulässig. Ein neuerer fehlgeschlagener, laufender oder abgebrochener Lauf führt zur Ablehnung; kein Rückfall auf einen älteren grünen Lauf.
-5. Jeder Job muss erfolgreich abgeschlossen sein, einschließlich zusätzlicher neuer Jobs. Die 20 Main-Jobs dieses Kandidaten sind einzeln verpflichtend: zwei reguläre Browser und zwei zusätzliche Premium-/PWA-Browser, Native Desktop/Android, Audio, Systemintegration, Paket-/Illustrationsprüfungen, Ressourcen, vollständiger Kartenpool, vier Balance-Shards und Aggregation sowie der gepaarte Blockdeck-Vergleich. Eine Umbenennung erfordert eine nachvollziehbare Anpassung dieses Vertrags.
-6. Genau ein unexpired `nachtsiegel-arena-qa`-Artefakt muss denselben Run und SHA referenzieren. Es muss einen unveränderlichen GitHub-v4-SHA256-Digest besitzen. Fehlende Daten oder403/404 sind Fehler und werden nicht durch zusätzliche Tokens oder alternative Publisher umgangen.
-7. Nur der Publish-Job erhält Pages-/OIDC-Schreibrechte und verwendet unverändert das Environment `github-pages`. Aktive Reviewer, Timer und Branchregeln gelten weiterhin. Es wird kein zweites Konto verlangt, keine aktive Schutzregel entfernt und kein Admin-Bypass benutzt.
-8. Nach dem Environment-Gate werden HEAD, sämtliche Jobs, Run-Versuche und Artefaktidentität erneut geprüft. Ändert sich etwas, wird abgebrochen und ein neuer ausdrücklicher Start benötigt.
-9. Der Download prüft den tatsächlichen ZIP-Digest und die Bytezahl. Authentifizierung wird ausschließlich an `api.github.com` geschickt; Weiterleitungen zu zugelassenem HTTPS-Artefaktspeicher erhalten keinen Authorization-Header. ZIP-Pfadtraversal, Symlinks, doppelte/nichtkanonische Pfade, verschlüsselte Einträge und übergroße Archive werden abgelehnt. Nur `build/web/` wird entpackt; SHA und Kanal in `build-info.json` müssen stimmen.
-10. Die getesteten Spielbytes bleiben unverändert. Ergänzt wird `release-evidence.json` mit Source-SHA, Main-/Safety-Run und Versuch, Artefakt-ID/-Digest sowie SHA256 aller veröffentlichten Spielressourcen. Unmittelbar vor `deploy-pages` erfolgt eine weitere HEAD-/QA-Prüfung.
-11. Ein separater Read-only-Job prüft die echte öffentliche URL: Commit und Provenienz sowie die tatsächlichen SHA256-Hashes des ausgelieferten `index.html`, PCK, WASM und der Einstiegsskripte/Metadaten. Dadurch genügen neue Metadaten neben alten Spielbytes nicht als Nachweis. Die Dateien werden begrenzt und als Stream gelesen; ein anderes Redirectziel, fehlende Dateien oder ein Hashfehler brechen ab. Danach folgen tatsächlicher WebAssembly/Godot-Start, fehlgeschlagene Ressourcen, Hauptmenü, erreichbare Deckauswahl und alle vier Starter in Chromium und WebKit. Screenshots und Ergebnisdaten werden als Artefakt aufbewahrt. Diese Prüfung behauptet keine physische Geräteabnahme. Eine vollständige Partie ist Bestandteil der vorgelagerten Main-QA; der öffentliche Smoke wird ausdrücklich nicht als zweite vollständige Partie ausgegeben.
+Als Fallback kann der Owner **Run workflow** auf `develop` auslösen. Der Dispatch besitzt keine Eingaben und verwendet denselben aktuellen Commit, dieselben sieben Post-Merge-Suiten und dieselben Sicherheitsprüfungen. Manuelle Commit-, QA-Run-ID- oder Bestätigungseingaben gibt es nicht mehr. Weder PR-, Featurebranch-, Fork- noch Tag-Läufe dürfen Quellnachweise liefern.
 
-GitHub bietet keine atomare Sperre zwischen dem letzten HEAD-Read und dem Pages-Deployment. Falls in diesem kurzen Zeitraum ein neuer Commit integriert wird, bleiben die veröffentlichten Bytes der zuvor geprüfte, protokollierte Kandidat. Dieser Ablauf garantiert keine atomare Veröffentlichung des jederzeit neuesten Branchstands. Er veröffentlicht niemals absichtlich einen späteren ungeprüften Commit. Das gemeinsame Release-Concurrency-Lock verhindert parallele Publisher dieses Prozesses.
+## Ausschließlich getestete Artefakte
 
-Ein vollständig unbeaufsichtigter `workflow_run`-Publisher ist **nicht aktiviert und nicht behauptet**. Der vorbereitete Ein-Klick-Prozess vermeidet die manuellen Identitätsfelder und wahrt eine eindeutige Einzelentwickler-Freigabe. Eine künftig gewünschte automatische Veröffentlichungsentscheidung nach jedem grünen Develop-Lauf benötigt eine zusätzliche ausdrückliche Policyfreigabe und Prüfung der dann aktuellen GitHub-Einstellungen.
+Die Main-QA liefert genau ein nicht abgelaufenes `nachtsiegel-arena-qa`-Artefakt mit unveränderlichem GitHub-v4-SHA256-Digest. Der Publish-Job erstellt keinen Spielbuild. Er prüft ZIP-Digest und Bytezahl, lehnt Pfadtraversal, Symlinks, doppelte oder nichtkanonische Pfade, verschlüsselte Einträge und übergroße Archive ab und entpackt ausschließlich `build/web/`. Commit und Kanal in `build-info.json` müssen zum Kandidaten passen.
 
-## Einmalige Aktivierung — erst nach ausdrücklicher Freigabe
+Authentifizierung geht ausschließlich an `api.github.com`. Weiterleitungen zu zugelassenem HTTPS-Artefaktspeicher erhalten keinen Authorization-Header. Fehlende Daten oder API-Fehler, einschließlich403/404, werden nicht durch zusätzliche Tokens oder alternative Publisher umgangen.
 
-Der prüfbare vollständige Diff lässt sich ohne Dateiveränderung ausgeben:
+Die getesteten Spielbytes bleiben unverändert. Ergänzt wird `release-evidence.json` mit Source-SHA, allen Suite-Identitäten, Artefakt-ID/-Digest und SHA256 der veröffentlichten Spielressourcen. Ein bereits im QA-Artefakt vorhandener Provenienzpfad wird abgewiesen. Der Download gibt den SHA256 der rohen Evidenzdatei als `evidence_sha256` aus; der Publish-Job reicht ihn an die öffentliche Prüfung weiter. Dadurch kann die öffentliche Datei nicht allein durch intern konsistente, aber ausgetauschte JSON-Daten als gültig erscheinen.
 
-```sh
-python3 tools/release/review_activation.py
-```
+## Rechte, Environment und erneute Prüfung
 
-Der Helfer besitzt absichtlich keinen Apply-Modus. Er verweigert eine Diff-Erzeugung, wenn der bisherige aktive Workflow inzwischen verändert wurde.
+Der Preflight besitzt ausschließlich Lesezugriff auf Contents, Actions und Pages. Nur der Publish-Job erhält Pages-/OIDC-Schreibrechte und nutzt unverändert das Environment `github-pages`. Aktive Reviewer, Timer und Branchregeln bleiben wirksam. Es wird keine Schutzregel entfernt, kein Admin-Bypass verwendet und keine zweite Identität zusätzlich verlangt. Publisher-Actions sind auf geprüfte offizielle Commit-SHAs gepinnt.
 
-Nach ausdrücklicher Zustimmung wird in einem separaten Feature-PR die Vorlage an die Stelle von `.github/workflows/pages-release.yml` übernommen. Die Aktivierungs-Tests müssen die dann freigegebene Policy abbilden; die vorhandenen Hash-/Manual-Input-Assertions dürfen erst in diesem gesondert geprüften Aktivierungs-PR geändert werden. Anschließend alle Release-Safety- und vollständigen Main-Tests auf dem tatsächlichen Integrations-SHA ausführen. Keine zweite Workflowdatei parallel als alternativen Publisher aktivieren.
+Nach jedem aktiven Environment-Gate und nochmals unmittelbar vor `deploy-pages` prüft `candidate.py recheck` HEAD, alle Suite-Jobs, Run-Versuche und Artefaktidentität. Ein geänderter Kandidat wird abgewiesen. Der gemeinsame Release-Lock `nachtsiegel-pages-release` hat `cancel-in-progress: false`; ein neuer Trigger bricht die laufende Veröffentlichung nicht ab.
 
-Minimal durch den Repository-Owner zu prüfen, ohne neue Einstellungen zu erfinden:
+GitHub bietet keine atomare Sperre zwischen dem letzten HEAD-Read und dem Deployment. Ein neuer Merge in diesem kurzen Zeitfenster kann dazu führen, dass noch der unmittelbar zuvor geprüfte Kandidat veröffentlicht wird. Dessen Bytes und Nachweise bleiben exakt gebunden; es gibt keine Garantie einer jederzeit atomaren Veröffentlichung des neuesten Branchstands.
 
-- **Settings → Pages → Source: GitHub Actions.** Branchbasierte Veröffentlichung darf kein zusätzlicher Pfad sein.
-- Das bestehende Environment **github-pages** erlaubt den Branch `develop`; aktive Reviewer, Timer und Branchschutz bleiben bestehen. Die Vorlage verlangt keine zweite Reviewer-Identität.
-- Workflow ist auf dem Defaultbranch verfügbar; im Actions-Menü für die Veröffentlichung den Branch `develop` wählen. Tags, Featurebranches und Main werden durch den Guard abgelehnt.
-- Die normalen Workflowberechtigungen für Actions-/Pages-Reads sowie Pages-/OIDC-Schreibrechte des Publish-Jobs müssen durch GitHub erlaubt sein. Bei403 nicht ausweichen, sondern die konkrete verweigerte Operation durch den Owner prüfen lassen. Dieses Paket behauptet nicht, unbekannte Repository-Einstellungen bereits verifiziert zu haben.
-- Die aktuellsten vollständigen Main- und Release-Safety-Läufe des neuen Develop-Commits müssen grün sein; der QA-Upload muss ein nicht abgelaufenes v4-Artefakt mit Digest enthalten. Der Stand10782185 hatte am Prüfzeitpunkt17 erfolgreiche Main-Jobs und einen v4-Digest; diese historische Beobachtung ist kein Releasebeleg für diese Änderungen.
+## Öffentlicher Nachweis
 
-## Tests und tatsächliche Grenzen
+Der separate Read-only-Job prüft an der tatsächlichen öffentlichen URL zuerst den erwarteten SHA256 von `release-evidence.json`, bevor er JSON interpretiert. Danach prüft er Commit, Provenienz und die tatsächlichen SHA256-Hashes der ausgelieferten Ressourcen einschließlich `index.html`, PCK, WASM und Einstiegsskripten/Metadaten. Neue Metadaten neben alten Spielbytes genügen nicht. Fehlende, übergroße, umgeleitete oder falsch gehashte Antworten brechen die Prüfung ab.
+
+Anschließend starten Chromium und WebKit den tatsächlichen WebAssembly-/Godot-Build. Ressourcenfehler, Hauptmenü, erreichbare Deckauswahl und alle vier Starter werden geprüft. npm installiert die bestehende offizielle Playwright-Version `1.65.0`; der vorhandene netzwerkbewusste Installationshelfer installiert Chromium, WebKit und ihre Systemabhängigkeiten mit begrenztem offiziellen Mirror-Fallback. Screenshots und Ergebnisdaten bleiben als Releaseartefakt erhalten. Dieser Browser-Smoke behauptet keine physische Geräteabnahme und keine zweite vollständige Partie; diese bleibt Teil der vorgelagerten Main-QA. Eine fehlgeschlagene öffentliche Prüfung ist kein verifizierter Veröffentlichungserfolg.
+
+## Betrieb und historische Vorlage
+
+Der Workflow muss auf dem Defaultbranch `develop` verfügbar sein, Pages GitHub Actions verwenden und das vorhandene Environment `github-pages` den Branch `develop` zulassen. Die Implementierung verändert keine Repository-, Branch-, Pages- oder Environment-Einstellungen und behauptet deren unbekannten Livezustand nicht als verifiziert.
+
+Ein Owner- oder autorisierter GitHub-App-Merge muss die normalen Push-Ereignisse erzeugen. Ein ausschließlich mit `GITHUB_TOKEN` ausgeführter Merge unterdrückt diese QA-Workflows und ist deshalb nicht unterstützt; fehlende Nachweise blockieren die Veröffentlichung. Native Auto-Merge-Einstellungen, ein privilegierter Merge-Daemon für beliebige PRs oder ein Ersatzpublisher werden nicht aktiviert.
+
+`.github/release-staging/pages-one-click.yml.in` bleibt als historischer, inaktiver Ein-Klick-Vorschlag außerhalb von `.github/workflows/` erhalten. Sie ist keine zweite Veröffentlichungsroute. `python3 tools/release/review_activation.py` zeigt ausschließlich einen nicht mutierenden Review-/Aktivierungsstatus; es besitzt keinen Apply-Modus. Die alten Hash- und Manual-Input-Verträge des aktiven Workflows werden durch Tests der freigegebenen automatischen Policy ersetzt. `guard.py` und seine historischen manuellen Gegenproben bleiben erhalten.
+
+## Lokale Prüfung und Rollback
+
+Die CI-Provisionierung trennt Playwrights `install-deps` und `install` in zwei
+eigene, begrenzte Phasen. Jede Phase besitzt standardmäßig 300 Sekunden. Nur
+die Systemabhängigkeiten dürfen bei einem nachgewiesenen APT-Downloadfehler
+einmal mit den offiziellen Ubuntu-Spiegeln wiederholt werden; deren temporäre
+Konfiguration wird vor dem Browserdownload vollständig zurückgesetzt. Der
+Browserdownload einschließlich der normalen Hostprüfung erhält genau einen
+eigenen Versuch. Ein CDN-Fehler löst keinen APT-Spiegelwechsel aus.
+
+Grund ist der tatsächliche fehlgeschlagene
+[Bild-Browserjob 134476925062](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44204333910/job/134476925062):
+Die Systempakete benötigten rund vier Minuten; der anschließende Chrome-Download
+erreichte 100 Prozent, wurde aber von der gemeinsamen 300-Sekunden-Grenze vor
+der Fertigstellung beendet. Die Bildtests liefen nicht und dieser Versuch
+bleibt fehlgeschlagen. Die getrennten Installationsphasen ändern keine
+Spiel-, Touch-, Audio- oder Browser-Testzeitgrenzen und ersetzen keine
+fehlgeschlagene QA durch einen Erfolg.
+
+Zwei weitere fehlgeschlagene WebKit-Läufe auf `60baaaa` bleiben ebenfalls als
+Fehlversuche erhalten. Im Kampagnenjob `134494300084` war die tatsächliche
+Übersicht bereits angezeigt, aber der getrennte Kampagnenbericht noch nicht vorhanden;
+der alte Poll-Callback warf sofort einen `TypeError`. Die neue serialisierbare
+Wartebedingung verlangt beide Berichte, den richtigen Kontext und Bildschirm
+sowie bei Kämpfen einen tatsächlich vorhandenen Kampfzustand.
+
+Im Migrationsjob `134494017498` zeigte der erfasste Fehlerzustand dagegen noch
+`page=lobby`, Menüaktionen und `render_version=2`. Die leere Deckliste war ein
+Menübericht nach einem verworfenen frühen Tap, kein Nachweis eines gelöschten
+Spielstands; die unabhängige gespeicherte Version-2-Datei war davor bytegenau
+korrekt. Der Treiber wartet vor seinem einzigen Touch auf frische stabile
+Zielgeometrie und danach auf die tatsächliche Navigation. Die genaue
+30-Karten-, Speicher-, neue-Karten-ID- und Partiestartprüfung bleibt bestehen;
+es gibt keine Wiederholung des Taps bis zum Erfolg und kein Warten auf eine
+passend gemachte Deckliste. Die erfassten Zustände sind verpflichtende
+Regressionen. Produkt- und Speicherlogik bleiben unverändert; neue vollständige
+Browserläufe müssen die korrigierten Treiber erst bestätigen.
 
 ```sh
 python3 -W error::ResourceWarning -m unittest discover -s tests/release -v
+python3 -m unittest discover -s tests/ci -v
 node --test tests/release/public_integrity.test.cjs
 node --check tools/release/public_probe.cjs
 python3 -m py_compile tools/release/candidate.py tools/release/review_activation.py
+git diff --check
 ```
 
-Der strenge lokale Lauf besteht **31 Python-Testmethoden**: acht vorhandene Schutztests und23 neue Methoden mit zusätzlichen Gegenproben. Dazu kommen **sieben Node-Testgruppen mit echten lokalen HTTP-Antworten** für öffentliche Dateiintegrität: unveränderte Dateien, alter Index trotz frischer Metadaten, alte PCK/WASM/JS-Dateien, fehlende/übergroße Antworten, falsche Provenienz/Pfade, Redirects und ausführbare Dateien in Unterverzeichnissen. Syntaxprüfungen für Python und Node sowie `git diff --check` bestehen. Die Python-Suite prüft den unveränderten aktiven Schutz und die neue inaktive Vorlage, Source-/Repository-/Event-/Branch-/Attempt-Identität, sämtliche Pflichtjobs, zusätzliche fehlgeschlagene Jobs einschließlich noch unbekannter künftiger Prüfnamen, neuere fehlgeschlagene Läufe, API-Pagination und403, Artefaktidentität, ZIP-Digest/Bytezahl, sichere Weiterleitung ohne Auth-Header, ZIP-Pfade, Source-Metadaten und unveränderte getestete Dateien. Ein vorab im QA-Artefakt enthaltenes `release-evidence.json` wird abgewiesen, damit seine Überschreibung keine widersprüchliche Hashliste erzeugt. Die API- und ZIP-Gegenproben sind lokale synthetische Testeingaben und lösen keinerlei GitHub-Aktionen aus.
+Diese Tests prüfen unter anderem Event-/Repository-/Source-Identität, alle Pflichtjobs, neue fehlgeschlagene Versuche, API-Pagination und Fehler, unveränderliche Artefakte, sichere Downloads, unveränderte Spielbytes, minimale Rechte und die Integrität echter lokaler HTTP-Antworten. Sie lösen keine GitHub-Deployments aus. Ein erfolgreiches lokales Ergebnis ersetzt keine öffentliche Releaseprüfung.
 
-Der öffentliche Browser-Smoke ist implementiert und syntaktisch geprüft. Er wurde in diesem Paket nicht gegen eine neue öffentliche Version ausgeführt, weil kein Deployment autorisiert oder gestartet wurde. Auch der inaktive Workflow selbst kann erst nach gesonderter Freigabe real auf GitHub laufen. Daraus wird weder eine erfolgreiche Veröffentlichung noch eine vollständig verifizierte Repository-Konfiguration abgeleitet.
-
-## Sicherer Rollback
-
-1. Bei einem Livefehler den betroffenen Workflowlauf, SHA und `release-evidence.json` sichern. Fehlgeschlagene öffentliche QA bedeutet keine erfolgreiche Abnahme.
-2. Gewünschten früheren Spielstand über einen regulären Revert-PR nach `develop` bringen, einschließlich nötiger Speicherkompatibilitätsprüfung.
-3. Vollständige Main-QA und Release Safety des neuen aktuellen Revert-SHAs abwarten und den freigegebenen manuellen Release starten. Keine alten abgelaufenen Artefakte und keine historischen QA-Run-IDs wiederverwenden.
-4. Bei einem Fehler in der neuen Releasekonfiguration selbst den bisherigen manuellen Publisher über einen separat getesteten Revert-PR wiederherstellen. Keine direkte Branchänderung oder Schutzregel-Umgehung.
-5. Die öffentliche Provenienz und Browserprüfung erneut bestehen lassen. Bestehende Spielstände nicht pauschal löschen.
+Bei einem Livefehler Lauf, SHA und Evidenzdatei sichern. Den früheren gewünschten Quellstand über einen regulären Revert-PR nach `develop` bringen und gegebenenfalls Speicherkompatibilität prüfen. Alle sieben Suiten des neuen Revert-SHAs müssen erneut grün sein; derselbe automatische Publisher veröffentlicht dessen neu getestetes Artefakt. Keine alten abgelaufenen Artefakte, historischen QA-Run-IDs, direkten Branchänderungen oder Schutzregel-Umgehungen verwenden. Danach öffentliche Provenienz und Browserprüfung erneut bestehen lassen; Spielstände nicht pauschal löschen.

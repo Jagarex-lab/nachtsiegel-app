@@ -1,5 +1,7 @@
 name: ORAFOLD isolated economy QA (no deployment)
 on:
+  push:
+    branches: [develop]
   pull_request:
     branches: [develop]
     paths:

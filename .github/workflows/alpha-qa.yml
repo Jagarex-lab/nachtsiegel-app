@@ -1,7 +1,7 @@
 name: ORAFOLD isolated Alpha QA (no deployment)
 on:
   push:
-    branches: ['alpha/**']
+    branches: [develop, 'alpha/**']
   pull_request:
     branches: [develop]
 permissions:

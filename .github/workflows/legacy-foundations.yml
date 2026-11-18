@@ -1,6 +1,8 @@
 name: Legacy P01-P07 (no deployment)
 
 on:
+  push:
+    branches: [develop]
   pull_request:
     branches: [develop, 'feature/legacy-foundations', 'feature/legacy-engine-p01-p04', 'feature/legacy-engine-p05-p06']
   workflow_dispatch:
