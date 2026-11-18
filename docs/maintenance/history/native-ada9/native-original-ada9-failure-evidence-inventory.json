@@ -1,0 +1,48 @@
+{
+  "archive": "work/consolidation/native-original-ada9-failure-evidence.zip",
+  "archive_sha256": "sha256:95877df888e4b5a129a5bada8fa8032b06e7809623809acb93dff905ffec9bfc",
+  "expected_sha256": "sha256:95877df888e4b5a129a5bada8fa8032b06e7809623809acb93dff905ffec9bfc",
+  "digest_verified": true,
+  "files": [
+    {
+      "path": "extracted/orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478/results.json",
+      "bytes": 247766,
+      "compressed_bytes": 69110
+    },
+    {
+      "path": "extracted/orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478/run-d064aaf93157/orafold-preview-export.log",
+      "bytes": 350927,
+      "compressed_bytes": 41726
+    },
+    {
+      "path": "extracted/orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478/run-d064aaf93157/orafold-preview-inventory.json",
+      "bytes": 189620,
+      "compressed_bytes": 37180
+    },
+    {
+      "path": "extracted/orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478/run-d064aaf93157/orafold-runtime-qa-export.log",
+      "bytes": 350927,
+      "compressed_bytes": 41726
+    },
+    {
+      "path": "extracted/orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478/run-d064aaf93157/orafold-runtime-qa-runtime.log",
+      "bytes": 1135,
+      "compressed_bytes": 528
+    },
+    {
+      "path": "extracted/orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478/run-d064aaf93157/results.json",
+      "bytes": 247766,
+      "compressed_bytes": 69110
+    },
+    {
+      "path": "extraction.json",
+      "bytes": 1490,
+      "compressed_bytes": 413
+    },
+    {
+      "path": "original-provenance.json",
+      "bytes": 1098,
+      "compressed_bytes": 538
+    }
+  ]
+}

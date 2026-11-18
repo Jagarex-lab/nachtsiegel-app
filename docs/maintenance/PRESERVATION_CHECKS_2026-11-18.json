@@ -1,0 +1,29 @@
+{
+  "checked_at_utc": "2026-11-18T11:51:55.878756+00:00",
+  "scope": "Only docs/maintenance textual files plus bounded native ZIP logs/JSON; no binary payload executed",
+  "secret_pattern_categories": [
+    "github_token",
+    "private_key",
+    "aws_access_key",
+    "authorization_value",
+    "api_secret_value",
+    "signed_credential_query"
+  ],
+  "matched_secrets": [],
+  "text_files_scanned": 19,
+  "native_zip_entries_scanned": 8,
+  "bytes_scanned": 2436299,
+  "exact_copied_file_hashes_validated": 11,
+  "local_markdown_links_missing": [],
+  "sparse_unmaterialized_link_targets_verified_in_pinned_git_tree": [
+    "docs/release/PAGES_RELEASE_SAFETY.md",
+    "docs/premium/RELEASE_AUTOMATION.md"
+  ],
+  "changed_path_records_validated": 571,
+  "maintenance_head_ci": "pending; these are preservation/document integrity checks only",
+  "report_file": "PR_CONSOLIDATION_REPORT.md",
+  "all_original_prs_closed_unmerged": 7,
+  "remaining_original_open_prs": 0,
+  "remaining_original_blockers": 0,
+  "closure_comment_links_recorded": 7
+}

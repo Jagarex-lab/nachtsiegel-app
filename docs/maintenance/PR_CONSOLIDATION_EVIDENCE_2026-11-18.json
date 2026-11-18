@@ -1,0 +1,3042 @@
+{
+  "schema_version": 1,
+  "report_date": "2026-11-18",
+  "repository": "Jagarex-lab/nachtsiegel-app",
+  "audited_baseline": {
+    "develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+    "tree": "8c84f6ed60213fbde77cb775319347b63af17dab",
+    "source_snapshot_utc": "2026-11-18T10:39:31.372Z",
+    "public_baseline_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+    "public_baseline_scope": "Published build and 29successful QA jobs; actual extra public fullAIduel/replay/restart proof archived locally",
+    "baseline_pr": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/30"
+  },
+  "statistics": {
+    "initial_open_prs": 7,
+    "decision_C_already_integrated": 5,
+    "decision_D_superseded": 2,
+    "decision_A_merge": 0,
+    "decision_B_repair_old_pr": 0,
+    "old_pr_merges": 0,
+    "old_pr_repairs": 0,
+    "new_maintenance_prs_planned": 1,
+    "recorded_closed": 7,
+    "D_closures_pending_recording": [],
+    "original_open_prs_remaining": 0,
+    "original_blockers_remaining": 0,
+    "replacement_issue": 31,
+    "replacement_issue_status": "Locally implemented in this single maintenance change; final maintenance-head CI pending"
+  },
+  "pull_requests": [
+    {
+      "number": 4,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/4",
+      "title": "Legacy-Kernel P01–P04: RNG, Phasen, Schaden und Differentialnachweise",
+      "purpose": "Adds isolated deterministic Legacy P01–P04 engine: unsigned32 LCG/Fisher–Yates and observed RNG consumption, two-player setup, phase/turn boundaries, block→ward→HP damage, attack/death/harvest FIFO and event cap. Adds separate original-reference fixtures and differential tests; no productive arena integration.",
+      "decision": "C",
+      "why_not_merge": "C: exact PR head and every PR commit are ancestors of audited develop. All changed paths remain; most are byteidentical, and five shared files evolved to retain these packages and add later features/QA. Merging into the historical stacked base adds no missing develop behavior and is unnecessary; porting old shared-file versions would discard current P10/profile/QA extensions. No cherry-pick or repair is needed.",
+      "source_ref": "feature/legacy-engine-p01-p04",
+      "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+      "base_ref": "feature/legacy-foundations",
+      "authorship_base_sha": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+      "api_base_sha": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+      "audited_current_develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "created_at": "2026-11-09T16:27:57Z",
+      "last_activity_before_maintenance": "2026-11-09T16:27:57Z",
+      "activity_before_maintenance": {
+        "issue_comments": 0,
+        "inline_comments": 0,
+        "reviews": 0
+      },
+      "draft_before_maintenance": false,
+      "mergeability_at_audit": {
+        "github_mergeable": true,
+        "github_state": "clean",
+        "conflicts_when_attempted_against_develop": [],
+        "scope": "GitHub state is relative to original stacked base; local conflicts are current develop trial"
+      },
+      "dependencies": [
+        "Historical base foundations PR#2 at2ff70549 is already ancestral; #5 and#7 depend on this head."
+      ],
+      "historical_exact_head_ci": {
+        "runs_total": 2,
+        "runs": [
+          {
+            "id": 42655058976,
+            "name": "Legacy P01-P04 (no deployment)",
+            "event": "pull_request",
+            "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+            "status": "completed",
+            "conclusion": "success",
+            "created_at": "2026-11-09T16:28:02Z",
+            "updated_at": "2026-11-09T16:28:28Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42655058976"
+          },
+          {
+            "id": 42654914311,
+            "name": "NACHTSIEGEL Test and Publish",
+            "event": "push",
+            "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+            "status": "completed",
+            "conclusion": "success",
+            "created_at": "2026-11-09T16:27:12Z",
+            "updated_at": "2026-11-09T16:37:41Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42654914311"
+          }
+        ],
+        "checks_total": 3,
+        "checks": [
+          {
+            "name": "deploy",
+            "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+            "status": "completed",
+            "conclusion": "skipped",
+            "completed_at": "2026-11-09T16:37:40Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42654914311/job/129296933112"
+          },
+          {
+            "name": "pinned-reference-and-catalog",
+            "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-09T16:28:27Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42655058976/job/129291217356"
+          },
+          {
+            "name": "test-and-export",
+            "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-09T16:37:40Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42654914311/job/129290700829"
+          }
+        ]
+      },
+      "historical_ci_scope": "Only this historical source head; never fresh maintenance-head CI or a release authorization",
+      "changed_paths": 48,
+      "content_summary": {
+        "evolved_or_replaced": 5,
+        "identical": 43
+      },
+      "implementation_or_supersession_proof": {
+        "workflow": "Current keeps P01–P07 stacked PR branch triggers and same no-deploy/read-only workflow; adds develop push trigger for trusted postmerge release QA.",
+        "battle_engine": "P01–P07 source retained. Subsequent Alpha adds original P10 opponent/start_match/end_turn and default-equivalent rule-profile hooks (summon2,resonance15,identity reaction mapping,original unit/hit semantics); P05/P06 lifecycle and all16 effects and P07 reactions/burst/tactics remain. Historical code should not overwrite these later extensions.",
+        "legacy_engine_test": "Keeps original differential corpus and expands supported coverage through P07/P10. The only remaining unsupported original raw-call test is deliberately guarded wrong-side begin. EndTurn now executes real automatic AI.",
+        "runner": "Retains P01–P04, P05/P06 and P07 generation/Node/Godot steps, adds deterministic full-match generation/tests and work/alpha output directory.",
+        "rng": "First20 lines are unchanged LCG/shuffle; P05/P06 appends mul_u32 low32 multiplication. Current rng is byteidentical to PR5 head."
+      },
+      "status_recorded_by_this_draft": {
+        "state": "closed",
+        "merged": false,
+        "decision": "C",
+        "comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/4#issuecomment-6976133136",
+        "followup_issue": null
+      },
+      "followup": "None: no useful missing content"
+    },
+    {
+      "number": 5,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/5",
+      "title": "Legacy P05/P06: Kartenkreislauf und alle 16 Fähigkeiten im isolierten Kernel",
+      "purpose": "Extends #4 kernel with P05 overflow burn/fatigue/recycle/recover and P06 all16 original creature effects, pending strike/shift selection and formation. Adds integration review/historical evidence, P05/P06 fixtures/generators/tests and derived-seed unsigned multiplication; no production arena/card/lore/economy changes.",
+      "decision": "C",
+      "why_not_merge": "C: exact PR head and every PR commit are ancestors of audited develop. All changed paths remain; most are byteidentical, and five shared files evolved to retain these packages and add later features/QA. Merging into the historical stacked base adds no missing develop behavior and is unnecessary; porting old shared-file versions would discard current P10/profile/QA extensions. No cherry-pick or repair is needed.",
+      "source_ref": "feature/legacy-engine-p05-p06",
+      "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+      "base_ref": "feature/legacy-engine-p01-p04",
+      "authorship_base_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+      "api_base_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+      "audited_current_develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "created_at": "2026-11-09T17:46:46Z",
+      "last_activity_before_maintenance": "2026-11-09T17:52:13Z",
+      "activity_before_maintenance": {
+        "issue_comments": 0,
+        "inline_comments": 0,
+        "reviews": 0
+      },
+      "draft_before_maintenance": true,
+      "mergeability_at_audit": {
+        "github_mergeable": true,
+        "github_state": "clean",
+        "conflicts_when_attempted_against_develop": [],
+        "scope": "GitHub state is relative to original stacked base; local conflicts are current develop trial"
+      },
+      "dependencies": [
+        "Historical base PR#4; #7 depends on this head."
+      ],
+      "historical_exact_head_ci": {
+        "runs_total": 2,
+        "runs": [
+          {
+            "id": 42668583345,
+            "name": "Legacy P01-P06 (no deployment)",
+            "event": "pull_request",
+            "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+            "status": "completed",
+            "conclusion": "success",
+            "created_at": "2026-11-09T17:50:54Z",
+            "updated_at": "2026-11-09T17:51:21Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42668583345"
+          },
+          {
+            "id": 42668573208,
+            "name": "NACHTSIEGEL Test and Publish",
+            "event": "push",
+            "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+            "status": "completed",
+            "conclusion": "success",
+            "created_at": "2026-11-09T17:50:51Z",
+            "updated_at": "2026-11-09T17:58:35Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42668573208"
+          }
+        ],
+        "checks_total": 3,
+        "checks": [
+          {
+            "name": "deploy",
+            "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+            "status": "completed",
+            "conclusion": "skipped",
+            "completed_at": "2026-11-09T17:58:32Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42668573208/job/129342919898"
+          },
+          {
+            "name": "test-and-export",
+            "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-09T17:58:32Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42668573208/job/129338955157"
+          },
+          {
+            "name": "pinned-reference-and-catalog",
+            "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-09T17:51:20Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42668583345/job/129338745621"
+          }
+        ]
+      },
+      "historical_ci_scope": "Only this historical source head; never fresh maintenance-head CI or a release authorization",
+      "changed_paths": 58,
+      "content_summary": {
+        "evolved_or_replaced": 5,
+        "identical": 53
+      },
+      "implementation_or_supersession_proof": {
+        "workflow": "Current keeps P01–P07 stacked PR branch triggers and same no-deploy/read-only workflow; adds develop push trigger for trusted postmerge release QA.",
+        "battle_engine": "P01–P07 source retained. Subsequent Alpha adds original P10 opponent/start_match/end_turn and default-equivalent rule-profile hooks (summon2,resonance15,identity reaction mapping,original unit/hit semantics); P05/P06 lifecycle and all16 effects and P07 reactions/burst/tactics remain. Historical code should not overwrite these later extensions.",
+        "legacy_engine_test": "Keeps original differential corpus and expands supported coverage through P07/P10. The only remaining unsupported original raw-call test is deliberately guarded wrong-side begin. EndTurn now executes real automatic AI.",
+        "runner": "Retains P01–P04, P05/P06 and P07 generation/Node/Godot steps, adds deterministic full-match generation/tests and work/alpha output directory.",
+        "p05_p06_test": "Current differs from P07 only by allowing implemented endTurn in the closed-command test; all P05/P06 checks retained. P07 added mixed-order-chain expectations to P05/P06 tests."
+      },
+      "status_recorded_by_this_draft": {
+        "state": "closed",
+        "merged": false,
+        "decision": "C",
+        "comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/5#issuecomment-6976128070",
+        "followup_issue": null
+      },
+      "followup": "None: no useful missing content"
+    },
+    {
+      "number": 7,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/7",
+      "title": "Legacy P07: original reactions resonance and special action chains",
+      "purpose": "Extends #5 kernel with P07 twelve directed order reactions, resonance, four bursts, tactical move and fortify, including mixed order chains. Adds P07 edge and mixed-chain fixtures/generators/tests; no new gameplay mechanics or productive deployment.",
+      "decision": "C",
+      "why_not_merge": "C: exact PR head and every PR commit are ancestors of audited develop. All changed paths remain; most are byteidentical, and five shared files evolved to retain these packages and add later features/QA. Merging into the historical stacked base adds no missing develop behavior and is unnecessary; porting old shared-file versions would discard current P10/profile/QA extensions. No cherry-pick or repair is needed.",
+      "source_ref": "feature/legacy-engine-p07",
+      "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+      "base_ref": "feature/legacy-engine-p05-p06",
+      "authorship_base_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+      "api_base_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+      "audited_current_develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "created_at": "2026-11-09T19:14:05Z",
+      "last_activity_before_maintenance": "2026-11-09T19:33:33Z",
+      "activity_before_maintenance": {
+        "issue_comments": 0,
+        "inline_comments": 0,
+        "reviews": 0
+      },
+      "draft_before_maintenance": true,
+      "mergeability_at_audit": {
+        "github_mergeable": true,
+        "github_state": "clean",
+        "conflicts_when_attempted_against_develop": [],
+        "scope": "GitHub state is relative to original stacked base; local conflicts are current develop trial"
+      },
+      "dependencies": [
+        "Historical bases PR#5→#4→#2; all actual heads already ancestral."
+      ],
+      "historical_exact_head_ci": {
+        "runs_total": 2,
+        "runs": [
+          {
+            "id": 42683971107,
+            "name": "Legacy P01-P07 (no deployment)",
+            "event": "pull_request",
+            "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+            "status": "completed",
+            "conclusion": "success",
+            "created_at": "2026-11-09T19:30:21Z",
+            "updated_at": "2026-11-09T19:31:11Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42683971107"
+          },
+          {
+            "id": 42683962018,
+            "name": "NACHTSIEGEL Test and Publish",
+            "event": "push",
+            "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+            "status": "completed",
+            "conclusion": "success",
+            "created_at": "2026-11-09T19:30:18Z",
+            "updated_at": "2026-11-09T19:38:12Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42683962018"
+          }
+        ],
+        "checks_total": 3,
+        "checks": [
+          {
+            "name": "deploy",
+            "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+            "status": "completed",
+            "conclusion": "skipped",
+            "completed_at": "2026-11-09T19:38:11Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42683962018/job/129390145715"
+          },
+          {
+            "name": "pinned-reference-and-catalog",
+            "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-09T19:31:10Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42683971107/job/129385706634"
+          },
+          {
+            "name": "test-and-export",
+            "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-09T19:38:11Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42683962018/job/129385676677"
+          }
+        ]
+      },
+      "historical_ci_scope": "Only this historical source head; never fresh maintenance-head CI or a release authorization",
+      "changed_paths": 40,
+      "content_summary": {
+        "evolved_or_replaced": 5,
+        "identical": 35
+      },
+      "implementation_or_supersession_proof": {
+        "workflow": "Current keeps P01–P07 stacked PR branch triggers and same no-deploy/read-only workflow; adds develop push trigger for trusted postmerge release QA.",
+        "battle_engine": "P01–P07 source retained. Subsequent Alpha adds original P10 opponent/start_match/end_turn and default-equivalent rule-profile hooks (summon2,resonance15,identity reaction mapping,original unit/hit semantics); P05/P06 lifecycle and all16 effects and P07 reactions/burst/tactics remain. Historical code should not overwrite these later extensions.",
+        "legacy_engine_test": "Keeps original differential corpus and expands supported coverage through P07/P10. The only remaining unsupported original raw-call test is deliberately guarded wrong-side begin. EndTurn now executes real automatic AI.",
+        "runner": "Retains P01–P04, P05/P06 and P07 generation/Node/Godot steps, adds deterministic full-match generation/tests and work/alpha output directory.",
+        "p05_p06_test": "Current differs from P07 only by allowing implemented endTurn in the closed-command test; all P05/P06 checks retained. P07 added mixed-order-chain expectations to P05/P06 tests."
+      },
+      "status_recorded_by_this_draft": {
+        "state": "closed",
+        "merged": false,
+        "decision": "C",
+        "comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/7#issuecomment-6976122480",
+        "followup_issue": null
+      },
+      "followup": "None: no useful missing content"
+    },
+    {
+      "number": 11,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/11",
+      "title": "Draft M2b: opt-in bridge for three source-bound card trigger families",
+      "purpose": "Opt-in subclass of existing Alpha/shared Legacy kernel: on_play/on_summon/on_death for exact source bindings, observed relic activation, isolated probes, monotone IDs, instance dedupe, fail-stop. No production Session activation at PR head.",
+      "decision": "C",
+      "why_not_merge": "Both original patches are already reachable as exact patch-equivalent commits; all implementation and tests remain. Merging would add duplicate history and requires resolving conflicts against evolved production code without adding useful behavior.",
+      "source_ref": "feature/generic-trigger-hooks",
+      "head_sha": "70cc08e482e17ac1bcec53a02ba95c78583df8bf",
+      "base_ref": "develop",
+      "authorship_base_sha": "fde508e85a2866e24653ef25d920a59832d2d653",
+      "api_base_sha": "fde508e85a2866e24653ef25d920a59832d2d653",
+      "audited_current_develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "created_at": "2026-11-10T17:18:29Z",
+      "last_activity_before_maintenance": "2026-11-10T17:18:29Z",
+      "activity_before_maintenance": {
+        "issue_comments": 0,
+        "inline_comments": 0,
+        "reviews": 0
+      },
+      "draft_before_maintenance": true,
+      "mergeability_at_audit": {
+        "github_mergeable": false,
+        "github_state": "dirty",
+        "conflicts_when_attempted_against_develop": [
+          "scripts/card_system/trigger_model.gd (add/add)",
+          "scripts/legacy/battle_engine.gd (content)"
+        ],
+        "scope": "GitHub state is relative to original stacked base; local conflicts are current develop trial"
+      },
+      "dependencies": "PR10 merged develop fde508e; bridge head explicitly left 13 executable trigger families plus production Session/replay for later.",
+      "historical_exact_head_ci": {
+        "head": "70cc08e482e17ac1bcec53a02ba95c78583df8bf",
+        "check_runs": [
+          {
+            "name": "browser (webkit)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:29:30Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607332/job/129999861945"
+          },
+          {
+            "name": "browser (chromium)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:36:43Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607332/job/129999861522"
+          },
+          {
+            "name": "browser (chromium)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:39:05Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607657/job/129999814239"
+          },
+          {
+            "name": "browser (webkit)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:28:51Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607657/job/129999813930"
+          },
+          {
+            "name": "browser (webkit)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:27:47Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863407203/job/129999047692"
+          },
+          {
+            "name": "browser (chromium)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:37:31Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863407203/job/129999047666"
+          },
+          {
+            "name": "alpha-playable",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:24:55Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607657/job/129995956965"
+          },
+          {
+            "name": "balance-audit",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:22:26Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607657/job/129995956288"
+          },
+          {
+            "name": "pinned-reference-and-catalog",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:19:28Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607265/job/129995955431"
+          },
+          {
+            "name": "release-safety",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:18:49Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607406/job/129995955225"
+          },
+          {
+            "name": "test-and-export",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:25:00Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863607332/job/129995954997"
+          },
+          {
+            "name": "test-and-export",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T17:23:39Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42863407203/job/129995245076"
+          }
+        ],
+        "summary": "12/12 completed success on exact existing head, last completion 2026-11-10T17:39:05Z. Historic original-head checks do not validate a new merge into current develop.",
+        "pr_event_workflow_runs": [
+          {
+            "id": 42863607406,
+            "name": "Release safety (no deployment)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_number": 45,
+            "jobs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607406/jobs",
+            "logs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607406/logs",
+            "workflow_id": 412462129
+          },
+          {
+            "id": 42863607265,
+            "name": "Legacy P01-P07 (no deployment)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_number": 40,
+            "jobs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607265/jobs",
+            "logs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607265/logs",
+            "workflow_id": 412212104
+          },
+          {
+            "id": 42863607657,
+            "name": "ORAFOLD isolated Alpha QA (no deployment)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_number": 46,
+            "jobs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607657/jobs",
+            "logs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607657/logs",
+            "workflow_id": 412578831
+          },
+          {
+            "id": 42863607332,
+            "name": "NACHTSIEGEL CI (no deployment)",
+            "status": "completed",
+            "conclusion": "success",
+            "run_number": 123,
+            "jobs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607332/jobs",
+            "logs_url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/actions/runs/42863607332/logs",
+            "workflow_id": 406254158
+          }
+        ],
+        "commit_statuses": []
+      },
+      "historical_ci_scope": "Only this historical source head; never fresh maintenance-head CI or a release authorization",
+      "changed_paths": 10,
+      "content_summary": {
+        "identical": 6,
+        "evolved_or_replaced": 4
+      },
+      "implementation_or_supersession_proof": [
+        {
+          "path": "scripts/card_system/trigger_model.gd",
+          "blob": "aa980e1a6e7c3b8118ed8dea97a84725a4784e6b",
+          "functions": "configure_v2 L34; execute L117; _after_card_played L142; _resolve_event_effect L151; enqueue_many L160; _resolve_summon L182; _apply_death_effect L218",
+          "finding": "Entire PR implementation retained; only subsequent change extracts unchanged v1 bridge snapshot data into overridable _bridge_snapshot_metadata L101 for production ABI."
+        },
+        {
+          "path": "scripts/card_system/runtime.gd",
+          "blob": "14964795ea475c05f30984f085c48d602404a5ee",
+          "finding": "Original callback/weak-owner/fail-stop queue code retained, extended with production preflight/apply and captured UID context plus ordered publication digest."
+        },
+        {
+          "path": "tests/card_system_trigger_bridge.gd",
+          "blob": "9047c12e5cb2b66ef36b73475cc186f27eb4aef0",
+          "finding": "Byte-identical to PRhead; exact current code rerun passed506 assertions0failures."
+        },
+        {
+          "path": "tools/test_master550.sh",
+          "blob": "8dcdd8c5ff4e0fd0423e53e622658a19a87623ad",
+          "line": 14,
+          "finding": "Byte-identical normal gate includes card_system_trigger_bridge. alpha-qa.yml L39 and web-preview.yml L68 invoke it."
+        },
+        {
+          "path": "scripts/card_system/production_model.gd",
+          "blob": "3a90977a7a11875d7d0f2149e91479725bef4391",
+          "functions": "extends original trigger_model L1; capabilities L117; _emit_trigger L209; _publish_watchers L243; _combat_hook L269; production_apply L411",
+          "finding": "Subsequent production profile uses existing bridge/runtime and extends all16automatic trigger families."
+        },
+        {
+          "path": "scripts/alpha/session.gd",
+          "blob": "c90b3c1ebef07d9ee600f6f5a6dff7d737cbb4ed",
+          "functions": "start_match L38-53; command L55-63; _reconstruct L75-110",
+          "finding": "Production default constructor L44, stored rules_profile/catalogfingerprint L53, accepted terminal-failure recording L58-59 and v2 replay event validation integrated."
+        }
+      ],
+      "status_recorded_by_this_draft": {
+        "state": "closed",
+        "merged": false,
+        "decision": "C",
+        "comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/11#issuecomment-6976277135",
+        "followup_issue": null
+      },
+      "followup": "None: no useful missing content"
+    },
+    {
+      "number": 14,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/14",
+      "title": "ORAFOLD: isolated audio runtime, 163 original clips and integration contract",
+      "purpose": "Original modular audio library/runtime and browser/native integration contract.",
+      "decision": "C",
+      "why_not_merge": [
+        "All three original commits have stable patch-identical reachable production equivalents; merging adds redundant ancestry rather than missing functionality.",
+        "The11 add/add conflicts are current enhancements, including streaming resume/future schema protection/independent UI gain and actual product QA. Resolving toward the old branch would regress them.",
+        "Old exact-head push CI has a genuine WebKit failure and cannot satisfy current head/release gates."
+      ],
+      "source_ref": "feature/orafold-audio",
+      "head_sha": "edc7309d2633c54fee23175f5213736d27a96bb3",
+      "base_ref": "develop",
+      "authorship_base_sha": "17121e40a49838f479d1655d88d354ed836ad20e",
+      "api_base_sha": "17121e40a49838f479d1655d88d354ed836ad20e",
+      "audited_current_develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "created_at": "2026-11-10T20:55:58Z",
+      "last_activity_before_maintenance": "2026-11-10T21:22:30Z",
+      "activity_before_maintenance": {
+        "issue_comments": 0,
+        "inline_comments": 0,
+        "reviews": 0
+      },
+      "draft_before_maintenance": false,
+      "mergeability_at_audit": {
+        "github_mergeable": false,
+        "github_state": "dirty",
+        "conflicts_when_attempted_against_develop": [
+          ".github/workflows/audio-qa.yml (add/add)",
+          "docs/audio/AUDIO-DELIVERY.md (add/add)",
+          "docs/audio/AUDIO-INTEGRATION.md (add/add)",
+          "docs/audio/README.md (add/add)",
+          "scripts/audio/audio_manager.gd (add/add)",
+          "scripts/audio/audio_settings_panel.gd (add/add)",
+          "scripts/audio/music_controller.gd (add/add)",
+          "tests/audio/preview.gd (add/add)",
+          "tests/audio/run.sh (add/add)",
+          "tests/audio/runtime_suite.gd (add/add)",
+          "tests/audio/web_fixture/main.gd (add/add)"
+        ],
+        "scope": "GitHub state is relative to original stacked base; local conflicts are current develop trial"
+      },
+      "dependencies": "Authored against17121e4; later production/audio integration and native/browser lifecycle fixes supersede isolated activation.",
+      "historical_exact_head_ci": {
+        "all_event_check_runs": 13,
+        "success": 12,
+        "failure": "WebKit alpha02_browser_qa.cjs:109 compared actual[] to expected30carddeck. This remains a failed historical run; PR success does not erase it. Current6c QA is separate evidence.",
+        "pull_request_runs": 5,
+        "pull_request_jobs": 10,
+        "all_pr_jobs_success": true,
+        "feature_push_run": 42904417456,
+        "failed_job": 130142962447,
+        "failed_job_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42904417456/job/130142962447"
+      },
+      "historical_ci_scope": "Only this historical source head; never fresh maintenance-head CI or a release authorization",
+      "changed_paths": 380,
+      "content_summary": {
+        "evolved_or_replaced": 11,
+        "identical": 369
+      },
+      "implementation_or_supersession_proof": [
+        {
+          "path": ".github/workflows/audio-qa.yml",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "7873a9da04bfe1ce152976cad348e7c7934587c4"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "d83bf4ea17127892ef6350292a0e096923b3f289"
+          },
+          "proof": "Reusable workflow called by current Main production-audio gate; retains isolated checks and adds actual product native export, Chromium/WebKit product PCM checks, strict runtime error/leak detection, bounded dependency installer. Legacy PR-only path filtering superseded."
+        },
+        {
+          "path": "docs/audio/AUDIO-DELIVERY.md",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "46baf5d2a957d161808cfb551792f47cd2a456aa"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "5b5abe0a97020123fcb0d87d58da1f00f4c49d43"
+          },
+          "proof": "Original delivery retained verbatim with a two-line pointer to authoritative PRODUCTION-INTEGRATION.md."
+        },
+        {
+          "path": "docs/audio/AUDIO-INTEGRATION.md",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "e4b5df23cd5a7f52f4b016876df443573e819bf9"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "496396c4724e77bec994eff5cb8f6c13023531c3"
+          },
+          "proof": "Original isolated integration contract retained verbatim with a two-line pointer to actual production activation."
+        },
+        {
+          "path": "docs/audio/README.md",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "36068e0246545b78e38fd42f00b8b297931f3ebd"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "5658bdeaa1d3375666de618ff787503cb8d3a7e3"
+          },
+          "proof": "Original text retained below explicit historical heading; newer introductory text identifies sole GameAudio owner, five gains and exact original asset/provenance retention. Its old draft24 wording is historical, not current release proof."
+        },
+        {
+          "path": "scripts/audio/audio_manager.gd",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "91e3b47aef5ae4c4c3f6b7a3f2a8e52e458f9582"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "67355cf2700fc6d6f20f5f0a109848c8dc554acc"
+          },
+          "proof": "Original service retained; fifth independent UI gain with v1 migration, future native/mirror write preservation, streaming resume and valid-finished Tween lifecycle repairs, exported mixer diagnostics. Later changes intentionally replace coupled UI gain and stale lifecycle behavior."
+        },
+        {
+          "path": "scripts/audio/audio_settings_panel.gd",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "ae435fbcea1c7648c026fa689d2619c7d62d1bfd"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "8b929d6b6f581866fb5ccf20db32e8f64d1330e6"
+          },
+          "proof": "Original settings panel retained; fifth independent UI gain and stable control names added; original four controls remain."
+        },
+        {
+          "path": "scripts/audio/music_controller.gd",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "d5aa55298fc947b2e108d15dbd8a93acf9a04840"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "2c14d32b40a31f1652f9a1890252c99bf3f1ab3a"
+          },
+          "proof": "Original two-player crossfade service retained; previously active streaming transports resume at captured positions and expose actual playback diagnostics."
+        },
+        {
+          "path": "tests/audio/preview.gd",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "436fb238462e4b6ef80a45ed911c89b072b60fc7"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "d2f2fd71c1bf82a29438711956049ef288c220e0"
+          },
+          "proof": "Original preview assertions retained with expected five controls and all original channels covered."
+        },
+        {
+          "path": "tests/audio/run.sh",
+          "status": "modified",
+          "head": {
+            "mode": "100755",
+            "kind": "blob",
+            "sha": "9dc67e74775b5618191365fd49cec58c636b0d56"
+          },
+          "develop": {
+            "mode": "100755",
+            "kind": "blob",
+            "sha": "112237635a9ddf6b474a050bf357333423155748"
+          },
+          "proof": "Original runtime, preview and asset checks retained; adds PCM/geometry contract and actual product integration checks."
+        },
+        {
+          "path": "tests/audio/runtime_suite.gd",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "13fd3170e4c84a94d1e9dfe40f4c7bd931239a61"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "a1beb304fa5e37906dab19db243e8f1c756eeabc"
+          },
+          "proof": "Original tests retained except assertions deliberately adjusted for independent UI gain/v1 migration; adds future-native protection, real finished-Tween window/live fade/replacement/stop lifecycle and dropped-backend resume cases."
+        },
+        {
+          "path": "tests/audio/web_fixture/main.gd",
+          "status": "modified",
+          "head": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "e86adcf14a85456c3e29270b113d0af6bab01ad9"
+          },
+          "develop": {
+            "mode": "100644",
+            "kind": "blob",
+            "sha": "33581583b05ee65cd8dff7b099fd641c274c91e9"
+          },
+          "proof": "Fixed 250ms crossfade assumption replaced by bounded 2000ms observation of actual duel context, empty pending context, settled transition and exactly one music voice; actual stuck fade remains failure."
+        }
+      ],
+      "status_recorded_by_this_draft": {
+        "state": "closed",
+        "merged": false,
+        "decision": "C",
+        "comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/14#issuecomment-6976282174",
+        "followup_issue": null
+      },
+      "followup": "None: no useful missing content"
+    },
+    {
+      "number": 15,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/15",
+      "title": "Production: 550 individual art briefs, asset validation and five illustration pilots",
+      "purpose": "Proposal-only 550 individual German scene/name briefs, reproducible concept classification, prompt export, offline image/source/brief validation and five reviewed 1448×1086 pilots; no card activation or publication.",
+      "decision": "D",
+      "why_not_merge": "Actual 550-card production catalog, full 550-image reviewed inventory, source-bound runtime delivery and current CI replaced this proposal-only authoring package. The independent code/assets are not literally integrated, so C would be false. Re-merging restores obsolete paths/data/workflow, a 55-card snapshot and a separate five-pilot concept inventory alongside completed production art. Draft status, merge conflicts and historical CI preclude A. Preserve the source branch and track the useful lost guard separately.",
+      "source_ref": "production/content-art-pipeline",
+      "head_sha": "868481419104a62bd044dae5a856357422614edb",
+      "base_ref": "develop",
+      "authorship_base_sha": "17121e40a49838f479d1655d88d354ed836ad20e",
+      "api_base_sha": "17121e40a49838f479d1655d88d354ed836ad20e",
+      "audited_current_develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "created_at": "2026-11-10T21:06:38Z",
+      "last_activity_before_maintenance": "2026-11-10T21:06:38Z",
+      "activity_before_maintenance": {
+        "issue_comments": 0,
+        "inline_comments": 0,
+        "reviews": 0
+      },
+      "draft_before_maintenance": true,
+      "mergeability_at_audit": {
+        "github_mergeable": false,
+        "github_state": "dirty",
+        "conflicts_when_attempted_against_develop": [
+          "docs/production/ART_PIPELINE.md (add/add)"
+        ],
+        "scope": "GitHub state is relative to original stacked base; local conflicts are current develop trial"
+      },
+      "dependencies": "Based on 17121e4; explicitly reserves PR11 generic triggers and Session/replay work, observes PR14 audio untouched, and requires a legal delayed source for Umleitung before activation. Later production engine/catalog/art work integrated through 345edb6 supersedes this preparation package.",
+      "historical_exact_head_ci": {
+        "kind": "historical exactPR-head workflow evidence, not currentmergeor release authorization",
+        "sha": "868481419104a62bd044dae5a856357422614edb",
+        "all_success": true,
+        "workflow_runs": [
+          {
+            "id": 42901800133,
+            "name": "Release safety (no deployment)",
+            "conclusion": "success"
+          },
+          {
+            "id": 42901800528,
+            "name": "Production content checks",
+            "conclusion": "success"
+          },
+          {
+            "id": 42901800156,
+            "name": "Legacy P01-P07 (no deployment)",
+            "conclusion": "success"
+          },
+          {
+            "id": 42901800281,
+            "name": "NACHTSIEGEL CI (no deployment)",
+            "conclusion": "success"
+          },
+          {
+            "id": 42901800220,
+            "name": "ORAFOLD isolated Alpha QA (no deployment)",
+            "conclusion": "success"
+          }
+        ],
+        "combined_statuses": [],
+        "check_runs": [
+          {
+            "name": "browser (chromium)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:23:18Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800281/job/130133691366"
+          },
+          {
+            "name": "browser (webkit)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:18:00Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800281/job/130133691311"
+          },
+          {
+            "name": "browser (webkit)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:14:50Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800220/job/130132207265"
+          },
+          {
+            "name": "browser (chromium)",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:27:46Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800220/job/130132207206"
+          },
+          {
+            "name": "test-and-export",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:14:03Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800281/job/130129397487"
+          },
+          {
+            "name": "release-safety",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:06:57Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800133/job/130129397409"
+          },
+          {
+            "name": "alpha-playable",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:11:31Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800220/job/130129397215"
+          },
+          {
+            "name": "authoring",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:07:00Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800528/job/130129397025"
+          },
+          {
+            "name": "balance-audit",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:09:40Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800220/job/130129396626"
+          },
+          {
+            "name": "pinned-reference-and-catalog",
+            "status": "completed",
+            "conclusion": "success",
+            "completed_at": "2026-11-10T21:07:41Z",
+            "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/42901800156/job/130129396138"
+          }
+        ],
+        "summary": "10/10 checks completed success on exact existing head; last completion2026-11-10T21:27:46Z. Historical CI validates original branch only."
+      },
+      "historical_ci_scope": "Only this historical source head; never fresh maintenance-head CI or a release authorization",
+      "changed_paths": 33,
+      "content_summary": {
+        "absent_from_develop": 31,
+        "evolved_or_replaced": 2
+      },
+      "implementation_or_supersession_proof": [
+        {
+          "source": "Five PR15 art-brief JSONs contain 110 entries each, 550 total, under concept IDs ZH/SW/VG/NS/NE",
+          "replacement": "data/production/art_briefs.json",
+          "replacement_blob": "be46a10455ae8ade272b51dafd43a6950d9771b8",
+          "actual_count": 550,
+          "function": "tools/production/build_catalog.py:517 art_brief(card);:608 emits all active550briefs",
+          "function_blob": "84b277974640fd3a317be0f8d87b3381420f57bb",
+          "limit": "Current brief records are generated seeds; detailed individual production prompts live in art_sources.json. The 550 alternative PR15 scene/name proposals remain only in the PR15 branch."
+        },
+        {
+          "source": "tools/production/art_pipeline.py / preview_art.gd / Production content checks",
+          "replacement": "tools/production/art_manifest.py build(root):163; png_info:41; checked_asset:81; validate_edit_provenance:97",
+          "replacement_blob": "0daa650623b92358f8f46105de075f8d321202a0",
+          "actual_inventory": {
+            "schema_version": 1,
+            "source_catalog": "data/production/cards.json",
+            "source_catalog_sha256": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+            "provenance": "data/production/art_sources.json",
+            "inventory_card_count": 550,
+            "individual_original_count": 550,
+            "final_individual_count": 550,
+            "missing_individual_count": 0,
+            "commercially_cleared_count": 0,
+            "orphan_files": [],
+            "compact_preview_count": 550,
+            "orphan_preview_files": []
+          },
+          "ci_replacement": ".github/workflows/web-preview.yml:359 production-art-native-package; :394 production-art-browser. tools/test_production_art.sh:9 checks the manifest and :10-11 run Python negative guards. tests/production_art_manifest_test.py:18 inventory; :38 native unique originals; :63 edit formats; :97 changed input; :105 corrupt PNG; :116 traversal; :142 preview/source binding.",
+          "ci_blob": "fb07950701edb72964c201ad942e91930998cfb6"
+        },
+        {
+          "source": "docs/production/ART_DIRECTION.md and five reviewed pilot statuses",
+          "replacement": "docs/production/ART_STYLE_GUIDE.md:63 names the different historical production first five; :81 records completed 550. docs/production/ART_PIPELINE.md and data/production/art_sources.json retain actual source provenance.",
+          "sources_blob": "80b55db7a203e65c2241a6172996504e0045bb4e",
+          "source_entries": 550,
+          "distinct_source_sha256s": 550,
+          "powers": {
+            "neutral": 110,
+            "houses": 110,
+            "stillwatch": 110,
+            "morph": 110,
+            "ninth": 110
+          },
+          "lore": "docs/LORE-BIBLE.md:267-269 preserves proposal status. Fifty-five original working identities retain ARBEITSSTAND; 495 new identities retain VORSCHLAG."
+        },
+        {
+          "source": "docs/production/BALANCE_BASELINE.md: historical 55-card Alpha 192-game study",
+          "replacement": "docs/production/BALANCE_REPORT.md and RESOURCE_MODEL_EXPERIMENT.md contain successor studies; the historical Alpha profile remains separate. No balance change is proposed.",
+          "replacement_blob": "581365e85f886b2a64ed2e8f245ce2384df0cb8d"
+        },
+        {
+          "implementation_commit": "15656940db7735b57d8fa306df65b97f925ceb64",
+          "purpose": "550-card production profile with stable identities, briefs, catalog, Session and replays"
+        },
+        {
+          "implementation_commit": "dca4e3619f9613a9ef0ff28943e21123891a7cbe",
+          "purpose": "Successor first five illustrations under oa IDs and the bounded art pipeline"
+        },
+        {
+          "integration_commit": "345edb6e683d4359b8141ef228683c0855773ac2",
+          "purpose": "Integrated 550 cards and individual artwork; ancestor of current develop."
+        }
+      ],
+      "status_recorded_by_this_draft": {
+        "state": "closed",
+        "merged": false,
+        "decision": "D",
+        "comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/15#issuecomment-6977717477",
+        "followup_issue": 31
+      },
+      "followup": "Issue31 guard adapted in this maintenance PR; source branch retained for550alternative briefs and5oldPNGs"
+    },
+    {
+      "number": 26,
+      "url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/26",
+      "title": "Alpha 0.3: geprüfter Release und genaue manuelle Pages-Freigabe",
+      "purpose": "Historical Alpha0.3 exact345edb6QA/artifact and manual-release evidence.",
+      "decision": "D",
+      "why_not_merge": [
+        "Its two unique files are historical evidence, not a missing runtime or release feature. They are not currently integrated; no blanket already-integrated claim is made.",
+        "The markdown and JSON call345edb6current and require obsolete manual inputs; merging them as active release-ready documentation would contradict the current sole automatic publisher and actual verified6c release.",
+        "Historical green22jobPRheadCI on56a11cf cannot authorize publication of345edb6or replace fresh QA on currentdevelop."
+      ],
+      "source_ref": "production/release-ready-alpha03-345edb6",
+      "head_sha": "56a11cfc047d6a44c4cea66a38fc991350d5bcd2",
+      "base_ref": "develop",
+      "authorship_base_sha": "345edb6e683d4359b8141ef228683c0855773ac2",
+      "api_base_sha": "345edb6e683d4359b8141ef228683c0855773ac2",
+      "audited_current_develop_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "created_at": "2026-11-11T08:03:07Z",
+      "last_activity_before_maintenance": "2026-11-11T11:10:22Z",
+      "activity_before_maintenance": {
+        "issue_comments": 0,
+        "inline_comments": 0,
+        "reviews": 0
+      },
+      "draft_before_maintenance": true,
+      "mergeability_at_audit": {
+        "github_mergeable": true,
+        "github_state": "clean",
+        "conflicts_when_attempted_against_develop": [],
+        "scope": "GitHub state is relative to original stacked base; local conflicts are current develop trial"
+      },
+      "dependencies": "Authored against345edb6; automatic develop publisher from PR29 and synchronous QA from PR30 supersede manual inputs.",
+      "historical_exact_head_ci": {
+        "all_event_check_runs": 22,
+        "success": 22,
+        "failure": 0,
+        "pull_request_runs": 4,
+        "push_runs": 0,
+        "all_pr_jobs_success": true
+      },
+      "historical_ci_scope": "Only this historical source head; never fresh maintenance-head CI or a release authorization",
+      "changed_paths": 2,
+      "content_summary": {
+        "absent_from_develop": 2
+      },
+      "implementation_or_supersession_proof": {
+        "current_release_policy_blob": "b57f893a097ccaedccafe3f2f542699b5a045b77",
+        "current_automation_doc_blob": "1f286f02601696080aa60e369306e7c46bd3a72f",
+        "sole_current_publisher_blob": "2c376fe117a35b90ab01cd58a4916979beba5b2f",
+        "current_proof_source": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/30",
+        "known_current_release": {
+          "commit": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+          "pages_run": 44250211904,
+          "main_qa_run": 44243912891,
+          "qa_suites": 7,
+          "required_success_jobs": 29,
+          "artifact_id": 14401622092,
+          "artifact_digest": "1e94c120d05f21f7a59b43dc54a7062b7ca43bcb4f07b8a61b942b0010a312a7",
+          "public_receipt_artifact": 14403288321
+        },
+        "replacement_behavior": "Automatic exact-develop seven-suite/29-job selection, immutable tested artifact, protected Pages environment and public Chromium/WebKit integrity verification; inputless fallback dispatch. No manual SHA/QA-ID/PUBLISH gate and no second publisher."
+      },
+      "status_recorded_by_this_draft": {
+        "state": "closed",
+        "merged": false,
+        "decision": "D",
+        "comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/26#issuecomment-6977722829",
+        "followup_issue": null
+      },
+      "followup": "Exact2historical originals archived underhistory/pr26-345edb6; no oldrelease input use"
+    }
+  ],
+  "branches": [
+    {
+      "branch": "alpha/playable-0.1",
+      "head": "53fb98b18119d5145e1c545f104e5dc6ab345500",
+      "behind": 206,
+      "ahead": 0,
+      "merge_base": "53fb98b18119d5145e1c545f104e5dc6ab345500",
+      "tree": "9e80f959beeeb2e3e049f80504b71c97b7955a5d",
+      "pull_requests": [
+        {
+          "number": 8,
+          "state": "closed",
+          "merged_at": "2026-11-10T06:20:07Z",
+          "head_sha": "53fb98b18119d5145e1c545f104e5dc6ab345500",
+          "merge_commit_sha": "f1d24ba9a15ae7bc74a21cfb674f61899ac4ac7a",
+          "title": "ORAFOLD Alpha 0.1: playable main application and manual solo Pages release"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Support explicitly approved solo Alpha releases with exact tested SHA gates",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "architecture/f2p-economy-design",
+      "head": "d3634b462444760665ba169dcd2be7df86baddfe",
+      "behind": 238,
+      "ahead": 0,
+      "merge_base": "d3634b462444760665ba169dcd2be7df86baddfe",
+      "tree": "646f3570ae88603187a62f8f3422ede19dca94aa",
+      "pull_requests": [
+        {
+          "number": 3,
+          "state": "closed",
+          "merged_at": "2026-11-10T06:20:09Z",
+          "head_sha": "d3634b462444760665ba169dcd2be7df86baddfe",
+          "merge_commit_sha": "37d8fc54904b1cb8c0cfbbec2578761a08b8b815",
+          "title": "docs: F2P-Wirtschaftsarchitektur, Serverautorität und Offline-Roadmap"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "docs: design server-authoritative F2P economy and offline migration roadmap",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "audit/legacy-functional-parity",
+      "head": "51ad544087dba200846b4420e493fcbe656c634f",
+      "behind": 238,
+      "ahead": 0,
+      "merge_base": "51ad544087dba200846b4420e493fcbe656c634f",
+      "tree": "7d88b33b4b8291357123b4e6806e576ab99b16b0",
+      "pull_requests": [
+        {
+          "number": 1,
+          "state": "closed",
+          "merged_at": "2026-11-10T06:20:09Z",
+          "head_sha": "51ad544087dba200846b4420e493fcbe656c634f",
+          "merge_commit_sha": "c635e122b7b64baab15a28a7ac6c7d0d8f3ccead",
+          "title": "Audit: vollständiger Legacy-Paritätsvergleich und Implementierungsplan"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "docs: audit JavaScript to Godot functional parity with reproducible evidence",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "develop",
+      "head": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "behind": 0,
+      "ahead": 0,
+      "merge_base": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "tree": "8c84f6ed60213fbde77cb775319347b63af17dab",
+      "pull_requests": [],
+      "unique_commits": [],
+      "head_subject": "Merge pull request #30: synchronous QA polling and bounded official HTTPS provisioning",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "retain_active_development",
+      "unique_content": "Current audited develop target.",
+      "recommendation": "Retain develop as approved integration and publication source.",
+      "blocker": null,
+      "secured_followup": "Recheck develop SHA before any write or publication."
+    },
+    {
+      "branch": "feature/alpha-0.2-mobile-ux",
+      "head": "d8053e9fe6c47633e6573866138ee58974e8f83a",
+      "behind": 190,
+      "ahead": 0,
+      "merge_base": "d8053e9fe6c47633e6573866138ee58974e8f83a",
+      "tree": "6e4c9e3ec5e15aed7c43534f3830d79af9a2f32e",
+      "pull_requests": [
+        {
+          "number": 9,
+          "state": "closed",
+          "merged_at": "2026-11-10T14:14:50Z",
+          "head_sha": "d8053e9fe6c47633e6573866138ee58974e8f83a",
+          "merge_commit_sha": "5d37cd937d7fcc50912a565e96f3cc4aa87f506d",
+          "title": "ORAFOLD Alpha 0.2: mobile Arena, Deckwerkstatt und Rendering-Korrekturen"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Release the archived input-test arena before engine resource teardown",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/alpha-automatic-release",
+      "head": "c0d10e36a033cbb80860fd7b1c92ef09e86ac14a",
+      "behind": 4,
+      "ahead": 0,
+      "merge_base": "c0d10e36a033cbb80860fd7b1c92ef09e86ac14a",
+      "tree": "5fb6c087287003e75ee4bfddbfb8908db3c5b44b",
+      "pull_requests": [
+        {
+          "number": 29,
+          "state": "closed",
+          "merged_at": "2026-11-18T02:36:35Z",
+          "head_sha": "c0d10e36a033cbb80860fd7b1c92ef09e86ac14a",
+          "merge_commit_sha": "d7efe2c3cacb949396d9d0180634b5a35d4907eb",
+          "title": "Alpha: automatisch geprüfte develop-Commits über Pages veröffentlichen"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "fix(qa): validate stable input and semantic navigation after reload",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/arena-quality",
+      "head": "f6f182f5e820728082b25c446b1e7d08b320a701",
+      "behind": 257,
+      "ahead": 0,
+      "merge_base": "f6f182f5e820728082b25c446b1e7d08b320a701",
+      "tree": "72d46b9b7f0ae944b62ef635fe435ceff3dfec69",
+      "pull_requests": [],
+      "unique_commits": [],
+      "head_subject": "Record verified live Moon Sanctuary build [skip ci]",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/brand-world-bible",
+      "head": "2bce5c33fa511286e39a0a08157f2a4bbf587bbd",
+      "behind": 251,
+      "ahead": 0,
+      "merge_base": "2bce5c33fa511286e39a0a08157f2a4bbf587bbd",
+      "tree": "7505a3f7501c1892531c69b271d736b10fbabce3",
+      "pull_requests": [],
+      "unique_commits": [],
+      "head_subject": "Record creative delivery QA, published foundation and naming approval boundary [skip ci]",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/card-system-550",
+      "head": "0835f7c0b0588a146165e9b5e2cebce0164f5263",
+      "behind": 169,
+      "ahead": 0,
+      "merge_base": "0835f7c0b0588a146165e9b5e2cebce0164f5263",
+      "tree": "9556993dbb311250d9ab8723c712aed66c5a3e19",
+      "pull_requests": [
+        {
+          "number": 10,
+          "state": "closed",
+          "merged_at": "2026-11-10T17:15:06Z",
+          "head_sha": "0835f7c0b0588a146165e9b5e2cebce0164f5263",
+          "merge_commit_sha": "fde508e85a2866e24653ef25d920a59832d2d653",
+          "title": "ORAFOLD: card foundation, battlefield opening, safe mobile dragging and ten deck templates"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Synchronize drag QA with completed UI rebuilds and record runner measurements",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/combat-presentation",
+      "head": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8",
+      "behind": 239,
+      "ahead": 0,
+      "merge_base": "b1f5ea59a4754bac19df31e279bff8a295cb6ea8",
+      "tree": "3f1da25b87c37a43b0d4be5d36707eb12c5c188b",
+      "pull_requests": [],
+      "unique_commits": [],
+      "head_subject": "Document combat release, gameplay video, resource limits and public QA [skip ci]",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/generic-trigger-hooks",
+      "head": "70cc08e482e17ac1bcec53a02ba95c78583df8bf",
+      "behind": 167,
+      "ahead": 2,
+      "merge_base": "fde508e85a2866e24653ef25d920a59832d2d653",
+      "tree": "5dfa21c45094242f93061fa0a9562214be2aed7a",
+      "pull_requests": [
+        {
+          "number": 11,
+          "state": "closed",
+          "merged_at": null,
+          "head_sha": "70cc08e482e17ac1bcec53a02ba95c78583df8bf",
+          "merge_commit_sha": null,
+          "title": "Draft M2b: opt-in bridge for three source-bound card trigger families",
+          "initial_state": "open",
+          "merged": false,
+          "consolidation_decision": "C"
+        }
+      ],
+      "unique_commits": [
+        "70cc08e482e17ac1bcec53a02ba95c78583df8bf Include the opt-in trigger regression in the normal CI gates",
+        "230859ef18aa656321ab1cf8d0915c5227562b1e Prepare an opt-in bridge for three source-bound card trigger families"
+      ],
+      "head_subject": "Include the opt-in trigger regression in the normal CI gates",
+      "ancestral_to_develop": false,
+      "open_pr": null,
+      "classification": "closed_integrated_no_missing_content",
+      "unique_content": "Dedicated PR audit proves all authored content integrated by ancestry or exact patch equivalence, with reviewed later improvements.",
+      "recommendation": "Closed unmerged with mandatory decision comment; retain source ref through maintenance preservation acceptance; no branch deletion performed.",
+      "blocker": null,
+      "secured_followup": "No missing useful content or original blocker; recheck current ref and preservation before any later authorized archive/delete action.",
+      "initial_classification": "open_pr_separate_audit",
+      "initial_open_pr": 11,
+      "consolidation_decision": "C",
+      "closure_comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/11#issuecomment-6976277135"
+    },
+    {
+      "branch": "feature/legacy-engine-p01-p04",
+      "head": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+      "behind": 236,
+      "ahead": 0,
+      "merge_base": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+      "tree": "81204188648df1c232107b387c50702d738809e0",
+      "pull_requests": [
+        {
+          "number": 4,
+          "state": "closed",
+          "merged_at": null,
+          "head_sha": "e36c9262b3854518afe6ced02f74ae130c1adbde",
+          "merge_commit_sha": "f16906970501034ee7549b5be3426eda4bed943d",
+          "title": "Legacy-Kernel P01–P04: RNG, Phasen, Schaden und Differentialnachweise",
+          "initial_state": "open",
+          "merged": false,
+          "consolidation_decision": "C"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Implement isolated deterministic legacy battle kernel through P04",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "closed_integrated_no_missing_content",
+      "unique_content": "Dedicated PR audit proves all authored content integrated by ancestry or exact patch equivalence, with reviewed later improvements.",
+      "recommendation": "Closed unmerged with mandatory decision comment; retain source ref through maintenance preservation acceptance; no branch deletion performed.",
+      "blocker": null,
+      "secured_followup": "No missing useful content or original blocker; recheck current ref and preservation before any later authorized archive/delete action.",
+      "initial_classification": "open_pr_separate_audit",
+      "initial_open_pr": 4,
+      "consolidation_decision": "C",
+      "closure_comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/4#issuecomment-6976133136"
+    },
+    {
+      "branch": "feature/legacy-engine-p05-p06",
+      "head": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+      "behind": 233,
+      "ahead": 0,
+      "merge_base": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+      "tree": "a53db1153d848f8e3a14edc94b4cdeea24737ed5",
+      "pull_requests": [
+        {
+          "number": 5,
+          "state": "closed",
+          "merged_at": null,
+          "head_sha": "27c39f3ee3c20d751bb9fa0caedb5c05f9ab5548",
+          "merge_commit_sha": "91803f11a0c5034a8f8531a79dfc0180336b8887",
+          "title": "Legacy P05/P06: Kartenkreislauf und alle 16 Fähigkeiten im isolierten Kernel",
+          "initial_state": "open",
+          "merged": false,
+          "consolidation_decision": "C"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Record passing full desktop regression and independent legacy CI results",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "closed_integrated_no_missing_content",
+      "unique_content": "Dedicated PR audit proves all authored content integrated by ancestry or exact patch equivalence, with reviewed later improvements.",
+      "recommendation": "Closed unmerged with mandatory decision comment; retain source ref through maintenance preservation acceptance; no branch deletion performed.",
+      "blocker": null,
+      "secured_followup": "No missing useful content or original blocker; recheck current ref and preservation before any later authorized archive/delete action.",
+      "initial_classification": "open_pr_separate_audit",
+      "initial_open_pr": 5,
+      "consolidation_decision": "C",
+      "closure_comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/5#issuecomment-6976128070"
+    },
+    {
+      "branch": "feature/legacy-engine-p07",
+      "head": "023a0e061504acee3f1f3009369065e87a10e968",
+      "behind": 231,
+      "ahead": 0,
+      "merge_base": "023a0e061504acee3f1f3009369065e87a10e968",
+      "tree": "c1a9aee5fada93d9318468536e658db0a9308a9d",
+      "pull_requests": [
+        {
+          "number": 7,
+          "state": "closed",
+          "merged_at": null,
+          "head_sha": "023a0e061504acee3f1f3009369065e87a10e968",
+          "merge_commit_sha": "72293b3e17a624aef2063bd3301502590cb52a8f",
+          "title": "Legacy P07: original reactions resonance and special action chains",
+          "initial_state": "open",
+          "merged": false,
+          "consolidation_decision": "C"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Document complete P07 CI and local renderer test limitations",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "closed_integrated_no_missing_content",
+      "unique_content": "Dedicated PR audit proves all authored content integrated by ancestry or exact patch equivalence, with reviewed later improvements.",
+      "recommendation": "Closed unmerged with mandatory decision comment; retain source ref through maintenance preservation acceptance; no branch deletion performed.",
+      "blocker": null,
+      "secured_followup": "No missing useful content or original blocker; recheck current ref and preservation before any later authorized archive/delete action.",
+      "initial_classification": "open_pr_separate_audit",
+      "initial_open_pr": 7,
+      "consolidation_decision": "C",
+      "closure_comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/7#issuecomment-6976122480"
+    },
+    {
+      "branch": "feature/legacy-foundations",
+      "head": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+      "behind": 237,
+      "ahead": 0,
+      "merge_base": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+      "tree": "637e8b12eb1ced90545fb99a34fef370223b0092",
+      "pull_requests": [
+        {
+          "number": 2,
+          "state": "closed",
+          "merged_at": "2026-11-10T06:20:09Z",
+          "head_sha": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+          "merge_commit_sha": "2ff70549d3c5e1c95f4b54c7990acd4d8970363d",
+          "title": "Legacy-Grundlagen: fixierte Referenz, separater Kartenkatalog und Deckvalidierung"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Preserve pinned reference bytes and generated fixture line endings",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/orafold-audio",
+      "head": "edc7309d2633c54fee23175f5213736d27a96bb3",
+      "behind": 164,
+      "ahead": 3,
+      "merge_base": "17121e40a49838f479d1655d88d354ed836ad20e",
+      "tree": "c7b6370c7202f5a8613d99e435f60a179bc36a77",
+      "pull_requests": [
+        {
+          "number": 14,
+          "state": "closed",
+          "merged_at": null,
+          "head_sha": "edc7309d2633c54fee23175f5213736d27a96bb3",
+          "merge_commit_sha": null,
+          "title": "ORAFOLD: isolated audio runtime, 163 original clips and integration contract",
+          "initial_state": "open",
+          "merged": false,
+          "consolidation_decision": "C"
+        }
+      ],
+      "unique_commits": [
+        "edc7309d2633c54fee23175f5213736d27a96bb3 test(audio): report known Godot WebGL framebuffer diagnostics separately from audio failures",
+        "7c40cdfb486e5ab8fe459e66d14952cbc899f60d fix(audio): verify Web mixing and persist immediate browser reloads",
+        "4a975e0ec76d9185399a934b1d90fa4fe57785af feat(audio): add isolated ORAFOLD sound library and modular runtime"
+      ],
+      "head_subject": "test(audio): report known Godot WebGL framebuffer diagnostics separately from audio failures",
+      "ancestral_to_develop": false,
+      "open_pr": null,
+      "classification": "closed_integrated_no_missing_content",
+      "unique_content": "Dedicated PR audit proves all authored content integrated by ancestry or exact patch equivalence, with reviewed later improvements.",
+      "recommendation": "Closed unmerged with mandatory decision comment; retain source ref through maintenance preservation acceptance; no branch deletion performed.",
+      "blocker": null,
+      "secured_followup": "No missing useful content or original blocker; recheck current ref and preservation before any later authorized archive/delete action.",
+      "initial_classification": "open_pr_separate_audit",
+      "initial_open_pr": 14,
+      "consolidation_decision": "C",
+      "closure_comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/14#issuecomment-6976282174"
+    },
+    {
+      "branch": "feature/orafold-campaign",
+      "head": "fdeaceff9dffde37d2f77b44b4fcfa5426064e36",
+      "behind": 157,
+      "ahead": 0,
+      "merge_base": "fdeaceff9dffde37d2f77b44b4fcfa5426064e36",
+      "tree": "bfcf33b73fa54565ca18b678d98e358245c563b8",
+      "pull_requests": [
+        {
+          "number": 18,
+          "state": "closed",
+          "merged_at": "2026-11-11T11:41:30Z",
+          "head_sha": "fdeaceff9dffde37d2f77b44b4fcfa5426064e36",
+          "merge_commit_sha": "568dc807d627a22ea9c4452ea0e2ce6c0f9b7db2",
+          "title": "ORAFOLD: isolierte Kampagnenarchitektur und spielbarer Narrativ-Prototyp"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "docs(campaign): record lore audit provisional story plan integration and QA evidence",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/orafold-economy",
+      "head": "d230e717612943bc473158ccf6617f930607d532",
+      "behind": 159,
+      "ahead": 0,
+      "merge_base": "d230e717612943bc473158ccf6617f930607d532",
+      "tree": "7d658559292efb023a3d69bf0b2782340849608e",
+      "pull_requests": [
+        {
+          "number": 16,
+          "state": "closed",
+          "merged_at": "2026-11-11T11:41:30Z",
+          "head_sha": "d230e717612943bc473158ccf6617f930607d532",
+          "merge_commit_sha": "568dc807d627a22ea9c4452ea0e2ce6c0f9b7db2",
+          "title": "ORAFOLD: Wirtschaft, Fortschritt und kommerzielle Modellanalyse"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "docs(economy): compare monetization outcomes, fairness and conditional viability",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/orafold-online",
+      "head": "67c734b92d9f6bfd92efd73f7d260a882f7b98d3",
+      "behind": 160,
+      "ahead": 0,
+      "merge_base": "67c734b92d9f6bfd92efd73f7d260a882f7b98d3",
+      "tree": "4fa13e1dd67f86b11aac60d77d2eaca2e4e2b3f4",
+      "pull_requests": [
+        {
+          "number": 17,
+          "state": "closed",
+          "merged_at": "2026-11-11T11:41:30Z",
+          "head_sha": "67c734b92d9f6bfd92efd73f7d260a882f7b98d3",
+          "merge_commit_sha": "568dc807d627a22ea9c4452ea0e2ce6c0f9b7db2",
+          "title": "Online-Grundlage: lokale Accounts, Matchmaking und Reconnect (Simulation)"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "docs(online): record audit security hosting and engine integration contract",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/premium-experience",
+      "head": "f3d3c7b0c082554a51661d98a2e89a0756815cb4",
+      "behind": 244,
+      "ahead": 0,
+      "merge_base": "f3d3c7b0c082554a51661d98a2e89a0756815cb4",
+      "tree": "9a04884bb79afe5e86928746f1bbdcb79071d72c",
+      "pull_requests": [],
+      "unique_commits": [],
+      "head_subject": "Document premium experience delivery, screenshots and public QA [skip ci]",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/premium-mobile-experience",
+      "head": "2ce222a38642e382b3ba7461c1137d881399a168",
+      "behind": 10,
+      "ahead": 0,
+      "merge_base": "2ce222a38642e382b3ba7461c1137d881399a168",
+      "tree": "25de99d29bebcb9b3813f61338bee5b835ab8b7c",
+      "pull_requests": [
+        {
+          "number": 28,
+          "state": "closed",
+          "merged_at": "2026-11-17T23:45:40Z",
+          "head_sha": "2ce222a38642e382b3ba7461c1137d881399a168",
+          "merge_commit_sha": "e689b01a7bd93044b5e2b286d90f551884b463bc",
+          "title": "Premium Mobile: illustrierte 2,5D-Arena, Kartenrahmen, PWA und sichere Eingaben"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "test: synchronize coherent campaign rotation snapshots",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/qa-synchronous-polling",
+      "head": "bad5803e8b6020413a52f4b8bea727d4e3a362d1",
+      "behind": 1,
+      "ahead": 0,
+      "merge_base": "bad5803e8b6020413a52f4b8bea727d4e3a362d1",
+      "tree": "8c84f6ed60213fbde77cb775319347b63af17dab",
+      "pull_requests": [
+        {
+          "number": 30,
+          "state": "closed",
+          "merged_at": "2026-11-18T05:23:21Z",
+          "head_sha": "bad5803e8b6020413a52f4b8bea727d4e3a362d1",
+          "merge_commit_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+          "title": "QA: synchrones Playwright-Polling mit echten API-Gegenproben"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "fix(ci): select official Ubuntu HTTPS mirrors before GitHub setup",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "feature/ux-contrast",
+      "head": "927ae10cdfcfa6089eb8c6359ab9efd814220393",
+      "behind": 254,
+      "ahead": 0,
+      "merge_base": "927ae10cdfcfa6089eb8c6359ab9efd814220393",
+      "tree": "dc57ac4a0a4e53049294b19433a70fcb07a40eb7",
+      "pull_requests": [],
+      "unique_commits": [],
+      "head_subject": "Record verified live UX build, browser evidence and direct play link [skip ci]",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "lore/orafold-worldbuilding-550-draft",
+      "head": "2a8d3390d4f7d263a2e9e52e0404101f197971d6",
+      "behind": 167,
+      "ahead": 45,
+      "merge_base": "fde508e85a2866e24653ef25d920a59832d2d653",
+      "tree": "b901b81236f58e0cf6c1851ce46285659fcc3fe0",
+      "pull_requests": [
+        {
+          "number": 12,
+          "state": "closed",
+          "merged_at": "2026-11-10T19:27:28Z",
+          "head_sha": "2a8d3390d4f7d263a2e9e52e0404101f197971d6",
+          "merge_commit_sha": "795be306470073276f53d1bcf8f85e5ad1278fe0",
+          "title": "Draft: ORAFOLD vollständiges Lore-Gerüst und 550 Kartenkonzepte"
+        }
+      ],
+      "unique_commits": [
+        "2a8d3390d4f7d263a2e9e52e0404101f197971d6 docs(lore): clarify provisional merge and commercial gates",
+        "59fe846a858934e2d1212733d0faa8a82d30a560 docs(lore): clarify provisional merge and commercial gates",
+        "aad865a4173e2a1acfa4c3cd561412ca768ab3a9 docs(lore): commercial creative review and launch quality gates",
+        "034df285e2a599f583e815b5d4c4d113da64d0a3 qa(lore): verify complete draft framework and referential integrity",
+        "da891b52267234566379d1bd22ddae3a85023fee docs(lore): reconcile chronology Eira and entrypoint",
+        "a5588a222eaed5f1c9de13f21194cbd98bd255d1 docs(lore): reconcile chronology Eira and entrypoint",
+        "7a8b6201204f79a4cf69574d4391d185b48298d1 docs(lore): reconcile chronology Eira and entrypoint",
+        "86ce911cbd1b15b75e8f8dfb752ce9430af65dc9 docs(lore): complete provisional causal story framework",
+        "25549fa47cd36a7c21a0003afb25d4efbbf3bc9b docs(lore): complete provisional causal story framework",
+        "e1c6c7f628c62d6301036147680b89a8827c4789 docs(lore): complete provisional causal story framework",
+        "c39365c5af97d53beecb3fcae847f39193c78521 docs(lore): record revised plausibility originality suspense audit",
+        "e19f483258210db4d148c77e598465fa2190fbb8 refine(cards): add causal hooks and distinct art direction to 550 concepts",
+        "c0d471d0e7f3f95025ace106ad810466ca33a52c refine(lore): align 80 character sketches with six narrative leads",
+        "e640259a0a71e5004deb2c1c31944e8c05a18960 docs(lore): add six developed perspective character arcs",
+        "876bb0ca10f6ea604c481db74b0d1c9ce41afba4 refine(lore): concrete causal story and character arcs",
+        "0da1847e1ae060c679cdbeb905ecc8e61959517e refine(lore): concrete causal story and character arcs",
+        "aa3372b5f31c24f6e44bba0593a128bebccde3af refine(lore): concrete causal story and character arcs",
+        "532619f82b066760b578737db7cf1a6bb3c877c4 refine(lore): concrete causal story and character arcs",
+        "8713033218f25a4efad240f77c4764610f4d54e2 docs(lore): report verified counts and editorial quality gaps",
+        "30589e17e1eb78db514134dce1b5d64f0769c564 fix(lore): disambiguate duplicate provisional card names",
+        "2e6e1ddbe5cc7f53866dbc84b07d00c21a2527e2 data(lore): add provisional expansion-roadmap.json",
+        "4d697f27b07cf1b88974adc434572ebbac2f444e data(lore): add provisional card-families.json",
+        "3e2ebb8debf9d6dd5392254d70913d4525ff7051 data(lore): add provisional card-concepts.json",
+        "23c2da9cd13d6a01059fbea69a60600d4e035006 data(lore): add provisional timeline.json",
+        "b99049f7215342f15a4f04b301c8e7b0265c09ab data(lore): add provisional organizations.json",
+        "0f10cb5db9b205f09e78b17e431d6ef727ce21e6 data(lore): add provisional locations.json",
+        "0f89407211483623739502764ade1a169dadbe76 data(lore): add provisional characters.json",
+        "6ce384521489144e990d20b751a52c4295dc09c4 docs(lore): add provisional ORAFOLD worldbuilding 17-decision-register.md",
+        "ba9ecd8f24838d21c4c816b8ddf559ae5e635e58 docs(lore): add provisional ORAFOLD worldbuilding 16-originality-review.md",
+        "cf1245f59967be360208e9e3eb60af940710211e docs(lore): add provisional ORAFOLD worldbuilding 15-continuity-audit.md",
+        "2bb4abbb0c45532414a46a80caea5c69ac491219 docs(lore): add provisional ORAFOLD worldbuilding 14-future-expansions.md",
+        "a8ce1eeae3b8ced1fc77edb251886ed4ea4c2aab docs(lore): add provisional ORAFOLD worldbuilding 13-card-lore-guidelines.md",
+        "ff6f070641439376e3e637c276fa7f39aa51a51a docs(lore): add provisional ORAFOLD worldbuilding 12-creatures-and-species.md",
+        "4d50b2b5a57240a22a4d926592e88d90e5480987 docs(lore): add provisional ORAFOLD worldbuilding 11-first-campaign.md",
+        "8fdb04df874b7dc8200060ee838b85f2c8cf9902 docs(lore): add provisional ORAFOLD worldbuilding 10-main-story.md",
+        "23ffc146d36d54576275ecc2076acff38562bf2b docs(lore): add provisional ORAFOLD worldbuilding 09-eira-and-mysteries.md",
+        "547c04588a3512eed4b29c982f5da590996163e8 docs(lore): add provisional ORAFOLD worldbuilding 07-organizations.md",
+        "1bda82e899ef32bdd6eb72762133ea1a40139b47 docs(lore): add provisional ORAFOLD worldbuilding 06-four-powers.md",
+        "1c74098b334cfebd6e0e8321e2882bf506e9a8f4 docs(lore): add provisional ORAFOLD worldbuilding 05-cultures-and-societies.md",
+        "e530a1e6dbb9a2b2824d4edcd1f9a282449cfd39 docs(lore): add provisional ORAFOLD worldbuilding 04-geography-and-regions.md",
+        "671e5b0309b01f61fe270fde134dc913b4946315 docs(lore): add provisional ORAFOLD worldbuilding 03-history-and-timeline.md",
+        "8622fc8af3133b9cc05b7b2de6843b8ac7a4981d docs(lore): add provisional ORAFOLD worldbuilding 02-causality-and-magic.md",
+        "d8d864107bea3f58134e06ec76611d8dda167c6f docs(lore): add provisional ORAFOLD worldbuilding 01-world-foundation.md",
+        "ebf773d5c03abb6ffd7bbdd5449bc941b19ca7fa docs(lore): add provisional ORAFOLD worldbuilding README.md",
+        "2a8062163ba2f164f82707385df5e85fe519e8a8 docs(lore): stage full ORAFOLD worldbuilding and 550-card master work order"
+      ],
+      "cherry": [
+        "+ 2a8062163ba2f164f82707385df5e85fe519e8a8 docs(lore): stage full ORAFOLD worldbuilding and 550-card master work order",
+        "+ ebf773d5c03abb6ffd7bbdd5449bc941b19ca7fa docs(lore): add provisional ORAFOLD worldbuilding README.md",
+        "+ d8d864107bea3f58134e06ec76611d8dda167c6f docs(lore): add provisional ORAFOLD worldbuilding 01-world-foundation.md",
+        "+ 8622fc8af3133b9cc05b7b2de6843b8ac7a4981d docs(lore): add provisional ORAFOLD worldbuilding 02-causality-and-magic.md",
+        "+ 671e5b0309b01f61fe270fde134dc913b4946315 docs(lore): add provisional ORAFOLD worldbuilding 03-history-and-timeline.md",
+        "+ e530a1e6dbb9a2b2824d4edcd1f9a282449cfd39 docs(lore): add provisional ORAFOLD worldbuilding 04-geography-and-regions.md",
+        "+ 1c74098b334cfebd6e0e8321e2882bf506e9a8f4 docs(lore): add provisional ORAFOLD worldbuilding 05-cultures-and-societies.md",
+        "+ 1bda82e899ef32bdd6eb72762133ea1a40139b47 docs(lore): add provisional ORAFOLD worldbuilding 06-four-powers.md",
+        "+ 547c04588a3512eed4b29c982f5da590996163e8 docs(lore): add provisional ORAFOLD worldbuilding 07-organizations.md",
+        "+ 23ffc146d36d54576275ecc2076acff38562bf2b docs(lore): add provisional ORAFOLD worldbuilding 09-eira-and-mysteries.md",
+        "+ 8fdb04df874b7dc8200060ee838b85f2c8cf9902 docs(lore): add provisional ORAFOLD worldbuilding 10-main-story.md",
+        "+ 4d50b2b5a57240a22a4d926592e88d90e5480987 docs(lore): add provisional ORAFOLD worldbuilding 11-first-campaign.md",
+        "+ ff6f070641439376e3e637c276fa7f39aa51a51a docs(lore): add provisional ORAFOLD worldbuilding 12-creatures-and-species.md",
+        "+ a8ce1eeae3b8ced1fc77edb251886ed4ea4c2aab docs(lore): add provisional ORAFOLD worldbuilding 13-card-lore-guidelines.md",
+        "+ 2bb4abbb0c45532414a46a80caea5c69ac491219 docs(lore): add provisional ORAFOLD worldbuilding 14-future-expansions.md",
+        "+ cf1245f59967be360208e9e3eb60af940710211e docs(lore): add provisional ORAFOLD worldbuilding 15-continuity-audit.md",
+        "+ ba9ecd8f24838d21c4c816b8ddf559ae5e635e58 docs(lore): add provisional ORAFOLD worldbuilding 16-originality-review.md",
+        "+ 6ce384521489144e990d20b751a52c4295dc09c4 docs(lore): add provisional ORAFOLD worldbuilding 17-decision-register.md",
+        "+ 0f89407211483623739502764ade1a169dadbe76 data(lore): add provisional characters.json",
+        "+ 0f10cb5db9b205f09e78b17e431d6ef727ce21e6 data(lore): add provisional locations.json",
+        "+ b99049f7215342f15a4f04b301c8e7b0265c09ab data(lore): add provisional organizations.json",
+        "+ 23c2da9cd13d6a01059fbea69a60600d4e035006 data(lore): add provisional timeline.json",
+        "+ 3e2ebb8debf9d6dd5392254d70913d4525ff7051 data(lore): add provisional card-concepts.json",
+        "+ 4d697f27b07cf1b88974adc434572ebbac2f444e data(lore): add provisional card-families.json",
+        "+ 2e6e1ddbe5cc7f53866dbc84b07d00c21a2527e2 data(lore): add provisional expansion-roadmap.json",
+        "+ 30589e17e1eb78db514134dce1b5d64f0769c564 fix(lore): disambiguate duplicate provisional card names",
+        "+ 8713033218f25a4efad240f77c4764610f4d54e2 docs(lore): report verified counts and editorial quality gaps",
+        "+ 532619f82b066760b578737db7cf1a6bb3c877c4 refine(lore): concrete causal story and character arcs",
+        "+ aa3372b5f31c24f6e44bba0593a128bebccde3af refine(lore): concrete causal story and character arcs",
+        "+ 0da1847e1ae060c679cdbeb905ecc8e61959517e refine(lore): concrete causal story and character arcs",
+        "+ 876bb0ca10f6ea604c481db74b0d1c9ce41afba4 refine(lore): concrete causal story and character arcs",
+        "+ e640259a0a71e5004deb2c1c31944e8c05a18960 docs(lore): add six developed perspective character arcs",
+        "+ c0d471d0e7f3f95025ace106ad810466ca33a52c refine(lore): align 80 character sketches with six narrative leads",
+        "+ e19f483258210db4d148c77e598465fa2190fbb8 refine(cards): add causal hooks and distinct art direction to 550 concepts",
+        "+ c39365c5af97d53beecb3fcae847f39193c78521 docs(lore): record revised plausibility originality suspense audit",
+        "+ e1c6c7f628c62d6301036147680b89a8827c4789 docs(lore): complete provisional causal story framework",
+        "+ 25549fa47cd36a7c21a0003afb25d4efbbf3bc9b docs(lore): complete provisional causal story framework",
+        "+ 86ce911cbd1b15b75e8f8dfb752ce9430af65dc9 docs(lore): complete provisional causal story framework",
+        "+ 7a8b6201204f79a4cf69574d4391d185b48298d1 docs(lore): reconcile chronology Eira and entrypoint",
+        "+ a5588a222eaed5f1c9de13f21194cbd98bd255d1 docs(lore): reconcile chronology Eira and entrypoint",
+        "+ da891b52267234566379d1bd22ddae3a85023fee docs(lore): reconcile chronology Eira and entrypoint",
+        "+ 034df285e2a599f583e815b5d4c4d113da64d0a3 qa(lore): verify complete draft framework and referential integrity",
+        "+ aad865a4173e2a1acfa4c3cd561412ca768ab3a9 docs(lore): commercial creative review and launch quality gates",
+        "+ 59fe846a858934e2d1212733d0faa8a82d30a560 docs(lore): clarify provisional merge and commercial gates",
+        "+ 2a8d3390d4f7d263a2e9e52e0404101f197971d6 docs(lore): clarify provisional merge and commercial gates"
+      ],
+      "delta_from_merge_base": [
+        "A\tdata/lore/card-concepts.json",
+        "A\tdata/lore/card-families.json",
+        "A\tdata/lore/characters.json",
+        "A\tdata/lore/expansion-roadmap.json",
+        "A\tdata/lore/locations.json",
+        "A\tdata/lore/organizations.json",
+        "A\tdata/lore/timeline.json",
+        "A\tdocs/lore/01-world-foundation.md",
+        "A\tdocs/lore/02-causality-and-magic.md",
+        "A\tdocs/lore/03-history-and-timeline.md",
+        "A\tdocs/lore/04-geography-and-regions.md",
+        "A\tdocs/lore/05-cultures-and-societies.md",
+        "A\tdocs/lore/06-four-powers.md",
+        "A\tdocs/lore/07-organizations.md",
+        "A\tdocs/lore/08-character-bible.md",
+        "A\tdocs/lore/09-eira-and-mysteries.md",
+        "A\tdocs/lore/10-main-story.md",
+        "A\tdocs/lore/11-first-campaign.md",
+        "A\tdocs/lore/12-creatures-and-species.md",
+        "A\tdocs/lore/13-card-lore-guidelines.md",
+        "A\tdocs/lore/14-future-expansions.md",
+        "A\tdocs/lore/15-continuity-audit.md",
+        "A\tdocs/lore/16-originality-review.md",
+        "A\tdocs/lore/17-decision-register.md",
+        "A\tdocs/lore/18-implementation-and-qa.md",
+        "A\tdocs/lore/19-authorial-truth-and-mechanism.md",
+        "A\tdocs/lore/20-world-and-card-production-framework.md",
+        "A\tdocs/lore/21-story-beats-and-clue-ledger.md",
+        "A\tdocs/lore/22-commercial-readiness.md",
+        "A\tdocs/lore/MASTER-WORK-ORDER.md",
+        "A\tdocs/lore/README.md"
+      ],
+      "head_subject": "docs(lore): clarify provisional merge and commercial gates",
+      "ancestral_to_develop": false,
+      "open_pr": null,
+      "classification": "redundant_content_squashed_history",
+      "unique_content": "45 non-ancestral commits; all 31 authored docs/lore and data/lore files are blob-identical to develop. PR #12 squash commit 795be306470073276f53d1bcf8f85e5ad1278fe0 is ancestral. No unique lore/data content.",
+      "recommendation": "Archive-eligible redundant branch; preserve PR #12 and blob proof before later authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Record original head SHA and 31-file blob equality; recheck branch/develop SHAs before any later archival.",
+      "content_proof_file": "orafold-worldbuilding-550-draft-blob-proof.json"
+    },
+    {
+      "branch": "main",
+      "head": "caaa00169a7c43eb6eabe919746a0f33131a0664",
+      "behind": 310,
+      "ahead": 0,
+      "merge_base": "caaa00169a7c43eb6eabe919746a0f33131a0664",
+      "tree": "e4d36bab32ad513e2c307b2846d45b6a27617c19",
+      "pull_requests": [],
+      "unique_commits": [],
+      "head_subject": "Initialize NACHTSIEGEL app repository",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "retain_protected_baseline",
+      "unique_content": "No head-only commits; main is an ancestor of develop. Main is explicitly out of scope for changes.",
+      "recommendation": "Retain main unchanged.",
+      "blocker": null,
+      "secured_followup": null
+    },
+    {
+      "branch": "production/alpha03-final-integration",
+      "head": "a52a1b571f7f39ba70973ba6facbf8c7a15b812c",
+      "behind": 26,
+      "ahead": 0,
+      "merge_base": "a52a1b571f7f39ba70973ba6facbf8c7a15b812c",
+      "tree": "3bac5b24b0a64d6c9d239fe3772a9777d5332b3d",
+      "pull_requests": [
+        {
+          "number": 27,
+          "state": "closed",
+          "merged_at": "2026-11-11T11:41:29Z",
+          "head_sha": "a52a1b571f7f39ba70973ba6facbf8c7a15b812c",
+          "merge_commit_sha": "10782185cf41f2013607ba47da0bbfcb737e89e2",
+          "title": "Integrate Alpha 0.3 modules and Safari orientation fixes"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Make source-integrity fixtures portable to fresh CI checkouts",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/audio-integration",
+      "head": "8a16ad6d0666bbb91476d6cc3a0475d99b3c815f",
+      "behind": 112,
+      "ahead": 0,
+      "merge_base": "8a16ad6d0666bbb91476d6cc3a0475d99b3c815f",
+      "tree": "2932dd8c8f546e30beb625d1254fa48ae98f7c8b",
+      "pull_requests": [
+        {
+          "number": 24,
+          "state": "closed",
+          "merged_at": "2026-11-11T01:56:54Z",
+          "head_sha": "8a16ad6d0666bbb91476d6cc3a0475d99b3c815f",
+          "merge_commit_sha": "308d1bed098c378f7208bb77af4670fcceb0c1c8",
+          "title": "Activate ORAFOLD audio in the product through one compatible mixer"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Make audio QA a reusable main-workflow gate and clarify delivery history",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/audit-cleanup",
+      "head": "70e6c23480e2a08d18bc275bf2182c39715e89c7",
+      "behind": 165,
+      "ahead": 0,
+      "merge_base": "70e6c23480e2a08d18bc275bf2182c39715e89c7",
+      "tree": "03765e7707d60537b721c4066aee1ea85eb451f6",
+      "pull_requests": [
+        {
+          "number": 13,
+          "state": "closed",
+          "merged_at": "2026-11-10T20:09:23Z",
+          "head_sha": "70e6c23480e2a08d18bc275bf2182c39715e89c7",
+          "merge_commit_sha": "17121e40a49838f479d1655d88d354ed836ad20e",
+          "title": "Production A: verify catalog, engine and lore readiness before migration"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Audit production readiness, provisional lore and safe card migration boundaries",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/catalog-engine",
+      "head": "82ded528c772daf305be288c48c829a8499b56ac",
+      "behind": 48,
+      "ahead": 0,
+      "merge_base": "82ded528c772daf305be288c48c829a8499b56ac",
+      "tree": "f0a71f3e6c67874169fa2174334db7684daa09d9",
+      "pull_requests": [
+        {
+          "number": 19,
+          "state": "closed",
+          "merged_at": "2026-11-11T07:17:07Z",
+          "head_sha": "82ded528c772daf305be288c48c829a8499b56ac",
+          "merge_commit_sha": "345edb6e683d4359b8141ef228683c0855773ac2",
+          "title": "ORAFOLD Alpha 0.3: 550 spielbare Karten, Einzelillustrationen und geprüfte Mobile-Integration"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Integrate tested 550-card illustration and runtime presentation",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/content-art-pipeline",
+      "head": "868481419104a62bd044dae5a856357422614edb",
+      "behind": 164,
+      "ahead": 4,
+      "merge_base": "17121e40a49838f479d1655d88d354ed836ad20e",
+      "tree": "6fff09ff595b5acc22713148d134be05f8e0f91d",
+      "pull_requests": [
+        {
+          "number": 15,
+          "state": "closed",
+          "merged_at": null,
+          "head_sha": "868481419104a62bd044dae5a856357422614edb",
+          "merge_commit_sha": null,
+          "title": "Production: 550 individual art briefs, asset validation and five illustration pilots",
+          "initial_state": "open",
+          "merged": false,
+          "consolidation_decision": "D"
+        }
+      ],
+      "unique_commits": [
+        "868481419104a62bd044dae5a856357422614edb Record native art QA, export isolation and actual Alpha match evidence",
+        "6b61fc9d8f75cf4f65637b4d21ee8489c442b62b Produce five illustration pilots with provenance and isolated native previews",
+        "9850b666ebcb6d6ece248f9c8fcc3107991ffc27 Author 550 individual illustration briefs and validate production assets",
+        "9823f7e78ffff5c44a7ccfb1f2a9cbd0256ce1f9 Audit 550 concept readiness with reproducible authoring checks"
+      ],
+      "head_subject": "Record native art QA, export isolation and actual Alpha match evidence",
+      "ancestral_to_develop": false,
+      "open_pr": null,
+      "classification": "closed_superseded_retain_independent_pilots",
+      "unique_content": "Independent alternative550briefs/fivepilotPNGs remain on retained source ref. Exact provenance manifest copied; useful stale-review guard adapted in current pipeline.",
+      "recommendation": "Closed unmerged; retain source branch for independent alternative briefs and original pilot PNGs. Replacement guard locally fixed, final CI pending.",
+      "blocker": null,
+      "secured_followup": "Issue31 tracks replacement; preserve source ref and pending rights. Do not delete source merely because compact provenance is archived.",
+      "initial_classification": "open_pr_separate_audit",
+      "initial_open_pr": 15,
+      "consolidation_decision": "D",
+      "closure_comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/15#issuecomment-6977717477"
+    },
+    {
+      "branch": "production/full-pool-simulation-coverage",
+      "head": "b157b4b36f8fd86e1b195ccd7b5e4a9f7f5b1cf8",
+      "behind": 106,
+      "ahead": 0,
+      "merge_base": "b157b4b36f8fd86e1b195ccd7b5e4a9f7f5b1cf8",
+      "tree": "f2702638ca35acff8525fffaeb8b28ac6435f61b",
+      "pull_requests": [
+        {
+          "number": 25,
+          "state": "closed",
+          "merged_at": "2026-11-11T03:31:06Z",
+          "head_sha": "b157b4b36f8fd86e1b195ccd7b5e4a9f7f5b1cf8",
+          "merge_commit_sha": "2bada16637fe956573f6183b3facfb4a9b9f870e",
+          "title": "Erweitere Selbstspiel um einen Full-Pool-Coverage-Sampler"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Gate release CI on a fresh real full-pool coverage sample",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/individual-art-batch2",
+      "head": "ba09e105cdcd013a22c6cea200ae473df3f1cfa1",
+      "behind": 49,
+      "ahead": 0,
+      "merge_base": "ba09e105cdcd013a22c6cea200ae473df3f1cfa1",
+      "tree": "f0a71f3e6c67874169fa2174334db7684daa09d9",
+      "pull_requests": [
+        {
+          "number": 23,
+          "state": "closed",
+          "merged_at": "2026-11-11T07:13:55Z",
+          "head_sha": "ba09e105cdcd013a22c6cea200ae473df3f1cfa1",
+          "merge_commit_sha": "82ded528c772daf305be288c48c829a8499b56ac",
+          "title": "550 eigene Illustrationen mit geprüfter Bildauslieferung und Kampfansicht"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Record actual finished-tween failure and source-bound audio regression",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/kernel-printed-semantics",
+      "head": "64c745ef3d3aabff74ebdd96bb2ffd45a013c0a2",
+      "behind": 122,
+      "ahead": 0,
+      "merge_base": "64c745ef3d3aabff74ebdd96bb2ffd45a013c0a2",
+      "tree": "5a5e4b484dedb41a3bac2b0f113edceca478a318",
+      "pull_requests": [
+        {
+          "number": 21,
+          "state": "closed",
+          "merged_at": "2026-11-11T01:18:00Z",
+          "head_sha": "64c745ef3d3aabff74ebdd96bb2ffd45a013c0a2",
+          "merge_commit_sha": "4780c7d516bf70678b07f508d942160499b721d7",
+          "title": "Fix printed timing and preserve creature damage ownership"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Preserve installed template data home when exporting pinned migration runtime",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/native-platform-qa",
+      "head": "5e4befc165153a15ae87a4af931ee164cf91dd22",
+      "behind": 120,
+      "ahead": 0,
+      "merge_base": "5e4befc165153a15ae87a4af931ee164cf91dd22",
+      "tree": "e22e47e56c2ddebbab6bcc4de831e4852e33a8dd",
+      "pull_requests": [
+        {
+          "number": 22,
+          "state": "closed",
+          "merged_at": "2026-11-11T01:19:16Z",
+          "head_sha": "5e4befc165153a15ae87a4af931ee164cf91dd22",
+          "merge_commit_sha": "d3c7c7bf1e2d714aef896d39538bfd343d2365c2",
+          "title": "Native debug QA for Linux, Android and Windows with source-bound package evidence"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Record actual successful Windows Linux and Android debug platform evidence",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "production/release-ready-alpha03-345edb6",
+      "head": "56a11cfc047d6a44c4cea66a38fc991350d5bcd2",
+      "behind": 47,
+      "ahead": 1,
+      "merge_base": "345edb6e683d4359b8141ef228683c0855773ac2",
+      "tree": "81b5d9755860c4d747a7c2ca27ec45c671724334",
+      "pull_requests": [
+        {
+          "number": 26,
+          "state": "closed",
+          "merged_at": null,
+          "head_sha": "56a11cfc047d6a44c4cea66a38fc991350d5bcd2",
+          "merge_commit_sha": "afc9318d78189b28358e3bae80a12af3a46b02ec",
+          "title": "Alpha 0.3: geprüfter Release und genaue manuelle Pages-Freigabe",
+          "initial_state": "open",
+          "merged": false,
+          "consolidation_decision": "D"
+        }
+      ],
+      "unique_commits": [
+        "56a11cfc047d6a44c4cea66a38fc991350d5bcd2 Document tested Alpha 0.3 release and exact manual publisher inputs"
+      ],
+      "head_subject": "Document tested Alpha 0.3 release and exact manual publisher inputs",
+      "ancestral_to_develop": false,
+      "open_pr": null,
+      "classification": "closed_superseded_history_archived",
+      "unique_content": "Two historical release evidence originals copied byte-identically under history/pr26-345edb6 with obsolete-input warning.",
+      "recommendation": "Closed unmerged; historical files preserved; no old manual inputs or workflow activation.",
+      "blocker": null,
+      "secured_followup": "Retain exact archived Git blobs/digests and ref until maintenance preservation is accepted; later deletion requires current-head recheck.",
+      "initial_classification": "open_pr_separate_audit",
+      "initial_open_pr": 26,
+      "consolidation_decision": "D",
+      "closure_comment_url": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/26#issuecomment-6977722829"
+    },
+    {
+      "branch": "production/resource-models",
+      "head": "cc5421f5db3230d9cf5effbf4a6d37caa6211076",
+      "behind": 121,
+      "ahead": 0,
+      "merge_base": "cc5421f5db3230d9cf5effbf4a6d37caa6211076",
+      "tree": "91fc98f1f165d5173d1709e14d277d4add405525",
+      "pull_requests": [
+        {
+          "number": 20,
+          "state": "closed",
+          "merged_at": "2026-11-11T01:18:40Z",
+          "head_sha": "cc5421f5db3230d9cf5effbf4a6d37caa6211076",
+          "merge_commit_sha": "a42e109813efa620563ea20134a242ae654827fa",
+          "title": "Prüfe Ressourcenmodelle mit gepaarten Produktionspartien"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Preserve installed template data home when exporting pinned migration runtime",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    },
+    {
+      "branch": "qa/recover-native-ada9",
+      "head": "f75162851bbd7eb57495919958de849c574f6420",
+      "behind": 14,
+      "ahead": 1,
+      "merge_base": "ada9ef91344b8df8042745ba089e6249d3dff478",
+      "tree": "60bae3b169b7545a9025b0e9752311260a6c16e5",
+      "pull_requests": [],
+      "unique_commits": [
+        "f75162851bbd7eb57495919958de849c574f6420 ci: recover original native failure logs without executing artifacts"
+      ],
+      "cherry": [
+        "+ f75162851bbd7eb57495919958de849c574f6420 ci: recover original native failure logs without executing artifacts"
+      ],
+      "delta_from_merge_base": [
+        "A\t.github/workflows/native-evidence-recovery.yml"
+      ],
+      "head_subject": "ci: recover original native failure logs without executing artifacts",
+      "ancestral_to_develop": false,
+      "open_pr": null,
+      "classification": "archive_eligible_forensic_evidence_secured",
+      "unique_content": "One unique commit adds only .github/workflows/native-evidence-recovery.yml. Read-only, branch-specific one-shot retrieval of original Windows failure evidence; no product/runtime change.",
+      "recommendation": "Do not merge the one-off recovery workflow. The successful compact recovery evidence and immutable provenance are now secured locally with verified digest, so the branch is archive-eligible under separately authorized hygiene.",
+      "blocker": null,
+      "secured_followup": "Keep native-original-ada9-failure-evidence.zip and its verified inventory with durable audit evidence, retain immutable run/artifact/head metadata, and recheck current branch/develop heads before any separately authorized archival.",
+      "content_proof_file": "recover-native-ada9-blob-proof.json",
+      "unique_workflow_blob": "name: Recover one native QA log (read only)\non:\n  push:\n    branches: [qa/recover-native-ada9]\n    paths: [.github/workflows/native-evidence-recovery.yml]\npermissions:\n  contents: read\n  actions: read\njobs:\n  recover:\n    runs-on: ubuntu-24.04\n    timeout-minutes: 15\n    steps:\n      - name: Bind immutable original failure evidence\n        uses: actions/github-script@v7\n        with:\n          script: |\n            const fs = require('fs');\n            if (context.repo.owner !== 'Jagarex-lab' || context.repo.repo !== 'nachtsiegel-app') throw Error('wrong repository');\n            const a = (await github.rest.actions.getArtifact({...context.repo, artifact_id:13895866598})).data;\n            const r = (await github.rest.actions.getWorkflowRun({...context.repo, run_id:43109351972})).data;\n            const j = (await github.rest.actions.getJobForWorkflowRun({...context.repo, job_id:130821145320})).data;\n            if(a.name !== 'orafold-windows-debug-ada9ef91344b8df8042745ba089e6249d3dff478' || a.expired || a.workflow_run.id !== 43109351972 || a.digest !== 'sha256:c8032bb017122ca0adafd976a4856db9016642c5cd473c109ccb2692b86ddb22' || a.size_in_bytes !== 859156296) throw Error('artifact identity changed');\n            if(r.head_sha !== 'ada9ef91344b8df8042745ba089e6249d3dff478' || r.event !== 'push' || j.run_id !== r.id || j.conclusion !== 'failure') throw Error('original job identity changed');\n            fs.mkdirSync('recovery/compact',{recursive:true});\n            fs.writeFileSync('recovery/compact/original-provenance.json', JSON.stringify({artifact:a,run:r.id,head:r.head_sha,job:j.id,conclusion:j.conclusion,recovery:context.sha},null,2));\n      - name: Retrieve original artifact without executing its contents\n        uses: actions/download-artifact@v4\n        with:\n          artifact-ids: '13895866598'\n          run-id: '43109351972'\n          repository: Jagarex-lab/nachtsiegel-app\n          github-token: ${{ github.token }}\n          path: recovery/untrusted-archive\n      - name: Retain only bounded evidence files\n        shell: python\n        run: |\n          from pathlib import Path\n          import hashlib,json,shutil\n          source=Path('recovery/untrusted-archive')\n          destination=Path('recovery/compact/extracted')\n          rows=[]; total=0; runtime=[]\n          for p in source.rglob('*'):\n              if p.is_symlink(): raise SystemExit('symlink in original artifact')\n              if not p.is_file() or p.suffix not in ('.json','.log'): continue\n              size=p.stat().st_size; total+=size\n              if size>16*1024*1024 or total>32*1024*1024: raise SystemExit('evidence bound exceeded')\n              target=destination/p.relative_to(source)\n              target.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(p,target)\n              rows.append({'path':str(p.relative_to(source)),'bytes':size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()})\n              if p.name=='orafold-runtime-qa-runtime.log': runtime.append(p)\n          if len(runtime)!=1: raise SystemExit('missing/ambiguous original runtime log')\n          log=runtime[0].read_text(errors='replace')\n          print('ORIGINAL NATIVE RUNTIME LOG:')\n          print(log[-48000:])\n          Path('recovery/compact/extraction.json').write_text(json.dumps({'files':rows,'bytes':total,'binary_execution':False},indent=2))\n      - name: Preserve original compact failure evidence\n        if: always()\n        uses: actions/upload-artifact@v4\n        with:\n          name: native-original-ada9-failure-evidence\n          path: recovery/compact/\n          if-no-files-found: error\n          retention-days: 30",
+      "secured_evidence": {
+        "run_id": 43111438143,
+        "artifact_id": 13896451760,
+        "artifact_name": "native-original-ada9-failure-evidence",
+        "bytes": 262491,
+        "created_at": "2026-11-11T22:24:27Z",
+        "github_expires_at": "2026-12-11T22:24:26Z",
+        "archive": "native-original-ada9-failure-evidence.zip",
+        "inventory": "native-original-ada9-failure-evidence-inventory.json",
+        "sha256": "95877df888e4b5a129a5bada8fa8032b06e7809623809acb93dff905ffec9bfc",
+        "digest_verified": true,
+        "execution_of_archived_content": false
+      }
+    },
+    {
+      "branch": "security/pages-release-gate",
+      "head": "dadb8471eaea8decc182792f26e5083e2100a4b6",
+      "behind": 235,
+      "ahead": 0,
+      "merge_base": "dadb8471eaea8decc182792f26e5083e2100a4b6",
+      "tree": "b9bc299cb77c72a13c1faaf2f3a2b74a22e92da2",
+      "pull_requests": [
+        {
+          "number": 6,
+          "state": "closed",
+          "merged_at": "2026-11-10T06:20:09Z",
+          "head_sha": "dadb8471eaea8decc182792f26e5083e2100a4b6",
+          "merge_commit_sha": "faea1cc931296fbd59d770b0e05bc532430dba1b",
+          "title": "Separate CI from explicitly approved protected Pages releases"
+        }
+      ],
+      "unique_commits": [],
+      "head_subject": "Record Alpha release authorization and enforced pre-merge settings blocker",
+      "ancestral_to_develop": true,
+      "open_pr": null,
+      "classification": "redundant_integrated_ancestor",
+      "unique_content": "No head-only commits: branch head is an exact ancestor of current develop. Later develop differences are subsequent integration and improvements, not unmerged branch content.",
+      "recommendation": "Archive-eligible integrated historical branch; keep immutable head SHA/PR record in this audit before any separately authorized deletion.",
+      "blocker": null,
+      "secured_followup": "Recheck branch head and ancestry against current develop immediately before any later archival."
+    }
+  ],
+  "branch_coverage": {
+    "branches": 38,
+    "prs_total": 30,
+    "prs_open": 7,
+    "prs_closed_merged": 23,
+    "prs_closed_unmerged": 0,
+    "open_pr_numbers": [
+      4,
+      5,
+      7,
+      11,
+      14,
+      15,
+      26
+    ],
+    "non_open_pr_branches": 31,
+    "non_open_pr_development_branches_excluding_main_develop": 29
+  },
+  "branch_conclusions": {
+    "retained_baselines": 2,
+    "open_pr_separate_audit": 7,
+    "archive_eligible_ancestral_development_heads": 27,
+    "archive_eligible_content_equivalent_lore_head": 1,
+    "unintegrated_product_changes_in_non_open_pr_branches": 0,
+    "unique_forensic_workflow_branch_archive_eligible_evidence_secured": 1
+  },
+  "lore_content_equivalence": [
+    {
+      "path": "data/lore/card-concepts.json",
+      "branch_blob": "c3f8fd42633283d1409f6399da1b2f68823780c6",
+      "develop_blob": "c3f8fd42633283d1409f6399da1b2f68823780c6",
+      "equal": true
+    },
+    {
+      "path": "data/lore/card-families.json",
+      "branch_blob": "6570972408185016215032dbfd44b4c28bcbcece",
+      "develop_blob": "6570972408185016215032dbfd44b4c28bcbcece",
+      "equal": true
+    },
+    {
+      "path": "data/lore/characters.json",
+      "branch_blob": "f3779a41c18287e869960599db3de4467cb65eae",
+      "develop_blob": "f3779a41c18287e869960599db3de4467cb65eae",
+      "equal": true
+    },
+    {
+      "path": "data/lore/expansion-roadmap.json",
+      "branch_blob": "2593096682057d712268800d05475ea654f4f77a",
+      "develop_blob": "2593096682057d712268800d05475ea654f4f77a",
+      "equal": true
+    },
+    {
+      "path": "data/lore/locations.json",
+      "branch_blob": "d5aca9d02332395598ab08ebff462211da7258ee",
+      "develop_blob": "d5aca9d02332395598ab08ebff462211da7258ee",
+      "equal": true
+    },
+    {
+      "path": "data/lore/organizations.json",
+      "branch_blob": "16c48b67a4942a79f65b209f81fe141cee8af1e7",
+      "develop_blob": "16c48b67a4942a79f65b209f81fe141cee8af1e7",
+      "equal": true
+    },
+    {
+      "path": "data/lore/timeline.json",
+      "branch_blob": "0b993af36c3fb3c7d633025bd8813bee99d3c87a",
+      "develop_blob": "0b993af36c3fb3c7d633025bd8813bee99d3c87a",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/01-world-foundation.md",
+      "branch_blob": "3f5d3a08746c3c13e3ed02356704bac2df7f7c7e",
+      "develop_blob": "3f5d3a08746c3c13e3ed02356704bac2df7f7c7e",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/02-causality-and-magic.md",
+      "branch_blob": "bb1d51dcf2792a7cf8f882aeb200beb6170d4067",
+      "develop_blob": "bb1d51dcf2792a7cf8f882aeb200beb6170d4067",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/03-history-and-timeline.md",
+      "branch_blob": "3dd5f67e87411fc79fb057505bea34d21c582c99",
+      "develop_blob": "3dd5f67e87411fc79fb057505bea34d21c582c99",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/04-geography-and-regions.md",
+      "branch_blob": "bf61ebb89251daaed4e5d812eb2688aa68e04659",
+      "develop_blob": "bf61ebb89251daaed4e5d812eb2688aa68e04659",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/05-cultures-and-societies.md",
+      "branch_blob": "7283229a2f43e6c1866f2677509d35af1de6ecfc",
+      "develop_blob": "7283229a2f43e6c1866f2677509d35af1de6ecfc",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/06-four-powers.md",
+      "branch_blob": "a4809ade5f58fd6768fe850e47a96da980b88d77",
+      "develop_blob": "a4809ade5f58fd6768fe850e47a96da980b88d77",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/07-organizations.md",
+      "branch_blob": "82f8b3a60dff72924014112933247c15bf2ab951",
+      "develop_blob": "82f8b3a60dff72924014112933247c15bf2ab951",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/08-character-bible.md",
+      "branch_blob": "c738a462ebbcc9bc29ace65c6bab8bf98cd3b333",
+      "develop_blob": "c738a462ebbcc9bc29ace65c6bab8bf98cd3b333",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/09-eira-and-mysteries.md",
+      "branch_blob": "cac001fe3e026a95fa34a25cd6c3394ef18d8564",
+      "develop_blob": "cac001fe3e026a95fa34a25cd6c3394ef18d8564",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/10-main-story.md",
+      "branch_blob": "5d4abe019d5bd24930a2990c483a5b420c2c15dc",
+      "develop_blob": "5d4abe019d5bd24930a2990c483a5b420c2c15dc",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/11-first-campaign.md",
+      "branch_blob": "9a0a88e5c6fd582bae1d97f863131e76e40b4278",
+      "develop_blob": "9a0a88e5c6fd582bae1d97f863131e76e40b4278",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/12-creatures-and-species.md",
+      "branch_blob": "de3398b5d4a568e9f8fca84ab5d5f4ac8d9c51f9",
+      "develop_blob": "de3398b5d4a568e9f8fca84ab5d5f4ac8d9c51f9",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/13-card-lore-guidelines.md",
+      "branch_blob": "e5854b5587ecf28d228e47bad99e116d7b34e553",
+      "develop_blob": "e5854b5587ecf28d228e47bad99e116d7b34e553",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/14-future-expansions.md",
+      "branch_blob": "3fd7839a95052ed15938824c25bcaa303e8a67bb",
+      "develop_blob": "3fd7839a95052ed15938824c25bcaa303e8a67bb",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/15-continuity-audit.md",
+      "branch_blob": "64456650fafea8a96b6fa0ccad9a9e0053af7a21",
+      "develop_blob": "64456650fafea8a96b6fa0ccad9a9e0053af7a21",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/16-originality-review.md",
+      "branch_blob": "2e6c6c5176033525afea1aa9538ce9267c16bc9e",
+      "develop_blob": "2e6c6c5176033525afea1aa9538ce9267c16bc9e",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/17-decision-register.md",
+      "branch_blob": "5989c5b4b242db97ff83845f86437122ee0fce41",
+      "develop_blob": "5989c5b4b242db97ff83845f86437122ee0fce41",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/18-implementation-and-qa.md",
+      "branch_blob": "37a00c22b15d9394ba1b24acfe514e8491045003",
+      "develop_blob": "37a00c22b15d9394ba1b24acfe514e8491045003",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/19-authorial-truth-and-mechanism.md",
+      "branch_blob": "f216e4c2cfeef3095c8fff576b5e8ed188f04ffb",
+      "develop_blob": "f216e4c2cfeef3095c8fff576b5e8ed188f04ffb",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/20-world-and-card-production-framework.md",
+      "branch_blob": "ba7d5dfed4595e0e50c38944cfbbf7a75cb19439",
+      "develop_blob": "ba7d5dfed4595e0e50c38944cfbbf7a75cb19439",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/21-story-beats-and-clue-ledger.md",
+      "branch_blob": "840f246deb4bd0348a855f31182a578acf05694a",
+      "develop_blob": "840f246deb4bd0348a855f31182a578acf05694a",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/22-commercial-readiness.md",
+      "branch_blob": "6307ee484e8fcfe623260d4e5ce4db3318ca4b3d",
+      "develop_blob": "6307ee484e8fcfe623260d4e5ce4db3318ca4b3d",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/MASTER-WORK-ORDER.md",
+      "branch_blob": "6f403b376f9f7ff5c55a84a053120c302ee0551a",
+      "develop_blob": "6f403b376f9f7ff5c55a84a053120c302ee0551a",
+      "equal": true
+    },
+    {
+      "path": "docs/lore/README.md",
+      "branch_blob": "0ac2d3de4696c55cd36787701efea4c665806f7f",
+      "develop_blob": "0ac2d3de4696c55cd36787701efea4c665806f7f",
+      "equal": true
+    }
+  ],
+  "workflows": {
+    "summary": {
+      "executable_pinned_workflows": 11,
+      "registry_active_workflows": 13,
+      "publisher_count": 1,
+      "required_top_level_suites": 7,
+      "successful_required_jobs": 29,
+      "publisher_events_for_pinned_sha": 7,
+      "actual_successful_publishes_for_pinned_sha": 1,
+      "no_op_publisher_events_for_pinned_sha": 6
+    },
+    "classifications": [
+      {
+        "path": ".github/workflows/alpha-qa.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required QA suite",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/alpha03-integration-qa.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required reusable QA",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/audio-qa.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required reusable QA",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/campaign-orafold-qa.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required QA suite",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/economy-qa.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required QA suite",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/legacy-foundations.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required QA suite",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/native-evidence-recovery.yml",
+        "present_on_pinned_develop": false,
+        "classification": "completed branch-only forensic workflow",
+        "recommendation": "archive eligible after durable evidence retention and ref recheck; do not integrate"
+      },
+      {
+        "path": ".github/workflows/native-platform-qa.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required reusable QA",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/online-qa.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required QA suite",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/pages-release.yml",
+        "present_on_pinned_develop": true,
+        "classification": "sole publisher",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/production-content.yml",
+        "present_on_pinned_develop": false,
+        "classification": "historical branch-only authoring QA",
+        "recommendation": "archive registry/history with superseded branch; do not add publisher or restore workflow solely for cleanup"
+      },
+      {
+        "path": ".github/workflows/release-safety.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required QA suite",
+        "recommendation": "retain"
+      },
+      {
+        "path": ".github/workflows/web-preview.yml",
+        "present_on_pinned_develop": true,
+        "classification": "required QA suite",
+        "recommendation": "retain"
+      }
+    ],
+    "exact_baseline_qa": [
+      {
+        "path": ".github/workflows/alpha-qa.yml",
+        "run_id": 44243912902,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+        "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912902",
+        "jobs": [
+          {
+            "id": 134598112864,
+            "name": "alpha-playable",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912902/job/134598112864"
+          },
+          {
+            "id": 134598113116,
+            "name": "balance-audit",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912902/job/134598113116"
+          },
+          {
+            "id": 134606972618,
+            "name": "browser (webkit)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912902/job/134606972618"
+          },
+          {
+            "id": 134606972627,
+            "name": "browser (chromium)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912902/job/134606972627"
+          }
+        ]
+      },
+      {
+        "path": ".github/workflows/campaign-orafold-qa.yml",
+        "run_id": 44243913060,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+        "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243913060",
+        "jobs": [
+          {
+            "id": 134598113729,
+            "name": "isolated-campaign",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243913060/job/134598113729"
+          }
+        ]
+      },
+      {
+        "path": ".github/workflows/economy-qa.yml",
+        "run_id": 44243912935,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+        "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912935",
+        "jobs": [
+          {
+            "id": 134598112767,
+            "name": "economy",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912935/job/134598112767"
+          }
+        ]
+      },
+      {
+        "path": ".github/workflows/legacy-foundations.yml",
+        "run_id": 44243912947,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+        "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912947",
+        "jobs": [
+          {
+            "id": 134598112647,
+            "name": "pinned-reference-and-catalog",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912947/job/134598112647"
+          }
+        ]
+      },
+      {
+        "path": ".github/workflows/online-qa.yml",
+        "run_id": 44243912927,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+        "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912927",
+        "jobs": [
+          {
+            "id": 134598112602,
+            "name": "online / integrated-modules",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912927/job/134598112602"
+          }
+        ]
+      },
+      {
+        "path": ".github/workflows/release-safety.yml",
+        "run_id": 44243912918,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+        "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912918",
+        "jobs": [
+          {
+            "id": 134598112501,
+            "name": "release-safety",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912918/job/134598112501"
+          }
+        ]
+      },
+      {
+        "path": ".github/workflows/web-preview.yml",
+        "run_id": 44243912891,
+        "run_attempt": 1,
+        "status": "completed",
+        "conclusion": "success",
+        "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+        "url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891",
+        "jobs": [
+          {
+            "id": 134598112870,
+            "name": "production-art-native-package",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598112870"
+          },
+          {
+            "id": 134598113020,
+            "name": "production-balance (2)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113020"
+          },
+          {
+            "id": 134598113112,
+            "name": "production-full-pool-coverage",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113112"
+          },
+          {
+            "id": 134598113129,
+            "name": "production-balance (3)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113129"
+          },
+          {
+            "id": 134598113146,
+            "name": "test-and-export",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113146"
+          },
+          {
+            "id": 134598113160,
+            "name": "production-resources",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113160"
+          },
+          {
+            "id": 134598113185,
+            "name": "premium-block-balance",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113185"
+          },
+          {
+            "id": 134598113215,
+            "name": "production-audio / audio",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113215"
+          },
+          {
+            "id": 134598113224,
+            "name": "alpha03-integration / integrated-modules",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113224"
+          },
+          {
+            "id": 134598113239,
+            "name": "production-balance (1)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113239"
+          },
+          {
+            "id": 134598113301,
+            "name": "production-balance (0)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113301"
+          },
+          {
+            "id": 134598113303,
+            "name": "native-platforms / linux-android",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113303"
+          },
+          {
+            "id": 134598113401,
+            "name": "native-platforms / windows",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134598113401"
+          },
+          {
+            "id": 134599746060,
+            "name": "production-balance-aggregate",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134599746060"
+          },
+          {
+            "id": 134606368543,
+            "name": "browser (webkit)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134606368543"
+          },
+          {
+            "id": 134606368590,
+            "name": "premium-browser (chromium)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134606368590"
+          },
+          {
+            "id": 134606368603,
+            "name": "premium-browser (webkit)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134606368603"
+          },
+          {
+            "id": 134606368629,
+            "name": "browser (chromium)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134606368629"
+          },
+          {
+            "id": 134606368631,
+            "name": "production-art-browser (chromium)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134606368631"
+          },
+          {
+            "id": 134606368674,
+            "name": "production-art-browser (webkit)",
+            "head_sha": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+            "conclusion": "success",
+            "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44243912891/job/134606368674"
+          }
+        ]
+      }
+    ],
+    "successful_publisher": 44250211904,
+    "settings": {
+      "rulesets": [],
+      "pages": {
+        "url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/pages",
+        "status": null,
+        "cname": null,
+        "custom_404": false,
+        "html_url": "https://jagarex-lab.github.io/nachtsiegel-app/",
+        "build_type": "workflow",
+        "source": {
+          "branch": "main",
+          "path": "/"
+        },
+        "public": true,
+        "protected_domain_state": null,
+        "pending_domain_unverified_at": null,
+        "https_enforced": true
+      },
+      "github_pages_environment": {
+        "id": 26184506659,
+        "node_id": "EN_kwDOVh7KYc8AAAAGGLfdIw",
+        "name": "github-pages",
+        "url": "https://api.github.com/repos/Jagarex-lab/nachtsiegel-app/environments/github-pages",
+        "html_url": "https://github.com/Jagarex-lab/nachtsiegel-app/deployments/activity_log?environments_filter=github-pages",
+        "created_at": "2026-11-03T21:59:56Z",
+        "updated_at": "2026-11-03T21:59:56Z",
+        "can_admins_bypass": true,
+        "protection_rules": [
+          {
+            "id": 71163406,
+            "node_id": "GA_kwDOVh7KYc4EPd4O",
+            "type": "branch_policy"
+          }
+        ],
+        "deployment_branch_policy": {
+          "protected_branches": false,
+          "custom_branch_policies": true
+        }
+      },
+      "environment_branch_policies": {
+        "total_count": 2,
+        "branch_policies": [
+          {
+            "id": 65417755,
+            "node_id": "MDE2OkdhdGVCcmFuY2hQb2xpY3k2NTQxNzc1NQ==",
+            "name": "develop",
+            "type": "branch"
+          },
+          {
+            "id": 65416533,
+            "node_id": "MDE2OkdhdGVCcmFuY2hQb2xpY3k2NTQxNjUzMw==",
+            "name": "main",
+            "type": "branch"
+          }
+        ]
+      },
+      "develop_protection_read": {
+        "endpoint": "branches/develop/protection",
+        "error": "HTTP Error 403: Forbidden"
+      },
+      "interpretation": "Pages build_type=workflow, so source.branch=main is dormant branch-build metadata. Environment permits develop and main; active publisher independently restricts to develop. No settings edits warranted. Rulesets are empty; classic branch protection details remain unreadable through public unauthenticated API (403), so this audit makes no claim that branch protection is absent."
+    },
+    "limitations": [
+      "No tests were run and no source/settings changes were made.",
+      "API workflow registry state=active does not imply file exists on default branch; registry and pinned tree were compared explicitly.",
+      "Historical run totals are GitHub API totals, not a claim that every historic run has been inspected.",
+      "Classic develop branch-protection GET returned403; the audit cannot assess protected-branch rules in that endpoint."
+    ]
+  },
+  "focused_current_source_probes": [
+    {
+      "suite": "tests/card_system_trigger_bridge.gd",
+      "assertions": 506,
+      "failures": 0,
+      "log": "work/consolidation/trigger-bridge-exact.log"
+    },
+    {
+      "suite": "tests/production_engine.gd",
+      "assertions": 4425,
+      "failures": 0,
+      "ability_fixtures": 940,
+      "accepted_real_card_commands": 1100,
+      "automatic_hooks": "all16 for hero and enemy",
+      "log": "work/consolidation/production-engine-exact.log",
+      "limits": "Arranged prerequisites, not1100complete games"
+    },
+    {
+      "suite": "umleitung_repro.gd",
+      "assertions": 21,
+      "failures": 0,
+      "log": "work/consolidation/umleitung-repro.log"
+    }
+  ],
+  "umleitung": {
+    "original_gap": "Archived alpha-55-v1 has only Stillwatch oa-stillwatch-e01 as own-delay source, so legal Ninth+neutral decks cannot satisfy oa-ninth-e01 redirect. This old limitation remains documented in docs/master550/{MILESTONE_REPORT,RESOURCE_EXPERIMENTS,TEST_DECKS}.md and tests/master550_test_decks.gd.",
+    "current_status": "Resolved in existing production-550-v1 without changing Umleitung, factions, deck rules, or costs. Native Umleitung remains in550cards; unchanged Ninth starter contains3xof-ninth-001,2xoa-ninth-e01,plus existing Ninth delay impulses.",
+    "proof": [
+      {
+        "path": "data/production/cards.json",
+        "blob": "3ad4863e10c0c3144e98f09650a728020952736f",
+        "finding": "oa-ninth-e01 unchanged native redirect; existing of-ninth-001 on_summon delay_damage amount2 turn_changes2;35Ninth generic delay abilities present."
+      },
+      {
+        "path": "scripts/card_system/production_model.gd",
+        "blob": "3a90977a7a11875d7d0f2149e91479725bef4391",
+        "functions": "play_support L128-133; play L156-165; production_apply delay_damage L499-504",
+        "finding": "Retained native cards delegate to original validation/dispatch; actual generic delay appends owned scheduled hit that native redirect can find."
+      },
+      {
+        "path": "scripts/alpha/model.gd",
+        "blob": "7d8e65845ba31bd815649ca32643ef8eb59c9407",
+        "functions": "play_support L165-169; _resolve_event_effect L209-211",
+        "finding": "Rejects absent own delayed event; redirects oldest owner hit only, preserving time/source."
+      }
+    ],
+    "fresh_fixture": {
+      "path": "work/consolidation/exact-engine-fixture/umleitung_repro.gd",
+      "log": "work/consolidation/umleitung-repro.log",
+      "assertions": 21,
+      "failures": 0,
+      "result": "Real execute(play) of of-ninth-001 creates own hit then execute(play) of Umleitung changes only path1→4. Due13,power2,owner,creatureUID retained;energy8→6;both sides.",
+      "limits": "Explicit main-phase and hand boundary fixture with actual current legal starter; no complete match/UI claim."
+    },
+    "issue_needed": false,
+    "archived_pool_scope": "Do not silently alter archived55card pool to solve a production gap already resolved."
+  },
+  "new_guard": {
+    "issue": "https://github.com/Jagarex-lab/nachtsiegel-app/issues/31",
+    "scope": "Adapt useful canonical reviewed-brief drift guard to existing production art pipeline; no old PR merge",
+    "local_validation_reported_by_root": {
+      "focused_tests": 38,
+      "test_groups": [
+        19,
+        4,
+        15
+      ],
+      "full_cli": {
+        "final": 550,
+        "missing": 0,
+        "orphan": 0,
+        "commercially_cleared": 0
+      },
+      "runtime_art_manifest_unchanged": true,
+      "removing_only_new_technical_baseline_and_reviewed_brief_fields_reproduces_old_source_blob": "80b55db",
+      "fresh_review_claimed": false
+    },
+    "reviewed_change_blobs": {
+      "tools/production/art_manifest.py": "c411933a161a7fb55509a83af1b52af2fabfe111",
+      "data/production/art_sources.json": "65ed10983dd41efb48c2649b545f20d25c84a679",
+      "tests/production_art_manifest_test.py": "a23bab901914143d3579f07310fad153dbb969ea",
+      "tests/production_art_contact_review_test.py": "0e99aa9e6368bb1e153ddf080aa43dba2a616b4f"
+    },
+    "new_maintenance_head_ci": "pending; oldbaselineorhistoricalPRCIcannotcertifynewhead",
+    "constraints": "No rights/status/asset/card/lore/economy/gameplay changes; explicit initializer pins three original blobs and refuses edited-current refresh; --check stays read-only",
+    "implementation_status": "Locally fixed and independently reviewed; final maintenance-head CI pending"
+  },
+  "preservation": {
+    "manifest": "history/archive-manifest.json",
+    "native_zip_inventory": "history/native-ada9/native-original-ada9-failure-evidence-inventory.json",
+    "pilot_provenance": "history/pr15-pilots/pilot-provenance.json",
+    "baseline_public_proof": "history/baseline-public-6c99/final-public-proof.json",
+    "source_branches_retained": true,
+    "branch_deletions_performed": false
+  },
+  "final_maintenance_validation": {
+    "pr_url": null,
+    "head_sha": null,
+    "merge_sha": null,
+    "exact_head_ci": "pending",
+    "post_merge_qa_29jobs": "pending",
+    "public_verification": "pending",
+    "authoritative_final_record": "Maintenance PR final comment and public release-evidence.json/build-info.json once actual results exist; no self-referential source commit SHA claimed"
+  },
+  "source_audit_hashes": {
+    "legacy-audit.json": "66561b7a26c97474dfb25f41af665f3a118f81f4c12c98cbbc09e56021da40f1",
+    "triggers-art-audit.json": "36cadff323fac1bab84fbc2f401434a77a6d5fc5f701c53aa252d7f700504047",
+    "audio-release-audit.json": "906b4b84e13280761ef6d8d080f116c140513f03fe90c404257a67bd42bedebd",
+    "audio-release-blobs.json": "3ad57b612ebe0eeceebc8f223e378f76b70658b87f071d3b729e61f4f988ec45",
+    "branches-workflows-audit.json": "420a10f972490d5135981ab461111596723aa4154292c1cd935f55a55658cc94",
+    "workflow-hygiene-audit.json": "77b21e1ad410c776164f70ba634b3c334cb692628bd930f605df65a8b3f30ef9",
+    "raw-pr-snapshot.json": "38a3ebaf292f17016fdf3baa63e9bcdf451872e29353293a2e16e9a8be0882a4",
+    "closure-actions-2.json": "f491460bdc3648120b9259e67b0567c898e45fc0be821035109547826c9d40d1",
+    "closure-actions-final.json": "c5ca045f3f05230da1b62fc4aab390dc37d4d55fb51851ccf13be3f36aef237c"
+  },
+  "report_file": "PR_CONSOLIDATION_REPORT.md",
+  "branch_coverage_scope": "Initial complete38branch/30PR inventory before maintenance closures; initial history counts remain a verifiable snapshot.",
+  "final_original_pr_outcome": {
+    "closed_unmerged": 7,
+    "open": 0,
+    "remaining_original_blockers": 0,
+    "decision_C": 5,
+    "decision_D": 2,
+    "old_pr_merges": 0,
+    "old_pr_repairs": 0,
+    "source_branch_deletions": 0,
+    "replacement_issue": 31,
+    "replacement_status": "Locally fixed in existing pipeline; final maintenance-head and post-merge QA/public verification pending"
+  }
+}

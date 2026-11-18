@@ -1,0 +1,30 @@
+{
+  "attempts": [
+    {
+      "status": "failed_before_gameplay",
+      "error_codes": [
+        "ENETUNREACH",
+        "ECONNREFUSED"
+      ],
+      "cause": "Playwright API request did not use required existing environment proxy",
+      "source": "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f",
+      "retry_adjustment": "Pass existing HTTPS_PROXY through supported QA_PROXY; no test/code/timebound changes",
+      "physical_device": false,
+      "recorded_at": "2026-11-18T06:30:18.841866+00:00",
+      "attempt": "attempt1-direct-network"
+    },
+    {
+      "status": "failed_before_gameplay",
+      "error": "ERR_CERT_AUTHORITY_INVALID",
+      "cause": "Chromium legacy NSS lacked the current already-system-trusted managed proxy CA",
+      "scope": "No game action executed; TLS validation preserved",
+      "physical_device": false,
+      "attempt": "attempt2-proxy-ca"
+    }
+  ],
+  "final_environment_result": {
+    "tls_verification_disabled": false,
+    "temporary_already_system_trusted_ca_restored": true,
+    "private_nss_database_metadata_archived": false
+  }
+}
