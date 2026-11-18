@@ -1,0 +1,191 @@
+{
+  "run_id": 44342790300,
+  "job_id": 134937011046,
+  "head": "119ceb09c4e6344a70e1dab38e9833a93c38e2aa",
+  "source_log": "work/consolidation/pr34-postmerge-alpha-cancelled.log",
+  "annotation": "The job has exceeded the maximum execution time of 45m0s",
+  "runner_start": "2026-11-18T16:03:51.5432124Z",
+  "cancellation": "2026-11-18T16:49:01.3635175Z",
+  "elapsed_seconds": 2709.820305,
+  "last_success_summary": {
+    "timestamp": "2026-11-18T16:47:57.2522733Z",
+    "message": "PRODUCTION SELECTOR TOUCH: 23 assertions, 0 failures; scroll 33/0/33",
+    "seconds_before_cancel": 64.111244
+  },
+  "next_native_suite": "production_ui",
+  "unchanged_native_suite_deadline_seconds": 600,
+  "timed_step_minutes": {
+    "checkout": 2.74,
+    "initial_import": 8.5,
+    "legacy": 2.06,
+    "alpha": 7.23,
+    "master550": 9.76,
+    "production_before_outer_cancel": 14.03
+  },
+  "remaining": [
+    "production_ui",
+    "production_short_landscape",
+    "production_burst_ui",
+    "production finishers",
+    "production storage",
+    "production art delivery/preview/cache/render gates",
+    "archive desktop regression",
+    "release Python regression",
+    "Alpha/archive/legacy exports",
+    "candidate package and build artifact upload"
+  ],
+  "conclusion": "45-minute outer job deadline interrupted ongoing successful suite progression; no evidence this current suite reached its own 600-second limit. Completion runtime beyond45minutes is unmeasured.",
+  "same_tree_success": {
+    "head": "c45cb968ef8d990a931ee7639ec60e0f6d70d85e",
+    "tree": "b94a4f44eecfc4cf80958c66225a2ad0fd2b097d",
+    "run_id": 44330262966,
+    "job_id": 134892693236,
+    "started_at": "2026-11-18T14:59:09Z",
+    "completed_at": "2026-11-18T15:22:09Z",
+    "duration_minutes": 23,
+    "last_matching_selector_summary": "2026-11-18T15:09:14.4789004Z PRODUCTION SELECTOR TOUCH: 23 assertions, 0 failures; scroll 33/0/33",
+    "following_ui_summary": "2026-11-18T15:09:40.8132731Z PRODUCTION UI: 5507 assertions, 0 failures;550-entry layoutfixture, boundedpagination, all550actualcompactnames/values,currentattack/status,reducedmotion feedback",
+    "minutes_from_selector_to_job_end": 12.91,
+    "log_file": "/tmp/orafold-alpha-c45-success.log",
+    "log_sha256": "07412e26822c0a6d62c1acb9a30dc3f060e309f987f6013d67ee6dbdb79b3b6d"
+  },
+  "minimal_fix": {
+    "old_outer_minutes": 45,
+    "new_outer_minutes": 75,
+    "all_other_workflow_semantics_identical": true,
+    "workflow_blob": "655c9d9116d46e1925385ddefe40e1b2256e078b",
+    "scope": "alpha-playable outer job timeout only; all steps, suite/process/match/action limits, browser budgets, assertions and release gates unchanged",
+    "limitation": "75minutes provides bounded orchestration headroom, not a guarantee of completion. A future suite can still fail at its existing own limit. Worst-case job occupancy increases by30minutes."
+  },
+  "github_annotations": [
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/Jagarex-lab/nachtsiegel-app/blob/119ceb09c4e6344a70e1dab38e9833a93c38e2aa/.github",
+      "start_line": 1,
+      "start_column": null,
+      "end_line": 1,
+      "end_column": null,
+      "annotation_level": "failure",
+      "title": "",
+      "message": "The job has exceeded the maximum execution time of 45m0s",
+      "raw_details": ""
+    },
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/Jagarex-lab/nachtsiegel-app/blob/119ceb09c4e6344a70e1dab38e9833a93c38e2aa/.github",
+      "start_line": 6,
+      "start_column": null,
+      "end_line": 6,
+      "end_column": null,
+      "annotation_level": "warning",
+      "title": "",
+      "message": "Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-node@v4, actions/setup-python@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/",
+      "raw_details": ""
+    },
+    {
+      "path": ".github",
+      "blob_href": "https://github.com/Jagarex-lab/nachtsiegel-app/blob/119ceb09c4e6344a70e1dab38e9833a93c38e2aa/.github",
+      "start_line": 277,
+      "start_column": null,
+      "end_line": 277,
+      "end_column": null,
+      "annotation_level": "failure",
+      "title": "",
+      "message": "The operation was canceled.",
+      "raw_details": ""
+    }
+  ],
+  "raw_decoded_job_log": {
+    "archive": "alpha-native-job-log.zip",
+    "archive_bytes": 62146,
+    "archive_sha256": "f7a62ef685344c50dbf2a028c48c4335dbb0a3cc4f07626d1c2c0c923c0d8d21",
+    "decoded_bytes": 529388,
+    "decoded_sha256": "3c462670c5232d7c28dc654861987cfb916ae126b5374d9e9fed4c890cf0a4ef",
+    "bounded_readonly": true,
+    "credential_pattern_scan": "no matches; not an exhaustive clearance claim"
+  },
+  "native_artifact": {
+    "id": 14448616868,
+    "size": 19138799,
+    "sha256": "871e9ffb46d7cf6bac022720a581427a615e1cd596de3344e34134c54b8ce5a1",
+    "downloaded": false,
+    "reason": "Full decoded cancelled-job log and original exact annotations secured; large preceding-render capture artifact remains referenced, not executed."
+  },
+  "current_source_result": {
+    "main": "all20success",
+    "other_standalone_suites": "all5success",
+    "alpha_balance_audit": "success",
+    "alpha_native": "cancelled at outer45m",
+    "alpha_browser_dependency": "one unexpanded skipped placeholder, neither expected engine passed",
+    "total_successful_job_entries": 26,
+    "required_full_job_total": 29,
+    "release_approved": false
+  },
+  "local_contracts": {
+    "ci": {
+      "count": 54,
+      "result": "pass",
+      "sha256": "98eed8d64ca6d6544ddf5d86931970725a66b6de6e61d09d78980f0491d728fb",
+      "summary": [
+        "Supported regular Ubuntu mirrorlist unavailable; original failure remains.",
+        "ok",
+        "test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression (test_mirror_format.MirrorFormat.test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression) ... ok",
+        "test_official_mirrors_use_required_tab_delimited_metadata (test_mirror_format.MirrorFormat.test_official_mirrors_use_required_tab_delimited_metadata) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 54 tests in 3.318s",
+        "",
+        "OK"
+      ]
+    },
+    "release_python": {
+      "count": 50,
+      "result": "pass",
+      "sha256": "127b16293297ee2739f480f8866403a29faf0e75943d4b740c262352804b1119",
+      "summary": [
+        "test_solo_alpha_and_existing_environment_rules (test_safety.Safety.test_solo_alpha_and_existing_environment_rules) ... ok",
+        "test_tested_artifact_rechecks_and_public_evidence_hash_are_wired (test_safety.Safety.test_tested_artifact_rechecks_and_public_evidence_hash_are_wired) ... ok",
+        "test_untrusted_events_are_rejected_before_any_checkout (test_safety.Safety.test_untrusted_events_are_rejected_before_any_checkout) ... ok",
+        "test_workflow_privilege_boundaries (test_safety.Safety.test_workflow_privilege_boundaries) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 50 tests in 0.610s",
+        "",
+        "OK"
+      ]
+    },
+    "node": {
+      "count": 88,
+      "result": "pass",
+      "sha256": "49623708fe096252b0a53004d1a9b415c4980983bca29c0f985a00b7d0ec3cf0",
+      "summary": [
+        "\u2714 network errors reject only the requested navigation or metadata fetch (0.79484ms)",
+        "\u2139 tests 88",
+        "\u2139 suites 0",
+        "\u2139 pass 88",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 968.882811"
+      ]
+    }
+  },
+  "review": "Independent workflow review approved; parsed old/new YAML identical after substituting only jobs.alpha-playable.timeout-minutes45->75; every inner test/process/action/match limit remains unchanged",
+  "followup_pr": 35,
+  "followup_issue": 33,
+  "final_receipt": "https://github.com/Jagarex-lab/nachtsiegel-app/pull/35#issuecomment-6985608488",
+  "actual_publisher_rejection": {
+    "run": 44354187198,
+    "preflight_job": 134977710254,
+    "step": 3,
+    "result": "failure: Denied: QA not successful: .github/workflows/alpha-qa.yml",
+    "publish_job": 134979033888,
+    "publish_result": "skipped",
+    "verify_public_job": 134979034226,
+    "verify_result": "skipped",
+    "full_decoded_log_sha256": "838b38350238bacc4c7ca17eef219cc9b79a407e2d3ca9be192fda92b040f926",
+    "stdout": "\ufeff2026-11-18T17:02:54.6074032Z Current runner version: '2.338.2'\n2026-11-18T17:02:54.6091614Z ##[group]Runner Image Provisioner\n2026-11-18T17:02:54.6092289Z Hosted Compute Agent\n2026-11-18T17:02:54.6092747Z Version: 20261103.629\n2026-11-18T17:02:54.6093206Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc\n2026-11-18T17:02:54.6093717Z Build Date: 2026-11-03T17:26:59Z\n2026-11-18T17:02:54.6094245Z Worker ID: {d00fe401-ddb3-4b4a-94db-0f4a3a27dced}\n2026-11-18T17:02:54.6094742Z Region: us-west-2\n2026-11-18T17:02:54.6095144Z Cloud: AWS\n2026-11-18T17:02:54.6095524Z ##[endgroup]\n2026-11-18T17:02:54.6096642Z ##[group]Operating System\n2026-11-18T17:02:54.6097118Z Ubuntu\n2026-11-18T17:02:54.6097476Z 24.04.5\n2026-11-18T17:02:54.6097834Z LTS\n2026-11-18T17:02:54.6098212Z ##[endgroup]\n2026-11-18T17:02:54.6098590Z ##[group]Runner Image\n2026-11-18T17:02:54.6099046Z Image: ubuntu-24.04\n2026-11-18T17:02:54.6099434Z Version: 20261111.127.1\n2026-11-18T17:02:54.6100367Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261111.127/images/ubuntu/Ubuntu2404-Readme.md\n2026-11-18T17:02:54.6101439Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261111.127\n2026-11-18T17:02:54.6102112Z ##[endgroup]\n2026-11-18T17:02:54.6103037Z ##[group]GITHUB_TOKEN Permissions\n2026-11-18T17:02:54.6104623Z Actions: read\n2026-11-18T17:02:54.6105014Z Contents: read\n2026-11-18T17:02:54.6105379Z Metadata: read\n2026-11-18T17:02:54.6105779Z Pages: read\n2026-11-18T17:02:54.6106167Z ##[endgroup]\n2026-11-18T17:02:54.6107896Z Secret source: Actions\n2026-11-18T17:02:54.6108563Z Cache mode: write\n2026-11-18T17:02:54.6109038Z Prepare workflow directory\n2026-11-18T17:02:54.6336925Z Prepare all required actions\n2026-11-18T17:02:54.6372874Z Getting action download info\n2026-11-18T17:02:54.9862248Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)\n2026-11-18T17:02:57.5531521Z Complete job name: preflight\n2026-11-18T17:02:57.6206026Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262\n2026-11-18T17:02:57.6207335Z with:\n2026-11-18T17:02:57.6207828Z   ref: 119ceb09c4e6344a70e1dab38e9833a93c38e2aa\n2026-11-18T17:02:57.6208395Z   persist-credentials: false\n2026-11-18T17:02:57.6208941Z   repository: Jagarex-lab/nachtsiegel-app\n2026-11-18T17:02:57.6213273Z   token: ***\n2026-11-18T17:02:57.6213757Z   ssh-strict: true\n2026-11-18T17:02:57.6214467Z   ssh-user: git\n2026-11-18T17:02:57.6215058Z   clean: true\n2026-11-18T17:02:57.6215807Z   sparse-checkout-cone-mode: true\n2026-11-18T17:02:57.6216787Z   fetch-depth: 1\n2026-11-18T17:02:57.6217426Z   fetch-tags: false\n2026-11-18T17:02:57.6218031Z   show-progress: true\n2026-11-18T17:02:57.6218668Z   lfs: false\n2026-11-18T17:02:57.6219254Z   submodules: false\n2026-11-18T17:02:57.6219999Z   set-safe-directory: true\n2026-11-18T17:02:57.6220678Z   allow-unsafe-pr-checkout: false\n2026-11-18T17:02:57.6221931Z ##[endgroup]\n2026-11-18T17:03:00.8388898Z Syncing repository: Jagarex-lab/nachtsiegel-app\n2026-11-18T17:03:00.8390192Z ##[group]Getting Git version info\n2026-11-18T17:03:00.8390689Z Working directory is '/home/runner/work/nachtsiegel-app/nachtsiegel-app'\n2026-11-18T17:03:00.8391347Z [command]/usr/bin/git version\n2026-11-18T17:03:01.1378936Z git version 2.56.1\n2026-11-18T17:03:01.1400054Z ##[endgroup]\n2026-11-18T17:03:01.1404307Z Temporarily overriding HOME='/home/runner/work/_temp/dfe16a74-1907-4fc5-a4c3-fccc35d3b964' before making global git config changes\n2026-11-18T17:03:01.1404990Z Adding repository directory to the temporary git global config as a safe directory\n2026-11-18T17:03:01.1408931Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nachtsiegel-app/nachtsiegel-app\n2026-11-18T17:03:01.2411606Z Deleting the contents of '/home/runner/work/nachtsiegel-app/nachtsiegel-app'\n2026-11-18T17:03:01.2415569Z ##[group]Initializing the repository\n2026-11-18T17:03:01.2419646Z [command]/usr/bin/git init /home/runner/work/nachtsiegel-app/nachtsiegel-app\n2026-11-18T17:03:01.2922900Z hint: Using 'master' as the name for the initial branch. This default branch name\n2026-11-18T17:03:01.2923679Z hint: will change to \"main\" in Git 3.0. To configure the initial branch name\n2026-11-18T17:03:01.2924140Z hint: to use in all of your new repositories, which will suppress this warning,\n2026-11-18T17:03:01.2924521Z hint: call:\n2026-11-18T17:03:01.2924750Z hint:\n2026-11-18T17:03:01.2925043Z hint: \tgit config --global init.defaultBranch <name>\n2026-11-18T17:03:01.2925348Z hint:\n2026-11-18T17:03:01.2925737Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\n2026-11-18T17:03:01.2926270Z hint: 'development'. The just-created branch can be renamed via this command:\n2026-11-18T17:03:01.2926763Z hint:\n2026-11-18T17:03:01.2926977Z hint: \tgit branch -m <name>\n2026-11-18T17:03:01.2927251Z hint:\n2026-11-18T17:03:01.2927566Z hint: Disable this message with \"git config set advice.defaultBranchName false\"\n2026-11-18T17:03:01.2935355Z Initialized empty Git repository in /home/runner/work/nachtsiegel-app/nachtsiegel-app/.git/\n2026-11-18T17:03:01.2942591Z [command]/usr/bin/git remote add origin https://github.com/Jagarex-lab/nachtsiegel-app\n2026-11-18T17:03:01.2991666Z ##[endgroup]\n2026-11-18T17:03:01.2992391Z ##[group]Disabling automatic garbage collection\n2026-11-18T17:03:01.2994819Z [command]/usr/bin/git config --local gc.auto 0\n2026-11-18T17:03:01.3017622Z ##[endgroup]\n2026-11-18T17:03:01.3018245Z ##[group]Setting up auth\n2026-11-18T17:03:01.3022853Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-11-18T17:03:01.3050884Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-11-18T17:03:01.9738905Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-11-18T17:03:01.9764451Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-11-18T17:03:01.9913723Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-11-18T17:03:01.9935911Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-11-18T17:03:02.0081055Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***\n2026-11-18T17:03:02.0105100Z ##[endgroup]\n2026-11-18T17:03:02.0105534Z ##[group]Fetching the repository\n2026-11-18T17:03:02.0115799Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 119ceb09c4e6344a70e1dab38e9833a93c38e2aa\n2026-11-18T17:04:24.8133591Z From https://github.com/Jagarex-lab/nachtsiegel-app\n2026-11-18T17:04:24.8134569Z  * branch            119ceb09c4e6344a70e1dab38e9833a93c38e2aa -> FETCH_HEAD\n2026-11-18T17:04:24.8142044Z ##[endgroup]\n2026-11-18T17:04:24.8142908Z ##[group]Determining the checkout info\n2026-11-18T17:04:24.8143562Z ##[endgroup]\n2026-11-18T17:04:24.8145167Z [command]/usr/bin/git sparse-checkout disable\n2026-11-18T17:04:24.8206266Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig\n2026-11-18T17:04:24.8227821Z ##[group]Checking out the ref\n2026-11-18T17:04:24.8231226Z [command]/usr/bin/git checkout --progress --force 119ceb09c4e6344a70e1dab38e9833a93c38e2aa\n2026-11-18T17:04:25.9141143Z Updating files:  12% (525/4135)\n2026-11-18T17:04:26.1844129Z Updating files:  13% (538/4135)\n2026-11-18T17:04:26.4588168Z Updating files:  14% (579/4135)\n2026-11-18T17:04:26.7158539Z Updating files:  15% (621/4135)\n2026-11-18T17:04:26.8340323Z Updating files:  16% (662/4135)\n2026-11-18T17:04:26.9801082Z Updating files:  16% (679/4135)\n2026-11-18T17:04:27.2688757Z Updating files:  17% (703/4135)\n2026-11-18T17:04:27.5411427Z Updating files:  18% (745/4135)\n2026-11-18T17:04:27.8364984Z Updating files:  19% (786/4135)\n2026-11-18T17:04:28.1311588Z Updating files:  20% (827/4135)\n2026-11-18T17:04:28.4017310Z Updating files:  21% (869/4135)\n2026-11-18T17:04:28.7057387Z Updating files:  22% (910/4135)\n2026-11-18T17:04:28.8340529Z Updating files:  23% (952/4135)\n2026-11-18T17:04:29.0060137Z Updating files:  23% (969/4135)\n2026-11-18T17:04:29.2929261Z Updating files:  24% (993/4135)\n2026-11-18T17:04:29.5926084Z Updating files:  25% (1034/4135)\n2026-11-18T17:04:29.8337518Z Updating files:  26% (1076/4135)\n2026-11-18T17:04:29.8736617Z Updating files:  26% (1111/4135)\n2026-11-18T17:04:30.1377993Z Updating files:  27% (1117/4135)\n2026-11-18T17:04:30.4201140Z Updating files:  28% (1158/4135)\n2026-11-18T17:04:30.7002629Z Updating files:  29% (1200/4135)\n2026-11-18T17:04:30.8369175Z Updating files:  30% (1241/4135)\n2026-11-18T17:04:30.9637783Z Updating files:  30% (1261/4135)\n2026-11-18T17:04:31.2531594Z Updating files:  31% (1282/4135)\n2026-11-18T17:04:31.5538434Z Updating files:  32% (1324/4135)\n2026-11-18T17:04:31.8289755Z Updating files:  33% (1365/4135)\n2026-11-18T17:04:31.8413018Z Updating files:  33% (1403/4135)\n2026-11-18T17:04:32.1321712Z Updating files:  34% (1406/4135)\n2026-11-18T17:04:32.4174623Z Updating files:  35% (1448/4135)\n2026-11-18T17:04:32.4379865Z Updating files:  36% (1489/4135)\n2026-11-18T17:04:32.4631343Z Updating files:  37% (1530/4135)\n2026-11-18T17:04:32.4760783Z Updating files:  38% (1572/4135)\n2026-11-18T17:04:32.4842356Z Updating files:  39% (1613/4135)\n2026-11-18T17:04:32.4934688Z Updating files:  40% (1654/4135)\n2026-11-18T17:04:32.5048588Z Updating files:  41% (1696/4135)\n2026-11-18T17:04:32.5147199Z Updating files:  42% (1737/4135)\n2026-11-18T17:04:32.5212218Z Updating files:  43% (1779/4135)\n2026-11-18T17:04:32.5275772Z Updating files:  44% (1820/4135)\n2026-11-18T17:04:32.5340795Z Updating files:  45% (1861/4135)\n2026-11-18T17:04:32.5401357Z Updating files:  46% (1903/4135)\n2026-11-18T17:04:32.5473510Z Updating files:  47% (1944/4135)\n2026-11-18T17:04:32.5679841Z Updating files:  48% (1985/4135)\n2026-11-18T17:04:32.5965652Z Updating files:  49% (2027/4135)\n2026-11-18T17:04:32.6239668Z Updating files:  50% (2068/4135)\n2026-11-18T17:04:32.6547735Z Updating files:  51% (2109/4135)\n2026-11-18T17:04:32.6848190Z Updating files:  52% (2151/4135)\n2026-11-18T17:04:32.7029309Z Updating files:  53% (2192/4135)\n2026-11-18T17:04:32.7211312Z Updating files:  54% (2233/4135)\n2026-11-18T17:04:32.7361124Z Updating files:  55% (2275/4135)\n2026-11-18T17:04:32.7532031Z Updating files:  56% (2316/4135)\n2026-11-18T17:04:32.7659891Z Updating files:  57% (2357/4135)\n2026-11-18T17:04:32.7889415Z Updating files:  58% (2399/4135)\n2026-11-18T17:04:32.8113347Z Updating files:  59% (2440/4135)\n2026-11-18T17:04:32.8293120Z Updating files:  60% (2481/4135)\n2026-11-18T17:04:32.8343659Z Updating files:  60% (2515/4135)\n2026-11-18T17:04:32.8535092Z Updating files:  61% (2523/4135)\n2026-11-18T17:04:32.8714034Z Updating files:  62% (2564/4135)\n2026-11-18T17:04:32.8742251Z Updating files:  63% (2606/4135)\n2026-11-18T17:04:32.8898150Z Updating files:  64% (2647/4135)\n2026-11-18T17:04:32.9054476Z Updating files:  65% (2688/4135)\n2026-11-18T17:04:32.9077985Z Updating files:  66% (2730/4135)\n2026-11-18T17:04:32.9119971Z Updating files:  67% (2771/4135)\n2026-11-18T17:04:32.9394958Z Updating files:  68% (2812/4135)\n2026-11-18T17:04:32.9569574Z Updating files:  69% (2854/4135)\n2026-11-18T17:04:32.9725915Z Updating files:  70% (2895/4135)\n2026-11-18T17:04:32.9834892Z Updating files:  71% (2936/4135)\n2026-11-18T17:04:32.9943225Z Updating files:  72% (2978/4135)\n2026-11-18T17:04:33.0001117Z Updating files:  73% (3019/4135)\n2026-11-18T17:04:33.0099617Z Updating files:  74% (3060/4135)\n2026-11-18T17:04:33.0107114Z Updating files:  75% (3102/4135)\n2026-11-18T17:04:33.0118181Z Updating files:  76% (3143/4135)\n2026-11-18T17:04:33.0122875Z Updating files:  77% (3184/4135)\n2026-11-18T17:04:33.0154969Z Updating files:  78% (3226/4135)\n2026-11-18T17:04:33.0184745Z Updating files:  79% (3267/4135)\n2026-11-18T17:04:33.0542664Z Updating files:  80% (3308/4135)\n2026-11-18T17:04:33.0697997Z Updating files:  81% (3350/4135)\n2026-11-18T17:04:33.0738356Z Updating files:  82% (3391/4135)\n2026-11-18T17:04:33.0947111Z Updating files:  83% (3433/4135)\n2026-11-18T17:04:33.0961379Z Updating files:  84% (3474/4135)\n2026-11-18T17:04:33.0972819Z Updating files:  85% (3515/4135)\n2026-11-18T17:04:33.0983153Z Updating files:  86% (3557/4135)\n2026-11-18T17:04:33.0992983Z Updating files:  87% (3598/4135)\n2026-11-18T17:04:33.1002481Z Updating files:  88% (3639/4135)\n2026-11-18T17:04:33.1016757Z Updating files:  89% (3681/4135)\n2026-11-18T17:04:33.1029900Z Updating files:  90% (3722/4135)\n2026-11-18T17:04:33.1043910Z Updating files:  91% (3763/4135)\n2026-11-18T17:04:33.1637487Z Updating files:  92% (3805/4135)\n2026-11-18T17:04:33.1648908Z Updating files:  93% (3846/4135)\n2026-11-18T17:04:33.1662057Z Updating files:  94% (3887/4135)\n2026-11-18T17:04:33.1675918Z Updating files:  95% (3929/4135)\n2026-11-18T17:04:33.1691470Z Updating files:  96% (3970/4135)\n2026-11-18T17:04:33.1710626Z Updating files:  97% (4011/4135)\n2026-11-18T17:04:33.1729486Z Updating files:  98% (4053/4135)\n2026-11-18T17:04:33.1741231Z Updating files:  99% (4094/4135)\n2026-11-18T17:04:33.1741479Z Updating files: 100% (4135/4135)\n2026-11-18T17:04:33.1741734Z Updating files: 100% (4135/4135), done.\n2026-11-18T17:04:33.1801721Z Note: switching to '119ceb09c4e6344a70e1dab38e9833a93c38e2aa'.\n2026-11-18T17:04:33.1802115Z \n2026-11-18T17:04:33.1803151Z You are in 'detached HEAD' state. You can look around, make experimental\n2026-11-18T17:04:33.1803871Z changes and commit them, and you can discard any commits you make in this\n2026-11-18T17:04:33.1804442Z state without impacting any branches by switching back to a branch.\n2026-11-18T17:04:33.1804813Z \n2026-11-18T17:04:33.1805028Z If you want to create a new branch to retain commits you create, you may\n2026-11-18T17:04:33.1805585Z do so (now or later) by using -c with the switch command. Example:\n2026-11-18T17:04:33.1805925Z \n2026-11-18T17:04:33.1806271Z   git switch -c <new-branch-name>\n2026-11-18T17:04:33.1806669Z \n2026-11-18T17:04:33.1806855Z Or undo this operation with:\n2026-11-18T17:04:33.1807060Z \n2026-11-18T17:04:33.1807196Z   git switch -\n2026-11-18T17:04:33.1807342Z \n2026-11-18T17:04:33.1807615Z Turn off this advice by setting config variable advice.detachedHead to false\n2026-11-18T17:04:33.1807984Z \n2026-11-18T17:04:33.1808351Z HEAD is now at 119ceb0 Merge pull request #34 from Jagarex-lab/maintenance/ci-browser-source-isolation\n2026-11-18T17:04:33.1966943Z ##[endgroup]\n2026-11-18T17:04:33.2011952Z [command]/usr/bin/git log -1 --format=%H\n2026-11-18T17:04:33.2026226Z 119ceb09c4e6344a70e1dab38e9833a93c38e2aa\n2026-11-18T17:04:33.2035588Z ##[group]Removing auth\n2026-11-18T17:04:33.2038963Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-11-18T17:04:33.2062003Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-11-18T17:04:33.2220936Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-11-18T17:04:33.2236175Z http.https://github.com/.extraheader\n2026-11-18T17:04:33.2241682Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader\n2026-11-18T17:04:33.2323415Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-11-18T17:04:33.2489812Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-11-18T17:04:33.2510460Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-11-18T17:04:33.2656166Z ##[endgroup]\n2026-11-18T17:04:33.2850689Z ##[group]Run python3 tools/release/candidate.py select\n2026-11-18T17:04:33.2851257Z \u001b[36;1mpython3 tools/release/candidate.py select\u001b[0m\n2026-11-18T17:04:33.7021862Z shell: /usr/bin/bash -e {0}\n2026-11-18T17:04:33.7022163Z env:\n2026-11-18T17:04:33.7024630Z   GH_TOKEN: ***\n2026-11-18T17:04:33.7024856Z ##[endgroup]\n2026-11-18T17:04:41.2305852Z Traceback (most recent call last):\n2026-11-18T17:04:41.2306772Z   File \"/home/runner/work/nachtsiegel-app/nachtsiegel-app/tools/release/candidate.py\", line 445, in <module>\n2026-11-18T17:04:41.2307293Z     main()\n2026-11-18T17:04:41.2307750Z   File \"/home/runner/work/nachtsiegel-app/nachtsiegel-app/tools/release/candidate.py\", line 416, in main\n2026-11-18T17:04:41.2308211Z     candidate = select(context, api.collect(context))\n2026-11-18T17:04:41.2308502Z                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n2026-11-18T17:04:41.2308901Z   File \"/home/runner/work/nachtsiegel-app/nachtsiegel-app/tools/release/candidate.py\", line 163, in select\n2026-11-18T17:04:41.2309534Z     validate_run(evidence[key], path, sha, evidence.get(key + \"_jobs\"))\n2026-11-18T17:04:41.2310046Z   File \"/home/runner/work/nachtsiegel-app/nachtsiegel-app/tools/release/candidate.py\", line 124, in validate_run\n2026-11-18T17:04:41.2310638Z     require(run.get(\"status\") == \"completed\" and run.get(\"conclusion\") == \"success\", \"QA not successful: \" + path)\n2026-11-18T17:04:41.2311201Z   File \"/home/runner/work/nachtsiegel-app/nachtsiegel-app/tools/release/candidate.py\", line 62, in require\n2026-11-18T17:04:41.2311619Z     raise Denied(message)\n2026-11-18T17:04:41.2311912Z Denied: QA not successful: .github/workflows/alpha-qa.yml\n2026-11-18T17:04:41.2469728Z ##[error]Process completed with exit code 1.\n2026-11-18T17:04:41.2630287Z Post job cleanup.\n2026-11-18T17:04:41.3268869Z [command]/usr/bin/git version\n2026-11-18T17:04:41.3297236Z git version 2.56.1\n2026-11-18T17:04:41.3315210Z Temporarily overriding HOME='/home/runner/work/_temp/1b55bf80-497c-4e6e-b8c5-adf78b42fbcb' before making global git config changes\n2026-11-18T17:04:41.3318570Z Adding repository directory to the temporary git global config as a safe directory\n2026-11-18T17:04:41.3319525Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/nachtsiegel-app/nachtsiegel-app\n2026-11-18T17:04:41.3364906Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-11-18T17:04:41.3389537Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-11-18T17:04:41.3569618Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-11-18T17:04:41.3593631Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-11-18T17:04:41.3757297Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-11-18T17:04:41.3780053Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-11-18T17:04:41.4048349Z Evaluate and set job outputs\n2026-11-18T17:04:41.4055425Z Cleaning up orphan processes\n2026-11-18T17:04:41.4311307Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/\n\n",
+    "actual_deployment": false
+  }
+}
