@@ -70,7 +70,35 @@ erhalten. Eine echte, netzwerkfreie APT-URI-Aufzählung prüft, dass die
 Microsoft-Quelle während der Systemphase ausgeschlossen und vor der
 Browserphase wieder vorhanden ist.
 
-Lokal bestanden **44 CI-Vertragstests** einschließlich aller bisherigen35,
+Der erste Folge-Head `5364d119e90c3f7fdd38fc9ea9b8319b3903a70e`
+wurde nicht gemergt: Seine neue Rechteannahme scheiterte in allen zehn Browser-Installationsjobs vor APT.
+Der abgeschlossene Head hatte 16 erfolgreiche und 10 fehlgeschlagene Jobs.
+Die lokale Fixture bildete das echte Runner-Image noch nicht ab.
+Der [unveränderte Nachweis](history/ci-183192/first-repair.json) erhält Fehler,
+Job-IDs und beide Originalarchive. Das exakte offizielle
+[Image-Skript](https://github.com/actions/runner-images/blob/fb099341ddaf44a428fb17495341cb7c2300faf2/images/ubuntu/scripts/build/configure-system.sh#L12)
+setzt `/usr/share` rekursiv auf 777; der bereitgestellte Ubuntu-Keyring ist
+dadurch beschreibbar. Diese Fehlversuche sind keine bestandenen Tests.
+
+Die korrigierte Variante authentifiziert die einmal gelesenen Keyring-Bytes
+mit SHA256 `80a36b0a6de2f69f49d2df75ef473ccde121e9e190b9ea01d20a4f63778d5c31`
+aus dem unabhängig verifizierten offiziellen Noble-Paket. Nur dieses bekannte
+Material und die streng geprüfte Quelle werden als root-eigene Snapshots mit Modus0644
+verwendet; Signed-By verweist ausschließlich auf die geprüfte Kopie.
+Originalbytes und Rechte bleiben unangetastet. Unbekannte Schlüssel,
+Source-Injektionen, Symlinks und Kollisionen bleiben Fehler; alle Kopien
+werden vor Browserinstallation und auf Fehlerpfaden entfernt.
+
+[Vendor-/Signaturnachweis](history/ci-183192/ubuntu-keyring-provenance.json)
+enthält Paket-URLs und Prüfsummen, das genaue Runner-Image sowie die
+erfolgreiche tatsächliche gpgv-Prüfung aktueller Noble-, Updates- und
+Security-InRelease-Dateien mit Fingerprint
+`F6ECB3762474EDA9D21B7022871920D1991BC93C`. Die jeweiligen Packages.xz-Hashes
+stimmen mit der signierten Release-Metadatenkette überein. Der aktuelle
+Noble-Paketstand ist damit bestätigt; kein Ubuntu-26-Keyring, kein fremder
+Trust und kein Netzwerk-Bootstrap zur Laufzeit werden eingeführt.
+
+Lokal bestanden **50 CI-Vertragstests** einschließlich aller bisherigen 35,
 **50 Release-Python-Tests** und **88 Node-Vertragstests**. Unabhängiges Review,
 Syntax und Diffprüfung bestanden. Diese lokalen Ergebnisse ersetzen keine
 frische GitHub-QA auf dem endgültigen Folge-Head oder dessen Merge.
@@ -82,8 +110,9 @@ PR ist wieder offen. Der endgültige Ersatz-PR ist über Issue #33 verknüpft.
 Nach seinem regulären Merge müssen alle sieben Suiten mit29Pflichtjobs auf
 dem neuen exakten Commit bestehen. Erst danach darf der unveränderte
 automatische Publisher veröffentlichen und die öffentliche Version prüfen.
-Endgültige Commit-, QA- und Live-Nachweise werden im Abschlusskommentar des
-Folge-PRs sowie den öffentlichen Provenienz-JSONs festgehalten; keine
+Endgültige Commit-, QA- und Live-Nachweise werden in der
+[Abschlussprüfung von PR #34](https://github.com/Jagarex-lab/nachtsiegel-app/pull/34#issuecomment-6979959291)
+sowie den öffentlichen Provenienz-JSONs festgehalten; keine
 veralteten Run-IDs und keine erfundenen zukünftigen Merge-SHAs.
 
 ## Technischer Detailnachweis

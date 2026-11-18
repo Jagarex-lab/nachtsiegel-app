@@ -1,0 +1,246 @@
+{
+  "head": "5364d119e90c3f7fdd38fc9ea9b8319b3903a70e",
+  "tree": "f06b9e042624ffa6081872ba726e07b542a0b4d9",
+  "not_merged": true,
+  "run_id": 44313753544,
+  "failed_jobs": [
+    134834306369,
+    134834307462,
+    134845506340,
+    134845507017,
+    134847899302,
+    134847899308,
+    134847899312,
+    134847899330,
+    134847899399,
+    134847899525
+  ],
+  "failure_before_apt_and_browser_tests": true,
+  "error": "Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+  "error_did_not_identify_path_or_mode": true,
+  "independent_image_proof": {
+    "revision": "fb099341ddaf44a428fb17495341cb7c2300faf2",
+    "url": "https://github.com/actions/runner-images/blob/fb099341ddaf44a428fb17495341cb7c2300faf2/images/ubuntu/scripts/build/configure-system.sh#L12",
+    "behavior": "chmod -R777 /usr/share includes canonical Ubuntu archive keyring"
+  },
+  "archives": {
+    "14431473045": {
+      "sha256": "0de6055f5c2c2c7f1a635614c9a3f8491322f4640f961749a547ae1e0c39fa85",
+      "size": 360
+    },
+    "14432530339": {
+      "sha256": "45ce76efdf3c87a554d73c902e9661776895a40edc4c16e7b0fae3eca731c297",
+      "size": 380
+    }
+  },
+  "followup_issue": 33,
+  "correction": "Read-once canonical vendor-pinned key bytes and validated source to root-owned snapshots; retainTLS/GPG/strictAPT/hostvalidation; no blind permission relaxation",
+  "old_failed_jobs_not_counted_as_passed": true,
+  "additional_alpha_failures": {
+    "chromium": {
+      "job": 134845507017,
+      "timestamp": "2026-11-18T13:46:30.185Z",
+      "artifact": 14433132168,
+      "sha256": "f3ceb6c38bb0927e211030d2b787e841e3d6a8f4088697f34da386a76623fee5"
+    },
+    "webkit": {
+      "job": 134845506340,
+      "timestamp": "2026-11-18T13:47:28.763Z",
+      "artifact": 14433900221,
+      "sha256": "1238a1747cd981509fe1486118405f4075ac6dc8961797ebe59515973f8cb068"
+    }
+  },
+  "scope": "All ten failed steps reported the identical guard before APT/browser/assertions; original head was not merged. No failed or superseded job is counted as passed.",
+  "final_outcome": {
+    "success": 16,
+    "failure": 10,
+    "cancelled": 0,
+    "skipped": 0,
+    "runs": [
+      44313753566,
+      44313753494,
+      44313753535,
+      44313753544
+    ]
+  },
+  "failure_details": [
+    {
+      "job_id": 134834306369,
+      "name": "production-audio / audio",
+      "at": "2026-11-18T13:28:31.6421833Z",
+      "artifact_id": 14431473045,
+      "artifact_digest": "sha256:0de6055f5c2c2c7f1a635614c9a3f8491322f4640f961749a547ae1e0c39fa85",
+      "run_id": 44313753544,
+      "step_number": 6,
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "candidate_paths": [
+        "/etc/apt/sources.list.d/ubuntu.sources",
+        "/usr/share/keyrings/ubuntu-archive-keyring.gpg"
+      ],
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:28:31.6413692Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:28:31.6421833Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:28:31.6500755Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134834307462,
+      "name": "alpha03-integration / integrated-modules",
+      "at": "2026-11-18T13:29:19.3541186Z",
+      "artifact_id": 14432530339,
+      "artifact_digest": "sha256:45ce76efdf3c87a554d73c902e9661776895a40edc4c16e7b0fae3eca731c297",
+      "run_id": 44313753544,
+      "step_number": 6,
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "candidate_paths": [
+        "/etc/apt/sources.list.d/ubuntu.sources",
+        "/usr/share/keyrings/ubuntu-archive-keyring.gpg"
+      ],
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:29:19.3531886Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:29:19.3541186Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:29:19.3604933Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134845506340,
+      "name": "Alpha browser (webkit)",
+      "run_id": 44313753535,
+      "at": "2026-11-18T13:47:28.7636711Z",
+      "artifact_id": 14433900221,
+      "artifact_digest": "sha256:1238a1747cd981509fe1486118405f4075ac6dc8961797ebe59515973f8cb068",
+      "step_number": 6,
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:47:28.7629396Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:47:28.7636711Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:47:28.7698560Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134845507017,
+      "name": "Alpha browser (chromium)",
+      "run_id": 44313753535,
+      "at": "2026-11-18T13:46:30.1855995Z",
+      "artifact_id": 14433132168,
+      "artifact_digest": "sha256:f3ceb6c38bb0927e211030d2b787e841e3d6a8f4088697f34da386a76623fee5",
+      "step_number": 6,
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:46:30.1847099Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:46:30.1855995Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:46:30.1925679Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134847899308,
+      "name": "production-art-browser (webkit)",
+      "run_id": 44313753544,
+      "step_name": "Install isolated image-delivery browser runtime",
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "observed_at": "2026-11-18T13:50:20.0991674Z",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "artifact_id": 14432582886,
+      "artifact_digest": "sha256:091695aaaa76b195dd101b45da600bfcdc8229fce7d36056343c2ed44c76094b",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:50:20.0984549Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:50:20.0991674Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:50:20.1052465Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134847899312,
+      "name": "browser (chromium)",
+      "run_id": 44313753544,
+      "step_name": "Install isolated browser runtime",
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "observed_at": "2026-11-18T13:50:23.1112220Z",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "artifact_id": 14433725989,
+      "artifact_digest": "sha256:350280df70bd2057e555d0eb30b1686f1a81e74d6e4932cdf8ba2ca84974fbcc",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:50:23.1104052Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:50:23.1112220Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:50:23.1178615Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134847899525,
+      "name": "premium-browser (webkit)",
+      "run_id": 44313753544,
+      "step_name": "Install isolated pinned browser runtime",
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "observed_at": "2026-11-18T13:50:29.8205521Z",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "artifact_id": 14432493620,
+      "artifact_digest": "sha256:87d779747a69247805292526b44aa50dd918ffd0c7ead706747e07c3c8a8c8ea",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:50:29.8199415Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:50:29.8205521Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:50:29.8291324Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134847899302,
+      "name": "browser (webkit)",
+      "run_id": 44313753544,
+      "step_name": "Install isolated browser runtime",
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "observed_at": "2026-11-18T13:51:42.0073787Z",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "artifact_id": 14433516736,
+      "artifact_digest": "sha256:5b3d72bcfcd3d04b96946f4e3989e53780543a18987a00284643744f53774306",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:51:42.0064496Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:51:42.0073787Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:51:42.0139351Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134847899330,
+      "name": "production-art-browser (chromium)",
+      "run_id": 44313753544,
+      "step_name": "Install isolated image-delivery browser runtime",
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "observed_at": "2026-11-18T13:51:40.6474958Z",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "artifact_id": 14433247187,
+      "artifact_digest": "sha256:d9a990cd20ec169948fe7b872fc773e408e7b9b2e89c7ffba95ad36d9a9ed4a6",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:51:40.6465618Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:51:40.6474958Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:51:40.6556101Z ##[error]Process completed with exit code 1."
+      ]
+    },
+    {
+      "job_id": 134847899399,
+      "name": "premium-browser (chromium)",
+      "run_id": 44313753544,
+      "step_name": "Install isolated pinned browser runtime",
+      "classification": "Hosted source/keyring mode rejected before APT",
+      "observed_at": "2026-11-18T13:51:38.4406863Z",
+      "error": "RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+      "artifact_id": 14433935917,
+      "artifact_digest": "sha256:4ceeaf57fc0086f0dd1ba25c5adf46f902f416240a75b7d5dbe01cac887efd98",
+      "exact_rejected_path_and_mode": "not emitted in current logs",
+      "log_excerpt": [
+        "2026-11-18T13:51:38.4396502Z System dependency phase: at most two attempts, each bounded to 300s.",
+        "2026-11-18T13:51:38.4406863Z CI dependency setup failed: RuntimeError: Unsupported GitHub Actions Ubuntu APT sources: source/keyring must not be group/world writable.",
+        "2026-11-18T13:51:38.4479410Z ##[error]Process completed with exit code 1."
+      ]
+    }
+  ]
+}
