@@ -1,0 +1,179 @@
+{
+  "head": "af6f74eb2dbb4111a730b2f92074546b05c510ed",
+  "tree": "c9a67c756084fd99fedc0a7762a6914fd756fbb8",
+  "not_merged": true,
+  "run_id": 44323018870,
+  "job_id": 134881337627,
+  "failed_step": 7,
+  "step_name": "Verify actual Playwright polling before game journeys",
+  "fixture": "tests/production/playwright_polling.test.cjs controlled about:blank; no game journeys executed after this failure",
+  "engine": "Playwright1.65.0 WebKit27.2",
+  "failed_leaf": "actual API preserves one mutable browser argument across synchronous polls",
+  "observed_failure": "real TimeoutError500ms exceeded; leaf623.061ms",
+  "passed_leaf_cases": 7,
+  "node_report_counts": {
+    "pass": 7,
+    "fail": 2,
+    "note": "one failed leaf plus its failed parent, not two independent mechanisms"
+  },
+  "other_measurements": {
+    "async_false_first_case_ms": 11768.222734,
+    "production_old_shape_positive_ms": 979.363698,
+    "production_current_shape_positive_ms": 969.361553
+  },
+  "original_failure_allocation_or_scheduler_trace": "not emitted; do not claim measured RAF starvation as the exact original cause",
+  "artifact": {
+    "id": 14438131501,
+    "size": 13402,
+    "sha256": "dae717cd9852456b992d277b2175ab714d19057a90b536c5ae6d29140a2aef94",
+    "entries": [
+      {
+        "name": "alpha/browser-install-webkit.log",
+        "size": 82212,
+        "sha256": "ed482c5fbf09c92b018c9d073abf2d4b08833c85795221bd7c4b69e2793426ab"
+      }
+    ]
+  },
+  "credential_pattern_scan": "no matches; bounded read-only archive, no exhaustive clearance claim",
+  "correction_status": "independently approved: readonly main-world document-ready assertion then20ms numeric polling ONLY for nonvisual mutable-argument fixture; original500ms unchanged; productioncallbacks/defaultRAFpositives, allassertions,250/400/4000ms andglobal30s unchanged",
+  "decoded_full_job_log_sha256": "bcb9b44045154aa50ea56cb1f08e1c2ca191852d24e513f51c9c2698000f401e",
+  "exact_failure_stdout_excerpt": "2026-11-18T14:44:27.4823268Z ##[group]Run node --test tests/production/playwright_polling.test.cjs\n2026-11-18T14:44:27.4823687Z \u001b[36;1mnode --test tests/production/playwright_polling.test.cjs\u001b[0m\n2026-11-18T14:44:27.4841972Z shell: /usr/bin/bash -e {0}\n2026-11-18T14:44:27.4842185Z env:\n2026-11-18T14:44:27.4842420Z   EXPECTED_COMMIT: 16ebb9107a8122a4e1e1e844b4a94aaaaca67fc8\n2026-11-18T14:44:27.4842740Z   QA_ENGINES: webkit\n2026-11-18T14:44:27.4842943Z   GAME_URL: http://127.0.0.1:8788/\n2026-11-18T14:44:27.4843214Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64\n2026-11-18T14:44:27.4843571Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig\n2026-11-18T14:44:27.4843908Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64\n2026-11-18T14:44:27.4844217Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64\n2026-11-18T14:44:27.4844519Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64\n2026-11-18T14:44:27.4844883Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib\n2026-11-18T14:44:27.4845170Z ##[endgroup]\n2026-11-18T14:44:40.4821479Z \u25b6 webkit: actual Playwright polling API on blank-page report fixtures\n2026-11-18T14:44:40.4822623Z   \u2714 pinned async-false negative control returns a false handle; production callback is synchronous (11768.222734ms)\n2026-11-18T14:44:41.1070963Z   \u2716 the actual API preserves one mutable browser argument across synchronous polls (623.06105ms)\n2026-11-18T14:44:42.0843710Z   \u2714 old report shape: epoch and geometry changes need three fresh stable reports (979.363698ms)\n2026-11-18T14:44:43.0540223Z   \u2714 current report shape: epoch and geometry changes need three fresh stable reports (969.361553ms)\n2026-11-18T14:44:43.5980260Z   \u2714 missing reports reject with the real bounded Playwright TimeoutError (543.705935ms)\n2026-11-18T14:44:44.1481281Z   \u2714 invalid 43CSS reports reject with the real bounded Playwright TimeoutError (549.816712ms)\n2026-11-18T14:44:44.6995688Z   \u2714 one unchanged report object reject with the real bounded Playwright TimeoutError (551.350935ms)\n2026-11-18T14:44:45.2584161Z   \u2714 continuously changing valid reports reject with the real bounded Playwright TimeoutError (558.779332ms)\n2026-11-18T14:44:45.2846890Z \u2716 webkit: actual Playwright polling API on blank-page report fixtures (17503.709001ms)\n2026-11-18T14:44:45.2848522Z \u2139 {\"engine\":\"webkit\",\"browser_version\":\"27.2\",\"playwright\":\"1.65.0\",\"scope\":\"about:blank controlled QA-report fixtures; real Playwright API\",\"gameplay\":false,\"physical_device\":false}\n2026-11-18T14:44:45.3030338Z \u2139 tests 9\n2026-11-18T14:44:45.3030590Z \u2139 suites 0\n2026-11-18T14:44:45.3030777Z \u2139 pass 7\n2026-11-18T14:44:45.3033903Z \u2139 fail 2\n2026-11-18T14:44:45.3034191Z \u2139 cancelled 0\n2026-11-18T14:44:45.3034473Z \u2139 skipped 0\n2026-11-18T14:44:45.3034729Z \u2139 todo 0\n2026-11-18T14:44:45.3034972Z \u2139 duration_ms 17784.931263\n2026-11-18T14:44:45.3036958Z \n2026-11-18T14:44:45.3037134Z \u2716 failing tests:\n2026-11-18T14:44:45.3037303Z \n2026-11-18T14:44:45.3037622Z test at tests/production/playwright_polling.test.cjs:88:15\n2026-11-18T14:44:45.3038371Z \u2716 the actual API preserves one mutable browser argument across synchronous polls (623.06105ms)\n2026-11-18T14:44:45.3038797Z   page.waitForFunction: Timeout 500ms exceeded.\n2026-11-18T14:44:45.3039553Z       at TestContext.<anonymous> (/home/runner/work/nachtsiegel-app/nachtsiegel-app/tests/production/playwright_polling.test.cjs:90:35)\n2026-11-18T14:44:45.3040345Z       at async TestContext.<anonymous> (/home/runner/work/nachtsiegel-app/nachtsiegel-app/tests/production/playwright_polling.test.cjs:88:7) {\n2026-11-18T14:44:45.3040839Z     name: 'TimeoutError',\n2026-11-18T14:44:45.3041032Z     log: []\n2026-11-18T14:44:45.3041196Z   }\n2026-11-18T14:44:45.3104762Z ##[error]Process completed with exit code 1.\n",
+  "failure_excerpt_sha256": "6275755ca5c91515902ba01d450278cc81124f2c9dbdb79d3c6c50dfb3df85d0",
+  "artifact_scope": "Contains browser dependency-install log only; failure itself is preserved in exact stdout excerpt with full decoded-job SHA and immutable job link, not falsely attributed to artifact content.",
+  "correction_proof": {
+    "base_tree": "c9a67c756084fd99fedc0a7762a6914fd756fbb8",
+    "base_blob": "8abb24247586351aabcd0f8d6412fe245320d56a",
+    "path": "tests/production/playwright_polling.test.cjs",
+    "fixed_blob": "d318a87a7efb4bf5e1798a87caa363b6e46e9ff0",
+    "fixed_sha256": "8dae7314ff276efd8e8784557edea5fcde40b6802ddd78481d5190bad44ff040",
+    "patch_sha256": "e308b582ae0a6c4231562f3f84acaeca4e1ae45aa3c4e9cd02dbf087304f6ef7",
+    "scope": "Only nonvisual mutable-argument identity fixture: complete main-world setup before unchanged500ms deadline, use20ms numeric polling; no production callback/defaultRAF readiness fixture/negative/global timeout changed.",
+    "actual_chromium": {
+      "test_nodes": 9,
+      "leaf_tests": 8,
+      "result": "pass",
+      "log": "work/chromium-after.log",
+      "sha256": "d85a97727d52895b9d5bd375762a609621d4b539e4d490a7e4fbc5d5adc26b25"
+    },
+    "controlled_raf_stall": {
+      "engine": "chromium",
+      "browser": "158.0.8127.18",
+      "playwright": "1.65.0",
+      "scope": "Controlled about:blank frame-clock stall, not a game or reconstruction of actual CI scheduler",
+      "before": {
+        "polling": "default RAF",
+        "timeout_ms": 500,
+        "result": "real TimeoutError",
+        "elapsed_ms": 502.380177,
+        "raf_requests": 1,
+        "node_argument": {
+          "polls": 0
+        }
+      },
+      "after": {
+        "polling_ms": 20,
+        "timeout_ms": 500,
+        "result": 3,
+        "elapsed_ms": 42.76875599999994,
+        "raf_requests": 1,
+        "node_argument": {
+          "polls": 0
+        }
+      },
+      "production_callback_changed": false,
+      "physical_device": false
+    },
+    "webkit_local": {
+      "result": "blocked before launch",
+      "cause": "Playwright preflight requires systemldconfig GLES entry despite verifiedworkspacevendorlibs; no bypass/skip/custompath/globalwrites used",
+      "acceptance": "fresh hosted WebKit required"
+    },
+    "attribution_limit": "Controlled RAF fixture proves argument identity should not depend on frame clock; exact failed CI scheduling/allocation cause was not emitted and is not claimed reproduced.",
+    "cleanup": "Unchanged fixturePage uses browser.newPage convenience-owned context and child t.after returns page.close Promise; closingpage closes its ownedcontext. Outer finally awaits browser.close.",
+    "independent_review": "Approved exact minimal patch: all original assertions/eight leaves/deadlines/negative controls and production default-RAF positives remain; SDK-owned page/context cleanup verified; no CI scheduling-cause claim or WebKit local pass."
+  },
+  "controlled_raf_stall": {
+    "engine": "chromium",
+    "browser": "158.0.8127.18",
+    "playwright": "1.65.0",
+    "scope": "Controlled about:blank frame-clock stall, not a game or reconstruction of actual CI scheduler",
+    "before": {
+      "polling": "default RAF",
+      "timeout_ms": 500,
+      "result": "real TimeoutError",
+      "elapsed_ms": 502.380177,
+      "raf_requests": 1,
+      "node_argument": {
+        "polls": 0
+      }
+    },
+    "after": {
+      "polling_ms": 20,
+      "timeout_ms": 500,
+      "result": 3,
+      "elapsed_ms": 42.76875599999994,
+      "raf_requests": 1,
+      "node_argument": {
+        "polls": 0
+      }
+    },
+    "production_callback_changed": false,
+    "physical_device": false
+  },
+  "local_chromium": {
+    "result": "9/9 including parent, eight actual leaf cases; zero failures",
+    "sha256": "d85a97727d52895b9d5bd375762a609621d4b539e4d490a7e4fbc5d5adc26b25",
+    "scope": "controlled about:blank API fixture; not gameplay or physical-device proof"
+  },
+  "fresh_final_local_contracts": {
+    "ci": {
+      "count": 54,
+      "result": "pass",
+      "sha256": "9fbf8d7bff886307738e68b334a0abad5ee5863c3be6749c713589f584a1a5f7",
+      "summary": [
+        "Supported regular Ubuntu mirrorlist unavailable; original failure remains.",
+        "ok",
+        "test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression (test_mirror_format.MirrorFormat.test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression) ... ok",
+        "test_official_mirrors_use_required_tab_delimited_metadata (test_mirror_format.MirrorFormat.test_official_mirrors_use_required_tab_delimited_metadata) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 54 tests in 3.305s",
+        "",
+        "OK"
+      ]
+    },
+    "release_python": {
+      "count": 50,
+      "result": "pass",
+      "sha256": "d87ecae264df88703faa4b62319743291a408bdeb9b09645e4fa6a39f979f1f9",
+      "summary": [
+        "test_solo_alpha_and_existing_environment_rules (test_safety.Safety.test_solo_alpha_and_existing_environment_rules) ... ok",
+        "test_tested_artifact_rechecks_and_public_evidence_hash_are_wired (test_safety.Safety.test_tested_artifact_rechecks_and_public_evidence_hash_are_wired) ... ok",
+        "test_untrusted_events_are_rejected_before_any_checkout (test_safety.Safety.test_untrusted_events_are_rejected_before_any_checkout) ... ok",
+        "test_workflow_privilege_boundaries (test_safety.Safety.test_workflow_privilege_boundaries) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 50 tests in 0.522s",
+        "",
+        "OK"
+      ]
+    },
+    "node": {
+      "count": 88,
+      "result": "pass",
+      "sha256": "d2ddb6d241b4cfbfb9ff1c936f306667ba1e9418a243160f6f58285c95d5b2c6",
+      "summary": [
+        "\u2714 network errors reject only the requested navigation or metadata fetch (0.872774ms)",
+        "\u2139 tests 88",
+        "\u2139 suites 0",
+        "\u2139 pass 88",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 823.897942"
+      ]
+    }
+  },
+  "local_webkit_limit": "Two official Debian libraries verified against sqv-authenticated InRelease/Packages and extracted workspace-only; unchanged Playwright registry preflight consults global ldconfig and still rejects local GLES. No bypass flag/SDK patch/custom executable path/global mutation; no local WebKit pass claimed. Hosted full WebKit required."
+}

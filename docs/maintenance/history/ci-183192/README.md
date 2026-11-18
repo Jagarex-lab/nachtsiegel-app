@@ -25,3 +25,9 @@ Das zusätzliche Audio-Originalartefakt pr34-af6-audio-failure.zip ist vollstän
 und SHA256-geprüft erhalten. audio-probe-failure.json unterscheidet den echten
 WebKit-Absturz, die belegte SDK-Abweichung, die begrenzte Pin-/Vertragstest-
 Korrektur und die weiterhin nötige frische reale Browserabnahme.
+
+Der isolierte WebKit-Polling-Fehler ist in polling-probe-failure.json mit
+exaktem stdout-Auszug und kontrolliertem Vorher-/Nachherbeleg dokumentiert.
+pr34-af6-polling-failure.zip erhält unverändert das kleine GitHub-Artefakt
+(Installationslog, keine irreführende Zuordnung des eigentlichen Timeout-Logs).
+Die Korrektur behält500ms und alle negativen/Produkt-Kontrollen bei.

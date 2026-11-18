@@ -402,3 +402,43 @@ Erst die neue vollständige gehostete Chromium-/WebKit-QA mit unveränderter
 Audio-Probe, dann die frischen Merge-Prüfungen und öffentliche Verifikation
 können den endgültigen Kandidaten freigeben. Die endgültigen Nachweise
 stehen nach tatsächlicher Ausführung im stabil verlinkten PR-Abschlusskommentar.
+
+
+## Nachtrag: nichtvisuelle API-Identitätsprüfung ohne Paint-Abhängigkeit
+
+Ein weiterer echter Fehler desselben af6-Heads war der kontrollierte
+[WebKit-Pollingtest](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44323018870/job/134881337627),
+vor allen eigentlichen Spiel-Journeys. Ein Blatt lief nach500ms aus, sieben
+andere bestanden; Nodes zwei Fehler zählen dieses Blatt plus seine Elternsuite.
+Der erste Kontrollfall benötigte auf dem Runner11,768s; beide realen
+Produkt-Readiness-Positivfälle bestanden mit979/969ms. Ein konkreter
+Scheduling-Trace des ursprünglichen Timeouts liegt nicht vor.
+[Originalartefakt, exakter Fehlerauszug und Prüfsummen](history/ci-183192/polling-probe-failure.json)
+trennen diese Fakten von der anschließenden kontrollierten Ursachenprobe.
+Das kleine GitHub-Artefakt enthält ausschließlich Installationslogs; der
+eigentliche Fehler steht im gesondert exakt erhaltenen stdout-Auszug.
+
+Die reine Argument-Identitätsprüfung wartete bislang auf Animationsframes,
+obwohl sie kein Rendering untersucht. Die enge Testkorrektur bestätigt zuerst
+das vollständig bereite about:blank-Dokument im echten Main-World-Kontext
+und verwendet ausschließlich für dieses Blatt20ms-Intervallpolling. Die
+ursprüngliche500ms-Frist bleibt unverändert. Alle Assertions, der30s-Gesamtrahmen,
+die250ms-Asynckontrolle, alle vier400ms-Negativkontrollen und beide realen
+Produkt-Positivfälle mit Standard-RAF/4000ms bleiben unverändert.
+
+Die tatsächliche kontrollierte Chromium-Probe zeigte: Bei absichtlich
+angehaltenem RAF scheitert die alte Variante mit echtem Timeout nach502ms;
+die neue liefert3 nach43ms, während das Node-Argument0 bleibt. Das beweist
+die entfernte sachfremde Paint-Abhängigkeit, nicht den exakten ursprünglichen
+CI-Schedulingverlauf. Die vollständige Chromium-Suite bestand9/9 (acht
+Blätter plus Elternsuite); ein unabhängiges Review genehmigte die Änderung.
+Lokale finale Verträge auf dem kombinierten Kandidaten:54CI-,50Release-
+Python- und88Node-Tests erfolgreich.
+
+Eine zusätzlich versuchte lokale WebKit-Einrichtung blieb an der unveränderten
+Host-Prüfung für lokal extrahierte Bibliotheken stehen. Signierte Vendor-Herkunft
+und tatsächliches Laden wurden geprüft, aber kein Hostcheck deaktiviert,
+kein SDK gepatcht, kein alternativer Executable-Pfad zur Umgehung gewählt und
+keine globale Konfiguration verändert. Es wird kein lokaler WebKit-Erfolg
+behauptet. Erforderlich bleiben alle frischen fünf PR-Suiten/27 Jobs, dann
+sieben Merge-Suiten/29 Jobs, automatischer Publisher und öffentliche Browserabnahme.
