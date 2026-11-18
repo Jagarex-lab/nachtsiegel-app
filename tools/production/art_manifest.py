@@ -32,10 +32,81 @@ SPECIES = {
 }
 STYLE = "Eigenständige malerische Dark Fantasy mit präzisem Fokus, zurückhaltender Raumfalten-Geometrie, glaubhaften Materialien und Licht von oben links. Keine Referenz auf bestehende Spielefiguren."
 EXCLUSIONS = "Nur Illustration: keine Schrift, Zahlen, Kartenrahmen, Logos, Wasserzeichen oder UI. Keine Enthüllung zu Eira, neuen Fraktionsführer oder verbindlichen Weltursprung erfinden."
+BRIEF_BASELINE_COMMIT = "6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f"
+BRIEF_BASELINE_BLOBS = {
+    "data/production/art_sources.json": "80b55db7a203e65c2241a6172996504e0045bb4e",
+    "data/production/cards.json": "3ad4863e10c0c3144e98f09650a728020952736f",
+    "data/production/art_briefs.json": "be46a10455ae8ade272b51dafd43a6950d9771b8",
+}
 
 
 def load(path: Path):
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def brief_sha256(card: dict, brief: dict) -> str:
+    """Bind the full authored brief and visual identity, not gameplay values.
+
+    Object order/JSON whitespace are insignificant; text and list order remain
+    exact. Changing the art contract requires explicit review of that binding.
+    """
+    if brief.get("id") != card.get("id"):
+        raise ValueError("Art brief/card identity mismatch")
+    power = card.get("faction", card.get("power", "neutral"))
+    payload = {"schema_version": 1, "card_id": card["id"], "brief": brief,
+               "visual_identity": {"name": card["name"], "power": power,
+                                   "kind": card["kind"], "species": card.get("species", [])},
+               "art_contract": {"palette": PALETTES[power], "style": STYLE, "exclusions": EXCLUSIONS}}
+    canonical = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), allow_nan=False)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+
+
+def validate_brief_binding(source: dict, card: dict, brief: dict) -> None:
+    card_id = card["id"]
+    if "reviewed_brief" not in source:
+        if source.get("status") == "final" or source.get("production_review") == "approved":
+            raise ValueError(f"Missing reviewed art brief binding: {card_id}")
+        return  # An unapproved concept makes no reviewed-brief claim.
+    binding = source["reviewed_brief"]
+    if (not isinstance(binding, dict) or set(binding) != {"schema_version", "card_id", "sha256"}
+            or type(binding.get("schema_version")) is not int or binding["schema_version"] != 1
+            or binding.get("card_id") != card_id
+            or not isinstance(binding.get("sha256"), str)
+            or re.fullmatch(r"[0-9a-f]{64}", binding["sha256"]) is None):
+        raise ValueError(f"Malformed reviewed art brief binding: {card_id}")
+    if binding["sha256"] != brief_sha256(card, brief):
+        raise ValueError(f"Stale reviewed art brief binding; explicit review required: {card_id}")
+
+
+def initialize_brief_baseline(root: Path = ROOT) -> None:
+    """One-time technical snapshot of the exact existing approval baseline.
+
+    Pin every input so this operation cannot refresh approval after a brief,
+    identity or provenance edit. Future art review must record its own binding.
+    """
+    for relative, expected in BRIEF_BASELINE_BLOBS.items():
+        data = (root / relative).read_bytes()
+        actual = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+        if actual != expected:
+            raise ValueError(f"Pinned brief baseline input differs: {relative}; initialization cannot refresh approval")
+    source_path = root / "data/production/art_sources.json"
+    sources = load(source_path)
+    cards = {card["id"]: card for card in load(root / "data/production/cards.json")["cards"]}
+    briefs = {brief["id"]: brief for brief in load(root / "data/production/art_briefs.json")["cards"]}
+    if set(sources["entries"]) != set(cards) or set(briefs) != set(cards):
+        raise ValueError("Pinned brief baseline IDs differ")
+    for card_id, source in sources["entries"].items():
+        if source.get("status") != "final" or source.get("production_review") != "approved" or "reviewed_brief" in source:
+            raise ValueError(f"Pinned brief baseline is not an existing unbound approval: {card_id}")
+        source["reviewed_brief"] = {"schema_version": 1, "card_id": card_id,
+                                    "sha256": brief_sha256(cards[card_id], briefs[card_id])}
+    sources["brief_binding_baseline"] = {
+        "schema_version": 1, "source_commit": BRIEF_BASELINE_COMMIT,
+        "input_blobs": BRIEF_BASELINE_BLOBS,
+        "scope": "Technical snapshot of existing visual approval; no fresh visual review or commercial clearance.",
+        "new_visual_review": False, "commercial_clearance": False,
+    }
+    source_path.write_text(serialized(sources), encoding="utf-8")
 
 
 def png_info(path: Path) -> tuple[int, int, str]:
@@ -186,6 +257,8 @@ def build(root: Path = ROOT) -> tuple[dict, dict]:
         source = sources.get(card_id)
         entry = {"card_id": card_id, "name": name, "power": power, "status": "missing", "expected_path": expected_path, "asset_path": "", "individual_original": False, "commercially_cleared": False, "production_review": "pending"}
         if source:
+            if source.get("card_id") != card_id: raise ValueError(f"Art source card identity mismatch: {card_id}")
+            validate_brief_binding(source, card, brief_by_id[card_id])
             if source.get("asset_path") != expected_path: raise ValueError(f"Art source path/card mismatch: {card_id}")
             path = checked_asset(root, expected_path)
             width, height, digest = png_info(path)
@@ -236,14 +309,18 @@ def serialized(value) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--check", action="store_true")
+    mode.add_argument("--initialize-brief-baseline", action="store_true",
+                      help="snapshot only the pinned existing visual approvals; never refresh a changed brief")
     args = parser.parse_args()
     try:
+        if args.initialize_brief_baseline: initialize_brief_baseline()
         manifest, briefs = build()
         for name, content in [("art_manifest.json", manifest)]:
             path = ROOT / "data/production" / name
             text = serialized(content)
-            if args.check:
+            if args.check or args.initialize_brief_baseline:
                 if not path.exists() or path.read_text(encoding="utf-8") != text: raise ValueError(f"Stale/missing {path.relative_to(ROOT)}; run python3 tools/production/art_manifest.py")
             else: path.write_text(text, encoding="utf-8")
         print(f"PRODUCTION ART: {manifest['inventory_card_count']} briefs, {manifest['individual_original_count']} individual illustrations, {manifest['final_individual_count']} visually approved final, {manifest['missing_individual_count']} missing, {len(manifest['orphan_files'])} orphan files")
