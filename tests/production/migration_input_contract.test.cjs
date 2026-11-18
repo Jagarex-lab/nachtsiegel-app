@@ -14,27 +14,23 @@ const builder = () => ({...lobby(),page:'builder',render_version:3,
   actions:{builder_back:button([300,8,82,44]),save_deck:button([8,792,180,44])}});
 const clone = value => structuredClone(value);
 function browser(report) {
-  const window = {orafoldQA:report}, frames = [];
-  const sandbox = vm.createContext({window,requestAnimationFrame:callback=>frames.push(callback)});
+  const window = {orafoldQA:report};
+  const sandbox = vm.createContext({window});
   // Exercise the exact functions Playwright serializes, with no module or
   // enclosing Node functions available in the browser's execution context.
   const stable = vm.runInContext('('+stableMigrationTarget.toString()+')',sandbox);
   const accepted = vm.runInContext('('+migrationActionAccepted.toString()+')',sandbox);
-  const publish = async next => {
-    window.orafoldQA = next;
-    for (const callback of frames.splice(0)) callback();
-    await Promise.resolve();
-  };
+  const publish = next => { window.orafoldQA = next; };
   return {window,stable,accepted,publish};
 }
 
-test('three distinct stable 44CSS reports permit one deliberate semantic builder navigation',async()=>{
-  const page = browser(lobby()), waiting = page.stable({id:'builder',viewport});
-  let ready = false;waiting.then(()=>{ready=true;});
-  await page.publish(clone(page.window.orafoldQA));
-  assert.equal(ready,false,'two reports are not yet a stable input target');
-  await page.publish(clone(page.window.orafoldQA));
-  const before = await waiting;
+test('three distinct stable 44CSS reports permit one deliberate semantic builder navigation',()=>{
+  const page = browser(lobby()), sample = {id:'builder',viewport};
+  assert.equal(page.stable(sample),false);
+  page.publish(clone(page.window.orafoldQA));
+  assert.equal(page.stable(sample),false,'two reports are not yet a stable input target');
+  page.publish(clone(page.window.orafoldQA));
+  const before = page.stable(sample);
   assert.equal(before,page.window.orafoldQA);
   assert.equal(page.accepted({id:'builder',before}),false,'readiness alone never acknowledges a touch');
   let taps = 0;
@@ -43,18 +39,20 @@ test('three distinct stable 44CSS reports permit one deliberate semantic builder
   assert.equal(taps,1);
 });
 
-test('re-reading one report on multiple frames never counts as fresh stability',async()=>{
-  const report = lobby(), page = browser(report), waiting = page.stable({id:'builder',viewport});
-  let settled = false;waiting.then(()=>{settled=true;});
-  for (let frame=0;frame<8;frame++) await page.publish(report);
-  assert.equal(settled,false);
-  await page.publish(clone(report));
-  assert.equal(settled,false);
-  await page.publish(clone(report));
-  assert.equal(await waiting,page.window.orafoldQA);
+test('re-reading one report on multiple polls never counts as fresh stability',()=>{
+  const report = lobby(), second = clone(report), page = browser(report), sample = {id:'builder',viewport};
+  for (let poll=0;poll<8;poll++) assert.equal(page.stable(sample),false);
+  page.publish(second);
+  assert.equal(page.stable(sample),false);
+  for (const duplicate of [report,second,report,second]) {
+    page.publish(duplicate);
+    assert.equal(page.stable(sample),false,'nonconsecutive duplicate reports do not count');
+  }
+  page.publish(clone(report));
+  assert.equal(page.stable(sample),page.window.orafoldQA);
 });
 
-test('any page, modal, render, modal epoch or exact target rectangle change rejects readiness',async()=>{
+test('any page, modal, render, modal epoch or exact target rectangle change resets readiness',()=>{
   for (const mutate of [
     report=>{report.page='settings';},report=>{report.modal=true;},
     report=>{report.render_version++;},report=>{report.modal_version++;},
@@ -62,12 +60,82 @@ test('any page, modal, render, modal epoch or exact target rectangle change reje
     report=>{delete report.actions.builder;},
   ]) {
     for (const changedSample of [1,2]) {
-      const page = browser(lobby()), waiting = page.stable({id:'builder',viewport});
-      if (changedSample === 2) await page.publish(clone(page.window.orafoldQA));
-      const changed = clone(page.window.orafoldQA);mutate(changed);await page.publish(changed);
-      assert.equal(await waiting,false);
+      const page = browser(lobby()), sample = {id:'builder',viewport};
+      assert.equal(page.stable(sample),false);
+      if (changedSample === 2) {
+        page.publish(clone(page.window.orafoldQA));
+        assert.equal(page.stable(sample),false);
+      }
+      const changed = clone(page.window.orafoldQA);mutate(changed);page.publish(changed);
+      assert.equal(page.stable(sample),false);
     }
   }
+});
+
+test('the serialized stable predicate returns synchronous false or the actual report on every path',()=>{
+  const page = browser(lobby()), sample = {id:'builder',viewport};
+  const poll = target => {
+    const result = page.stable(target);
+    assert.notEqual(typeof result?.then,'function','Playwright must receive a synchronous predicate result');
+    assert(result === false || result === page.window.orafoldQA);
+    return result;
+  };
+  for (const target of [undefined,null,{}, {id:'builder'}, {id:'builder',viewport:{width:0,height:844}}]) {
+    assert.equal(poll(target),false);
+  }
+  assert.equal(poll(sample),false);
+  assert.equal(poll(sample),false,'duplicate report remains a synchronous false');
+  page.publish(undefined);assert.equal(poll(sample),false);
+  page.publish(lobby());assert.equal(poll(sample),false);
+  const changed = lobby();changed.render_version++;
+  page.publish(changed);assert.equal(poll(sample),false);
+  page.publish(clone(changed));assert.equal(poll(sample),false);
+  page.publish(clone(changed));assert.equal(poll(sample),page.window.orafoldQA);
+});
+
+test('unstable reports recover only after three fresh reports in the new exact context',()=>{
+  for (const mutate of [
+    report=>{report.page='settings';},report=>{report.modal=true;},
+    report=>{report.render_version++;},report=>{report.modal_version++;},
+    report=>{report.actions.builder.rect[1]+=.01;},
+  ]) {
+    const page = browser(lobby()), sample = {id:'builder',viewport};
+    assert.equal(page.stable(sample),false);
+    page.publish(clone(page.window.orafoldQA));assert.equal(page.stable(sample),false);
+    const changed = clone(page.window.orafoldQA);mutate(changed);
+    const bytes = JSON.stringify(changed);
+    Object.freeze(changed.actions.builder.rect);Object.freeze(changed.actions.builder);
+    Object.freeze(changed.actions);Object.freeze(changed);
+    page.publish(changed);assert.equal(page.stable(sample),false);
+    assert.equal(page.stable(sample),false,'the changed object is only one observation');
+    page.publish(clone(changed));assert.equal(page.stable(sample),false);
+    page.publish(clone(changed));assert.equal(page.stable(sample),page.window.orafoldQA);
+    assert.equal(JSON.stringify(changed),bytes,'the predicate never changes observed reports');
+  }
+});
+
+test('forever-changing or missing reports never become ready and invalid samples clear progress',()=>{
+  const page = browser(lobby()), sample = {id:'builder',viewport:{...viewport}};
+  for (let poll=0;poll<50;poll++) {
+    const changing = lobby();changing.render_version=poll+1;
+    page.publish(changing);assert.equal(page.stable(sample),false);
+  }
+  for (let cycle=0;cycle<8;cycle++) {
+    for (let poll=0;poll<2;poll++) {
+      page.publish(lobby());assert.equal(page.stable(sample),false);
+    }
+    page.publish(cycle%2 ? undefined : {...lobby(),actions:{}});
+    assert.equal(page.stable(sample),false,'a missing report or target clears prior observations');
+  }
+  for (let poll=0;poll<2;poll++) {
+    page.publish(lobby());assert.equal(page.stable(sample),false);
+  }
+  sample.viewport.width=0;assert.equal(page.stable(sample),false);
+  sample.viewport.width=viewport.width;
+  for (let poll=0;poll<2;poll++) {
+    page.publish(lobby());assert.equal(page.stable(sample),false);
+  }
+  page.publish(lobby());assert.equal(page.stable(sample),page.window.orafoldQA);
 });
 
 test('the captured WebKit lobby render advance cannot acknowledge the rejected builder touch',()=>{
@@ -86,17 +154,20 @@ test('the captured WebKit lobby render advance cannot acknowledge the rejected b
   assert.equal(JSON.stringify(captured),bytes,'polling never changes the actual reports');
 });
 
-test('missing, malformed, disabled, undersized and out-of-viewport targets never become ready',async()=>{
+test('missing, malformed, disabled, undersized and out-of-viewport targets never become ready',()=>{
   for (const report of [undefined,null,{}, {...lobby(),modal:undefined}, {...lobby(),render_version:undefined},
     {...lobby(),modal_version:undefined}, {...lobby(),actions:{}},
     ...[button([12,218,366,43]),button([12,218,43,44]),button([-1,218,366,44]),
       button([12,802,366,44]),button([12,218,380,44]),button([12,218,NaN,44]),
       {rect:[12,218,366,44]},button([12,218,366,44],true)].map(action=>({...lobby(),actions:{builder:action}}))]) {
-    const page = browser(report);
-    for (let poll=0;poll<3;poll++) assert.equal(await page.stable({id:'builder',viewport}),false);
+    const page = browser(report), sample = {id:'builder',viewport};
+    for (let poll=0;poll<8;poll++) {
+      page.publish(clone(report));
+      assert.equal(page.stable(sample),false);
+    }
   }
-  for (const target of [undefined,{}, {id:''}, {id:'builder'}, {id:'builder',viewport:{width:0,height:844}}]) {
-    assert.equal(await browser(lobby()).stable(target),false);
+  for (const target of [undefined,null,false,1,{}, {id:''}, {id:'builder'}, {id:'builder',viewport:{width:0,height:844}}]) {
+    assert.equal(browser(lobby()).stable(target),false);
   }
 });
 
@@ -116,13 +187,14 @@ test('builder completion requires actual builder controls but leaves exact deck 
     'the original exact deck assertion fails immediately; readiness never waits for expected deck values');
 });
 
-test('old and modern report formats both stabilize without requiring modern clip or density fields',async()=>{
+test('old and modern report formats both stabilize without requiring modern clip or density fields',()=>{
   for (const modern of [false,true]) {
     const report = lobby();
     if (modern) {report.density=3;report.layout_size=[1170,2532];report.action_visibility={builder:{clip_rect:[8,8,374,828],visible_rect:[12,218,366,44]}};}
-    const page = browser(report), waiting = page.stable({id:'builder',viewport});
-    await page.publish(clone(report));await page.publish(clone(report));
-    assert.equal((await waiting).page,'lobby');
+    const page = browser(report), sample = {id:'builder',viewport};
+    assert.equal(page.stable(sample),false);
+    page.publish(clone(report));assert.equal(page.stable(sample),false);
+    page.publish(clone(report));assert.equal(page.stable(sample).page,'lobby');
   }
 });
 

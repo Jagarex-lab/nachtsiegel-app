@@ -217,6 +217,8 @@ jobs:
           mkdir -p "work/alpha"
           npm install --no-save --package-lock=false playwright@1.65.0 2>&1 | tee "work/alpha/browser-install-${{ matrix.engine }}.log"
           python3 tools/ci/install_dependencies.py --log work/alpha/browser-install-${{ matrix.engine }}.log playwright node_modules/.bin/playwright ${{ matrix.engine }}
+      - name: Verify actual Playwright polling before game journeys
+        run: node --test tests/production/playwright_polling.test.cjs
       - name: Serve the three tested builds
         run: |
           python3 -m http.server 8765 --bind 127.0.0.1 --directory work/build/archive-web > work/http.log 2>&1 &

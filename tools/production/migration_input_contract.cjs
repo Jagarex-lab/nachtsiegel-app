@@ -1,9 +1,14 @@
 'use strict';
 // Playwright serializes these functions into both actual runtimes. Keep them
 // self-contained and read-only: QA reports are observations, never input hooks.
-async function stableMigrationTarget({id,viewport} = {}) {
+function stableMigrationTarget(sample = {}) {
+  if (!sample || typeof sample !== 'object') return false;
+  const {id,viewport} = sample;
   if (typeof id !== 'string' || !id || !Number.isFinite(viewport?.width) ||
-      !Number.isFinite(viewport?.height) || viewport.width <= 0 || viewport.height <= 0) return false;
+      !Number.isFinite(viewport?.height) || viewport.width <= 0 || viewport.height <= 0) {
+    delete sample._migrationTarget;
+    return false;
+  }
   const ready = report => {
     const action = report?.actions?.[id], rect = action?.rect;
     return typeof report?.page === 'string' && report.page.length > 0 &&
@@ -13,25 +18,28 @@ async function stableMigrationTarget({id,viewport} = {}) {
       rect[2] >= 43.9 && rect[3] >= 43.9 && rect[0] >= -.1 && rect[1] >= -.1 &&
       rect[0]+rect[2] <= viewport.width+1 && rect[1]+rect[3] <= viewport.height+1;
   };
-  let previous = window.orafoldQA;
-  if (!ready(previous)) return false;
-  // The game replaces its report every ~100ms. Re-reading the same object on
-  // three animation frames would miss its deferred startup/viewport render.
-  for (let sample=1; sample<3; sample++) {
-    const current = await new Promise(resolve => {
-      const fresh = () => {
-        const report = window.orafoldQA;
-        if (report !== previous) resolve(report);
-        else requestAnimationFrame(fresh);
-      };
-      requestAnimationFrame(fresh);
-    });
-    if (!ready(current) || current.page !== previous.page || current.modal !== previous.modal ||
-        current.render_version !== previous.render_version || current.modal_version !== previous.modal_version ||
-        current.actions[id].rect.some((value,index) => value !== previous.actions[id].rect[index])) return false;
-    previous = current;
+  const current = window.orafoldQA;
+  if (!ready(current)) {
+    delete sample._migrationTarget;
+    return false;
   }
-  return previous;
+  const previous = sample._migrationTarget, rect = current.actions[id].rect;
+  // Playwright retains the argument between synchronous polls. Keep our
+  // observations there: an async predicate can resolve a false value as a
+  // completed wait. QA reports remain read-only, including their rectangles.
+  if (!previous || previous.id !== id || previous.width !== viewport.width || previous.height !== viewport.height ||
+      current.page !== previous.page || current.modal !== previous.modal ||
+      current.render_version !== previous.render_version || current.modal_version !== previous.modal_version ||
+      rect.some((value,index) => value !== previous.rect[index])) {
+    sample._migrationTarget = {id,width:viewport.width,height:viewport.height,
+      page:current.page,modal:current.modal,render_version:current.render_version,modal_version:current.modal_version,
+      rect:rect.slice(),reports:[current]};
+    return false;
+  }
+  // The game replaces its report every ~100ms. Re-reading one object cannot
+  // establish freshness or hide its deferred startup/viewport render.
+  if (previous.reports.length < 3 && !previous.reports.includes(current)) previous.reports.push(current);
+  return previous.reports.length >= 3 ? current : false;
 }
 
 function migrationActionAccepted({id,before} = {}) {

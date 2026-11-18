@@ -277,6 +277,27 @@ class Safety(unittest.TestCase):
         self.assertEqual(jobs['preflight']['steps'][0]['with']['ref'],'${{ github.sha }}')
         self.assertEqual(publish['steps'][0]['with']['ref'],'${{ needs.preflight.outputs.commit }}')
 
+    def test_actual_playwright_polling_is_mandatory_before_both_browser_journeys(self):
+        job=workflows()['web-preview.yml']['jobs']['browser']
+        self.assertEqual(job['strategy']['matrix']['engine'],['chromium','webkit'])
+        self.assertEqual(job['strategy']['fail-fast'],'false')
+        self.assertEqual(job['timeout-minutes'],'75','the original complete-browser budget is retained')
+        self.assertEqual(job['env']['QA_ENGINES'],'${{ matrix.engine }}')
+        steps=job['steps']
+        index=next(i for i,step in enumerate(steps) if step.get('run')=='node --test tests/production/playwright_polling.test.cjs')
+        self.assertNotIn('if',steps[index])
+        self.assertNotIn('continue-on-error',steps[index])
+        install=next(i for i,step in enumerate(steps) if 'playwright@1.65.0' in step.get('run',''))
+        serve=next(i for i,step in enumerate(steps) if step.get('name')=='Serve the three tested builds')
+        self.assertLess(install,index)
+        self.assertLess(index,serve)
+        for name in ['Archive tutorial, saved reload and collection browser regression',
+                     'Complete Alpha browser duels and replay',
+                     'Mobile orientation, Retina and deckbuilder browser regression',
+                     'Actual previous-version upgrade, stale-tab write and storage quota regression',
+                     'Master card system and battlefield opening browser regression']:
+            self.assertTrue(any(step.get('name')==name for step in steps),name)
+
     def test_tested_artifact_rechecks_and_public_evidence_hash_are_wired(self):
         release=workflows()['pages-release.yml'];jobs=release['jobs']
         self.assertEqual(jobs['preflight']['outputs'],{

@@ -90,6 +90,18 @@ passend gemachte Deckliste. Die erfassten Zustände sind verpflichtende
 Regressionen. Produkt- und Speicherlogik bleiben unverändert; neue vollständige
 Browserläufe müssen die korrigierten Treiber erst bestätigen.
 
+Die erneute Merge-QA auf `d7efe2c` erkannte im Chromium-Job `134544942911`
+eine weitere Lücke des Treibers: Playwright `1.65.0` kann das `false`-Ergebnis
+eines asynchronen Poll-Callbacks als fertigen Handle zurückgeben. Der Aufrufer
+erwartete dagegen bereits einen Zielbericht. Ein Minimalfall mit der echten
+Playwright-API hat dieses Verhalten unabhängig vom Spiel reproduziert. Die
+Zielprüfung arbeitet deshalb synchron und zählt frische Berichte ausschließlich
+im serialisierten Poll-Argument. Zusätzlich zu den VM-Regressionen prüfen beide
+CI-Browser die tatsächliche `waitForFunction`-Semantik auf einer klar getrennten
+Testseite vor den Spielabläufen. Fehlende oder wechselnde Berichte müssen dort
+weiterhin einen echten Timeout erzeugen. Der fehlgeschlagene Merge-Lauf bleibt
+dokumentiert und darf keine Veröffentlichung freigeben.
+
 ```sh
 python3 -W error::ResourceWarning -m unittest discover -s tests/release -v
 python3 -m unittest discover -s tests/ci -v
