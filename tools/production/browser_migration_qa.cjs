@@ -9,6 +9,7 @@ const path=require('node:path');
 const http=require('node:http');
 const crypto=require('node:crypto');
 const {nativeCapture}=require('../premium/native_capture_contract.cjs');
+const {stableMigrationTarget,migrationActionAccepted}=require('./migration_input_contract.cjs');
 const ROOT=path.resolve(__dirname,'../..');
 const OUTPUT=path.resolve(ROOT,process.env.MIGRATION_OUTPUT||'work/production-browser-migration');
 const OLD=path.resolve(ROOT,process.env.MIGRATION_OLD_BUILD||'work/production/before-web');
@@ -140,19 +141,23 @@ async function run(engineName,baseURL,expectedCommit){
    equal(buffer.readUInt32BE(16),viewport.width*factor,'native screenshot width '+tag);equal(buffer.readUInt32BE(20),viewport.height*factor,'native screenshot height '+tag);
    check(buffer.length>20000,'actual rendered screenshot '+tag);fs.writeFileSync(path.join(OUTPUT,filename),buffer);shots.push({file:filename,bytes:buffer.length,sha256:sha256(buffer)});
   }
-  async function action(id){
-   await page.bringToFront();progress('action '+id);
-   await wait(key=>{const action=window.orafoldQA?.actions?.[key];return action&&!action.disabled;},id);
-   let before=await q();
-   for(let attempt=0;attempt<16&&!inside(before.actions[id]?.rect,page.viewportSize());attempt++){
-    const rect=before.actions[id].rect,viewport=page.viewportSize();
-    await page.mouse.move(Math.max(1,Math.min(viewport.width-1,rect[0]+rect[2]/2)),viewport.height*.62);
-    await page.mouse.wheel(0,rect[1]<0?-viewport.height*.55:viewport.height*.55);await page.waitForTimeout(140);before=await q();
+  async function trustedAction(target,id,old=false){
+   await target.bringToFront();
+   const deadline=Date.now()+TIMEOUT;
+   const inputWait=(predicate,arg)=>target.waitForFunction(predicate,arg,{timeout:Math.max(1,deadline-Date.now())});
+   await inputWait(key=>{const action=window.orafoldQA?.actions?.[key];return action&&!action.disabled;},id);
+   let before=await target.evaluate(()=>window.orafoldQA);
+   for(let attempt=0;attempt<16&&!inside(before?.actions?.[id]?.rect,target.viewportSize());attempt++){
+    const rect=before?.actions?.[id]?.rect,viewport=target.viewportSize();if(!Array.isArray(rect))break;
+    await target.mouse.move(Math.max(1,Math.min(viewport.width-1,rect[0]+rect[2]/2)),viewport.height*.62);
+    await target.mouse.wheel(0,rect[1]<0?-viewport.height*.55:viewport.height*.55);await target.waitForTimeout(140);before=await target.evaluate(()=>window.orafoldQA);
    }
-   const rect=before.actions[id]?.rect;check(inside(rect,page.viewportSize()),'visible bounds for '+id);check(rect[2]>=43.9&&rect[3]>=43.9,'44CSS touch area for '+id);
-   await page.touchscreen.tap(rect[0]+rect[2]/2,rect[1]+rect[3]/2);
-   await wait(previous=>{const current=window.orafoldQA;return current.render_version>previous.render_version||current.modal_version!==previous.modal_version;},before);
+   const ready=await inputWait(stableMigrationTarget,{id,viewport:target.viewportSize()});before=await ready.jsonValue();await ready.dispose();
+   const rect=before.actions[id].rect;check(inside(rect,target.viewportSize()),(old?'old-tab visible action ':'visible bounds for ')+id);check(rect[2]>=43.9&&rect[3]>=43.9,(old?'old-tab action44CSS ':'44CSS touch area for ')+id);
+   await target.touchscreen.tap(rect[0]+rect[2]/2,rect[1]+rect[3]/2);
+   await inputWait(migrationActionAccepted,{id,before});
   }
+  async function action(id){progress('action '+id);await trustedAction(page,id);}
   async function boot(phase){
    await page.bringToFront();const url=new URL(baseURL);url.searchParams.set('qa','1');url.searchParams.set('migration_phase',phase);
    await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');
@@ -225,9 +230,7 @@ async function run(engineName,baseURL,expectedCommit){
   progress('write from old tab whose filesystem predates version2');
   try{
    async function oldAction(id){
-    await oldTab.bringToFront();await oldTab.waitForFunction(key=>window.orafoldQA?.actions?.[key]&&!window.orafoldQA.actions[key].disabled,id,{timeout:TIMEOUT});
-    const before=await oldTab.evaluate(()=>window.orafoldQA),rect=before.actions[id].rect;check(inside(rect,oldTab.viewportSize()),'old-tab visible action '+id);check(rect[2]>=43.9&&rect[3]>=43.9,'old-tab action44CSS '+id);
-    await oldTab.touchscreen.tap(rect[0]+rect[2]/2,rect[1]+rect[3]/2);await oldTab.waitForFunction(previous=>{const now=window.orafoldQA;return now.render_version>previous.render_version||now.modal_version!==previous.modal_version;},before,{timeout:TIMEOUT});
+    await trustedAction(oldTab,id,true);
    }
    await oldAction('settings');await oldAction('motion');
    const oldWritten=await waitProfile(oldTab,data=>data?.version===1&&data.reduced_motion!==oldProfile.reduced_motion,'actual stale old tab write',LEGACY_PROFILE);

@@ -3,6 +3,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {chromium,webkit,devices}=require('playwright');
 const {verifyExecutables,fetchReleaseEvidence}=require('./public_integrity.cjs');
+const {stableMigrationTarget,migrationActionAccepted}=require('../production/migration_input_contract.cjs');
 const output='work/release-public';fs.mkdirSync(output,{recursive:true});
 const candidate=JSON.parse(process.env.RELEASE_CANDIDATE||'null');
 assert(candidate?.schema===1&&candidate.repository==='Jagarex-lab/nachtsiegel-app','trusted candidate required');
@@ -43,9 +44,15 @@ async function getJSON(name){
    for(const id of ['start','campaign','builder','collection','economy','online','settings'])assert(state.actions[id],`live main entry ${id}`);
    assert.equal(state.portrait,false,'landscape boot must not have a blocking orientation guide');
    assert.deepEqual(await page.evaluate(()=>fetch('build-info.json',{cache:'no-store'}).then(response=>response.json())),info,'runtime and HTTP source match');
-   const action=state.actions.start;assert(!action.disabled&&action.rect[2]>=44&&action.rect[3]>=44,'play has an actual touch target');
+   const navigationDeadline=Date.now()+60000;
+   const ready=await page.waitForFunction(stableMigrationTarget,{id:'start',viewport:page.viewportSize()},{timeout:60000});
+   let settled;try{settled=await ready.jsonValue();}finally{await ready.dispose();}
+   assert.equal(settled.page,'lobby','the final touch snapshot belongs to the actual main menu');
+   assert.equal(settled.modal,false,'the main menu has no blocking dialog');
+   const action=settled.actions.start;assert(!action.disabled&&action.rect[2]>=44&&action.rect[3]>=44,'play has an actual touch target');
+   assert(Date.now()<navigationDeadline,'the existing navigation deadline still permits the single touch');
    await page.touchscreen.tap(action.rect[0]+action.rect[2]/2,action.rect[1]+action.rect[3]/2);
-   await page.waitForFunction(()=>window.orafoldQA?.page==='decks',undefined,{timeout:60000});
+   await page.waitForFunction(migrationActionAccepted,{id:'start',before:settled},{timeout:Math.max(1,navigationDeadline-Date.now())});
    const decks=await page.evaluate(()=>window.orafoldQA);
    assert.equal(Object.keys(decks.actions).filter(id=>id.startsWith('choose_')).length,4,'four live starter decks');
    await page.screenshot({path:`${output}/${engine}-live-starters.png`});

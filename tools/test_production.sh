@@ -5,6 +5,9 @@ cd "$(dirname "$0")/.."
 mkdir -p work/production work/xdg/{data,config,cache}
 export XDG_DATA_HOME="$PWD/work/xdg/data" XDG_CONFIG_HOME="$PWD/work/xdg/config" XDG_CACHE_HOME="$PWD/work/xdg/cache"
 export LP_NUM_THREADS="${LP_NUM_THREADS:-2}"
+node --check tools/production/migration_input_contract.cjs
+node --check tools/production/browser_migration_qa.cjs
+node --test tests/production/migration_input_contract.test.cjs
 python3 tools/production/build_catalog.py --check
 python3 tools/production/build_starters.py --check
 python3 tools/production/build_test_decks.py --check

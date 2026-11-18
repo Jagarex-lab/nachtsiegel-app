@@ -1,6 +1,17 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),http=require('node:http'),crypto=require('node:crypto');
 const {requiredFiles,verifyExecutables,fetchReleaseEvidence}=require('../../tools/release/public_integrity.cjs');
+test('public browser probe waits for a fresh real touch target and semantic navigation within one deadline',()=>{
+ const source=require('node:fs').readFileSync(require('node:path').join(__dirname,'../../tools/release/public_probe.cjs'),'utf8');
+ assert(source.includes("const {stableMigrationTarget,migrationActionAccepted}=require('../production/migration_input_contract.cjs');"));
+ assert(source.includes("page.waitForFunction(stableMigrationTarget,{id:'start',viewport:page.viewportSize()},{timeout:60000})"));
+ assert(source.includes('const action=settled.actions.start;'));
+ assert.equal((source.match(/page\.touchscreen\.tap\(/g)||[]).length,1,'only one deliberate touch per browser');
+ assert(source.indexOf('page.waitForFunction(stableMigrationTarget')<source.indexOf('page.touchscreen.tap('));
+ assert(source.indexOf('page.touchscreen.tap(')<source.indexOf('page.waitForFunction(migrationActionAccepted'));
+ assert(source.includes("{id:'start',before:settled},{timeout:Math.max(1,navigationDeadline-Date.now())}"));
+ assert(source.includes('const navigationDeadline=Date.now()+60000;'),'existing navigation budget is shared, not extended');
+});
 const sha=value=>crypto.createHash('sha256').update(value).digest('hex');
 async function server(run){
  const bodies={'index.html':'<html>exact candidate</html>','build-info.json':'{"commit":"candidate"}','orafold-a.js':'exact entry script','orafold-a.pck':'exact packed game','orafold-a.wasm':'exact executable','manifest.webmanifest':'{"display":"standalone"}'};

@@ -71,6 +71,25 @@ bleibt fehlgeschlagen. Die getrennten Installationsphasen ändern keine
 Spiel-, Touch-, Audio- oder Browser-Testzeitgrenzen und ersetzen keine
 fehlgeschlagene QA durch einen Erfolg.
 
+Zwei weitere fehlgeschlagene WebKit-Läufe auf `60baaaa` bleiben ebenfalls als
+Fehlversuche erhalten. Im Kampagnenjob `134494300084` war die tatsächliche
+Übersicht bereits angezeigt, aber der getrennte Kampagnenbericht noch nicht vorhanden;
+der alte Poll-Callback warf sofort einen `TypeError`. Die neue serialisierbare
+Wartebedingung verlangt beide Berichte, den richtigen Kontext und Bildschirm
+sowie bei Kämpfen einen tatsächlich vorhandenen Kampfzustand.
+
+Im Migrationsjob `134494017498` zeigte der erfasste Fehlerzustand dagegen noch
+`page=lobby`, Menüaktionen und `render_version=2`. Die leere Deckliste war ein
+Menübericht nach einem verworfenen frühen Tap, kein Nachweis eines gelöschten
+Spielstands; die unabhängige gespeicherte Version-2-Datei war davor bytegenau
+korrekt. Der Treiber wartet vor seinem einzigen Touch auf frische stabile
+Zielgeometrie und danach auf die tatsächliche Navigation. Die genaue
+30-Karten-, Speicher-, neue-Karten-ID- und Partiestartprüfung bleibt bestehen;
+es gibt keine Wiederholung des Taps bis zum Erfolg und kein Warten auf eine
+passend gemachte Deckliste. Die erfassten Zustände sind verpflichtende
+Regressionen. Produkt- und Speicherlogik bleiben unverändert; neue vollständige
+Browserläufe müssen die korrigierten Treiber erst bestätigen.
+
 ```sh
 python3 -W error::ResourceWarning -m unittest discover -s tests/release -v
 python3 -m unittest discover -s tests/ci -v
