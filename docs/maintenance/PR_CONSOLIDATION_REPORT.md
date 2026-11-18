@@ -2,19 +2,40 @@
 
 ## Ergebnis für den Projektinhaber
 
-**Aktueller Nachtrag vor Integration des letzten Wartungs-PRs:** develop119ceb,
-öffentlich6c99. Die drei zusätzlich erforderlichen Wartungs-PRs sind in der
-Tabelle separat erfasst; die ursprünglichen sieben bleiben C5/D2 abgeschlossen.
-Der endgültige aktuelle Merge-, QA- und Live-Nachweis steht nach tatsächlicher
-Ausführung im [Abschlusskommentar von PR #35](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35#issuecomment-6985608488)
-sowie den unten verlinkten öffentlichen Provenienzdateien. Dieser datierte
-Quellstand behauptet keinen zukünftigen eigenen Commit-Hash oder Release.
+**Verifizierter Bearbeitungsstand am 18.11.2026, 19:02 UTC:** Alle sieben
+ursprünglichen PRs sind geschlossen; die drei notwendigen Wartungs-PRs #32,
+#34 und #35 wurden nach erfolgreicher eigener Head-QA regulär integriert.
+Aktueller develop-Commit ist
+`d7b34e78b6b8b79c69d8d00f90cd4811449c9897`, Baum
+`04316d5ed7d6e1af9af6254755b9360c85349dea`.
+Seine frische Merge-QA ist zu diesem Zeitpunkt mit 28/29 erfolgreichen
+Pflichtjobs noch nicht vollständig: Main-Chromium läuft, Alpha einschließlich
+beider Browser ist erfolgreich. Es gibt keinen fehlgeschlagenen Pflichtjob.
+Bis zu einem tatsächlich erfolgreichen Publish und öffentlicher Prüfung bleibt
+der zuletzt bestätigte Live-Commit
+`6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f`.
+
+Dieser abschließende Berichtsnachtrag ändert ausschließlich Dokumentation.
+Sein eigener PR ist beim Verfassen noch nicht angelegt oder integriert.
+Auch für ihn sind vollständige Head-QA, regulärer Merge, neue QA auf dem
+exakten Merge-Commit und die bestehende automatische Veröffentlichung
+verpflichtend. Der endgültige aktuelle Merge-, QA- und Live-Nachweis wird nach
+tatsächlicher Ausführung im stabilen
+[Abschlusskommentar von PR #35](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35#issuecomment-6985608488)
+einschließlich Verweis auf den Berichts-PR und in den unten verlinkten
+öffentlichen Provenienzdateien dokumentiert. Ein Quellcommit kann seinen
+eigenen späteren Merge-Hash nicht enthalten; daraus entsteht keine Ausnahme
+von der Pflicht zu neuen, exakt zugeordneten QA-Nachweisen.
 
 Alle **sieben ursprünglich offenen PRs** wurden geprüft und mit begründetem
 Abschlusskommentar **ohne zusätzlichen Merge geschlossen**: fünf bereits
-integriert, zwei durch die heutige Produktion abgelöst. **38 Branches** und
-alle **571 PR-/Dateiänderungen** sind erfasst. Kein Branch wurde gelöscht;
-historische Bilder, Herkunft, Lizenzen und Prüfnachweise bleiben erhalten.
+integriert, zwei durch die heutige Produktion abgelöst. **38 ursprüngliche
+Branches** und alle **571 PR-/Dateiänderungen** sind erfasst. Die
+Abschlusskontrolle fand **41 Branches**: alle ursprünglichen 38 bleiben
+erhalten, die 37 ursprünglichen Nicht-develop-Heads sind unverändert; drei
+neue Wartungsbranches entsprechen genau den integrierten PRs #32/#34/#35.
+Kein Branch wurde gelöscht; historische Bilder, Herkunft, Lizenzen und
+Prüfnachweise bleiben erhalten.
 
 | PR | Zweck | Entscheidung | Begründung | CI | Endstatus |
 | --- | --- | --- | --- | --- | --- |
@@ -23,31 +44,45 @@ historische Bilder, Herkunft, Lizenzen und Prüfnachweise bleiben erhalten.
 | [#7](https://github.com/Jagarex-lab/nachtsiegel-app/pull/7) | Legacy P07 | C – BEREITS INTEGRIERT | Gesamte Commit-Kette vorhanden; 35/40 Dateien identisch. | Zwei historische Checks erfolgreich; Deployment übersprungen. | Geschlossen, kein neuer Merge. |
 | [#11](https://github.com/Jagarex-lab/nachtsiegel-app/pull/11) | Trigger-Bridge | C – BEREITS INTEGRIERT | Beide Patches exakt übernommen; aktuelle Engine mit allen 16 Triggern weiterentwickelt. | Alter Head 12/12 grün; gezielte aktuelle Engine-/Umleitungstests ohne Fehler. | Geschlossen, kein zweiter Kernel. |
 | [#14](https://github.com/Jagarex-lab/nachtsiegel-app/pull/14) | Audio und 163 Originalclips | C – BEREITS INTEGRIERT | Alle drei Patches übernommen;369/380 Dateien identisch, elf verbessert. | Alter Head 12/13; historischer WebKit-Builderfehler bleibt dokumentiert. Aktueller Stand 6c99 separat grün. | Geschlossen, neuere Audioverbesserungen erhalten. |
-| [#15](https://github.com/Jagarex-lab/nachtsiegel-app/pull/15) | Konzept-/Art-Vorbereitung | D – ÜBERHOLT | Alte Pipeline ersetzt; kleine fehlende Brief-Prüfung gezielt in bestehende Pipeline portiert, Issue #31. | Alter Head 10/10; Ersatz lokal 38 Tests plus 550-Bild-Prüfung. Neue vollständige QA erforderlich. | Geschlossen; Piloten und alternative Entwürfe gesichert. |
+| [#15](https://github.com/Jagarex-lab/nachtsiegel-app/pull/15) | Konzept-/Art-Vorbereitung | D – ÜBERHOLT | Alte Pipeline ersetzt; kleine fehlende Brief-Prüfung gezielt mit #32 in bestehende Pipeline portiert. | Alter Head 10/10; Ersatz lokal 38 Tests plus 550-Bild-Prüfung, #32-Head26/26. | Geschlossen; Piloten und alternative Entwürfe gesichert; Issue #31 completed. |
 | [#26](https://github.com/Jagarex-lab/nachtsiegel-app/pull/26) | Alter manueller Release-Nachweis | D – ÜBERHOLT | Automatischer Release ersetzt die damaligen Eingaben; einzigartige Nachweise historisch archiviert. | Alter Head 22/22; keine Freigabe späterer Commits daraus abgeleitet. | Geschlossen; kein alter Publisher aktiviert. |
-
 | [#32](https://github.com/Jagarex-lab/nachtsiegel-app/pull/32) | Bericht/Archive und fehlende Brief-Bindung | A – MERGEN | Eigenständige Guard-Lücke aus #15 adaptiert, ohne alte Pipeline zu übernehmen. | Head26/26 erfolgreich; frische183192-QA durch fremde APT429 blockiert, nicht veröffentlicht. | Regulär als183192 integriert; Folgekorrekturen in #34. |
 | [#34](https://github.com/Jagarex-lab/nachtsiegel-app/pull/34) | CI-Quellen, Browser-Versionen, Test-Lebenszyklen | B – REPARIEREN UND MERGEN | Konkrete vier Fehlerklassen gezielt mit Quellen-/SDK-/Testkorrekturen behoben. | Finaler Head c45:27/27 erfolgreich; frischer Merge119ceb:26 erfolgreiche Einträge, Alpha-Nativ45m abgebrochen, Browser übersprungen; keine Releasefreigabe. | Regulär als119ceb integriert; Restkapazität in #35 gesichert. |
-| [#35](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35) | Vollständige native Alpha-Suite im endlichen Jobrahmen | B – REPARIEREN UND MERGEN | GitHub-Annotation beweist äußeres45m-Limit; gleicher Baum benötigte nach letztem Marker weitere12,91m. Nur äußerer Job75m, alle Tests/inneren Fristen unverändert. | Lokale54/50/88-Verträge und unabhängiges Workflowreview erfolgreich; eigene frische Head-/Merge-QA erforderlich. | Draft zum Zeitpunkt dieses Quellstands; endgültiger Status und Release im [Abschlussnachweis](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35#issuecomment-6985608488). |
+| [#35](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35) | Vollständige native Alpha-Suite im endlichen Jobrahmen | B – REPARIEREN UND MERGEN | GitHub-Annotation beweist äußeres45m-Limit; gleicher Baum benötigte nach letztem Marker weitere12,91m. Nur äußerer Job75m, alle Tests/inneren Fristen unverändert. | Finaler Head7eba:26/26 erfolgreich; frische d7-Merge-QA28/29 erfolgreich, Main-Chromium noch aktiv. | Regulär alsd7b34 integriert; Issue #33 completed. Release noch nicht nachgewiesen. |
+| [Abschließender Berichts-PR (dieser Nachtrag)](https://github.com/Jagarex-lab/nachtsiegel-app/tree/maintenance/consolidation-final-receipt) | Einheitliche vollständige Tabelle, aktuelle Zählung und Abschlussbelege | A – MERGEN nach erfolgreicher eigener QA | Nur diese Berichtsdatei; beseitigt getrennte Tabellen und überholte Ergebnisübersicht, erhält alle historischen Fehlernachweise. | Beim Verfassen noch ausstehend; eigene vollständige Head- und Merge-QA erforderlich. | Vorbereitet, noch nicht integriert; endgültiger PR und Status im [Abschlussnachweis](https://github.com/Jagarex-lab/nachtsiegel-app/pull/35#issuecomment-6985608488). |
 
-**Zählweise:** ursprünglich offen 7; ursprüngliche PRs neu gemergt 0;
-ursprüngliche PRs repariert/rebased 0; redundant geschlossen 5; als abgelöst
-geschlossen 2; ursprüngliche offene PRs 0; ursprüngliche Integrationsblocker 0.
-Ein zusätzliches, eng begrenztes Wartungspaket enthält Bericht, Archive und
-Ersatz der fehlenden Art-Prüfung. Seine Integration und sein Release benötigen
-eigene frische QA; sie werden nicht als bereits bestanden dargestellt.
+**Zählweise zum genannten Bearbeitungsstand:** ursprünglich offen **7**;
+davon **5 C / bereits integriert** und **2 D / abgelöst**, alle geschlossen
+ohne erneuten Merge. Zusätzlich **3 Wartungs-PRs regulär gemergt**, davon
+**2 B / repariert** (#34/#35); #32 ist ausschließlich A. Damit sind insgesamt
+**10 PRs abgeschlossen** und vor Anlage dieses Berichts-PRs **0 PRs offen**.
+Die Issues #31 und #33 sind closed/completed. Es bestehen **0 bekannte offene
+Integrationsblocker**; noch laufende QA und fehlender Publish-Nachweis sind
+ausstehende Freigabeschritte und werden nicht als bestanden gezählt.
 
-**Geprüfter develop- und tatsächlich veröffentlichter Ausgangscommit:**
+Nach erfolgreicher Integration dieses zusätzlichen Dokumentations-PRs lautet
+die abschließende Gesamtzählung **4 neue Merges, davon 2 repariert; 7 alte PRs
+geschlossen (C5/D2)**. Das ist hier ein ausdrücklich noch ausstehender
+Zielzustand, kein behaupteter Merge. Die tatsächlich erreichten Gesamtzahlen,
+offenen PRs, Merge- und Live-SHAs werden im verlinkten Abschlussnachweis
+erneut direkt über die API und öffentliche Anwendung bestätigt.
+
+**Historischer geprüfter und tatsächlich veröffentlichter Ausgangscommit:**
 `6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f`.
-Die bisherigen sieben Suiten mit 29 Pflichtjobs, öffentliche Chromium-/WebKit-
+Die damaligen sieben Suiten mit 29 Pflichtjobs, öffentliche Chromium-/WebKit-
 Prüfung und zusätzliche vollständige öffentliche KI-Partie mit Replay und
-Neustart gehören genau zu diesem Ausgangscommit. Die eigenen endgültigen
-Merge-/Release-SHAs dieses Wartungsberichts stehen anschließend im
-Abschlusskommentar seines PRs und im öffentlichen
+Neustart gehören genau zu diesem Ausgangscommit. Die endgültigen Merge-/
+Release-SHAs dieses Wartungsberichts stehen nach tatsächlicher Ausführung im
+stabilen PR-Abschlussnachweis und im öffentlichen
 [Release-Nachweis](https://jagarex-lab.github.io/nachtsiegel-app/release-evidence.json)
 sowie [Build-Nachweis](https://jagarex-lab.github.io/nachtsiegel-app/build-info.json).
 So wird kein eigener zukünftiger Commit-Hash vorweggenommen und keine alte QA
 auf einen neuen Commit übertragen.
+
+Die folgenden Fortschreibungen bewahren die jeweiligen damaligen Zustände,
+einschließlich fehlgeschlagener oder gesperrter Kandidaten. Ihre datierten
+Pending-Angaben ersetzen nicht die aktuelle Ergebnisübersicht oder den
+abschließenden, commitgebundenen Nachweis.
 
 ## Fortschreibung: Wartungsmerge und zusätzlicher CI-Provisionierungsblocker
 
