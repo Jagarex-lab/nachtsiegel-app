@@ -98,7 +98,17 @@ func _run() -> void:
 	var overview_text: Array = []
 	_collect_text(ui.main, overview_text)
 	check("\n".join(overview_text).contains("0 / 1"), "Overview completion count belongs to selected campaign")
-	ui.queue_free(); await settle()
+	var abandoned_owner = weakref(abandoned)
+	# The stale adapter was retained only to test replacement; release that test owner.
+	abandoned = null
+	var active_adapter_owner = weakref(ui.battle_adapter)
+	var active_session_owner = weakref(ui.battle_adapter.session)
+	var active_model_owner = weakref(ui.battle_adapter.model)
+	ui.queue_free(); ui = null; await settle()
+	check(active_adapter_owner.get_ref() == null, "Freeing presentation releases its active battle adapter")
+	check(active_session_owner.get_ref() == null, "Freeing presentation releases its active battle Session")
+	check(active_model_owner.get_ref() == null, "Freeing presentation releases its active production model")
+	check(abandoned_owner.get_ref() == null, "Test releases its deliberately retained abandoned adapter before shutdown")
 	for suffix in ["", ".bak", ".tmp"]:
 		if FileAccess.file_exists(path + suffix): DirAccess.remove_absolute(path + suffix)
 	print("ORAFOLD PRESENTATION: %d assertions, %d failures; immediate locale redraw, battle navigation, stale tokens and surrender return" % [assertions, failures])
