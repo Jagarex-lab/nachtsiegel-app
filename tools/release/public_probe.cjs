@@ -47,6 +47,7 @@ async function getJSON(name){
    const navigationDeadline=Date.now()+60000;
    const ready=await page.waitForFunction(stableMigrationTarget,{id:'start',viewport:page.viewportSize()},{timeout:60000});
    let settled;try{settled=await ready.jsonValue();}finally{await ready.dispose();}
+   assert(settled&&typeof settled==='object'&&settled.actions?.start,'Stable input must return the actual ready QA snapshot');
    assert.equal(settled.page,'lobby','the final touch snapshot belongs to the actual main menu');
    assert.equal(settled.modal,false,'the main menu has no blocking dialog');
    const action=settled.actions.start;assert(!action.disabled&&action.rect[2]>=44&&action.rect[3]>=44,'play has an actual touch target');

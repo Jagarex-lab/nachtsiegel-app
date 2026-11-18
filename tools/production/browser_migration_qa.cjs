@@ -153,6 +153,7 @@ async function run(engineName,baseURL,expectedCommit){
     await target.mouse.wheel(0,rect[1]<0?-viewport.height*.55:viewport.height*.55);await target.waitForTimeout(140);before=await target.evaluate(()=>window.orafoldQA);
    }
    const ready=await inputWait(stableMigrationTarget,{id,viewport:target.viewportSize()});before=await ready.jsonValue();await ready.dispose();
+   assert(before&&typeof before==='object'&&before.actions?.[id],'Stable input must return the actual ready QA snapshot');
    const rect=before.actions[id].rect;check(inside(rect,target.viewportSize()),(old?'old-tab visible action ':'visible bounds for ')+id);check(rect[2]>=43.9&&rect[3]>=43.9,(old?'old-tab action44CSS ':'44CSS touch area for ')+id);
    await target.touchscreen.tap(rect[0]+rect[2]/2,rect[1]+rect[3]/2);
    await inputWait(migrationActionAccepted,{id,before});

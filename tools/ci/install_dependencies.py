@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Bounded CI dependency setup with one official Ubuntu mirror fallback.
+"""Bounded CI dependency setup using official Ubuntu HTTPS mirrors on GitHub.
 
-Normal mirrors are always tried first. System dependencies and browser download
-each have their own bounded deadline. Playwright's public install-deps then
+GitHub Actions Ubuntu runners with a regular mirrorlist use official HTTPS on
+the first attempt; other environments retain normal mirrors first. System
+dependencies and browser download each have their own bounded deadline.
+Playwright's public install-deps then
 install commands retain the same dependencies and host validation as --with-deps;
 neither GPG/TLS nor host checks are disabled. Temporary APT settings are restored
 before browser download. No repository setting, publisher or credential changes.
@@ -77,7 +79,7 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
         def emit(text):
             print(text,end='' if text.endswith('\n') else '\n',flush=True)
             log.write(text+('' if text.endswith('\n') else '\n'));log.flush()
-        emit('CI dependency setup: normal mirrors first; at most one official fallback.')
+        emit('CI dependency setup: at most two system attempts; official Ubuntu HTTPS first on supported GitHub Actions runners.')
         if mode=='playwright':
             if len(arguments)<2 or not Path(arguments[0]).is_file() or any(browser not in ('chromium','webkit','firefox') for browser in arguments[1:]):
                 emit('Invalid Playwright binary or browser selection.');return 2
@@ -91,6 +93,7 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
         else:emit('Unknown installer mode.');return 2
         if not 0<timeout<=600:emit('Attempt timeout must be positive and no more than600seconds.');return 2
         ubuntu=os_release.is_file() and any(line.strip() in ('ID=ubuntu','ID="ubuntu"') for line in os_release.read_text().splitlines())
+        github_actions=os.environ.get('GITHUB_ACTIONS')=='true'
         mirror=apt_root/'apt-mirrors.txt'
         configuration=apt_root/'apt.conf.d'/f'99-orafold-playwright-{os.getpid()}.conf'
         def system_dependencies():
@@ -102,21 +105,32 @@ def install(mode, arguments, log_path, *, timeout=300, apt_root=Path('/etc/apt')
                         source=temporary/'limits.conf';source.write_text(APT_LIMITS)
                         owned_configuration=True
                         root_command(['install','-m','0644',str(source),str(configuration)])
-                    emit('Attempt1: original mirror configuration; required dependencies remain enabled.')
+                    supported_mirror=ubuntu and mirror.is_file() and not mirror.is_symlink()
+                    official_first=github_actions and supported_mirror
+                    def select_official_mirrors():
+                        nonlocal changed_mirror
+                        backup=temporary/'original-mirrors.txt'
+                        root_command(['cp','-p',str(mirror),str(backup)])
+                        official=temporary/'official-mirrors.txt';official.write_text(OFFICIAL_MIRRORS)
+                        changed_mirror=True
+                        root_command(['cp',str(official),str(mirror)])
+                    if official_first:
+                        select_official_mirrors()
+                        emit('Attempt1: official Ubuntu archive/security HTTPS mirrors; GitHub Actions Ubuntu regular mirrorlist avoids slow runner HTTP mirrors. Signatures, TLS and dependency validation unchanged.')
+                    else:
+                        reason='GITHUB_ACTIONS is not true; normal-first behavior' if not github_actions else 'supported regular Ubuntu mirrorlist unavailable'
+                        emit(f'Attempt1: original mirror configuration ({reason}); required dependencies remain enabled.')
                     status,text=execute(commands,timeout,root_command);emit(text)
                     if status==0:emit('Dependency installation succeeded.');return 0
                     emit(f'Attempt1 failed with exit{status}.')
-                    if not dependency_failure(text,status):emit('Not an Ubuntu dependency-download failure; no mirror changes or retry.');return status
+                    if not dependency_failure(text,status):emit('Not an Ubuntu dependency-download failure; no further mirror changes or retry.');return status
                     if not ubuntu or not mirror.is_file() or mirror.is_symlink():
                         emit('Supported regular Ubuntu mirrorlist unavailable; original failure remains.');return status
-                    backup=temporary/'original-mirrors.txt'
-                    root_command(['cp','-p',str(mirror),str(backup)])
-                    official=temporary/'official-mirrors.txt';official.write_text(OFFICIAL_MIRRORS)
-                    changed_mirror=True
-                    root_command(['cp',str(official),str(mirror)])
-                    emit('Attempt2: official Ubuntu archive/security HTTPS mirrors; signatures, TLS and dependency validation unchanged.')
+                    if not official_first:select_official_mirrors()
+                    reason='one bounded retry after an Ubuntu dependency-download failure' if official_first else 'fallback after an Ubuntu dependency-download failure'
+                    emit(f'Attempt2: official Ubuntu archive/security HTTPS mirrors; {reason}. Signatures, TLS and dependency validation unchanged.')
                     status,text=execute(commands,timeout,root_command);emit(text)
-                    emit('Dependency installation succeeded after the official fallback.' if status==0 else f'Official fallback failed with exit{status}; CI remains failed.')
+                    emit('Dependency installation succeeded after the official retry.' if status==0 else f'Official retry failed with exit{status}; CI remains failed.')
                     return status
                 finally:
                     cleanup_errors=[]

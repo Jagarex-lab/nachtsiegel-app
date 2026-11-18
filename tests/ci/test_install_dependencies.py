@@ -26,13 +26,18 @@ class DependencyInstaller(unittest.TestCase):
         self.os=self.root/'os-release';self.os.write_text('ID=ubuntu\nVERSION_CODENAME=noble\n')
         self.cli=self.root/'playwright';self.calls=self.root/'calls.jsonl';self.log=self.root/'install.log'
         self.cli.write_text("""#!/usr/bin/env python3
-import json,os,pathlib,sys,time,subprocess,signal
+import json,os,pathlib,sys,time,subprocess,signal,stat
 root=pathlib.Path(os.environ['FAKE_APT_ROOT']);calls=pathlib.Path(os.environ['FAKE_CALLS'])
 rows=calls.read_text().splitlines() if calls.exists() else []
 entry={'arguments':sys.argv[1:],'mirror':(root/'apt-mirrors.txt').read_text() if (root/'apt-mirrors.txt').exists() else None,'configs':[p.read_text() for p in (root/'apt.conf.d').glob('*')]}
+if (root/'apt-mirrors.txt').exists():
+ info=(root/'apt-mirrors.txt').stat();entry['mirror_metadata']=[info.st_uid,info.st_gid,stat.S_IMODE(info.st_mode)]
 with calls.open('a') as output:output.write(json.dumps(entry)+'\\n')
 codes=json.loads(os.environ.get('FAKE_CODES','[0]'));status=codes[min(len(rows),len(codes)-1)]
-if os.environ.get('FAKE_SLEEP') or os.environ.get('FAKE_SLEEP_STAGE')==sys.argv[1]:print('fake installer waiting',flush=True);time.sleep(3)
+if os.environ.get('FAKE_SLEEP') or os.environ.get('FAKE_SLEEP_STAGE')==sys.argv[1]:
+ print(os.environ.get('FAKE_WAIT_OUTPUT','fake installer waiting'),flush=True)
+ if os.environ.get('FAKE_READY'):pathlib.Path(os.environ['FAKE_READY']).write_text('ready')
+ time.sleep(3)
 if os.environ.get('FAKE_CHILD'):
  child=subprocess.Popen([sys.executable,'-c','import time;time.sleep(30)'])
  def terminate(signum,frame):child.wait(timeout=2);sys.exit(143)
@@ -43,7 +48,7 @@ print(os.environ.get('FAKE_ERROR','Error: Installation process exited with code:
 sys.exit(status)
 """)
         self.cli.chmod(0o755)
-        self.environment=patch.dict(os.environ,{'FAKE_APT_ROOT':str(self.apt),'FAKE_CALLS':str(self.calls),'FAKE_CODES':'[0]','FAKE_ERROR':'Error: Installation process exited with code:100'},clear=False)
+        self.environment=patch.dict(os.environ,{'GITHUB_ACTIONS':'false','FAKE_APT_ROOT':str(self.apt),'FAKE_CALLS':str(self.calls),'FAKE_CODES':'[0]','FAKE_ERROR':'Error: Installation process exited with code:100'},clear=False)
         self.environment.start()
         self.before=self.mirror.stat()
 
@@ -83,6 +88,124 @@ sys.exit(status)
         self.assertEqual(self.run_installer(),0)
         self.assertTrue(self.log.read_text().startswith('npm bootstrap diagnostic\n'))
         self.assert_restored()
+
+    def test_github_actions_first_attempt_uses_official_https_and_restores_before_browser(self):
+        os.environ['GITHUB_ACTIONS']='true'
+        self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),2)
+        self.assertEqual(rows[0]['arguments'],['install-deps','chromium','webkit'])
+        self.assertEqual(rows[0]['mirror'],deps.OFFICIAL_MIRRORS)
+        self.assertEqual(rows[0]['mirror'].splitlines(),['https://archive.ubuntu.com/ubuntu\tpriority:1','https://security.ubuntu.com/ubuntu\tpriority:2'])
+        self.assertEqual(rows[0]['configs'],[deps.APT_LIMITS])
+        self.assertEqual(rows[0]['configs'][0],'Acquire::Retries "2";\nAcquire::http::Timeout "20";\nAcquire::https::Timeout "20";\nAPT::Update::Error-Mode "any";\n')
+        self.assertEqual(rows[1]['arguments'],['install','chromium','webkit'])
+        self.assertEqual(rows[1]['mirror'],self.original.decode())
+        self.assertEqual(rows[1]['mirror_metadata'],[self.before.st_uid,self.before.st_gid,stat.S_IMODE(self.before.st_mode)])
+        self.assertEqual(rows[1]['configs'],[])
+        self.assertIn('Attempt1: official Ubuntu archive/security HTTPS mirrors',self.log.read_text())
+        self.assertIn('GitHub Actions Ubuntu regular mirrorlist avoids slow runner HTTP mirrors',self.log.read_text())
+        self.assert_restored()
+
+    def test_github_actions_flag_must_be_exactly_true(self):
+        for flag in ('false','TRUE','1',''):
+            with self.subTest(flag=flag):
+                os.environ['GITHUB_ACTIONS']=flag
+                self.assertEqual(self.run_installer(),0)
+                self.assertEqual(self.rows()[-2]['mirror'],self.original.decode())
+                self.assert_restored()
+
+    def test_github_actions_download_failure_retries_official_mirrors_once(self):
+        os.environ.update(GITHUB_ACTIONS='true',FAKE_CODES='[1,0]')
+        self.assertEqual(self.run_installer(),0);rows=self.rows();self.assertEqual(len(rows),3)
+        self.assertEqual([row['mirror'] for row in rows],[deps.OFFICIAL_MIRRORS,deps.OFFICIAL_MIRRORS,self.original.decode()])
+        self.assertTrue(all(row['arguments']==['install-deps','chromium','webkit'] for row in rows[:2]))
+        self.assertEqual(rows[2]['configs'],[])
+        self.assertEqual(rows[2]['mirror_metadata'],[self.before.st_uid,self.before.st_gid,stat.S_IMODE(self.before.st_mode)])
+        self.assertIn('one bounded retry after an Ubuntu dependency-download failure',self.log.read_text())
+        self.assert_restored()
+
+    def test_github_actions_persistent_download_failure_stops_after_two_official_attempts(self):
+        os.environ.update(GITHUB_ACTIONS='true',FAKE_CODES='[1,7,0]')
+        self.assertEqual(self.run_installer(),7);rows=self.rows();self.assertEqual(len(rows),2)
+        self.assertTrue(all(row['mirror']==deps.OFFICIAL_MIRRORS for row in rows))
+        self.assertTrue(all(row['arguments'][0]=='install-deps' for row in rows))
+        self.assertIn('CI remains failed',self.log.read_text());self.assert_restored()
+
+    def test_github_actions_browser_failure_is_fatal_once_after_cleanup(self):
+        os.environ.update(GITHUB_ACTIONS='true',FAKE_CODES='[0,100,0]',FAKE_ERROR='Failed to install browser dependencies')
+        self.assertEqual(self.run_installer(),100);rows=self.rows();self.assertEqual(len(rows),2)
+        self.assertEqual(rows[0]['mirror'],deps.OFFICIAL_MIRRORS)
+        self.assertEqual(rows[1]['mirror'],self.original.decode());self.assertEqual(rows[1]['configs'],[])
+        self.assertNotIn('Attempt2:',self.log.read_text());self.assert_restored()
+
+    def test_github_actions_postconfigure_timeout_never_retries_or_infers_success(self):
+        # Main44231456766/job134565476520: the EC2 HTTP transfer consumed4m15s
+        # before a300s deadline stopped libc-bin triggers, before any browser.
+        # A real controlled process exercises cancellation after those lines;
+        # it does not perform APT/network work or wait for the original delay.
+        ready=self.root/'installer.ready'
+        os.environ.update(GITHUB_ACTIONS='true',FAKE_SLEEP='yes',FAKE_READY=str(ready),FAKE_WAIT_OUTPUT='Fetched 32.1 MB in 4min 15s (126 kB/s)\nSetting up libgbm1:amd64 (25.2.8-0ubuntu0.24.04.5) ...\nProcessing triggers for libc-bin (2.39-0ubuntu8.7) ...')
+        real_popen=deps.subprocess.Popen
+        def ready_popen(command,*args,**kwargs):
+            process=real_popen(command,*args,**kwargs)
+            if command[0]!=str(self.cli):return process
+            ready_deadline=time.monotonic()+10
+            try:
+                while not ready.exists():
+                    self.assertIsNone(process.poll(),'Fake installer exited before configuration output.')
+                    self.assertLess(time.monotonic(),ready_deadline,'Fake installer did not reach configuration output.')
+                    time.sleep(.01)
+            except BaseException:
+                if process.poll() is None:os.killpg(process.pid,signal.SIGKILL)
+                process.communicate(timeout=5)
+                raise
+            return process
+        with patch.object(deps.subprocess,'Popen',side_effect=ready_popen):
+            self.assertEqual(self.run_installer(timeout=.1),124)
+        rows=self.rows();self.assertEqual(len(rows),1);self.assertEqual(rows[0]['mirror'],deps.OFFICIAL_MIRRORS)
+        text=self.log.read_text();self.assertIn('Fetched 32.1 MB in 4min 15s (126 kB/s)',text)
+        self.assertIn('Processing triggers for libc-bin',text);self.assertIn('no success was inferred',text)
+        self.assertNotIn('Attempt2:',text);self.assertNotIn('Browser download and host validation phase:',text)
+        self.assert_restored()
+
+    def test_github_actions_unsupported_mirrorlist_or_os_never_overwrites(self):
+        os.environ.update(GITHUB_ACTIONS='true',FAKE_CODES='[1,0]')
+        for case in ('missing','symlink','non-ubuntu'):
+            with self.subTest(case=case):
+                self.calls.unlink(missing_ok=True);self.mirror.unlink(missing_ok=True)
+                self.os.write_text('ID=other\n' if case=='non-ubuntu' else 'ID=ubuntu\n')
+                if case=='symlink':
+                    target=self.root/'other-mirror';target.write_bytes(self.original);self.mirror.symlink_to(target)
+                elif case=='non-ubuntu':self.mirror.write_bytes(self.original)
+                self.assertEqual(self.run_installer(),1);rows=self.rows();self.assertEqual(len(rows),1)
+                self.assertEqual(rows[0]['mirror'],None if case=='missing' else self.original.decode())
+                self.assertIn('supported regular Ubuntu mirrorlist unavailable',self.log.read_text())
+                if case=='symlink':
+                    self.assertTrue(self.mirror.is_symlink());self.assertEqual(target.read_bytes(),self.original)
+                elif case=='missing':self.assertFalse(self.mirror.exists())
+                else:self.assertEqual(self.mirror.read_bytes(),self.original);self.assertEqual(rows[0]['configs'],[])
+                self.assertEqual(list((self.apt/'apt.conf.d').iterdir()),[])
+
+    def test_github_actions_mirror_backup_or_first_write_failure_cleans_up_before_execute(self):
+        os.environ['GITHUB_ACTIONS']='true'
+        for stage in ('backup','first-write'):
+            with self.subTest(stage=stage):
+                def failed_setup(command):
+                    if stage=='backup' and command[:2]==['cp','-p'] and command[2]==str(self.mirror):raise OSError('test backup refused')
+                    self.local_root(command)
+                    if stage=='first-write' and command[0]=='cp' and 'official-mirrors.txt' in command[1]:raise OSError('test write interrupted')
+                with self.assertRaises(OSError):
+                    deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=failed_setup)
+                self.assertFalse(self.calls.exists());self.assert_restored()
+
+    def test_github_actions_restore_failure_prevents_browser_and_remains_fatal(self):
+        os.environ['GITHUB_ACTIONS']='true'
+        def failed_restore(command):
+            if command[:2]==['cp','-p'] and 'original-mirrors' in command[2]:raise OSError('test restore refused')
+            self.local_root(command)
+        with self.assertRaises(RuntimeError):
+            deps.install('playwright',[str(self.cli),'chromium'],self.log,apt_root=self.apt,os_release=self.os,root_command=failed_restore)
+        self.assertEqual(len(self.rows()),1);self.assertEqual(self.rows()[0]['arguments'][0],'install-deps')
+        self.assertIn('cleanup failed',self.log.read_text());self.assertEqual(list((self.apt/'apt.conf.d').iterdir()),[])
 
     def test_actual_dependency_failure_gets_one_official_fallback_and_restores(self):
         os.environ['FAKE_CODES']='[1,0]'
@@ -295,6 +418,25 @@ CI dependency attempt exceeded 300s; no success was inferred.
             self.assertEqual(commands[0][-2:],['apt-get','update'])
             self.assertEqual(commands[1][-4:],['apt-get','install','-y','ffmpeg'])
         self.assert_restored()
+
+    def test_github_actions_ffmpeg_uses_official_first_and_at_most_one_bounded_retry(self):
+        os.environ['GITHUB_ACTIONS']='true'
+        for statuses in ((0,),(100,0),(100,7,0)):
+            with self.subTest(statuses=statuses):
+                calls=[]
+                def execute(commands,timeout,root_command):
+                    calls.append((commands,timeout,self.mirror.read_text(),[p.read_text() for p in (self.apt/'apt.conf.d').iterdir()]))
+                    status=statuses[len(calls)-1]
+                    return status,'E: Failed to fetch Ubuntu package\n' if status else 'ffmpeg installed\n'
+                with patch.object(deps,'execute',side_effect=execute):
+                    self.assertEqual(deps.install('apt',['ffmpeg'],self.log,apt_root=self.apt,os_release=self.os,root_command=self.local_root),statuses[min(1,len(statuses)-1)])
+                self.assertEqual(len(calls),min(2,len(statuses)))
+                for commands,timeout,mirror,configs in calls:
+                    self.assertEqual(commands[0][-2:],['apt-get','update'])
+                    self.assertEqual(commands[1][-4:],['apt-get','install','-y','ffmpeg'])
+                    self.assertEqual(timeout,300);self.assertEqual(mirror,deps.OFFICIAL_MIRRORS)
+                    self.assertEqual(configs,[deps.APT_LIMITS])
+                self.assert_restored()
 
     def test_real_ffmpeg_package_transfer_timeout_gets_the_same_one_official_fallback(self):
         # Main44202171157/audio job134458772680 timed out in apt install,
