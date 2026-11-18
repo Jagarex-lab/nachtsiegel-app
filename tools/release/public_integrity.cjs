@@ -3,6 +3,26 @@
 // Metadata alone cannot prove that a CDN serves the matching index/PCK/WASM.
 const assert=require('node:assert/strict');
 const crypto=require('node:crypto');
+async function fetchReleaseEvidence(candidate,expectedDigest,{fetchImpl=fetch,maxBytes=4*1024*1024}={}){
+ assert(typeof expectedDigest==='string'&&/^[0-9a-f]{64}$/.test(expectedDigest),'publisher-generated evidence SHA256 required');
+ const root=new URL(candidate.public_url),url=new URL('release-evidence.json',root);
+ url.searchParams.set('release',candidate.commit);
+ const response=await fetchImpl(url,{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(120000)});
+ assert(response.ok,'published release evidence fetch succeeds');
+ const resolved=new URL(response.url);
+ assert.equal(resolved.origin,root.origin,'release evidence stays on the expected public origin');
+ assert.equal(resolved.pathname,url.pathname,'release evidence does not redirect to a different file');
+ assert(response.body,'release evidence has an actual response stream');
+ const chunks=[];let bytes=0;const digest=crypto.createHash('sha256');
+ for await(const chunk of response.body){bytes+=chunk.byteLength;assert(bytes<=maxBytes,'release evidence exceeds size bound');digest.update(chunk);chunks.push(Buffer.from(chunk));}
+ assert(bytes>0,'release evidence is nonempty');
+ // The expected digest comes from the publishing job, never from this server.
+ // Authenticate the exact bytes before accepting its JSON and executable hashes.
+ assert.equal(digest.digest('hex'),expectedDigest,'publisher-generated release evidence SHA256');
+ const evidence=JSON.parse(Buffer.concat(chunks).toString('utf8'));
+ requiredFiles(candidate,evidence);
+ return evidence;
+}
 function requiredFiles(candidate,evidence){
  assert.equal(evidence?.schema,1,'known release-evidence schema');
  assert.deepEqual(evidence.candidate,candidate,'public release candidate matches exactly');
@@ -40,4 +60,4 @@ async function verifyExecutables(candidate,evidence,options={}){
  for(const [name,digest]of Object.entries(files))verified.push(await verifyFile(candidate.public_url,name,digest,{...options,commit:candidate.commit}));
  return verified;
 }
-module.exports={requiredFiles,verifyFile,verifyExecutables};
+module.exports={requiredFiles,verifyFile,verifyExecutables,fetchReleaseEvidence};

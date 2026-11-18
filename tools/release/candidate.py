@@ -1,7 +1,8 @@
-"""Read-only, fail-closed candidate discovery for the INACTIVE one-click proposal.
+"""Fail-closed discovery and verification for the approved automatic Alpha release.
 
-This module never dispatches a workflow, edits settings, merges, or deploys. The
-active manual publisher deliberately continues to use the unchanged guard.py.
+GitHub's trusted workflow_run payload identifies the tested source. The workflow
+execution SHA is never substituted for that source. This guard only reads API
+state and prepares the immutable tested export; it never changes GitHub settings.
 """
 from __future__ import annotations
 
@@ -15,6 +16,7 @@ import urllib.parse
 import urllib.request
 import urllib.error
 import zipfile
+from datetime import datetime
 from pathlib import Path, PurePosixPath
 
 REPOSITORY = "Jagarex-lab/nachtsiegel-app"
@@ -35,10 +37,24 @@ MAIN_JOBS = {
     "premium-browser (chromium)", "premium-browser (webkit)", "premium-block-balance",
     *{f"production-balance ({i})" for i in range(4)},
 }
+SUITES = {
+    "main": (MAIN, MAIN_JOBS),
+    "alpha": (".github/workflows/alpha-qa.yml", {"alpha-playable", "balance-audit", "browser (chromium)", "browser (webkit)"}),
+    "safety": (SAFETY, {"release-safety"}),
+    "legacy": (".github/workflows/legacy-foundations.yml", {"pinned-reference-and-catalog"}),
+    "economy": (".github/workflows/economy-qa.yml", {"economy"}),
+    "campaign": (".github/workflows/campaign-orafold-qa.yml", {"isolated-campaign"}),
+    "online": (".github/workflows/online-qa.yml", {"online / integrated-modules"}),
+}
+PENDING = {"queued", "in_progress", "requested", "waiting", "pending"}
 
 
 class Denied(ValueError):
     pass
+
+
+class NotReady(ValueError):
+    """A valid source is stale or still waiting for its required push QA."""
 
 
 def require(ok, message):
@@ -47,50 +63,87 @@ def require(ok, message):
 
 
 def context_from_env():
-    return {key: os.environ[name] for key, name in {
+    context = {key: os.environ[name] for key, name in {
         "repository": "GITHUB_REPOSITORY", "event": "GITHUB_EVENT_NAME",
         "ref": "GITHUB_REF", "sha": "GITHUB_SHA",
     }.items()}
+    context["workflow_sha"] = context["sha"]
+    if context["event"] == "workflow_run":
+        try:
+            context["payload"] = json.loads(Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
+            context["sha"] = context["payload"]["workflow_run"]["head_sha"]
+        except (KeyError, TypeError, OSError, ValueError) as error:
+            raise Denied("missing or malformed workflow_run event payload") from error
+    validate_context(context)
+    return context
+
+
+def positive_id(value):
+    return type(value) is int and value > 0
+
+
+def repository_name(value):
+    return value.get("full_name") if isinstance(value, dict) else None
+
+
+def validate_run_identity(run, path, sha):
+    require(isinstance(run, dict), "malformed QA run")
+    require(repository_name(run.get("repository")) == REPOSITORY, "foreign QA repository")
+    require(repository_name(run.get("head_repository")) == REPOSITORY, "foreign head repository")
+    require(run.get("head_sha") == sha and run.get("head_branch") == "develop", "QA source mismatch")
+    require(run.get("event") == "push", "only trusted push QA is accepted")
+    require(run.get("path") == path, "wrong QA workflow path")
+    require(positive_id(run.get("id")), "invalid run ID")
+    require(positive_id(run.get("run_attempt")), "invalid run attempt")
 
 
 def validate_context(context):
-    require(context["repository"] == REPOSITORY, "wrong repository")
-    require(context["event"] == "workflow_dispatch", "explicit manual dispatch only")
-    require(context["ref"] == REF, "develop branch only; no tags or PR refs")
-    require(SHA.fullmatch(context["sha"]) is not None, "full lowercase SHA required")
+    require(context.get("repository") == REPOSITORY, "wrong repository")
+    require(context.get("ref") == REF, "develop branch only; no tags or PR refs")
+    require(isinstance(context.get("sha"), str) and SHA.fullmatch(context["sha"]) is not None, "full lowercase SHA required")
+    if context.get("event") == "workflow_dispatch":
+        return
+    require(context.get("event") == "workflow_run", "only QA completion or inputless dispatch is accepted")
+    payload = context.get("payload")
+    require(isinstance(payload, dict) and payload.get("action") == "completed", "completed workflow_run event required")
+    require(repository_name(payload.get("repository")) == REPOSITORY, "foreign event repository")
+    run = payload.get("workflow_run")
+    require(isinstance(run, dict), "missing workflow_run identity")
+    require(isinstance(run.get("path"), str) and run["path"] in {path for path, _ in SUITES.values()}, "unapproved QA trigger path")
+    validate_run_identity(run, run["path"], context["sha"])
+    require(run.get("status") == "completed" and run.get("conclusion") == "success", "trigger QA not successfully completed")
 
 
 def validate_run(run, path, sha, jobs):
-    require(run["repository"]["full_name"] == REPOSITORY, "foreign QA repository")
-    require(run.get("head_repository", {}).get("full_name") == REPOSITORY, "foreign head repository")
-    require(run["head_sha"] == sha and run["head_branch"] == "develop", "QA source mismatch")
-    require(run["event"] in ("push", "workflow_dispatch"), "PR or untrusted QA event")
-    require(run["path"] == path, "wrong QA workflow path")
-    require(run["status"] == "completed" and run["conclusion"] == "success", "QA not successful")
-    require(isinstance(run["id"], int) and run["id"] > 0, "invalid run ID")
-    require(isinstance(run["run_attempt"], int) and run["run_attempt"] > 0, "invalid run attempt")
-    require(bool(jobs), "empty QA job list")
+    if run is None:
+        raise NotReady("no exact-develop push QA run: " + path)
+    validate_run_identity(run, path, sha)
+    require(isinstance(run.get("status"), str), "malformed QA status")
+    if run.get("status") in PENDING and run.get("conclusion") is None:
+        raise NotReady("QA still pending: " + path)
+    require(run.get("status") == "completed" and run.get("conclusion") == "success", "QA not successful: " + path)
+    require(isinstance(jobs, list) and bool(jobs), "empty QA job list")
+    require(all(isinstance(job, dict) and positive_id(job.get("id")) for job in jobs), "invalid QA job")
     require(len({job["id"] for job in jobs}) == len(jobs), "duplicate QA jobs")
     for job in jobs:
-        require(job["run_id"] == run["id"], "foreign QA job")
-        require(job["head_sha"] == sha, "job source mismatch")
-        require(job["status"] == "completed" and job["conclusion"] == "success", "failed, pending or skipped QA job")
-    # The main workflow already includes native, browser, audio, integration,
-    # resources, full-pool and balance jobs. Do not accept a reduced smoke run.
-    if path == MAIN:
-        names = {job["name"] for job in jobs}
-        require(MAIN_JOBS.issubset(names), "incomplete main QA job set")
-    else:
-        require(any(job["name"] == "release-safety" for job in jobs), "missing release-safety job")
+        require(job.get("run_id") == run["id"], "foreign QA job")
+        require(job.get("head_sha") == sha, "job source mismatch")
+        require(job.get("status") == "completed" and job.get("conclusion") == "success", "failed, pending or skipped QA job")
+        require(isinstance(job.get("name"), str), "missing QA job name")
+    required = next(names for workflow, names in SUITES.values() if workflow == path)
+    require(required.issubset({job["name"] for job in jobs}), "incomplete QA job set: " + path)
 
 
 def validate_settings(evidence):
-    require(evidence["pages"]["build_type"] == "workflow", "branch-based Pages forbidden")
-    environment = evidence["environment"]
+    pages = evidence.get("pages")
+    require(isinstance(pages, dict) and pages.get("build_type") == "workflow", "branch-based Pages forbidden")
+    environment = evidence.get("environment")
+    require(isinstance(environment, dict), "missing deployment environment")
     require(environment.get("name") == "github-pages", "wrong deployment environment")
     policy = environment.get("deployment_branch_policy") or {}
+    require(isinstance(policy, dict), "malformed environment branch policy")
     if policy.get("custom_branch_policies"):
-        require({"name": "develop", "type": "branch"} in evidence["policies"], "environment must allow develop explicitly")
+        require(isinstance(evidence.get("policies"), list) and {"name": "develop", "type": "branch"} in evidence["policies"], "environment must allow develop explicitly")
     # GitHub enforces active reviewers/timers/protected-branch rules. No admin
     # bypass, policy edit, alternate environment, or second identity is required.
 
@@ -98,32 +151,65 @@ def validate_settings(evidence):
 def select(context, evidence):
     validate_context(context)
     sha = context["sha"]
-    require(evidence["develop_sha"] == sha, "stale dispatch: develop changed")
+    require(isinstance(evidence, dict), "malformed release evidence")
+    require(isinstance(evidence.get("develop_sha"), str) and SHA.fullmatch(evidence["develop_sha"]) is not None, "invalid develop source")
+    if evidence["develop_sha"] != sha:
+        raise NotReady("stale source: develop changed")
     validate_settings(evidence)
-    validate_run(evidence["main"], MAIN, sha, evidence["main_jobs"])
-    validate_run(evidence["safety"], SAFETY, sha, evidence["safety_jobs"])
+    waiting = []
+    for key, (path, _) in SUITES.items():
+        require(key in evidence, "missing QA suite evidence: " + key)
+        try:
+            validate_run(evidence[key], path, sha, evidence.get(key + "_jobs"))
+        except NotReady as error:
+            waiting.append(str(error))
+    if context["event"] == "workflow_run":
+        trigger = context["payload"]["workflow_run"]
+        key = next(key for key, (path, _) in SUITES.items() if path == trigger["path"])
+        latest = evidence[key]
+        require(isinstance(latest, dict) and (trigger["id"], trigger["run_attempt"]) == (latest["id"], latest["run_attempt"]), "trigger is not the latest QA run and attempt")
+    if waiting:
+        raise NotReady("; ".join(waiting))
+    require(isinstance(evidence.get("artifacts"), list), "missing tested artifact evidence")
+    require(all(isinstance(artifact, dict) and isinstance(artifact.get("name"), str) for artifact in evidence["artifacts"]), "malformed artifact metadata")
     artifacts = [a for a in evidence["artifacts"] if a["name"] == ARTIFACT]
     require(len(artifacts) == 1, "exactly one tested artifact required")
     artifact = artifacts[0]
-    require(artifact["expired"] is False, "expired tested artifact")
-    require(isinstance(artifact["id"], int) and artifact["id"] > 0, "invalid artifact ID")
-    require(0 < artifact["size_in_bytes"] <= 2_000_000_000, "invalid artifact size")
+    require(artifact.get("expired") is False, "expired tested artifact")
+    require(positive_id(artifact.get("id")), "invalid artifact ID")
+    require(type(artifact.get("size_in_bytes")) is int and 0 < artifact["size_in_bytes"] <= 2_000_000_000, "invalid artifact size")
     require(isinstance(artifact.get("digest"), str) and DIGEST.fullmatch(artifact["digest"]) is not None, "immutable SHA256 artifact digest required")
-    require(artifact["workflow_run"]["id"] == evidence["main"]["id"], "foreign artifact run")
-    require(artifact["workflow_run"]["head_sha"] == sha, "foreign artifact source")
+    artifact_run = artifact.get("workflow_run")
+    require(isinstance(artifact_run, dict) and artifact_run.get("id") == evidence["main"]["id"], "foreign artifact run")
+    require(artifact_run.get("head_sha") == sha, "foreign artifact source")
+    require(timestamp(artifact.get("created_at")) >= timestamp(evidence["main"].get("run_started_at")), "artifact predates selected QA attempt")
     return {
         "schema": 1, "repository": REPOSITORY, "commit": sha,
         "qa_run_id": evidence["main"]["id"], "qa_attempt": evidence["main"]["run_attempt"],
         "safety_run_id": evidence["safety"]["id"], "safety_attempt": evidence["safety"]["run_attempt"],
+        "suites": {key: {"path": path, "run_id": evidence[key]["id"], "attempt": evidence[key]["run_attempt"]} for key, (path, _) in SUITES.items()},
         "artifact_id": artifact["id"], "artifact_digest": artifact["digest"],
         "artifact_size": artifact["size_in_bytes"], "public_url": PUBLIC_URL,
     }
 
 
 def recheck(context, evidence, candidate):
-    actual = select(context, evidence)
-    require(candidate == actual, "candidate changed while awaiting approval; dispatch again")
+    try:
+        actual = select(context, evidence)
+    except NotReady as error:
+        raise Denied("candidate no longer ready: " + str(error)) from error
+    require(candidate == actual, "candidate changed during publication")
     return actual
+
+
+def timestamp(value):
+    require(isinstance(value, str), "missing QA/artifact timestamp")
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError as error:
+        raise Denied("invalid QA/artifact timestamp") from error
+    require(parsed.utcoffset() is not None, "unqualified QA/artifact timestamp")
+    return parsed
 
 
 class API:
@@ -137,15 +223,19 @@ class API:
             "https://api.github.com/repos/" + REPOSITORY + "/" + path,
             headers={"Authorization": "Bearer " + self.token, "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"},
         )
-        # Read-only API errors including403/404 propagate. Never log credentials.
-        with urllib.request.build_opener(NoRedirect).open(request, timeout=30) as response:
-            return json.load(response)
+        # Read-only API errors including 403/404 deny release. Never log credentials.
+        try:
+            with urllib.request.build_opener(NoRedirect).open(request, timeout=30) as response:
+                return json.load(response)
+        except (urllib.error.URLError, OSError, ValueError) as error:
+            raise Denied("GitHub API request failed") from error
 
     def pages(self, path, key):
         values = []
         for page in range(1, 101):
             separator = "&" if "?" in path else "?"
             result = self.get(f"{path}{separator}per_page=100&page={page}")
+            require(isinstance(result, dict) and isinstance(result.get(key), list), "malformed API pagination response")
             rows = result[key]
             values.extend(rows)
             if len(rows) < 100:
@@ -153,30 +243,49 @@ class API:
         raise Denied("API pagination limit exceeded")
 
     def latest_run(self, workflow, sha):
-        query = urllib.parse.urlencode({"branch": "develop", "head_sha": sha})
+        query = urllib.parse.urlencode({"branch": "develop", "head_sha": sha, "event": "push"})
         rows = self.pages(f"actions/workflows/{Path(workflow).name}/runs?{query}", "workflow_runs")
         # Include incomplete/failed runs. A new failed or pending retry must
         # never fall back to a historical successful run for the same commit.
-        rows = [r for r in rows if r["head_sha"] == sha and r["head_branch"] == "develop" and r["event"] in ("push", "workflow_dispatch")]
-        require(bool(rows), "no exact-develop QA run: " + workflow)
-        return max(rows, key=lambda row: (row.get("run_started_at", row.get("created_at", "")), row["id"], row["run_attempt"]))
+        require(all(isinstance(row, dict) for row in rows), "malformed API QA run")
+        require(all(isinstance(row.get("event"), str) for row in rows), "missing QA event")
+        rows = [r for r in rows if r.get("event") == "push"]
+        for row in rows:
+            validate_run_identity(row, workflow, sha)
+        if not rows:
+            return None
+        return max(rows, key=lambda row: (timestamp(row.get("run_started_at") or row.get("created_at")), row["id"], row["run_attempt"]))
 
     def collect(self, context, candidate=None):
         validate_context(context)
-        main = self.latest_run(MAIN, context["sha"])
-        safety = self.latest_run(SAFETY, context["sha"])
-        if candidate is not None:
-            require(main["id"] == candidate["qa_run_id"] and safety["id"] == candidate["safety_run_id"], "newer QA run requires a fresh release dispatch")
+        def check_source():
+            develop = self.get("git/ref/heads/develop")
+            require(isinstance(develop, dict) and isinstance(develop.get("object"), dict), "malformed develop API source")
+            develop_sha = develop["object"].get("sha")
+            require(isinstance(develop_sha, str) and SHA.fullmatch(develop_sha) is not None, "invalid develop API source")
+            if develop_sha != context["sha"]:
+                if candidate is not None:
+                    raise Denied("develop changed during publication")
+                raise NotReady("stale source: develop changed")
+            return develop_sha
+        develop_sha = check_source()
+        runs = {key: self.latest_run(path, context["sha"]) for key, (path, _) in SUITES.items()}
         policy = self.pages("environments/github-pages/deployment-branch-policies", "branch_policies")
-        return {
-            "develop_sha": self.get("git/ref/heads/develop")["object"]["sha"],
+        require(all(isinstance(row, dict) and isinstance(row.get("name"), str) and isinstance(row.get("type"), str) for row in policy), "malformed environment branch policies")
+        evidence = {
+            "develop_sha": develop_sha,
             "pages": self.get("pages"), "environment": self.get("environments/github-pages"),
             "policies": [{k: row[k] for k in ("name", "type")} for row in policy],
-            "main": main, "safety": safety,
-            "main_jobs": self.pages(f"actions/runs/{main['id']}/attempts/{main['run_attempt']}/jobs", "jobs"),
-            "safety_jobs": self.pages(f"actions/runs/{safety['id']}/attempts/{safety['run_attempt']}/jobs", "jobs"),
-            "artifacts": self.pages(f"actions/runs/{main['id']}/artifacts", "artifacts"),
+            **runs,
         }
+        for key, run in runs.items():
+            evidence[key + "_jobs"] = self.pages(f"actions/runs/{run['id']}/attempts/{run['run_attempt']}/jobs", "jobs") if run and run.get("status") == "completed" else []
+        main = runs["main"]
+        evidence["artifacts"] = self.pages(f"actions/runs/{main['id']}/artifacts", "artifacts") if main and main.get("status") == "completed" else []
+        check_source()
+        if candidate is not None:
+            recheck(context, evidence, candidate)
+        return evidence
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
@@ -303,11 +412,18 @@ def main():
     api = API(os.environ.get("GH_TOKEN", ""))
     candidate = json.loads(os.environ["RELEASE_CANDIDATE"]) if args.command != "select" else None
     if args.command == "select":
-        candidate = select(context, api.collect(context))
+        try:
+            candidate = select(context, api.collect(context))
+        except NotReady as error:
+            with open(os.environ["GITHUB_OUTPUT"], "a") as outputs:
+                outputs.write("ready=false\n")
+            print("Release not ready:", error)
+            return
         target = Path(args.output)
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(json.dumps(candidate, indent=2) + "\n")
         with open(os.environ["GITHUB_OUTPUT"], "a") as outputs:
+            outputs.write("ready=true\n")
             outputs.write("commit=" + candidate["commit"] + "\n")
             outputs.write("candidate=" + json.dumps(candidate, separators=(",", ":")) + "\n")
     elif args.command == "recheck":
@@ -316,6 +432,9 @@ def main():
         recheck(context, api.collect(context, candidate), candidate)
         download_artifact(api, candidate, "work/release-candidate.zip")
         manifest = extract_web("work/release-candidate.zip", "work/release-web", candidate)
+        evidence_digest = hashlib.sha256(Path("work/release-web/release-evidence.json").read_bytes()).hexdigest()
+        with open(os.environ["GITHUB_OUTPUT"], "a") as outputs:
+            outputs.write("evidence_sha256=" + evidence_digest + "\n")
         print("Verified release files:", len(manifest["files"]))
     else:
         verify_public(candidate)

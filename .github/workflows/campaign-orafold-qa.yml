@@ -1,7 +1,7 @@
 name: ORAFOLD campaign QA (no deployment)
 on:
   push:
-    branches: [feature/orafold-campaign]
+    branches: [develop, feature/orafold-campaign]
   pull_request:
     branches: [develop]
     paths:

@@ -4,7 +4,7 @@ on:
     branches: [develop]
     paths: ['server/**', 'scripts/online/**', 'shared/**', 'tests/online*', 'data/online/**', 'docs/online/**', '.github/workflows/online-qa.yml']
   push:
-    branches: [feature/orafold-online]
+    branches: [develop, feature/orafold-online]
 permissions:
   contents: read
 jobs:

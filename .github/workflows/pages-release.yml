@@ -1,49 +1,95 @@
-name: Manual production Pages release
+name: Automatic Alpha Pages release
 on:
+  workflow_run:
+    workflows:
+      - NACHTSIEGEL CI (no deployment)
+      - ORAFOLD isolated Alpha QA (no deployment)
+      - Release safety (no deployment)
+      - Legacy P01-P07 (no deployment)
+      - ORAFOLD isolated economy QA (no deployment)
+      - ORAFOLD campaign QA (no deployment)
+      - ORAFOLD online authority integration QA (no deployment)
+    branches: [develop]
+    types: [completed]
   workflow_dispatch:
-    inputs:
-      commit:
-        description: Full develop HEAD SHA with successful Web QA
-        required: true
-        type: string
-      qa_run_id:
-        description: Successful develop Web QA run containing tested artifact
-        required: true
-        type: string
-      confirmation:
-        description: Type PUBLISH followed by a space and the exact commit SHA
-        required: true
-        type: string
 permissions:
   contents: read
 concurrency:
-  group: nachtsiegel-pages-release
+  # GitHub retains only one pending run per group. Ineligible completions must
+  # not replace a valid pending release. Execution SHA is only a queue hint;
+  # candidate.py still derives and validates source identity from payload/API.
+  group: >-
+    ${{ (github.repository == 'Jagarex-lab/nachtsiegel-app' &&
+         github.event.repository.default_branch == 'develop' &&
+         github.ref == 'refs/heads/develop' &&
+         (github.event_name == 'workflow_dispatch' ||
+          (github.event_name == 'workflow_run' &&
+           github.event.action == 'completed' &&
+           github.event.workflow_run.repository.full_name == github.repository &&
+           github.event.workflow_run.head_repository.full_name == github.repository &&
+           github.event.workflow_run.head_branch == 'develop' &&
+           github.event.workflow_run.event == 'push' &&
+           github.event.workflow_run.status == 'completed' &&
+           github.event.workflow_run.conclusion == 'success' &&
+           github.event.workflow_run.head_sha == github.sha))) &&
+        'nachtsiegel-pages-release' ||
+        format('nachtsiegel-pages-release-ignored-{0}', github.run_id) }}
   cancel-in-progress: false
 jobs:
   preflight:
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop'
-    runs-on: ubuntu-latest
+    # Reject untrusted events before checking out any release control code.
+    # workflow_run uses the trusted default branch, never the triggering checkout.
+    if: >-
+      github.repository == 'Jagarex-lab/nachtsiegel-app' &&
+      github.event.repository.default_branch == 'develop' &&
+      github.ref == 'refs/heads/develop' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'workflow_run' &&
+        github.event.action == 'completed' &&
+        github.event.workflow_run.repository.full_name == github.repository &&
+        github.event.workflow_run.head_repository.full_name == github.repository &&
+        github.event.workflow_run.head_branch == 'develop' &&
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.status == 'completed' &&
+        github.event.workflow_run.conclusion == 'success'))
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
       contents: read
       actions: read
       pages: read
+    outputs:
+      ready: ${{ steps.candidate.outputs.ready }}
+      commit: ${{ steps.candidate.outputs.commit }}
+      candidate: ${{ steps.candidate.outputs.candidate }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: ${{ github.sha }}
           persist-credentials: false
-      - name: Read-only approval and QA preflight
-        run: python3 tools/release/guard.py
+      - name: Discover current develop, all 29 QA jobs and immutable tested artifact
+        id: candidate
+        run: python3 tools/release/candidate.py select
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_SHA: ${{ inputs.commit }}
-          QA_RUN_ID: ${{ inputs.qa_run_id }}
-          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
   publish:
     needs: preflight
-    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/develop' && needs.preflight.result == 'success'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
+    if: >-
+      github.repository == 'Jagarex-lab/nachtsiegel-app' &&
+      github.event.repository.default_branch == 'develop' &&
+      github.ref == 'refs/heads/develop' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'workflow_run' &&
+        github.event.action == 'completed' &&
+        github.event.workflow_run.repository.full_name == github.repository &&
+        github.event.workflow_run.head_repository.full_name == github.repository &&
+        github.event.workflow_run.head_branch == 'develop' &&
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.status == 'completed' &&
+        github.event.workflow_run.conclusion == 'success')) &&
+      needs.preflight.result == 'success' && needs.preflight.outputs.ready == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -52,41 +98,81 @@ jobs:
       actions: read
       pages: write
       id-token: write
+    env:
+      RELEASE_CANDIDATE: ${{ needs.preflight.outputs.candidate }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+      evidence_sha256: ${{ steps.download.outputs.evidence_sha256 }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
+          ref: ${{ needs.preflight.outputs.commit }}
           persist-credentials: false
-      - name: Recheck exact commit and QA after any active environment gates
-        run: python3 tools/release/guard.py
+      - name: Recheck current commit and all QA after existing environment gates
+        run: python3 tools/release/candidate.py recheck
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_SHA: ${{ inputs.commit }}
-          QA_RUN_ID: ${{ inputs.qa_run_id }}
-          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
-        with:
-          name: nachtsiegel-arena-qa
-          run-id: ${{ inputs.qa_run_id }}
-          github-token: ${{ github.token }}
-          path: work/release
-      - name: Verify tested artifact identity and record hashes
+      - name: Verify immutable QA ZIP digest and extract tested bytes without rebuilding
+        id: download
+        run: python3 tools/release/candidate.py download
         env:
-          RELEASE_SHA: ${{ inputs.commit }}
-        run: |
-          python3 - <<'PY'
-          import hashlib, json, os
-          from pathlib import Path
-          root = Path('work/release/build/web')
-          assert (root / 'index.html').is_file()
-          info = json.loads((root / 'build-info.json').read_text())
-          assert info['commit'] == os.environ['RELEASE_SHA'] and info['channel'] == 'develop'
-          for p in sorted(root.rglob('*')):
-              assert not p.is_symlink(), 'No symlinks in release'
-              if p.is_file(): print(hashlib.sha256(p.read_bytes()).hexdigest(), p.relative_to(root))
-          PY
+          GH_TOKEN: ${{ github.token }}
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
-          path: work/release/build/web
-      - name: Explicitly approved production publication
+          path: work/release-web
+      - name: Final current-commit and all-QA-attempt check immediately before publication
+        run: python3 tools/release/candidate.py recheck
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Publish the fully tested and rechecked Alpha candidate
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+  verify-public:
+    needs: [preflight, publish]
+    if: >-
+      github.repository == 'Jagarex-lab/nachtsiegel-app' &&
+      github.event.repository.default_branch == 'develop' &&
+      github.ref == 'refs/heads/develop' &&
+      (github.event_name == 'workflow_dispatch' ||
+       (github.event_name == 'workflow_run' &&
+        github.event.action == 'completed' &&
+        github.event.workflow_run.repository.full_name == github.repository &&
+        github.event.workflow_run.head_repository.full_name == github.repository &&
+        github.event.workflow_run.head_branch == 'develop' &&
+        github.event.workflow_run.event == 'push' &&
+        github.event.workflow_run.status == 'completed' &&
+        github.event.workflow_run.conclusion == 'success')) &&
+      needs.publish.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    env:
+      RELEASE_CANDIDATE: ${{ needs.preflight.outputs.candidate }}
+      EXPECTED_RELEASE_EVIDENCE_SHA256: ${{ needs.publish.outputs.evidence_sha256 }}
+      PUBLISHED_PAGE_URL: ${{ needs.publish.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.preflight.outputs.commit }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - name: Install existing pinned browser runtime with bounded official fallback
+        run: |
+          set -o pipefail
+          mkdir -p work/release-public
+          npm install --prefix work/release-browser --no-save --package-lock=false playwright@1.65.0 2>&1 | tee work/release-public/browser-install.log
+          python3 tools/ci/install_dependencies.py --log work/release-public/browser-install.log playwright work/release-browser/node_modules/.bin/playwright chromium webkit
+      - name: Verify actual public evidence digest, resources, menu and four starter choices
+        run: node tools/release/public_probe.cjs
+        env:
+          NODE_PATH: ${{ github.workspace }}/work/release-browser/node_modules
+      - name: Preserve actual public verification and exact published provenance
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: orafold-live-release-${{ needs.preflight.outputs.commit }}
+          path: work/release-public/
+          if-no-files-found: error

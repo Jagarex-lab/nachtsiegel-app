@@ -2,12 +2,15 @@
 // Read-only post-deployment verification; never dispatches or publishes.
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {chromium,webkit,devices}=require('playwright');
-const {verifyExecutables}=require('./public_integrity.cjs');
+const {verifyExecutables,fetchReleaseEvidence}=require('./public_integrity.cjs');
 const output='work/release-public';fs.mkdirSync(output,{recursive:true});
 const candidate=JSON.parse(process.env.RELEASE_CANDIDATE||'null');
 assert(candidate?.schema===1&&candidate.repository==='Jagarex-lab/nachtsiegel-app','trusted candidate required');
 assert(/^[0-9a-f]{40}$/.test(candidate.commit),'exact candidate commit required');
 assert.equal(candidate.public_url,'https://jagarex-lab.github.io/nachtsiegel-app/','fixed public deployment target');
+assert.equal(process.env.PUBLISHED_PAGE_URL,candidate.public_url,'Pages must report the expected public deployment target');
+const expectedEvidenceDigest=process.env.EXPECTED_RELEASE_EVIDENCE_SHA256;
+assert(/^[0-9a-f]{64}$/.test(expectedEvidenceDigest||''),'trusted publishing-job evidence digest required');
 const results=[];
 async function getJSON(name){
  const url=new URL(name,candidate.public_url);url.searchParams.set('release',candidate.commit);
@@ -17,13 +20,13 @@ async function getJSON(name){
  let info,evidence,lastError;
  for(let attempt=0;attempt<18;attempt++){
   try{
-   info=await getJSON('build-info.json');evidence=await getJSON('release-evidence.json');
+   info=await getJSON('build-info.json');evidence=await fetchReleaseEvidence(candidate,expectedEvidenceDigest);
    assert.equal(info.commit,candidate.commit);assert.deepEqual(evidence.candidate,candidate);lastError=null;break;
   }catch(error){lastError=error;if(attempt<17)await new Promise(resolve=>setTimeout(resolve,10000));}
  }
  if(lastError)throw lastError;
  const executables=await verifyExecutables(candidate,evidence);
- fs.writeFileSync(`${output}/provenance.json`,JSON.stringify({candidate,info,evidence,verified_executables:executables},null,2));
+ fs.writeFileSync(`${output}/provenance.json`,JSON.stringify({candidate,info,evidence,evidence_sha256:expectedEvidenceDigest,verified_executables:executables},null,2));
  for(const [engine,runner] of [['chromium',chromium],['webkit',webkit]]){
   const browser=await runner.launch({headless:true,...(engine==='chromium'?{channel:'chromium',args:['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader']}: {})});
   let page;const errors=[];
