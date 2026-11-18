@@ -364,3 +364,41 @@ Dieser weitere kleine Installer-/Testfix benötigt erneut vollständige frische
 PR-QA (jetzt fünf Suiten/27 Pflichtjobs, einschließlich der eigenständigen
 Kampagne) und anschließend sieben Suiten/29 Jobs auf dem tatsächlichen Merge.
 Kein fehlgeschlagener oder abgebrochener alter Head liefert die Freigabe.
+
+
+## Nachtrag: einheitliche Audio-/Browser-Testwerkzeuge
+
+Auf demselben nicht gemergten Head af6 scheiterte zusätzlich die reale
+[Audio-Produktprobe](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44323018870/job/134866986702):
+Chromium bestand alle acht Prüfungen; WebKit bestand sechs einschließlich
+echter PCM-/Settings-/Quota-Recovery-Prüfungen, stürzte aber beim dritten
+vollständigen Produktladen für den Future-Version99-Spiegeltest ab.
+`page.evaluate: Target crashed` ist ein echter fehlgeschlagener Test.
+OOM oder konkrete Allokationsursache wurden nicht ausgegeben und werden
+nicht behauptet. Das [unveränderte Originalartefakt und seine Prüfsummen](history/ci-183192/audio-probe-failure.json)
+bleiben erhalten.
+
+Nachweisbare Werkzeugabweichung: Die Audio-Suite verwendete als einzige
+Playwright1.62.1, während die acht anderen npm-Browserinstallationen1.65.0
+verwenden (neun Installationen in sieben bestehenden Workflows insgesamt).
+Die einzige Workflowänderung dieses Wartungspakets gleicht genau diese eine
+Versionszeile in `audio-qa.yml` an. Eine neue stdlib-Prüfung liest alle aktiven
+Installationspfade und verlangt exakte, einheitliche Pins; sie scheiterte vor
+der Korrektur am echten Drift und besteht danach. Keine Audioassertion, kein
+Reload, keine Lifecycle-/Timing-Annahme, Berechtigung oder Freigabesperre
+wird verändert. Der Publisher bleibt unverändert und allein zuständig.
+
+Unabhängiges Review genehmigte die eng begrenzte Korrektur. Lokal bestanden
+anschließend vollständig **54 CI-,50 Release-Python- und88 Node-Vertragstests**.
+Anfängliche Auslassungen der sparsamen lokalen Arbeitskopie (fehlende
+committete Staging-/Shell-/Mirror-Testdateien) sind im maschinenlesbaren
+Nachweis samt begrenzten Fehl-/Teilresultaten erfasst; nach unveränderter
+Materialisierung bestanden alle vollständigen Suiten. Kein Test wurde dafür
+geändert oder entfernt. Das lokale WebKit-Probeexperiment hatte fehlende
+Systembibliotheken und wird nicht als bestandene Produktprüfung gezählt.
+
+Die Versionsangleichung beweist allein keine Ursache des alten Absturzes.
+Erst die neue vollständige gehostete Chromium-/WebKit-QA mit unveränderter
+Audio-Probe, dann die frischen Merge-Prüfungen und öffentliche Verifikation
+können den endgültigen Kandidaten freigeben. Die endgültigen Nachweise
+stehen nach tatsächlicher Ausführung im stabil verlinkten PR-Abschlusskommentar.

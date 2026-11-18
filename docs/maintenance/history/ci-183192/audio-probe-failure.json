@@ -1,0 +1,250 @@
+{
+  "head": "af6f74eb2dbb4111a730b2f92074546b05c510ed",
+  "tree": "c9a67c756084fd99fedc0a7762a6914fd756fbb8",
+  "not_merged": true,
+  "run_id": 44323018870,
+  "job_id": 134866986702,
+  "failed_step": 12,
+  "failed_step_name": "Export and test the actual product audio surface",
+  "artifact": {
+    "id": 14437355722,
+    "size": 663451,
+    "sha256": "7507ef334b1696eaa14a822e0ac6e566a2fdd48884ffce78cb213af811184dcf"
+  },
+  "archive_entries": [
+    {
+      "path": "audio/asset-results.json",
+      "size": 62225,
+      "sha256": "31f3a5b6de631120416beb71aa42b29857b06687f57ac2eb1e85670a266a9e51"
+    },
+    {
+      "path": "audio/browser/android.json",
+      "size": 5013,
+      "sha256": "8f9ee71cd926f3428a210c7adaba2b41f37767ee7eac8204af96a600f785def4"
+    },
+    {
+      "path": "audio/browser/android.png",
+      "size": 78456,
+      "sha256": "30e6da48d86e72f2dc1e23a7049907fbce96c5b0fcdb9d6321dbac801e24df06"
+    },
+    {
+      "path": "audio/browser/chromium.json",
+      "size": 4993,
+      "sha256": "ee616214ec863059aef36fdd6b6d0e8049953e1611d8ea7b76ff1da5d3a80a68"
+    },
+    {
+      "path": "audio/browser/chromium.png",
+      "size": 64316,
+      "sha256": "3ea4bb837e98fb64d406d52c4800ecec54daf3af907caf04ba663918ba04cc08"
+    },
+    {
+      "path": "audio/browser/webkit.json",
+      "size": 8481,
+      "sha256": "6d9f2bd53510ae5c8c1a4879aea0ab8388b558f956bb02e07ec7340ecdb53828"
+    },
+    {
+      "path": "audio/browser/webkit.png",
+      "size": 103523,
+      "sha256": "ac6d9426966aba0ebabe95464bec95cf11d205842c11b952f9709d0c65d6997c"
+    },
+    {
+      "path": "audio/browser-http.log",
+      "size": 3958,
+      "sha256": "a3a6b4386741ab12223fe6b97cdad16585ededa622593f1a549e71a315f6d129"
+    },
+    {
+      "path": "audio/browser-install.log",
+      "size": 56055,
+      "sha256": "ce3191b5fad6805f5d2c2aba1736706bbaf35102a46776d4494b3ee571445230"
+    },
+    {
+      "path": "audio/import.log",
+      "size": 283121,
+      "sha256": "b396e4d873c4540ef187f058947e3c4c671740c149d3f15e8edd53ee93811f7e"
+    },
+    {
+      "path": "audio/integration.log",
+      "size": 126,
+      "sha256": "05f8316118d915296cd046a52594e34ca97057b937e7b8c04c396d439a0186f2"
+    },
+    {
+      "path": "audio/native-export-test.log",
+      "size": 1257,
+      "sha256": "8ea5d56592a7b2334eb5a91f2711c7dffa0dbae0f65529ddf8807c7f01d1b168"
+    },
+    {
+      "path": "audio/preview.log",
+      "size": 114,
+      "sha256": "bae8966145098911097fbec0478323fc1c7e9efa2f69a2a0089f06fec474f689"
+    },
+    {
+      "path": "audio/product-browser/chromium-20261118143144146.json",
+      "size": 143029,
+      "sha256": "62fddc6543617706a7e567a4a1580879265809fa21f5622327a84dfe240c0f4c"
+    },
+    {
+      "path": "audio/product-browser/chromium-mobile.png",
+      "size": 261399,
+      "sha256": "9c87f35589af00c6e02c0b6d25f672e2d5e866974099541d291ac401247f2051"
+    },
+    {
+      "path": "audio/product-browser/chromium.json",
+      "size": 143029,
+      "sha256": "62fddc6543617706a7e567a4a1580879265809fa21f5622327a84dfe240c0f4c"
+    },
+    {
+      "path": "audio/product-browser/webkit-20261118143405202.json",
+      "size": 113380,
+      "sha256": "bdff2b45a0fd34da1ee17ce6c8ae8a41e1f1661db526d7cc5d405dcb2c65ce96"
+    },
+    {
+      "path": "audio/product-browser/webkit.json",
+      "size": 113380,
+      "sha256": "bdff2b45a0fd34da1ee17ce6c8ae8a41e1f1661db526d7cc5d405dcb2c65ce96"
+    },
+    {
+      "path": "audio/product-http.log",
+      "size": 7740,
+      "sha256": "c6ba2f37ffc16a192a61690b488b1a84b6767ff276b4c22871d6a9ca6b7a32a6"
+    },
+    {
+      "path": "audio/product-native-export.log",
+      "size": 348099,
+      "sha256": "b8dc94b421f112fe01893bea5cd45579c6ec2a8bea3fd681108985c08d7dc925"
+    },
+    {
+      "path": "audio/product-native-runtime.log",
+      "size": 892,
+      "sha256": "99403188ac55f8786c73e1e8d9cc91ca235160b793ff99bb50fea2db4bc99f1a"
+    },
+    {
+      "path": "audio/runtime-results.json",
+      "size": 236,
+      "sha256": "34abd2e5c00ac7b4249e33b76007d2427bd32e9d66bfee924b3ff628e7df2348"
+    },
+    {
+      "path": "audio/runtime.log",
+      "size": 283,
+      "sha256": "d7ed28b7684fa8fbb7cacdf998896f273761cc7ab92c2bf09c2c3a5fec5c7045"
+    },
+    {
+      "path": "audio/system-install.log",
+      "size": 42505,
+      "sha256": "91110fb1fe6a1387cc173621518ec5dcc960d0f334edbf85a9f68252042c0184"
+    },
+    {
+      "path": "alpha/export.log",
+      "size": 77422,
+      "sha256": "dcfebeee3756726c594d8fb5fa76e36dfe80cb0f59e9e809890ae1a77083f1a2"
+    },
+    {
+      "path": "alpha/package-inspection.log",
+      "size": 105312,
+      "sha256": "6fd4623016bf355f41076d83a37b83845ff02256e6a96c5642f54117656c0069"
+    },
+    {
+      "path": "alpha/web/build-info.json",
+      "size": 448,
+      "sha256": "4803e0e80a591f4c45903c50eb5921cb6fdfdd277f5d9d4c38a26f0b30dd7b34"
+    }
+  ],
+  "bounded_read_only_archive": true,
+  "credential_pattern_scan": "no matches; not an exhaustive clearance claim",
+  "engine": "WebKit26.5 via Playwright1.62.1",
+  "failure": "page.evaluate: Target crashed during future-version99 mirror third full product load",
+  "preceding_results": "Chromium full product8checks passed; WebKit first6including actual PCM/settings/quota recovery passed; no Godot/metererror emitted",
+  "allocation_or_oom_cause": "not emitted; not proven",
+  "known_toolchain_gap": "Audio alone pins1.62.1; eight other npm browser installs across the seven total active browser workflows use1.65.0.",
+  "followup": "Align existing reviewed SDK version without changing probe assertions, reloads, timing or guards; regression contract and fresh full QA required; do not claim old-browser causal trace without comparison.",
+  "correction_proof": {
+    "base_tree": "c9a67c756084fd99fedc0a7762a6914fd756fbb8",
+    "base_audio_workflow_blob": "d83bf4ea17127892ef6350292a0e096923b3f289",
+    "cause_limit": "Original WebKit26.5 target crash root cause/OOM not emitted. Toolchain drift proven, pin alignment needs fresh actual browser QA; no claim the SDK alone is proven cause.",
+    "scope": "Only exact audio Playwright pin1.62.1 to existing1.65.0, plus stdlib all-active-entrypoints consistency guard. Probe/assertions/lifecycle/timeouts unchanged.",
+    "before": "One real-workflow regression fails on audio1.62.1 vs1.65.0 across nine installs / seven workflows",
+    "after": "One regression passes after exact pin alignment",
+    "files": [
+      {
+        "path": ".github/workflows/audio-qa.yml",
+        "size": 4986,
+        "blob": "79872fc6bb81219d16be7276475bca0ad51828d9",
+        "sha256": "5910149dea4abfbe2fc6da78b4dcd4a3fcd6642da1447891f8c8d3681e27aa83"
+      },
+      {
+        "path": "tests/ci/test_browser_toolchain.py",
+        "size": 2154,
+        "blob": "f77329296b950c36f488a53fcd512293fd27be46",
+        "sha256": "b43a66267011c50ca260a31d9d52f7589e8a153d8c7cc55fcc89363a547aca6c"
+      }
+    ],
+    "before_log_sha256": "75bae2e767c2bd44ba810395d78a583c414ac3c966ea4e565e3e0a0b7b813bbd",
+    "after_log_sha256": "4c8008a31794be01cdedf993a42a188c25c5f8eea93e12371cb8435015b59943",
+    "combined_ci": {
+      "tests": 54,
+      "result": "pass",
+      "sha256": "adb8dfdfdfdb28817cf5a9d6dc2823ad996a6d161c8a805d48f72e5e7e6e87a0",
+      "log": "work/all54-ci.log",
+      "helper_blob": "13bc77cefaf94a49ff4d304fb64faedea2e1f63a",
+      "installer_test_blob": "433cbf86d878f1ff66e3761aa296f109570cddd9"
+    },
+    "independent_review": "Approved: exact one-line pin, all assertions/duties/permissions/deadlines unchanged; original browser crash cause unproven"
+  },
+  "independent_review": "approved exact one-line SDK pin and all-entrypoints consistency guard; no probe assertion/reload/lifecycle/deadline or permissions/gate changes",
+  "local_validation": {
+    "ci": {
+      "count": 54,
+      "result": "pass",
+      "sha256": "d12355138e855906ce115712346a53d759d2b42cc2c48cbf1d34a213889f6501",
+      "summary": [
+        "Supported regular Ubuntu mirrorlist unavailable; original failure remains.",
+        "ok",
+        "test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression (test_mirror_format.MirrorFormat.test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression) ... ok",
+        "test_official_mirrors_use_required_tab_delimited_metadata (test_mirror_format.MirrorFormat.test_official_mirrors_use_required_tab_delimited_metadata) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 54 tests in 3.035s",
+        "",
+        "OK"
+      ]
+    },
+    "release_python": {
+      "count": 50,
+      "result": "pass",
+      "sha256": "a7558fb492b504e74443d93485703d97e3476e13bfc8a6d538b1e33b96aba18f",
+      "summary": [
+        "test_solo_alpha_and_existing_environment_rules (test_safety.Safety.test_solo_alpha_and_existing_environment_rules) ... ok",
+        "test_tested_artifact_rechecks_and_public_evidence_hash_are_wired (test_safety.Safety.test_tested_artifact_rechecks_and_public_evidence_hash_are_wired) ... ok",
+        "test_untrusted_events_are_rejected_before_any_checkout (test_safety.Safety.test_untrusted_events_are_rejected_before_any_checkout) ... ok",
+        "test_workflow_privilege_boundaries (test_safety.Safety.test_workflow_privilege_boundaries) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 50 tests in 0.336s",
+        "",
+        "OK"
+      ]
+    },
+    "node": {
+      "count": 88,
+      "result": "pass",
+      "sha256": "4e91cbf448973700373c707e1b64e35f75480c965fff6cc5bb9fb88429bd6295",
+      "summary": [
+        "\u2714 network errors reject only the requested navigation or metadata fetch (2.28792ms)",
+        "\u2139 tests 88",
+        "\u2139 suites 0",
+        "\u2139 pass 88",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 625.870337"
+      ]
+    },
+    "initial_sparse_checkout_limits": {
+      "release": "First50test invocation had two missing inactive .github/release-staging fixture-file errors; full .github materialized unchanged, final50passed.",
+      "node": "Firstwide88invocation had two missing tools/test_premium.sh and tools/test_production.sh errors; exact committed files materialized, final88passed. Initial tests/release-only invocation was12passed, nevercounted88.",
+      "ci": "Initial sparse invocation was52passed because two committed mirror tests were absent; all tests/ci materialized unchanged, full54passed.",
+      "code_changes_for_these_environment_issues": "none; no test removed or relaxed"
+    }
+  },
+  "local_webkit_limit": "Installed local1.65WebKit lacks liblzo2.so.2/libGLESv2.so.2; no current-source local product browser pass claimed. Fresh hosted browser QA is required."
+}

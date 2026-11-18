@@ -20,3 +20,8 @@ jedoch vom URI-Guard vor APT zurückgewiesen. campaign-source-variant.json und
 pr34-af6-campaign-failure-log.zip erhalten den ganzen dekodierten Job-Log,
 Artefaktmetadaten, die belegten offiziellen Quellenvarianten und die Grenze,
 dass der konkrete historische URI nicht ausgegeben wurde.
+
+Das zusätzliche Audio-Originalartefakt pr34-af6-audio-failure.zip ist vollständig
+und SHA256-geprüft erhalten. audio-probe-failure.json unterscheidet den echten
+WebKit-Absturz, die belegte SDK-Abweichung, die begrenzte Pin-/Vertragstest-
+Korrektur und die weiterhin nötige frische reale Browserabnahme.
