@@ -327,3 +327,40 @@ frische exakte Head-/Merge-QA bleibt erforderlich; deren Ergebnisse
 werden erst nach ihrer tatsächlichen Ausführung im
 [Abschlusskommentar von PR #34](https://github.com/Jagarex-lab/nachtsiegel-app/pull/34#issuecomment-6979959291)
 als eigene Nachweise verlinkt. Alte fehlgeschlagene Heads bleiben Fehler.
+
+
+## Nachtrag: dokumentierte Ubuntu-Quellenvarianten im separaten Kampagnenlauf
+
+Der Head `af6f74eb2dbb4111a730b2f92074546b05c510ed` bleibt ebenfalls
+ungemergt. Die integrierten Module bestanden nun tatsächlich vollständig:
+Präsentation 36/0 ohne Leck, echtes Online-Produktduell, Hosted-Anwendung
+37/0 und Match-Belohnungen 102/0. Die zusätzlich wegen des Testpfads gestartete
+eigenständige Kampagnen-Suite bestand ihre nativen Tests ebenfalls, scheiterte
+aber in [Job 134866753544](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44323018819/job/134866753544)
+vor APT am gemeinsamen URI-Guard. Sie verwendete das andere offizielle
+Image `ubuntu24/20261111.127.1`; der genaue zurückgewiesene URI wurde vom
+bisherigen Guard nicht ausgegeben. Seine öffentlichen Image-Refs liefern404.
+Eine konkrete historische URI wird deshalb nicht als nachgewiesen behauptet.
+
+Der [vollständige erhaltene Job-Log und Quellenbeleg](history/ci-183192/campaign-source-variant.json)
+verweist auf zwei immutable offizielle runner-images-Korrekturen: Cloud-Init
+kann kanonische HTTP-Ubuntu-Adressen mit/ohne End-Slash hinterlassen; die
+spätere AWS-Unterstützung behandelt zusätzlich exakt
+`http://us-east-2.ec2.archive.ubuntu.com/ubuntu`. Der Installer normalisiert
+ausschließlich die acht so dokumentierten Literale (archive, security, Azure,
+dieser EC2-Host; je mit/ohne Slash) im geschützten Snapshot auf die bereits
+erlaubten offiziellen archive-/security-HTTPS-Endpunkte. Kein HTTP- oder
+Cloud-Host wird dabei kontaktiert; Originalquellen bleiben unverändert.
+
+53 lokale CI-Vertragstests bestehen. Eine echte netzwerkfreie APT-Aufzählung
+beweist EC2-Eingabe → ausschließlich offizielles HTTPS während der
+Systemphase → Originalquellen nach Wiederherstellung. Unbekannte Hosts, andere
+Regionen, Zugangsdaten, Ports, Parameter und Host-Suffixtricks bleiben Fehler.
+Diagnosen begrenzen Scheme/Host und geben einen Hash aus, niemals Userinfo,
+Pfad, Query, Fragment oder rohe Parserfehler. TLS/GPG, Schlüssel-Pin, strikte
+APT-Fehler, Hostprüfung, Cleanup, Deadlines und Versuchsgrenzen bleiben aktiv.
+
+Dieser weitere kleine Installer-/Testfix benötigt erneut vollständige frische
+PR-QA (jetzt fünf Suiten/27 Pflichtjobs, einschließlich der eigenständigen
+Kampagne) und anschließend sieben Suiten/29 Jobs auf dem tatsächlichen Merge.
+Kein fehlgeschlagener oder abgebrochener alter Head liefert die Freigabe.

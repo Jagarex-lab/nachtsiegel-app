@@ -1,0 +1,137 @@
+{
+  "head": "af6f74eb2dbb4111a730b2f92074546b05c510ed",
+  "tree": "c9a67c756084fd99fedc0a7762a6914fd756fbb8",
+  "not_merged": true,
+  "run_id": 44323018819,
+  "job_id": 134866753544,
+  "failed_step": 9,
+  "failed_step_name": "Chromium runtime",
+  "error": "Unsupported GitHub Actions Ubuntu APT sources: official Ubuntu HTTPS URI or standard mirrorlist required.",
+  "before_apt": true,
+  "actual_rejected_uri": "not emitted; do not invent the runtime value",
+  "runner_image": "ubuntu-24.04 20261111.127.1",
+  "runner_readme": "https://github.com/actions/runner-images/blob/ubuntu24/20261111.127/images/ubuntu/Ubuntu2404-Readme.md",
+  "artifact": {
+    "id": 14436226883,
+    "size": 405242268,
+    "sha256": "58d1edeb0d895af4db1ad72b80cf50203acfa8f802065f91ab17c1d543863735",
+    "downloaded": false,
+    "reason": "Large redundant isolated web export; exact decoded job stdout retained separately"
+  },
+  "preserved_job_log": {
+    "archive": "pr34-af6-campaign-failure-log.zip",
+    "archive_sha256": "7338548076ecfcb810603c22c81f1d194959ddeac8cb42b9d793fcd3f94afac0",
+    "archive_bytes": 42727,
+    "decoded_utf8_sha256": "32dd7d7aa26592bda0696092fad4c536eab9f46ed1157e44705857c59da7b492",
+    "decoded_utf8_bytes": 440373,
+    "credential_pattern_scan": "no matches; bounded read-only archive, no exhaustive clearance claimed"
+  },
+  "actual_native_presentation": {
+    "assertions": 36,
+    "failures": 0,
+    "quiet_shutdown": true
+  },
+  "same_head_main_integration": {
+    "run_id": 44323018870,
+    "job_id": 134866986993,
+    "result": "success; actual online production duel and hosted application completed",
+    "artifact_id": 14436166654,
+    "artifact_sha256": "849cd66d8f499f92169b4d42cfbd2037b1ce5226ebec0943ebbb8abbc9b1860d"
+  },
+  "followup_issue": 33,
+  "fresh_full_qa_required_after_correction": true,
+  "independent_upstream_source_proof": {
+    "checked_utc": "2026-11-18T14:30:49.444795+00:00",
+    "failed_image_reported": "Ubuntu2404 20261111.127.1",
+    "exact_image_limitation": {
+      "tag": "ubuntu24/20261111.127",
+      "public_ref_url": "https://api.github.com/repos/actions/runner-images/git/ref/tags/ubuntu24%2F20261111.127",
+      "public_release_url": "https://api.github.com/repos/actions/runner-images/releases/tags/ubuntu24%2F20261111.127",
+      "result": "Both HTTP404; exact image source URI cannot be established from public tag"
+    },
+    "known_370_image": {
+      "tag": "ubuntu24/20261111.370",
+      "commit": "fb099341ddaf44a428fb17495341cb7c2300faf2"
+    },
+    "upstream_cloud_init_and_uri_fix": {
+      "commit": "9b75b60f5c2a8a890a1c0bf4c169ff50bf96b4be",
+      "date": "2026-11-11T21:29:29Z",
+      "url": "https://github.com/actions/runner-images/commit/9b75b60f5c2a8a890a1c0bf4c169ff50bf96b4be",
+      "previous_source_match": "http://azure.archive.ubuntu.com/ubuntu/ only",
+      "new_source_matches": [
+        "http://azure.archive.ubuntu.com/ubuntu",
+        "http://archive.ubuntu.com/ubuntu",
+        "http://security.ubuntu.com/ubuntu"
+      ],
+      "optional_trailing_slash": true,
+      "reason_in_source": "cloud-init fallback mirrors have no trailing slash; defaults may not yet have changed to Azure"
+    },
+    "upstream_aws_support": {
+      "commit": "f2f91839f985dcbde42542557c72de8d0c2970a6",
+      "date": "2026-11-17T10:15:28Z",
+      "url": "https://github.com/actions/runner-images/commit/f2f91839f985dcbde42542557c72de8d0c2970a6",
+      "additional_exact_source": "http://us-east-2.ec2.archive.ubuntu.com/ubuntu"
+    },
+    "recommended_scope": "Canonicalize only these exact known image URI literals (optional trailing slash) inside the validated private source snapshot to existing official archive/security HTTPS; perform no HTTP or cloud-mirror requests; do not relax signature or host validation",
+    "attribution_limit": "Public scripts prove the variants exist and needed compatibility work; attributing a particular variant to inaccessible image127 remains an inference."
+  },
+  "correction": {
+    "behavior": "Canonicalize only eight exact documented official HTTP Ubuntu source literals (four hosts with optional trailing slash) to already allowed archive/security HTTPS inside the validated root-owned source snapshot. No HTTP/cloud host is fetched. Original source bytes/rights are unchanged.",
+    "diagnostics": "Unknown URIs reveal only bounded safe scheme/host plus SHA256; no userinfo/path/query/fragment/raw parse error.",
+    "security": "Pinned Noble key, source/suite/field validation, GPG/TLS, strict APT, host validation, cleanup, deadlines and retry limits retained.",
+    "attribution_limit": "The exact rejected URI was not logged by the failed head; documented official image variants are supported without asserting which one occurred on image127.",
+    "local_ci_tests": 53,
+    "fresh_exact_head_and_merge_qa": "required; not yet passed"
+  },
+  "local_validation": {
+    "ci": {
+      "count": 53,
+      "sha256": "d8166e34eb46eed029628babb337926d9b173d8e3fdf6c53fc42d0f5eab5d924",
+      "result": "pass",
+      "summary": [
+        "Supported regular Ubuntu mirrorlist unavailable; original failure remains.",
+        "ok",
+        "test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression (test_mirror_format.MirrorFormat.test_actual_apt_parser_requests_clean_uri_and_rejects_space_regression) ... ok",
+        "test_official_mirrors_use_required_tab_delimited_metadata (test_mirror_format.MirrorFormat.test_official_mirrors_use_required_tab_delimited_metadata) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 53 tests in 3.198s",
+        "",
+        "OK"
+      ]
+    },
+    "release_python": {
+      "count": 50,
+      "sha256": "85f7fb63b584ea863725ad6ddf778ed472adde15349fc83f6833267af26612f7",
+      "result": "pass",
+      "summary": [
+        "test_solo_alpha_and_existing_environment_rules (test_safety.Safety.test_solo_alpha_and_existing_environment_rules) ... ok",
+        "test_tested_artifact_rechecks_and_public_evidence_hash_are_wired (test_safety.Safety.test_tested_artifact_rechecks_and_public_evidence_hash_are_wired) ... ok",
+        "test_untrusted_events_are_rejected_before_any_checkout (test_safety.Safety.test_untrusted_events_are_rejected_before_any_checkout) ... ok",
+        "test_workflow_privilege_boundaries (test_safety.Safety.test_workflow_privilege_boundaries) ... ok",
+        "",
+        "----------------------------------------------------------------------",
+        "Ran 50 tests in 0.480s",
+        "",
+        "OK"
+      ]
+    },
+    "node": {
+      "count": 88,
+      "sha256": "d32da91d89a5fff198bbb6e30bab9ef40c53a32da6e76822f163665f2b9be71e",
+      "result": "pass",
+      "summary": [
+        "\u2714 network errors reject only the requested navigation or metadata fetch (0.769911ms)",
+        "\u2139 tests 88",
+        "\u2139 suites 0",
+        "\u2139 pass 88",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 619.586849"
+      ]
+    }
+  },
+  "independent_reviews": "two independent approvals of installer13bc77cefaf94a49ff4d304fb64faedea2e1f63a / tests433cbf86d878f1ff66e3761aa296f109570cddd9"
+}

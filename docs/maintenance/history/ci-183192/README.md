@@ -13,3 +13,10 @@ Originalarchiv pr34-2b65-integration-failure.zip erhalten diesen unabhängigen
 Fehler, seine Grenzen sowie den deterministischen Test-Ownership-Nachweis
 vor und nach der eng begrenzten Testkorrektur. Die konkrete ursprüngliche
 CI-Allokationsspur ist mangels verbose Ausgabe nicht bekannt.
+
+Die native Präsentation und integrierten Module bestanden auf af6 nach dem
+Test-Fix vollständig. Dessen zusätzlicher eigenständiger Kampagnenlauf wurde
+jedoch vom URI-Guard vor APT zurückgewiesen. campaign-source-variant.json und
+pr34-af6-campaign-failure-log.zip erhalten den ganzen dekodierten Job-Log,
+Artefaktmetadaten, die belegten offiziellen Quellenvarianten und die Grenze,
+dass der konkrete historische URI nicht ausgegeben wurde.
