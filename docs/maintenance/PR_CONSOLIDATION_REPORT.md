@@ -37,6 +37,55 @@ sowie [Build-Nachweis](https://jagarex-lab.github.io/nachtsiegel-app/build-info.
 So wird kein eigener zukünftiger Commit-Hash vorweggenommen und keine alte QA
 auf einen neuen Commit übertragen.
 
+## Fortschreibung: Wartungsmerge und zusätzlicher CI-Provisionierungsblocker
+
+PR [#32](https://github.com/Jagarex-lab/nachtsiegel-app/pull/32) wurde nach
+**26/26 erfolgreichen Head-Jobs** regulär als
+`183192f9974837a67876a86fa7194506e6be93cc` integriert. Der tatsächliche
+Merge-Baum `c94b4ece5f396e920de0af999f1e55268fb80efe` entspricht exakt dem
+geprüften Kandidaten; Issue #31 ist damit als completed geschlossen. Die
+ursprünglichen sieben PRs bleiben abgeschlossen. Die Art-Korrektur ist
+integriert; ihre Bilder, Karten, Rechte und Spielregeln bleiben unverändert.
+
+Die anschließende frische QA auf **183192** fand einen neuen, unabhängigen
+Einrichtungsfehler: [Main-Job134820510983](https://github.com/Jagarex-lab/nachtsiegel-app/actions/runs/44309750137/job/134820510983)
+scheiterte vor Browserinstallation und integrierten Assertions an zwei
+HTTP429-Antworten einer vorinstallierten Microsoft-APT-Quelle. Offizielle
+Ubuntu-Indizes wurden erfolgreich geladen. Dieser Lauf bleibt **fehlgeschlagen**;
+eine teilweise erfolgreiche Suite ist keine Releasefreigabe.
+Der konkrete Blocker ist in [Issue #33](https://github.com/Jagarex-lab/nachtsiegel-app/issues/33)
+gesichert; das unveränderte [Fehlarchiv](history/ci-183192/README.md) ist samt
+GitHub-Artefakt-SHA256 konserviert. Die automatische Sperre hat eine
+Veröffentlichung korrekt verhindert.
+
+Dieses kleine Folgepaket begrenzt ausschließlich die Systemabhängigkeitsphase
+unter unterstütztem GitHub Ubuntu24.04 auf vorhandene, streng geprüfte,
+offizielle signierte Ubuntu-Quellen. Fremde Quellen und Schlüssel bleiben
+unangetastet. Temporäre Auswahl und Spiegelkonfiguration werden vor
+Browserinstallation und auf Fehlerpfaden wiederhergestellt. TLS, GPG,
+strikte APT-Fehler, Paket- und Browser-Hostprüfung, Deadlines und maximal
+zwei Systemversuche bleiben erhalten. Unsichere oder unbekannte
+Konfiguration wird sichtbar zurückgewiesen; lokale Nicht-GHA-Abläufe bleiben
+erhalten. Eine echte, netzwerkfreie APT-URI-Aufzählung prüft, dass die
+Microsoft-Quelle während der Systemphase ausgeschlossen und vor der
+Browserphase wieder vorhanden ist.
+
+Lokal bestanden **44 CI-Vertragstests** einschließlich aller bisherigen35,
+**50 Release-Python-Tests** und **88 Node-Vertragstests**. Unabhängiges Review,
+Syntax und Diffprüfung bestanden. Diese lokalen Ergebnisse ersetzen keine
+frische GitHub-QA auf dem endgültigen Folge-Head oder dessen Merge.
+
+**Stand dieses Nachtrags vor seiner eigenen Integration:** develop183192;
+öffentlich weiterhin der vollständig geprüfte Ausgangscommit6c99dfc.
+Ein neuer gesicherter CI-Blocker befindet sich in Korrektur; kein ursprünglicher
+PR ist wieder offen. Der endgültige Ersatz-PR ist über Issue #33 verknüpft.
+Nach seinem regulären Merge müssen alle sieben Suiten mit29Pflichtjobs auf
+dem neuen exakten Commit bestehen. Erst danach darf der unveränderte
+automatische Publisher veröffentlichen und die öffentliche Version prüfen.
+Endgültige Commit-, QA- und Live-Nachweise werden im Abschlusskommentar des
+Folge-PRs sowie den öffentlichen Provenienz-JSONs festgehalten; keine
+veralteten Run-IDs und keine erfundenen zukünftigen Merge-SHAs.
+
 ## Technischer Detailnachweis
 
 Seven old open PRs were audited against published develop `6c99dfcbd1bc68b550b3aa61f9dc762f4be8635f` (tree `8c84f6ed60213fbde77cb775319347b63af17dab`). Five are **C — already integrated**; two are **D — superseded**. **No old PR was merged or repaired.** The useful missing art-review guard is adapted in one small maintenance PR together with this report and historical preservation; it is not a new master task.
