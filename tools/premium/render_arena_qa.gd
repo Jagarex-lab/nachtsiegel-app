@@ -10,6 +10,7 @@ class PresentationShell extends Shell:
 var app
 var output := "res://work/premium-mobile/before"
 var records: Array=[]
+var include_opening := false
 var catalog=Catalog.new()
 var chosen: Array=[]
 func _initialize() -> void:call_deferred("run")
@@ -83,6 +84,7 @@ func capture_effect_families() -> Dictionary:
 func run() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--output="):output=argument.trim_prefix("--output=")
+		elif argument=="--include-opening":include_opening=true
 	DirAccess.make_dir_recursive_absolute(output)
 	# Fixed deterministic selection and full IDs are recorded, allowing the same
 	# physical cards/state to be rendered before and after presentation changes.
@@ -101,6 +103,10 @@ func run() -> void:
 		root.size=dimensions;await settle();await build_fixture();await capture("battle-%dx%d" % [dimensions.x,dimensions.y])
 		if dimensions==Vector2i(844,390):
 			app.inspect(catalog.card(chosen[13]));await capture("inspection-844x390");app.close_modal()
+			if include_opening:
+				# Real opening commands, unlike the deliberately arranged full field.
+				app.match_use_starter=true;app.session.profile.last_seed=23
+				app.start_battle();await settle();await capture("opening-free-paths-844x390")
 	root.size=Vector2i(390,844);await settle();app.page="lobby";app.render();await capture("menu-390x844")
 	app.page="decks";app.render();await capture("starters-390x844")
 	app.page="builder";app.collection_mode="alpha";app.collection_only=false;app.deck=catalog.deck("houses");app.render();await capture("deckbuilder-390x844")

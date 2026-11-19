@@ -2,6 +2,19 @@
 
 Status: Native Godot-Prüfungen auf Präsentationsstand `6c531fa` bestanden; Browser-/Integrationsabnahme und Veröffentlichung stehen noch aus. Diese Datei wird nach den tatsächlichen Messungen ergänzt. Keine physische iPhone-/Android-Abnahme behauptet.
 
+Der anschließend mit der Karteninspektion zusammengeführte lokale Stand
+`240ac74da4b4512dbfc760fda532d684c5e48963` besteht außerdem die acht tatsächlichen
+Godot-UI-Suites: Inspektion **3399/0**, Shell-Geometrie **1018/0**, Drag-Abbruch
+**112/0**, Spielfeld-Eröffnung **3852/0**, Alpha-UI **353/0**, Alpha02-UI
+**4439/0**, Orientierung **96/0**, kurze Querformate **430/0**. Der Alpha-UI-Zähler
+kann wegen des lokalen gespeicherten Seeds variieren. Diese Entwicklungsnachweise
+ersetzen weder endgültige Head-CI noch neue Merge-Commit-QA.
+
+Eine zusätzliche reproduzierbare Aufnahme der wirklichen Starthand mit freien
+Pfaden ist über `tools/premium/render_arena_qa.gd -- --include-opening` verfügbar.
+Ohne dieses optionale Aufnahmeflag bleibt die bestehende Pflichtsuite bei genau
+neun Hauptaufnahmen plus dem getrennten Effektdiagramm; keine Prüfung entfällt.
+
 ## Ausgangslage und Abgrenzung
 
 Die Änderung startet von develop `81ec5701d1600f2e80738a2dd0b3a05a9f9973a0` und betrifft ausschließlich Präsentation und deren Tests. Spielregeln, Kartenwerte/IDs, RNG, fünf Pfade, Energie/Resonanz, Siegbedingungen, KI und Assetzuordnungen bleiben unverändert. Die experimentelle echte 3D-Variante bleibt erhalten. Es findet keine globale Umstellung der Kartenrahmen statt; die Fractal-Fold-Studie hat einen eigenen Freigabeweg.

@@ -1,0 +1,5440 @@
+{
+  "card_ids": [
+    "oa-houses-c01",
+    "oa-houses-c07",
+    "oa-stillwatch-c01",
+    "oa-stillwatch-c07",
+    "oa-morph-c01",
+    "oa-morph-c07",
+    "oa-ninth-c01",
+    "oa-ninth-c07",
+    "oa-neutral-c01",
+    "of-neutral-065",
+    "oa-houses-c01",
+    "oa-houses-c05",
+    "of-houses-051",
+    "oa-houses-c07",
+    "oa-houses-e01",
+    "oa-houses-r01"
+  ],
+  "card_view_sha256": "0002f4c1674ca9d8059ce2ffb271b16e4998b0f0bdf0830d30b8c3a01cb347ef",
+  "catalog_sha256": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+  "effects_fixture": {
+    "age": 0,
+    "families": [
+      {
+        "bright_pixels": 366,
+        "kind": "shield",
+        "mask_sha256": "64f6c478d489af367fdae5b6e184bf8244c1b602686664633d85736f760a7da2"
+      },
+      {
+        "bright_pixels": 331,
+        "kind": "block",
+        "mask_sha256": "ed3724e1a1a6c1add32b24f273c927146475cb791595b9509f28f2b500fe7865"
+      },
+      {
+        "bright_pixels": 162,
+        "kind": "heal",
+        "mask_sha256": "2ca955fab832842b73435cd6bd75326b43473599c10a1cb1a597f67db7f06fac"
+      }
+    ],
+    "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/effects-shield-block-heal.png",
+    "same_pigment": true,
+    "scope": "Actual offscreen Godot presentation fixture; no battle command, fake damage or physical-device claim.",
+    "sha256": "f96f6389eabb0f6d247502ead0d66e39f9a3f6a083332daf8c036aa4370a9dee",
+    "viewport": [
+      512,
+      160
+    ]
+  },
+  "feedback_sha256": "f6b47d493706cc460e3486e635d433d64398f7bfc1e68ec6425b4170f70187cf",
+  "fixture_sha256": "43053423a2a60a50ca33fe680c2c8650a0f2055b3c667d53075cb4f06eaf2721",
+  "godot": "4.6.3-stable (official)",
+  "records": [
+    {
+      "board": {
+        "enemy0": [
+          28.7000007629395,
+          52.0,
+          150.919998168945,
+          80.1999969482422
+        ],
+        "enemy1": [
+          187.619995117188,
+          52.0,
+          150.919982910156,
+          80.1999969482422
+        ],
+        "enemy2": [
+          346.540008544922,
+          52.0,
+          150.920013427734,
+          80.1999969482422
+        ],
+        "enemy3": [
+          505.459991455078,
+          52.0,
+          150.920013427734,
+          80.1999969482422
+        ],
+        "enemy4": [
+          664.380004882812,
+          52.0,
+          150.919982910156,
+          80.1999969482422
+        ],
+        "hero0": [
+          8.0,
+          146.199996948242,
+          159.199996948242,
+          80.1999969482422
+        ],
+        "hero1": [
+          175.199996948242,
+          146.199996948242,
+          159.199996948242,
+          80.1999969482422
+        ],
+        "hero2": [
+          342.399993896484,
+          146.199996948242,
+          159.199981689453,
+          80.1999969482422
+        ],
+        "hero3": [
+          509.600006103516,
+          146.199996948242,
+          159.199981689453,
+          80.1999969482422
+        ],
+        "hero4": [
+          676.799987792969,
+          146.199996948242,
+          159.200012207031,
+          80.1999969482422
+        ]
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/battle-844x390.png",
+      "hand": [
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              5.11020183563232,
+              5.11020183563232,
+              85.8415756225586,
+              123.961418151855
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.463911667834826
+          },
+          "id": "oa-houses-c01",
+          "rect": [
+            30.3140487670898,
+            241.399993896484,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c05",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619888305664,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              6.22987508773804,
+              6.22987508773804,
+              83.6022415161133,
+              121.722076416016
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.445187083170074
+          },
+          "id": "oa-houses-c05",
+          "rect": [
+            131.376037597656,
+            240.199996948242,
+            96.0619888305664,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "of-houses-051",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              7.34954738616943,
+              7.34954738616943,
+              81.3628845214844,
+              119.482727050781
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.416462398926396
+          },
+          "id": "of-houses-051",
+          "rect": [
+            232.438018798828,
+            239.0,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c07",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              8.46922016143799,
+              8.46922016143799,
+              79.1235427856445,
+              117.243385314941
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "legendary",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.382737814176247
+          },
+          "id": "oa-houses-c07",
+          "rect": [
+            333.5,
+            239.0,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-e01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              6.22987461090088,
+              6.22987461090088,
+              83.6022338867188,
+              121.722076416016
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.445187084463987
+          },
+          "id": "oa-houses-e01",
+          "rect": [
+            434.561981201172,
+            240.199996948242,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-r01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619506835938,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              6.2298731803894,
+              6.2298731803894,
+              83.6022033691406,
+              121.722076416016
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": true,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Ausspielbar",
+            "visible": true,
+            "visible_art_fraction": 0.44518708963963
+          },
+          "id": "oa-houses-r01",
+          "rect": [
+            535.623962402344,
+            241.399993896484,
+            96.0619506835938,
+            134.181823730469
+          ]
+        }
+      ],
+      "modal": false,
+      "page": "battle",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "board": {
+        "enemy0": [
+          28.7000007629395,
+          52.0,
+          150.919998168945,
+          80.1999969482422
+        ],
+        "enemy1": [
+          187.619995117188,
+          52.0,
+          150.919982910156,
+          80.1999969482422
+        ],
+        "enemy2": [
+          346.540008544922,
+          52.0,
+          150.920013427734,
+          80.1999969482422
+        ],
+        "enemy3": [
+          505.459991455078,
+          52.0,
+          150.920013427734,
+          80.1999969482422
+        ],
+        "enemy4": [
+          664.380004882812,
+          52.0,
+          150.919982910156,
+          80.1999969482422
+        ],
+        "hero0": [
+          8.0,
+          146.199996948242,
+          159.199996948242,
+          80.1999969482422
+        ],
+        "hero1": [
+          175.199996948242,
+          146.199996948242,
+          159.199996948242,
+          80.1999969482422
+        ],
+        "hero2": [
+          342.399993896484,
+          146.199996948242,
+          159.199981689453,
+          80.1999969482422
+        ],
+        "hero3": [
+          509.600006103516,
+          146.199996948242,
+          159.199981689453,
+          80.1999969482422
+        ],
+        "hero4": [
+          676.799987792969,
+          146.199996948242,
+          159.200012207031,
+          80.1999969482422
+        ]
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/inspection-844x390.png",
+      "hand": [
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              5.11020183563232,
+              5.11020183563232,
+              85.8415756225586,
+              123.961418151855
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.463911667834826
+          },
+          "id": "oa-houses-c01",
+          "rect": [
+            30.3140487670898,
+            241.399993896484,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c05",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619888305664,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              6.22987508773804,
+              6.22987508773804,
+              83.6022415161133,
+              121.722076416016
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.445187083170074
+          },
+          "id": "oa-houses-c05",
+          "rect": [
+            131.376037597656,
+            240.199996948242,
+            96.0619888305664,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "of-houses-051",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              7.34954738616943,
+              7.34954738616943,
+              81.3628845214844,
+              119.482727050781
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.416462398926396
+          },
+          "id": "of-houses-051",
+          "rect": [
+            232.438018798828,
+            239.0,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c07",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              8.46922016143799,
+              8.46922016143799,
+              79.1235427856445,
+              117.243385314941
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "legendary",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.382737814176247
+          },
+          "id": "oa-houses-c07",
+          "rect": [
+            333.5,
+            239.0,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-e01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              6.22987461090088,
+              6.22987461090088,
+              83.6022338867188,
+              121.722076416016
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.445187084463987
+          },
+          "id": "oa-houses-e01",
+          "rect": [
+            434.561981201172,
+            240.199996948242,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-r01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619506835938,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              6.2298731803894,
+              6.2298731803894,
+              83.6022033691406,
+              121.722076416016
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": true,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Ausspielbar",
+            "visible": true,
+            "visible_art_fraction": 0.44518708963963
+          },
+          "id": "oa-houses-r01",
+          "rect": [
+            535.623962402344,
+            241.399993896484,
+            96.0619506835938,
+            134.181823730469
+          ]
+        }
+      ],
+      "modal": true,
+      "page": "battle",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "board": {
+        "enemy0": [
+          28.7000007629395,
+          52.0,
+          150.919998168945,
+          80.1999969482422
+        ],
+        "enemy1": [
+          187.619995117188,
+          52.0,
+          150.919982910156,
+          80.1999969482422
+        ],
+        "enemy2": [
+          346.540008544922,
+          52.0,
+          150.920013427734,
+          80.1999969482422
+        ],
+        "enemy3": [
+          505.459991455078,
+          52.0,
+          150.920013427734,
+          80.1999969482422
+        ],
+        "enemy4": [
+          664.380004882812,
+          52.0,
+          150.919982910156,
+          80.1999969482422
+        ],
+        "hero0": [
+          8.0,
+          146.199996948242,
+          159.199996948242,
+          80.1999969482422
+        ],
+        "hero1": [
+          175.199996948242,
+          146.199996948242,
+          159.199996948242,
+          80.1999969482422
+        ],
+        "hero2": [
+          342.399993896484,
+          146.199996948242,
+          159.199981689453,
+          80.1999969482422
+        ],
+        "hero3": [
+          509.600006103516,
+          146.199996948242,
+          159.199981689453,
+          80.1999969482422
+        ],
+        "hero4": [
+          676.799987792969,
+          146.199996948242,
+          159.200012207031,
+          80.1999969482422
+        ]
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/opening-free-paths-844x390.png",
+      "hand": [
+        {
+          "art": {
+            "availability_shown": false,
+            "card_id": "oa-houses-c01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619735717773,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              5.11020183563232,
+              5.11020183563232,
+              85.8415679931641,
+              123.961418151855
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Vorbereitung · Karte lesen oder zum Tauschen markieren",
+            "visible": true,
+            "visible_art_fraction": 0.463911670277399
+          },
+          "id": "oa-houses-c01",
+          "rect": [
+            80.8450393676758,
+            240.799987792969,
+            96.0619735717773,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": false,
+            "card_id": "of-houses-087",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619659423828,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              7.34954643249512,
+              7.34954643249512,
+              81.3628692626953,
+              119.482727050781
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Vorbereitung · Karte lesen oder zum Tauschen markieren",
+            "visible": true,
+            "visible_art_fraction": 0.416462399355593
+          },
+          "id": "of-houses-087",
+          "rect": [
+            181.907028198242,
+            239.599990844727,
+            96.0619659423828,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": false,
+            "card_id": "of-houses-052",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              7.34954738616943,
+              7.34954738616943,
+              81.3628845214844,
+              119.482727050781
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Vorbereitung · Karte lesen oder zum Tauschen markieren",
+            "visible": true,
+            "visible_art_fraction": 0.416462398926396
+          },
+          "id": "of-houses-052",
+          "rect": [
+            282.968994140625,
+            238.399993896484,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": false,
+            "card_id": "of-houses-057",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619812011719,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              7.34954738616943,
+              7.34954738616943,
+              81.3628845214844,
+              119.482727050781
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Vorbereitung · Karte lesen oder zum Tauschen markieren",
+            "visible": true,
+            "visible_art_fraction": 0.416462398926396
+          },
+          "id": "of-houses-057",
+          "rect": [
+            384.030975341797,
+            239.599990844727,
+            96.0619812011719,
+            134.181823730469
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": false,
+            "card_id": "of-houses-010",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.0619506835938,
+              130.181823730469
+            ],
+            "illustration_rect": [
+              5.11020088195801,
+              5.11020088195801,
+              85.8415451049805,
+              123.961418151855
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Vorbereitung · Karte lesen oder zum Tauschen markieren",
+            "visible": true,
+            "visible_art_fraction": 0.463911677605112
+          },
+          "id": "of-houses-010",
+          "rect": [
+            485.092956542969,
+            240.799987792969,
+            96.0619506835938,
+            134.181823730469
+          ]
+        }
+      ],
+      "modal": false,
+      "page": "battle",
+      "snapshot": {
+        "active": "hero",
+        "coin": null,
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 0,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-087",
+            "of-houses-072",
+            "of-houses-099",
+            "of-neutral-049",
+            "of-neutral-056",
+            "of-houses-001",
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-052",
+            "of-houses-068",
+            "oa-houses-c01",
+            "oa-houses-c01",
+            "of-neutral-049",
+            "of-neutral-056",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-010",
+            "of-houses-001",
+            "of-houses-094",
+            "of-houses-057",
+            "of-houses-052",
+            "of-houses-062",
+            "of-houses-045",
+            "of-houses-038",
+            "of-houses-058"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 0,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-houses-058",
+            "of-houses-082",
+            "of-houses-089",
+            "of-houses-061",
+            "of-houses-086"
+          ],
+          "handCount": 5,
+          "hp": 30,
+          "lanes": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "opening",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 0,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 0,
+          "ward": 0,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 0,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-001",
+            "of-houses-020",
+            "of-houses-094",
+            "oa-houses-c01",
+            "of-houses-086",
+            "of-houses-089",
+            "of-neutral-049",
+            "of-houses-068",
+            "of-houses-061",
+            "of-houses-082",
+            "of-houses-058",
+            "of-houses-038",
+            "oa-houses-c01",
+            "of-houses-001",
+            "of-houses-058",
+            "of-houses-045",
+            "of-houses-057",
+            "of-houses-052",
+            "of-neutral-056",
+            "of-houses-062",
+            "of-houses-072",
+            "of-neutral-056",
+            "of-houses-099",
+            "of-houses-062",
+            "of-neutral-049"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 0,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "of-houses-087",
+            "of-houses-052",
+            "of-houses-057",
+            "of-houses-010"
+          ],
+          "handCount": 5,
+          "hp": 30,
+          "lanes": [
+            null,
+            null,
+            null,
+            null,
+            null
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "opening",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 0,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 0,
+          "ward": 0,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 1,
+        "origin_used": {
+          "enemy": false,
+          "hero": false
+        },
+        "origins": {
+          "enemy": -1,
+          "hero": -1
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 0,
+        "second_card": false,
+        "second_path": false,
+        "seed": 24,
+        "stage": "mulligan",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        844,
+        390
+      ]
+    },
+    {
+      "board": {
+        "enemy0": [
+          28.8999996185303,
+          52.0,
+          152.440002441406,
+          81.0999984741211
+        ],
+        "enemy1": [
+          189.339996337891,
+          52.0,
+          152.440002441406,
+          81.0999984741211
+        ],
+        "enemy2": [
+          349.779998779297,
+          52.0,
+          152.440002441406,
+          81.0999984741211
+        ],
+        "enemy3": [
+          510.220001220703,
+          52.0,
+          152.440032958984,
+          81.0999984741211
+        ],
+        "enemy4": [
+          670.660034179688,
+          52.0,
+          152.440002441406,
+          81.0999984741211
+        ],
+        "hero0": [
+          8.0,
+          147.100006103516,
+          160.800003051758,
+          81.0999984741211
+        ],
+        "hero1": [
+          176.800003051758,
+          147.100006103516,
+          160.800003051758,
+          81.0999984741211
+        ],
+        "hero2": [
+          345.600006103516,
+          147.100006103516,
+          160.800018310547,
+          81.0999984741211
+        ],
+        "hero3": [
+          514.400024414062,
+          147.100006103516,
+          160.800018310547,
+          81.0999984741211
+        ],
+        "hero4": [
+          683.200012207031,
+          147.100006103516,
+          160.799987792969,
+          81.0999984741211
+        ]
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/battle-852x393.png",
+      "hand": [
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.8429718017578,
+              131.272720336914
+            ],
+            "illustration_rect": [
+              5.13658714294434,
+              5.13658714294434,
+              86.5698013305664,
+              124.999549865723
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.466145981026267
+          },
+          "id": "oa-houses-c01",
+          "rect": [
+            31.9710750579834,
+            243.199996948242,
+            96.8429718017578,
+            135.272720336914
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c05",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.8429641723633,
+              131.272720336914
+            ],
+            "illustration_rect": [
+              6.26575803756714,
+              6.26575803756714,
+              84.3114471435547,
+              122.741203308105
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.447419781713485
+          },
+          "id": "oa-houses-c05",
+          "rect": [
+            133.814056396484,
+            242.0,
+            96.8429641723633,
+            135.272720336914
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "of-houses-051",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.8429870605469,
+              131.272720336914
+            ],
+            "illustration_rect": [
+              7.39493036270142,
+              7.39493036270142,
+              82.0531234741211,
+              120.482856750488
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.418693547189212
+          },
+          "id": "of-houses-051",
+          "rect": [
+            235.657012939453,
+            240.800003051758,
+            96.8429870605469,
+            135.272720336914
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c07",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.8429565429688,
+              131.272720336914
+            ],
+            "illustration_rect": [
+              8.52409934997559,
+              8.52409934997559,
+              79.7947540283203,
+              118.224517822266
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "legendary",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.384967481169955
+          },
+          "id": "oa-houses-c07",
+          "rect": [
+            337.5,
+            240.800003051758,
+            96.8429565429688,
+            135.272720336914
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-e01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.8429565429688,
+              131.272720336914
+            ],
+            "illustration_rect": [
+              6.26575756072998,
+              6.26575756072998,
+              84.3114395141602,
+              122.741203308105
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.447419782671996
+          },
+          "id": "oa-houses-e01",
+          "rect": [
+            439.342956542969,
+            242.0,
+            96.8429565429688,
+            135.272720336914
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-r01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              92.8429565429688,
+              131.272720336914
+            ],
+            "illustration_rect": [
+              6.26575756072998,
+              6.26575756072998,
+              84.3114395141602,
+              122.741203308105
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": true,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 10,
+            "unavailable_reason": "Ausspielbar",
+            "visible": true,
+            "visible_art_fraction": 0.447419782671996
+          },
+          "id": "oa-houses-r01",
+          "rect": [
+            541.185913085938,
+            243.199996948242,
+            96.8429565429688,
+            135.272720336914
+          ]
+        }
+      ],
+      "modal": false,
+      "page": "battle",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        852,
+        393
+      ]
+    },
+    {
+      "board": {
+        "enemy0": [
+          30.8999996185303,
+          52.0,
+          167.639999389648,
+          92.1999969482422
+        ],
+        "enemy1": [
+          206.539993286133,
+          52.0,
+          167.639999389648,
+          92.1999969482422
+        ],
+        "enemy2": [
+          382.179992675781,
+          52.0,
+          167.640014648438,
+          92.1999969482422
+        ],
+        "enemy3": [
+          557.820007324219,
+          52.0,
+          167.640014648438,
+          92.1999969482422
+        ],
+        "enemy4": [
+          733.460021972656,
+          52.0,
+          167.640014648438,
+          92.1999969482422
+        ],
+        "hero0": [
+          8.0,
+          158.199996948242,
+          176.800003051758,
+          92.1999969482422
+        ],
+        "hero1": [
+          192.800003051758,
+          158.199996948242,
+          176.800003051758,
+          92.1999969482422
+        ],
+        "hero2": [
+          377.600006103516,
+          158.199996948242,
+          176.800018310547,
+          92.1999969482422
+        ],
+        "hero3": [
+          562.400024414062,
+          158.199996948242,
+          176.799987792969,
+          92.1999969482422
+        ],
+        "hero4": [
+          747.200012207031,
+          158.199996948242,
+          176.799987792969,
+          92.1999969482422
+        ]
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/battle-932x430.png",
+      "hand": [
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              102.475212097168,
+              144.727279663086
+            ],
+            "illustration_rect": [
+              5.46200037002563,
+              5.46200037002563,
+              95.5512084960938,
+              137.803283691406
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.495428535186728
+          },
+          "id": "oa-houses-c01",
+          "rect": [
+            37.1843643188477,
+            265.399993896484,
+            106.475212097168,
+            148.727279663086
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c05",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              102.475204467773,
+              144.727279663086
+            ],
+            "illustration_rect": [
+              6.70832014083862,
+              6.70832014083862,
+              93.0585632324219,
+              135.310638427734
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.476685606897477
+          },
+          "id": "oa-houses-c05",
+          "rect": [
+            148.659576416016,
+            264.199981689453,
+            106.475204467773,
+            148.727279663086
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "of-houses-051",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              102.475204467773,
+              144.727279663086
+            ],
+            "illustration_rect": [
+              7.95464038848877,
+              7.95464038848877,
+              90.5659255981445,
+              132.817993164062
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.447942691621207
+          },
+          "id": "of-houses-051",
+          "rect": [
+            260.134765625,
+            263.0,
+            106.475204467773,
+            148.727279663086
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c07",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              102.475219726562,
+              144.727279663086
+            ],
+            "illustration_rect": [
+              9.20096206665039,
+              9.20096206665039,
+              88.0732955932617,
+              130.32536315918
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "legendary",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.414199852486806
+          },
+          "id": "oa-houses-c07",
+          "rect": [
+            371.609985351562,
+            263.0,
+            106.475219726562,
+            148.727279663086
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-e01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              102.475189208984,
+              144.727279663086
+            ],
+            "illustration_rect": [
+              6.70831966400146,
+              6.70831966400146,
+              93.0585479736328,
+              135.310638427734
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.476685608901111
+          },
+          "id": "oa-houses-e01",
+          "rect": [
+            483.085174560547,
+            264.199981689453,
+            106.475189208984,
+            148.727279663086
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-r01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              102.475219726562,
+              144.727279663086
+            ],
+            "illustration_rect": [
+              6.70832109451294,
+              6.70832109451294,
+              93.0585784912109,
+              135.310638427734
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": true,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Ausspielbar",
+            "visible": true,
+            "visible_art_fraction": 0.476685636545169
+          },
+          "id": "oa-houses-r01",
+          "rect": [
+            594.560363769531,
+            265.399993896484,
+            106.475219726562,
+            148.727279663086
+          ]
+        }
+      ],
+      "modal": false,
+      "page": "battle",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        932,
+        430
+      ]
+    },
+    {
+      "board": {
+        "enemy0": [
+          33.2000007629395,
+          60.0,
+          185.119995117188,
+          245.0
+        ],
+        "enemy1": [
+          226.31999206543,
+          60.0,
+          185.120010375977,
+          245.0
+        ],
+        "enemy2": [
+          419.440002441406,
+          60.0,
+          185.119995117188,
+          245.0
+        ],
+        "enemy3": [
+          612.559997558594,
+          60.0,
+          185.119995117188,
+          245.0
+        ],
+        "enemy4": [
+          805.679992675781,
+          60.0,
+          185.119995117188,
+          245.0
+        ],
+        "hero0": [
+          8.0,
+          319.0,
+          195.199996948242,
+          245.0
+        ],
+        "hero1": [
+          211.199996948242,
+          319.0,
+          195.199996948242,
+          245.0
+        ],
+        "hero2": [
+          414.399993896484,
+          319.0,
+          195.199981689453,
+          245.0
+        ],
+        "hero3": [
+          617.599975585938,
+          319.0,
+          195.200012207031,
+          245.0
+        ],
+        "hero4": [
+          820.799987792969,
+          319.0,
+          195.200012207031,
+          245.0
+        ]
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/battle-1024x768.png",
+      "hand": [
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355361938477,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              5.99849224090576,
+              5.99849224090576,
+              110.358375549316,
+              158.912109375
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.501348493337414
+          },
+          "id": "oa-houses-c01",
+          "rect": [
+            26.1138763427734,
+            579.0,
+            122.355361938477,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c05",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355361938477,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              7.43794918060303,
+              7.43794918060303,
+              107.479461669922,
+              156.033187866211
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.482583830546696
+          },
+          "id": "oa-houses-c05",
+          "rect": [
+            153.469253540039,
+            577.799987792969,
+            122.355361938477,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "of-houses-051",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355377197266,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              8.87740707397461,
+              8.87740707397461,
+              104.600563049316,
+              153.154266357422
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.453819199226676
+          },
+          "id": "of-houses-051",
+          "rect": [
+            280.824615478516,
+            576.599975585938,
+            122.355377197266,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c07",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355346679688,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              10.3168621063232,
+              10.3168621063232,
+              101.721618652344,
+              150.275360107422
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "legendary",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.420054595353317
+          },
+          "id": "oa-houses-c07",
+          "rect": [
+            408.179992675781,
+            576.599975585938,
+            122.355346679688,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-e01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355346679688,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              7.43794822692871,
+              7.43794822692871,
+              107.479446411133,
+              156.033187866211
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.482583848396937
+          },
+          "id": "oa-houses-e01",
+          "rect": [
+            535.535339355469,
+            577.799987792969,
+            122.355346679688,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-r01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355346679688,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              7.43794822692871,
+              7.43794822692871,
+              107.479446411133,
+              156.033187866211
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": true,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Ausspielbar",
+            "visible": true,
+            "visible_art_fraction": 0.482583848396937
+          },
+          "id": "oa-houses-r01",
+          "rect": [
+            662.890747070312,
+            579.0,
+            122.355346679688,
+            170.909088134766
+          ]
+        }
+      ],
+      "modal": false,
+      "page": "battle",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        1024,
+        768
+      ]
+    },
+    {
+      "board": {
+        "enemy0": [
+          47.5999984741211,
+          60.0,
+          294.559997558594,
+          311.0
+        ],
+        "enemy1": [
+          350.160003662109,
+          60.0,
+          294.559967041016,
+          311.0
+        ],
+        "enemy2": [
+          652.719970703125,
+          60.0,
+          294.559997558594,
+          311.0
+        ],
+        "enemy3": [
+          955.280029296875,
+          60.0,
+          294.56005859375,
+          311.0
+        ],
+        "enemy4": [
+          1257.83996582031,
+          60.0,
+          294.559936523438,
+          311.0
+        ],
+        "hero0": [
+          8.0,
+          385.0,
+          310.399993896484,
+          311.0
+        ],
+        "hero1": [
+          326.399993896484,
+          385.0,
+          310.399993896484,
+          311.0
+        ],
+        "hero2": [
+          644.799987792969,
+          385.0,
+          310.399963378906,
+          311.0
+        ],
+        "hero3": [
+          963.200012207031,
+          385.0,
+          310.399963378906,
+          311.0
+        ],
+        "hero4": [
+          1281.59997558594,
+          385.0,
+          310.400024414062,
+          311.0
+        ]
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/battle-1600x900.png",
+      "hand": [
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355377197266,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              5.99849224090576,
+              5.99849224090576,
+              110.358390808105,
+              158.912109375
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "common",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.501348522178442
+          },
+          "id": "oa-houses-c01",
+          "rect": [
+            303.433898925781,
+            711.0,
+            122.355377197266,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c05",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355346679688,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              7.43794822692871,
+              7.43794822692871,
+              107.479446411133,
+              156.033187866211
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.482583848396937
+          },
+          "id": "oa-houses-c05",
+          "rect": [
+            430.789245605469,
+            709.799987792969,
+            122.355346679688,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "of-houses-051",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355346679688,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              8.87740516662598,
+              8.87740516662598,
+              104.600540161133,
+              153.154281616211
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "epic",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.453819301222081
+          },
+          "id": "of-houses-051",
+          "rect": [
+            558.144653320312,
+            708.599975585938,
+            122.355346679688,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-c07",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355346679688,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              10.3168621063232,
+              10.3168621063232,
+              101.721618652344,
+              150.275360107422
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "legendary",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.420054595353317
+          },
+          "id": "oa-houses-c07",
+          "rect": [
+            685.5,
+            708.599975585938,
+            122.355346679688,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-e01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355346679688,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              7.43794822692871,
+              7.43794822692871,
+              107.479446411133,
+              156.033187866211
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": false,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Kein gültiges Ziel · Details erklärt die Bedingungen",
+            "visible": true,
+            "visible_art_fraction": 0.482583848396937
+          },
+          "id": "oa-houses-e01",
+          "rect": [
+            812.855346679688,
+            709.799987792969,
+            122.355346679688,
+            170.909088134766
+          ]
+        },
+        {
+          "art": {
+            "availability_shown": true,
+            "card_id": "oa-houses-r01",
+            "coordinate_space": "local",
+            "delivery_state": "ready",
+            "display_role": "hand",
+            "frame_concept": "folded",
+            "frame_rect": [
+              2.0,
+              2.0,
+              118.355407714844,
+              166.909088134766
+            ],
+            "illustration_rect": [
+              7.43795108795166,
+              7.43795108795166,
+              107.479507446289,
+              156.033187866211
+            ],
+            "pending": false,
+            "pixels": [
+              512,
+              384
+            ],
+            "playable": true,
+            "profile": "compact",
+            "rarity": "rare",
+            "status": "final",
+            "title_fits": true,
+            "title_font_size": 11,
+            "unavailable_reason": "Ausspielbar",
+            "visible": true,
+            "visible_art_fraction": 0.482583873212516
+          },
+          "id": "oa-houses-r01",
+          "rect": [
+            940.210754394531,
+            711.0,
+            122.355407714844,
+            170.909088134766
+          ]
+        }
+      ],
+      "modal": false,
+      "page": "battle",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        1600,
+        900
+      ]
+    },
+    {
+      "board": {
+
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/menu-390x844.png",
+      "hand": [],
+      "modal": false,
+      "page": "lobby",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "board": {
+
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/starters-390x844.png",
+      "hand": [],
+      "modal": false,
+      "page": "decks",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "board": {
+
+      },
+      "file": "/dev/shm/orafold-ux/stage/work/ux-correction/pr2-canonical-final/deckbuilder-390x844.png",
+      "hand": [],
+      "modal": false,
+      "page": "builder",
+      "snapshot": {
+        "active": "hero",
+        "coin": "hero",
+        "convergence_enabled": true,
+        "delayed": [],
+        "enemy": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-ninth-051",
+            "oa-ninth-c01",
+            "of-ninth-020",
+            "oa-ninth-c01",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-001",
+            "of-ninth-046",
+            "oa-ninth-e01",
+            "of-ninth-095",
+            "of-ninth-065",
+            "of-ninth-065",
+            "of-ninth-070",
+            "of-ninth-015",
+            "of-ninth-019",
+            "of-neutral-095",
+            "of-ninth-079",
+            "of-ninth-050",
+            "of-ninth-044",
+            "of-ninth-056",
+            "of-ninth-090",
+            "oa-ninth-c01",
+            "of-ninth-079",
+            "of-ninth-045",
+            "of-ninth-001"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "of-ninth-043",
+            "of-ninth-033",
+            "of-ninth-043",
+            "of-ninth-056",
+            "of-ninth-001"
+          ],
+          "handCount": 5,
+          "hp": 19,
+          "lanes": [
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 5.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 5.0,
+              "id": "oa-morph-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 6,
+              "ward": 0
+            },
+            {
+              "atk": 2.0,
+              "baseAtk": 2.0,
+              "baseHp": 2.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 2.0,
+              "id": "oa-ninth-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 7,
+              "ward": 2
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 8.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-ninth-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 8,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-neutral-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 9,
+              "ward": 0
+            },
+            {
+              "atk": 5.0,
+              "baseAtk": 5.0,
+              "baseHp": 6.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 6.0,
+              "id": "of-neutral-065",
+              "stun": 1,
+              "summoned": false,
+              "uid": 10,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "error": "",
+        "hero": {
+          "attune": null,
+          "block": 2,
+          "burstUsed": false,
+          "convergence": null,
+          "cycled": false,
+          "cycles": 0,
+          "deck": [
+            "of-houses-057",
+            "of-houses-062",
+            "of-houses-089",
+            "of-houses-099",
+            "of-houses-068",
+            "of-houses-001",
+            "of-houses-061",
+            "oa-houses-c01",
+            "of-houses-020",
+            "of-houses-087",
+            "of-houses-045",
+            "of-neutral-049",
+            "of-houses-094",
+            "of-neutral-056",
+            "of-houses-058",
+            "of-houses-057",
+            "oa-houses-c01",
+            "of-houses-072",
+            "of-houses-038",
+            "of-houses-082",
+            "of-neutral-049",
+            "of-houses-001",
+            "of-houses-086",
+            "of-neutral-056",
+            "of-houses-052"
+          ],
+          "deckCount": 25,
+          "declaring": [],
+          "discard": [],
+          "drawDone": false,
+          "energy": 6,
+          "fatigue": 0,
+          "fortifyUsed": false,
+          "hand": [
+            "oa-houses-c01",
+            "oa-houses-c05",
+            "of-houses-051",
+            "oa-houses-c07",
+            "oa-houses-e01",
+            "oa-houses-r01"
+          ],
+          "handCount": 6,
+          "hp": 24,
+          "lanes": [
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-houses-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 1,
+              "ward": 0
+            },
+            {
+              "atk": 4.0,
+              "baseAtk": 4.0,
+              "baseHp": 7.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 7.0,
+              "id": "oa-houses-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 2,
+              "ward": 2
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-stillwatch-c01",
+              "stun": 0,
+              "summoned": false,
+              "uid": 3,
+              "ward": 0
+            },
+            {
+              "atk": 3.0,
+              "baseAtk": 3.0,
+              "baseHp": 8.0,
+              "block": 1,
+              "extra_attacks": 0,
+              "hp": 8.0,
+              "id": "oa-stillwatch-c07",
+              "stun": 0,
+              "summoned": false,
+              "uid": 4,
+              "ward": 0
+            },
+            {
+              "atk": 1.0,
+              "baseAtk": 1.0,
+              "baseHp": 3.0,
+              "block": 0,
+              "extra_attacks": 0,
+              "hp": 3.0,
+              "id": "oa-morph-c01",
+              "stun": 1,
+              "summoned": false,
+              "uid": 5,
+              "ward": 0
+            }
+          ],
+          "maxHp": 30,
+          "pendingDraw": 0,
+          "pendingShift": null,
+          "pendingTarget": null,
+          "phase": "main",
+          "relic": null,
+          "relic_used": false,
+          "resonance": 9,
+          "seals": 0,
+          "summons": 0,
+          "tacticUsed": false,
+          "turns": 5,
+          "ward": 3,
+          "weak": 0
+        },
+        "level": 2,
+        "next_uid": 11,
+        "origin_used": {
+          "enemy": true,
+          "hero": true
+        },
+        "origins": {
+          "enemy": 3,
+          "hero": 2
+        },
+        "production": {
+          "ability_uses": {
+
+          },
+          "armed": [],
+          "armed_serial": 0,
+          "condition_latches": {
+
+          },
+          "fatal_damage_sources": {
+
+          },
+          "native_choice_uids": {
+
+          },
+          "pending_arrivals": [],
+          "play_serial": 0,
+          "profile": "production-550-v1",
+          "relic_serial": 0
+        },
+        "round": 9,
+        "second_card": false,
+        "second_path": false,
+        "seed": 22031,
+        "stage": "battle",
+        "v2_bridge": {
+          "binding_sha256": "8a77b5f780385d88d926ef6fceebf4dd5c6231c1bddef414fa86bfb8b5862fee",
+          "dead_uids": [],
+          "history_algorithm": "sha256-event-chain-v1",
+          "runtime_chain": 0,
+          "runtime_event_count": 0,
+          "runtime_history_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "summoned_uids": [],
+          "trigger_serial": 0,
+          "version": 2
+        },
+        "winner": null
+      },
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  ],
+  "scope": "Actual native Godot presentation fixture with deliberately arranged full fields and six hand cards. Not a legal game, browser test, performance benchmark or physical device test.",
+  "shell_sha256": "88ac81d0cb862eb25beab1dc2ead6535e35eb03397e179f17d4c90c574a69d27",
+  "source_commit": "b1bfc8d8eccca9f2c88cef91c0925762369b43ff"
+}
