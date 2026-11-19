@@ -11,8 +11,12 @@ static func measure(view: Vector2, hand_count: int = 6, selected_index: int = -1
 	var height=maxf(240.0,view.y)
 	var emergency=height<280.0
 	var header_h=52.0 if height>=560 else HEADER
-	var dock_w=clampf(width*.255,184.0,264.0)
-	var hand_h=minf(clampf(height*.345,112.0,190.0),height-header_h-(88.0 if emergency else 99.0)-GAP)
+	var dock_w=clampf(width*.205,176.0,228.0)
+	# When Safari bars leave <374px, retain enough lane height for the real
+	# illustration above its permanent combat/readiness bands. Standard phone
+	# landscape still gets the larger .40 hand; no touch or art check is waived.
+	var hand_fraction=lerpf(.37,.40,clampf((height-312.0)/62.0,0.0,1.0))
+	var hand_h=minf(clampf(height*hand_fraction,112.0,190.0),height-header_h-(88.0 if emergency else 99.0)-GAP)
 	var board_h=height-header_h-hand_h-GAP
 	var hand_y=header_h+board_h+GAP
 	var rail=Rect2(0,hand_y,width-dock_w-GAP,hand_h)
