@@ -1,0 +1,56 @@
+{
+  "scope": "Actual native PNGs converted at original pixel dimensions to WebP quality92 for repository review. Approval pending; no selected design or physical-device acceptance.",
+  "local_integrated_source": "037acb29382b7056259388d79187009ec25397fe",
+  "source_tree": "38d05734592cab977a0798a025be529bc3f7b826",
+  "files": [
+    {
+      "file": "reference-matrix.webp",
+      "bytes": 384184,
+      "png_sha256": "5526fe2674bc7a6c8f3f794870e090dc52961f85a1ee1e5b59feaaa14c14d009",
+      "preview_sha256": "4a1edb1747a59819f585528826dab82d2fc0ffcc41d4c87f2cf1a6cc66330073",
+      "git_blob_sha": "e4bf1f52edee98ef8253d382303bbd30ba7d0ba2"
+    },
+    {
+      "file": "hinge-matrix.webp",
+      "bytes": 387314,
+      "png_sha256": "2c3b548958961225f826760aee691b3d4ed7162738c687c1edf662cb9e7c0201",
+      "preview_sha256": "fcbd67780266359f83d7304f5dde53167c5e57d1e5076cc8e82247296ca9e619",
+      "git_blob_sha": "898a9203d17a38a633ce2bc80196dcd7b3e33c97"
+    },
+    {
+      "file": "lattice-matrix.webp",
+      "bytes": 399062,
+      "png_sha256": "a6ecd31c1a1d71e2589a6e80a16289f4da08bc8dbce70d42da7aabdaa9489c2b",
+      "preview_sha256": "0f915da7beeecdd67650fdb3400937feb3c3ec4beee2d4bad63d5c9ec6980759",
+      "git_blob_sha": "b9490ab1ea92af4fe23bdbb5744818287b9a12e4"
+    },
+    {
+      "file": "crystalline-matrix.webp",
+      "bytes": 395582,
+      "png_sha256": "2c98986f3eeb7a1fa0c6d7c29eb0e1841e10e195af8fce3da43c98a515feb747",
+      "preview_sha256": "d49f6cc8af234c45f709555dbe10cfc134ac55dd005143147d8ed8b3f759233b",
+      "git_blob_sha": "41a67ea6f5be4e70dbd06b73b759569843f93913"
+    },
+    {
+      "file": "hinge-phone.webp",
+      "bytes": 47952,
+      "png_sha256": "770f0caba29fb19087fcac187567dd49ff4cc2f486656dce338472313c6e7ca6",
+      "preview_sha256": "62b826642ed287df93c8c78e6f9f48c579037a22caab48af97b7b56985d7ba37",
+      "git_blob_sha": "383cfe3750790f369997c81870dcd2288aa8ebaa"
+    },
+    {
+      "file": "lattice-phone.webp",
+      "bytes": 49250,
+      "png_sha256": "210a4edc37ebe0efeca8e01464171c691bff72f69aab5a1ed948458f65294daa",
+      "preview_sha256": "c1cacb48f333a193790b7134d69563ce842010ff88df64a80a477da22e43ea55",
+      "git_blob_sha": "50d89030ed36b9d28109e59580a4740a1fb9b605"
+    },
+    {
+      "file": "crystalline-phone.webp",
+      "bytes": 49106,
+      "png_sha256": "97823d287cbf58a2e771755f8354781ccab6eeb214cbba6c5cf586f63eeb2462",
+      "preview_sha256": "42b075c5fc1cce7fe5400336c7555eced72686833f11c7468570d88ecfc614cb",
+      "git_blob_sha": "3a0da07ae1647138eb9dbd82286240ad2962d073"
+    }
+  ]
+}
