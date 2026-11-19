@@ -12,6 +12,7 @@ var rules_body: VBoxContainer
 var attack_label: Label
 var health_label: Label
 var rarity_label: Label
+var art_status_label: Label
 var _labels: Dictionary={}
 var _shown_signature := ""
 var _fitting := false
@@ -26,6 +27,9 @@ func _ready() -> void:
 	attack_label=_make_label("Attack",HORIZONTAL_ALIGNMENT_LEFT)
 	health_label=_make_label("Health",HORIZONTAL_ALIGNMENT_RIGHT)
 	rarity_label=_make_label("Rarity",HORIZONTAL_ALIGNMENT_CENTER)
+	art_status_label=_make_label("ArtDelivery",HORIZONTAL_ALIGNMENT_LEFT)
+	art_status_label.add_theme_stylebox_override("normal",T.panel(Color.TRANSPARENT,Color(.035,.055,.08,.94)))
+	for value in [attack_label,health_label]:value.autowrap_mode=TextServer.AUTOWRAP_OFF
 	rules_scroll=ScrollContainer.new();rules_scroll.name="PrintedRules"
 	rules_scroll.horizontal_scroll_mode=ScrollContainer.SCROLL_MODE_DISABLED
 	rules_scroll.vertical_scroll_mode=ScrollContainer.SCROLL_MODE_AUTO
@@ -49,6 +53,10 @@ func _process(delta: float) -> void:
 	super._process(delta)
 	var signature=JSON.stringify(card)
 	if signature!=_shown_signature:_refresh_print();_fit_print()
+	# The inherited delivery caption was positioned under the old header.
+	# Keep loading/offline/provenance truthful in this reflowed card as well.
+	art_status_label.text=str(_illustration_data.get("label",""))
+	art_status_label.visible=not art_status_label.text.is_empty()
 
 func _make_label(node_name: String, alignment: HorizontalAlignment) -> Label:
 	var node=Label.new();node.name=node_name;node.horizontal_alignment=alignment
@@ -101,9 +109,23 @@ func _fit_print() -> void:
 	_place(cost_label,_local(Rect2(43,40,78,160)))
 	var small_font=clampi(roundi(size.y/30.0),12,17)
 	identity_label.add_theme_font_size_override("font_size",small_font)
-	_place(identity_label,_local(Rect2(61,557,634,62)))
+	var identity_rect=_local(Rect2(61,557,634,62))
+	var identity_lines=TextParagraph.new();identity_lines.width=identity_rect.size.x
+	identity_lines.break_flags=TextServer.BREAK_MANDATORY|TextServer.BREAK_WORD_BOUND|TextServer.BREAK_ADAPTIVE
+	identity_lines.add_string(identity_label.text,S.font,small_font)
+	identity_rect.size.y=maxf(identity_rect.size.y,identity_lines.get_size().y)
+	_place(identity_label,identity_rect)
+	art_status_label.add_theme_font_size_override("font_size",12)
+	_place(art_status_label,_local(Rect2(55,208,646,80)))
 	species_label.add_theme_font_size_override("font_size",small_font)
+	var stat_font=clampi(roundi(size.y/23.0),14,23)
+	var rarity_height=maxf(14,S.font.get_height(small_font))
+	var stat_height=maxf(18,S.font.get_height(stat_font))
+	var rarity_top=face_rect().end.y-maxf(4,size.y*.016)-rarity_height
+	var stat_top=rarity_top-stat_height-2
 	var printed=_local(Rect2(61,626,634,306))
+	printed.position.y=maxf(printed.position.y,identity_rect.end.y+3)
+	printed.size.y=minf(printed.size.y,maxf(18,stat_top-4-printed.position.y))
 	_place(rules_scroll,printed)
 	var body_font=clampi(roundi(size.y/29.0),13,18)
 	rules_label.add_theme_font_size_override("font_size",body_font)
@@ -111,11 +133,21 @@ func _fit_print() -> void:
 	# Reserve the themed scrollbar so line wrapping is stable while dragging.
 	var gutter=rules_scroll.get_v_scroll_bar().get_combined_minimum_size().x
 	rules_body.custom_minimum_size.x=maxf(44,printed.size.x-gutter)
-	for node in [attack_label,health_label]:node.add_theme_font_size_override("font_size",clampi(roundi(size.y/23.0),14,23))
-	_place(attack_label,_local(Rect2(48,941,260,70)))
-	_place(health_label,_local(Rect2(448,941,260,70)))
+	for node in [attack_label,health_label]:node.add_theme_font_size_override("font_size",stat_font)
+	var attack_rect=_local(Rect2(48,941,260,70));var health_rect=_local(Rect2(448,941,260,70))
+	attack_rect.position.y=stat_top;health_rect.position.y=stat_top
+	attack_rect.size.y=stat_height;health_rect.size.y=stat_height
+	_place(attack_label,attack_rect);_place(health_label,health_rect)
+	if card.get("kind","creature")=="creature":
+		var attack=int(card.get("attack",card.get("atk",0)));var health=int(card.get("health",card.get("hp",0)))
+		attack_label.text="%d Angriff" % attack;health_label.text="%d Leben" % health
+		# At an unusually short browser height, abbreviate captions rather
+		# than wrapping combat values over the rarity or outside the card.
+		if S.font.get_string_size(attack_label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,stat_font).x>attack_rect.size.x:attack_label.text="ATK %d" % attack
+		if S.font.get_string_size(health_label.text,HORIZONTAL_ALIGNMENT_LEFT,-1,stat_font).x>health_rect.size.x:health_label.text="LP %d" % health
 	rarity_label.add_theme_font_size_override("font_size",small_font)
-	_place(rarity_label,_local(Rect2(193,993,370,46)))
+	var rarity_rect=_local(Rect2(193,993,370,46));rarity_rect.position.y=rarity_top;rarity_rect.size.y=rarity_height
+	_place(rarity_label,rarity_rect)
 	_fitting=false
 	queue_redraw()
 
@@ -143,7 +175,7 @@ func draw_front() -> void:
 func inspection_report() -> Dictionary:
 	if not is_instance_valid(rules_label):return {}
 	var art=art_report();var scroll_bar=rules_scroll.get_v_scroll_bar()
-	return {"id":str(card.get("id","")),"title":title_label.text,"rules":rules_label.text,"rules_font_size":rules_label.get_theme_font_size("font_size"),"rules_rect":rules_scroll.get_global_rect(),"rules_content_rect":rules_label.get_global_rect(),"rules_visible_rect":rules_label.get_global_rect().intersection(rules_scroll.get_global_rect()),"card_rect":get_global_rect(),"card_aspect":size.x/size.y,"art":art,"rules_scroll":{"offset":rules_scroll.scroll_vertical,"content_height":scroll_bar.max_value,"viewport_height":scroll_bar.page,"can_scroll":scroll_bar.max_value>scroll_bar.page+1},"keyword_definitions_in_card":false,"title_rect":title_label.get_global_rect()}
+	return {"id":str(card.get("id","")),"title":title_label.text,"rules":rules_label.text,"rules_font_size":rules_label.get_theme_font_size("font_size"),"rules_rect":rules_scroll.get_global_rect(),"rules_content_rect":rules_label.get_global_rect(),"rules_visible_rect":rules_label.get_global_rect().intersection(rules_scroll.get_global_rect()),"card_rect":get_global_rect(),"card_aspect":size.x/size.y,"art":art,"rules_scroll":{"offset":rules_scroll.scroll_vertical,"content_height":scroll_bar.max_value,"viewport_height":scroll_bar.page,"can_scroll":scroll_bar.max_value>scroll_bar.page+1},"keyword_definitions_in_card":false,"title_rect":title_label.get_global_rect(),"stats_rects":{"attack":attack_label.get_global_rect(),"health":health_label.get_global_rect(),"rarity":rarity_label.get_global_rect()},"combat_text":{"attack":attack_label.text,"health":health_label.text},"art_caption":art_status_label.text if art_status_label.visible else ""}
 
 func layout_report() -> Dictionary:
 	if not is_instance_valid(title_label):return super.layout_report()

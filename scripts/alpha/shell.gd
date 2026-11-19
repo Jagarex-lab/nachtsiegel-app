@@ -997,13 +997,19 @@ func _inspection_hand_availability(index: int) -> Dictionary:
 	var answer={"allowed":false,"caption":"NUR ANSEHEN","reason":"Diese Karte kann gerade nicht ausgewählt werden."}
 	if session.model==null:return answer
 	var state: Dictionary=session.model.state;var p: Dictionary=state.hero
-	if state.winner!=null or state.active!="hero" or not str(state.get("error","")).is_empty():return answer
+	if state.winner!=null or not str(state.get("error","")).is_empty():return answer
 	if p.pendingTarget!=null or p.pendingShift!=null:return answer
+	# The coin still names the opening player. During the second-player
+	# compensation phase hero may choose while active correctly remains enemy.
 	if state.get("stage", "battle")=="second":
-		answer.allowed=not bool(state.second_card);answer.caption="FÜR TAUSCH AUSWÄHLEN";return answer
+		answer.allowed=state.coin=="enemy" and not bool(state.second_card);answer.caption="FÜR TAUSCH AUSWÄHLEN"
+		answer.reason="Karte wählen und anschließend den Tausch bestätigen." if answer.allowed else "Der einmalige Kartentausch ist bereits abgeschlossen."
+		return answer
+	if state.active!="hero":return answer
 	if p.phase=="draw":
 		var overflow=p.hand.size()+mini(int(p.pendingDraw),p.deck.size())>6
 		answer.allowed=overflow;answer.caption="ZUM ABLEGEN WÄHLEN" if overflow else "NACHZIEHEN BESTÄTIGEN"
+		answer.reason="Karte wählen und anschließend das Ablegen bestätigen." if overflow else "Bestätige zuerst das Nachziehen in der Hauptaktion."
 		return answer
 	var available=_card_availability(index)
 	answer.allowed=true;answer.caption="ZUM AUSSPIELEN WÄHLEN";answer.reason=str(available.reason)
@@ -1316,6 +1322,7 @@ func publish_qa() -> void:
 		state.inspection=inspector_face.inspection_report()
 		state.inspection.rules_font_size=float(inspector_rules.get_theme_font_size("font_size"))*absf(inspector_rules.get_global_transform().get_scale().y)/density
 		for field in ["rules_rect","rules_content_rect","rules_visible_rect","card_rect","title_rect"]:state.inspection[field]=_qa_css_rect(state.inspection[field])
+		for field in state.inspection.stats_rects:state.inspection.stats_rects[field]=_qa_css_rect(state.inspection.stats_rects[field])
 		state.inspection.intent_action=inspector_intent_action
 		state.inspection.owner=inspector_context.get("relic_owner","hero")
 		state.inspection.help_visible=is_instance_valid(inspector_help)
