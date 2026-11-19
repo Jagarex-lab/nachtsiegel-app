@@ -46,7 +46,7 @@ Small final host logs: `/tmp/orafold-inspector-node.log`, `/tmp/orafold-inspecto
 | `tools/alpha_browser_qa.cjs` | `f8821b79580771c19f0a21e07cbc6b4c988fece387f15211ae2a482f43fa1ebb` |
 | `tools/alpha02_browser_qa.cjs` | `d84690cb9cbf47161e6b86011a94bd926768f7ad4220a43ba3c31d40324ecf4c` |
 | `tools/master550_browser_qa.cjs` | `e18cf489700118ab1233754dda6fb61421a8ce2dbd60cff0c184ac76cdf59d5b` |
-| `tools/premium/browser_qa.cjs` | `ffe71abcd2abe35ba4982386a9c204fa2dc063d122c3f63d93528dff2c442708` |
+| `tools/premium/browser_qa.cjs` | `6cd0f688f463c88ddb310621a34f903795b6ac5b055159c9d99ffc5ec7c4b01a` |
 | `tools/premium/card_inspection_contract.cjs` | `6f009197ebb14f22376eeb570702c281cb6491a9c5519e253a2e34071a5c5483` |
 
 ## Behavior asserted by the updated browser harnesses
@@ -54,3 +54,11 @@ Small final host logs: `/tmp/orafold-inspector-node.log`, `/tmp/orafold-inspecto
 A first actual hand tap opens the same card without changing selection, marks, commands, deck or complete battle state. An explicit inspector action arms it; the existing target or exchange/burn confirmation still performs the original game action. The legacy-only archive retains its original input contract.
 
 The inspector checks use actual painted-card/control reports: original ID/name/rules, 63:88 contour inside the viewport, internal rules viewport, at least 13 CSS-pixel rules, and visible 44 CSS-pixel close action. Additional exported-game tests cover open-inspector rotation, optional separate keyword help, consumed outside close, longest printed rules scrolling, Mulligan/second-chance selection, overflow burn selection and existing canceled drag/target inputs. These tests are implemented here; their browser results must be recorded only after running the actual export.
+
+## Actual first Chromium export attempt and harness correction
+
+The first real Chromium premium-browser attempt stopped after 82 checks, eight screenshots and one landscape viewport. This is a failed attempt, not a completed browser acceptance. Root inspected its actual failure report: `inspect_keywords.disabled` was `false`, and `inspection.help_visible` was already `true`. The help opened correctly; the harness incorrectly waited only for a full UI-render or top-level modal-version change. A nested help panel deliberately changes neither.
+
+The action waiter now additionally observes the actual `help_visible` transition **only** for `inspect_keywords` and `inspect_help_close`. All existing version waits, deadlines, input, clipping and negative assertions remain. No product patch or disabled-button assumption was introduced to make the harness pass.
+
+The optional-help regression now searches the real `oa-neutral-c04` Feldärztin through collection input and opens its real card. It requires the existing Heile keyword, an enabled help control, visible `Heilung:` definition, absence of a false `Eile:` definition, unchanged original card and game/deck data, and actual help-close behavior. The random first hand card is no longer assumed to need glossary help. Rotation and consumed outside-close assertions on that hand card remain. This correction requires a new actual export-browser run; no successful browser result is claimed here.

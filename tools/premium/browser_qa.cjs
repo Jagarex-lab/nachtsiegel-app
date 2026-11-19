@@ -130,12 +130,12 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
      if(!a||a.disabled){sample.count=0;return false;}
      const r=sample.id.startsWith('card_')&&v?v.visible_rect:a.rect;
      sample.count=sample.last&&r.every((n,i)=>Math.abs(n-sample.last[i])<1)?sample.count+1:1;sample.last=[...r];
-     return sample.count>=3?{rect:r,render:current.render_version,modal:current.modal_version}:false;
+     return sample.count>=3?{rect:r,render:current.render_version,modal:current.modal_version,help:Boolean(current.inspection?.help_visible)}:false;
     },{id,previous:null,last:null,count:0});
     let settled;try{settled=await ready.jsonValue();}finally{await ready.dispose();}
     assertPanContext(actionContext,await q(),id);lastAction=id;
     const before=performance.now();await tapRect(settled.rect,id);
-    await page.waitForFunction(s=>{const c=window.orafoldQA;return c&&(c.render_version>s.render||c.modal_version!==s.modal);},settled);
+    await page.waitForFunction(s=>{const c=window.orafoldQA;return c&&(c.render_version>s.render||c.modal_version!==s.modal||(s.id==='inspect_keywords'&&c.inspection?.help_visible===true&&!s.help)||(s.id==='inspect_help_close'&&c.inspection?.help_visible===false&&s.help));},{...settled,id});
     report.touch_samples.push({action:id,elapsed_ms:Math.round(performance.now()-before),meaning:'real touch to next published UI/model frame; includes host/test overhead'});
    }
    async function shot(label){
@@ -184,7 +184,20 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
    const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));
    check(first&&by[first.slice(5)],'the collection exposes actual production card IDs');await rapidLibraryScroll(first);await action(first);
    const detail=await q();check(detail.inspection?.title===by[first.slice(5)].name,'the inspector displays the complete actual name');
-   await inspectorArt();assertCardInspection(await q(),by[first.slice(5)],page.viewportSize());await shot('collection-inspection-portrait');await action('modal_close');await action('builder_back');
+   await inspectorArt();assertCardInspection(await q(),by[first.slice(5)],page.viewportSize());await shot('collection-inspection-portrait');await action('modal_close');
+   // A random hand card need not contain a glossary term. Search an actual
+   // existing healing card and exercise its separate help with real UI input.
+   const helpCard=by['oa-neutral-c04'];check(helpCard&&/(?<![a-zäöüß0-9_])heile(?![a-zäöüß0-9_])/i.test(String(helpCard.text_de??helpCard.description??'')),'the selected actual glossary card has the Heile keyword');
+   await tapRect((await q()).actions.search.rect,'collection keyword-card search');await page.keyboard.press('ControlOrMeta+A');await page.keyboard.type(helpCard.name);
+   await page.waitForFunction(name=>window.orafoldQA.search_text===name,helpCard.name);await action('search_apply');await action('card_'+helpCard.id);
+   await waitForCardInspection(page,helpCard.id);await inspectorArt();const beforeHelp=await q();assertCardInspection(beforeHelp,helpCard,page.viewportSize());
+   check(beforeHelp.actions.inspect_keywords&&!beforeHelp.actions.inspect_keywords.disabled,'actual healing card has an enabled keyword-help control');
+   await action('inspect_keywords');const help=await q();check(help.inspection.help_visible,'keyword help is a separate optional view');
+   check(help.inspection.help_text.includes('Heilung:'),'the healing glossary definition is actually visible');
+   check(!/(^|\n)Eile:/.test(help.inspection.help_text),'Heile does not accidentally show the Eile definition');
+   assertUnchangedGame(beforeHelp,help,'optional healing keyword help');await shot('collection-healing-keyword-help');await action('inspect_help_close');
+   check(!(await q()).inspection.help_visible,'closing keyword help restores the same card');assertCardInspection(await q(),helpCard,page.viewportSize());assertUnchangedGame(beforeHelp,await q(),'closing separate keyword help');
+   await action('modal_close');await action('filters');await action('reset_filters');await action('builder_back');
    await action('builder');check((await q()).deck_size===30,'builder loads an existing valid30-card deck');await shot('deckbuilder-portrait');
    await action('save_deck');await wait(()=>window.orafoldQA.message.includes('gespeichert'));await action('builder_back');
    await action('start');await wait(()=>window.orafoldQA.page==='decks');
@@ -226,9 +239,6 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
      await shot('hand-inspection-portrait');
      await resize(size);await waitForCardInspection(page,opened.card.id);
      assertCardInspection(await q(),opened.card,page.viewportSize());assertUnchangedGame(opened.before,await q(),'landscape inspection rotation');
-     await action('inspect_keywords');check((await q()).inspection.help_visible,'keyword help is a separate optional view');
-     assertUnchangedGame(opened.before,await q(),'optional keyword help');await action('inspect_help_close');
-     check(!(await q()).inspection.help_visible,'closing keyword help restores the same card');
      const beforeOutside=await q(),face=beforeOutside.inspection.card_rect;
      // Choose a real shaded point beside the card, also inside any safe-area
      // layout; the underlying battlefield must never receive this release.
