@@ -10,6 +10,7 @@ const {performance}=require('node:perf_hooks');
 const {scrollGesture,assertPanContext,settleHeldPan}=require('./premium/browser_contract.cjs');
 const {masterActionGeometry}=require('./premium/master_input_contract.cjs');
 const {nativeCapture}=require('./premium/native_capture_contract.cjs');
+const {assertCardInspection,assertUnchangedGame,waitForCardInspection,openHandInspection,selectHandCard}=require('./premium/card_inspection_contract.cjs');
 const OUTPUT='work/master550/browser';
 const TIMEOUT=120000;
 const cards=JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards;
@@ -138,15 +139,29 @@ async function runEngine(name){
    await action('restart');await action('confirm_restart');
    await wait(()=>window.orafoldQA?.battle?.stage==='mulligan'&&window.orafoldQA.actions.mulligan_done);
   }
+  async function inspectHand(index,openingAction=null){
+   return openHandInspection({page,read:q,tap:async rect=>{if(openingAction)await action(openingAction);else{const at=center(rect);await page.touchscreen.tap(at.x,at.y);}},index,cards:by,timeout:TIMEOUT});
+  }
+  async function armHand(index,openingAction=null){
+   return selectHandCard({page,read:q,tap:async rect=>{if(openingAction)await action(openingAction);else{const at=center(rect);await page.touchscreen.tap(at.x,at.y);}},action,index,cards:by,timeout:TIMEOUT});
+  }
+  async function markMulligan(index){
+   const opened=await inspectHand(index,'mulligan_'+index);await action('inspect_mulligan');
+   await wait(()=>!window.orafoldQA.modal);const after=await q();
+   equal(after.battle,opened.before.battle,'explicit exchange mark keeps the complete model');
+   equal(after.command_count,opened.before.command_count,'explicit exchange mark issues no command');
+  }
   async function opening({detailed=false}={}){
    await paths('mulligan');let before=await q();equal(before.hand.map(card=>card.id),before.battle.hero.hand,'opening shows actual hand IDs');equal(before.hand.length,5,'five starting cards');
    for(const hand of before.hand)rectCheck(hand.rect,'opening card '+hand.id);
-   await action('mulligan_0');await wait(()=>window.orafoldQA.opening_marks?.includes(0));
-   await action('mulligan_1');await action('mulligan_1');await wait(()=>JSON.stringify(window.orafoldQA.opening_marks)==='[0]');
+   await markMulligan(0);await wait(()=>window.orafoldQA.opening_marks?.includes(0));
+   await markMulligan(1);await markMulligan(1);await wait(()=>JSON.stringify(window.orafoldQA.opening_marks)==='[0]');
    await exactState(before,'marking and unmarking');
    if(detailed){
     await canceledTap((await q()).actions.menu.rect,'canceled menu tap');
-    await shot('mulligan-five-paths-marked');await action('inspect');check((await q()).modal,'mulligan inspector is open');await shot('mulligan-inspection-844');await action('modal_close');
+    await shot('mulligan-five-paths-marked');const opened=await inspectHand(0,'mulligan_0');check((await q()).modal,'one mulligan tap opens the actual card');await shot('mulligan-inspection-844');
+    await resize(390,844);await waitForCardInspection(page,opened.card.id,TIMEOUT);assertCardInspection(await q(),opened.card,page.viewportSize());assertUnchangedGame(opened.before,await q(),'mulligan inspector in portrait');await shot('mulligan-inspection-390');
+    await resize(844,390);await waitForCardInspection(page,opened.card.id,TIMEOUT);assertCardInspection(await q(),opened.card,page.viewportSize());assertUnchangedGame(opened.before,await q(),'mulligan inspector restored to landscape');await action('modal_close');
     before=await q();await resize(390,844);await wait(()=>window.orafoldQA.actions.rotate_menu);equal(Object.keys((await q()).board).length,0,'portrait never squeezes battlefield');await exactState(before,'mulligan rotation');equal((await q()).opening_marks,[0],'exchange selection retained in portrait');
     await resize(844,390);await wait(()=>window.orafoldQA.actions.mulligan_done);await paths('restored mulligan');equal((await q()).opening_marks,[0],'exchange selection restored');
    }
@@ -158,11 +173,11 @@ async function runEngine(name){
    if(detailed)await shot('origin-on-battlefield');await action('origin_2');await wait(()=>window.orafoldQA.battle.stage!=='origins');
    let state=await q();equal(state.battle.origins.hero,2,'origin chosen on actual path');const coin=state.battle.coin;seeds.push({seed:state.battle.seed,coin});
    if(state.battle.stage==='second'){
-    await paths('second possibility');before=await q();await action('second_card_0');equal((await q()).selected,0,'second exchange selects card');await exactState(before,'selecting second exchange needs confirmation');
+    await paths('second possibility');before=await q();await armHand(0,'second_card_0');equal((await q()).selected,0,'explicit inspector action selects the second exchange card');await exactState(before,'selecting second exchange needs confirmation');
     await action('inspect');await action('modal_close');await action('second_origin_3');check((await q()).battle.second_path,'second origin applied');
     for(let lane=0;lane<5;lane++)check((await q()).actions['second_origin_'+lane].disabled,'second origin locked after use');
     // Changing origin intentionally clears selection; choose again before confirming exchange.
-    await action('second_card_0');before=await q();await action('second_exchange');equal((await q()).command_count,before.command_count+1,'one optional card-exchange command');
+    await armHand(0,'second_card_0');before=await q();await action('second_exchange');equal((await q()).command_count,before.command_count+1,'one optional card-exchange command');
     check((await q()).battle.second_card&&(await q()).actions.second_exchange.disabled,'optional exchange limited to once');
     if(detailed)await shot('second-possibility');await action('opening_done');
    }
@@ -220,7 +235,7 @@ async function runEngine(name){
      await pointer.move(method,at);const canceling=await q();check(canceling.drag.active,'touch-cancel case cancels an active gesture');await pointer.end(method,at,true);await rebuiltHand(canceling.render_version,'touchcancel');await exactState(gesture.before,'touchcancel on a legal target');equal((await q()).selected,gesture.before.selected,'touchcancel restores previous selection');
     }
     gesture=await lift(index,method);await resize(390,844);await wait(()=>window.orafoldQA.actions.rotate_menu&&!window.orafoldQA.drag.active);await pointer.end(method,{x:180,y:350});await exactState(gesture.before,'rotation cancels '+method+' drag');equal((await q()).selected,gesture.before.selected,'rotation restores previous selection');await resize(844,390);await wait(()=>window.orafoldQA.actions.end);
-    const state=await q(),handPoint=center(state.hand[index].rect);await page.touchscreen.tap(handPoint.x,handPoint.y);await wait(i=>window.orafoldQA.selected===i,index);
+    await armHand(index);
     const selected=await q(),targetRect=tapTarget==='relic_slot'?selected.actions.relic_slot.rect:selected.board[tapTarget];
     await canceledTap(targetRect,'canceled selected-card target tap');await canceledTap(targetRect,'same-turn canceled selected-card target tap',0);await action('cancel_selection');
    }
@@ -250,7 +265,7 @@ async function runEngine(name){
     const state=await q(),p=state.battle.hero;if(state.battle.winner)return;
     if(p.phase==='draw'){
      if(p.hand.length+Math.min(p.pendingDraw,p.deck.length)>6){
-      const index=Math.max(0,p.hand.findIndex(id=>by[id].kind==='creature'));const at=center(state.hand[index].rect);await page.touchscreen.tap(at.x,at.y);await wait(i=>window.orafoldQA.selected===i,index);
+      const index=Math.max(0,p.hand.findIndex(id=>by[id].kind==='creature'));await armHand(index);
      }
      await action('end');continue;
     }
@@ -320,10 +335,24 @@ async function runEngine(name){
   await action(first);
   for(const [width,height] of [[390,844],[844,390],[756,390],[390,844]]){
    if(page.viewportSize().width!==width||page.viewportSize().height!==height)await resize(width,height);
+   await waitForCardInspection(page,firstId,TIMEOUT);assertCardInspection(await q(),by[firstId],page.viewportSize());
    check((await q()).modal,'inspector stays open across sizes');rectCheck((await q()).actions.modal_close.rect,'inspector close');await shot('inspector-'+width+'x'+height);
   }
   checks.push('open card inspector at portrait390 and landscape844/756 widths');
-  await action('modal_close');equal(errors,[],'no browser/script/WebGL console errors');
+  await action('modal_close');
+  const longest=cards.reduce((a,b)=>String(a.text_de??a.description??'').length>=String(b.text_de??b.description??'').length?a:b);
+  const query=center((await q()).actions.search.rect);await page.touchscreen.tap(query.x,query.y);await page.keyboard.press('ControlOrMeta+A');await page.keyboard.type(longest.name);
+  await wait(value=>window.orafoldQA.search_text===value,longest.name);await action('search_apply');await action('card_'+longest.id);await waitForCardInspection(page,longest.id,TIMEOUT);
+  const longBefore=await q(),longFace=assertCardInspection(longBefore,longest,page.viewportSize());
+  if(longFace.rules_scroll.can_scroll){
+   const r=longFace.rules_rect,x=r[0]+r[2]*.5,start=r[1]+r[3]-8,end=r[1]+8;
+   await page.mouse.move(x,start);await page.mouse.down();
+   try{for(let step=1;step<=8;step++){await page.mouse.move(x,start+(end-start)*step/8);await page.waitForTimeout(30);}}finally{await page.mouse.up();}
+   await wait(offset=>window.orafoldQA.inspection?.rules_scroll.offset>offset,longFace.rules_scroll.offset);
+   assertUnchangedGame(longBefore,await q(),'scrolling the longest actual printed rules');
+   assertCardInspection(await q(),longest,page.viewportSize());checks.push('longest actual card rules remain complete and scroll through real pointer input inside the card');
+  }else checks.push('longest actual card rules fit entirely inside the actual printed-rules viewport');
+  await shot('inspector-longest-rules');await action('modal_close');equal(errors,[],'no browser/script/WebGL console errors');
   const result={engine:name,browser_version:browser.version(),playwright:require('playwright/package.json').version,url:url.href,build_info:buildInfo,boot_ms:bootMs,assertions,failures:0,simulated:true,real_device:false,touch_driver:touchDriver,metrics,checks,seeds,completed_drag_types:completed,screenshots:shots,actions,action_targets:actionTargets,scrolls,drag_attempts:dragAttempts,lift_traces:liftTraces,native_captures:captureMetrics,errors};
   fs.writeFileSync(path.join(OUTPUT,name+'-results.json'),JSON.stringify(result,null,2));fs.writeFileSync(path.join(OUTPUT,name+'-progress.json'),JSON.stringify({status:'passed',assertions},null,2));console.log('MASTER550 BROWSER PASS',name,assertions,'assertions');return result;
  }catch(error){

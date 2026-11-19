@@ -68,7 +68,9 @@ func run():
   await tap(app.actions.mulligan_done);await tap(app.actions.origin_2)
   if app.session.model.state.stage=="second":await tap(app.actions.opening_done)
   if app.session.model.state.hero.phase=="draw":await tap(app.actions.end)
-  await tap(app.hand_views[0]);before=Session.digest(app.session.model.snapshot());var selection=app.selected
+  before=Session.digest(app.session.model.snapshot());await tap(app.hand_views[0])
+  check(is_instance_valid(app.modal) and app.selected==-1 and Session.digest(app.session.model.snapshot())==before,"first hand tap inspects without selecting or playing")
+  await tap(app.actions.inspect_select);var selection=app.selected
   root.size=dimensions;await settle();root.size=Vector2i(915,412);await settle()
   check(app.selected==selection and Session.digest(app.session.model.snapshot())==before,"hand selection and state survive round-trip rotation")
   for b in app.board_views.values():check(visible_bounds(b) and b.size.x>=44 and b.size.y>=44,"all five paired paths retain touch bounds")

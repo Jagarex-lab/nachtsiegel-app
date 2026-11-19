@@ -8,6 +8,7 @@ const path=require('node:path');
 const crypto=require('node:crypto');
 const {performance}=require('node:perf_hooks');
 const {encloses,clearTouchPoint,scrollGesture,assertPanContext,settleHeldPan,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
+const {assertCardInspection,assertUnchangedGame,openHandInspection,waitForCardInspection}=require('./card_inspection_contract.cjs');
 const output=path.resolve(process.env.PREMIUM_BROWSER_OUTPUT||'work/premium-mobile/browser');
 const expectedCommit=process.env.EXPECTED_COMMIT;
 assert(/^[0-9a-f]{40}$/.test(expectedCommit||''),'EXPECTED_COMMIT must name the exact exported candidate');
@@ -183,7 +184,7 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
    const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));
    check(first&&by[first.slice(5)],'the collection exposes actual production card IDs');await rapidLibraryScroll(first);await action(first);
    const detail=await q();check(detail.inspection?.title===by[first.slice(5)].name,'the inspector displays the complete actual name');
-   await inspectorArt();await shot('collection-inspection-portrait');await action('modal_close');await action('builder_back');
+   await inspectorArt();assertCardInspection(await q(),by[first.slice(5)],page.viewportSize());await shot('collection-inspection-portrait');await action('modal_close');await action('builder_back');
    await action('builder');check((await q()).deck_size===30,'builder loads an existing valid30-card deck');await shot('deckbuilder-portrait');
    await action('save_deck');await wait(()=>window.orafoldQA.message.includes('gespeichert'));await action('builder_back');
    await action('start');await wait(()=>window.orafoldQA.page==='decks');
@@ -214,10 +215,27 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
     const bounds=[0,0,size.width,size.height],layout=battleGeometry(await q(),bounds,{requireSix:true}),art=premiumArt(await q(),bounds),availability=playability(await q());
     report.viewports.push({size,layout,art,availability,physical_device:false});
     await shot('battle-'+size.width+'x'+size.height);
-    const hand=(await q()).hand[0];await tapRect(hand.rect,'hand0');await wait(()=>window.orafoldQA.selected===0);
-    await action('inspect');await inspectorArt();
-    const inspected=await q();check(inspected.inspection?.title===by[hand.id].name,'full hand-card name is readable at '+size.width);
-    check(Boolean(inspected.inspection.rules),'full actual ability text is present at '+size.width);await shot('inspection-'+size.width+'x'+size.height);await action('modal_close');
+    const opened=await openHandInspection({page,read:q,tap:rect=>tapRect(rect,'hand0'),index:0,cards:by});await inspectorArt();
+    const inspected=await q();assertCardInspection(inspected,opened.card,page.viewportSize());
+    check(inspected.inspection.title===opened.card.name,'full hand-card name is readable at '+size.width);
+    check(inspected.inspection.rules===String(opened.card.text_de??opened.card.description??''),'all actual mechanical rules are printed inside the card at '+size.width);
+    await shot('inspection-'+size.width+'x'+size.height);
+    if(size.width===844){
+     await resize({width:390,height:844});await waitForCardInspection(page,opened.card.id);
+     assertCardInspection(await q(),opened.card,page.viewportSize());assertUnchangedGame(opened.before,await q(),'portrait inspection rotation');
+     await shot('hand-inspection-portrait');
+     await resize(size);await waitForCardInspection(page,opened.card.id);
+     assertCardInspection(await q(),opened.card,page.viewportSize());assertUnchangedGame(opened.before,await q(),'landscape inspection rotation');
+     await action('inspect_keywords');check((await q()).inspection.help_visible,'keyword help is a separate optional view');
+     assertUnchangedGame(opened.before,await q(),'optional keyword help');await action('inspect_help_close');
+     check(!(await q()).inspection.help_visible,'closing keyword help restores the same card');
+     const beforeOutside=await q(),face=beforeOutside.inspection.card_rect;
+     // Choose a real shaded point beside the card, also inside any safe-area
+     // layout; the underlying battlefield must never receive this release.
+     await page.touchscreen.tap(Math.max(1,face[0]-10),face[1]+face[3]/2);await wait(()=>!window.orafoldQA.modal);
+     assertUnchangedGame(opened.before,await q(),'outside close');check((await q()).selected===opened.before.selected,'outside close never arms the card');
+     check((await q()).modal_version>beforeOutside.modal_version,'outside tap actually closes the inspector');
+    }else await action('modal_close');
     if((await q()).actions.cancel_selection)await action('cancel_selection');
    }
    await resize(variants[0]);

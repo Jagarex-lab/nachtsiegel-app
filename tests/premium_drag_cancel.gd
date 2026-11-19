@@ -34,6 +34,9 @@ func settle() -> void:
 	for frame in 6:await process_frame
 func touch(at: Vector2,pressed: bool,canceled: bool=false,pointer: int=0) -> void:
 	var event=InputEventScreenTouch.new();event.position=at;event.index=pointer;event.pressed=pressed;event.canceled=canceled;Input.parse_input_event(event);await settle()
+func tap_control(control: Control) -> void:
+	var at=control.get_global_rect().get_center()
+	await touch(at,true);await touch(at,false)
 func key(code: Key,pressed: bool) -> void:
 	var event=InputEventKey.new();event.keycode=code;event.pressed=pressed;Input.parse_input_event(event);await settle()
 func move(at: Vector2) -> void:
@@ -81,7 +84,9 @@ func run() -> void:
 			check(app.hand_drag.is_empty() and not is_instance_valid(app.modal) and before==unchanged(),"invalid in-hand drop cancels without synthetic tap "+kind)
 			start=app.hand_views[index].get_global_rect().get_center()
 			await touch(start,true);await touch(start,false)
-			check(app.selected==index and not is_instance_valid(app.modal) and before==unchanged(),"next genuine tap works immediately without a cooldown "+kind)
+			check(app.selected==-1 and is_instance_valid(app.modal) and before==unchanged(),"next genuine tap inspects immediately without a cooldown "+kind)
+			await tap_control(app.actions.inspect_select)
+			check(app.selected==index and not is_instance_valid(app.modal) and before==unchanged(),"explicit selection after inspection is immediate and read-only "+kind)
 			app.cancel_selection();await settle()
 			start=app.hand_views[index].get_global_rect().get_center()
 			await touch(start,true);await move(start+Vector2(0,-30))
@@ -93,7 +98,9 @@ func run() -> void:
 			check(app.selected==-1 and not is_instance_valid(app.modal) and before==unchanged(),"ordinary canceled tap cannot become a card action "+kind)
 		for code in [KEY_SPACE,KEY_ENTER]:
 			app.hand_views[index].grab_focus();await key(code,true);await key(code,false)
-			check(app.selected==index and not is_instance_valid(app.modal) and before==unchanged(),"genuine keyboard Space/Enter still selects without a cooldown "+kind)
+			check(app.selected==-1 and is_instance_valid(app.modal) and before==unchanged(),"genuine keyboard Space/Enter inspects without a cooldown "+kind)
+			await tap_control(app.actions.inspect_select)
+			check(app.selected==index and not is_instance_valid(app.modal) and before==unchanged(),"keyboard inspection offers explicit safe selection "+kind)
 			app.cancel_selection();await settle()
 		var source=app.hand_views[index].get_global_rect().get_center()
 		await touch(source,true);await move(source+Vector2(0,-30))
@@ -111,7 +118,9 @@ func run() -> void:
 		for item in [{"pressed":false,"canceled":true},{"pressed":true,"canceled":false},{"pressed":false,"canceled":false}]:
 			var packet=InputEventScreenTouch.new();packet.position=source;packet.index=0;packet.pressed=item.pressed;packet.canceled=item.canceled;Input.parse_input_event(packet)
 		await settle()
-		check(app.selected==index and not is_instance_valid(app.modal) and before==unchanged(),"same-frame cancel+newDown+newUp permits only the genuine tap "+kind)
+		check(app.selected==-1 and is_instance_valid(app.modal) and before==unchanged(),"same-frame cancel+newDown+newUp permits only the genuine inspection "+kind)
+		await tap_control(app.actions.inspect_select)
+		check(app.selected==index and not is_instance_valid(app.modal) and before==unchanged(),"same-frame genuine inspection can explicitly select without a command "+kind)
 		app.cancel_selection();await settle()
 		# Finish through the real model; the guard cannot block genuine play.
 		var lane=int(app.session.model.legal_targets("hero",index)[0]);var card=app.session.card(app.session.model.state.hero.hand[index]);var side=app.card_target_side(card)

@@ -24,7 +24,7 @@ func tap(control: Control) -> void:
 func bounded(control: Control) -> bool:
 	return Rect2(Vector2.ZERO,Vector2(root.size)).encloses(control.get_global_rect()) and control.size.x>=44 and control.size.y>=44
 func full_face_in(node: Node) -> Control:
-	if node.get_script()==FullFace:return node
+	if node is FullFace:return node
 	for child in node.get_children():
 		var face=full_face_in(child)
 		if face!=null:return face
@@ -92,7 +92,8 @@ func drag_checks() -> void:
 		var index=int(setup.index);var before=Session.digest(app.session.model.snapshot());var count=app.session.commands.size()
 		var from=await drag_press(index);await drag_move(from+Vector2(5,0))
 		check(not app.hand_drag.active,"subthreshold motion retains a normal tap")
-		await drag_release(from+Vector2(5,0));check(app.selected==index and app.session.commands.size()==count,"tap alternative selects without playing")
+		await drag_release(from+Vector2(5,0));check(is_instance_valid(app.modal) and app.selected==-1 and app.session.commands.size()==count,"first tap inspects without arming or playing")
+		await tap(app.actions.inspect_select);check(app.selected==index and not is_instance_valid(app.modal) and app.session.commands.size()==count,"explicit tap alternative selects without playing")
 		app.cancel_selection();await settle()
 		from=await drag_press(index);await drag_move(Vector2(4,4))
 		check(app.hand_drag.active and is_instance_valid(app.drag_ghost),"drag lifts card and displays presentation ghost")
@@ -173,7 +174,7 @@ func run() -> void:
 			check(app.hand_views[index].card.id==app.session.model.state.hero.hand[index] and bounded(app.hand_views[index]),"real hand data and touch bounds")
 			check(app.hand_views[index].layout_report().title_fits,"whole opening card name fits its actual portrait plate")
 		var digest=Session.digest(app.session.model.snapshot());var count=app.session.commands.size()
-		await tap(app.actions.mulligan_0);await tap(app.actions.mulligan_1);await tap(app.actions.mulligan_1)
+		await tap(app.actions.mulligan_0);await tap(app.actions.inspect_mulligan);await tap(app.actions.mulligan_1);await tap(app.actions.inspect_mulligan);await tap(app.actions.mulligan_1);await tap(app.actions.inspect_mulligan)
 		check(app.mulligan_indices==[0] and app.selected==1,"mark, switch and unmark with real touch")
 		check(app.hand_views[0].get_child_count()==1 and app.hand_views[0].get_global_rect().encloses(app.hand_views[0].get_child(0).get_global_rect()),"exchange ribbon stays inside its card")
 		check(Session.digest(app.session.model.snapshot())==digest and app.session.commands.size()==count,"marking cards never changes rules or adds commands")
@@ -245,6 +246,8 @@ func finish_second(dimensions: Vector2i) -> void:
 	check(app.session.model.state.second_path and app.session.model.state.origins.hero==3,"optional second origin uses original command")
 	for lane in 5:check(app.actions["second_origin_"+str(lane)].disabled,"second origin cannot be changed twice")
 	var count=app.session.commands.size();await tap(app.actions.second_card_0)
+	check(app.session.model.state.active=="enemy" and not app.actions.inspect_select.disabled,"second-player compensation remains selectable while the original starting player is active")
+	await tap(app.actions.inspect_select)
 	check(app.selected==0 and app.session.commands.size()==count,"second card choice requires explicit exchange confirmation")
 	check(bounded(app.actions.second_exchange) and not app.actions.second_exchange.disabled,"second card exchange is a bounded enabled action")
 	if dimensions==Vector2i(844,390):await shot("second-844x390")
