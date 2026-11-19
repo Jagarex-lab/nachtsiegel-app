@@ -13,6 +13,7 @@ func _initialize() -> void:
 		for count in range(1,7):
 			for selection in range(-1,count):
 				var geometry=Layout.measure(area.size,count,selection)
+				if viewport.y>=390 and viewport.x<=932 and count==6:check(geometry.card_size.x>=90,"six-card phone hand uses materially larger readable portraits")
 				for region in ["header","board","hand","dock"]:check(area.grow(.01).encloses(geometry[region]),"bounded "+region+str(viewport))
 				for index in count:
 					var tile=Layout.hand_rect(geometry,index,count,index==selection)

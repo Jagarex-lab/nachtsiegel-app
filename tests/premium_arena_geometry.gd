@@ -1,6 +1,7 @@
 extends SceneTree
 ## Contract tests for logical lane targets, independent of visual perspective.
 const Stage=preload("res://scripts/premium/arena_stage.gd")
+const BattleLayout=preload("res://scripts/premium/battle_layout.gd")
 var checked:=0
 var failures:Array[String]=[]
 func _initialize() -> void:
@@ -63,9 +64,13 @@ func check_real_camera() -> void:
 				slots.append(slot)
 		stage.mode="spatial";check(stage.world_viewport==null,"Selected 2.5D mode releases all 3D viewport resources")
 		stage.queue_free();await process_frame
-	# Actual production BattleLayout dimensions, including the iPhone board
-	# that previously clipped the near row after width-only camera fitting.
-	for dimensions in [Vector2(828,194.97),Vector2(720,184),Vector2(576,160)]:
+	# Retain the three historical camera regressions, and additionally derive
+	# current production dimensions instead of calling an old constant current.
+	var boards: Array[Vector2]=[Vector2(828,194.97),Vector2(720,184),Vector2(576,160)]
+	for screen in [Vector2(844,390),Vector2(852,393),Vector2(932,430),Vector2(1024,768),Vector2(1600,900)]:
+		var inset := 4.0 if screen.y<380 else 8.0
+		boards.append(BattleLayout.measure(screen-Vector2.ONE*inset*2,6).board.size)
+	for dimensions in boards:
 		var stage:=Stage.new();stage.size=dimensions;stage.mode="three_d";root.add_child(stage)
 		await process_frame;await process_frame
 		var slots:Array[Rect2]=[]
@@ -96,6 +101,16 @@ func check_real_camera() -> void:
 	check(projected_stage._faces_frozen,"A selectable empty path freezes without waiting forever for nonexistent artwork")
 	check(projected_stage._face_viewports[0].get_child(0).target,"Empty 3D path preserves the valid target highlight")
 	projected_stage.queue_free();await process_frame
+	# Effects remain bounded, disposable presentation jobs; reduced motion never
+	# turns a visual confirmation into a delayed battle/input command.
+	var effects=preload("res://scripts/alpha/feedback.gd").new();root.add_child(effects)
+	for index in 40:effects.emit(["shield","block","heal"][index%3],Vector2(30,30),Vector2(30,30),Color.WHITE,"1")
+	check(effects.jobs.size()==24,"large effect chains retain a bounded24-job visual budget")
+	effects._process(1.0)
+	check(effects.jobs.is_empty(),"all visual jobs expire without a gameplay callback or queued input")
+	effects.reduced=true;effects.emit("shield",Vector2(10,10),Vector2(40,40),Color.WHITE,"1")
+	check(effects.jobs.size()==1 and effects.jobs[0].still and effects.jobs[0].duration<=.2,"reduced motion confirms defense with stationary short feedback")
+	effects._process(1.0);effects.queue_free();await process_frame
 	print("PREMIUM_ARENA_GEOMETRY %d checks, %d failures"%[checked,failures.size()])
 	for failure in failures:push_error(failure)
 	quit(0 if failures.is_empty() else 1)

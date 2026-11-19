@@ -43,6 +43,43 @@ func build_fixture() -> void:
 			player.lanes[lane]=unit
 	model.state.hero.hand=chosen.slice(10,16)
 	app.page="battle";app.selected=-1;app.action_mode="";app.source_lane=-1;app.render();await settle()
+func capture_effect_families() -> Dictionary:
+	# Three genuine Godot rasterizations use the SAME white pigment and age.
+	# Distinct silhouettes therefore prove more than different faction colours.
+	var viewport := SubViewport.new();viewport.size=Vector2i(512,160)
+	viewport.disable_3d=true;viewport.world_2d=World2D.new()
+	viewport.render_target_update_mode=SubViewport.UPDATE_ALWAYS;root.add_child(viewport)
+	var ground := ColorRect.new();ground.size=Vector2(viewport.size);ground.color=Color("07111b");viewport.add_child(ground)
+	var effects=preload("res://scripts/alpha/feedback.gd").new();viewport.add_child(effects)
+	effects.set_process(false)
+	var families := ["shield","block","heal"]
+	var centers := [Vector2(86,70),Vector2(256,70),Vector2(426,70)]
+	for index in families.size():
+		effects.emit(families[index],centers[index],centers[index],Color.WHITE,"")
+		var label := Label.new();label.text=["SCHILD","BLOCK","HEILUNG"][index]
+		label.position=centers[index]+Vector2(-60,42);label.size=Vector2(120,28)
+		label.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER;label.add_theme_font_size_override("font_size",16)
+		viewport.add_child(label)
+	await settle(3);await RenderingServer.frame_post_draw
+	var image := viewport.get_texture().get_image()
+	var masks: Array=[];var measurements: Array=[]
+	for index in families.size():
+		var rectangle := Rect2i(Vector2i(centers[index])-Vector2i(32,32),Vector2i(64,64))
+		var region := image.get_region(rectangle)
+		var bright := 0
+		for y in region.get_height():
+			for x in region.get_width():
+				if region.get_pixel(x,y).get_luminance()>.2:bright+=1
+		assert(bright>8,"Actual defense silhouette must contain visible pixels")
+		var digest := region.get_data().hex_encode().sha256_text()
+		masks.append(digest);measurements.append({"kind":families[index],"bright_pixels":bright,"mask_sha256":digest})
+	assert(masks[0]!=masks[1] and masks[0]!=masks[2] and masks[1]!=masks[2],"Shield/block/heal must have distinguishable geometry even with the same colour")
+	var destination := output+"/effects-shield-block-heal.png"
+	assert(image.save_png(destination)==OK)
+	var result := {"file":destination,"viewport":[512,160],"same_pigment":true,"age":0,"families":measurements,"sha256":FileAccess.get_sha256(destination),"scope":"Actual offscreen Godot presentation fixture; no battle command, fake damage or physical-device claim."}
+	viewport.queue_free();await settle()
+	return result
+
 func run() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--output="):output=argument.trim_prefix("--output=")
@@ -67,8 +104,9 @@ func run() -> void:
 	root.size=Vector2i(390,844);await settle();app.page="lobby";app.render();await capture("menu-390x844")
 	app.page="decks";app.render();await capture("starters-390x844")
 	app.page="builder";app.collection_mode="alpha";app.collection_only=false;app.deck=catalog.deck("houses");app.render();await capture("deckbuilder-390x844")
+	var effects_report := await capture_effect_families()
 	var version: Array=[];assert(OS.execute("git",["rev-parse","HEAD"],version)==0)
-	var manifest={"source_commit":str(version[0]).strip_edges(),"fixture_sha256":FileAccess.get_sha256("res://tools/premium/render_arena_qa.gd"),"shell_sha256":FileAccess.get_sha256("res://scripts/alpha/shell.gd"),"card_view_sha256":FileAccess.get_sha256("res://scripts/alpha/card_view.gd"),"catalog_sha256":FileAccess.get_sha256(Catalog.SOURCE_PATH),"godot":Engine.get_version_info().string,"scope":"Actual native Godot presentation fixture with deliberately arranged full fields and six hand cards. Not a legal game, browser test, performance benchmark or physical device test.","card_ids":chosen,"records":records}
+	var manifest={"source_commit":str(version[0]).strip_edges(),"fixture_sha256":FileAccess.get_sha256("res://tools/premium/render_arena_qa.gd"),"shell_sha256":FileAccess.get_sha256("res://scripts/alpha/shell.gd"),"card_view_sha256":FileAccess.get_sha256("res://scripts/alpha/card_view.gd"),"catalog_sha256":FileAccess.get_sha256(Catalog.SOURCE_PATH),"godot":Engine.get_version_info().string,"scope":"Actual native Godot presentation fixture with deliberately arranged full fields and six hand cards. Not a legal game, browser test, performance benchmark or physical device test.","card_ids":chosen,"records":records,"effects_fixture":effects_report,"feedback_sha256":FileAccess.get_sha256("res://scripts/alpha/feedback.gd")}
 	var file=FileAccess.open(output+"/manifest.json",FileAccess.WRITE);file.store_string(JSON.stringify(manifest,"  "));file.close()
 	app.close_modal();app.queue_free();await settle()
 	print("PREMIUM PRESENTATION: %d actual Shell captures; source and fixture hashes recorded" % records.size())
