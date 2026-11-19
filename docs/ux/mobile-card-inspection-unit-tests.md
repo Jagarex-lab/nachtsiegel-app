@@ -44,7 +44,7 @@ Small final host logs: `/tmp/orafold-inspector-node.log`, `/tmp/orafold-inspecto
 | Source | SHA-256 |
 | --- | --- |
 | `tools/alpha_browser_qa.cjs` | `f8821b79580771c19f0a21e07cbc6b4c988fece387f15211ae2a482f43fa1ebb` |
-| `tools/alpha02_browser_qa.cjs` | `d84690cb9cbf47161e6b86011a94bd926768f7ad4220a43ba3c31d40324ecf4c` |
+| `tools/alpha02_browser_qa.cjs` | `63fed02cfe784e244bcbdbd2a4fcc96c744fa56cd3a91259742cd21131670e0d` |
 | `tools/master550_browser_qa.cjs` | `e18cf489700118ab1233754dda6fb61421a8ce2dbd60cff0c184ac76cdf59d5b` |
 | `tools/premium/browser_qa.cjs` | `6cd0f688f463c88ddb310621a34f903795b6ac5b055159c9d99ffc5ec7c4b01a` |
 | `tools/premium/card_inspection_contract.cjs` | `6f009197ebb14f22376eeb570702c281cb6491a9c5519e253a2e34071a5c5483` |
@@ -62,3 +62,13 @@ The first real Chromium premium-browser attempt stopped after 82 checks, eight s
 The action waiter now additionally observes the actual `help_visible` transition **only** for `inspect_keywords` and `inspect_help_close`. All existing version waits, deadlines, input, clipping and negative assertions remain. No product patch or disabled-button assumption was introduced to make the harness pass.
 
 The optional-help regression now searches the real `oa-neutral-c04` Feldärztin through collection input and opens its real card. It requires the existing Heile keyword, an enabled help control, visible `Heilung:` definition, absence of a false `Eile:` definition, unchanged original card and game/deck data, and actual help-close behavior. The random first hand card is no longer assumed to need glossary help. Rotation and consumed outside-close assertions on that hand card remain. This correction requires a new actual export-browser run; no successful browser result is claimed here.
+
+## PR37 WebKit reload navigation failure and correction
+
+Main QA run `44628893380`, WebKit job `135942180597`, failed in Alpha02 after successfully completing the preceding real full-duel/replay step. PR head was `0375195916a014a475102ddda29a5477e3ccd910`; its tested synthetic merge was `8f1b3c5b2aabfe79396eacf99a760bde400346cd`. Artifact `14581868442`, `alpha02/webkit-error.json`, proves the failure state after the supposed Builder tap: `page=lobby`, `render_version=2`, `deck_size=0`, normal lobby controls, no console errors, and correct 390×844 CSS / 1170×2532 render dimensions. The empty list was the unopened lobby's deck variable; this evidence does not show a lost stored deck.
+
+The old Alpha02 action helper accepted an unrelated deferred startup render as navigation completion. It now reuses the existing production `stableMigrationTarget` contract (three fresh observations of the same enabled control, version and rectangle) and `migrationActionAccepted` for actual menu/tab destinations. It still sends one real tap, retains the original 90-second deadlines, and immediately checks the exact saved 30-card list after confirmed Builder navigation. No polling for a desired deck, retry tap, storage injection or product-code change was added.
+
+The two new open-card rotation checks also wait for the actual new render, CSS dimensions and orientation before checking card geometry. Minimum font sizes and full model-preservation assertions remain unchanged.
+
+The existing migration-input unit suite was rerun: **14/14 passed, zero skipped**. These repeat tests are already represented in the 240-unit total; they are not 14 additional distinct tests. New Alpha02 syntax and diff checks passed. The full four-suite PR gate must rerun on the new head; the failed head is not mergeable and its earlier passes do not release the correction.
