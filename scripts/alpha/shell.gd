@@ -549,7 +549,7 @@ func battle() -> void:
 		_battle_board()
 		_build_hand(false)
 		_combat_dock()
-	if arena_mode=="three_d":
+	if is_instance_valid(battle_stage):
 		var projected: Array=[]
 		for side in ["enemy","hero"]:
 			for lane in 5:

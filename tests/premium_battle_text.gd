@@ -20,6 +20,10 @@ func run() -> void:
 			view.card=card;view.unit={};view.display_role="hand";view.size=geometry.card_size
 			var report=view.layout_report()
 			check(report.title_fits,"complete actual hand name in measured portrait "+card.id+str(screen))
+			var rendered: String=str(report.title_rendered_text)
+			check(rendered.replace(" ","").replace("\n","")==str(card.name).replace(" ",""),"every real name retains every character without ellipsis or replacement")
+			var printed_lines=rendered.split("\n",false)
+			check(printed_lines.is_empty() or str(printed_lines[-1]).length()>1,"hand names never leave a single orphan letter on their last line")
 			check(report.outer.encloses(report.title) and report.outer.encloses(report.stats),"actual title and value/type zones stay inside the shared outline")
 			check(report.title.end.y<=report.stats.position.y+.1,"measured hand name cannot intersect current values")
 			check(report.has_combat_values==(card.kind=="creature"),"only creatures expose attack/life")

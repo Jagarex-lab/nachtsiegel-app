@@ -1,0 +1,24 @@
+{
+  "scope": "Actual Godot4.6.3 renderings; PNG originals retained during QA. WebP quality94 at unchanged pixel dimensions for repository review. No physical device or legal full-game claim.",
+  "source_commit": "b1bfc8d8eccca9f2c88cef91c0925762369b43ff",
+  "files": [
+    {
+      "preview": "battle-844x390.webp",
+      "png_sha256": "81c64a3ec03b3c20cb821e8fffc1340bedc33f7aad26b84a64996e2ccc2824e2",
+      "webp_sha256": "9f4b3f7647944470c31499503fc9e947e92a3f2a08b99a1894a80e4f90108a30",
+      "size": [
+        844,
+        390
+      ]
+    },
+    {
+      "preview": "opening-free-paths-844x390.webp",
+      "png_sha256": "7e8f311aa69a4fd733ef870491ad7189f60e0aa01e9e3279f6e343f41948937e",
+      "webp_sha256": "eb9899926a3898d95edd693237f5f285bf7b97fbf9087b5df817d6b7039e2000",
+      "size": [
+        844,
+        390
+      ]
+    }
+  ]
+}

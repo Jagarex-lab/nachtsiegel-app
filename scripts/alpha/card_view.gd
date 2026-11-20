@@ -98,22 +98,58 @@ func effective_role() -> String:
 	return "board" if not unit.is_empty() or card.is_empty() else "library" if library else "hand"
 func _rect_array(rect: Rect2) -> Array:
 	return [rect.position.x,rect.position.y,rect.size.x,rect.size.y]
+func _balanced_title_text(value: String, width: float, font_size: int) -> String:
+	# Preserve every character. Prefer whole words; if one compound itself is
+	# wider than the small card, rebalance its final two chunks rather than
+	# leaving a single trailing letter on an otherwise empty line.
+	var lines: Array[String]=[]
+	var current := ""
+	for word in value.split(" ",false):
+		var candidate: String=word if current.is_empty() else current+" "+word
+		if S.font.get_string_size(candidate,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x<=width:
+			current=candidate;continue
+		if not current.is_empty():lines.append(current);current=""
+		if S.font.get_string_size(word,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x<=width:
+			current=word;continue
+		var chunks: Array[String]=[]
+		var part := ""
+		for index in word.length():
+			var letter: String=word.substr(index,1)
+			if not part.is_empty() and S.font.get_string_size(part+letter,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x>width:
+				chunks.append(part);part=letter
+			else:part+=letter
+		if not part.is_empty():chunks.append(part)
+		if chunks.size()>1 and chunks[-1].length()<3:
+			var tail: String=chunks[-2]+chunks[-1]
+			var best := -1
+			var difference := INF
+			for split_at in range(3,tail.length()-2):
+				var first: String=tail.substr(0,split_at)
+				var last: String=tail.substr(split_at)
+				var first_width := S.font.get_string_size(first,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x
+				var last_width := S.font.get_string_size(last,HORIZONTAL_ALIGNMENT_LEFT,-1,font_size).x
+				if first_width<=width and last_width<=width and absf(first_width-last_width)<difference:
+					best=split_at;difference=absf(first_width-last_width)
+			if best>=0:chunks[-2]=tail.substr(0,best);chunks[-1]=tail.substr(best)
+		for index in chunks.size():
+			if index==chunks.size()-1:current=chunks[index]
+			else:lines.append(chunks[index])
+	if not current.is_empty():lines.append(current)
+	return "\n".join(lines)
+
 func _face_title(width: float, height: float, maximum: int, lines: int=3) -> Dictionary:
 	var paragraph: TextParagraph
 	var chosen:=maximum
-	var minimum:=9 if size.x<84 else 10
+	var minimum:=9 if size.x<105 else 10
+	var rendered := ""
+	var available := maxf(24,floorf(width))
 	for fs in range(maximum,minimum-1,-1):
-		paragraph=TextParagraph.new();paragraph.width=maxf(24,floorf(width))
-		paragraph.break_flags=TextServer.BREAK_MANDATORY|TextServer.BREAK_WORD_BOUND|TextServer.BREAK_ADAPTIVE
-		paragraph.add_string(str(card.get("name",card.get("id",""))),S.font,fs);chosen=fs
-		if paragraph.get_size().y<=height and paragraph.get_line_count()<=lines:break
-	# Two long words can otherwise each create an orphan tail (four lines).
-	# A measured grapheme fallback fits the complete name into the same plate.
-	if paragraph.get_size().y>height or paragraph.get_line_count()>lines:
-		paragraph=TextParagraph.new();paragraph.width=maxf(24,floorf(width))
-		paragraph.break_flags=TextServer.BREAK_MANDATORY|TextServer.BREAK_GRAPHEME_BOUND
-		paragraph.add_string(str(card.get("name",card.get("id",""))),S.font,chosen)
-	return {"paragraph":paragraph,"font_size":chosen,"fits":paragraph.get_size().y<=height and paragraph.get_line_count()<=lines}
+		paragraph=TextParagraph.new();paragraph.width=available
+		paragraph.break_flags=TextServer.BREAK_MANDATORY|TextServer.BREAK_WORD_BOUND
+		rendered=_balanced_title_text(str(card.get("name",card.get("id",""))),available,fs)
+		paragraph.add_string(rendered,S.font,fs);chosen=fs
+		if paragraph.get_size().y<=height and paragraph.get_line_count()<=lines and paragraph.get_size().x<=available+.1:break
+	return {"paragraph":paragraph,"font_size":chosen,"rendered_text":rendered,"fits":paragraph.get_size().y<=height and paragraph.get_line_count()<=lines and paragraph.get_size().x<=available+.1}
 func layout_report() -> Dictionary:
 	var outer:=Rect2(Vector2(2,2),(size-Vector2(4,4)).max(Vector2.ZERO))
 	var role:=effective_role()
@@ -132,8 +168,11 @@ func layout_report() -> Dictionary:
 	var title:=Rect2(art.position+Vector2(4,2),Vector2(maxf(24,art.size.x-8),title_height))
 	var stats:=Rect2(art.position.x,art.end.y-footer_height,art.size.x,footer_height)
 	if not board:
-		title.position=Vector2(art.position.x+1,stats.position.y-title_height)
-		title.size.x=maxf(24,art.size.x-2)
+		# Names may use the inset frame width: on low Safari viewports the
+		# illustration aperture alone would needlessly force four lines in
+		# two-word titles. The opaque plate and text remain inside the contour.
+		title.position=Vector2(outer.position.x+2,stats.position.y-title_height)
+		title.size.x=maxf(24,outer.size.x-4)
 	else:title.size.x-=22 if lane>=0 else 0
 	var maximum:=12 if size.x>=150 else 11 if size.x>=105 else 10
 	var title_data:=_face_title(title.size.x,title.size.y,maximum,2 if board else 3)
@@ -152,20 +191,14 @@ func layout_report() -> Dictionary:
 	var visible_area:=visible_width*exposed
 	if not board:visible_area=maxf(0,visible_area-2*PI*pow(minf(14,size.x*.135),2)-Frames.collectible_occlusion(outer,str(card.get("rarity","common"))))
 	elif not unit.is_empty():visible_area=maxf(0,visible_area-visible_width*15) # readiness/modifier band
-	return {"role":role,"outer":outer,"art":art,"title":title,"stats":stats,"status":stats,"title_actual":title_data.paragraph.get_size() if title_height>0 else Vector2.ZERO,"title_fits":title_data.fits,"title_font_size":title_data.font_size,"art_fraction":visible_area/maxf(1,outer.get_area()),"frame_concept":frame_concept,"has_combat_values":card.get("kind")=="creature","status_values":board_status() if board else {}}
+	return {"role":role,"outer":outer,"art":art,"title":title,"stats":stats,"status":stats,"title_actual":title_data.paragraph.get_size() if title_height>0 else Vector2.ZERO,"title_fits":title_data.fits,"title_font_size":title_data.font_size,"title_rendered_text":title_data.rendered_text,"art_fraction":visible_area/maxf(1,outer.get_area()),"frame_concept":frame_concept,"has_combat_values":card.get("kind")=="creature","status_values":board_status() if board else {}}
 func _draw() -> void:
 	if size.x<=8 or size.y<=8:return
 	var report:=layout_report()
 	var rect: Rect2=report.outer
 	var edge=T.GOLD if selected or convergence else T.SUCCESS if target else color
 	if card.is_empty():
-		# A free lane is a low raised docking plane, not a giant debug circle.
-		Frames.box(self,rect,Color(.025,.045,.06,.38),Color(edge,.42 if target else .18),1,7)
-		var center:=size/2.0
-		var half:=minf(12,size.y*.18)
-		draw_polyline(PackedVector2Array([center+Vector2(-half,0),center+Vector2(0,-half*.5),center+Vector2(half,0),center+Vector2(0,half*.5),center+Vector2(-half,0)]),Color(edge,.8 if target else .28),1.4,true)
-		if lane>=0:_ink(str(lane+1),center+Vector2(-3,4),11,T.TEXT if target else T.MUTED,18)
-		if origin:_ink("U",Vector2(7,15),11,T.GOLD,16)
+		_draw_empty_path(rect,edge)
 	else:
 		var power:=str(card.get("faction","neutral"))
 		var rarity:=str(card.get("rarity","common"))
@@ -178,11 +211,43 @@ func _draw() -> void:
 		if effective_role()=="board":_draw_board(report)
 		else:_draw_portrait(report)
 	# Interaction always dominates material, inside the same hit contour.
-	if selected or convergence:Frames.box(self,rect.grow(-1),Color.TRANSPARENT,T.GOLD,2,5)
-	if target:Frames.box(self,rect.grow(-1),Color.TRANSPARENT,T.SUCCESS,2,5)
+	if selected or convergence:
+		if card.is_empty():_path_focus(rect,T.GOLD,2.0)
+		else:Frames.box(self,rect.grow(-1),Color.TRANSPARENT,T.GOLD,2,5)
+	if target:
+		if card.is_empty():_path_focus(rect,T.SUCCESS,2.0)
+		else:Frames.box(self,rect.grow(-1),Color.TRANSPARENT,T.SUCCESS,2,5)
 	if invalid_target:
 		draw_line(Vector2(size.x-12,7),Vector2(size.x-5,14),T.DANGER,2,true);draw_line(Vector2(size.x-5,7),Vector2(size.x-12,14),T.DANGER,2,true)
-	if has_focus():Frames.box(self,rect.grow(-1),Color.TRANSPARENT,T.FOCUS,1,5)
+	if has_focus():
+		if card.is_empty():_path_focus(rect,T.FOCUS,1.4)
+		else:Frames.box(self,rect.grow(-1),Color.TRANSPARENT,T.FOCUS,1,5)
+func _draw_empty_path(rect: Rect2, edge: Color) -> void:
+	# The floor owns its material. Empty positions never cover it with a dark
+	# rectangle; this small seal identifies the same full-size upright hit area.
+	var center := rect.get_center()
+	var radius := Vector2(minf(27,rect.size.x*.21),minf(12,rect.size.y*.18))
+	var tint := Color(edge,.82 if target else .34)
+	var sigil := PackedVector2Array([center+Vector2(-radius.x,0),center+Vector2(0,-radius.y),center+Vector2(radius.x,0),center+Vector2(0,radius.y),center+Vector2(-radius.x,0)])
+	draw_colored_polygon(sigil.slice(0,4),Color(.015,.035,.045,.45 if target else .18))
+	draw_polyline(sigil,tint,1.5 if target else 1.0,true)
+	var direction := -1.0 if owner_label=="DU" else 1.0
+	for distance in [1.0,2.0]:
+		var at := center+Vector2(0,direction*(radius.y+distance*4))
+		draw_polyline(PackedVector2Array([at+Vector2(-4,-direction*2),at,at+Vector2(4,-direction*2)]),Color(edge,.40 if target else .13),1,true)
+	if lane>=0:_center_text(str(lane+1),center,12,T.TEXT if target else Color("8ba4ac"),18)
+	if origin:
+		var point := Vector2(minf(rect.end.x-5,center.x+radius.x+10),center.y)
+		draw_circle(point,4,Color("675439"));draw_arc(point,4,0,TAU,16,T.GOLD,1,true)
+
+func _path_focus(rect: Rect2, tint: Color, thickness: float) -> void:
+	var bounds := rect.grow(-3)
+	var length := minf(17,minf(bounds.size.x,bounds.size.y)*.25)
+	for corner in [Vector2(0,0),Vector2(1,0),Vector2(1,1),Vector2(0,1)]:
+		var at: Vector2=bounds.position+bounds.size*corner
+		var direction := Vector2(1 if corner.x==0 else -1,1 if corner.y==0 else -1)
+		draw_polyline(PackedVector2Array([at+Vector2(direction.x*length,0),at,at+Vector2(0,direction.y*length)]),tint,thickness,true)
+
 func _draw_portrait(report: Dictionary) -> void:
 	var art: Rect2=report.art
 	var name_box: Rect2=report.title
@@ -192,8 +257,8 @@ func _draw_portrait(report: Dictionary) -> void:
 	# The diagonal plate is deliberately below the image, so a small hand card
 	# is immediately recognisable as an illustrated collectible rather than a
 	# horizontal text button. Full rules live in the undistorted inspector.
-	draw_colored_polygon(PackedVector2Array([Vector2(art.position.x,name_box.position.y+3),Vector2(art.end.x,name_box.position.y-5),art.end,Vector2(art.position.x,art.end.y)]),Color("101722"))
-	draw_line(Vector2(art.position.x,name_box.position.y+3),Vector2(art.end.x,name_box.position.y-5),pigment.lightened(.35),1.3,true)
+	draw_colored_polygon(PackedVector2Array([Vector2(name_box.position.x,name_box.position.y+3),Vector2(name_box.end.x,name_box.position.y-5),Vector2(name_box.end.x,art.end.y),Vector2(name_box.position.x,art.end.y)]),Color("101722"))
+	draw_line(Vector2(name_box.position.x,name_box.position.y+3),Vector2(name_box.end.x,name_box.position.y-5),pigment.lightened(.35),1.3,true)
 	var title:=_face_title(name_box.size.x,name_box.size.y,int(report.title_font_size))
 	title.paragraph.draw(get_canvas_item(),name_box.position,T.TEXT)
 	draw_rect(stats,Color("090f18"))

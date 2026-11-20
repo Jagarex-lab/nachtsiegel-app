@@ -57,43 +57,114 @@ func configure(value: Array) -> void:
 	queue_redraw()
 
 func _draw() -> void:
-	if size.x <= 1 or size.y <= 1: return
-	if mode == "three_d": return
+	if size.x <= 1 or size.y <= 1 or mode == "three_d": return
 	var plane := _floor_polygon()
-	# A single top-left key light, restrained near-side depth and no obscuring FX.
-	for dy in [10.0, 6.0, 3.0]:
-		var shadow := PackedVector2Array()
-		for point in plane: shadow.append(point + Vector2(0,dy))
-		draw_colored_polygon(shadow, Color(0,0,0,.12))
+	# One continuous, carved causeway. Geometry is visual only: the ten upright
+	# hit rectangles above this floor still use the unchanged slot_rect contract.
+	for depth in [7.0, 4.0, 1.5]:
+		draw_colored_polygon(_offset_polygon(plane,Vector2(0,depth)),Color(0,0,0,.18))
+	draw_colored_polygon(plane,Color("080e16"))
 	if mode == "spatial":
-		draw_colored_polygon(PackedVector2Array([plane[3], plane[2], plane[2]+Vector2(0,7), plane[3]+Vector2(0,7)]), Color("080f17"))
-	draw_colored_polygon(plane, STONE)
-	var edge := PackedVector2Array(plane); edge.append(plane[0])
-	draw_polyline(edge, Color(METAL,.48), 1.4, true)
-	draw_line(plane[0],plane[1],Color("9db4bd"),1.3,true)
+		draw_colored_polygon(PackedVector2Array([plane[3],plane[2],plane[2]+Vector2(0,7),plane[3]+Vector2(0,7)]),Color("070b11"))
+	# The fractured dark channels separate five full-length paths, rather than
+	# ten independent UI panels. Every facet shares a top-left key light.
 	for lane in 5:
-		var a := _floor_point(float(lane)/5.0,.02)
-		var b := _floor_point(float(lane+1)/5.0,.02)
-		var c := _floor_point(float(lane+1)/5.0,.98)
-		var d := _floor_point(float(lane)/5.0,.98)
-		var lane_shape := PackedVector2Array([a+Vector2(2,0),b-Vector2(2,0),c-Vector2(2,0),d+Vector2(2,0)])
-		draw_colored_polygon(lane_shape,Color(.025,.05,.065,.35 if lane%2==0 else .18))
-		if lane > 0: draw_line(a,d,Color(METAL,.26),1,true)
-		var middle := _floor_point((float(lane)+.5)/5.0,.5)
-		draw_line(middle-Vector2(13,0),middle+Vector2(13,0),Color(METAL,.5),1,true)
-		draw_colored_polygon(PackedVector2Array([middle+Vector2(0,-3),middle+Vector2(3,0),middle+Vector2(0,3),middle+Vector2(-3,0)]),Color(METAL,.8))
-		for side in ["enemy","hero"]:
-			var slot := slot_rect(side,lane,Rect2(Vector2.ZERO,size),mode)
-			var hue := PLAYER if side=="hero" else FOE
-			var base := Vector2(slot.get_center().x,slot.end.y-3)
-			var radius := Vector2(slot.size.x*.31,minf(8,slot.size.y*.10))
-			if mode=="spatial": _ellipse(base+Vector2(0,3),radius,Color(0,0,0,.35))
-			_ellipse(base,radius,Color(hue,.13))
-			_ellipse_outline(base,radius,Color(hue,.3))
-			if int(origins.get(side,-1))==lane:
-				draw_line(base-Vector2(15,0),base+Vector2(15,0),Color("dbb981"),2,true)
-			if controlled.get(side,[]).has(lane):
-				draw_line(Vector2(slot.position.x+6,base.y),Vector2(slot.end.x-6,base.y),Color(PLAYER,.85),2,true)
+		_draw_causeway(lane)
+	_draw_fold()
+	var border := PackedVector2Array(plane);border.append(plane[0])
+	draw_polyline(border,Color("46525a"),1.2,true)
+	draw_line(plane[0],plane[1],Color("93a4ae"),1.2,true)
+	for side in ["enemy","hero"]:
+		for lane in 5:
+			_draw_berth(side,lane)
+
+func _offset_polygon(points: PackedVector2Array, by: Vector2) -> PackedVector2Array:
+	var shifted := PackedVector2Array()
+	for point in points:shifted.append(point+by)
+	return shifted
+
+func _stone_patch(x0: float, x1: float, y0: float, y1: float, inset: float=3.0) -> PackedVector2Array:
+	var a := _floor_point(x0,y0)+Vector2(inset,1)
+	var b := _floor_point(x1,y0)+Vector2(-inset,1)
+	var c := _floor_point(x1,y1)+Vector2(-inset,-1)
+	var d := _floor_point(x0,y1)+Vector2(inset,-1)
+	var cut := minf(8.0,maxf(2.0,(d.y-a.y)*.19))
+	return PackedVector2Array([a+Vector2(cut,0),b-Vector2(cut,0),b+Vector2(0,cut),c-Vector2(0,cut),c-Vector2(cut,0),d+Vector2(cut,0),d-Vector2(0,cut),a+Vector2(0,cut)])
+
+func _draw_causeway(lane: int) -> void:
+	var left := float(lane)/5.0
+	var right := float(lane+1)/5.0
+	var path := _stone_patch(left,right,.025,.975,2.0)
+	draw_colored_polygon(_offset_polygon(path,Vector2(0,3)),Color(0,0,0,.50))
+	draw_colored_polygon(path,Color("202932"))
+	var rows := [Vector2(.035,.255),Vector2(.26,.48),Vector2(.52,.74),Vector2(.745,.965)]
+	for index in rows.size():
+		var interval: Vector2=rows[index]
+		var tint := Color("30313b") if index<2 else Color("263a3e")
+		if lane%2==1:tint=tint.darkened(.08)
+		var slab := _stone_patch(left,right,interval.x,interval.y,4.0)
+		draw_colored_polygon(slab,tint)
+		# A narrow mineral inclusion and two broad facets read as material even
+		# at phone resolution. They require no shader, texture or particle emitter.
+		var shine := PackedVector2Array([slab[0],slab[1],slab[1].lerp(slab[4],.34),slab[0].lerp(slab[5],.46)])
+		draw_colored_polygon(shine,Color(.65,.74,.79,.055))
+		draw_line(slab[0],slab[1],Color(.64,.71,.76,.26),1,true)
+		draw_line(slab[7],slab[6],Color(.55,.68,.74,.13),1,true)
+		draw_line(slab[4],slab[5],Color(0,0,0,.42),1.6,true)
+		var crack_x := left+(right-left)*(.31 if (index+lane)%2==0 else .67)
+		var crack := PackedVector2Array([_floor_point(crack_x,interval.x+.035),_floor_point(crack_x+.018,lerpf(interval.x,interval.y,.49)),_floor_point(crack_x-.008,interval.y-.025)])
+		draw_polyline(crack,Color("101b22"),1.3,true)
+	var trench_x := float(lane+1)/5.0
+	if lane<4:
+		var top := _floor_point(trench_x,.035)
+		var middle := _floor_point(trench_x,.5)
+		var bottom := _floor_point(trench_x,.965)
+		draw_line(top,bottom,Color("04090f"),3,true)
+		draw_line(top.lerp(middle,.10),middle,Color(.66,.44,.64,.23),1,true)
+		draw_line(middle,bottom.lerp(middle,.10),Color(.28,.72,.76,.25),1,true)
+
+func _draw_fold() -> void:
+	var seam := PackedVector2Array()
+	for section in 21:
+		seam.append(_floor_point(float(section)/20.0,.5)+Vector2(0,-2 if section%2==0 else 2))
+	draw_polyline(seam,Color("03070d"),8,true)
+	draw_polyline(seam,Color("466470"),2.5,true)
+	draw_polyline(seam,Color(.64,.80,.84,.35),.8,true)
+	var numerals := ["I","II","III","IV","V"]
+	for lane in 5:
+		var at := _floor_point((float(lane)+.5)/5.0,.5)
+		var rx := minf(20.0,size.x*.024)
+		var ry := minf(8.0,size.y*.045)
+		var seal := PackedVector2Array([at+Vector2(-rx,0),at+Vector2(-rx*.63,-ry),at+Vector2(rx*.63,-ry),at+Vector2(rx,0),at+Vector2(rx*.63,ry),at+Vector2(-rx*.63,ry)])
+		draw_colored_polygon(seal,Color("101b24"))
+		var edge := PackedVector2Array(seal);edge.append(seal[0])
+		draw_polyline(edge,Color("9e8e71"),1,true)
+		var font_size := 10
+		var text_size := CardStyle.font.get_string_size(numerals[lane],HORIZONTAL_ALIGNMENT_LEFT,-1,font_size)
+		draw_string(CardStyle.font,at+Vector2(-text_size.x*.5,CardStyle.font.get_ascent(font_size)*.38),numerals[lane],HORIZONTAL_ALIGNMENT_LEFT,-1,font_size,Color("ddcfaa"))
+
+func _draw_berth(side: String, lane: int) -> void:
+	var slot := slot_rect(side,lane,Rect2(Vector2.ZERO,size),mode)
+	var hue := PLAYER if side=="hero" else FOE
+	var base := Vector2(slot.get_center().x,slot.end.y-4)
+	var radius := Vector2(slot.size.x*.33,minf(8,slot.size.y*.11))
+	_ellipse(base+Vector2(0,2),radius,Color(0,0,0,.33))
+	_ellipse(base,radius,Color(hue,.10))
+	_ellipse_outline(base,radius,Color(hue,.32))
+	if int(origins.get(side,-1))==lane:
+		draw_line(base-Vector2(19,0),base+Vector2(19,0),Color("d3b16f"),2,true)
+		var origin_mark := PackedVector2Array([base+Vector2(-5,-3),base+Vector2(0,-7),base+Vector2(5,-3)])
+		draw_polyline(origin_mark,Color("edcf8f"),1.4,true)
+	if controlled.get(side,[]).has(lane):
+		draw_line(Vector2(slot.position.x+8,base.y),Vector2(slot.end.x-8,base.y),Color(hue,.72),2,true)
+	for item in cards:
+		if str(item.get("side",""))!=side or int(item.get("lane",-1))!=lane:continue
+		if item.get("unit",{}).is_empty():continue
+		if bool(item.get("combat_ready",false)):
+			var direction := -1.0 if side=="hero" else 1.0
+			var arrow_at := base+Vector2(0,-3)
+			draw_polyline(PackedVector2Array([arrow_at+Vector2(-8,-direction*3),arrow_at+Vector2(0,direction*2),arrow_at+Vector2(8,-direction*3)]),Color(hue,.9),1.7,true)
+		break
 
 func _floor_polygon() -> PackedVector2Array:
 	var inset := size.x*.035 if mode=="spatial" else 0.0
