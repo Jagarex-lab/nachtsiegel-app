@@ -72,3 +72,13 @@ The old Alpha02 action helper accepted an unrelated deferred startup render as n
 The two new open-card rotation checks also wait for the actual new render, CSS dimensions and orientation before checking card geometry. Minimum font sizes and full model-preservation assertions remain unchanged.
 
 The existing migration-input unit suite was rerun: **14/14 passed, zero skipped**. These repeat tests are already represented in the 240-unit total; they are not 14 additional distinct tests. New Alpha02 syntax and diff checks passed. The full four-suite PR gate must rerun on the new head; the failed head is not mergeable and its earlier passes do not release the correction.
+
+## Private legacy hand-input regression
+
+Main QA run `44635251496`, Chromium job `135963663420`, failed in the preserved legacy duel. Source inspection found that `_hand_click` had applied Alpha's new first-tap inspection to every mode, although the private `legacy_ui_qa` export still requires its original first-tap selection. Only `mode == "legacy"` now restores the original selection/second-tap inspection branch, including its pending-target and pending-shift inspection safeguards. Public Alpha still opens inspection first and requires explicit selection; no public archive navigation, engine, card data or browser expectation changed.
+
+The actual failed-run artifact confirms the diagnosis: `legacy-browser.log` timed out after 30,000 ms in `armHand` at line 223 after the first card tap. The inspected ZIP is 65,901,694 bytes, SHA-256 `b4922b8756374d7a8e45c01f4f6f3133c1a61019d2f93747fdae191add038329`.
+
+`tests/mobile_card_inspection.gd` retains every Alpha assertion and adds actual legacy hand-touch selection, second-touch inspection, real close and selection of another card. Complete model/events/commands/RNG digests remain unchanged throughout. Root executed this suite on the exact `git archive` source of correction commit `e6b7b9dcf6cc41ed9c704f9b8875d7fc794cbb8f` in RAM with Godot 4.6.3 headless, using read-only links to existing assets and their import cache: **3406 assertions, zero failures**, exit 0 in 4.43 seconds, with no script, runtime or leak errors. Command: `godot --headless --path . --audio-driver Dummy --script tests/mobile_card_inspection.gd`.
+
+Fresh full CI and actual exported-browser execution of this correction are **pending**. This native result does not establish a browser or physical-device pass; the existing private-export browser job must still run on the new head.
