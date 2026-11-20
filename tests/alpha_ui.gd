@@ -71,6 +71,8 @@ func run() -> void:
 			var targets=app.session.model.legal_targets("hero",index)
 			if not targets.is_empty():
 				var c=app.session.card(p.hand[index]);await tap(app.hand_views[index])
+				check(is_instance_valid(app.modal) and app.session.model.snapshot()==before,"first card tap only inspects the original card")
+				await tap(app.actions.inspect_select)
 				if c.kind=="relic":await tap(app.actions.relic_slot)
 				else:await tap(app.board_views[app.card_target_side(c)+str(targets[0])])
 				check(app.session.model.snapshot()!=before,"touch card play changes authoritative state");break

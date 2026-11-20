@@ -8,6 +8,7 @@ const path=require('node:path');
 const crypto=require('node:crypto');
 const {performance}=require('node:perf_hooks');
 const {encloses,clearTouchPoint,scrollGesture,assertPanContext,settleHeldPan,battleGeometry,artReady,fullArtReady,premiumArt,playability}=require('./browser_contract.cjs');
+const {assertCardInspection,assertUnchangedGame,openHandInspection,waitForCardInspection}=require('./card_inspection_contract.cjs');
 const output=path.resolve(process.env.PREMIUM_BROWSER_OUTPUT||'work/premium-mobile/browser');
 const expectedCommit=process.env.EXPECTED_COMMIT;
 assert(/^[0-9a-f]{40}$/.test(expectedCommit||''),'EXPECTED_COMMIT must name the exact exported candidate');
@@ -129,12 +130,12 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
      if(!a||a.disabled){sample.count=0;return false;}
      const r=sample.id.startsWith('card_')&&v?v.visible_rect:a.rect;
      sample.count=sample.last&&r.every((n,i)=>Math.abs(n-sample.last[i])<1)?sample.count+1:1;sample.last=[...r];
-     return sample.count>=3?{rect:r,render:current.render_version,modal:current.modal_version}:false;
+     return sample.count>=3?{rect:r,render:current.render_version,modal:current.modal_version,help:Boolean(current.inspection?.help_visible)}:false;
     },{id,previous:null,last:null,count:0});
     let settled;try{settled=await ready.jsonValue();}finally{await ready.dispose();}
     assertPanContext(actionContext,await q(),id);lastAction=id;
     const before=performance.now();await tapRect(settled.rect,id);
-    await page.waitForFunction(s=>{const c=window.orafoldQA;return c&&(c.render_version>s.render||c.modal_version!==s.modal);},settled);
+    await page.waitForFunction(s=>{const c=window.orafoldQA;return c&&(c.render_version>s.render||c.modal_version!==s.modal||(s.id==='inspect_keywords'&&c.inspection?.help_visible===true&&!s.help)||(s.id==='inspect_help_close'&&c.inspection?.help_visible===false&&s.help));},{...settled,id});
     report.touch_samples.push({action:id,elapsed_ms:Math.round(performance.now()-before),meaning:'real touch to next published UI/model frame; includes host/test overhead'});
    }
    async function shot(label){
@@ -183,7 +184,20 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
    const first=Object.keys((await q()).actions).find(id=>id.startsWith('card_'));
    check(first&&by[first.slice(5)],'the collection exposes actual production card IDs');await rapidLibraryScroll(first);await action(first);
    const detail=await q();check(detail.inspection?.title===by[first.slice(5)].name,'the inspector displays the complete actual name');
-   await inspectorArt();await shot('collection-inspection-portrait');await action('modal_close');await action('builder_back');
+   await inspectorArt();assertCardInspection(await q(),by[first.slice(5)],page.viewportSize());await shot('collection-inspection-portrait');await action('modal_close');
+   // A random hand card need not contain a glossary term. Search an actual
+   // existing healing card and exercise its separate help with real UI input.
+   const helpCard=by['oa-neutral-c04'];check(helpCard&&/(?<![a-zäöüß0-9_])heile(?![a-zäöüß0-9_])/i.test(String(helpCard.text_de??helpCard.description??'')),'the selected actual glossary card has the Heile keyword');
+   await tapRect((await q()).actions.search.rect,'collection keyword-card search');await page.keyboard.press('ControlOrMeta+A');await page.keyboard.type(helpCard.name);
+   await page.waitForFunction(name=>window.orafoldQA.search_text===name,helpCard.name);await action('search_apply');await action('card_'+helpCard.id);
+   await waitForCardInspection(page,helpCard.id);await inspectorArt();const beforeHelp=await q();assertCardInspection(beforeHelp,helpCard,page.viewportSize());
+   check(beforeHelp.actions.inspect_keywords&&!beforeHelp.actions.inspect_keywords.disabled,'actual healing card has an enabled keyword-help control');
+   await action('inspect_keywords');const help=await q();check(help.inspection.help_visible,'keyword help is a separate optional view');
+   check(help.inspection.help_text.includes('Heilung:'),'the healing glossary definition is actually visible');
+   check(!/(^|\n)Eile:/.test(help.inspection.help_text),'Heile does not accidentally show the Eile definition');
+   assertUnchangedGame(beforeHelp,help,'optional healing keyword help');await shot('collection-healing-keyword-help');await action('inspect_help_close');
+   check(!(await q()).inspection.help_visible,'closing keyword help restores the same card');assertCardInspection(await q(),helpCard,page.viewportSize());assertUnchangedGame(beforeHelp,await q(),'closing separate keyword help');
+   await action('modal_close');await action('filters');await action('reset_filters');await action('builder_back');
    await action('builder');check((await q()).deck_size===30,'builder loads an existing valid30-card deck');await shot('deckbuilder-portrait');
    await action('save_deck');await wait(()=>window.orafoldQA.message.includes('gespeichert'));await action('builder_back');
    await action('start');await wait(()=>window.orafoldQA.page==='decks');
@@ -214,10 +228,24 @@ assert.equal(Object.keys(geometry).length,550,'all active illustrations have com
     const bounds=[0,0,size.width,size.height],layout=battleGeometry(await q(),bounds,{requireSix:true}),art=premiumArt(await q(),bounds),availability=playability(await q());
     report.viewports.push({size,layout,art,availability,physical_device:false});
     await shot('battle-'+size.width+'x'+size.height);
-    const hand=(await q()).hand[0];await tapRect(hand.rect,'hand0');await wait(()=>window.orafoldQA.selected===0);
-    await action('inspect');await inspectorArt();
-    const inspected=await q();check(inspected.inspection?.title===by[hand.id].name,'full hand-card name is readable at '+size.width);
-    check(Boolean(inspected.inspection.rules),'full actual ability text is present at '+size.width);await shot('inspection-'+size.width+'x'+size.height);await action('modal_close');
+    const opened=await openHandInspection({page,read:q,tap:rect=>tapRect(rect,'hand0'),index:0,cards:by});await inspectorArt();
+    const inspected=await q();assertCardInspection(inspected,opened.card,page.viewportSize());
+    check(inspected.inspection.title===opened.card.name,'full hand-card name is readable at '+size.width);
+    check(inspected.inspection.rules===String(opened.card.text_de??opened.card.description??''),'all actual mechanical rules are printed inside the card at '+size.width);
+    await shot('inspection-'+size.width+'x'+size.height);
+    if(size.width===844){
+     await resize({width:390,height:844});await waitForCardInspection(page,opened.card.id);
+     assertCardInspection(await q(),opened.card,page.viewportSize());assertUnchangedGame(opened.before,await q(),'portrait inspection rotation');
+     await shot('hand-inspection-portrait');
+     await resize(size);await waitForCardInspection(page,opened.card.id);
+     assertCardInspection(await q(),opened.card,page.viewportSize());assertUnchangedGame(opened.before,await q(),'landscape inspection rotation');
+     const beforeOutside=await q(),face=beforeOutside.inspection.card_rect;
+     // Choose a real shaded point beside the card, also inside any safe-area
+     // layout; the underlying battlefield must never receive this release.
+     await page.touchscreen.tap(Math.max(1,face[0]-10),face[1]+face[3]/2);await wait(()=>!window.orafoldQA.modal);
+     assertUnchangedGame(opened.before,await q(),'outside close');check((await q()).selected===opened.before.selected,'outside close never arms the card');
+     check((await q()).modal_version>beforeOutside.modal_version,'outside tap actually closes the inspector');
+    }else await action('modal_close');
     if((await q()).actions.cancel_selection)await action('cancel_selection');
    }
    await resize(variants[0]);

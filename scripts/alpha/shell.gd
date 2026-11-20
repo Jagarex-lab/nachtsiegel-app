@@ -6,6 +6,7 @@ const AlphaCatalog=preload("res://scripts/production/catalog.gd")
 const LegacyCatalog=preload("res://scripts/legacy/catalog.gd")
 const CardView=preload("res://scripts/alpha/card_view.gd")
 const FullCardFace=preload("res://scripts/card_system/card_face.gd")
+const InspectionCard=preload("res://scripts/alpha/inspection_card.gd")
 const ArtQualityLabel=preload("res://scripts/production/art_quality_label.gd")
 const LibraryFilter=preload("res://scripts/card_system/library_filter.gd")
 const PresentationAudio=preload("res://scripts/audio/presentation_audio.gd")
@@ -81,6 +82,11 @@ var inspector_rules: Label
 var inspector_title: Label
 var inspector_face: Control
 var inspector_card_id := ""
+var inspector_context: Dictionary={}
+var inspector_pointer: Dictionary={}
+var inspector_help: Control
+var inspector_help_text: Label
+var inspector_intent_action := ""
 var log_page := 0
 var actions: Dictionary={}
 var hand_views: Array=[]
@@ -307,7 +313,7 @@ func _render_now() -> void:
 	if restore_search_focus:search_caret=actions.search.caret_column
 	_clear()
 	_sync_audio_context()
-	if is_instance_valid(modal):modal.visible=not (page=="battle" and (portrait or layout.size.y<248))
+	if is_instance_valid(modal):modal.visible=not inspector_card_id.is_empty() or not (page=="battle" and (portrait or layout.size.y<248))
 	if page=="lobby":lobby()
 	elif page=="decks":deck_selection()
 	elif page in ["builder","collection"]:builder()
@@ -633,7 +639,7 @@ func _build_hand(preparing: bool=false) -> void:
 		var availability=_card_availability(index)
 		view.set("availability_shown",not preparing);view.set("playable",bool(availability.playable));view.set("unavailable_reason",str(availability.reason))
 		view.custom_minimum_size=Vector2(44,44)
-		view.tooltip_text=view.card.name+"\n"+str(view.card.get("description",""))+"\n"+("Ausspielbar · leuchtendes Ziel wählen" if availability.playable else str(availability.reason))+"\nAntippen: auswählen · nochmals antippen oder Details: ganze Karte"
+		view.tooltip_text=view.card.name+"\n"+str(view.card.get("description",""))+"\n"+("Ausspielbar · leuchtendes Ziel wählen" if availability.playable else str(availability.reason))+"\nAntippen: ganze Karte lesen · Ziehen oder ausdrücklich auswählen: ausspielen"
 		_bind_press(view,func():_opening_hand_click(index) if preparing else _hand_click(index));battle_hand_host.add_child(view);hand_views.append(view)
 		if preparing and s.stage=="mulligan":
 			actions["mulligan_"+str(index)]=view
@@ -666,7 +672,7 @@ func _dock_context(caption: String) -> void:
 
 func _dock_tools(preparing: bool=false) -> void:
 	var tools=row(battle_dock)
-	button("inspect","Details",func():if selected>=0:inspect(session.card(session.model.state.hero.hand[selected])),tools,selected<0).add_theme_font_size_override("font_size",12)
+	button("inspect","Details",func():if selected>=0:inspect(session.card(session.model.state.hero.hand[selected]),{},"hero",selected),tools,selected<0).add_theme_font_size_override("font_size",12)
 	var more=button("actions","Mehr …"+(" !" if not _duel_save_issue().is_empty() else ""),show_actions,tools);more.add_theme_font_size_override("font_size",12)
 	if not _duel_save_issue().is_empty():more.add_theme_color_override("font_color",T.WARNING);more.tooltip_text="Die laufende Partie konnte zuletzt nicht lokal gesichert werden. Mehr zeigt den Grund."
 	if not preparing and (selected>=0 or not action_mode.is_empty()):
@@ -826,7 +832,7 @@ func opening() -> void:
 	var s: Dictionary=session.model.state
 	_battle_board(true)
 	_build_hand(true)
-	var instructions={"mulligan":"Antippen: tauschen.\nDetails: Karte lesen.","origins":("Du beginnst · " if s.coin=="hero" else "KI beginnt · ")+"Ursprung: erstes Wesen erhält 1 Schild.","second":"Optional: Ursprung ändern + eine Handkarte tauschen."}
+	var instructions={"mulligan":"Karte antippen: lesen.\nAuf der Karte: Tausch markieren.","origins":("Du beginnst · " if s.coin=="hero" else "KI beginnt · ")+"Ursprung: erstes Wesen erhält 1 Schild.","second":"Optional: Ursprung ändern + eine Handkarte tauschen."}
 	_dock_context(instructions.get(s.stage,"Vorbereitung"))
 	_dock_tools(true)
 	if s.stage=="mulligan":
@@ -848,9 +854,7 @@ func _opening_lane_click(side: String, lane: int) -> void:
 func _opening_hand_click(index: int) -> void:
 	var s: Dictionary=session.model.state
 	if index<0 or index>=s.hero.hand.size():return
-	selected=index
-	if s.stage=="mulligan":_toggle_mulligan(index)
-	else:render()
+	inspect(session.card(s.hero.hand[index]),{},"hero",index)
 func convergence_action() -> void:
 	if action_mode!="converge":selected=-1;action_mode="converge";convergence_lanes=[];message="Drei unbestrittene bereite Kreaturen wählen.";render()
 	elif convergence_lanes.size()==3:act("converge",["hero",convergence_lanes]);convergence_lanes=[]
@@ -928,47 +932,137 @@ func close_modal() -> void:
 	modal_version+=1
 	if is_instance_valid(modal):modal.hide();modal.queue_free()
 	modal=null;inspector_rules=null;inspector_title=null;inspector_face=null;inspector_card_id=""
-func inspect(c: Dictionary, current: Dictionary={}, relic_owner: String="hero") -> void:
+	inspector_context.clear();inspector_pointer.clear();inspector_help=null;inspector_help_text=null;inspector_intent_action=""
+func inspect(c: Dictionary, current: Dictionary={}, relic_owner: String="hero", hand_index: int=-1) -> void:
 	_audio_event("card.enlarge",{"faction":c.get("faction",c.get("order","neutral")),"rarity":c.get("rarity","common")})
-	show_modal(("Gegnerisches Relikt · " if relic_owner=="enemy" else "")+str(c.get("name",c.id)),func(box):
-		# Every orientation gets the canonical portrait face. The adjacent readable
-		# rules column reflows below it on portrait rotation without closing or
-		# rebuilding the inspected card, selection or model.
-		var composition=BoxContainer.new();composition.add_theme_constant_override("separation",18);composition.size_flags_horizontal=Control.SIZE_EXPAND_FILL;box.add_child(composition)
-		var portrait_wrap=Control.new();portrait_wrap.mouse_filter=Control.MOUSE_FILTER_IGNORE;composition.add_child(portrait_wrap)
-		var full_card=FullCardFace.new();full_card.card=c;full_card.set("reduced_motion",bool(session.profile.reduced_motion));portrait_wrap.add_child(full_card)
-		inspector_face=full_card
-		var details=VBoxContainer.new();details.size_flags_horizontal=Control.SIZE_EXPAND_FILL;details.add_theme_constant_override("separation",8);composition.add_child(details)
-		var fit=func():
-			var vertical=composition.size.x<620
-			composition.vertical=vertical
-			var width=minf(374,maxf(140,composition.size.x)) if vertical else clampf((layout.size.y-100)*63.0/88.0,106,294)
-			var height=width*88.0/63.0
-			portrait_wrap.custom_minimum_size=Vector2(0 if vertical else width,height)
-			full_card.size=Vector2(width,height);full_card.position=Vector2(maxf(0,(portrait_wrap.size.x-width)/2.0),0)
-		composition.resized.connect(fit);portrait_wrap.resized.connect(fit);fit.call()
-		inspector_card_id=str(c.id);inspector_title=text(str(c.name),details,24)
-		# The fixed44px top return is the single dismiss/return-to-target action.
-		# Retain the semantic inspector action for input and accessibility tests.
-		actions.inspect_target=actions.modal_close
-		text("%s · %s · %s" % [alpha_catalog.source.powers.get(c.get("faction","neutral"),c.get("order","")),S.KINDS.get(c.kind,c.kind),S.RARITIES.get(c.rarity,c.rarity)],details,15)
-		var resonance=int(c.get("resonance_cost",0))
-		text("Energie %d%s" % [c.cost," · Resonanz %d" % resonance if resonance>0 else ""],details,16).add_theme_color_override("font_color",T.ENERGY)
-		if c.kind=="creature":
-			text("Angriff %d  /  Leben %d" % [current.get("display_attack",current.get("atk",c.atk)),current.get("hp",c.hp)],details,22)
-			var species: Array=[]
-			var labels=LibraryFilter.species_labels()
-			for species_id in c.get("species",[]):species.append(str(labels.get(species_id,species_id)))
-			if not species.is_empty():text("Wesensarten: "+" · ".join(species),details,15)
-		if not current.is_empty():text("Wesenschild %d · Block %d · Stasis %d · Zusätzliche Angriffe %d" % [current.get("ward",0),current.get("block",0),current.get("stun",0),current.get("extra_attacks",0)],details,15)
-		if int(current.get("attack_penalty",0))>0:text("Aktuelle Schwächung: −%d Angriff in der nächsten eigenen Angriffsphase." % int(current.attack_penalty),details,14)
-		inspector_rules=text(str(c.get("description","")),details,18)
-		text("SCHLÜSSELWÖRTER",details,14);text(S.card_keywords(c),details,14)
-		var art_note=ArtQualityLabel.new();art_note.card=c;details.add_child(art_note)
-		if c.kind=="event" and c.effect=="redirect":text("Voraussetzung: Ein eigener verzögerter Treffer wartet bereits. Neunte-Stunde-Karten wie Vorgemerkter Einschlag bereiten ihn vor.",details,14)
-		if page=="battle" and mode=="alpha" and relic_owner=="hero" and c.kind=="relic" and session.model.state.hero.relic!=null and session.model.state.hero.relic.id==c.id:
-			button("inspect_relic_activate","RELIKT AKTIVIEREN · "+relic_cost_caption(),func():close_modal();act("activateRelic",["hero"]),details,not relic_can_activate())
-	)
+	_cancel_hand_drag(true)
+	close_modal()
+	modal_version+=1
+	if is_instance_valid(feedback):feedback.jobs.clear()
+	modal=Control.new();modal.name="CardInspection";modal.z_index=200
+	modal.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);layout.add_child(modal)
+	var shade=ColorRect.new();shade.name="OutsideToClose";shade.color=Color(.008,.014,.025,.90)
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);shade.mouse_filter=Control.MOUSE_FILTER_STOP;modal.add_child(shade)
+	shade.gui_input.connect(_inspection_outside_input.bind(weakref(shade)))
+	var displayed: Dictionary=c.duplicate(true)
+	if not current.is_empty() and c.kind=="creature":
+		displayed.atk=int(current.get("display_attack",current.get("atk",c.get("atk",0))))
+		displayed.hp=int(current.get("hp",c.get("hp",0)))
+	var face=InspectionCard.new();face.card=displayed;face.reduced_motion=bool(session.profile.reduced_motion)
+	modal.add_child(face);inspector_face=face;inspector_card_id=str(c.id)
+	inspector_rules=face.rules_label;inspector_title=face.title_label
+	inspector_context={"index":hand_index,"card_id":str(c.id),"model":weakref(session.model) if session.model!=null else null,"commands":session.commands.size(),"relic_owner":relic_owner}
+	var close=button("modal_close","×",close_modal,modal);close.tooltip_text="Karte schließen";close.add_theme_font_size_override("font_size",24)
+	actions.inspect_target=close
+	if relic_owner=="enemy":
+		var ownership=text("GEGNERISCHES RELIKT",modal,14);ownership.position=Vector2(16,12);ownership.size=Vector2(250,32);ownership.mouse_filter=Control.MOUSE_FILTER_IGNORE
+	var rail=BoxContainer.new();rail.name="CardActions";rail.add_theme_constant_override("separation",8);modal.add_child(rail)
+	if hand_index>=0 and page=="battle" and session.model!=null:
+		var stage=str(session.model.state.get("stage","battle"))
+		if stage=="mulligan":
+			inspector_intent_action="inspect_mulligan"
+			button("inspect_mulligan","BEHALTEN" if mulligan_indices.has(hand_index) else "ZUM TAUSCH MARKIEREN",_choose_inspected_hand.bind(true),rail)
+		else:
+			inspector_intent_action="inspect_select"
+			var availability=_inspection_hand_availability(hand_index)
+			var choose=button("inspect_select",availability.caption,_choose_inspected_hand.bind(false),rail,not bool(availability.allowed))
+			choose.tooltip_text=availability.reason
+	if hand_index<0 and page=="battle" and mode=="alpha" and relic_owner=="hero" and c.kind=="relic" and session.model.state.hero.relic!=null and session.model.state.hero.relic.id==c.id:
+		button("inspect_relic_activate","RELIKT AKTIVIEREN",func():close_modal();act("activateRelic",["hero"]),rail,not relic_can_activate())
+	var help=button("inspect_keywords","?",_inspection_keyword_help.bind(c),rail);help.tooltip_text="Schlüsselwörter erklären"
+	var fit=func():
+		if not is_instance_valid(face) or not is_instance_valid(modal):return
+		var available=modal.size
+		var wide=available.x>=available.y and (available.x-(available.y-16)*63.0/88.0)/2.0>=188
+		var max_height=maxf(80,available.y-(16 if wide else 124))
+		var width=minf(maxf(80,available.x-24),max_height*63.0/88.0)
+		var height=width*88.0/63.0
+		face.size=Vector2(width,height)
+		face.position=Vector2((available.x-width)/2.0,(available.y-height)/2.0 if wide else 56+(available.y-124-height)/2.0)
+		close.position=Vector2(maxf(0,available.x-56),8);close.size=Vector2(48,44)
+		rail.vertical=wide
+		if wide:
+			rail.position=Vector2(face.position.x+width+16,maxf(60,face.position.y+height-rail.get_combined_minimum_size().y))
+			rail.size=Vector2(minf(220,available.x-rail.position.x-12),rail.get_combined_minimum_size().y)
+		else:
+			var rail_width=minf(maxf(width,260),available.x-24)
+			rail.position=Vector2((available.x-rail_width)/2.0,minf(available.y-56,face.position.y+height+12));rail.size=Vector2(rail_width,48)
+		for child in rail.get_children():
+			child.custom_minimum_size.y=48
+			if child==help:child.custom_minimum_size.x=44;child.size_flags_horizontal=Control.SIZE_SHRINK_END
+			else:child.size_flags_horizontal=Control.SIZE_EXPAND_FILL
+		face._fit_print()
+	modal.resized.connect(fit);rail.minimum_size_changed.connect(fit);fit.call_deferred()
+func _inspection_hand_availability(index: int) -> Dictionary:
+	var answer={"allowed":false,"caption":"NUR ANSEHEN","reason":"Diese Karte kann gerade nicht ausgewählt werden."}
+	if session.model==null:return answer
+	var state: Dictionary=session.model.state;var p: Dictionary=state.hero
+	if state.winner!=null or not str(state.get("error","")).is_empty():return answer
+	if p.pendingTarget!=null or p.pendingShift!=null:return answer
+	# The coin still names the opening player. During the second-player
+	# compensation phase hero may choose while active correctly remains enemy.
+	if state.get("stage", "battle")=="second":
+		answer.allowed=state.coin=="enemy" and not bool(state.second_card);answer.caption="FÜR TAUSCH AUSWÄHLEN"
+		answer.reason="Karte wählen und anschließend den Tausch bestätigen." if answer.allowed else "Der einmalige Kartentausch ist bereits abgeschlossen."
+		return answer
+	if state.active!="hero":return answer
+	if p.phase=="draw":
+		var overflow=p.hand.size()+mini(int(p.pendingDraw),p.deck.size())>6
+		answer.allowed=overflow;answer.caption="ZUM ABLEGEN WÄHLEN" if overflow else "NACHZIEHEN BESTÄTIGEN"
+		answer.reason="Karte wählen und anschließend das Ablegen bestätigen." if overflow else "Bestätige zuerst das Nachziehen in der Hauptaktion."
+		return answer
+	var available=_card_availability(index)
+	answer.allowed=true;answer.caption="ZUM AUSSPIELEN WÄHLEN";answer.reason=str(available.reason)
+	return answer
+func _choose_inspected_hand(mulligan: bool) -> void:
+	var context=inspector_context.duplicate()
+	if context.is_empty() or session.model==null:return
+	var retained=context.get("model")
+	var index=int(context.get("index",-1))
+	if retained==null or retained.get_ref()!=session.model or session.commands.size()!=int(context.commands):return
+	var s: Dictionary=session.model.state
+	if index<0 or index>=s.hero.hand.size() or str(s.hero.hand[index])!=str(context.card_id):return
+	if mulligan and s.get("stage", "")!="mulligan":return
+	if not mulligan and not _inspection_hand_availability(index).allowed:return
+	close_modal();selected=index;source_lane=-1;action_mode=""
+	if mulligan:_toggle_mulligan(index)
+	else:_audio_event("card.select");message="Karte ausgewählt · gültiges Ziel wählen.";render()
+func _inspection_outside_input(event: InputEvent, shade_ref: WeakRef) -> void:
+	var shade=shade_ref.get_ref()
+	if shade==null or not is_instance_valid(modal):return
+	shade.accept_event()
+	if event.device==-1:return
+	var pointer=-3;var pressed=false;var canceled=false;var at=Vector2.ZERO
+	if event is InputEventScreenTouch:pointer=event.index;pressed=event.pressed;canceled=event.canceled;at=event.position
+	elif event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:pointer=-2;pressed=event.pressed;at=event.position
+	else:return
+	if pressed:
+		inspector_pointer={"pointer":pointer,"at":at,"version":modal_version,"cancel":_web_drag_cancel_version(),"modal":weakref(modal)}
+		return
+	var previous=inspector_pointer.duplicate();inspector_pointer.clear()
+	if previous.is_empty() or pointer!=int(previous.pointer) or canceled:return
+	if int(previous.version)!=modal_version or int(previous.cancel)!=_web_drag_cancel_version() or at.distance_to(previous.at)>12*density:return
+	hand_tap_epoch+=1;_invalidate_scroll_press()
+	call_deferred("_close_inspection_outside",previous.modal)
+func _close_inspection_outside(modal_ref: WeakRef) -> void:
+	if modal_ref.get_ref()==modal:close_modal()
+func _inspection_keyword_help(c: Dictionary) -> void:
+	if not is_instance_valid(modal) or is_instance_valid(inspector_help):return
+	var overlay=PanelContainer.new();overlay.z_index=20;overlay.name="KeywordHelp"
+	overlay.add_theme_stylebox_override("panel",T.panel(T.GOLD,T.SURFACE_RAISED));modal.add_child(overlay);inspector_help=overlay
+	var margin=MarginContainer.new()
+	for side in ["left","right","top","bottom"]:margin.add_theme_constant_override("margin_"+side,12)
+	overlay.add_child(margin)
+	var box=VBoxContainer.new();box.add_theme_constant_override("separation",8);margin.add_child(box)
+	var top=row(box);text("SCHLÜSSELWÖRTER",top,16)
+	button("inspect_help_close","×",func():if is_instance_valid(inspector_help):inspector_help.hide();inspector_help.queue_free();inspector_help=null;inspector_help_text=null,top).size_flags_horizontal=Control.SIZE_SHRINK_END
+	var content=scroll(box)
+	var glossary=S.card_keywords(c)
+	inspector_help_text=text(glossary if not glossary.is_empty() else "Für diese Karte sind keine zusätzlichen Schlüsselwörter erforderlich.",content,15)
+	var fit=func():
+		if not is_instance_valid(overlay) or not is_instance_valid(modal):return
+		overlay.size=Vector2(minf(500,modal.size.x-24),minf(420,modal.size.y-24));overlay.position=(modal.size-overlay.size)/2
+	modal.resized.connect(fit);fit.call_deferred()
 func show_log(requested_page: int=0) -> void:
 	var event_count: int=session.model.events.size()
 	var pages=maxi(1,ceili(event_count/60.0))
@@ -1224,13 +1318,15 @@ func publish_qa() -> void:
 		for channel in audio_settings.sliders:
 			state.audio_controls[channel]=audio_settings.sliders[channel].value
 		state.audio_persistence_note=audio_settings.persistence_note.text
-	if is_instance_valid(inspector_rules) and is_instance_valid(modal):
-		var r=inspector_rules.get_global_rect()
-		state.inspection={"id":inspector_card_id,"title":inspector_title.text,"rules":inspector_rules.text,"rules_font_size":inspector_rules.get_theme_font_size("font_size"),"rules_rect":[r.position.x/density,r.position.y/density,r.size.x/density,r.size.y/density]}
-		if is_instance_valid(inspector_face):state.inspection.card_rect=_qa_css_rect(inspector_face.get_global_rect());state.inspection.card_aspect=inspector_face.size.x/inspector_face.size.y
-		# Observe the face that actually painted the inspector, not a newer cache
-		# entry that may not have reached that Control's framebuffer yet.
-		state.inspection.art=inspector_face.art_report() if is_instance_valid(inspector_face) and inspector_face.has_method("art_report") else {"state":"unbound","preview_only":true,"pixels":[]}
+	if is_instance_valid(inspector_face) and is_instance_valid(modal) and inspector_face.has_method("inspection_report"):
+		state.inspection=inspector_face.inspection_report()
+		state.inspection.rules_font_size=float(inspector_rules.get_theme_font_size("font_size"))*absf(inspector_rules.get_global_transform().get_scale().y)/density
+		for field in ["rules_rect","rules_content_rect","rules_visible_rect","card_rect","title_rect"]:state.inspection[field]=_qa_css_rect(state.inspection[field])
+		for field in state.inspection.stats_rects:state.inspection.stats_rects[field]=_qa_css_rect(state.inspection.stats_rects[field])
+		state.inspection.intent_action=inspector_intent_action
+		state.inspection.owner=inspector_context.get("relic_owner","hero")
+		state.inspection.help_visible=is_instance_valid(inspector_help)
+		if is_instance_valid(inspector_help_text):state.inspection.help_text=inspector_help_text.text
 	state.library_art={}
 	for card_id in library_visible_ids:
 		var library_view=actions.get("card_"+str(card_id))
@@ -1273,10 +1369,14 @@ func publish_qa() -> void:
 
 func _hand_click(index: int) -> void:
 	if index<0 or index>=session.model.state.hero.hand.size():return
-	var c=session.card(session.model.state.hero.hand[index])
-	if session.model.state.hero.pendingTarget!=null or session.model.state.hero.pendingShift!=null:inspect(c);return
-	if selected==index:inspect(c)
-	else:_audio_event("card.select");selected=index;source_lane=-1;action_mode="";message=c.name+" · leuchtendes Ziel wählen. Nochmals tippen: Details.";render()
+	# The private archived QA export retains its original select-then-inspect input.
+	if mode=="legacy":
+		var c=session.card(session.model.state.hero.hand[index])
+		if session.model.state.hero.pendingTarget!=null or session.model.state.hero.pendingShift!=null:inspect(c);return
+		if selected==index:inspect(c)
+		else:_audio_event("card.select");selected=index;source_lane=-1;action_mode="";message=c.name+" · leuchtendes Ziel wählen. Nochmals tippen: Details.";render()
+		return
+	inspect(session.card(session.model.state.hero.hand[index]),{},"hero",index)
 func _toggle_mulligan(index: int) -> void:
 	if mulligan_indices.has(index):mulligan_indices.erase(index)
 	else:mulligan_indices.append(index)
@@ -1540,6 +1640,8 @@ func _notification(what: int) -> void:
 		_cancel_hand_drag(true)
 		_checkpoint_duel()
 func _input(event: InputEvent) -> void:
+	if is_instance_valid(modal) and not inspector_card_id.is_empty() and event.is_action_pressed("ui_cancel"):
+		close_modal();get_viewport().set_input_as_handled();return
 	if OS.has_feature("web") and Time.get_ticks_msec()<rotation_block_until and event is InputEventScreenTouch:
 		get_viewport().set_input_as_handled();return
 	# Godot may synthesize a mouse event for touch and touch for mouse. Only the

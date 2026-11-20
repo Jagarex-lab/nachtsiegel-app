@@ -2,6 +2,7 @@
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
 const {scrollGesture,assertPanContext,settleHeldPan}=require('./premium/browser_contract.cjs');
 const {nativeCapture}=require('./premium/native_capture_contract.cjs');
+const {assertCardInspection,selectHandCard}=require('./premium/card_inspection_contract.cjs');
 const cards=[...JSON.parse(fs.readFileSync('data/production/cards.json','utf8')).cards,...JSON.parse(fs.readFileSync('data/legacy/cards.json','utf8')).cards],by=Object.fromEntries(cards.map(c=>[c.id,c]));
 function allVisibleCompactReady({expected,count}){
  const rows=(window.orafoldQA?.battle_art||[]).filter(row=>row.card_id&&row.visible&&['hand','board'].includes(row.zone));
@@ -218,11 +219,15 @@ function allVisibleCompactReady({expected,count}){
     }
     assert.deepEqual((await state()).battle,expected,'restoring browser geometry preserves all gameplay state');
    }
+   async function armHand(index){
+    if(legacyOnly){const current=await state();await tap(current.hand[index].rect);await page.waitForFunction(i=>window.orafoldQA.selected===i,index);return;}
+    await selectHandCard({page,read:state,tap:(rect,i,id)=>tap(rect,{hand:i,card_id:id}),action,index,cards:by});
+   }
    async function playTurn(){
     for(let n=0;n<22;n++){
      let q=await state(),b=q.battle,p=b.hero;if(b.winner)return;
      if(p.phase==='draw'){
-      if(p.hand.length+Math.min(p.pendingDraw,p.deck.length)>6){await page.waitForFunction(()=>window.orafoldQA.hand.length===window.orafoldQA.battle.hero.hand.length);await tap(q.hand[0].rect);}
+      if(p.hand.length+Math.min(p.pendingDraw,p.deck.length)>6){await page.waitForFunction(()=>window.orafoldQA.hand.length===window.orafoldQA.battle.hero.hand.length);await armHand(0);}
       const before=q.command_count;await action('end');await page.waitForFunction(n=>window.orafoldQA.command_count>n||window.orafoldQA.battle.winner,before);
       if(!legacyOnly){const drawn=await state();if(!drawn.battle.winner&&drawn.battle.hero.phase==='main'){
        const remaining=[...p.hand],newExternal=drawn.battle.hero.hand.filter(id=>{const index=remaining.indexOf(id);if(index>=0){remaining.splice(index,1);return false;}return !!externalCompact[id];});
@@ -259,8 +264,8 @@ function allVisibleCompactReady({expected,count}){
        }
       }return;
      }
-     await page.waitForFunction(()=>window.orafoldQA.hand.map(c=>c.id).join()===window.orafoldQA.battle.hero.hand.join());q=await state();await tap(q.hand[choice.i].rect);
-     await page.waitForFunction(i=>window.orafoldQA.selected===i,choice.i);const before=(await state()).command_count;
+     await page.waitForFunction(()=>window.orafoldQA.hand.map(c=>c.id).join()===window.orafoldQA.battle.hero.hand.join());q=await state();await armHand(choice.i);
+     const before=(await state()).command_count;
      await tap(choice.relic?(await state()).actions.relic_slot.rect:(await state()).board[choice.side+choice.lane]);
      await page.waitForFunction(n=>window.orafoldQA.command_count>n||window.orafoldQA.battle.winner,before,{timeout:90000});
      if(!legacyOnly){const played=q.hand[choice.i].id,after=await state();if(!after.battle.winner&&externalCompact[played]&&after.battle[choice.side].lanes[choice.lane]?.id===played)await checkBattleArt('battle',[played],'board');}
@@ -296,6 +301,7 @@ function allVisibleCompactReady({expected,count}){
      inspectedCard={id:card.id,name:card.name,rect:target.rect,hit_rect:touchRect(collection,id)};
      await action(id);const detail=await state();
      assert(detail.modal&&detail.actions.inspect_target&&detail.actions.modal_close,'card inspector with explicit close actions');
+     if(!legacyOnly)assertCardInspection(detail,card,page.viewportSize());
      assert(detail.modal_version>collection.modal_version,'inspection opened a new modal');
      assert.deepEqual(detail.deck_ids,collection.deck_ids,'read-only collection inspection preserves the deck');
      assert.equal(detail.page,'collection','inspection stays in the collection');

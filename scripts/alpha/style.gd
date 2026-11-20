@@ -48,10 +48,17 @@ const GLOSSARY={
 	"nacheinander":"Echokette: Jeder Treffer wird einzeln in Reihenfolge abgewickelt. Gewöhnlicher Heldenschaden verbraucht Block, dann Schild, dann Leben; eine entschiedene Partie beendet die Kette.",
 }
 
+static func keyword_terms(card: Dictionary) -> Array:
+	var result: Array=[]
+	var content=str(card.get("text_de",card.get("description",""))).to_lower()
+	for term in GLOSSARY:
+		# True word boundaries: healing ("Heile") must never claim the Eile keyword.
+		var matcher=RegEx.new()
+		matcher.compile("(?<![a-zäöüß0-9_])"+str(term)+"(?![a-zäöüß0-9_])")
+		if matcher.search(content)!=null or term=="durchdringung" and card.get("effect","")=="pierce":result.append(term)
+	return result
+
 static func card_keywords(card: Dictionary) -> String:
 	var result: Array=[]
-	var content=str(card.get("description","")).to_lower()
-	for term in GLOSSARY:
-		if content.contains(term) or term=="durchdringung" and card.get("effect","")=="pierce":result.append(GLOSSARY[term])
-	result.append("Freier Gegenpfad: Ein kampfbereites Wesen trifft am Zugende den gegnerischen Helden. Block schützt vor Schild und Leben. Details schließen, um zur Auswahl zurückzukehren.")
+	for term in keyword_terms(card):result.append(GLOSSARY[term])
 	return "\n\n".join(result)

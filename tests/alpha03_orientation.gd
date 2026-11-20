@@ -9,6 +9,11 @@ func check(ok: bool,label: String) -> void:
 	if not ok:failures+=1;printerr("FAIL: ",label)
 func settle() -> void:
 	for i in 6:await process_frame
+func tap(control: Control) -> void:
+	var center=control.get_global_rect().get_center()
+	for pressed in [true,false]:
+		var event=InputEventScreenTouch.new();event.index=0;event.position=center;event.pressed=pressed
+		Input.parse_input_event(event);await settle()
 func retained() -> Dictionary:
 	return {"model":app.session.model.snapshot().duplicate(true),"commands":app.session.commands.duplicate(true),"selected":app.selected,"source_lane":app.source_lane,"action_mode":app.action_mode,"convergence_lanes":app.convergence_lanes.duplicate(),"mulligan":app.mulligan_indices.duplicate()}
 func labels(node: Node) -> String:
@@ -28,7 +33,9 @@ func run() -> void:
 	app.start_battle();await settle()
 	check(app.session.model.state.stage=="mulligan","real production match begins in mulligan")
 	app._opening_hand_click(2);await settle()
-	check(app.mulligan_indices==[2] and app.selected==2,"real opening selection marks exchange")
+	check(is_instance_valid(app.modal) and app.mulligan_indices.is_empty() and app.selected==-1,"first opening tap inspects without marking exchange")
+	await tap(app.actions.inspect_mulligan)
+	check(app.mulligan_indices==[2] and app.selected==2,"explicit opening selection marks exchange")
 	var before=retained()
 	for dimensions in [Vector2i(390,844),Vector2i(844,390),Vector2i(393,852),Vector2i(915,412),Vector2i(844,220),Vector2i(844,247),Vector2i(844,248),Vector2i(844,390)]:
 		root.size=dimensions;app.render();await settle()

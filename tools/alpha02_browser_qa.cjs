@@ -1,6 +1,8 @@
 'use strict';
 const {chromium,webkit,devices}=require('playwright'),fs=require('node:fs'),assert=require('node:assert/strict');
 const {nativeCapture}=require('./premium/native_capture_contract.cjs');
+const {assertCardInspection,assertUnchangedGame,waitForCardInspection,selectHandCard}=require('./premium/card_inspection_contract.cjs');
+const {stableMigrationTarget,migrationActionAccepted}=require('./production/migration_input_contract.cjs');
 const cards=JSON.parse(fs.readFileSync('data/production/cards.json')).cards, by=Object.fromEntries(cards.map(c=>[c.id,c]));
 const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSync('data/production/art_preview_delivery.json')).entries).filter(([,entry])=>entry.delivery==='external').map(([id,entry])=>[id,[entry.width,entry.height]]));
 (async()=>{
@@ -31,11 +33,20 @@ const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSy
     boundArtChecks.push({label,seed:current.battle.seed,command_count:current.command_count,delivered:current.battle_art.filter(row=>row.visible&&row.profile==='compact'&&row.status==='final'&&!row.pending&&externalCompact[row.card_id]&&row.pixels[0]===externalCompact[row.card_id][0]&&row.pixels[1]===externalCompact[row.card_id][1])});
    };
    const action=async id=>{const beganAction=Date.now();
-    await page.waitForFunction(id=>window.orafoldQA?.actions[id]&&!window.orafoldQA.actions[id].disabled,id,{timeout:90000});
-    const a=(await q()).actions[id],r=a.rect;assert(r[2]>=43.9&&r[3]>=43.9,id+' touch');
+    const target=await page.waitForFunction(stableMigrationTarget,{id,viewport:page.viewportSize()},{timeout:90000});
+    let old;try{old=await target.jsonValue();}finally{await target.dispose();}
+    const a=old.actions[id],r=a.rect;assert(r[2]>=43.9&&r[3]>=43.9,id+' touch');
     assert(r[0]>=0&&r[1]>=0&&r[0]+r[2]<=page.viewportSize().width+1&&r[1]+r[3]<=page.viewportSize().height+1,id+' visible bounds');
-    const old=await q();await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);
-    await page.waitForFunction(v=>{const s=window.orafoldQA;return s.render_version>v.render_version||s.modal_version!==v.modal_version},old,{timeout:90000});timings.push({action:id,qa_state_ms:Date.now()-beganAction});
+    await page.touchscreen.tap(r[0]+r[2]/2,r[1]+r[3]/2);
+    const navigation=['builder','collection','start','settings','builder_back','settings_back','decks_back','deck_play','deck_tab','library_tab'];
+    if(navigation.includes(id))await page.waitForFunction(migrationActionAccepted,{id,before:old},{timeout:90000});
+    else await page.waitForFunction(v=>{const s=window.orafoldQA;return s.render_version>v.render_version||s.modal_version!==v.modal_version},old,{timeout:90000});
+    timings.push({action:id,qa_state_ms:Date.now()-beganAction});
+   };
+   const resizeInspectedCard=async(width,height,id)=>{
+    const before=await q();await page.setViewportSize({width,height});
+    await page.waitForFunction(({width,height,version})=>{const s=window.orafoldQA,m=window.orafoldDisplayMetrics?.();return s?.render_version>version&&s.portrait===(height>width)&&m&&Math.abs(m.cssWidth-width)<1&&Math.abs(m.cssHeight-height)<1;},{width,height,version:before.render_version},{timeout:90000});
+    await waitForCardInspection(page,id);
    };
    const url=new URL(process.env.GAME_URL||'http://127.0.0.1:8788/');url.searchParams.set('qa','1');
    const began=Date.now();await page.goto(url.href,{waitUntil:'networkidle'});await wait(()=>window.orafoldQA?.page==='lobby');
@@ -55,14 +66,19 @@ const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSy
    await action('mulligan_done');await action('origin_2');
    if((await q()).battle.stage==='second')await action('opening_done');
    await wait(()=>window.orafoldQA.battle.stage==='battle');
-   let state=await q(),first=state.hand[0].rect;await page.touchscreen.tap(first[0]+first[2]/2,first[1]+first[3]/2);await wait(()=>window.orafoldQA.selected===0);
+   await wait(()=>window.orafoldQA.battle.active==='hero');
+   if((await q()).battle.hero.phase==='draw')await action('end');
+   await selectHandCard({page,read:q,tap:rect=>page.touchscreen.tap(rect[0]+rect[2]/2,rect[1]+rect[3]/2),action,index:0,cards:by});
    const selected=await q();
    await page.setViewportSize({width:390,height:844});await wait(()=>window.orafoldQA.actions.rotate_menu);
    await page.setViewportSize({width:915,height:412});await wait(()=>window.orafoldQA.board.hero0);await page.waitForTimeout(220);
    assert.deepEqual((await q()).battle,selected.battle);assert.equal((await q()).selected,0);
    await boundArt('normal battle after return from portrait guard');
    for(const r of Object.values((await q()).board))assert(r[2]>=43.9&&r[3]>=43.9);
-   console.log('ALPHA02',name,'rotation passed');await action('inspect');assert((await q()).actions.modal_close);fs.writeFileSync('work/alpha02/'+name+'-pre-inspection.json',JSON.stringify({state:await q(),metrics:await page.evaluate(()=>({...window.orafoldDisplayMetrics(),screenWidth:screen.width,screenHeight:screen.height}))}));await shot('inspection');await action('modal_close');
+   console.log('ALPHA02',name,'rotation passed');await action('inspect');const inspectedCard=by[selected.battle.hero.hand[0]];await waitForCardInspection(page,inspectedCard.id);assertCardInspection(await q(),inspectedCard,page.viewportSize());assert((await q()).actions.modal_close);
+   const inspectorBefore=await q();await resizeInspectedCard(390,844,inspectedCard.id);assertCardInspection(await q(),inspectedCard,page.viewportSize());assertUnchangedGame(inspectorBefore,await q(),'portrait open-card rotation');await shot('inspection-portrait');
+   await resizeInspectedCard(915,412,inspectedCard.id);assertCardInspection(await q(),inspectedCard,page.viewportSize());assertUnchangedGame(inspectorBefore,await q(),'landscape open-card rotation');
+   fs.writeFileSync('work/alpha02/'+name+'-pre-inspection.json',JSON.stringify({state:await q(),metrics:await page.evaluate(()=>({...window.orafoldDisplayMetrics(),screenWidth:screen.width,screenHeight:screen.height}))}));await shot('inspection');await action('modal_close');
    await action('cancel_selection');await action('menu');await action('confirm_menu');
    await page.setViewportSize({width:390,height:844});await wait(()=>window.orafoldQA.portrait);
    const returned=await page.evaluate(()=>window.orafoldDisplayMetrics());rotationMetrics.push(returned);assert.equal(returned.cssWidth,390,'canvas returns to portrait CSS width');assert.equal(returned.cssHeight,844,'canvas returns to portrait CSS height');assert.equal(returned.pixelsWidth,1170,'portrait native buffer restored');assert.equal(returned.pixelsHeight,2532,'portrait native buffer height restored');
@@ -117,7 +133,7 @@ const externalCompact=Object.fromEntries(Object.entries(JSON.parse(fs.readFileSy
    await action('builder_back');await action('start');await action('custom_houses');await action('deck_play');
    const played=(await q()).battle.hero;assert.deepEqual([...played.hand,...played.deck].sort(),[...edited].sort());
    assert.equal(errors.length,0,errors.join('\n'));
-   records.push({engine:name,build:buildInfo,boot_ms:boot,metrics,rotationMetrics,captures,native_captures:captureMetrics,timings,bound_art_checks:boundArtChecks,errors,deck_edit:{removed_id:removed,added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and card inspector']});
+   records.push({engine:name,build:buildInfo,boot_ms:boot,metrics,rotationMetrics,captures,native_captures:captureMetrics,timings,bound_art_checks:boundArtChecks,errors,deck_edit:{removed_id:removed,added_id:candidate.id,added_name:candidate.name,search_query:candidate.name},checks:['portrait menu and four starters','real card-name search and exact legal replacement','real edited deck saved/reloaded/selected','native DPR3 and MSDF','safe areas','rotation preserves complete state and selected card','landscape paths and actual63:88 card inspector','first hand tap is read-only; explicit action arms the card','open inspector survives portrait/landscape rotation with complete model unchanged']});
    console.log('ALPHA02 BROWSER PASS',name);await context.close();
   }catch(error){const diagnostic=lastPage?await Promise.race([lastPage.evaluate(()=>({qa:window.orafoldQA,metrics:window.orafoldDisplayMetrics?.()})).catch(()=>null),new Promise(r=>setTimeout(()=>r(null),5000))]):null;fs.writeFileSync('work/alpha02/'+name+'-error.json',JSON.stringify({error:String(error),console:lastErrors,native_captures:captureMetrics,diagnostic},null,2));throw error;}finally{await browser.close();}
  }
