@@ -34,6 +34,25 @@ func shot(label: String) -> void:
 	DirAccess.make_dir_recursive_absolute("res://work/mobile-inspection")
 	await RenderingServer.frame_post_draw
 	root.get_texture().get_image().save_png("res://work/mobile-inspection/"+label+".png")
+func legacy_hand_contract() -> void:
+	# Enter only through the test fixture; the public Alpha menu has no archive switch.
+	root.size=Vector2i(844,390);app=PresentationShell.new();root.add_child(app);await settle()
+	app.mode="legacy";app.faction="start";app.session.profile.last_seed=23;app.start_battle();await settle()
+	check(app.session.mode=="legacy" and app.hand_views.size()>=2,"private legacy fixture starts an original seeded match with real hand controls")
+	if app.session.mode=="legacy" and app.hand_views.size()>=2:
+		var before=gameplay();var first_id=app.session.model.state.hero.hand[0]
+		await tap(app.hand_views[0])
+		check(app.selected==0 and app.source_lane==-1 and app.action_mode.is_empty() and not is_instance_valid(app.modal),"legacy first real hand tap selects immediately without opening inspection")
+		check(before==gameplay(),"legacy selection changes no model, event, command or RNG")
+		var selected_intent=intent()
+		await tap(app.hand_views[0])
+		check(is_instance_valid(app.modal) and app.inspector_face is Face and app.inspector_card_id==first_id,"legacy second real tap opens the same actual selected card")
+		check(before==gameplay() and selected_intent==intent(),"legacy second-tap inspection preserves full gameplay and selection intent")
+		await tap(app.actions.modal_close)
+		check(not is_instance_valid(app.modal) and before==gameplay() and selected_intent==intent(),"legacy real close retains the selected card without a game action")
+		await tap(app.hand_views[1])
+		check(app.selected==1 and not is_instance_valid(app.modal) and before==gameplay(),"legacy tap on a different hand card selects it without inspecting or issuing a command")
+	app.close_modal();app.queue_free();await settle()
 func run() -> void:
 	root.size=Vector2i(844,390);app=PresentationShell.new();root.add_child(app);await settle()
 	app.match_use_starter=true;app.faction="houses";app.session.profile.last_seed=23;app.start_battle();await settle()
@@ -140,5 +159,6 @@ func run() -> void:
 	check(app.inspector_rules.text==longest.description and bounded(app.inspector_face),"scrolling retains the complete original text and visible card")
 	await shot("longest-rules-scrolled")
 	app.close_modal();app.queue_free();await settle()
-	print("MOBILE CARD INSPECTION: %d assertions, %d failures; real tap/mark/close/help/rotation/selection/target/replay plus550 source-text layouts, no physical-device or550-match claim" % [assertions,failures])
+	await legacy_hand_contract()
+	print("MOBILE CARD INSPECTION: %d assertions, %d failures; real tap/mark/close/help/rotation/selection/target/replay, private legacy select/inspect plus550 source-text layouts, no physical-device or550-match claim" % [assertions,failures])
 	root.get_node("GameAudio").request_quit(1 if failures else 0)

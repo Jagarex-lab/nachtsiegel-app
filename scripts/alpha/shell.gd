@@ -1369,6 +1369,13 @@ func publish_qa() -> void:
 
 func _hand_click(index: int) -> void:
 	if index<0 or index>=session.model.state.hero.hand.size():return
+	# The private archived QA export retains its original select-then-inspect input.
+	if mode=="legacy":
+		var c=session.card(session.model.state.hero.hand[index])
+		if session.model.state.hero.pendingTarget!=null or session.model.state.hero.pendingShift!=null:inspect(c);return
+		if selected==index:inspect(c)
+		else:_audio_event("card.select");selected=index;source_lane=-1;action_mode="";message=c.name+" · leuchtendes Ziel wählen. Nochmals tippen: Details.";render()
+		return
 	inspect(session.card(session.model.state.hero.hand[index]),{},"hero",index)
 func _toggle_mulligan(index: int) -> void:
 	if mulligan_indices.has(index):mulligan_indices.erase(index)
