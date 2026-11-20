@@ -1,0 +1,2126 @@
+{
+  "approval": "pending_owner",
+  "assertions": 226784,
+  "capture_count": 0,
+  "captures": [
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "b9de05e64d4a3a59b1f70c115ed5103d1cb182dcc62177dd136ecba1c0e4aeb9",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "c4bc2bf84254455351845bcaf7ea5d0f0089d616d40ba6c85585e5f0ef1aa390",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "90f0a0676e8018ac60169262bf3321592d763932541b2f5b761ef7df9c3cc69f",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "a0886c939ab5ea3ac5b3ea0ae066d9f038d50b5d1cc69912f1489cc5c23a8383",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "d911535bcc5527de14f07aa6773c073a7d3a1a9f9349bd9860b0a1723b980d43",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "480213425c0947fa1bdff116b7a61ca2849d0c4699ce8069469fbf6475450272",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "de6d073c271f066ca77bb5f9b4de72ae9a940ae7309e2a590e0b38e43c5354f9",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "7c249884d665091f8d625c39f61b6e14108a04d0fb694eb7de16ff08930a235b",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "9f0f98d82603a4b172c9b9c2a1fd30837f8f2c20c9b3957ed77ddfde4866baf1",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "bdf2d0311b5bc0f8d6462133c51d64323526fde914c6027fb92d7b71d452d642",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "cf41c8526c1f555af85b9dd91e2ba61f0e660eb55d2bb577dd3f3fc593d7c88f",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "b15a13c8c88e1c1dd55ab5aaf43c3d879466c779c05af88edb80f591c4dec60e",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "e419f01a2676d50ded931c24516b37d86969c3c321c19e2fc502a3cbad9fe7e7",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "1be71ff13bb8eb6a024ef8ff7874129d6d68be6dac127c649456bcf69f0d96a6",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "d6c79e0a25ba295e174ad2d86d8b279b107bd20e288dfbba3646ef333576a95d",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "68407c71bdc1bbd690db8700bdd0772088fdc0528a645fe11596f1c538c8e76c",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "b1acea3746b69f595ffdc90f3aa09a27fbd6dcd8cb35800f0a61a9fd8dae6cea",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "faeb0b4263bcb9a4a404d21f29dad51498b73a7bdb8e778e221f80b3b17d18ca",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "33e52d2586e6dac72cbbb0063fab693baabd5fa7cad48255d633e9694bd3c445",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "hinge",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "951327332938e3d771ab7bf6ba3817a48b4643989b521f2c71205170f02d0cc1",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "e0ef99b01fd647c7c7257a7f26431d3dba1fc9a8c4d7cce1832c8f14ffac8904",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "bed1b6349d649b41c88c331fabbc448ebff24534f0e3801e766d7b8a48c34652",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "71911e72d4d47bb5d167e74b33c102a5e2efd4e48d16cd21abb9ce6f4bc7864b",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "6e0440d79f7b15a39cd1d0d1b8a5587d73b0d4efca4e5beaaf5d5c0400d40da5",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "af6c8e72fe4f109fb11cf1d512bfaf8d9287931cbbe8bce59093fe39009ae1b0",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "68ea0d59c0ba2fe9cf79ab872fb4258cadd5d2063c9bbb34b1e9bd848e53f654",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "53eed0c17abe13fc0a8c49ebce69ef91e62cdd1a20b88a01f54942fc15cabd7b",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "e3f50c1608b76e19e7a7877fcb6c5e8a24144d994e014c18f96ce1f86e58184d",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "ec5679c79851c4464a2e1b1c0a1b551d70f43bd5ba7e1742c923e3ba91b02865",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "1a8124c13040300565924f6d013a87021a42a3dc2451a0214c46fa2fbde41374",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "33f69055bf1030ed762478e4972c6e291576c9667c2227b2220930c5293f5d0c",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "9f20afe606b499336d5f7b2cc3e98828bd34b78280db682f9d94a09cf2471ecb",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "eb0a90e0999ce6ab373f148902e4b30a796389b4797cbc552bb0eb022c85a4cb",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "de95ba9245998dff28869bb89a7b1808d6039e42e6dc69090f5988f6828d90ea",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "5b9022b3166375e13bd728b346f35fc3d7bf2ac3626f1213bd6a6c38044f5a9c",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "f5b75883f9cd29dc0b03cc69aac2c69881506057dfeb7cb658ffac79ac50bee7",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "6aee9b9ac6742ec4eb50220eee34c5a3aa36a9b32c7b38b3b5817bd115de9b35",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "dcc8dc8e1b2c00e61a06a8d89565e1e17d14c546fe6e3235e418980586327feb",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "166a547169b5bc4c2e5434c2b59eb52a81cf66827c5b60a9ddb1e7fa53d557be",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "lattice",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "bc5b86fe6ef80796a32b352652d045488b1903da0f9077982638ba4f91278f6d",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "de5a1ecbf790f549006405be76adae1413442e5dc96ed0bf5dc5d7f3a46a8174",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "d569dc82f4a2663da9e7e6b1785bc18a3ec7964cda49a60cdb8411c853770c1d",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "785fbe7f6cad9b7c22420c7ca0b2d237675600dad5fcb5437ec2f6bfa2891e06",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-houses-001.png",
+        "card_id": "of-houses-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-houses-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-houses-001.png",
+        "visible": true
+      },
+      "card_id": "of-houses-001",
+      "frame_only_rail_sha256": "a5fef14f01b3a2263aee96669114fe1ddc337f7bf7443769b864e15d2d68f959",
+      "mode": "contour",
+      "power": "houses",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "2c55b781379f758322bb3c64725ef4375cf0da53a5819eeb331b8ccd3c294fca",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "1db385826de9e4020f9876ffd1ccad6dcac7df8c7b45ea9ce6390e11f8e6a07c",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "a091278765b382e35b0f6660ee32a1e556c85e6c41b3fbd7fdf23e2f2ce1b6c0",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "card_id": "of-stillwatch-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-stillwatch-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-stillwatch-001.png",
+        "visible": true
+      },
+      "card_id": "of-stillwatch-001",
+      "frame_only_rail_sha256": "68e4a765d5763d88082938a3be1d52398263f4c3cb7c39707537baa732856561",
+      "mode": "contour",
+      "power": "stillwatch",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "43bb6bc21ac4abf6246c43f55ad7e431ba99a58d18674e30b6efec89d9076a75",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "28d70607ab57ea8ad1e0ebcb571de4eec65b55bd9db429aad7eeb392789382dc",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "c1395022c803dbe026bdc5fdcff374f299d70e9c11c86af850140a864ab783c1",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-morph-001.png",
+        "card_id": "of-morph-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-morph-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-morph-001.png",
+        "visible": true
+      },
+      "card_id": "of-morph-001",
+      "frame_only_rail_sha256": "1b99d613e042e4c84e55dfad03283f68e9a7d8f58111b66076fbd944002b6d98",
+      "mode": "contour",
+      "power": "morph",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "17bc3b342aecd1bac9906e315dd78a0f7b984310ff28d2658738d56e87e3a5c7",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "9314cc8a94550c0bef1d1244fa848430fb22eed22767559a9e8e68dbbbfe8a6d",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "3af5d56d8a4c3f3baaf825f0b5cb8407c33ddb904eb6c8501ce9ce893aada062",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-ninth-001.png",
+        "card_id": "of-ninth-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1447,
+          1087
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-ninth-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-ninth-001.png",
+        "visible": true
+      },
+      "card_id": "of-ninth-001",
+      "frame_only_rail_sha256": "c00725a40f8af230bcf9c0d3774f16f490c9922003c46fe83d599d8dd0201a71",
+      "mode": "contour",
+      "power": "ninth",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "d0893a5b5597957c6f46d90385ad65cbcdf02d073f316e0b77c86c0221a82847",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "common",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "108a551e2e630e125a63dfb863a7ba54e1c38c754d3d1c1a894f8bc1bf46fe06",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "rare",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "4910a0e6ee5d030c2b3b0b9414e073770abd818bff6f5d307b6a1d8ad104c903",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "epic",
+      "real_card_draws": 1
+    },
+    {
+      "actual_used_rect": [
+        8,
+        8,
+        740,
+        1040
+      ],
+      "alpha_corner_sha256": "b5e4c168accb61b92c5790dbcd28505d62f47d46824f200201961d7e7a8f8f7c",
+      "approval": "pending_owner",
+      "architecture": "crystalline",
+      "art_report": {
+        "asset": "res://assets/cards/originals/of-neutral-001.png",
+        "card_id": "of-neutral-001",
+        "delivery_state": "ready",
+        "draw_count": 2,
+        "pending": false,
+        "pixels": [
+          1448,
+          1086
+        ],
+        "preview_only": false,
+        "profile": "full",
+        "requested_card_id": "of-neutral-001",
+        "state": "ready",
+        "status": "final",
+        "texture_asset": "res://assets/cards/originals/of-neutral-001.png",
+        "visible": true
+      },
+      "card_id": "of-neutral-001",
+      "frame_only_rail_sha256": "3e2dd5c19124724ef8786c0f3abfa5bb40d3fb52c9f4b8aa02bd26d4a5e2f738",
+      "mode": "contour",
+      "power": "neutral",
+      "rarity": "legendary",
+      "real_card_draws": 1
+    }
+  ],
+  "failures": 0,
+  "godot": "4.6.3-stable (official)",
+  "physical_device": false,
+  "production_default": "folded",
+  "renderer_scope": "native Godot framebuffers; no physical iPhone/Android or battery benchmark",
+  "selected_proposal": null,
+  "source_art_manifest_sha256": "f0262446069e23e27b1f2bf2815eca144cf21ca23583e50413c3c495c7948687",
+  "source_card_view_sha256": "0002f4c1674ca9d8059ce2ffb271b16e4998b0f0bdf0830d30b8c3a01cb347ef",
+  "source_catalog_sha256": "161384024ba4ba4ad78994adfb203eaa49c6fd222916285e6d9338f5f19f53b7",
+  "source_face_sha256": "4a83a1400950519d94411ba0f872869c0adde820d7db2e2409642cd419abffee",
+  "source_frames_sha256": "651f4f6fadb31e352750723cf5a4fde176c0adda544e07065fcb5671c270265d",
+  "source_mechanics_fingerprint": "877fdc66a5da9f336bc4124b61c53c7f0b3412047432215af05ab047af1f3655",
+  "study_source_sha256": {
+    "scripts/design_study/fractal_fold_card.gd": "e115d2f745875b1ab21ef960ecef902f727ce6520caf4983e7ae637d7414cb1b",
+    "scripts/design_study/fractal_fold_compact.gd": "5350b774348351a869ea9dc62d5c363c6f30af795e410179737fa6b2e668aef7",
+    "scripts/design_study/fractal_fold_frames.gd": "61c7a064d43109183b6dcfb7a5ec74d4eacb84388d2c3e75a5fd791ad2f78d95",
+    "scripts/design_study/fractal_fold_study.gd": "a3a20b09acc0b094cc49f1c5e128b89da86abe61994f741917c55eb9c2a32aae",
+    "tools/design_study/render_fractal_fold.gd": "eab23d75b27f4ac0a4a76bb93f8df20aa42ecb00382a07024abb83452bfc301a"
+  }
+}
